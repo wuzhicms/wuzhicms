@@ -19,7 +19,7 @@ final class index extends WUZHI_admin {
     function __construct() {
         $this->db = load_class('db');
     }
-    function index() {
+    function init() {
         $lang = get_cookie('lang') ? get_cookie('lang') : LANG;
         require COREFRAME_ROOT.'languages/'.$lang.'/admin_menu.lang.php';
         $_panels = $panels = array();
@@ -202,7 +202,7 @@ final class index extends WUZHI_admin {
 
                     //login success!
                     $this->db->insert('logintime',array('uid'=>$uid,'status'=>1,'logintime'=>SYS_TIME,'ip'=>$ip));
-                    MSG(L('login success'),'?m=core&f=index&v=index&su='.$this->su(0),500);
+                    MSG(L('login success'),'?m=core&f=index'.$this->su(0),500);
                 } else {
                     //验证失败
                     $this->db->insert('logintime',array('uid'=>$uid,'status'=>0,'logintime'=>SYS_TIME,'ip'=>$ip));
