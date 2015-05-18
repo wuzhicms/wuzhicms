@@ -296,6 +296,11 @@ switch($step) {
             $configs = include ($current_cache.'install_cache.php');
             switch($startid) {
                 case 1://mysql_config.php
+                    if (function_exists('mysqli_connect') && version_compare(PHP_VERSION, '5.5.0') >= 0) {
+                        $type = 'mysqli';
+                    } else {
+                        $type = 'mysql';
+                    }
                     $config = array (
                         'default' => array (
                             'dbhost' => ''.$configs['dbhost'].'',
@@ -304,7 +309,7 @@ switch($step) {
                             'password' => ''.$configs['password'].'',
                             'tablepre' => ''.$configs['tablepre'].'',
                             'dbcharset' => ''.$dbcharset.'',
-                            'type' => 'mysql',
+                            'type' => $type,
                             'pconnect' => 0,
                         ),
                     );

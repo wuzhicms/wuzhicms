@@ -142,26 +142,7 @@
                                   <td><?php echo get_cfg("upload_max_filesize");?></td>
                                   <td><div class="right"></div></td>
                               </tr>
-                              <tr>
-                                  <td><?php
-                                      $PHP_VERSION = PHP_VERSION;
-                                      $PHP_VERSION = substr($PHP_VERSION,2,1);
-                                      if($PHP_VERSION > 2) {
-                                          echo "Zend Guard Loader";
-                                      } else {
-                                          echo "Zend Optimizer";
-                                      }
-                                      ?></td>
-                                  <td class="hidden-phone">支持</td>
-                                  <td>支持</td>
-                                  <td>支持</td>
-                                  <td><?php if($PHP_VERSION > 2){echo get_cfg("zend_loader.enable",1,1);} else {
-                                          if(function_exists('zend_optimizer_version')){
-                                              echo zend_optimizer_version();
-                                          } else {
-                                              echo (get_cfg_var("zend_optimizer.optimization_level")||get_cfg_var("zend_extension_manager.optimizer_ts")||get_cfg_var("zend.ze1_compatibility_mode") || get_cfg_var("zend_extension_ts"))?'<div class="right"></div>':'<div class="error"></div>';}
-                                      }?></td>
-                              </tr>
+
                               <tr>
                                   <td>MYSQL 扩展</td>
                                   <td class="hidden-phone">支持</td>
