@@ -1,5 +1,6 @@
 #五指CMS网站管理系统
 五指cms网站管理系统，网站内容管理系统，php5+mysql开发。
+
 ![](http://www.wuzhicms.com/uploadfile/2015/05/18/1431917862749065.png)
 #### 服务器要求
 Web服务器：apache/nginx/iis
@@ -17,6 +18,7 @@ PHP环境要求：支持php5.2、php5.3、php5.4、php5.5、php5.6！（推荐�
 
 #### 获取帮助
 官网：http://www.wuzhicms.com/
+
 开发文档：http://www.wuzhicms.com/doc/
 
 #### 功能特点描述
