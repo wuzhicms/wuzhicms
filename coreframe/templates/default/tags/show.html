@@ -1,0 +1,10 @@
+{T 'tags','header'}
+
+{wz:tags action="content" page="$page" tid="$tid" cid="" modelid="" moduleid="" pagesize="10" field="" order="id DESC"}
+{loop $rs $r}
+<li>{$r[id]} <a href="{$r[url]}">{safe_htm($r['title'])}</a></li>
+{/loop}
+{/wz}
+
+</body>
+</html>

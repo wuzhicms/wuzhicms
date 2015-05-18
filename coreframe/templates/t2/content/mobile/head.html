@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="{CHARSET}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{$seo_title}</title>
+    <meta name="keywords" content="{$seo_keywords}">
+    <meta name="description" content="{$seo_description}">
+    <link href="{R}css/mob.css" rel="stylesheet" type="text/css">
+    <link href="{R}css/new.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{R}js/jquery.min.js"></script>
+</head>
+
+<body>
+<section class="tbox">
+    <div class="topbar">
+        <!--<aside class="fr tbr"><a href="#">导航</a></aside>-->
+        <div class="logo"><a href="{WEBURL}index.php"><img src="{R}images/mologo.png" height="30" width="100%"/></a></div>
+    </div>
+    <header class="navbox">
+        <ul class="navlst">
+            <li><a href="{WEBURL}" {if !isset($cid)}class="ac"{/if}>首页</a></li>{wz:content action="category" pagesize="100" mshow="1" order="sort ASC"}{loop $rs $r}<li><a href="{$r[url]}" {if isset($cid) && $cid==$r['cid']}class="ac"{/if}>{$r['mb']}</a></li>{/loop}{/wz}
+        </ul>
+    </header>
+</section>

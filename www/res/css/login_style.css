@@ -1,0 +1,124 @@
+
+
+.container {
+  width: 1028px;
+  max-width: none !important;
+}
+.bottom_links_box .row{
+	margin-right: -30px;
+	margin-left: -30px;
+}
+.chengnuo_box .row{
+	margin-right: -30px;
+	margin-left: -30px;
+	}
+/*---------------------------------------*/
+/* ---- login ---- */
+/*---------------------------------------*/ 
+
+
+.login .verticalcenter .rightline{border-right: 1px solid #EBEBEB;}
+.login .verticalcenter .form-group{margin-bottom: 20px;}
+.login .verticalcenter .form-group label{color: #666;width: 100px;padding-top: 10px; margin-left:16px}
+.login .verticalcenter .form-group input{border: 1px solid #DDD;padding: 10px;margin-left: 0px; color:#000;}
+.login .verticalcenter .form-group input:focus{border-color: #75B9F0;box-shadow: 0 0 0 2px rgba(82, 168, 236, 0.15);}
+.login .verticalcenter .form-group input::-webkit-input-placeholder {color:#ccc;}
+.login .verticalcenter .form-group input::-moz-placeholder {color:#ccc;}
+.login .verticalcenter .form-group #error{color: #fe461c}
+.login .verticalcenter .form-group .prompt{display: inline-block;margin: 0;color: #999;}
+.login .verticalcenter .form-group .prompt img{padding: 0 10px;margin-top: -5px;}
+.login .verticalcenter .form-group #Verificationcode{width: 90px;margin-right: 4px;}
+.login .verticalcenter .form-group .checkbox,.login .verticalcenter .form-group .btn-login{margin: 0 0 0 10px; display:inline-block;vertical-align: middle;}
+.login .verticalcenter .form-group .btn-register{margin-left: 20px;}
+.login .verticalcenter .form-group {font-size: 12px;}
+.login .verticalcenter .form-group .btn-login{padding: 10px 36px;color: #fff;text-shadow:none; border-color:#2c83e5;background-color:#3c8de9;background-image:-webkit-gradient(linear,left top,left bottom,from(#4795f7),to(#3c8de9));background-image:-webkit-linear-gradient(top,#4795f7,#3c8de9);background-image:-moz-linear-gradient(top,#4795f7,#3c8de9);background-image:-ms-linear-gradient(top,#4795f7,#3c8de9);background-image:-o-linear-gradient(top,#4795f7,#3c8de9);background-image:linear-gradient(top,#4795f7,#3c8de9);filter:progid:DXImageTransform.Microsoft.gradient(StartColorStr="#4795f7",EndColorStr="#3c8de9")}
+.login .verticalcenter .form-group .btn-register{padding: 10px 36px;background: #ddd;
+border: #CCC 1px solid;}
+.login .verticalcenter .connectwebsite{padding-top: 55px;}
+.login .verticalcenter .connectwebsite h6{ color:#666}
+.login .verticalcenter .connectwebsite h3{ color:#61656c}
+.login .verticalcenter .connectwebsite p{ color:#61656c; line-height:1.8; padding-right:32px;}
+.login .verticalcenter .connectwebsite ul li{float: left;margin: 10px 6px;}
+.login .verticalcenter .connectwebsite ul li a img{opacity: .5;-webkit-transition: all 0.3s;transition: all 0.3s;-moz-transition: all 0.3s;-o-transition: all 0.3s;}
+.login .verticalcenter .connectwebsite ul li a img:hover{opacity: 1}
+.agreement{border-left: 1px solid #E6E6E6;border-right: 1px solid #E6E6E6;padding: 20px;}
+.agreement h1{padding: 5px 0 20px;margin-bottom: 20px;border-bottom: 1px solid #D2D2D2;font-size: 18px;color: #666;}
+
+.parner_img{max-width: 80%}
+.list-paddingleft-2{list-style-type:decimal;}
+
+[class*="span"] {
+float: left;
+min-height: 1px;
+margin-left:15px;
+}
+.span7 {
+width: 600px;
+}
+.span5 {
+width: 390px;
+min-height:500px;
+}
+.span7 h4 {
+	font-size:16px;
+	color:#61656c;
+	height:32px;
+	border-bottom: 1px solid #E6E6E6;
+	font-weight:600;
+	margin-bottom:32px;
+	margin-left:24px
+}
+
+ul, ol {
+list-style: none;
+margin: 0;
+padding: 0;
+}
+
+.form-horizontal .control-label {
+float: left;
+padding-top: 5px;
+text-align: right;
+font-size:14px;
+}
+.login .verticalcenter .form-group .form-control{ display:inline-block; width:80%}
+
+/*---------------------------------------*/
+/* ---- 注册切换 ---- */
+/*---------------------------------------*/ 
+.login .verticalcenter .nav-tabs {
+border-bottom: 1px solid #d9e8ff;
+}
+
+.login .verticalcenter .nav > li > a {
+position: relative;
+display: block;
+padding: 10px 30px;
+}
+.login .verticalcenter .nav-tabs > li {
+float: left;
+margin-bottom: -1px;
+color:#9097a0;
+}
+
+
+
+.login .verticalcenter .nav > li > a:hover, .nav > li > a:focus {
+text-decoration: none;
+ background-color:#f5f9ff;
+}
+.login .verticalcenter .nav-tabs > li > a:hover {
+  border-color:transparent;
+}
+.login .verticalcenter .nav-tabs > li > a {
+margin-right: 2px;
+line-height: 1.42857143;
+border-bottom: 1px solid transparent;
+border-right: 1px solid transparent;
+border-left: 1px solid transparent;
+border-radius: 0px 0px 0 0;
+font-size: 16px;
+color:#61656c
+}
+.typesbox{margin-bottom:40px;}
+

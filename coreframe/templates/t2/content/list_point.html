@@ -1,0 +1,33 @@
+{T "content","head",TPLID}
+<div class="container Site_map"> 当前位置：<a href="{WEBURL}">首页</a><span> &gt; {catpos($cid)}</span></div>
+
+<div class="bankuai_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10" style="border-right:1px solid #eee">
+                <h3>兑换礼品</h3>
+                {wz:content action="listing" page="$page" pagesize="20" order="sort DESC,id DESC" cid="$cid" urlrule="$urlrule"}
+                {loop $rs $r}
+                <div class="bignewsbox_g">
+                    <div class="Nbd_g"><a href="{$r['url']}"><img src="{$r['thumb']}"></a>
+                        <p><a href="{$r['url']}"><span style="font-weight:600">{$r['title']}</span></a><br>
+                            所需积分：<span class="color_danger">{$r['point']}积分</span><br>
+                            库存：<span class="color_danger">有货</span><br>
+                            使用范围：{strcut($r['remark'],60)}</p>
+                        <p><a href="{$r['url']}" class="btn btn-danger" role="button">立即兑换</a></p>
+                    </div>
+                </div>
+                {/loop}
+                {/wz}
+            </div>
+
+
+
+            <div class="col-xs-2">
+                <h4>==推荐礼品==</h4>
+                {block=10}
+            </div>
+        </div>
+    </div>
+</div>
+{T "content","foot",TPLID}

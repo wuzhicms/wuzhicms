@@ -1,0 +1,39 @@
+{T "content","head",TPLID}
+<div class="container Site_map"> 当前位置：<a href="{WEBURL}">首页</a><span> &gt; {catpos($cid)}</span></div>
+
+<div class="bankuai_1 pd5">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10" style="border-right:1px solid #eee">
+                <div class="bignewsbox_gg">
+                    <div class="Nbd_gg"><img src="{$thumb}" class="thumbnail">
+                        <p><a href="#"><span style="font-weight:600; font-size:16px">{$title}</span></a><br>
+                            商品编码：<span class="color_danger">{$id}</span>&nbsp;&nbsp;&nbsp;&nbsp; 库存：<span class="color_danger">有货</span><br>
+                        <hr/>
+                        支付方式：积分兑换
+                        <hr/>
+                        尊享价：<span class="color_danger" style="font-weight:600" >{$point}积分</span><br><br>
+                        &nbsp;<a href="{WEBURL}index.php?m=order&id={$id}&cid={$cid}" class="btn btn-danger" role="button" >立即兑换</a></p>
+                    </div>
+                </div>
+                <h3>商品详情</h3>
+                <div class="bignewsbox_gg">
+                    <div>
+                        {$content}
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="col-xs-2">
+                <h4>==礼品推荐==</h4>
+                {block=10}
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{WEBURL}index.php?f=stat&id={$id}&cid={$cid}"></script>
+{T "content","foot",TPLID}

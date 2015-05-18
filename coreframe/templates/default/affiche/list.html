@@ -1,0 +1,54 @@
+{T "content","head",TPLID}
+<div class="headimg"><img src="{R}{TPLID}/images/headimg.jpg" alt=""></div>
+<div class="white-section">
+    <div class="container">
+        <div class="crumbs"><a href="{WEBURL}">首页</a><span> &gt; <a href="index.php?m=affiche&f=index&v=listing">网站公告</a></span></div>
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span256 custom-page-sidebar">
+                        <div class="widget widget_nav_menu">
+                            <div class="menu-services-container">
+                                <ul>
+              {wz:content action="category" cid="0" pagesize="100" order="sort ASC"}
+                    {loop $rs $r}
+                   {if $r['ismenu']}<li><a href="{$r[url]}">{$r['name']}</a></li>{/if}
+                    {/loop}
+              {/wz}
+                                </ul>
+                            </div>
+                        </div>
+                    </div><!-- span4 end -->
+                    <div class="span704">
+                        <div id="content">
+                            <div id="contentmian">
+                                <div class="newslist">
+                                    <ul>
+                                        {wz:affiche action="listing" page="$page" pagesize="5" order="id DESC" status="status=2"}
+                                        {loop $rs $r}
+                                        <li><a href="{$r[url]}">
+                                            <div class="newstitle"><h3>{safe_htm($r['title'])}</h3></div></a>
+                                            <p>{safe_htm(strcut(strip_tags($r['content']),100))}.</p>
+                                        </li>
+                                        {/loop}
+                                        {/wz}
+                                    </ul>
+                                </div>
+                                <div class="page-ination">
+                                    <div class="page-in">
+                                        <ul class="clearfix">
+                                            {$pages}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- span8 end -->
+            </div><!-- row end -->
+        </div><!-- span12 end -->
+    </div><!-- row end -->
+</div><!-- conteiner end -->
+</div>
+{T "content","foot",TPLID}

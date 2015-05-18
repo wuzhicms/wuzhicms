@@ -1,0 +1,6 @@
+#iColorPicker{color:#fff;background:#333;padding:5px;z-index:9999;}
+#title_color{opacity:.6;cursor: pointer;}
+#title_color:hover{opacity:1;}
+#colorPreview{height:50px;}
+table.pickerTable{border-collapse:collapse;}
+table.pickerTable td{width:12px;height:14px;border:1px solid #000;cursor:pointer;}

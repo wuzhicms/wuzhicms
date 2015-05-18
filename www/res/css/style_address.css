@@ -1,0 +1,424 @@
+body{font-family:Microsoft Yahei,Helvetica Neue,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+ font-size:12px;}
+ 
+ #contenter{
+min-height: 400px;
+width: 990px;
+margin: auto;
+}
+.jet{}
+.jet .abtn {
+color: #c97;
+cursor: pointer;
+}
+.jet a {
+color: #C97;
+cursor: pointer;
+}
+.jet a:hover {
+text-decoration: underline;
+color: #b10000;
+}
+a {
+text-decoration: none;
+}
+
+div {
+display: block;
+}
+
+.shipping-address {}
+.shipping-address .list { width:1004px;}
+
+
+.shipping-address .addr {
+display: inline-block;
+vertical-align: top;
+position: relative;
+width: 237px;
+height: 106px;
+margin: 0 10px 14px 0;
+color: #666;
+cursor: pointer;
+}
+
+.shipping-address .addr .inner {
+z-index: 2;
+position: relative;
+padding: 11px 15px;
+background:url(../images/order/dizhibg.png) no-repeat;
+overflow: hidden;
+}
+.shipping-address .addr-active .inner {
+background-image:url(../images/order/dizhibg_hover.png);
+}
+
+.shipping-address .addr:hover .inner{
+background-image:url(../images/order/dizhibg_hover.png);
+}
+
+
+.shipping-address .addr .addr-hd {
+width: 100%;
+border-bottom: 1px solid #f2f2f2;
+padding: 0 0 5px;
+margin-bottom: 5px;
+height: 18px;
+line-height: 18px;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+.shipping-address .addr .addr-bd {
+height: 55px;
+overflow: hidden;
+word-break: break-all;
+word-wrap: break-word;
+}
+
+
+
+
+
+/*对号图片样式*/
+
+.shipping-address .addr-active .curmarker {
+visibility: visible !important;
+}
+.shipping-address .addr .curmarker {
+z-index: 3;
+position: absolute;
+width: 28px;
+height: 28px;
+top: 77px;
+right: 1px;
+visibility: hidden;
+background:url(../images/order/add_ok.png) no-repeat;
+}
+
+
+/*“设为默认”样式*/
+.shipping-address .addr .setdefault {
+color: #666;
+background: #fff;
+}
+.shipping-address .addr .setdefault, .shipping-address .addr .deftip {
+position: absolute;
+top: 0;
+right: 0;
+padding: 0 2px;
+text-decoration: none;
+display: none;
+filter: alpha(opacity=70);
+opacity: .7;
+z-index: 3;
+}
+.shipping-address .addr .setdefault:hover {
+color: #c97;
+}
+.shipping-address .addr:hover .setdefault {
+display: block !important;
+}
+
+/* -------地址管理样式---------- */
+.shipping-address .control {
+min-height: 25px;
+}
+
+.shipping-address .manageAddr {
+float: right;
+}
+
+/* --------table样式-----------*/
+table {
+display: table;
+border-collapse: separate;
+border-spacing: 2px;
+border-color: gray;
+}
+td, th {
+display: table-cell;
+vertical-align: inherit;
+}
+.grid-bundle {
+width: 990px;
+margin-bottom: 50px;
+table-layout: fixed;
+text-align: center;
+border-collapse: collapse;
+}
+.grid-bundle tbody .tube-main, .grid-bundle tbody .tube-postage {
+border-bottom: 1px solid #b4d0ff;
+}
+/*thead样式*/
+thead {
+display: table-header-group;
+vertical-align: middle;
+border-color: inherit;
+}
+
+.grid-bundle .tube-title {
+text-align: left;
+width: 360px;
+}
+.grid-bundle th {
+padding: 4px 0;
+color: #999;
+font-weight: 400;
+text-align: center;
+}
+
+.grid-bundle .row-border td {
+background: #b2d1ff;
+height: 3px;
+border-right: 2px solid #fff;
+}
+
+.grid-bundle .row-border td.tube-postage {
+border-right: 0;
+}
+
+.grid-bundle .tube-postage {
+width: 190px;
+padding-left: 5px;
+}
+.grid-bundle .tube-sum {
+width: 110px;
+}
+.grid-bundle .tube-promo {
+width: 120px;
+}
+.grid-bundle .tube-amount {
+width: 105px;
+}
+.grid-bundle .tube-price {
+width: 100px;
+}
+
+/*tbody样式*/
+
+.grid-bundle tbody td {
+background: #fbfcff;
+}
+.tube-main td {
+padding-top: 8px;
+padding-bottom: 8px;
+}
+.grid-bundle .tube-img {
+width: 68px;
+vertical-align: top;
+}
+
+.grid-order .tube-master {
+width: 162px;
+padding-right: 8px;
+text-align: left;
+vertical-align: top;
+}
+.tube-master .item-title {
+width: 162px;
+height: 21px;
+ling-height: 21px;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
+.grid-order .tube-sku {
+width: 130px;
+text-align: left;
+}
+.grid-order .tube-sku .hd {
+color: #666;
+}
+.grid-order .tube-sku .bd {
+color: #999;
+}
+
+.grid-order .tube-price {
+width: 100px;
+}
+
+.grid-order .tube-amount {
+width: 105px;
+}
+.tc-amount {
+position: relative;
+}
+
+.grid-bundle .tube-promo {
+width: 120px;
+}
+
+.tube-main .tube-sum {
+color: #c00;
+}
+.grid-bundle .tube-sum {
+width: 110px;
+}
+.grid-order .tube-sum .sum {
+font-weight: 700;
+}
+/*配送方式数据样式*/
+.grid-bundle tbody .tube-postage {
+text-align: left;
+padding: 5px;
+}
+.grid-bundle .tube-postage .cage {
+color: #666;
+}
+.grid-bundle .tube-postage .cage .hd {
+margin-right: 5px;
+}
+.grid-bundle .tube-postage .cage .hd {
+margin-right: 5px;
+}
+label {
+cursor: default;
+}
+
+.grid-bundle .tube-postage .postage .postage-select {
+max-width: 92px;
+}
+
+.grid-bundle .tube-postage .postage .postage-select {
+max-width: 82px;
+}
+.tc-select {
+position: relative;
+display: inline-block;
+vertical-align: middle;
+cursor: default;
+outline: 0;
+background: #fff;
+height: 21px;
+padding-right: 20px;
+}
+
+.grid-bundle .tube-postage .insure {
+margin-top: 10px;
+}
+.grid-bundle .tube-postage .cage .hd {
+margin-right: 5px;
+}
+.grid-bundle .tube-postage .insure .hd .trigger {
+position: relative;
+background: #36ab67;
+color: #fff;
+cursor: pointer;
+padding: 1px;
+}
+
+/*tfoot样式*/
+.grid-bundle .tube-annex {
+padding-left: 10px;
+text-align: left;
+}
+.grid-bundle tfoot td {
+background: #f2f6ff;
+padding-top: 12px;
+padding-bottom: 12px;
+vertical-align: top;
+}
+.memo {
+position: relative;
+float: left;
+color: #999;
+margin-right: 30px;
+}
+
+.grid-bundle .tube-bill {
+text-align: right;
+padding-right: 10px;
+color:#666;
+}
+.grid-bundle input {
+color:#777;
+}
+.grid-bundle tfoot td {
+background: #f2f6ff;
+padding-top: 12px;
+padding-bottom: 12px;
+vertical-align: top;
+color:#666;
+}
+
+/*---*/
+.checkbar {
+text-align: right;
+padding: 0 10px 0 0;
+}
+.checkbar .coupon, .checkbar .point, .checkbar .due {
+display: inline-block;
+vertical-align: bottom;
+}
+.coupon {
+position: relative;
+height: 51px;
+line-height: 19px;
+margin-right: 30px;
+}
+.checkbar .due {
+color: #999;
+min-height: 50px;
+}
+.checkbar .due .realPay {
+margin-top: -6px;
+}
+.checkbar .due .realPay .bd {
+color: #c00;
+font-size: 24px;
+font-weight: 700;
+font-family: tahoma;
+}
+.tc-rmb {
+font-family: arial;
+}
+.checkbar .due .obtainedPoint {
+display: inline;
+margin-left: 10px;
+}
+.addbtn {
+    display: inline-block;
+    zoom: 1;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 20px;
+    color: #FFF;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+    background: #01A8FF;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.new_address{
+    display: inline-block;
+    zoom: 1;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 20px;
+    color: #FFF;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+    background: #EDEDED;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.defaultaddress {
+    color: #666;
+    background: #fff;
+}
+ .defaultaddress {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 2px;
+    text-decoration: none;
+    filter: alpha(opacity=70);
+    opacity: .7;
+    z-index: 3;
+}

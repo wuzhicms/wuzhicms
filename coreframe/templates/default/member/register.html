@@ -1,0 +1,203 @@
+{T "content","head",TPLID}
+
+<link type="text/css" rel="stylesheet" href="{R}css/login_style.css">
+<div class="container login">
+    <div class="verticalcenter" style="background:none; ">
+        <div class="row">
+        	<div class="span5 rightline">
+                <div class="connectwebsite">
+                    <h3>欢迎注册!</h3><br/>
+                    <h6>我已有账户，<a href="{WEBURL}index.php?m=member&v=login" style="font-size:16px; color:#C00" >点此登录！</a></h6>
+                </div>
+            </div>
+            <div class="span7">
+            <div class="typesbox" style="margin-left:32px">
+            	<ul class="nav nav-tabs">
+              <li role="presentation" class="stypeclass active"><a href="#"><span onclick="ch_type(10,this);">个人账户注册</span></a></li>
+              <li role="presentation" class="stypeclass"><a href="#"><span onclick="ch_type(11,this);">企业账户注册</span></a></li>
+              <li role="presentation" class="stypeclass" ><a href="#"><span onclick="ch_type(23,this);" id="modelid23">机构账户注册</span></a></li>
+            </ul>
+            </div>
+            
+            <form action="" method="post" id="form-register" name="form-register" class="form-horizontal">
+                <input type="hidden" name="modelid" id="setmodelid" value="10">
+                <div class="form-group" id="d_companyname" style="display: none;">
+                    <label class="control-label" id="f_companyname">注册公司</label>
+                    <div class="col-sm-8">
+
+                        <input type="text" name="companyname" id="companyname" class="form-control" placeholder="请输入名称" datatype="*6-36">
+                        <span class="Validform_wrong">请输入名称</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">注册手机</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="mobile" class="form-control" placeholder="请输入手机号码" datatype="m" errormsg="请输入正确的手机号码" sucmsg="OK" ajaxurl="index.php?m=member&f=index&v=public_check_mobile">
+                        <span class="Validform_wrong">请输入手机号码</span>
+                    </div>
+                </div>
+          		<div class="form-group">
+					<label class="control-label">用户名</label>
+            		<div class="col-sm-8">
+                		<input type="text" name="username" class="form-control" placeholder="请输入用户名" datatype="/^[a-z0-9\u4E00-\u9FA5\uf900-\ufa2d\-]{3,20}$/i" errormsg="手机号、字母、汉字" sucmsg="OK" ajaxurl="index.php?m=member&f=index&v=public_check_user">
+                		<span class="Validform_wrong">用户名应该为2-20位之间</span>
+            		</div>
+        		</div>
+
+                <div class="form-group">
+                    <label class="control-label">设置密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" name="password" class="form-control" placeholder="请输入密码" datatype="*" errormsg="请输入密码" sucmsg="OK">
+                    	<span class="Validform_wrong">请输入密码</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">确认密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" name="pwdconfirm" class="form-control" placeholder="请确认密码" datatype="*" recheck="password" errormsg="您两次输入的账号密码不一致！" sucmsg="OK" >
+                    	<span class="Validform_wrong">请再次输入密码</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">验证码</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="checkcode" class="form-control" id="Verificationcode" placeholder="请输入验证码" datatype="*4-4"	errormsg="请输入验证码" sucmsg="输入正确" onfocus="if($('#code_img').attr('src') == '{R}images/logincode.gif')$('#code_img').attr('src', '{WEBURL}index.php?m=core&f=identifying_code&w=112&h=40&rd='+Math.random());" />
+                        <img src="{R}images/logincode.gif" id="code_img" alt="点击刷新"	onclick="$(this).attr('src', '{WEBURL}index.php?m=core&f=identifying_code&w=112&h=40&rd='+Math.random());">
+                    	<span class="Validform_wrong">请输入验证码</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label footer"></label>
+                    <input type="checkbox" name="protocol" value="1" class="checkbox" checked="" /> 我已阅读并同意<a href="javascript:showProtocol();" target="_blank">《网站使用协议》</a>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <input type="submit" name="submit" class="btn btn-login" value=" 注册 " />
+                </div>
+          </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="{R}js/dialog/ui-dialog.css" />
+<div id="protocol" class="ui-popup ui-popup-modal ui-popup-show ui-popup-focus hide" style="position: fixed; z-index: 100; left: 10%; top: 10%;">
+	<div class="ui-dialog">
+		<div class="ui-dialog-header">
+			<button class="ui-dialog-close" onclick="$('#protocol').hide()">×</button>
+			<div class="ui-dialog-title">注册协议</div>
+		</div>
+		<p style="margin:20px;"><?php echo nl2br($this->setting['protocol'])?></p>
+	</div>
+</div>
+<link href="{R}css/validform.css" rel="stylesheet">
+<script src="{R}js/validform.min.js"></script>
+<script type="text/javascript">
+    function ch_type(type,obj) {
+        $('.stypeclass').removeClass('active');
+        $(obj).parent().parent().addClass('active');
+
+        $("#setmodelid").val(type);
+        if(type==10) {
+            $("#companyname").attr('type','hidden');
+            $("#worktype").attr('type','hidden');
+            $("#d_companyname").css('display','none');
+            $("#d_worktype").css('display','none');
+
+        } else {
+            $("#companyname").attr('type','text');
+            $("#worktype").attr('type','text');
+            $("#d_companyname").css('display','');
+            $("#d_worktype").css('display','');
+            if(type==11) {
+                $("#f_companyname").html('注册公司');
+                $("#f_worktype").html('公司职务');
+            } else {
+                $("#f_companyname").html('注册机构');
+                $("#f_worktype").html('机构职务');
+            }
+        }
+    }
+    $(function(){
+        {if $GLOBALS['modelid']}
+            $("#modelid23").click();
+            {/if}
+        $(".form-horizontal").Validform({
+        tiptype:function(msg,o,cssctl){
+            var objtip=o.obj.siblings("span");
+            cssctl(objtip,o.type);
+            objtip.text(msg);
+        },
+        ignoreHidden:true,
+        dragonfly:false,
+        tipSweep:false,
+        showAllError:false,
+        postonce:true,
+        ajaxPost:false,
+        beforeCheck:function(curform){
+            //console.log(curform);
+            //在表单提交执行验证之前执行的函数，curform参数是当前表单对象。
+            //这里明确return false的话将不会继续执行验证操作;
+
+        },
+        beforeSubmit:function(curform){
+            //在验证成功后，表单提交前执行的函数，curform参数是当前表单对象。
+            //这里明确return false的话表单将不会提交;
+
+            return true;
+        },
+        callback:function(data){
+
+            //返回数据data是json对象，{"info":"demo info","status":"y"}
+            //info: 输出提示信息;
+            //status: 返回提交数据的状态,是否提交成功。如可以用"y"表示提交成功，"n"表示提交失败，在ajax_post.php文件返回数据里自定字符，主要用在callback函数里根据该值执行相应的回调操作;
+            //你也可以在ajax_post.php文件返回更多信息在这里获取，进行相应操作；
+            //ajax遇到服务端错误时也会执行回调，这时的data是{ status:**, statusText:**, readyState:**, responseText:** }；
+
+            //这里执行回调操作;
+            //注意：如果不是ajax方式提交表单，传入callback，这时data参数是当前表单对象，回调函数会在表单验证全部通过后执行，然后判断是否提交表单，如果callback里明确return false，则表单不会提交，如果return true或没有return，则会提交表单。
+        }
+    });
+});
+//	注册协议 先简单alert一下 后期统一UI处理
+function showProtocol() {
+	var width = $(window).width();
+	var height = $(window).height();
+	$('#protocol > div').css({ width:(width*0.8)+'px', height:(height*0.8)+'px', overflow:'auto' });
+	$('#protocol').show();
+}
+</script>
+
+<style>
+	*:focus { outline: none; }
+	body{background-color:#fafafa}
+	
+
+.login .verticalcenter .nav-tabs > li.active > a, .login .verticalcenter .nav-tabs > li.active > a:hover, .login .verticalcenter .nav-tabs > li.active > a:focus {
+  color: #AA151B;
+  cursor: default;
+   background:#fafafa; 
+  border: 1px solid #FFD9D9;
+  border-top: 3px solid #AA151B;
+  border-bottom-color: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 4px 4px 0 0;
+}
+
+	.login .verticalcenter .form-group .btn-login {
+  padding: 10px 36px;
+  color: #fff;
+  text-shadow: none;
+  border-color: #AA151B;
+  background-color: #AA151B;
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#AA151B),to(#8A0000));
+  background-image: -webkit-linear-gradient(top,#AA151B,#8A0000);
+  background-image: -moz-linear-gradient(top,#4795f7,#3c8de9);
+  background-image: -ms-linear-gradient(top,#4795f7,#3c8de9);
+  background-image: -o-linear-gradient(top,#4795f7,#3c8de9);
+  background-image: linear-gradient(top,#4795f7,#3c8de9);
+  filter: progid:DXImageTransform.Microsoft.gradient(StartColorStr="#4795f7",EndColorStr="#3c8de9");
+}
+</style>
+{T "content","foot",TPLID}

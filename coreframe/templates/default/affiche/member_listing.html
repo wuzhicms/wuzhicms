@@ -1,0 +1,30 @@
+{T  'member','head'}
+<div class="container membercenter">
+    <div class="row">
+        <div class="span3 memberleft">
+{T 'member','left'}
+        </div>
+        <div class="memberright">
+            <div class="memberframe article">
+                <div class="memberinfotitle"><h4>系统公告</h4></div>
+                <ul>
+                    {wz:affiche action="listing" page="$page" pagesize="10" order="id DESC" status="status IN(1,2)"}
+                    {loop $rs $r}
+                    <li><a href="index.php?m=affiche&f=affiche&v=show&id={$r['id']}">{safe_htm($r['title'])}<span>{time_format($r['addtime'])}</span></a></li>
+                    {/loop}
+                    {/wz}
+                </ul>
+            </div>
+            <div class="page-ination">
+                <div class="page-in">
+                    <ul class="clearfix">
+                        {$pages}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{T  'member','foot'}

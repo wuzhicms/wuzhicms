@@ -1,0 +1,53 @@
+{T "content","head",TPLID}
+<div class="container Site_map"> 当前位置：<a href="{WEBURL}">首页</a><span> &gt; {catpos($cid)}</span></div>
+
+<div class="bankuai_1 pd30">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8" style="border-right:1px solid #eee">
+                <div class="content_title">{$title}</div>
+                <div class="bignewsbox">
+                    <div class="Nfoot">
+                        <div class="lwd">时间：{date('Y-m-d H:i',$addtime)}&nbsp;&nbsp; 来源：{$copyfrom}</div>
+                    </div>
+                </div>
+                <div class="content_p">
+                    {$content}
+                </div>
+                {if $content_pages}
+                <div class="page-ination">
+                    <div class="page-in">
+                        <ul class="clearfix">
+                            {$content_pages}
+                        </ul>
+                    </div>
+                </div>{/if}
+                {php if($keywords) $keyword = implode(',',$keywords);}
+                {wz:content action="relation" cid="$cid" id="$id" keywords="$keyword" pagesize="5" order="id ASC"}
+                {if !empty($rs)}相关内容：<br>
+                {loop $rs $r}
+                <a href="{$r['url']}">{$r['title']}</a> {time_format($r['addtime'])}
+                {/loop}
+                <hr>
+                {/if}
+                {/wz}
+
+            </div>
+            <div class="col-xs-4">
+                <div class="rightad_boxg">{block=13}</div>
+                <div class="right_hot" id="righthot">
+                    <h4>浏览排行</h4>
+                    <div class="list-group">
+                        {wz:content action="rank" pagesize="10" order="monthviews DESC" cid="$cid"}
+                        {loop $rs $r}
+                        <a href="{$r['url']}" class="list-group-item_gr active"><span class="badge_top">{str_pad($n, 2, "0", STR_PAD_LEFT)} </span>&nbsp;{strcut($r['title'],36)}</a>
+                        {/loop}
+                        {/wz}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{WEBURL}index.php?f=stat&id={$id}&cid={$cid}"></script>
+{T "content","foot",TPLID}

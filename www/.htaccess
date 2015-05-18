@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteRule ^item-([0-9]+)-([0-9]+)-([0-9]+).html index.php?v=show&cid=$1&id=$2&page=$3
+RewriteRule ^show-([0-9]+)-([0-9]+)-([0-9]+).html index.php?v=show&cid=$1&id=$2&page=$3
+RewriteRule ^list-([0-9]+)-([0-9]+).html index.php?v=listing&cid=$1&page=$2

@@ -1,0 +1,121 @@
+{T "content","head",TPLID}
+<link type="text/css" rel="stylesheet" href="{R}h1jk/css/shequ.css">
+
+<!-- 社区-->
+<!-- ---------------------------------- -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12" style="background:url({R}h1jk/image/shequbg.png) no-repeat top center;">
+            <div class="shequ_box" >
+                <div class="shequ_title">
+                    <div class="row">
+                        <div class="col-xs-3" style="width:192px;">
+                            <a href="/list-81/">
+                                <div class="title">
+                                    <span class="iconfont{if $cid!=81}_g{/if}"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></span>
+                                    <span class="titles">健康行<p class="tiaoshu">条数：{get_category_item(81)}</p></span>
+                                </div></a>
+
+                        </div>
+                        <div class="col-xs-3" style="width:192px;">
+                            <a href="/list-82/"><div class="title">
+                                <span class="iconfont{if $cid!=82}_g{/if}"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></span>
+                                <span class="titles">健康吧 <p class="tiaoshu">条数：{get_category_item(82)}</p></span>
+                            </div></a>
+                        </div>
+                        <div class="col-xs-3" style="width:192px;">
+                            <a href="/list-83/"><div class="title">
+                                <span class="iconfont{if $cid!=83}_g{/if}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>
+                                <span class="titles">健康学 <p class="tiaoshu">条数：{get_category_item(83)}</p></span>
+                            </div></a>
+                        </div>
+                        <div class="col-xs-3" style="width:192px;">
+                            <a href="/list-84/"><div class="title">
+                                <span class="iconfont{if $cid!=84}_g{/if}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></span>
+                                <span class="titles">健康知 <p class="tiaoshu">条数：{get_category_item(84)}</p></span>
+                            </div></a>
+                        </div>
+                        <div class="col-xs-3" style="width:192px;">
+                            <a href="/my-guestbook/"><div class="title">
+                                <span class="iconfont"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></span>
+                                <span class="titles">健康问答 <p class="tiaoshu">条数：{wzsql('guestbook')}</p></span>
+                            </div></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shequ_list">
+                    <div class="header">
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="active"><a href="#zuiixnfabiao" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 最新发表</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="main">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="zuiixnfabiao">
+
+                                <table class="table table-hover">
+                                    <tbody>
+                                    {wz:guestbook action="listing"  page="$page" pagesize="20" order="id DESC"}
+                                    {loop $rs $r}
+                                    <tr>
+                                        <td class="tuxiang"><img src="{avatar($r['uid'], 180)}" width="60"></td>
+                                        <td class="zhuti">
+                                            <div class="title"><a href="/index?m=guestbook&v=show&id={$r['id']}" class="color_heyilan">{$r['title']}</a></div>
+                                            <div class="em">{$r['publisher']}&nbsp;&nbsp; 于{date('Y-m-d',$r['addtime'])}发表 </div>
+                                        </td>
+                                        <td class="rw">
+                                            <div class="liulan">{$r['hits']}</div>
+                                            <div class="huifu">浏览次数</div>
+                                        </td>
+                                    </tr>
+                                    {/loop}
+                                    {/wz}
+                                    </tbody>
+                                </table>
+                                <div style="text-align:center">
+                                    <ul class="pagination">
+                                        {$pages}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="zuire">
+                                <table class="table table-hover">
+                                    <tbody>
+                                    {wz:content action="rank" pagesize="10" order="views DESC" cid="$cid"}
+                                    {loop $rs $r}
+                                    <tr>
+                                        <td class="tuxiang"><img src="{R}h1jk/image/luntanmr.jpg" width="60"></td>
+                                        <td class="zhuti">
+                                            <div class="title"><a href="{$r['url']}" class="color_heyilan">{$r['title']}</a></div>
+                                            <div class="em">合一官网&nbsp;&nbsp; 于{date('Y-m-d',$r['addtime'])}发表 <a href="{$categorys[$r['cid']]['url']}">[{$categorys[$r['cid']]['name']}]</a> </div>
+                                        </td>
+                                        <td class="rw">
+                                            <div class="liulan">{get_hits($r['cid'],$r['id'],'views')}</div>
+                                            <div class="huifu">浏览次数</div>
+                                        </td>
+                                    </tr>
+                                    {/loop}
+                                    {/wz}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <!-- Tab panes js -->
+                        <script>
+                            $(function () {
+                                $('#myTab a:last').tab('show')
+                            })
+                        </script>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{T "content","foot",TPLID}
