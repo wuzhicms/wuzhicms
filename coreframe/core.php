@@ -312,5 +312,5 @@ function log_exception( Exception $e) {
  */
 function running_fatal() {
     $error = error_get_last();
-    if($error["type"] == E_ERROR) log_error( $error["type"], $error["message"], $error["file"], $error["line"] );
+    if($error["type"] == E_ERROR || $error["type"] == 4) log_error( $error["type"], $error["message"], $error["file"], $error["line"] );
 }
