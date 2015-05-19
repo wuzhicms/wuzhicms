@@ -6796,7 +6796,7 @@ INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `
   (216, 215, '生成优惠券', 'coupon', 'card', 'add', '', 216, 1, 0),
   (217, 5, '发票申请管理', 'receipt', 'receipt', 'listing', '', 217, 1, 0),
   (218, 217, '审核', 'receipt', 'receipt', 'check', '', 218, 0, 0),
-  (219, 6, '机构审核', 'member', 'mec', 'listing', '', 219, 1, 0),
+  (219, 6, '机构审核', 'member', 'mec', 'listing', '', 219, 0, 0),
   (222, 220, '物流公司', 'order', 'express', 'listing', '', 222, 1, 0),
   (223, 220, '添加物流公司', 'order', 'express', 'add', '', 223, 1, 0),
   (224, 220, '修改物流', 'order', 'express', 'edit', '', 224, 0, 0),
