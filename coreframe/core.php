@@ -9,7 +9,7 @@ defined('WWW_ROOT') or exit('No direct script access allowed');
 /**
  * 核心文件
  */
-define('VERSION','2.0.2');
+define('VERSION','2.0.3');
 
 $GLOBALS = array();
 define('SYSTEM_NAME','wuzhicms');
@@ -46,7 +46,7 @@ define('HTTP_REFERER', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'
 date_default_timezone_set(TIME_ZONE);
 //输出页面字符集
 header('Content-type: text/html; charset='.CHARSET);
-if(!ob_start("ob_gzhandler")) ob_start();
+if(extension_loaded("zlib") && !ob_start("ob_gzhandler")) ob_start();
 
 //将GET，POST 参数全部转给 GLOBALS ，然后注销 get／post
 
@@ -286,11 +286,10 @@ function log_exception( Exception $e) {
     $data['line'] = $e->getLine();
     $data['version'] = VERSION;
     $data['php_version'] = PHP_VERSION;
-    $data['referer'] = WEBURL;
+    $data['referer'] = URL();
 
     if (ERROR_REPORT) {
         if(IS_CLI==0) {
-            echo 'sss';
             print "<div style='text-align: center;'>";
             print "<h5 style='color: rgb(190, 50, 50);'>WuzhiCMS Exception Occured:</h5>";
             print "<table style='width: 800px; display: inline-block;'>";
