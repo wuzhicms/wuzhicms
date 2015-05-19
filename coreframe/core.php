@@ -9,6 +9,7 @@ defined('WWW_ROOT') or exit('No direct script access allowed');
 /**
  * 核心文件
  */
+define('VERSION','2.0.2');
 
 $GLOBALS = array();
 define('SYSTEM_NAME','wuzhicms');
@@ -278,33 +279,52 @@ function log_exception( Exception $e) {
     $file = str_replace(rtrim(COREFRAME_ROOT,'/'),'coreframe->',$e->getFile());
     $file = str_replace(rtrim(WWW_ROOT,'/'),'www->',$file);
     $file = str_replace(rtrim(CACHE_ROOT,'/'),'caches->',$file);
-    $msg = urlencode($e->getMessage());
+    $data = array();
+    $data['type'] = get_class($e);
+    $data['msg'] = urlencode($e->getMessage());
+    $data['file'] = $file;
+    $data['line'] = $e->getLine();
+    $data['version'] = VERSION;
+    $data['php_version'] = PHP_VERSION;
+    $data['referer'] = WEBURL;
+
     if (ERROR_REPORT) {
         if(IS_CLI==0) {
+            echo 'sss';
             print "<div style='text-align: center;'>";
             print "<h5 style='color: rgb(190, 50, 50);'>WuzhiCMS Exception Occured:</h5>";
             print "<table style='width: 800px; display: inline-block;'>";
-            print "<tr style='background-color:rgb(230,230,230);text-align:left;'><th style='width: 80px;'>Type</th><td>" . get_class( $e ) . "</td></tr>";
-            print "<tr style='background-color:rgb(240,240,240);text-align:left;'><th>Message</th><td>{$e->getMessage()}</td></tr>";
+            print "<tr style='background-color:rgb(230,230,230);text-align:left;'><th style='width: 80px;'>Type</th><td>" . $data['type'] . "</td></tr>";
+            print "<tr style='background-color:rgb(240,240,240);text-align:left;'><th>Message</th><td>{$data['msg']}</td></tr>";
             print "<tr style='background-color:rgb(230,230,230);text-align:left;'><th>File</th><td>{$file}</td></tr>";
-            print "<tr style='background-color:rgb(240,240,240);text-align:left;'><th>Line</th><td>{$e->getLine()}</td></tr>";
-            print "<tr style='background-color:rgb(230,230,230);'><th colspan='2'><a href='http://www.wuzhicms.com/index.php?m=help&f=logerror&msg={$msg}&file={$file}&line={$e->getLine()}' target='_blank'>Need Help?</a></th></tr>";
+            print "<tr style='background-color:rgb(240,240,240);text-align:left;'><th>Line</th><td>{$data['line']}</td></tr>";
+            print "<tr style='background-color:rgb(230,230,230);'><th colspan='2'><a href='http://www.wuzhicms.com/index.php?m=help&f=logerror&msg={$data['msg']}&file={$data['file']}&line={$data['line']}' target='_blank'>Need Help?</a></th></tr>";
             print "</table></div>";
         } else {
             print "------------- WuzhiCMS Exception Occured:------------- \r\n";
-            print "Type:" . get_class( $e ) . "\r\n";
-            print "Message: {$e->getMessage()} \r\n";
-            print "File: {$file} \r\n";
-            print "Line: {$e->getLine()} \r\n";
+            print "Type: {$data['type']} \r\n";
+            print "Message: {$data['msg']} \r\n";
+            print "File: {$data['file']} \r\n";
+            print "Line: {$data['line']} \r\n";
             print date('Y-m-d H:i:s')."\r\n";
         }
 
         if(OPEN_DEBUG) exit();
     } else {
-        $message = "Time: " . date('Y-m-d H:i:s') . "; Type: " . get_class( $e ) . "; Message: {$e->getMessage()}; File: {$e->getFile()}; Line: {$e->getLine()};";
+        $message = "Time: " . date('Y-m-d H:i:s') . "; Type: " . $data['type'] . "; Message: {$e->getMessage()}; File: {$data['file']}; Line: {$data['line']};";
         @file_put_contents(CACHE_ROOT. "logs/error-".CACHE_EXT.'-'.date("ym").".log", $message . PHP_EOL, FILE_APPEND );
     }
-    @file_get_contents("http://ms.wuzhicms.com/index.php?m=help&f=record&ver=1&msg={$msg}&file={$file}&line={$e->getLine()}");
+    if(function_exists('curl_init')) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://ms.wuzhicms.com/index.php?m=help&f=error');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
+        curl_setopt($ch, CURLOPT_POST, true);//启用POST提交
+        curl_setopt($ch, CURLOPT_TIMEOUT, 3);//3s超时
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data); //设置POST提交的字符串
+        curl_exec($ch);
+        curl_close($ch);
+    }
 }
 
 /**

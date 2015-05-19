@@ -15,7 +15,6 @@ defined('IN_WZ') or exit('No direct script access allowed');
 load_class('admin');
 
 final class index extends WUZHI_admin {
-    private $version = '2.0.1';
     function __construct() {
         $this->db = load_class('db');
     }
@@ -214,7 +213,7 @@ final class index extends WUZHI_admin {
     public function checknew_version() {
         $a1 = 'w';
         $a2 = 'zhi';
-        echo file_get_contents('http://'.$a1.$a1.$a1.'.'.$a1.'u'.$a2.'cms.com/api/checknew_version.php?ver='.$this->version.'&domain='.WEBURL);
+        echo file_get_contents('http://'.$a1.$a1.$a1.'.'.$a1.'u'.$a2.'cms.com/api/checknew_version.php?ver='.VERSION.'&domain='.WEBURL);
     }
     /**
      * 后台左侧菜单

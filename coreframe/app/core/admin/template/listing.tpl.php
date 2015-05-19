@@ -29,9 +29,6 @@
     <!<![endif]-->
 </head>
 <body>
-<?php
-define('WZ_VERSION','WUZHICMS v2.0.1[20150518]');
-?>
 <section class="wrapper">
     <!--state overview start-->
     <div class="row state-overview">
@@ -190,7 +187,7 @@ define('WZ_VERSION','WUZHICMS v2.0.1[20150518]');
                         ?>
                         <tr>
                             <td>
-                                <strong>系统信息</strong>： <?php echo WZ_VERSION;?>
+                                <strong>系统信息</strong>： 五指CMS v<?php echo VERSION.' (简体中文'.CHARSET.')';?>
                                 <a href="http://www.wuzhicms.com/update/lastest/" target="_blank">【查看最新版本】</a>
                             </td>
                             <td></td>
