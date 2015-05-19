@@ -8,7 +8,7 @@ define('CACHE_EXT','H_1_a');
 //勿忘－网站上线后，需要修改下面 3项
 define('OPEN_DEBUG',0);//开启调试模式？1 开启后，将会显示页面的变量，遇到错误终止、0 关闭-网站上线后，需要关闭该项
 define('AUTO_CACHE_TPL',1);//是否自动缓存模版，网站上线后，必须关闭该项
-define('ERROR_REPORT',1);//错误信息现实级别：1 ，显示高级别错误，0 关闭错误提醒（上线后，使用该项） 2 显示所有错误（开发模式）
+define('ERROR_REPORT',0);//错误信息现实级别：1 ，显示高级别错误，0 关闭错误提醒（上线后，使用该项） 2 显示所有错误（开发模式）
 
 define('WWW_PATH','/');//网站安装路径，二级目录形式为：/mydemo/
 define('WEBURL','http://dev.wuzhicms.com/');//网站域名
