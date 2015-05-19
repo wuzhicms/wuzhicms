@@ -97,19 +97,12 @@ PHP环境要求：支持php5.2、php5.3、php5.4、php5.5、php5.6！（推荐�
 |   |-- languages               #语言包
 |   --- templates               #模板
 |-- caches                      #缓存目录
-|   |-- _cache_
-|   |-- block
-|   |-- caches
-|   |-- content
-|   |-- database
-|   |-- db_bak
-|   |-- install.check
-|   |-- linkage
-|   |-- logs
-|   |-- member
-|   |-- model
-|   |-- order
-|   |-- ppc
+|   |-- _cache_                 #公共缓存
+|   |-- block                   #区块、碎片缓存
+|   |-- content                 #内容模块缓存，栏目缓存
+|   |-- db_bak                  #数据库备份路径
+|   |-- install.check           #安装锁定
+|   |-- model                   #模型缓存
 |   --- templates               #模板缓存
 --- www                         #网站根目录
     |-- 404.html                #404页面
