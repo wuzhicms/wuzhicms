@@ -21,8 +21,10 @@ class WUZHI_cache_model {
         }
 
         $modulefield_list = glob(COREFRAME_ROOT.'app/'.$m.'/fields/*',GLOB_ONLYDIR);
-        foreach ($modulefield_list as $filename) {
-            $module_field[] = basename($filename);
+        if(!empty($modulefield_list)) {
+            foreach ($modulefield_list as $filename) {
+                $module_field[] = basename($filename);
+            }
         }
         $fields = '';
         if($unique) {
