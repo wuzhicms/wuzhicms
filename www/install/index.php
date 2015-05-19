@@ -8,7 +8,7 @@
 /**
  * 安装程序
  */
-
+set_time_limit(300);
 //检测PHP环境
 if(PHP_VERSION < '5.2.0') die('PHP配置需要大于 5.2.0 ');
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
