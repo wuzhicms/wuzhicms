@@ -62,7 +62,7 @@ final class WUZHI_template {
         return TRUE;
 	}
 	public function template_parse($template) {
-        $template = preg_replace("/\{block=([0-9]+)\}/ie", "self::block('\\1')", $template);
+        $template = preg_replace_callback("/\{block=([0-9]+)\}/i", "self::block", $template);
 		$template = preg_replace ( "/\{T\s+(.+)\}/", "<?php if(!isset(\$siteconfigs)) \$siteconfigs=get_cache('siteconfigs'); include T(\\1); ?>", $template );
 		$template = preg_replace ( "/\{if\s+(.+?)\}/", "<?php if(\\1) { ?>", $template );
 		$template = preg_replace ( "/\{else\}/", "<?php } else { ?>", $template );
@@ -77,39 +77,42 @@ final class WUZHI_template {
 		$template = preg_replace ( "/\{loop\s+(\S+)\s+(\S+)\}/", "<?php \$n=1;if(is_array(\\1)) foreach(\\1 AS \\2) { ?>", $template );
 		$template = preg_replace ( "/\{loop\s+(\S+)\s+(\S+)\s+(\S+)\}/", "<?php \$n=1; if(is_array(\\1)) foreach(\\1 AS \\2 => \\3) { ?>", $template );
 		$template = preg_replace ( "/\{\/loop\}/", "<?php \$n++;}?>", $template );
-		$template = preg_replace ( "/\{([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff:]*\(([^{}]*)\))\}/", "<?php echo \\1;?>", $template );
-		$template = preg_replace ( "/\{\\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff:]*\(([^{}]*)\))\}/", "<?php echo \\1;?>", $template );
-		$template = preg_replace ( "/\{(\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\}/", "<?php echo \\1;?>", $template );
-		$template = preg_replace("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/es", "self::addquote('<?php echo \\1;?>')",$template);
-		$template = preg_replace ( "/\{([A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*)\}/s", "<?php echo \\1;?>", $template );
 
-		$template = preg_replace("/\{wz:(\w+)\s+([^}]+)\}/ie", "self::syntax_parse('$1','$2', '$0')", $template);
-		$template = preg_replace("/\{\/wz\}/ie", "self::endof_syntax_parse()", $template);
+
+        $template = preg_replace ( "/\{([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff:]*\(([^{}]*)\))\}/", "<?php echo \\1;?>", $template );
+		$template = preg_replace ( "/\{\\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff:]*\(([^{}]*)\))\}/", "<?php echo \\1;?>", $template );
+        $template = preg_replace ( "/\{(\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\}/", "<?php echo \\1;?>", $template );
+        $template = preg_replace("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/s",  "<?php echo \\1;?>",$template);
+        $template = preg_replace ( "/\{([A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*)\}/s", "<?php echo \\1;?>", $template );
+
+		$template = preg_replace_callback("/\{wz:(\w+)\s+([^}]+)\}/i", "self::syntax_parse", $template);
+		$template = preg_replace_callback("/\{\/wz\}/i", "self::endof_syntax_parse", $template);
 
 		$template = preg_replace("/\<\?(\s{1})/is", "<?php\\1", $template);
 		$template = preg_replace("/\<\?\=(.+?)\?\>/is", "<?php echo \\1;?>", $template);
-		$template = preg_replace("/\{hook:(\w+?)(\s+(.+?))?\}/ie", "self::hooktags('\\1', '\\3')", $template);
+		$template = preg_replace_callback("/\{hook:(\w+?)(\s+(.+?))?\}/i", "self::hooktags", $template);
 
 
 		$template = "<?php defined('IN_WZ') or exit('No direct script access allowed'); ?>" . $template;
 		return $template;
 
 	}
-    private static function block($blockid) {
-        $block_config = @get_cache('block_'.$blockid,'block');
+    private static function block($mat) {
+        $block_config = @get_cache('block_'.$mat[1],'block');
         if(empty($block_config)) return '';
         $str = $block_config['code'];
         return $str;
     }
-	private static function hooktags($hookid, $key = '') {
+	private static function hooktags($mat) {
 		$str = '<?php';
 		$str .= "\r\n\$hook_class = load_class('hook');\r\n";
-		$str .= "\$hook_class->run_hook('footer', $key);\r\n";
+		$str .= "\$hook_class->run_hook('footer', $mat[2]);\r\n";
 		$str .= "?>\r\n";
 		return $str;
 	}
-	private static function syntax_parse($m, $data, $html) {
-		preg_match_all("/([a-z]+)\=[\"]?([^\"]+)[\"]?/i", stripslashes($data), $matches, PREG_SET_ORDER);
+	private static function syntax_parse($mat) {
+        $m = $mat[1];
+		preg_match_all("/([a-z]+)\=[\"]?([^\"]+)[\"]?/i", stripslashes($mat[2]), $matches, PREG_SET_ORDER);
 		$arr = array('action','cache','page', 'pagesize', 'return', 'start');
 		$tools = array('json', 'xml', 'block', 'sql');
 		$datas = array();
@@ -174,9 +177,6 @@ final class WUZHI_template {
 	}
 	private static function endof_syntax_parse() {
 		return "<?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>";
-	}
-	private static function addquote($var) {
-		return str_replace("\\\"", "\"", preg_replace("/\[([a-zA-Z0-9_\-\.\x7f-\xff]+)\]/s", "['\\1']", $var));
 	}
 
 	/**
