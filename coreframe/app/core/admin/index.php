@@ -15,7 +15,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
 load_class('admin');
 
 final class index extends WUZHI_admin {
-    private $version = '2.0';
+    private $version = '2.0.1';
     function __construct() {
         $this->db = load_class('db');
     }

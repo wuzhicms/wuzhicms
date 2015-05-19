@@ -30,7 +30,7 @@
 </head>
 <body>
 <?php
-define('WZ_VERSION','WUZHICMS v2.0[20150518]');
+define('WZ_VERSION','WUZHICMS v2.0.1[20150518]');
 ?>
 <section class="wrapper">
     <!--state overview start-->
