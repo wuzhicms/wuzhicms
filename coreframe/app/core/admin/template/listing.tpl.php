@@ -95,6 +95,7 @@
                         <tbody>
                         <?php
                         $categorys = get_cache('category','content');
+                        if(!empty($categorys)) {
                         $lastlist = get_cache('lastlist','content');
                         $nums = 1;
                         foreach($lastlist as $n=>$r) {
@@ -109,7 +110,7 @@
                                     <?php echo time_format($r['addtime']);?>
                                 </td>
                             </tr>
-                        <?php }?>
+                        <?php }}?>
                         </tbody>
                     </table>
                 </div>

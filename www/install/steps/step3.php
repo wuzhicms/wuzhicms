@@ -72,7 +72,7 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">数据库主机：</label>
                                 <div class="col-sm-5">
-                                    <input type="text" name="dbhost" id="dbhost" class="form-control" value="127.0.0.1">
+                                    <input type="text" name="dbhost" id="dbhost" class="form-control" value="localhost">
                                 </div>
                             </div>
                             <div class="form-group">

@@ -9,7 +9,7 @@ return array (
     'password' => '',
     'tablepre' => 'wz_',
     'dbcharset' => 'utf8',
-    'type' => 'mysql',
+    'type' => 'mysqli',
     'pconnect' => 0,
   ),
 )

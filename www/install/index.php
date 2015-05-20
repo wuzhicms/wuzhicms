@@ -19,8 +19,11 @@ ini_set('display_errors', 1);
 define('INSTALL_ROOT',dirname(__FILE__).'/');
 
 define('WWW_ROOT',str_replace('\\','/',substr(INSTALL_ROOT,0,-8)));
-
-$web_configfile = WWW_ROOT.'configs/web_config.php';
+$reinstall = '';
+if(!file_exists(WWW_ROOT.'configs/web_config.php')) {
+    $reinstall = 'default_';
+}
+$web_configfile = WWW_ROOT.'configs/'.$reinstall.'web_config.php';
 if(!file_exists($web_configfile)) exit('文件不存在：'.$web_configfile);
 
 $step = isset($_GET['step']) ? intval($_GET['step']) : 1;
@@ -39,7 +42,7 @@ if(file_exists($best_cache.'install.check')) {
 } elseif(file_exists(WWW_ROOT.'caches/install.check')) {
     $current_cache = WWW_ROOT . 'caches/';
 } else {
-    exit('缓存目录不存在');
+    exit('caches 缓存目录不存在');
 }
 if(file_exists($best_iframe.'core.php')) {
     $current_iframe = $best_iframe;
@@ -225,18 +228,23 @@ switch($step) {
         if(!is_writable(WWW_ROOT.'index.html')) {
             $filelist[] = WWW_ROOT.'index.html';
         }
-        if(!is_writable(WWW_ROOT.'configs/web_config.php')) {
-            $filelist[] = WWW_ROOT.'configs/web_config.php';
+        if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'web_config.php')) {
+            $filelist[] = WWW_ROOT.'configs/'.$reinstall.'web_config.php';
         }
-        if(!is_writable(WWW_ROOT.'configs/mysql_config.php')) {
-            $filelist[] = WWW_ROOT.'configs/mysql_config.php';
+        if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php')) {
+            $filelist[] = WWW_ROOT.'configs/'.$reinstall.'mysql_config.php';
         }
-        if(!is_writable(WWW_ROOT.'configs/uc_mysql_config.php')) {
-            $filelist[] = WWW_ROOT.'configs/uc_mysql_config.php';
+        if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php')) {
+            $filelist[] = WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php';
         }
-
-        if(!is_writable($current_iframe.'configs/wz_config.php')) {
-            $filelist[] = $current_iframe.'configs/wz_config.php';
+        if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'weixin_config.php')) {
+            $filelist[] = WWW_ROOT.'configs/'.$reinstall.'weixin_config.php';
+        }
+        if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'route_config.php')) {
+            $filelist[] = WWW_ROOT.'configs/'.$reinstall.'route_config.php';
+        }
+        if(!is_writable($current_iframe.'configs/'.$reinstall.'wz_config.php')) {
+            $filelist[] = $current_iframe.'configs/'.$reinstall.'wz_config.php';
         }
         if(!is_writable($current_cache)) {
             $filelist[] = $current_cache;
@@ -315,11 +323,27 @@ switch($step) {
                     );
                     $data = '<?php'."\r\n defined('IN_WZ') or exit('No direct script access allowed');\r\nreturn ".var_export($config, TRUE)."\r\n?>";
 
-                    file_put_contents(WWW_ROOT.'configs/mysql_config.php',$data);
+                    file_put_contents(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php',$data);
+                    if($reinstall) {
+                        rename(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php',WWW_ROOT.'configs/mysql_config.php');
+                        rename(WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php',WWW_ROOT.'configs/uc_mysql_config.php');
+                        rename(WWW_ROOT.'configs/'.$reinstall.'weixin_config.php',WWW_ROOT.'configs/weixin_config.php');
+                        rename(WWW_ROOT.'configs/'.$reinstall.'route_config.php',WWW_ROOT.'configs/route_config.php');
+                    }
                     echo '1';
                     break;
-                case 2://web_config.php
-                    $res = file_get_contents(WWW_ROOT.'configs/web_config.php');
+                case 2://开始配置文件：coreframe/configs/wz_config.php
+                    $res = file_get_contents($current_iframe.'configs/'.$reinstall.'wz_config.php');
+                    $res = set_config($res,'WWW_ROOT',"'".WWW_ROOT."'");
+                    file_put_contents($current_iframe.'configs/'.$reinstall.'wz_config.php',$res);
+                    if($reinstall) {
+                        rename($current_iframe.'configs/'.$reinstall.'wz_config.php',$current_iframe.'configs/wz_config.php');
+                    }
+
+                    echo '2';
+                    break;
+                case 3://web_config.php
+                    $res = file_get_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php');
 
                     $res = set_config($res,'COREFRAME_ROOT',"'".$current_iframe."'");
                     $res = set_config($res,'CACHE_ROOT',"'".$current_cache."'");
@@ -360,13 +384,10 @@ switch($step) {
                     $res = set_config($res,'_KEY',"'".$key1.$key2."'");
                     $res = set_config($res,'CHARSET',"'".$charset."'");
 
-                    file_put_contents(WWW_ROOT.'configs/web_config.php',$res);
-                    echo '2';
-                    break;
-                case 3://开始配置文件：coreframe/configs/wz_config.php
-                    $res = file_get_contents($current_iframe.'configs/wz_config.php');
-                    $res = set_config($res,'WWW_ROOT',"'".WWW_ROOT."'");
-                    file_put_contents($current_iframe.'configs/wz_config.php',$res);
+                    file_put_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php',$res);
+                    if($reinstall) {
+                        rename(WWW_ROOT.'configs/'.$reinstall.'web_config.php',WWW_ROOT.'configs/web_config.php');
+                    }
                     echo '3';
                     break;
                 case 4://开始导入数据库文件 1
