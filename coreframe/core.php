@@ -21,7 +21,7 @@ if(ERROR_REPORT==1) {
 } else {
     error_reporting(E_ALL);
 }
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 register_shutdown_function('running_fatal');
 set_error_handler('log_error');
 set_exception_handler('log_exception');
@@ -281,7 +281,7 @@ function log_exception( Exception $e) {
     $file = str_replace(rtrim(CACHE_ROOT,'/'),'caches->',$file);
     $data = array();
     $data['type'] = get_class($e);
-    $data['msg'] = urlencode($e->getMessage());
+    $data['msg'] = $e->getMessage();
     $data['file'] = $file;
     $data['line'] = $e->getLine();
     $data['version'] = VERSION;
