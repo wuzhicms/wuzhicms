@@ -551,6 +551,9 @@ class WUZHI_sendmail {
      * @return boolean
      */
     protected function socket() {
+        if (!extension_loaded('sockets')) {
+            die('The sockets extension is not loaded.');
+        }
         //创建socket资源
         $this->_socket = socket_create(AF_INET, SOCK_STREAM, getprotobyname('tcp'));
 
