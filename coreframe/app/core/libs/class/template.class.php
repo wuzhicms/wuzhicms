@@ -20,14 +20,20 @@ final class WUZHI_template {
             $template_file = str_replace(COREFRAME_ROOT,'',$template_file);
             exit($template_file." is not exists!" );
         }
-
+        if(!is_writable(CACHE_ROOT.'templates/')) {
+            exit(CACHE_ROOT.'templates/ 目录不可写');
+        }
         $cache_path = CACHE_ROOT.'templates/'.$style.'/'.$m.'/';
         if(!is_dir($cache_path)) {
             mkdir($cache_path, 0777, true);
+        } elseif(!is_writable($cache_path)) {
+            exit($cache_path.' 目录不可写');
         }
+
         $cache_file = $cache_path.$template.'.php';
         $data = file_get_contents($template_file);
         $data = $this->template_parse($data);
+
         $templatelen = @file_put_contents( $cache_file, $data );
 
         if($templatelen==false) MSG(str_replace(CACHE_ROOT,'caches/',$cache_file).' is readonly!');
