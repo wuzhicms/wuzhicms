@@ -115,22 +115,24 @@ class WUZHI_tree {
             $effected = '';
         }
         if (!$have_child) $this->str .= '<ul' . $effected . '>';
-        foreach ($child as $id => $a) {
-            @extract($a);
-            $this->str .= $have_child ? '<ul><li>' : '';
-            $have_child = FALSE;
-            if ($this->get_child($id)) {
-                eval("\$nstr = \"$str2\";");
-                $this->str .= $nstr;
-                if ($showlevel == 0 || ($showlevel > 0 && $showlevel > $currentlevel)) {
-                    $this->get_treeview($id, '', $str, $str2, $showlevel, $currentlevel + 1, TRUE);
+        if(!empty($child)) {
+            foreach ($child as $id => $a) {
+                @extract($a);
+                $this->str .= $have_child ? '<ul><li>' : '';
+                $have_child = FALSE;
+                if ($this->get_child($id)) {
+                    eval("\$nstr = \"$str2\";");
+                    $this->str .= $nstr;
+                    if ($showlevel == 0 || ($showlevel > 0 && $showlevel > $currentlevel)) {
+                        $this->get_treeview($id, '', $str, $str2, $showlevel, $currentlevel + 1, TRUE);
+                    }
                 }
+                else {
+                    eval("\$nstr = \"$str\";");
+                    $this->str .= $nstr;
+                }
+                $this->str .= $have_child ? '</li></ul>' : '</li>';
             }
-            else {
-                eval("\$nstr = \"$str\";");
-                $this->str .= $nstr;
-            }
-            $this->str .= $have_child ? '</li></ul>' : '</li>';
         }
         if (!$have_child) $this->str .= '</ul>';
         return $this->str;
