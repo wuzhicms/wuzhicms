@@ -640,7 +640,7 @@ class content extends WUZHI_admin {
      */
     private function _show_share_add($cid) {
         //文章 icon-file-word-o 图文 icon-file-photo-o 下载 icon-file-zip-o 视频 icon-file-movie-o
-        $result = $this->db->get_list('model', array('m'=>'content','share_model'=>1), 'modelid,name,css', 0, 30);
+        $result = $this->db->get_list('model', array('m'=>'content','share_model'=>1), 'modelid,name,css', 0, 30,0,'modelid ASC');
         $string = '';
         foreach($result as $rs) {
             $string .= '<li><a href="?m=content&f=content&v=add&modelid='.$rs['modelid'].'&cid='.$cid.$this->su().'"><i class="'.$rs['css'].' btn-sm"></i>'.$rs['name'].'</a></li>';

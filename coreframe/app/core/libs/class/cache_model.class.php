@@ -104,7 +104,7 @@ class WUZHI_cache_model {
         for($i=0;$i<$tatalpage;$i++) {
             //get_list($table, $where = '', $field = '*', $startid = 0, $pagesize = 20,
             $startid = $i * 100;
-            $result = $db->get_list('model', '', '*', $startid, 100);
+            $result = $db->get_list('model', '', '*', $startid, 100,0,'modelid ASC');
             $model_arr = array();
             foreach ($result as $r) {
                 $model_arr[$r['m']][$r['modelid']] = $r;

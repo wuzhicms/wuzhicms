@@ -28,7 +28,7 @@ class model extends WUZHI_admin {
 
 		$m = $this->m;
 		$where = array('m'=>$m);
-		$result = $this->db->get_list('model', $where, '*', 0, 100);
+		$result = $this->db->get_list('model', $where, '*', 0, 100,0,'modelid ASC');
 		include $this->template('model_listing');
 	}
 	//添加模型
