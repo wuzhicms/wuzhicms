@@ -122,6 +122,7 @@ class WUZHI_form {
 	 */
 	public static function attachment($ext = 'png|jpg|gif|doc|docx', $limit = 1, $formname = 'file', $default_val = '' ,$callback = 'callback_thumb_dialog', $is_thumb = 0, $width = '', $height = '',$cut = 0)
 	{
+        if($ext=='') $ext = 'png|jpg|gif|doc|docx';
         $id = preg_match("/\[(.*)\]/", $formname, $m) ? $m[1] : $formname;
 		$str = '';
 		if(!defined('PUPLOAD_INIT')) 	
