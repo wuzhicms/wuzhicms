@@ -210,7 +210,7 @@ function MSG($msg,$gotourl = '', $time = 1000,$msg2 = '',$msg3 = '') {
 */
 function string2array($data) {
 	if($data == '') return array();
-	@eval("\$array = $data;");
+    @eval("\$array = \"$data\";");
 	return $array;
 }
 /**
