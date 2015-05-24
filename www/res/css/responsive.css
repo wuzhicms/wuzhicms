@@ -5,7 +5,7 @@
     .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
     #sidebar .appicon img{width: 60px;}
     .topnav ul li a{padding: 8px 10px 5px 10px;}
-    .topmenunav ul li a{padding: 25px 25px 20px 25px;}
+    .topmenunav ul li a{padding: 23px 25px 20px 25px;}
     .top-menu{padding-left: 10px;}
     .wrapper{padding: 15px;}
     .table>thead>tr>th.tableth15{padding: 15px }
@@ -20,7 +20,7 @@
     .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
     #sidebar .appicon img{width: 60px;}
     .topnav ul li a{padding: 8px 10px 5px 10px;}
-    .topmenunav ul li a{padding: 25px 25px 20px 25px;}
+    .topmenunav ul li a{padding: 23px 25px 20px 25px;}
     .top-menu{padding-left: 10px;}
     .wrapper{padding: 15px;}
     .header,.footer{padding:0 15px;}
@@ -31,7 +31,7 @@
 }
 
 @media (min-width: 1200px) and (max-width: 1366px) {
-    .topmenunav ul li a{padding: 25px 25px 20px 25px;}
+    .topmenunav ul li a{padding: 23px 25px 20px 25px;}
     .top-menu{padding-left: 0px;}
     #sidebar .appicon img{width: 60px;}
     .topnav ul li a{padding: 8px 10px 5px 10px;}
@@ -51,7 +51,7 @@
 }
 
 @media (min-width: 1024px) and (max-width: 1200px) {
-    .topmenunav ul li a{padding: 25px 15px 20px 15px;}
+    .topmenunav ul li a{padding: 23px 15px 20px 15px;}
     .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
     .topnav ul li a{padding: 8px 10px 5px 10px;}
     .top-menu{padding-left: 0px;}
@@ -69,7 +69,7 @@
 }
 
 @media (min-width: 990px) and (max-width: 1100px) {
-    .topmenunav ul li a{padding: 25px 15px 20px 15px;}
+    .topmenunav ul li a{padding: 23px 15px 20px 15px;}
     #menu{display:block;}
     .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
     .table>tbody>tr>td.paydescription{width: 685px;}
