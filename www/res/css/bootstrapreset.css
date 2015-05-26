@@ -12,17 +12,17 @@
 .panel .panel-body .table, .panel .panel-body .table-responsive{margin-bottom: 0;}
 .modal-title{font-size: 16px;}
 .panel-title{color:#2A3542;font-size:14px;font-weight:400;margin-bottom:0;margin-top:0;}
-.btn-default{background-color:#BDC3C7;border-color:#BDC3C7;color:#fff;}
+.btn-default{background-color:#BDC3C7;border-color:#BDC3C7;color:#fff;border-radius: 2px;}
 .btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default{background-color:#3498DB;border-color:#3498DB;color:#fff;}
-.btn-primary{background-color:#1ABC9C;border-color:#1ABC9C;color:#FFFFFF;}
+.btn-primary{background-color:#1ABC9C;border-color:#1ABC9C;color:#FFFFFF;border-radius: 2px;}
 .btn-primary:hover,.btn-primary:focus,.btn-primary:active,.btn-primary.active,.open .dropdown-toggle.btn-primary{background-color:#17B092;border-color:#16A286;color:#FFFFFF;}
-.btn-success{background-color:#2DCB73;border-color:#2DCB73;color:#FFFFFF;}
+.btn-success{background-color:#2DCB73;border-color:#2DCB73;color:#FFFFFF;border-radius: 2px;}
 .btn-success:hover,.btn-success:focus,.btn-success:active,.btn-success.active,.open .dropdown-toggle.btn-success{background-color:#2BC16E;border-color:#23AD61;color:#FFFFFF;}
-.btn-info{background-color:#3498DB;border-color:#3498DB;color:#FFFFFF;}
+.btn-info{background-color:#3498DB;border-color:#3498DB;color:#FFFFFF;border-radius: 2px;}
 .btn-info:hover,.btn-info:focus,.btn-info:active,.btn-info.active,.open .dropdown-toggle.btn-info{background-color:#308CCA;border-color:#247EBC;color:#FFFFFF;}
-.btn-warning{background-color:#F39C12;border-color:#F39C12;color:#FFFFFF;}
+.btn-warning{background-color:#F39C12;border-color:#F39C12;color:#FFFFFF;border-radius: 2px;}
 .btn-warning:hover,.btn-warning:focus,.btn-warning:active,.btn-warning.active,.open .dropdown-toggle.btn-warning{background-color:#E89512;border-color:#D58A13;color:#FFFFFF;}
-.btn-danger{background-color:#ff6c60;border-color:#ff6c60;color:#FFFFFF;}
+.btn-danger{background-color:#ff6c60;border-color:#ff6c60;color:#FFFFFF;border-radius: 2px;}
 .btn-danger:hover,.btn-danger:focus,.btn-danger:active,.btn-danger.active,.open .dropdown-toggle.btn-danger{background-color:#ec6459;border-color:#ec6459;color:#FFFFFF;}
 .btn-inverse{background-color:#34495E;border-color:#34495E;color:#FFFFFF;}
 .btn-inverse:hover,.btn-inverse:focus,.btn-inverse:active,.btn-inverse.active,.open .dropdown-toggle.btn-inverse{background-color:#293B4E;border-color:#293B4E;color:#FFFFFF;}
