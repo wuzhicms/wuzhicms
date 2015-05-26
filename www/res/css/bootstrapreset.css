@@ -44,6 +44,7 @@
 input,textarea,select,button{outline:none !important;}
 .m-bot15 {margin-bottom: 15px;}
 .table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color: #fcfcfd;}
+.table>tbody>tr>td .img{margin: 0 0 4px 5px}
 .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color: #FCFFE9;}
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{border-top: 1px dashed #EAEAEA;vertical-align: middle;}
 .input-group-addon, .input-group-addon:first-child,.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group,.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group{border-radius: 0px;}
