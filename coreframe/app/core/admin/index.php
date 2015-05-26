@@ -225,5 +225,13 @@ final class index extends WUZHI_admin {
         $result = $this->db->get_list('menu',array('pid'=>$menuid,'display'=>1), '*', 0, 100, 0, 'sort ASC', '', 'menuid');
         include $this->template('left');
     }
+
+    /**
+     * 保持登录状态
+     */
+    public function keep_alive() {
+        $uid = $_SESSION['uid'];
+        echo date('H:i:s',SYS_TIME);
+    }
 }
 ?>

@@ -245,7 +245,11 @@
             }
         });
     }
-setTimeout("checknew_version()",10000);
+    setTimeout("checknew_version()",10000);
+    function keep_alive() {
+        $.get("?m=core&f=index&v=keep_alive<?php echo $this->su();?>");
+    }
+    setInterval("keep_alive()",100000);
 </script>
 
 
