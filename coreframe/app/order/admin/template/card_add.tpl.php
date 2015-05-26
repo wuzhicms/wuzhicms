@@ -12,13 +12,13 @@ include $this->template('header','core');
                 <div class="panel-body" id="formid">
                     <form class="form-horizontal tasi-form" method="post" action="">
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">预约卡前缀</label>
+                            <label class="col-sm-2 control-label">预约卡前缀</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="pre" value="" placeholder="例如：AK （爱康国宾）"  datatype="s0-4" errormsg="最多4个字符">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">生成数量</label>
+                            <label class="col-sm-2 control-label">生成数量</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="number" value="1">
                             </div>
@@ -36,7 +36,7 @@ include $this->template('header','core');
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">截至时间</label>
+                            <label class="col-sm-2 control-label">截至时间</label>
                             <div class="col-sm-4">
                                 <?php echo WUZHI_form::calendar('endtime',$endtime);?>
                             </div>
@@ -44,14 +44,14 @@ include $this->template('header','core');
 
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">备注（管理员可见）</label>
+                            <label class="col-sm-2 control-label">备注（管理员可见）</label>
                             <div class="col-sm-4">
                                 <textarea name="form[admin_note]" class="form-control" cols="60" rows="3"></textarea>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">下载－线下发送</label>
+                            <label class="col-sm-2 control-label">下载－线下发送</label>
                             <div class="col-sm-4">
                                 <label class="radio-inline">
                                     <input type="radio" name="download" value="1" >是
@@ -63,7 +63,7 @@ include $this->template('header','core');
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label"></label>
+                            <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">
                                 <input class="btn btn-info" id="submit" type="submit" name="submit" value="提交">
                             </div>

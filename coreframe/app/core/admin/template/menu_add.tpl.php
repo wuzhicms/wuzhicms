@@ -21,7 +21,7 @@ include $this->template('header','core');
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">上级菜单</label>
+                <label class="col-sm-2 control-label">上级菜单</label>
                 <div class="col-sm-4">
                     <?php
                     if($pid) {
@@ -34,38 +34,38 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">菜单中文名</label>
+                <label class="col-sm-2 control-label">菜单中文名</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="form[name]" color="#000000">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">m</label>
+                <label class="col-sm-2 control-label">m</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="form[m]" value="<?php echo $r['m'];?>" title="模块英文名">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">f</label>
+                <label class="col-sm-2 control-label">f</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="form[f]" value="<?php echo $r['f'];?>" title="文件名">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">v</label>
+                <label class="col-sm-2 control-label">v</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="form[v]" value="" title="视图：方法名">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">附加参数</label>
+                <label class="col-sm-2 control-label">附加参数</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="form[data]">
                     <span class="help-block">例如：type=1&flag=open</span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
                     <div class="radioscross">
                         <label for="radio-01">
@@ -88,7 +88,7 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
                     <input class="btn btn-info" type="submit" name="submit" value="提交">
                     <input class="btn btn-info" type="submit" name="submit2" value="提交后继续添加">

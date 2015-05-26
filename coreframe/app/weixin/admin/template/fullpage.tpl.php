@@ -15,7 +15,7 @@ include $this->template('header','core');
                         $n=1;
                     foreach($contents as $rs) {?>
                         <div class="msgtype0 form-group"  style="border-top: 2px #F1F2F7 outset;padding-top: 10px;">
-                            <label class="col-sm-2 col-sm-2 control-label">第<?php echo $n;?>页</label>
+                            <label class="col-sm-2 control-label">第<?php echo $n;?>页</label>
                             <div class="col-sm-8">
                                 <table class="table">
                                     <tr>
@@ -49,7 +49,7 @@ include $this->template('header','core');
 <?php $n++;}?>
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label"></label>
+                            <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">
                                 <input class="btn btn-info" type="submit" name="submit" value="提交">
                             </div>

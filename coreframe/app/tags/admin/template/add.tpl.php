@@ -15,7 +15,7 @@ include $this->template('header','core');
 <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
 		<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('tag');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('tag');?></label>
                 <div class="col-sm-5 input-group">
                     <input type="text" name="tag[tag]" id="tag" class="form-control" value="<?php echo output($tag_info,'tag');?>"<?php if($tid):?> readonly<?php endif;?> />
 					<?php if($tid):?>
@@ -25,54 +25,54 @@ include $this->template('header','core');
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('tag_title');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('tag_title');?></label>
                 <div class="col-sm-5 input-group">
                     <input type="text" name="tag[title]" class="form-control" id="title" value="<?php echo output($tag_info,'title');?>" />
                 </div>
             </div>
 
 				<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('tag_keyword');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('tag_keyword');?></label>
                 <div class="col-sm-5 input-group">
                     <input type="text" name="tag[keyword]" class="form-control" id="keyword" value="<?php echo output($tag_info,'keyword');?>" />
                 </div>
             </div>
 
 				<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('tag_desc');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('tag_desc');?></label>
                 <div class="col-sm-5 input-group">
                     <textarea class="form-control" name="tag[desc]" id="desc"  cols="80" rows="5"><?php echo output($tag_info,'desc');?></textarea>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('isshow');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('isshow');?></label>
                 <div class="col-sm-5 input-group"><input type="radio" name="tag[isshow]" value="1" <?php echo output($tag_info,'isshow') == 1 || !$tid ? 'checked' : '';?>><?php echo L('yes');?> &nbsp;&nbsp; <input type="radio" name="tag[isshow]" value="0" <?php echo output($tag_info,'isshow') == 0 && $tid ? 'checked' : '';?>> <?php echo L('no');?> <?php echo L('isshow_tips');?></div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('tag_type');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('tag_type');?></label>
                 <div class="col-sm-5 input-group">
                     <?php echo linkage(output($this->_cache,'linkage'),'tag[linkage]');?>
                 </div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('pinyin');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('pinyin');?></label>
                 <div class="col-sm-5 input-group">
                     <input type="text" name="tag[pinyin]" class="form-control" id="pinyin" value="<?php echo output($tag_info,'pinyin');?>" placeholder="<?php echo L('empty_tips');?>" />
                 </div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('letter');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('letter');?></label>
                 <div class="col-sm-5 input-group">
                     <input type="text" name="tag[letter]" class="form-control" placeholder="<?php echo L('empty_tips');?>" id="letter" value="<?php echo output($tag_info,'letter');?>" />
                 </div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('url');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('url');?></label>
                 <div class="col-sm-5 input-group">
                     <input type="text" name="tag[url]" class="form-control" id="url" value="<?php echo output($tag_info,'url');?>" placeholder="<?php echo L('empty_tips');?>" />
 					<?php if($tid):?><a href="<?php echo WEBURL.output($tag_info,'url');?>" target="_blank"><?php echo L('view_tag');?></a><?php endif;?>
@@ -80,7 +80,7 @@ include $this->template('header','core');
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-5 input-group">
                     <input class="btn btn-info" type="submit" name="dosubmit" value="<?php echo L('submit');?>">
                 </div>

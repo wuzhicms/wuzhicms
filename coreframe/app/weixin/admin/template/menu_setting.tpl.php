@@ -13,7 +13,7 @@ include $this->template('header','core');
                     <form class="form-horizontal tasi-form" method="post" action="">
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">菜单</label>
+                            <label class="col-sm-2 control-label">菜单</label>
                             <div class="col-sm-8">
                                 <textarea name="form[menu_setting]" class="form-control" cols="60" rows="15"><?php echo $menu_setting;?></textarea>
                             </div>
@@ -21,7 +21,7 @@ include $this->template('header','core');
 
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label"></label>
+                            <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">
                                 <input class="btn btn-info" type="submit" name="submit" value="提交">
                             </div>

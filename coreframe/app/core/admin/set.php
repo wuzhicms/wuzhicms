@@ -22,9 +22,7 @@ class set extends WUZHI_admin {
      */
     public function basic() {
         if(isset($GLOBALS['submit'])) {
-            $formdata = array_map('remove_xss',$GLOBALS['form']);
-            $formdata['copyright'] = $GLOBALS['form']['copyright'];
-            $formdata['statcode'] = $GLOBALS['form']['statcode'];
+            $formdata = $GLOBALS['form'];
             set_cache('siteconfigs',$formdata);
             $serialize_data = serialize($formdata);
             $updatetime = date('Y-m-d H:i:s',SYS_TIME);
