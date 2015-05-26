@@ -12,7 +12,7 @@ include $this->template('header','core');
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">用户名</label>
+                <label class="col-sm-2 control-label">用户名</label>
                 <div class="col-sm-2 input-group">
                     <input type="text" class="form-control" name="username">
                 </div>
@@ -25,7 +25,7 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">积分数量</label>
+                <label class="col-sm-2 control-label">积分数量</label>
                 <div class="col-sm-2 input-group">
                     <input type="text" class="form-control" name="point" value="" placeholder="正整数">
                 </div>
@@ -33,13 +33,13 @@ include $this->template('header','core');
 
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">备注</label>
+                <label class="col-sm-2 control-label">备注</label>
                 <div class="col-sm-4 input-group">
                     <textarea name="note" class="form-control" cols="60" rows="3"></textarea>                </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10 input-group">
                     <input class="btn btn-info" type="submit" name="submit" value="提交">
                 </div>

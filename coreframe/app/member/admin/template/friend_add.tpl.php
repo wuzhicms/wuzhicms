@@ -12,7 +12,7 @@ include $this->template('header','core');
                 <div class="panel-body" id="formid">
                     <form class="form-horizontal tasi-form" method="post" action="">
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">所属城市</label>
+                            <label class="col-sm-2 control-label">所属城市</label>
                             <div class="col-sm-4">
                                 <?php
                                 echo $form->tree_select($categorys, $pid, 'name="cityid" class="form-control"', '≡ 全国 ≡');
@@ -27,7 +27,7 @@ include $this->template('header','core');
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label"></label>
+                            <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">
                                 <input class="btn btn-info" id="submit" type="submit" name="submit" value="提交">
                             </div>

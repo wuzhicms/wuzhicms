@@ -12,7 +12,7 @@ include $this->template('header','core');
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">所属类别</label>
+                <label class="col-sm-2 control-label">所属类别</label>
                 <div class="col-sm-4 input-group">
                     <?php
                     echo $form->select($options, $r['kid'], 'name="form[kid]" class="form-control"');
@@ -21,31 +21,31 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">链接名称</label>
+                <label class="col-sm-2 control-label">链接名称</label>
                 <div class="col-sm-4 input-group">
                     <input type="text" class="form-control" name="form[sitename]" datatype="s2-60" errormsg="别名至少2个字符,最多60个字符！" value="<?php echo $r['sitename'];?>">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">链接地址</label>
+                <label class="col-sm-2 control-label">链接地址</label>
                 <div class="col-sm-4 input-group">
                     <input type="text" class="form-control" name="form[url]" datatype="url" errormsg="请填写正确的网址" value="<?php echo $r['url'];?>">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">logo</label>
+                <label class="col-sm-2 control-label">logo</label>
                 <div class="col-sm-4 input-group">
                     <div class="input-group"><?php echo $form->attachment('','1','form[logo]',$r['logo']);?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">备注</label>
+                <label class="col-sm-2 control-label">备注</label>
                 <div class="col-sm-4 input-group">
                     <textarea name="form[remark]" class="form-control" cols="60" rows="3"><?php echo $r['remark'];?></textarea>                </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10 input-group">
                     <input type="hidden" name="forward" value="<?php echo HTTP_REFERER;?>">
                     <input class="btn btn-info" type="submit" name="submit" value="提交">

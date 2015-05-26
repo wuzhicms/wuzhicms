@@ -24,7 +24,7 @@ include $this->template('header','core');
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">备注（管理员可见）</label>
+                            <label class="col-sm-2 control-label">备注（管理员可见）</label>
                             <div class="col-sm-9">
                                 <textarea name="note" class="form-control" cols="60" rows="3"><?php echo $r['note'];?></textarea>                </div>
                         </div>

@@ -11,36 +11,36 @@ defined('IN_WZ') or exit('No direct script access allowed');
  */
 
 function p_urlencode($url) {
-	static $search = array('%21', '%2A','%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%2F', '%3F', '%25', '%23', '%5B', '%5D');
-	static $replace = array('!', '*', ';', ":", "@", "&", "=", "+", "$", ",", "/", "?", "%", "#", "[", "]");
-	return str_replace($search, $replace, urlencode($url));
+    static $search = array('%21', '%2A','%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%2F', '%3F', '%25', '%23', '%5B', '%5D');
+    static $replace = array('!', '*', ';', ":", "@", "&", "=", "+", "$", ",", "/", "?", "%", "#", "[", "]");
+    return str_replace($search, $replace, urlencode($url));
 }
 
 function p_htmlspecialchars($string, $flags = null) {
-	if(is_array($string)) {
-		foreach($string as $key => $val) {
-			$string[$key] = p_htmlspecialchars($val, $flags);
-		}
-	} else {
-		if($flags === null) {
-			$string = str_replace(array('&', '"', '<', '>'), array('&amp;', '&quot;', '&lt;', '&gt;'), $string);
-			if(strpos($string, '&amp;#') !== false) {
-				$string = preg_replace('/&amp;((#(\d{3,5}|x[a-fA-F0-9]{4}));)/', '&\\1', $string);
-			}
-		} else {
-			if(version_compare(PHP_VERSION,'5.4.0','<')) {
-				$string = htmlspecialchars($string, $flags);
-			} else {
-				if(strtolower(CHARSET) == 'utf-8') {
-					$charset = 'UTF-8';
-				} else {
-					$charset = 'ISO-8859-1';
-				}
-				$string = htmlspecialchars($string, $flags, $charset);
-			}
-		}
-	}
-	return $string;
+    if(is_array($string)) {
+        foreach($string as $key => $val) {
+            $string[$key] = p_htmlspecialchars($val, $flags);
+        }
+    } else {
+        if($flags === null) {
+            $string = str_replace(array('&', '"', '<', '>'), array('&amp;', '&quot;', '&lt;', '&gt;'), $string);
+            if(strpos($string, '&amp;#') !== false) {
+                $string = preg_replace('/&amp;((#(\d{3,5}|x[a-fA-F0-9]{4}));)/', '&\\1', $string);
+            }
+        } else {
+            if(version_compare(PHP_VERSION,'5.4.0','<')) {
+                $string = htmlspecialchars($string, $flags);
+            } else {
+                if(strtolower(CHARSET) == 'utf-8') {
+                    $charset = 'UTF-8';
+                } else {
+                    $charset = 'ISO-8859-1';
+                }
+                $string = htmlspecialchars($string, $flags, $charset);
+            }
+        }
+    }
+    return $string;
 }
 
 function p_html_entity_decode($string) {
@@ -59,21 +59,21 @@ function p_htmlentities($string) {
 }
 
 function p_strlen($str) {
-	if(strtolower(CHARSET) != 'utf-8') {
-		return strlen($str);
-	}
-	$count = 0;
-	for($i = 0; $i < strlen($str); $i++){
-		$value = ord($str[$i]);
-		if($value > 127) {
-			$count++;
-			if($value >= 192 && $value <= 223) $i++;
-			elseif($value >= 224 && $value <= 239) $i = $i + 2;
-			elseif($value >= 240 && $value <= 247) $i = $i + 3;
-	    	}
-    		$count++;
-	}
-	return $count;
+    if(strtolower(CHARSET) != 'utf-8') {
+        return strlen($str);
+    }
+    $count = 0;
+    for($i = 0; $i < strlen($str); $i++){
+        $value = ord($str[$i]);
+        if($value > 127) {
+            $count++;
+            if($value >= 192 && $value <= 223) $i++;
+            elseif($value >= 224 && $value <= 239) $i = $i + 2;
+            elseif($value >= 240 && $value <= 247) $i = $i + 3;
+        }
+        $count++;
+    }
+    return $count;
 }
 
 /**
@@ -86,52 +86,52 @@ function p_strlen($str) {
  * @return	string
  */
 function random_string($type = 'basic', $len = 8, $string = '0123456789') {
-	if($type=='basic') {
-		return mt_rand();
-	} elseif($type=='md5') {
-		return md5(uniqid(mt_rand()));
-	} elseif($type=='sha1') {
-		return sha1(uniqid(mt_rand(), TRUE));
-	} elseif($type=='diy') {
-		return substr(str_shuffle(str_repeat($string, ceil($len / strlen($string)))), 0, $len);
-	}
+    if($type=='basic') {
+        return mt_rand();
+    } elseif($type=='md5') {
+        return md5(uniqid(mt_rand()));
+    } elseif($type=='sha1') {
+        return sha1(uniqid(mt_rand(), TRUE));
+    } elseif($type=='diy') {
+        return substr(str_shuffle(str_repeat($string, ceil($len / strlen($string)))), 0, $len);
+    }
 }
 
 /**
-* 语言文件处理
-*
-* @param	string		$language	标示符
-* @param	array		$pars	转义的数组,二维数组 ,'key1'=>'value1','key2'=>'value2',
-* @param	string		$apps 多个模块之间用半角逗号隔开，如：member,guestbook
-* @return	string		语言字符
-*/
+ * 语言文件处理
+ *
+ * @param	string		$language	标示符
+ * @param	array		$pars	转义的数组,二维数组 ,'key1'=>'value1','key2'=>'value2',
+ * @param	string		$apps 多个模块之间用半角逗号隔开，如：member,guestbook
+ * @return	string		语言字符
+ */
 function L($language = 'empty language',$pars = array(), $apps = '') {
-	static $LANG = array();
-	static $LANG_APPS = array();
-	static $lang = '';
+    static $LANG = array();
+    static $LANG_APPS = array();
+    static $lang = '';
     $language = str_replace(' ','_',$language);
-	$lang = get_cookie('lang') ? get_cookie('lang') : LANG;
-	if(!$LANG) {
-		require_once COREFRAME_ROOT.'languages'.'/'.$lang.'/system.lang.php';
-		if(file_exists(COREFRAME_ROOT.'languages'.'/'.$lang.'/'.M.'.lang.php')) require_once COREFRAME_ROOT.'languages'.'/'.$lang.'/'.M.'.lang.php';
-	}
-	if(!empty($apps)) {
-		$apps = explode(',',$apps);
-		foreach($apps AS $app) {
-			if(!isset($LANG_APPS[$app])) require_once COREFRAME_ROOT.'languages'.'/'.$lang.'/'.$app.'.lang.php';
-		}
-	}
-	if(!array_key_exists($language,$LANG)) {
-		return $language;
-	} else {
-		$language = $LANG[$language];
-		if($pars) {
-			foreach($pars AS $_k=>$_v) {
-				$language = str_replace('{'.$_k.'}',$_v,$language);
-			}
-		}
-		return $language;
-	}
+    $lang = get_cookie('lang') ? get_cookie('lang') : LANG;
+    if(!$LANG) {
+        require_once COREFRAME_ROOT.'languages'.'/'.$lang.'/system.lang.php';
+        if(file_exists(COREFRAME_ROOT.'languages'.'/'.$lang.'/'.M.'.lang.php')) require_once COREFRAME_ROOT.'languages'.'/'.$lang.'/'.M.'.lang.php';
+    }
+    if(!empty($apps)) {
+        $apps = explode(',',$apps);
+        foreach($apps AS $app) {
+            if(!isset($LANG_APPS[$app])) require_once COREFRAME_ROOT.'languages'.'/'.$lang.'/'.$app.'.lang.php';
+        }
+    }
+    if(!array_key_exists($language,$LANG)) {
+        return $language;
+    } else {
+        $language = $LANG[$language];
+        if($pars) {
+            foreach($pars AS $_k=>$_v) {
+                $language = str_replace('{'.$_k.'}',$_v,$language);
+            }
+        }
+        return $language;
+    }
 }
 
 /**
@@ -150,11 +150,11 @@ function T($m = 'content', $template = 'index', $style = 'default') {
         $mb = true;
     }
 
-	$cache_file = CACHE_ROOT.'templates/'.$style.'/'.$m.'/'.$template.'.php';
-	if(!file_exists($cache_file)) {
-		$tpl_file = 'templates/'.$style.'/'.$m.'/'.$template.'.html';
-		if(file_exists(COREFRAME_ROOT.$tpl_file)) {
-			exit('Please update template cache!');
+    $cache_file = CACHE_ROOT.'templates/'.$style.'/'.$m.'/'.$template.'.php';
+    if(!file_exists($cache_file)) {
+        $tpl_file = 'templates/'.$style.'/'.$m.'/'.$template.'.html';
+        if(file_exists(COREFRAME_ROOT.$tpl_file)) {
+            exit('Please update template cache!');
         } elseif($mb) {
             $cache_file = CACHE_ROOT.'templates/'.$style.'/'.$m.'/'.$tmp.'.php';
             if(!file_exists($cache_file)) {
@@ -168,14 +168,14 @@ function T($m = 'content', $template = 'index', $style = 'default') {
                 $c_template = load_class('template');
                 $c_template->cache_template($m, $tmp, $style);
             }
-		} else {
-			exit('Template does not exists:'.$tpl_file);
-		}
-	} elseif(AUTO_CACHE_TPL) {
+        } else {
+            exit('Template does not exists:'.$tpl_file);
+        }
+    } elseif(AUTO_CACHE_TPL) {
         $c_template = load_class('template');
         $c_template->cache_template($m, $template, $style);
     }
-	return $cache_file;
+    return $cache_file;
 }
 
 /**
@@ -187,43 +187,43 @@ function T($m = 'content', $template = 'index', $style = 'default') {
  * @return string
  */
 function MSG($msg,$gotourl = '', $time = 1000,$msg2 = '',$msg3 = '') {
-	if(IS_CLI) {
-		echo date('H:i:s',SYS_TIME).' Msg:'.$msg."\r\n";
-	} else {
+    if(IS_CLI) {
+        echo date('H:i:s',SYS_TIME).' Msg:'.$msg."\r\n";
+    } else {
         if(defined('IN_ADMIN')) {
             include COREFRAME_ROOT.'app/core/admin/template/msg.tpl.php';
         } else {
             include T('content','msg','default');
         }
-		//echo $msg;
+        //echo $msg;
         //sleep($time);
         //header("Location:".$gotourl);
-	}
-	exit;
+    }
+    exit;
 }
 
 /**
-* 将字符串转换为数组
-*
-* @param	string	$data	字符串
-* @return	array	返回数组格式，如果，data为空，则返回空数组
-*/
+ * 将字符串转换为数组
+ *
+ * @param	string	$data	字符串
+ * @return	array	返回数组格式，如果，data为空，则返回空数组
+ */
 function string2array($data) {
-	if($data == '') return array();
-    @eval("\$array = \"$data\";");
-	return $array;
+    if($data == '') return array();
+    @eval("\$array = $data;");
+    return $array;
 }
 /**
-* 将数组转换为字符串
-*
-* @param	array	$data		数组
-* @param	bool	$isformdata	如果为0，则不使用new_stripslashes处理，可选参数，默认为1
-* @return	string	返回字符串，如果，data为空，则返回空
-*/
+ * 将数组转换为字符串
+ *
+ * @param	array	$data		数组
+ * @param	bool	$isformdata	如果为0，则不使用new_stripslashes处理，可选参数，默认为1
+ * @return	string	返回字符串，如果，data为空，则返回空
+ */
 function array2string($data, $isformdata = 1) {
-	if($data == '') return '';
-	if($isformdata) $data = p_stripslashes($data);
-	return var_export($data, TRUE);
+    if($data == '') return '';
+    if($isformdata) $data = p_stripslashes($data);
+    return var_export($data, TRUE);
 }
 
 
@@ -273,7 +273,7 @@ function pages($num, $current_page, $pagesize = 20, $urlrule = '', $variables = 
     $output .= '<li><a '.$active.' href="'._pageurl($urlrule,1,$variables).'">1</a></li>';
 
     $difference = $limit+1;
-   $difference2 = ceil($limit/2-1);
+    $difference2 = ceil($limit/2-1);
 
     $startpage = $current_page - $difference2;
     $endpage = $current_page + $difference2;
@@ -302,7 +302,7 @@ function pages($num, $current_page, $pagesize = 20, $urlrule = '', $variables = 
         if($current_page==$maxpage) $active = 'class="active"';
         $output .= '<li><a '.$active.' href="'._pageurl($urlrule,$maxpage,$variables).'">'.$maxpage.'</a></li>';
     }
-   //下一页
+    //下一页
     $pagedown = $current_page+1;
     if($pagedown>=$maxpage) $pagedown = $maxpage;
     //热键
@@ -345,7 +345,7 @@ function URL() {
         $http_url .= $_SERVER["SERVER_NAME"];
     }
     if(isset($_SERVER['REQUEST_URI'])) {
-       $http_url .= $_SERVER['REQUEST_URI'];
+        $http_url .= $_SERVER['REQUEST_URI'];
     } else {
         if(isset($_SERVER['PHP_SELF'])) {
             $http_url .= $_SERVER['PHP_SELF'];
@@ -382,80 +382,80 @@ function url_unique($url) {
 }
 /**
  * @param array $weight 权重 例如 array('a'=>200,'b'=>300,'c'=>500)
- * @return string key 键名 
+ * @return string key 键名
  */
 function weight_rand($weight = array()) {
-	$roll = rand (1, array_sum ($weight));
-	$_tmp = 0;
-	$rollnum = 0;
-	foreach ($weight as $k => $v) {
-		$min = $_tmp;
-		$_tmp += $v;
-		$max = $_tmp;
-		if ($roll > $min && $roll <= $max) {
-			$rollnum = $k;
-			break;
-		}
-	}
-	return $rollnum;
+    $roll = rand (1, array_sum ($weight));
+    $_tmp = 0;
+    $rollnum = 0;
+    foreach ($weight as $k => $v) {
+        $min = $_tmp;
+        $_tmp += $v;
+        $max = $_tmp;
+        if ($roll > $min && $roll <= $max) {
+            $rollnum = $k;
+            break;
+        }
+    }
+    return $rollnum;
 }
 
 /**
  * 获取客户端ip
- * @return string 
+ * @return string
  */
 function get_ip() {
-	static $ip = null;
-	if (! $ip) {
-		if (isset ( $_SERVER ['HTTP_X_FORWARDED_FOR'] ) && $_SERVER ['HTTP_X_FORWARDED_FOR'] && $_SERVER ['REMOTE_ADDR']) {
-			if (strstr ( $_SERVER ['HTTP_X_FORWARDED_FOR'], ',' )) {
-				$x = explode ( ',', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
-				$_SERVER ['HTTP_X_FORWARDED_FOR'] = trim ( end ( $x ) );
-			}
-			if (preg_match ( '/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
-				$ip = $_SERVER ['HTTP_X_FORWARDED_FOR'];
-			}
-		} elseif (isset ( $_SERVER ['HTTP_CLIENT_IP'] ) && $_SERVER ['HTTP_CLIENT_IP'] && preg_match ( '/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER ['HTTP_CLIENT_IP'] )) {
-			$ip = $_SERVER ['HTTP_CLIENT_IP'];
-		}
-		if (! $ip && preg_match ( '/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER ['REMOTE_ADDR'] )) {
-			$ip = $_SERVER ['REMOTE_ADDR'];
-		}
-		! $ip && $ip = 'Unknown';
-	}
-	return $ip;
+    static $ip = null;
+    if (! $ip) {
+        if (isset ( $_SERVER ['HTTP_X_FORWARDED_FOR'] ) && $_SERVER ['HTTP_X_FORWARDED_FOR'] && $_SERVER ['REMOTE_ADDR']) {
+            if (strstr ( $_SERVER ['HTTP_X_FORWARDED_FOR'], ',' )) {
+                $x = explode ( ',', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
+                $_SERVER ['HTTP_X_FORWARDED_FOR'] = trim ( end ( $x ) );
+            }
+            if (preg_match ( '/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
+                $ip = $_SERVER ['HTTP_X_FORWARDED_FOR'];
+            }
+        } elseif (isset ( $_SERVER ['HTTP_CLIENT_IP'] ) && $_SERVER ['HTTP_CLIENT_IP'] && preg_match ( '/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER ['HTTP_CLIENT_IP'] )) {
+            $ip = $_SERVER ['HTTP_CLIENT_IP'];
+        }
+        if (! $ip && preg_match ( '/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER ['REMOTE_ADDR'] )) {
+            $ip = $_SERVER ['REMOTE_ADDR'];
+        }
+        ! $ip && $ip = 'Unknown';
+    }
+    return $ip;
 }
 
 //写入缓存
 function set_cache($filename, $data, $dir = '_cache_') {
-	static $_dirs;
-	if($dir=='') return FALSE;
-	if(!preg_match('/([a-z0-9_]+)/i', $filename)) return FALSE;
-	$cache_path = CACHE_ROOT.$dir.'/';
-	if(!isset($_dirs[$filename.$dir])) {
-		if(!is_dir($cache_path)) {
-			mkdir($cache_path, 0777, true);
-	    }
-	    $_dirs[$filename.$dir] = 1;
-	}
-	$filename = $cache_path.$filename.'.'.CACHE_EXT.'.php';
-	if(is_array($data)) {
-		$data = '<?php'."\r\n return ".array2string($data).'?>';
-	}
-	file_put_contents($filename, $data);
+    static $_dirs;
+    if($dir=='') return FALSE;
+    if(!preg_match('/([a-z0-9_]+)/i', $filename)) return FALSE;
+    $cache_path = CACHE_ROOT.$dir.'/';
+    if(!isset($_dirs[$filename.$dir])) {
+        if(!is_dir($cache_path)) {
+            mkdir($cache_path, 0777, true);
+        }
+        $_dirs[$filename.$dir] = 1;
+    }
+    $filename = $cache_path.$filename.'.'.CACHE_EXT.'.php';
+    if(is_array($data)) {
+        $data = '<?php'."\r\n return ".array2string($data).'?>';
+    }
+    file_put_contents($filename, $data);
 }
 
 //获取缓存内容
 function get_cache($filename, $dir = '_cache_') {
     $file = get_cache_path($filename, $dir);;
     if(!file_exists($file)) return '';
-	$data = include $file;
-	return $data;
+    $data = include $file;
+    return $data;
 }
 //获取缓存路径
 function get_cache_path($filename, $dir = '_cache_') {
-	$cache_path = CACHE_ROOT.$dir.'/'.$filename.'.'.CACHE_EXT.'.php';
-	return $cache_path;
+    $cache_path = CACHE_ROOT.$dir.'/'.$filename.'.'.CACHE_EXT.'.php';
+    return $cache_path;
 }
 
 /**
@@ -466,9 +466,9 @@ function get_cache_path($filename, $dir = '_cache_') {
  * @param $pars
  */
 function value_exists($str, $strs = '', $pars = ',') {
-	if(empty($strs)) return FALSE;
-	$strs = explode($pars, $strs);
-	return is_array($str) ? array_intersect($str, $strs) : in_array($str, $strs);
+    if(empty($strs)) return FALSE;
+    $strs = explode($pars, $strs);
+    return is_array($str) ? array_intersect($str, $strs) : in_array($str, $strs);
 }
 /**
  * 检查数组中的变量是否被定义
@@ -476,8 +476,8 @@ function value_exists($str, $strs = '', $pars = ',') {
  * @param $variable 变量
  */
 function output($array = '',$variable = '') {
-	if(empty($array) || empty($variable)) return '';
-	return isset($array[$variable]) ? $array[$variable] : '';
+    if(empty($array) || empty($variable)) return '';
+    return isset($array[$variable]) ? $array[$variable] : '';
 }
 
 /**
@@ -541,95 +541,95 @@ function remove_xss($val) {
  * 将多维数组转化为 key＝>value格式
  */
 function key_value($array, $key, $value) {
-	if(empty($array)) return '';
-	$arr = array();
-	foreach ($array AS $_value) {
-		$arr[$_value[$key]] = $_value[$value];
-	}
-	return $arr;
+    if(empty($array)) return '';
+    $arr = array();
+    foreach ($array AS $_value) {
+        $arr[$_value[$key]] = $_value[$value];
+    }
+    return $arr;
 }
 /**
  * 过滤SQL关键字，mysql入库字段过滤
  */
 function sql_replace($val){
-	$val = str_replace("\t",'',$val);
-	$val = str_replace("%20",'',$val);
-	$val = str_replace("%27",'',$val);
-	$val = str_replace("*",'',$val);
-	$val = str_replace("'",'',$val);
-	$val = str_replace("\"",'',$val);
-	$val = str_replace("/",'',$val);
-	$val = str_replace(";",'',$val);
-	$val = str_replace("#",'',$val);
-	$val = str_replace("--",'',$val);
-	$val = addslashes($val);
-	return $val;
+    $val = str_replace("\t",'',$val);
+    $val = str_replace("%20",'',$val);
+    $val = str_replace("%27",'',$val);
+    $val = str_replace("*",'',$val);
+    $val = str_replace("'",'',$val);
+    $val = str_replace("\"",'',$val);
+    $val = str_replace("/",'',$val);
+    $val = str_replace(";",'',$val);
+    $val = str_replace("#",'',$val);
+    $val = str_replace("--",'',$val);
+    $val = addslashes($val);
+    return $val;
 }
 /**
  * 字符串截取
  */
 function strcut($string, $length, $dot = '', $rephtml = 0){
-	$strlen=strlen($string);
-	if($strlen<=$length) {
-		return $string;
-	}
-	if($rephtml==0) {
-		$string = str_replace(array('&nbsp;','&amp;','&quot;','&lt;','&gt;','&#039;'), array(' ','&','"','<','>',"'"), $string);
-	}
-	$strs = '';
-	if(strtolower(CHARSET) == 'utf-8') {
-		$n = $tn = $noc = 0;
-		while($n < $strlen) {
-			$t = ord($string[$n]);
-			if($t == 9 || $t == 10 || (32 <= $t && $t <= 126)) {
-				$tn = 1; $n++; $noc++;
-			} elseif(194 <= $t && $t <= 223) {
-				$tn = 2; $n += 2; $noc += 2;
-			} elseif(224 <= $t && $t < 239) {
-				$tn = 3; $n += 3; $noc += 2;
-			} elseif(240 <= $t && $t <= 247) {
-				$tn = 4; $n += 4; $noc += 2;
-			} elseif(248 <= $t && $t <= 251) {
-				$tn = 5; $n += 5; $noc += 2;
-			} elseif($t == 252 || $t == 253) {
-				$tn = 6; $n += 6; $noc += 2;
-			} else {
-				$n++;
-			}
+    $strlen=strlen($string);
+    if($strlen<=$length) {
+        return $string;
+    }
+    if($rephtml==0) {
+        $string = str_replace(array('&nbsp;','&amp;','&quot;','&lt;','&gt;','&#039;'), array(' ','&','"','<','>',"'"), $string);
+    }
+    $strs = '';
+    if(strtolower(CHARSET) == 'utf-8') {
+        $n = $tn = $noc = 0;
+        while($n < $strlen) {
+            $t = ord($string[$n]);
+            if($t == 9 || $t == 10 || (32 <= $t && $t <= 126)) {
+                $tn = 1; $n++; $noc++;
+            } elseif(194 <= $t && $t <= 223) {
+                $tn = 2; $n += 2; $noc += 2;
+            } elseif(224 <= $t && $t < 239) {
+                $tn = 3; $n += 3; $noc += 2;
+            } elseif(240 <= $t && $t <= 247) {
+                $tn = 4; $n += 4; $noc += 2;
+            } elseif(248 <= $t && $t <= 251) {
+                $tn = 5; $n += 5; $noc += 2;
+            } elseif($t == 252 || $t == 253) {
+                $tn = 6; $n += 6; $noc += 2;
+            } else {
+                $n++;
+            }
 
-			if($noc >= $length) {
-				break;
-			}
-		}
-		if($noc > $length) {
-			$n -= $tn;
-		}
-		$strs = substr($string, 0, $n);
-	} else {
-		for($i = 0; $i < $length; $i++) {
-			$strs .= ord($string[$i]) > 127 ? $string[$i].$string[++$i] : $string[$i];
-		}
-	}
+            if($noc >= $length) {
+                break;
+            }
+        }
+        if($noc > $length) {
+            $n -= $tn;
+        }
+        $strs = substr($string, 0, $n);
+    } else {
+        for($i = 0; $i < $length; $i++) {
+            $strs .= ord($string[$i]) > 127 ? $string[$i].$string[++$i] : $string[$i];
+        }
+    }
 
-	if($rephtml == 0) {
-		$strs = str_replace(array('&','"','<','>',"'"), array('&amp;','&quot;','&lt;','&gt;','&#039;'), $strs);
-	}
-	return $strs.$dot;
+    if($rephtml == 0) {
+        $strs = str_replace(array('&','"','<','>',"'"), array('&amp;','&quot;','&lt;','&gt;','&#039;'), $strs);
+    }
+    return $strs.$dot;
 }
 /**
  * 获取模块配置或相关根据keyid组合的配置信息
  */
 function module_setting($m, $keyid = '') {
-	static $_MODULES = array();
-	if(!isset($_MODULES[$m])) {
-		$db = load_class('db');
-		$_MODULES[$m] = $db->get_list('setting',array('m'=>$m));
-	}
-	if($keyid) {
-		return isset($_MODULES[$m][$keyid]) ? $_MODULES[$m][$keyid] : '';
-	} else {
-		return $_MODULES[$m];
-	}
+    static $_MODULES = array();
+    if(!isset($_MODULES[$m])) {
+        $db = load_class('db');
+        $_MODULES[$m] = $db->get_list('setting',array('m'=>$m));
+    }
+    if($keyid) {
+        return isset($_MODULES[$m][$keyid]) ? $_MODULES[$m][$keyid] : '';
+    } else {
+        return $_MODULES[$m];
+    }
 }
 
 function time_format($timestamp,$type = 0) {
@@ -651,14 +651,14 @@ function time_format($timestamp,$type = 0) {
  * @return string
  */
 function link_url($array) {
-	$array['m'] = isset($array['m']) ? $array['m'] : M;
-	$array['f'] = isset($array['f']) ? $array['f'] : F;
-	$array['v'] = isset($array['v']) ? $array['v'] : V;
-	$array['_su'] = isset($array['_su']) ? $array['_su'] : _SU;
-	$array['_menuid'] = isset($GLOBALS['_menuid']) ? intval($GLOBALS['_menuid']) : '';
-	$array['_submenuid'] = isset($GLOBALS['_submenuid']) ? intval($GLOBALS['_submenuid']) : '';
-	$array = array_filter($array);
-	return '?'.http_build_query($array);
+    $array['m'] = isset($array['m']) ? $array['m'] : M;
+    $array['f'] = isset($array['f']) ? $array['f'] : F;
+    $array['v'] = isset($array['v']) ? $array['v'] : V;
+    $array['_su'] = isset($array['_su']) ? $array['_su'] : _SU;
+    $array['_menuid'] = isset($GLOBALS['_menuid']) ? intval($GLOBALS['_menuid']) : '';
+    $array['_submenuid'] = isset($GLOBALS['_submenuid']) ? intval($GLOBALS['_submenuid']) : '';
+    $array = array_filter($array);
+    return '?'.http_build_query($array);
 }
 
 /**
@@ -746,16 +746,16 @@ function at($id) {
  * @param string
  * @return bool true表示为utf8
  */
-function is_utf8($word)   
-{   
-	if(preg_match("/^([".chr(228)."-".chr(233)."]{1}[".chr(128)."-".chr(191)."]{1}[".chr(128)."-".chr(191)."]{1}){1}/",$word) == true || preg_match("/([".chr(228)."-".chr(233)."]{1}[".chr(128)."-".chr(191)."]{1}[".chr(128)."-".chr(191)."]{1}){1}$/",$word) == true || preg_match("/([".chr(228)."-".chr(233)."]{1}[".chr(128)."-".chr(191)."]{1}[".chr(128)."-".chr(191)."]{1}){2,}/",$word) == true)   
-	{   
-		return true;   
-	}   
-	else   
-	{   
-		return false;   
-	}   
+function is_utf8($word)
+{
+    if(preg_match("/^([".chr(228)."-".chr(233)."]{1}[".chr(128)."-".chr(191)."]{1}[".chr(128)."-".chr(191)."]{1}){1}/",$word) == true || preg_match("/([".chr(228)."-".chr(233)."]{1}[".chr(128)."-".chr(191)."]{1}[".chr(128)."-".chr(191)."]{1}){1}$/",$word) == true || preg_match("/([".chr(228)."-".chr(233)."]{1}[".chr(128)."-".chr(191)."]{1}[".chr(128)."-".chr(191)."]{1}){2,}/",$word) == true)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /**
@@ -765,18 +765,18 @@ function is_utf8($word)
  * @param string $output    转换后的编码
  */
 function array_iconv( $input = 'gbk', $output = 'utf-8', $data = '') {
-	if (!is_array($data)) {
-		return (is_utf8($data) &&  $output == 'utf-8') || (!is_utf8($data) &&  $output == 'gbk') ? $data : iconv($input, $output, $data);
-	} else {
-		foreach ($data as $key=>$val) {
-			if(is_array($val)) {
-				$data[$key] = array_iconv( $input, $output, $val);
-			} else {
-				$data[$key] = (is_utf8($val) &&  $output == 'utf-8') || (!is_utf8($val) &&  $output == 'gbk') ? $val : iconv($input, $output, $val);
-			}
-		}
-		return $data;
-	}
+    if (!is_array($data)) {
+        return (is_utf8($data) &&  $output == 'utf-8') || (!is_utf8($data) &&  $output == 'gbk') ? $data : iconv($input, $output, $data);
+    } else {
+        foreach ($data as $key=>$val) {
+            if(is_array($val)) {
+                $data[$key] = array_iconv( $input, $output, $val);
+            } else {
+                $data[$key] = (is_utf8($val) &&  $output == 'utf-8') || (!is_utf8($val) &&  $output == 'gbk') ? $val : iconv($input, $output, $val);
+            }
+        }
+        return $data;
+    }
 }
 
 /**
@@ -856,22 +856,22 @@ function is_mobile_request() {
  */
 function cache_in_db( $data, $keyid, $m)
 {
-	if( empty($keyid) || empty($m)) return false;
-	$where = array( 'keyid'=>$keyid, 'm'=>$m);
-	$db = load_class('db');
-	$r = $db->get_one( 'setting' ,$where );
+    if( empty($keyid) || empty($m)) return false;
+    $where = array( 'keyid'=>$keyid, 'm'=>$m);
+    $db = load_class('db');
+    $r = $db->get_one( 'setting' ,$where );
 
-	if( empty($data) ) return unserialize($r['data']);
-	$insert_data = array( 'data'=>serialize($data), 'updatetime'=>SYS_TIME );
-	if( empty($r) )
-	{
-		$db->insert( 'setting', array_merge( $insert_data, $where) );
-	}
-	else
-	{
-	    $db->update( 'setting', $insert_data, $where );
-	}
-	return $data ? $data : unserialize($r['data']);
+    if( empty($data) ) return unserialize($r['data']);
+    $insert_data = array( 'data'=>serialize($data), 'updatetime'=>SYS_TIME );
+    if( empty($r) )
+    {
+        $db->insert( 'setting', array_merge( $insert_data, $where) );
+    }
+    else
+    {
+        $db->update( 'setting', $insert_data, $where );
+    }
+    return $data ? $data : unserialize($r['data']);
 }
 
 /**
@@ -908,14 +908,14 @@ function sub_categorys($cid,$categorys = '') {
  * @return mixed
  */
 function wzsql($table,$where = '',$type = 1,$order = '',$limit = 10,$start = 0) {
-	$db = load_class('db');
-	if($type==1) {//返回统计
-		return $db->count_result($table,$where);
-	} elseif($type==2) {//返回单条结果
-		return $db->get_one($table,$where);
-	} elseif($type==3) {//返回多条结果
-		return $db->get_list($table, $where, '*', $start, $limit, 0, $order);
-	}
+    $db = load_class('db');
+    if($type==1) {//返回统计
+        return $db->count_result($table,$where);
+    } elseif($type==2) {//返回单条结果
+        return $db->get_one($table,$where);
+    } elseif($type==3) {//返回多条结果
+        return $db->get_list($table, $where, '*', $start, $limit, 0, $order);
+    }
 }
 
 /**
@@ -924,14 +924,14 @@ function wzsql($table,$where = '',$type = 1,$order = '',$limit = 10,$start = 0) 
  * @return array
  */
 function sql($sql) {
-	$pre = substr($sql,0,6);
-	if(strtolower($pre)!='select') return array();
-	$db = load_class('db');
-	$query = $db->query($sql);
-	while($r = $db->fetch_array($query)) {
-		$result[] = $r;
-	}
-	return $result;
+    $pre = substr($sql,0,6);
+    if(strtolower($pre)!='select') return array();
+    $db = load_class('db');
+    $query = $db->query($sql);
+    while($r = $db->fetch_array($query)) {
+        $result[] = $r;
+    }
+    return $result;
 }
 
 /**
@@ -943,9 +943,9 @@ function sql($sql) {
  * @return string
  */
 function explode2array($string,$key,$delimiter = '-') {
-	if(empty($string)) return '';
-	$arr = explode($delimiter,$string);
-	return $arr[$key];
+    if(empty($string)) return '';
+    $arr = explode($delimiter,$string);
+    return $arr[$key];
 }
 
 /**

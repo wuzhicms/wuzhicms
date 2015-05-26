@@ -13,7 +13,7 @@ include $this->template('header','core');
                     <form class="form-horizontal tasi-form" method="post" action="">
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">邮件标题</label>
+                            <label class="col-sm-2 control-label">邮件标题</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control"  name="email_title" value="<?php echo $email_title;?>">
                             </div>
@@ -28,7 +28,7 @@ include $this->template('header','core');
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label"></label>
+                            <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">
                                 <input name="forward" value="<?php echo HTTP_REFERER;?>" type="hidden">
                                 <input class="btn btn-info" id="submit" type="submit" name="submit" value="提交">

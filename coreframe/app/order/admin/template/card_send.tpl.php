@@ -12,32 +12,32 @@ include $this->template('header','core');
                 <div class="panel-body" id="formid">
                     <form class="form-horizontal tasi-form" method="post" action="">
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">卡号</label>
+                            <label class="col-sm-2 control-label">卡号</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="pre" value="<?php echo $r['card_no'];?>" readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">手机</label>
+                            <label class="col-sm-2 control-label">手机</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="mobile" value="" placeholder="手机或邮箱需要填写一项" datatype="m" errormsg="请填写正确的手机号码" ignore="ignore">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">邮箱</label>
+                            <label class="col-sm-2 control-label">邮箱</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="email" name="email" value="" placeholder="留空不发送" datatype="e" errormsg="请填写正确的邮箱地址" ignore="ignore">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">备注（管理员可见）</label>
+                            <label class="col-sm-2 control-label">备注（管理员可见）</label>
                             <div class="col-sm-4">
                                 <textarea name="note" class="form-control" cols="60" rows="3"></textarea>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label"></label>
+                            <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">
                                 <input name="forward" value="<?php echo HTTP_REFERER;?>" type="hidden">
                                 <input class="btn btn-info" id="submit" type="submit" name="submit" value="提交">
