@@ -15,25 +15,25 @@ include $this->template('header','core');
         <form class="form-horizontal tasi-form" method="post" action="">
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">标题 <font color="red">＊</font></label>
+                <label class="col-sm-2 control-label">标题 <font color="red">＊</font></label>
                 <div class="col-sm-4 input-group">
                     <input type="text" class="form-control" name="form[title]" value="<?php echo $r['title'];?>" datatype="*" errormsg="标题不能为空">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">缩略图</label>
+                <label class="col-sm-2 control-label">缩略图</label>
                 <div class="col-sm-4 input-group">
                     <div class="input-group"><?php echo $form->attachment('','1','form[thumb]',$r['thumb']);?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">链接地址</label>
+                <label class="col-sm-2 control-label">链接地址</label>
                 <div class="col-sm-4 input-group">
                     <input type="text" class="form-control" name="form[url]" value="<?php echo $r['url'];?>">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">描述</label>
+                <label class="col-sm-2 control-label">描述</label>
                 <div class="col-sm-8 input-group">
                     <textarea name="form[remark]" style="width: 100%;height: 80px;"><?php echo p_htmlentities($r['remark']);?></textarea>
                 </div>
@@ -43,7 +43,7 @@ include $this->template('header','core');
             ?>
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo $field;?></label>
+                <label class="col-sm-2 control-label"><?php echo $field;?></label>
                 <div class="col-sm-8 input-group">
                     <textarea name="attform[<?php echo $field;?>]" style="width: 100%;height: 80px;"><?php echo p_htmlentities($value);?></textarea>
                 </div>
@@ -53,7 +53,7 @@ include $this->template('header','core');
             }
             ?>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10 input-group">
                     <input type="hidden" name="forward" value="<?php echo HTTP_REFERER;?>">
                     <input class="btn btn-info" type="submit" name="submit" value="提交">

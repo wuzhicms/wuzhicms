@@ -20,18 +20,18 @@ include $this->template('header','core');
         <form class="form-horizontal tasi-form" method="post" action="">
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">菜单名称</label>
+                <label class="col-sm-2 control-label">菜单名称</label>
                 <div class="col-sm-4 input-group">
                     <input type="text" class="form-control" name="form[name]" color="#000000" datatype="s2-30" errormsg="别名至少2个字符,最多30个字符！" value="<?php echo $r['name'];?>">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">描述</label>
+                <label class="col-sm-2 control-label">描述</label>
                 <div class="col-sm-4 input-group">
                     <textarea name="form[remark]" class="form-control" cols="60" rows="3"><?php echo $r['remark'];?></textarea>                </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">层级数</label>
+                <label class="col-sm-2 control-label">层级数</label>
                 <div class="col-sm-2 input-group">
                     <?php echo $form->select(array(1=>'1',2=>'2',3=>'3',4=>'4','5'=>'5'),$r['level'],"name='form[level]' class='form-control'");?>
                 </div>
@@ -52,7 +52,7 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10 input-group">
                     <input class="btn btn-info" type="submit" name="submit" value="提交">
                 </div>

@@ -61,10 +61,12 @@ class index{
             }
             $attrdata = $this->db->get_one($attr_table,array('id'=>$id));
             $data = array_merge($data,$attrdata);
+        } else {
+            $modelid = $model_r['modelid'];
         }
 
         require get_cache_path('content_format','model');
-        $form_format = new form_format($model_r['modelid']);
+        $form_format = new form_format($modelid);
         $data = $form_format->execute($data);
 
         foreach($data as $_key=>$_value) {

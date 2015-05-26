@@ -12,7 +12,7 @@ include $this->template('header','core');
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">用户名</label>
+                <label class="col-sm-2 control-label">用户名</label>
                 <div class="col-sm-2 input-group">
                     <input type="text" class="form-control" name="username">
                 </div>
@@ -25,7 +25,7 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">充值额度</label>
+                <label class="col-sm-2 control-label">充值额度</label>
                 <div class="col-sm-2 input-group">
                     <input type="text" class="form-control" name="money" value=""> 单位：元 ， 例如：10.00或者10
                 </div>
@@ -33,13 +33,13 @@ include $this->template('header','core');
 
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">备注</label>
+                <label class="col-sm-2 control-label">备注</label>
                 <div class="col-sm-4 input-group">
                     <textarea name="note" class="form-control" cols="60" rows="3"></textarea>                </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10 input-group">
                     <input class="btn btn-info" type="submit" name="submit" value="提交">
                 </div>

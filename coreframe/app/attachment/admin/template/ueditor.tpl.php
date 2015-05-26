@@ -15,38 +15,38 @@ include $this->template('header','core');
         <form class="form-horizontal tasi-form" method="post" action="">
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('ue_imagePathFormat');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('ue_imagePathFormat');?></label>
                 <div class="col-sm-4"><input type="text" value="<?php echo $setting['imagePathFormat'];?>" class="form-control" name="setting[imagePathFormat]" size="100"></div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('ue_scrawlPathFormat');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('ue_scrawlPathFormat');?></label>
                 <div class="col-sm-4"><input type="text" value="<?php echo $setting['scrawlPathFormat'];?>" class="form-control" name="setting[scrawlPathFormat]" size="100"></div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('ue_snapscreenPathFormat');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('ue_snapscreenPathFormat');?></label>
                 <div class="col-sm-4"><input type="text" value="<?php echo $setting['snapscreenPathFormat'];?>" class="form-control" name="setting[snapscreenPathFormat]" size="100"></div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('ue_filePathFormat');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('ue_filePathFormat');?></label>
                 <div class="col-sm-4"><input type="text" value="<?php echo $setting['filePathFormat'];?>" class="form-control" name="setting[filePathFormat]" size="100"></div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('ue_videoPathFormat');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('ue_videoPathFormat');?></label>
                 <div class="col-sm-4"><input type="text" value="<?php echo $setting['videoPathFormat'];?>" class="form-control" name="setting[videoPathFormat]" size="100"></div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('ue_catcherPathFormat');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('ue_catcherPathFormat');?></label>
                 <div class="col-sm-4"><input type="text" value="<?php echo $setting['catcherPathFormat'];?>" class="form-control" name="setting[catcherPathFormat]" size="100"></div>
             </div>
             <span class="help-block"><?php echo L('ue_path_intro');?></span>
 
  			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('ue_catch_mode');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('ue_catch_mode');?></label>
                 <div class="col-sm-8"><input type="radio" name="setting[catchRemoteImageEnable]" value="1" <?php echo $setting['catchRemoteImageEnable'] == 1 ? 'checked' : '';?>><?php echo L('ajax_mode');?> &nbsp;&nbsp; <input type="radio" name="setting[catchRemoteImageEnable]" value="0" <?php echo $setting['catchRemoteImageEnable'] == 0 ? 'checked' : '';?>><?php echo L('syn_mode');?>
                 <span class="help-block"><?php echo L('catch_mode');?></span>
 				</div>
@@ -56,7 +56,7 @@ include $this->template('header','core');
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
                     <input class="btn btn-info" type="submit" name="dosubmit" value="<?php echo L('dosubmit');?>">
                 </div>

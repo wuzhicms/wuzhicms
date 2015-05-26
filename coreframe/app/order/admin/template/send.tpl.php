@@ -33,12 +33,12 @@ include $this->template('header','core');
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">备注（管理员可见）</label>
+                            <label class="col-sm-2 control-label">备注（管理员可见）</label>
                             <div class="col-sm-9">
                                 <textarea name="note" class="form-control" cols="60" rows="2"></textarea>                </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label"></label>
+                            <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">
                                 <input class="btn btn-info" type="submit" name="submit" value="发货">
                             </div>

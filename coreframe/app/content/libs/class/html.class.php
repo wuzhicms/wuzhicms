@@ -97,7 +97,10 @@ class WUZHI_html {
         $GLOBALS['catdir'] = $this->category['catdir'];
         $GLOBALS['categorydir'] = $this->category['parentdir'];
 
-
+        if($data['modelid']) {
+            $this->form_format->modelid = $data['modelid'];
+            $this->form_format->fields = get_cache('field_'.$data['modelid'],'model');
+        }
         $format_data = $this->form_format->execute($data);
         foreach($format_data as $_key=>$_value) {
             $$_key = $_value['data'];
@@ -129,11 +132,7 @@ class WUZHI_html {
             foreach($contents as $cons) {
                 $urls = $this->urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$data['addtime'],'page'=>$page,'route'=>$data['route']));
                 $file_root = $urls['root'];
-                $content = $data['content'] = $cons;
-                $tmp_year = date('Y',$addtime);
-                $tmp_month = date('m',$addtime);
-                $tmp_day = date('d',$addtime);
-                $content_pages = pages($pagetotal,$page,1,$urlrule,array('year'=>$tmp_year,'month'=>$tmp_month,'day'=>$tmp_day,'catdir'=>$category['catdir'],'cid'=>$cid,'id'=>$id));
+                $data['content'] = $cons;
                 //写入
                 ob_start();
                 include T('content',$_template,$project_css);

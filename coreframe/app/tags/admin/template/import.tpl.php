@@ -15,7 +15,7 @@ include $this->template('header','core');
         <form class="form-horizontal tasi-form" method="post" action="" enctype="multipart/form-data">
 
 				<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('tags_batch');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('tags_batch');?></label>
                 <div class="row">
                     <div class="col-sm-5">
                     <textarea class="form-control" name="import" id="import"  cols="80" rows="10"></textarea>
@@ -28,7 +28,7 @@ include $this->template('header','core');
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"><?php echo L('tags_upload');?></label>
+                <label class="col-sm-2 control-label"><?php echo L('tags_upload');?></label>
                 <div class="col-sm-5">
                     <input type="file" accept=".txt" name="file" id="file" value="<?php echo L('select_file');?>" /> 
                     <span class="help-block"><?php echo L('file_note');?></span>
@@ -36,7 +36,7 @@ include $this->template('header','core');
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-5">
                     <input class="btn btn-info" type="submit" name="dosubmit" value="<?php echo L('submit');?>">
                 </div>

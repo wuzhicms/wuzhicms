@@ -18,19 +18,19 @@ include $this->template('header','core');
             <input name="_su" value="<?php echo $GLOBALS['_su'];?>" type="hidden">
             <input name="status" value="<?php echo $status;?>" type="hidden">
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">搜索类型</label>
+                <label class="col-sm-2 control-label">搜索类型</label>
                 <div class="col-sm-2 input-group">
                     <?php echo $form->select($options, $stype, 'name="stype" id="stype" class="form-control"');?>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">关键字</label>
+                <label class="col-sm-2 control-label">关键字</label>
                 <div class="col-sm-4 input-group">
                     <input type="text" class="form-control" name="keywords" value="<?php echo $keywords;?>">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">所属栏目 </label>
+                <label class="col-sm-2 control-label">所属栏目 </label>
                 <div class="col-sm-4 input-group">
                     <?php
                     echo $form->tree_select($categorys, $cid, 'name="cid" class="form-control" ', '≡ 全部 ≡');
@@ -41,19 +41,19 @@ include $this->template('header','core');
 
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">发布时间 </label>
+                <label class="col-sm-2 control-label">发布时间 </label>
                 <div class="col-sm-8 input-group">
                     <?php echo WUZHI_form::calendar('start',$start,1);?> - <?php echo WUZHI_form::calendar('end',$end,1);?>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">状态</label>
+                <label class="col-sm-2 control-label">状态</label>
                 <div class="col-sm-2 input-group">
                     <?php echo $form->select($this->status_array, $status, 'name="status" id="status" class="form-control"');?>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10 input-group">
                     <input class="btn btn-info" type="submit" name="submit" value="提交">
                 </div>

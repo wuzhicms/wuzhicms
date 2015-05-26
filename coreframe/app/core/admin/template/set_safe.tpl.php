@@ -14,7 +14,7 @@ include $this->template('header','core');
 
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">启用后台管理日志</label>
+                <label class="col-sm-2 control-label">启用后台管理日志</label>
                 <div class="col-sm-4">
                     <label class="radio-inline">
                         <input type="radio" name="logerr" value="1" <?php if(defined('ADMIN_LOG')) echo 'checked';?> disabled>是
@@ -25,21 +25,21 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">访问后台的密码串</label>
+                <label class="col-sm-2 control-label">访问后台的密码串</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="su" color="#000000" value="<?php echo _SU;?>" readonly>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">禁止访问网站IP列表</label>
+                <label class="col-sm-2 control-label">禁止访问网站IP列表</label>
                 <div class="col-sm-4">
                     <textarea name="form[ban_ips]" class="form-control" cols="60" rows="3"><?php echo output($setting,'ban_ips');?></textarea>
 
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label">允许登录后台IP列表</label>
+                <label class="col-sm-2 control-label">允许登录后台IP列表</label>
                 <div class="col-sm-4">
                     <textarea name="form[adminlogin_ips]" class="form-control" cols="60" rows="3"><?php echo output($setting,'adminlogin_ips');?></textarea>
 
@@ -52,7 +52,7 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-sm-2 control-label"></label>
+                <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
                     <input class="btn btn-info" type="submit" name="submit" value="提交">
                 </div>

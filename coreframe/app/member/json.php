@@ -55,5 +55,21 @@ class json{
         }
         echo json_encode($arr);
     }
+    /*
+     * 获取会员头像
+     *
+     * Author：沉默の羔羊
+    */
+    public function get_avatar() {
+        $uid = $GLOBALS['uid'] ? intval($GLOBALS['uid']) : get_cookie('_uid');
+        if(!$uid) {
+            echo json_encode(R."images/userface.png");
+            exit();
+        }
+        $dir = substr(md5($uid), 0, 2).'/'.$uid.'/';
+        $avatar = ATTACHMENT_URL.'member/'.$dir."180x180.jpg";
+        echo json_encode($avatar);
+    }
+
 }
 ?>

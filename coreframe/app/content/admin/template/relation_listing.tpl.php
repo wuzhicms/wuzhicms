@@ -5,7 +5,7 @@
         <?php foreach($result AS $r) {
 
             ?>
-            <li class="cur" onclick="changeList('<?php echo p_htmlentities($r['title']);?>','index.php?id=<?php echo $r['id'];?>');">
+            <li class="cur" onclick="changeList('<?php echo p_htmlentities($r['title']);?>','<?php echo $r['url'];?>');">
                 <div class="task-checkbox">
                     <?php echo $r['id'];?>
                 </div>
