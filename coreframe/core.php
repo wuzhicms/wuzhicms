@@ -9,7 +9,7 @@ defined('WWW_ROOT') or exit('No direct script access allowed');
 /**
  * 核心文件
  */
-define('VERSION','2.0.5');
+define('VERSION','2.0.6');
 
 $GLOBALS = array();
 define('SYSTEM_NAME','wuzhicms');
