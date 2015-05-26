@@ -75,8 +75,8 @@ opacity:1}
 100%{-moz-transform:translateY(0)}
 }
 .userullist{
--webkit-animation:fadeInDown .4s .2s ease both;
--moz-animation:fadeInDown .4s .2s ease both;}
+-webkit-animation:fadeInDown .2s .1s ease both;
+-moz-animation:fadeInDown .2s .1s ease both;}
 @-webkit-keyframes fadeInDown{
 0%{opacity:0;
 -webkit-transform:translateY(-20px)}

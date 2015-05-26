@@ -26,8 +26,6 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended userullist" id="userullist">
-                        <div class="log-arrow-up"><i class="icon-sort-up"></i></div>
-                        <li class="usersettitle"><h5>个人信息</h5></li>
                         <li><a href="javascript:void(1);">本次登陆IP:<?php echo $ip;?></a></li>
                         <li><a href="javascript:void(1);">上次登陆IP:<?php echo $last_rs['ip'];?></a></li>
                         <li><a href="javascript:void(1);">上次登陆时间:<?php echo time_format($last_rs['logintime']);?></a></li>
