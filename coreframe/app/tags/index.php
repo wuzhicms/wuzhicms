@@ -89,7 +89,7 @@ class index{
  */
 	public function ajax_auto_complete()
 	{
-		$tag = isset($GLOBALS['term']) ? array_iconv('utf-8','gbk',remove_xss($GLOBALS['term'])) : MSG(L('parameter_error'));
+		$tag = isset($GLOBALS['term']) ? remove_xss($GLOBALS['term']) : MSG(L('parameter_error'));
 		$where = ' tag like "%'.$tag.'%" ';
 		$tag_info = $this->db->get_list('tag', $where, 'tag',0,10,1);
 		foreach($tag_info AS $k=>$v)
@@ -97,7 +97,7 @@ class index{
 		    $tag_info[$k]['label'] = $tag_info[$k]['value'] = $v['tag'];
 			unset($tag_info[$k]['tag']);
 		}
-		exit( json_encode(array_iconv('gbk','utf-8',$tag_info)) );
+		exit(json_encode($tag_info));
 	}
 }
 ?>
