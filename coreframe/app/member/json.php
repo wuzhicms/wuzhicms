@@ -63,11 +63,12 @@ class json{
     public function get_avatar() {
         $uid = $GLOBALS['uid'] ? intval($GLOBALS['uid']) : get_cookie('_uid');
         if(!$uid) {
-            echo json_encode(array('code'=>101,'msg'=>'uid error'));
+            echo json_encode(R."images/userface.png");
+            exit();
         }
         $dir = substr(md5($uid), 0, 2).'/'.$uid.'/';
         $avatar = ATTACHMENT_URL.'member/'.$dir."180x180.jpg";
-        echo json_encode(array('code'=>200,'thumb'=>$avatar));
+        echo json_encode($avatar);
     }
 
 }

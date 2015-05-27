@@ -41,7 +41,7 @@ a,a:hover,a:focus{text-decoration:none;outline:none;-webkit-transition:all 0.3s;
 .logo{width: 155px;}
 #main-content{margin-left:210px;}
 .header,.footer{min-height:60px;padding:0 20px;}
-.header{position:relative;z-index:1002;box-shadow: 0 2px 4px rgba(6, 8, 8, 0.1);-webkit-box-shadow:0 2px 4px rgba(6, 8, 8, 0.1);-moz-box-shadow:0 2px 4px rgba(6, 8, 8, 0.1);}
+.header{position:relative;z-index:1002;box-shadow: 0 2px 4px rgba(6, 8, 8, 0.1);-webkit-box-shadow:0 2px 4px rgba(6, 8, 8, 0.1);-moz-box-shadow:0 2px 4px rgba(6, 8, 8, 0.1);margin-bottom: 1px;}
 /*.pxgrids-bg{background:#3B4658;}*/
 .pxgrids-bg{background:#3B4658;}
 .wrapper{display:inline-block;padding:20px;width:100%;}
