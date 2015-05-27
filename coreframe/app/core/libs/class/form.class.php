@@ -240,7 +240,7 @@ class WUZHI_form {
         $string = '';
         foreach($options as $key=>$v) {
             $checked = $key==$value ? 'checked' : '';
-            $string .= ' <label style="padding-right:10px;"><input type="radio" '.$str.' value="'.$key.'" '.$checked.'> '.$v.'</label>';
+            $string .= ' <label class="radio-inline"><input type="radio" '.$str.' value="'.$key.'" '.$checked.'> '.$v.'</label>';
         }
         return $string;
     }
@@ -253,7 +253,7 @@ class WUZHI_form {
         foreach($array as $key=>$v) {
             $key = trim($key);
             $checked = ($value && in_array($key, $value)) ? 'checked' : '';
-            $string .= '<label style="padding-right:10px;"><input type="checkbox" '.$str.' id="'.$field.'_'.$i.'" '.$checked.' value="'.p_htmlspecialchars($key).'"> '.p_htmlspecialchars($v)."</label>";
+            $string .= '<label class="checkbox-inline"><input type="checkbox" '.$str.' id="'.$field.'_'.$i.'" '.$checked.' value="'.p_htmlspecialchars($key).'"> '.p_htmlspecialchars($v)."</label>";
             $i++;
         }
         return $string;

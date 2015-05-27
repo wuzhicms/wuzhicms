@@ -41,9 +41,11 @@
 /*text input*/
 .form-control{box-shadow:none;border-radius: 0;border: 1px solid #E2E2E4;padding: 6px 4px;font-size: 12px;}
 .form-horizontal .control-label{font-weight:300;font-size:14px;text-align:left;}
+.form-horizontal .checkbox, .form-horizontal .checkbox-inline, .form-horizontal .radio, .form-horizontal .radio-inline{padding-top: 0px;}
 input,textarea,select,button{outline:none !important;}
 .m-bot15 {margin-bottom: 15px;}
 .table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color: #fcfcfd;}
+.table>tbody>tr>td i{margin: 0 0 0 5px;font-size: 14px;color: #BCBFC9;}
 .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color: #FCFFE9;}
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{border-top: 1px dashed #EAEAEA;vertical-align: middle;}
 .input-group-addon, .input-group-addon:first-child,.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group,.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group{border-radius: 0px;}
