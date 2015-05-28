@@ -73,5 +73,6 @@ include $this->template('header','core');
     function search_text(s,text){
         if(text.match(s)) return true;
     }
+    $('.tooltips').tooltip();
     $(".categorytree").niceScroll({cursorwidth: '6',horizrailenabled:false,mousescrollstep:55,autohidemode:false,cursorborder:"none",cursorcolor : "#c4c8d2"});
 </script>
