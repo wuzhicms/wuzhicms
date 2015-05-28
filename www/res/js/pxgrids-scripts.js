@@ -38,5 +38,4 @@ var Script = function () {
 var Script = function () {
 // 自定义滚动条
     $("html").niceScroll({autohidemode:false,cursorcolor : "#cacbcf",cursorwidth: '10',cursorborder:"none",horizrailenabled:false,mousescrollstep:55});
-    $("#treemain").niceScroll({cursorwidth: '6',horizrailenabled:false,mousescrollstep:55});
 }();
