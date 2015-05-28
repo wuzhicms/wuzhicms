@@ -144,7 +144,7 @@ class WUZHI_form {
 				$default_thumb = $default_val ? $default_val : R.'images/upload-thumb.png';
 				$thumb_w = $width ? $width : '135';
 				$thumb_h = $height ? $height : '113';
-				$str .= '<img class="attachment_thumb" id="'.$id.'_thumb" src="'.$default_thumb.'" onclick="img_view(this.src);"  width="'.$thumb_w.'" height="'.$thumb_h.'" />';
+				$str .= '<img class="attachment_thumb" id="'.$id.'_thumb" src="'.$default_thumb.'" onclick="img_view(this.src);"  width="'.$thumb_w.'" height="'.$thumb_h.'" style="margin-bottom: 10px;" />';
 			} else {
                 $input_type = 'text';
             }
@@ -165,7 +165,7 @@ class WUZHI_form {
 		}
         $token = md5($ext._KEY);
 		$up_url = '/index.php'. link_url( array('m'=>'attachment','f'=>'index','v'=>'upload_dialog','callback'=>$callback,'htmlid'=>$id,'_su'=>'','limit'=>$limit,'is_thumb'=>$is_thumb,'width'=>$width,'height'=>$height,'htmlname'=>$formname,'ext'=>$ext,'token'=>$token,'cut'=>$cut) );
-		$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="openiframe(\''.$up_url.'\',\''.$id.'\',\'loading...\',810,400,'.$limit.')">上传文件</button></span>';
+		$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="openiframe(\''.$up_url.'\',\''.$id.'\',\'loading...\',810,400,'.$limit.')"><i class="icon-paperclip"></i>上传文件</button></span>';
 		return $str;
 	}
 

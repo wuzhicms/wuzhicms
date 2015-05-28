@@ -41,7 +41,8 @@
 /*text input*/
 .form-control{box-shadow:none;border-radius: 0;border: 1px solid #E2E2E4;padding: 6px 4px;font-size: 12px;}
 .form-horizontal .control-label{font-weight:300;font-size:14px;text-align:left;}
-.form-horizontal .checkbox, .form-horizontal .checkbox-inline, .form-horizontal .radio, .form-horizontal .radio-inline{padding-top: 0px;}
+.form-horizontal .checkbox, .form-horizontal .checkbox-inline, .form-horizontal .radio, .form-horizontal .radio-inline{padding-top: 0px;margin-right: 15px;}
+.checkbox-inline+.checkbox-inline, .radio-inline+.radio-inline{margin-right: 15px;margin-left: 0;}
 input,textarea,select,button{outline:none !important;}
 .m-bot15 {margin-bottom: 15px;}
 .table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color: #fcfcfd;}
