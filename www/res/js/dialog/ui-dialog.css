@@ -11,8 +11,8 @@
     _float: left;
     position: relative;
     background-color: #FFF;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    border-radius: 0px;
     outline: 0;
     background-clip: padding-box;
     font-family: "Microsoft YaHei UI","Microsoft YaHei", sans-serif,Helvetica, arial;
@@ -60,7 +60,7 @@
     position: relative;
     _position: absolute;
     float: right;
-    top: 9px;
+    top: 15px;
     right: 13px;
     _height: 26px;
     padding: 0 4px;
@@ -90,7 +90,7 @@
     margin: 0;
     line-height: 1.428571429;
     min-height: 16.428571429px;
-    padding: 10px;
+    padding: 15px;
     overflow:hidden; 
     white-space: nowrap;
     text-overflow: ellipsis;
