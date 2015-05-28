@@ -1,6 +1,6 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed');?>
 <?php include $this->template('header','core');?>
-<body id="body" style="overflow-y :scroll;overflow-x:auto;">
+<body id="body" style="overflow-y :scroll;overflow-x:auto;background:#fff;">
 <link href="<?php echo R;?>css/validform.css" rel="stylesheet">
 <script src="<?php echo R;?>js/validform.min.js"></script>
 <section class="panel">
@@ -96,7 +96,7 @@
             }
 
         });
-        $("#body").niceScroll({styler:"fb",cursorcolor:"#CAD3D5",cursorwidth: '3', cursorborderradius: '10px', background: '#E2E7E8', cursorborder: '',horizrailenabled:false});
+        $("#body").niceScroll({styler:"fb",horizrailenabled:false,cursorcolor:"#c4c8d2",cursorwidth: '6', cursorborderradius: '10px', background: '#E2E7E8', cursorborder: ''});
 
     });
 </script>
