@@ -1,17 +1,17 @@
 <?php
 // +----------------------------------------------------------------------
-// | wuzhicms [ ÎåÖ¸»¥ÁªÍøÕ¾ÄÚÈÝ¹ÜÀíÏµÍ³ ]
+// | wuzhicms [ äº”æŒ‡äº’è”ç½‘ç«™å†…å®¹ç®¡ç†ç³»ç»Ÿ ]
 // | Copyright (c) 2014-2015 http://www.wuzhicms.com All rights reserved.
 // | Licensed ( http://www.wuzhicms.com/licenses/ )
 // | Author: wangcanjia <phpip@qq.com>
 // +----------------------------------------------------------------------
 /**
- * ³ÌÐòÈë¿ÚÎÄ¼þ
+ * ç¨‹åºå…¥å£æ–‡ä»¶
  */
 
-//¼ì²âPHP»·¾³
+//æ£€æµ‹PHPçŽ¯å¢ƒ
 if(PHP_VERSION < '5.2.0') die('Require PHP > 5.2.0 ');
-//¶¨Òåµ±Ç°µÄÍøÕ¾ÎïÀíÂ·¾¶
+//å®šä¹‰å½“å‰çš„ç½‘ç«™ç‰©ç†è·¯å¾„
 define('WWW_ROOT',dirname(__FILE__).'/');
 
 require './configs/web_config.php';
