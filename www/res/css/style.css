@@ -58,7 +58,7 @@ a,a:hover,a:focus{text-decoration:none;outline:none;-webkit-transition:all 0.3s;
 .topmenunav ul li a.active{color: #3B4658;background-color: #DBDFE3;}
 .top-nav ul li{float: left;}
 .top-nav ul li a{color: #C8CCD1;display: block;padding: 21px 20px;}
-.top-nav ul li.userinfo a.dropdown-toggle:hover, .top-nav ul li.userinfo a.dropdown-toggle:focus,.top-nav ul li.open a{color: #fff;background-color: #31343b;}
+.top-nav ul li a:hover,.top-nav ul li.userinfo a.dropdown-toggle:hover, .top-nav ul li.userinfo a.dropdown-toggle:focus,.top-nav ul li.open a{color: #fff;background-color: #31343b;}
 .top-nav ul li i{float: left;margin: 3px 5px 0px 0px;font-size: 14px;}
 .top-menu{margin:0;}
 .top-nav ul.top-menu > li .dropdown-menu.userullist{width:216px !important;margin-top: 18px;}
