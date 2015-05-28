@@ -1,18 +1,18 @@
 <?php
 // +----------------------------------------------------------------------
-// | wuzhicms [ ÎåÖ¸»¥ÁªÍøÕ¾ÄÚÈİ¹ÜÀíÏµÍ³ ]
+// | wuzhicms [ äº”æŒ‡äº’è”ç½‘ç«™å†…å®¹ç®¡ç†ç³»ç»Ÿ ]
 // | Copyright (c) 2014-2015 http://www.wuzhicms.com All rights reserved.
 // | Licensed ( http://www.wuzhicms.com/licenses/ )
 // | Author: wangcanjia <phpip@qq.com>
 // +----------------------------------------------------------------------
 /**
- * ×Ô¶¨Òå³ÌĞòÈë¿ÚÎÄ¼ş
+ * è‡ªå®šä¹‰ç¨‹åºå…¥å£æ–‡ä»¶
  * web.php?at=1
  */
 
-//¼ì²âPHP»·¾³
+//æ£€æµ‹PHPç¯å¢ƒ
 if(PHP_VERSION < '5.2.0') die('Require PHP > 5.2.0 ');
-//¶¨Òåµ±Ç°µÄÍøÕ¾ÎïÀíÂ·¾¶
+//å®šä¹‰å½“å‰çš„ç½‘ç«™ç‰©ç†è·¯å¾„
 define('WWW_ROOT',dirname(__FILE__).'/');
 
 require './configs/web_config.php';
@@ -28,7 +28,7 @@ $GLOBALS['m'] = $route_config[$at]['m'];
 $GLOBALS['f'] = $route_config[$at]['f'];
 $GLOBALS['v'] = $route_config[$at]['v'];
 if(isset($route_config[$at]['extend'])) {
-    //TODO »º´æµÄÊ±ºò£¬Èç¹ûextendÎª¿Õ£¬Ôò²»»º´æ¸Ã×Ö¶Î
+    //TODO ç¼“å­˜çš„æ—¶å€™ï¼Œå¦‚æœextendä¸ºç©ºï¼Œåˆ™ä¸ç¼“å­˜è¯¥å­—æ®µ
     parse_str($route_config[$at]['extend']);
 }
 $app = load_class('application');
