@@ -109,7 +109,11 @@ final class index extends WUZHI_admin {
         if(isset($_SESSION['uid'])){
             $_SESSION = array();
         }
-        include $this->template('login');
+
+        set_cookie('username','');
+        set_cookie('wz_name','');
+
+        MSG(L('logout_success'), '?m=core&f=index&v=login'.$this->su(0));
     }
 
     //锁屏
