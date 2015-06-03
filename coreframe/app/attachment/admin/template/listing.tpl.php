@@ -45,16 +45,16 @@ include $this->template('header','core');
 
 
 <div class="panel-body" id="panel-bodys">
-<table class="table table-striped table-advance table-hover">
+<table class="table table-striped table-advance table-hover tablefixed">
 	<thead>
 	    <tr>
-	    <th class="tablehead">文件名</th>
-		<th class="tablehead">大小</th>
-	    <th class="tablehead hidden-phone">上传时间</th>
-	    <th class="tablehead"></i>上传用户</th>
-		<th class="tablehead">使用次数</th>
-	    <th class="tablehead">图片Tags</th>
-	    <th class="tablehead">操作</th>
+	    <th class="tablehead thw15">文件名</th>
+		<th class="tablehead thw10">大小</th>
+	    <th class="tablehead thw15 hidden-phone">上传时间</th>
+	    <th class="tablehead thw10"></i>上传用户</th>
+		<th class="tablehead thw10">使用次数</th>
+	    <th class="tablehead thw25">图片Tags</th>
+	    <th class="tablehead thw10">操作</th>
 	    </tr>
     </thead>
     <tbody>
@@ -63,7 +63,7 @@ foreach($lists AS $k=>$v)
 {
 ?>
       <tr>
-      <td class="hidden-phone"><a href="<?php echo ATTACHMENT_URL.$v['path'];?>" class="fancybox-button" rel="fancybox-button" title="<?php echo L('look_big');?>:<?php echo $v['name'];?>">
+      <td class="tdnames"><a href="<?php echo ATTACHMENT_URL.$v['path'];?>" class="fancybox-button" rel="fancybox-button" title="<?php echo L('look_big');?>:<?php echo $v['name'];?>">
 	  <?php if($this->_cache['show_mode'] == 2 && in_array( fileext($v['path']),array('jpg','jpeg','png','gif','bmp') ) ):?><img src="<?php echo ATTACHMENT_URL.$v['path'];?>" height="60" /> <?php endif;?><?php echo $v['name'];?></a></td>
 	  <td><?php echo filesize_format($v['filesize']);?></td>
       <td><?php echo time_format($v['addtime']);?></td>
@@ -71,7 +71,7 @@ foreach($lists AS $k=>$v)
 	  <td><?php echo $v['usertimes'];?></td>
 	  <td><input name="tagsinput" data-id="<?php echo $v['id'];?>" class="tagsinput" value="<?php echo $v['tags'];?>" /></td>
       <td>
-<a href="javascript:makedo('<?php echo link_url( array('v'=>'del','id'=>$v['id']) );?>', '<?php echo L('confirm_del');?>')" class="btn btn-danger btn-xs"><i class="icon-x "></i></a>
+<a href="javascript:makedo('<?php echo link_url( array('v'=>'del','id'=>$v['id']) );?>', '<?php echo L('confirm_del');?>')" class="btn btn-danger btn-xs">删除</a>
       </td>
       </tr>
 <?php } ?>
@@ -99,7 +99,7 @@ foreach($lists AS $k=>$v)
 <script type="text/javascript">
 $(function(){	
 	$('.tagsinput').tagsInput({
-	"width": "300px",
+	"width": "90%",
 	'height':'42px',
 	'minChars':2,
 	'onAddTag':function(tag){callback_tags( tag, 1, $(this) )}, //增加标签的回调函数
