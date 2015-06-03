@@ -14,9 +14,9 @@ $LANG['parameter_error'] = '参数错误！';
 $LANG['not_writable'] = '文件不可写';
 $LANG['admin_login'] = '请登录...';
 $LANG['checkcode_error'] = '验证码错误';
-$LANG['checkcode_error'] = '验证码错误';
 $LANG['please_login'] = '请先登录...';
 $LANG['login_please'] = '请先登录...';
+$LANG['logout_success'] = '登出成功！';
 
 
 
