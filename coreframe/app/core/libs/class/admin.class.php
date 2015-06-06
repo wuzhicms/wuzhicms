@@ -96,6 +96,14 @@ class WUZHI_admin {
             }
         }
         if(V=='listing') return '';
+
+        //后台管理日志配置
+        include COREFRAME_ROOT.'configs/wz_config.php';
+
+        if (defined('ADMIN_LOG') && 0 == ADMIN_LOG) {
+            return '';
+        }
+
         $formdata = array();
         $formdata['uid'] = $_SESSION['uid'];
         $formdata['m'] = M;

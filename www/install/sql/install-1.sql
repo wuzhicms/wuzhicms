@@ -2478,7 +2478,7 @@ CREATE TABLE IF NOT EXISTS `wz_copyfrom` (
   `fromid` smallint(5) unsigned NOT NULL,
   `name` char(20) NOT NULL,
   `url` char(40) NOT NULL,
-  `logo` char(50) NOT NULL,
+  `logo` char(255) NOT NULL,
   `usetimes` mediumint(8) unsigned NOT NULL,
   `updatetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='来源表' AUTO_INCREMENT=6 ;

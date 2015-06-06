@@ -18,7 +18,7 @@ class index extends WUZHI_admin
     {
         $this->db = load_class('db');
         $GLOBALS['_menuid'] = isset($GLOBALS['_menuid']) ? intval($GLOBALS['_menuid']) : '';
-        $this->_cache = get_cache(M);
+        $this->_cache = $this->fetch_cache();
     }
 
     public function listing()
@@ -296,5 +296,17 @@ class index extends WUZHI_admin
         }
 
         return $where;
+    }
+
+    private function fetch_cache() {
+        if ('' != get_cache(M)) return get_cache(M);
+
+        $default_config = array(
+            'show_mode' => '1',
+            'attachment_test' => '',
+            'attachment_thumb_test' => '',
+        );
+        set_cache(M, $default_config);
+        return $default_config;
     }
 }

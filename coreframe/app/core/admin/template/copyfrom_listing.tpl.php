@@ -32,7 +32,7 @@
                             <td><?php echo $r['fromid'];?></td>
                             <td><?php echo $r['name'];?></td>
                             <td><?php echo $r['url'];?></td>
-                            <td><?php echo $r['logo'];?></td>
+                            <td><?php if($r['logo']) echo '<img src="'.$r['logo'].'" style="max-height:100px;max-width:150px;">';?></td>
                             <td><?php echo $r['usetimes'];?></td>
                             <td><?php echo $r['updatetime'];?></td>
                             <td>
