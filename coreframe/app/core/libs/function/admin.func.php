@@ -15,7 +15,7 @@ function set_web_config($key,$value) {
 
         $res = file_get_contents(WWW_ROOT.'configs/web_config.php');
         //define('SUPPORT_MOBILE',1);//0，不支持移动页面，1，自动识别，动态，伪静态下可用，静态页面通过
-        $res = preg_replace("/define\('$key',([0-9])\);/is","define('$key',$value);",$res);
+        $res = preg_replace("/define\('$key',([0-9a-z\/\,\._':]+)\);/is","define('$key',$value);",$res);
         file_put_contents(WWW_ROOT.'configs/web_config.php',$res);
     } else {
         MSG("文件不可写：".WWW_ROOT.'configs/web_config.php');
