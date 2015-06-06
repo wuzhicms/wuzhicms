@@ -29,7 +29,7 @@ include $this->template('header','core');
             <div class="form-group">
                 <label class="col-sm-2 control-label">logo</label>
                 <div class="col-sm-4 input-group">
-                    <input type="text" class="form-control" name="form[logo]" color="#000000">
+                    <div class="input-group"><?php echo WUZHI_form::attachment('','1','form[logo]');?></div>
                 </div>
             </div>
             <div class="form-group">
