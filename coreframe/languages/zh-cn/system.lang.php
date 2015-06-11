@@ -17,6 +17,7 @@ $LANG['checkcode_error'] = '验证码错误';
 $LANG['please_login'] = '请先登录...';
 $LANG['login_please'] = '请先登录...';
 $LANG['logout_success'] = '登出成功！';
+$LANG['already_login'] = '已经登陆，即将跳转到后台首页...';
 
 
 
