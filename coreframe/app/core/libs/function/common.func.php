@@ -862,7 +862,7 @@ function cache_in_db( $data, $keyid, $m)
     $r = $db->get_one( 'setting' ,$where );
 
     if( empty($data) ) return unserialize($r['data']);
-    $insert_data = array( 'data'=>serialize($data), 'updatetime'=>SYS_TIME );
+    $insert_data = array( 'data'=>serialize($data), 'updatetime'=>date('Y-m-d H:i:s', SYS_TIME) );
     if( empty($r) )
     {
         $db->insert( 'setting', array_merge( $insert_data, $where) );

@@ -281,4 +281,15 @@ if (data == 'ok') {
 });
 }
 }
+//移除相关内容
+    function remove_relation(obj,rid) {
+        $.post("?m=content&f=relation&v=remove_relation<?php echo $this->su();?>", { rid: rid, time: Math.random()}, function(data){
+            if(data=='200') {
+                $(obj).parent().fadeOut();
+            } else {
+                alert(data);
+            }
+        });
+
+    }
 </script>

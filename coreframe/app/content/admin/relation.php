@@ -72,4 +72,9 @@ class relation extends WUZHI_admin {
 
         include $this->template('relation_listing');
     }
+    public function remove_relation() {
+        $rid = intval($GLOBALS['rid']);
+        $this->db->delete('content_relation',array('rid'=>$rid));
+        exit('200');
+    }
 }
