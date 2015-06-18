@@ -76,9 +76,9 @@ include $this->template('header','core');
             $("#panel-bodys").load("?m=content&f=relation&v=listing&charset=1&&keytype="+keytype+"&cid="+cid+"&keywords="+keywords+"<?php echo $this->su();?>", {},function(){});
 
         }
-        function changeList(title,url) {
+        function changeList(title,url,origin_id,origin_cid) {
             title = title.replace('<','&lt;');
-            $("#slist").append('<li><div class="task-title"><span class="task-title-sp"><a href="'+url+'" target="_blank">'+title+'</a></span><div class="pull-right cur" onclick="removeList(this);">移 除</div></div></li>');
+            $("#slist").append('<li><div class="task-title"><span class="task-title-sp"><a href="'+url+'" target="_blank" origin_id="'+origin_id+'" origin_cid="'+origin_cid+'">'+title+'</a></span><div class="pull-right cur" onclick="removeList(this);">移 除</div></div></li>');
             document.getElementById('sheiht').scrollTop = document.getElementById('sheiht').scrollHeight;
 
 
@@ -90,7 +90,7 @@ include $this->template('header','core');
             var dialog = top.dialog.get(window);
             var htmls = '';
             $("#slist a").each(function(){
-                htmls += $(this).html()+"~wz~"+$(this).attr('href')+"~wuzhicms~";
+                htmls += $(this).html()+"~wz~"+$(this).attr('href')+"~wz~"+$(this).attr('origin_id')+"~wz~"+$(this).attr('origin_cid')+"~wuzhicms~";
                 //alert($(this).html());
             });
             dialog.close(htmls).remove();

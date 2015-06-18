@@ -86,6 +86,11 @@ final class index extends WUZHI_admin {
 
     //登录
     function login() {
+        //已经登陆的用户重定向到后台首页
+        if (isset($_SESSION['uid'])) {
+            MSG(L('already login'), '?m=core&f=index'.$this->su(0));
+        }
+
         if(isset($GLOBALS['submit'])) {
             if(!isset($_SESSION['code']) && $_SERVER["SERVER_NAME"]!=parse_url(WEBURL, PHP_URL_HOST)) {
                 MSG(L('session error'));
