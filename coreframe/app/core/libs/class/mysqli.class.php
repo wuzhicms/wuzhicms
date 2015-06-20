@@ -172,7 +172,7 @@ class WUZHI_mysqli {
 	}
 
 	public function escape_string($string) {
-		return $string;
+        return mysqli_real_escape_string($this->link,$string);
 	}
 
 	private static function safe_filed($field, $is_array = TRUE) {
@@ -253,6 +253,6 @@ class WUZHI_mysqli {
 	}
 
 	public function halt($message = '', $sql = '') {
-		MSG('sql_error:'.$message.'<br /><br />'.$sql.'<br /> '.mysql_error());
+		MSG('<div style="font-size: 9px;word-break: break-all;height: 150px;overflow: overlay;">[sql_error]'.$message.'<br /><br />'.$sql.'<br />[msg]'.mysqli_error($this->link).'</div>');
 	}
 }
