@@ -24,10 +24,7 @@ class model extends WUZHI_admin {
 	}
 	//模型列表
 	public function model_listing() {
-        $this->cache_form();//TODO 删除该行
-
-		$m = $this->m;
-		$where = array('m'=>$m);
+		$where = array('m'=>$this->m);
 		$result = $this->db->get_list('model', $where, '*', 0, 100,0,'modelid ASC');
 		include $this->template('model_listing');
 	}
