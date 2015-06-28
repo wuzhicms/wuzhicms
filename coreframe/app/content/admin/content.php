@@ -113,9 +113,10 @@ class content extends WUZHI_admin {
         $result = array();
         foreach($models as $key=>$model) {
             $master_table = $model['master_table'];
-            $result[$key] = $this->db->get_list($master_table,$where, '*', 0, 20,0,'id DESC');
+            if (!isset($result[$master_table])) {
+                $result[$master_table] = $this->db->get_list($master_table,$where, '*', 0, 20,0,'id DESC');
+            }
         }
-        //print_r($result);
         include $this->template('content_allcheck');
     }
     public function add() {
