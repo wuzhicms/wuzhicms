@@ -131,13 +131,14 @@ class content extends WUZHI_admin {
 
         if(isset($GLOBALS['submit']) || isset($GLOBALS['submit2'])) {
             $formdata = $GLOBALS['form'];
+            //插入时间，更新时间，如果用户设置了时间。则按照用户设置的时间
+            $addtime = empty($formdata['addtime']) ? SYS_TIME : strtotime($formdata['addtime']);
+
             //添加数据之前，将用户提交的数据按照字段的配置，进行处理
             require get_cache_path('content_add','model');
             $form_add = new form_add($modelid);
             $formdata = $form_add->execute($formdata);
 
-            //插入时间，更新时间，如果用户设置了时间。则按照用户设置的时间
-            $addtime = empty($formdata['addtime']) ? SYS_TIME : strtotime($formdata['addtime']);
             $formdata['master_data']['addtime'] = $formdata['master_data']['updatetime'] = $addtime;
             //如果是共享模型，那么需要在将字段modelid增加到数据库
             if($formdata['master_table']=='content_share') {
@@ -283,14 +284,14 @@ class content extends WUZHI_admin {
 
         if(isset($GLOBALS['submit']) || isset($GLOBALS['submit2'])) {
             $formdata = $GLOBALS['form'];
+            //插入时间，更新时间，如果用户设置了时间。则按照用户设置的时间
+            $addtime = empty($formdata['addtime']) ? SYS_TIME : strtotime($formdata['addtime']);
+
             //添加数据之前，将用户提交的数据按照字段的配置，进行处理
             require get_cache_path('content_add','model');
             $form_add = new form_add($modelid);
             $formdata = $form_add->execute($formdata);
 
-//exit;
-            //插入时间，更新时间，如果用户设置了时间。则按照用户设置的时间
-            $addtime = empty($formdata['addtime']) ? SYS_TIME : strtotime($formdata['addtime']);
             $formdata['master_data']['addtime'] = $addtime;
             $formdata['master_data']['updatetime'] = SYS_TIME;
             //如果是共享模型，那么需要在将字段modelid增加到数据库
