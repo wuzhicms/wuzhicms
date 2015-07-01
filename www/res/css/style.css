@@ -294,6 +294,7 @@ ul.sidebar-menu li a.active span{color:#3B4658;}
 .treelistmain .treetools ul li a i{font-size: 20px;color: #787B89;}
 .treelistmain .treetools ul li a:hover i{color:#FF6C60; }
 .treelistmain .treetools ul li.active a i {color: #FF6C60;}
+.treelistmain .treelist{float: left;}
 .treelistmain .badge.bg-important {background: #FF6C60;}
 .treelistmain .treetools .badge {position: absolute;right: 0px;top: -6px;z-index: 100;font-weight: 100;padding: 2px 5px;}
 .adser{position: absolute;right: 17px;top: -7px;background-position: -93px 0}
