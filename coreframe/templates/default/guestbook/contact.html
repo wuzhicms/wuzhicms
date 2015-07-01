@@ -21,7 +21,7 @@
                         <tr>
                             <th align="right">验证码：</th>
                             <td>
-                                <input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img').src='<?php echo WEBURL;?>index.php?m=core&w=110&h=40&f=identifying_code&rd='+Math.random();void(0);"> <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>index.php?m=core&f=identifying_code&rd='+Math.random();void(0);">
+                                <input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img').src='<?php echo WEBURL;?>api/identifying_code.php?w=110&h=40&rd='+Math.random();void(0);"> <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>api/identifying_code.php?&rd='+Math.random();void(0);">
 
                             </td>
                         </tr>

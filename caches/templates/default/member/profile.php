@@ -20,7 +20,7 @@
 <div class="container adframe">
     <div class="row">
         <div class="col-lg-12 col-xs-12">
-            
+
         </div>
     </div>
 </div>
@@ -81,10 +81,10 @@
                                             <tr>
                                                 <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right"><?php if($info['star']) { ?><font color="red">*</font><?php } ?> <?php echo $info['name'];?>：</label><div class="col-sm-3 text-left"><?php echo $info['form'];?><span class="tablewarnings"><?php echo $info['remark'];?></span></div></div></td>
                                             </tr>
-                                            
+
                                             <?php $n++;}?>
                                             <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">验证码：</label><div class="col-sm-8 text-left"><input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img').src='<?php echo WEBURL;?>index.php?m=core&w=110&h=40&f=identifying_code&rd='+Math.random();void(0);"> <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>index.php?m=core&f=identifying_code&rd='+Math.random();void(0);"></div></div></td>
+                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">验证码：</label><div class="col-sm-8 text-left"><input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img').src='<?php echo WEBURL;?>api/identifying_code.php?w=110&h=40&rd='+Math.random();void(0);"> <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>api/identifying_code.php?rd='+Math.random();void(0);"></div></div></td>
                                             </tr>
 
                                             <tr>
@@ -115,7 +115,7 @@
                                                 <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">确认密码：</label><div class="col-sm-3 text-left"><input type="password" class="form-control" id="repassword" placeholder="请再输入一次" name="password2" type="password"></div></div></td>
                                             </tr>
                                             <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">验证码：</label><div class="col-sm-8 text-left"><input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img2').src='<?php echo WEBURL;?>index.php?m=core&w=110&h=40&f=identifying_code&rd='+Math.random();void(0);"> <img src="<?php echo R;?>images/logincode.gif" id="code_img2" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>index.php?m=core&f=identifying_code&rd='+Math.random();void(0);"></div></div></td>
+                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">验证码：</label><div class="col-sm-8 text-left"><input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img2').src='<?php echo WEBURL;?>api/identifying_code.php?w=110&h=40&rd='+Math.random();void(0);"> <img src="<?php echo R;?>images/logincode.gif" id="code_img2" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>api/identifying_code.php?rd='+Math.random();void(0);"></div></div></td>
                                             </tr>
 
                                             <tr>

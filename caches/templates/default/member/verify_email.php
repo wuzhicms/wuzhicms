@@ -19,7 +19,7 @@
                                         <div id="username_error" class="input-group">
                                             <div class="input-group-addon"><i class="icon-qrcode"></i></div>
                                             <input type="text" name="checkcode" class="form-control" placeholder="验证码"  datatype="s4-4" errormsg="请输入正确的Email" sucmsg="OK">
-                                            <div id="logincode" class="input-group-addon"><img id="code_img" onclick="javascript:this.src='/index.php?m=core&f=identifying_code&rd='+Math.random();void(0);" src="/index.php?m=core&f=identifying_code" alt="点击刷新"> </div>
+                                            <div id="logincode" class="input-group-addon"><img id="code_img" onclick="javascript:this.src='/api/identifying_code.php?rd='+Math.random();void(0);" src="/api/identifying_code.php" alt="点击刷新"> </div>
                                         </div>
                                     </div>
                                     <button type="submit" name="submit" class="btn btn-shadow btn-danger btn-block btn-login">立 即 提交</button>
