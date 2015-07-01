@@ -95,7 +95,7 @@ class WUZHI_admin {
                 exit;
             }
         }
-        if(V=='listing') return '';
+        if(V=='listing' || M =='core' && F =='index' && V === 'keep_alive') return '';
 
         //后台管理日志配置
         include COREFRAME_ROOT.'configs/wz_config.php';
