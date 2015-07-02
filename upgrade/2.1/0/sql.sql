@@ -6,6 +6,7 @@ ALTER TABLE `wz_attachment` ADD `isimage` TINYINT(1) NOT NULL DEFAULT '0' ;
 ALTER TABLE `wz_attachment` ADD `diycat` VARCHAR(20) NOT NULL ;
 
 ALTER TABLE `wz_block_data` ADD `siteid` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' AFTER `id`;
+ALTER TABLE `wz_block_data` ADD `isdiy` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `id`;
 ALTER TABLE `wz_category` ADD `siteid` TINYINT(3) UNSIGNED NOT NULL DEFAULT '1' AFTER `cid`;
 ALTER TABLE `wz_category` ADD `icon` VARCHAR(150) NOT NULL ;
 

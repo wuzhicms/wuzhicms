@@ -1925,6 +1925,7 @@ CREATE TABLE IF NOT EXISTS `wz_block_data` (
   `addtime` int(10) unsigned NOT NULL COMMENT '添加时间',
   `sort` tinyint(3) unsigned NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '9' COMMENT '状态，9通过审核',
+  `isdiy` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `attach` text NOT NULL COMMENT '附加参数'
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='区块数据表' AUTO_INCREMENT=43 ;
 
