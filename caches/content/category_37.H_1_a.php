@@ -1,11 +1,12 @@
 <?php
  return array (
   'cid' => '37',
+  'siteid' => '1',
   'keyid' => 'content',
   'name' => '微信自动回复',
   'mb' => '微信自动回复',
   'catdir' => 'weixinautoreply',
-  'parentdir' => '',
+  'parentdir' => 'weixinautoreply',
   'pid' => '0',
   'type' => '0',
   'child' => '0',
@@ -14,6 +15,7 @@
   'domain' => '',
   'url' => '/index.php?v=listing&cid=37&page=1',
   'thumb' => '',
+  'icon' => '',
   'workflowid' => '0',
   'showloop' => '0',
   'ismenu' => '0',

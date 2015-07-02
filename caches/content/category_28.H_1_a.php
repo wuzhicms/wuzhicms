@@ -1,11 +1,12 @@
 <?php
  return array (
   'cid' => '28',
+  'siteid' => '1',
   'keyid' => 'content',
   'name' => '北京',
   'mb' => '商家演示',
   'catdir' => 'beijing',
-  'parentdir' => 'shangjiayanshi',
+  'parentdir' => 'beijing',
   'pid' => '0',
   'type' => '0',
   'child' => '0',
@@ -14,6 +15,7 @@
   'domain' => '',
   'url' => '/index.php?v=listing&cid=28&page=1',
   'thumb' => '',
+  'icon' => '',
   'workflowid' => '0',
   'showloop' => '0',
   'ismenu' => '0',

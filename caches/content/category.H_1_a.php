@@ -12,6 +12,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   2 => 
   array (
@@ -25,6 +28,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   3 => 
   array (
@@ -38,6 +44,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   4 => 
   array (
@@ -51,6 +60,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   31 => 
   array (
@@ -64,6 +76,9 @@
     'type' => '1',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   6 => 
   array (
@@ -75,8 +90,11 @@
     'url' => '/index.php?v=listing&cid=6&page=1',
     'showloop' => '1',
     'type' => '0',
-    'showhtml' => '0',
+    'showhtml' => '1',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   7 => 
   array (
@@ -90,6 +108,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   8 => 
   array (
@@ -103,6 +124,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   9 => 
   array (
@@ -116,6 +140,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   10 => 
   array (
@@ -129,6 +156,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   11 => 
   array (
@@ -142,6 +172,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   12 => 
   array (
@@ -155,6 +188,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   14 => 
   array (
@@ -168,6 +204,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   15 => 
   array (
@@ -181,6 +220,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   30 => 
   array (
@@ -194,6 +236,9 @@
     'type' => '1',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   18 => 
   array (
@@ -207,6 +252,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   29 => 
   array (
@@ -220,6 +268,9 @@
     'type' => '1',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   20 => 
   array (
@@ -233,6 +284,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   32 => 
   array (
@@ -246,6 +300,9 @@
     'type' => '1',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   28 => 
   array (
@@ -259,6 +316,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   27 => 
   array (
@@ -272,6 +332,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   26 => 
   array (
@@ -285,6 +348,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   33 => 
   array (
@@ -298,6 +364,9 @@
     'type' => '1',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   35 => 
   array (
@@ -311,6 +380,9 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   36 => 
   array (
@@ -324,6 +396,9 @@
     'type' => '1',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
   37 => 
   array (
@@ -337,5 +412,8 @@
     'type' => '0',
     'showhtml' => '0',
     'listhtml' => '0',
+    'language' => '',
+    'siteid' => '1',
+    'icon' => '',
   ),
 )?>

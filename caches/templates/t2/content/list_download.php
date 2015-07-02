@@ -29,10 +29,10 @@ if (method_exists($content_template_parse, 'listing')) {
                 <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
                 <div class="media">
                     <div class="media-left">
-                        <a href="<?php echo $r['url'];?>"><img src="<?php echo $r['thumb'];?>" width="120px;"></a>
+                        <a href="<?php echo $r[url];?>"><img src="<?php echo $r[thumb];?>" width="120px;"></a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading manhangyichu" style="max-width:480px;"><strong><a href="<?php echo $r['url'];?>" target="_blank"><?php echo $r['title'];?></a></strong></h4>
+                        <h4 class="media-heading manhangyichu" style="max-width:480px;"><strong><a href="<?php echo $r[url];?>" target="_blank"><?php echo $r['title'];?></a></strong></h4>
                         <p style="width:490px;"><span class="down_wds"><a href="<?php echo $categorys[$r['cid']]['url'];?>"><?php echo $categorys[$r['cid']]['name'];?></a> | <?php echo $r['soft_license'];?> | 大小:<?php echo $r['soft_size'];?> | 环境:<?php echo $r['soft_env'];?> | 人气:<?php echo $r['down_numbers'];?></span><br>
                             <?php echo strcut($r['remark'],180,'...');?><br>
                             <small style="float:right"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> 更新日期：<?php echo date('Y.m.d',$r['addtime']);?></small></p>

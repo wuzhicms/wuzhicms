@@ -18,7 +18,7 @@
         </tr>
         <tr>
             <td width="120" align="right">所在地区<span class="color_warning">*</span></td>
-            <td width="675"><?php echo linkage(3,'myfieldid3',0);?></td>
+            <td width="675"><?php echo linkage(1,'myfieldid1',0);?></td>
         </tr>
         <tr>
             <td align="right">详细地址<span class="color_warning">*</span></td>

@@ -1,6 +1,7 @@
 <?php
  return array (
   'cid' => '11',
+  'siteid' => '1',
   'keyid' => 'content',
   'name' => '移民',
   'mb' => '移民',
@@ -14,6 +15,7 @@
   'domain' => '',
   'url' => '/index.php?v=listing&cid=11&page=1',
   'thumb' => '',
+  'icon' => '',
   'workflowid' => '0',
   'showloop' => '1',
   'ismenu' => '1',

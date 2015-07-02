@@ -64,7 +64,7 @@ if (method_exists($content_template_parse, 'block')) {
     <div class="container">
         <div class="row">
             <div class="col-xs-8 ">
-                <h3><?php echo $categorys['1']['name'];?> <span class="lm_more"><?php $sub_categorys = sub_categorys(1);?>
+                <h3><?php echo $categorys[1]['name'];?> <span class="lm_more"><?php $sub_categorys = sub_categorys(1);?>
                     <?php $n=1; if(is_array($sub_categorys)) foreach($sub_categorys AS $cid => $cat) { ?>
                     <a href="<?php echo $cat['url'];?>" target="_blank"><?php echo $cat['name'];?></a>&nbsp;&nbsp;
                     <?php $n++;}?></span>
@@ -83,11 +83,11 @@ if(!class_exists('content_template_parse')) {
 if (method_exists($content_template_parse, 'listing')) {
 	$rs = $content_template_parse->listing(array('order'=>'sort DESC,id DESC','cid'=>'6','start'=>'0','pagesize'=>'6','page'=>'0',));
 	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?>
-                    <h4>&#8226; <a href="<?php echo $categorys['6']['url'];?>" target="_blank"><?php echo $categorys['6']['name'];?></a></h4>
+                    <h4>&#8226; <a href="<?php echo $categorys[6]['url'];?>" target="_blank"><?php echo $categorys[6]['name'];?></a></h4>
                     <div class="list-group">
                     <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-                        <?php if($n==1) { ?><a href="<?php echo $r['url'];?>" class="list-group-item_g" target="_blank"><?php echo strcut($r['title'],36);?></a><?php } else { ?>
-                        <a href="<?php echo $r['url'];?>" class="list-group-item_g" target="_blank"><span class="badge"><?php echo date('m-d',$r['addtime']);?></span>· <?php echo strcut($r['title'],32);?></a><?php } ?>
+                        <?php if($n==1) { ?><a href="<?php echo $r[url];?>" class="list-group-item_g" target="_blank"><?php echo strcut($r['title'],36);?></a><?php } else { ?>
+                        <a href="<?php echo $r[url];?>" class="list-group-item_g" target="_blank"><span class="badge"><?php echo date('m-d',$r['addtime']);?></span>· <?php echo strcut($r['title'],32);?></a><?php } ?>
                     <?php $n++;}?>
                     </div>
                     <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
@@ -101,11 +101,11 @@ if(!class_exists('content_template_parse')) {
 if (method_exists($content_template_parse, 'listing')) {
 	$rs = $content_template_parse->listing(array('order'=>'sort DESC,id DESC','cid'=>'7','start'=>'0','pagesize'=>'6','page'=>'0',));
 	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?>
-                    <h4>&#8226; <a href="<?php echo $categorys['7']['url'];?>" target="_blank"><?php echo $categorys['7']['name'];?></a></h4>
+                    <h4>&#8226; <a href="<?php echo $categorys[7]['url'];?>" target="_blank"><?php echo $categorys[7]['name'];?></a></h4>
                     <div class="list-group">
                         <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-                        <?php if($n==1) { ?><a href="<?php echo $r['url'];?>" class="list-group-item_g" target="_blank"><?php echo strcut($r['title'],36);?></a><?php } else { ?>
-                        <a href="<?php echo $r['url'];?>" class="list-group-item_g" target="_blank"><span class="badge"><?php echo date('m-d',$r['addtime']);?></span>· <?php echo strcut($r['title'],32);?></a><?php } ?>
+                        <?php if($n==1) { ?><a href="<?php echo $r[url];?>" class="list-group-item_g" target="_blank"><?php echo strcut($r['title'],36);?></a><?php } else { ?>
+                        <a href="<?php echo $r[url];?>" class="list-group-item_g" target="_blank"><span class="badge"><?php echo date('m-d',$r['addtime']);?></span>· <?php echo strcut($r['title'],32);?></a><?php } ?>
                         <?php $n++;}?>
                     </div>
                     <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
@@ -123,11 +123,11 @@ if(!class_exists('content_template_parse')) {
 if (method_exists($content_template_parse, 'listing')) {
 	$rs = $content_template_parse->listing(array('order'=>'sort DESC,id DESC','cid'=>'8','start'=>'0','pagesize'=>'6','page'=>'0',));
 	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?>
-                    <h4>&#8226; <a href="<?php echo $categorys['8']['url'];?>" target="_blank"><?php echo $categorys['8']['name'];?></a></h4>
+                    <h4>&#8226; <a href="<?php echo $categorys[8]['url'];?>" target="_blank"><?php echo $categorys[8]['name'];?></a></h4>
                     <div class="list-group">
                         <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-                        <?php if($n==1) { ?><a href="<?php echo $r['url'];?>" class="list-group-item_g" target="_blank"><?php echo strcut($r['title'],36);?></a><?php } else { ?>
-                        <a href="<?php echo $r['url'];?>" class="list-group-item_g" target="_blank"><span class="badge"><?php echo date('m-d',$r['addtime']);?></span>· <?php echo strcut($r['title'],32);?></a><?php } ?>
+                        <?php if($n==1) { ?><a href="<?php echo $r[url];?>" class="list-group-item_g" target="_blank"><?php echo strcut($r['title'],36);?></a><?php } else { ?>
+                        <a href="<?php echo $r[url];?>" class="list-group-item_g" target="_blank"><span class="badge"><?php echo date('m-d',$r['addtime']);?></span>· <?php echo strcut($r['title'],32);?></a><?php } ?>
                         <?php $n++;}?>
                     </div>
                     <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
@@ -140,11 +140,11 @@ if(!class_exists('content_template_parse')) {
 if (method_exists($content_template_parse, 'listing')) {
 	$rs = $content_template_parse->listing(array('order'=>'sort DESC,id DESC','cid'=>'9','start'=>'0','pagesize'=>'6','page'=>'0',));
 	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?>
-                    <h4>&#8226; <a href="<?php echo $categorys['9']['url'];?>" target="_blank"><?php echo $categorys['9']['name'];?></a></h4>
+                    <h4>&#8226; <a href="<?php echo $categorys[9]['url'];?>" target="_blank"><?php echo $categorys[9]['name'];?></a></h4>
                     <div class="list-group">
                         <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-                        <?php if($n==1) { ?><a href="<?php echo $r['url'];?>" class="list-group-item_g" target="_blank"><?php echo strcut($r['title'],36);?></a><?php } else { ?>
-                        <a href="<?php echo $r['url'];?>" class="list-group-item_g" target="_blank"><span class="badge"><?php echo date('m-d',$r['addtime']);?></span>· <?php echo strcut($r['title'],32);?></a><?php } ?>
+                        <?php if($n==1) { ?><a href="<?php echo $r[url];?>" class="list-group-item_g" target="_blank"><?php echo strcut($r['title'],36);?></a><?php } else { ?>
+                        <a href="<?php echo $r[url];?>" class="list-group-item_g" target="_blank"><span class="badge"><?php echo date('m-d',$r['addtime']);?></span>· <?php echo strcut($r['title'],32);?></a><?php } ?>
                         <?php $n++;}?>
                     </div>
                     <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
