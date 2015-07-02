@@ -29,14 +29,14 @@ include $this->template('header','core');
 
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
 <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-
+<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo R;?>css/jquery-tree.css" />
 <script type="text/javascript" src="<?php echo R;?>js/jquery-tree.min.js"></script>
 <script type="text/javascript">
     var global_cid = '<?php echo $cid;?>';
     $('#tree').explr({
-        rememberState   : false,
-        startCollapsed  : true,
+        rememberState   : true,
+        startCollapsed  : false,
         treeWidth   : 180
     });
     var parentpos = top.$("#position").html();
@@ -73,6 +73,4 @@ include $this->template('header','core');
     function search_text(s,text){
         if(text.match(s)) return true;
     }
-    $('.tooltips').tooltip();
-    $(".categorytree").niceScroll({cursorwidth: '6',horizrailenabled:false,mousescrollstep:55,autohidemode:false,cursorborder:"none",cursorcolor : "#c4c8d2"});
 </script>

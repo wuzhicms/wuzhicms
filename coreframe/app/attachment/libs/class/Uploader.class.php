@@ -355,7 +355,7 @@ class WUZHI_Uploader
 		$insert['addtime'] = SYS_TIME;
 		$insert['filesize'] = $this->fileSize;
 		$insert['ip'] = get_ip();
-		$insert['userid'] = '111';
+		$insert['username'] = get_cookie('username') ? get_cookie('username') : get_cookie('wz_name');
 		$id = $attachment->insert($insert);
 	}
 

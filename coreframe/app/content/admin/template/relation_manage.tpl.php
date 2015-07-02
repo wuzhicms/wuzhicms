@@ -62,15 +62,16 @@ include $this->template('header','core');
     </div>
 </div>
     <script type="text/javascript">
+		var cid = <?php echo $cid;?>;
         function changepage(pageid) {
             var keytype = $("#keytype").val();
             var keywords = $("#keywords").val();
-            $("#panel-bodys").load("?m=content&f=relation&v=listing&keytype="+keytype+"&keywords="+keywords+"&cid=<?php echo $cid.$this->su();?>&page="+pageid, {},function(){
+            $("#panel-bodys").load("?m=content&f=relation&v=listing&keytype="+keytype+"&keywords="+keywords+"&cid="+cid+"<?php echo $this->su();?>&page="+pageid, {},function(){
             });
         }
         changepage(1);
         function search_form() {
-            var cid = $("#cid").val();
+            cid = $("#cid").val();
             var keywords = $("#keywords").val();
             var keytype = $("#keytype").val();
             $("#panel-bodys").load("?m=content&f=relation&v=listing&charset=1&&keytype="+keytype+"&cid="+cid+"&keywords="+keywords+"<?php echo $this->su();?>", {},function(){});

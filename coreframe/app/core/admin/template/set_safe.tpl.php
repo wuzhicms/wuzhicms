@@ -17,10 +17,10 @@ include $this->template('header','core');
                 <label class="col-sm-2 control-label">启用后台管理日志</label>
                 <div class="col-sm-4">
                     <label class="radio-inline">
-                        <input type="radio" name="logerr" value="1" <?php if(defined('ADMIN_LOG') && 1 == ADMIN_LOG) echo 'checked';?> disabled>是
+                        <input type="radio" name="logerr" value="1" <?php if(defined('ADMIN_LOG')) echo 'checked';?> disabled>是
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="logerr" value="0" <?php if(defined('ADMIN_LOG') && 0 == ADMIN_LOG) echo 'checked';?> disabled>否
+                        <input type="radio" name="logerr" value="0" <?php if(!defined('ADMIN_LOG')) echo 'checked';?> disabled>否
                     </label>
                 </div>
             </div>

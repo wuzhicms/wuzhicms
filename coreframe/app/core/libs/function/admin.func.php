@@ -8,6 +8,9 @@
 defined('IN_WZ') or exit('No direct script access allowed');
 /**
  * 设置web_config
+ * @param $key 配置项
+ * @param $value 值
+ * @return string
  */
 function set_web_config($key,$value) {
     if($key=='') return '-1';
@@ -15,12 +18,18 @@ function set_web_config($key,$value) {
 
         $res = file_get_contents(WWW_ROOT.'configs/web_config.php');
         //define('SUPPORT_MOBILE',1);//0，不支持移动页面，1，自动识别，动态，伪静态下可用，静态页面通过
-        $res = preg_replace("/define\('$key',([0-9a-z\/\,\._':]+)\);/is","define('$key',$value);",$res);
+        $res = preg_replace("/define\('$key',([0-9])\);/is","define('$key',$value);",$res);
         file_put_contents(WWW_ROOT.'configs/web_config.php',$res);
     } else {
         MSG("文件不可写：".WWW_ROOT.'configs/web_config.php');
     }
 }
+
+/**
+ * 后台列表标题样颜色
+ * @param $css
+ * @return array
+ */
 function style($css) {
     if(empty($css)) {
         return array('color'=>'','font-weight'=>'','font-size'=>'');

@@ -24,7 +24,8 @@ class form_build {
 
 	public function execute($formdata = array()) {
 		$this->formdata = $formdata;
-		$info = array();
+        $this->id = $this->formdata['id'] ? $this->formdata['id'] : 0;
+        $info = array();
 		foreach($this->fields as $field=>$field_config) {
             $value = '';
 			if($this->check_field($field)===FALSE) continue;

@@ -22,17 +22,15 @@ class category extends WUZHI_admin {
 	 */
 	public function listing() {
         $types = array('列表','单网页','外链');
+        $siteid = get_cookie('siteid');
         $model_cache = get_cache('model_content','model');
-        if(isset($GLOBALS['modelid'])) {
-            $modelid = intval($GLOBALS['modelid']);
-            $where = "modelid=$modelid";
-        } else {
-            $where = "`keyid`='content' AND modelid NOT IN(2,3)";
-        }
+        $where = "`keyid`='content' AND `siteid`='$siteid'";
+        $sitelist = get_cache('sitelist');
 		$result = $this->db->get_list('category', $where, '*', 0, 2000, 0, 'sort ASC', '', 'cid');
 		foreach($result as $cid=>$r) {
 			$result[$cid]['str_manage'] = '<a class="btn btn-default btn-xs" href="?m=content&f=category&v=add&pid='.$r['cid'].$this->su().'">添加子栏目</a> <a class="btn btn-primary btn-xs" href="?m=content&f=category&v=edit&cid='.$r['cid'].$this->su().'">修改</a> <a class="btn btn-danger btn-xs" href="javascript:makedo(\'?m=content&f=category&v=delete&cid='.$r['cid'].$this->su().'\', \'确认删除该记录？\')">删除</a>';
 			$result[$cid]['ctype'] = $types[$r['type']];
+			$result[$cid]['siteid'] = $sitelist[$r['siteid']]['name'];
 			$result[$cid]['modelname'] = $model_cache[$r['modelid']]['name'];
 			$result[$cid]['url'] = '<a href="'.$r['url'].'" target="_blank">访问</a>';
 		}
@@ -42,7 +40,7 @@ class category extends WUZHI_admin {
 		$tree_data = '';
 
 		//格式字符串
-		$str="<tr><td class='categorytd'><div><input class='center'style='padding:3px' name='sorts[\$cid]' type='text' size='3' value='\$sort'></div></td><td>\$cid</td></td><td id='\$cid' \$selected>\$spacer\$name</td><td>\$ctype</td><td>\$modelname</td><td>\$url</td><td>\$str_manage</td></tr>";
+		$str="<tr><td class='categorytd'><div><input class='center'style='padding:3px' name='sorts[\$cid]' type='text' size='3' value='\$sort'></div></td><td>\$cid</td><td>\$siteid</td></td><td id='\$cid' \$selected>\$spacer\$name</td><td>\$ctype</td><td>\$modelname</td><td>\$url</td><td>\$str_manage</td></tr>";
 		 
 		//返回树
 		$tree_data.=$tree->create(0,$str);
@@ -57,6 +55,7 @@ class category extends WUZHI_admin {
 	 */
 	public function add() {
         $type = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : 0;
+        $siteid = get_cookie('siteid');
 		if(isset($GLOBALS['submit'])) {
 			if(!is_array($GLOBALS['catname'])) MSG(L('catname error'));
             $pinyin = load_class('pinyin');
@@ -65,6 +64,7 @@ class category extends WUZHI_admin {
                 if(trim($value)=='') continue;
 				$formdata = array();
                 $formdata = $GLOBALS['form'];
+				$formdata['siteid'] = $siteid;
 				$formdata['keyid'] = 'content';
 				$formdata['pid'] = intval($GLOBALS['form']['pid']);
 				$formdata['name'] = trim($value);
@@ -103,12 +103,14 @@ class category extends WUZHI_admin {
             if($pid) {
                 $r = $this->db->get_one('category',array('cid'=>$pid));
                 $modelid = $r['modelid'];
+                if($r['siteid']!=$siteid) MSG('请重新选择上级栏目','?m=content&f=category&v=add'.$this->su());
             }
 			$form = load_class('form');
 			$models = $this->db->get_list('model', array('m'=>'content'), '*', 0, 200, 0, '', '', 'modelid');
             $workflow = $this->db->get_list('workflow', array('keyid'=>'content'), '*', 0, 10);
-			$where = array('keyid'=>M);
+			$where = array('keyid'=>M,'siteid'=>$siteid);
 			$categorys = $this->db->get_list('category', $where, '*', 0, 2000, 0, '', '', 'cid');
+            if(empty($categorys)) $categorys = array();
             load_function('template');
             $templates = select_template('content');
             if($type==2) {
@@ -123,6 +125,7 @@ class category extends WUZHI_admin {
      */
     public function edit() {
         $cid = intval($GLOBALS['cid']);
+        $siteid = get_cookie('siteid');
         $type = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : 0;
         if(isset($GLOBALS['submit'])) {
             $formdata = array();
@@ -154,8 +157,12 @@ class category extends WUZHI_admin {
             $form = load_class('form');
             $models = $this->db->get_list('model', array('m'=>'content'), '*', 0, 200, 0, '', '', 'modelid');
             $workflow = $this->db->get_list('workflow', array('keyid'=>'content'), '*', 0, 10);
-            $where = array('keyid'=>M);
+            $where = array('keyid'=>M,'siteid'=>$siteid);
             $categorys = $this->db->get_list('category', $where, '*', 0, 2000, 0, '', '', 'cid');
+            if($r['pid']) {
+                if($r['siteid']!=$siteid) MSG('请重新选择上级栏目','?m=content&f=category&v=add'.$this->su());
+            }
+            if(empty($categorys)) $categorys = array();
             load_function('template');
             if($r['type']==2) {
                 include $this->template('category_edit_2');
@@ -334,9 +341,12 @@ class category extends WUZHI_admin {
             foreach($privates_rs as $rs) {
                 $privates[$rs['cid']][$rs['actionid']] = 1;
             }
+            $sitelist = get_cache('sitelist');
+
             $categorys = array();
             foreach ($result as $k=>$v) {
                 $v['cid'] = $k;
+                $v['sitename'] = $sitelist[$v['siteid']]['name'];
                 $v['disabled'] = '';
                 $v['listing_check'] = isset($privates[$k][1]) ? 'checked' : '';
                 $v['add_check'] = isset($privates[$k][2]) ? 'checked' : '';
@@ -348,6 +358,7 @@ class category extends WUZHI_admin {
             $show_header = true;
             $str = "<tr>
 					<td width='80' align='center'><label><input type='checkbox' onclick='select_tr(\$cid, this)' > 全选</label></td>
+				  <td >\$sitename</td>
 				  <td >\$spacer\$name</td>
 				  <td width='120' align='center'><label><input type='checkbox' onclick='st(\$cid,this);' name='cid\$cid' \$listing_check  value='1' > 浏览列表</label></td>
 				  <td width='80' align='center'><label><input type='checkbox' onclick='st(\$cid,this);' name='cid\$cid' \$disabled \$add_check value='2' > 添加</label></td>
@@ -362,5 +373,49 @@ class category extends WUZHI_admin {
             $tree_data=$tree->create(0,$str);
             include $this->template('private_set');
         }
+    }
+    public function load_sitecate() {
+        $siteid = intval($GLOBALS['siteid']);
+
+            $cid = intval($GLOBALS['cid']);
+            $form = load_class('form');
+            $cache_categorys = get_cache('category','content');
+            $categorys = array();
+            $models = get_cache('model_content','model');
+            if($cid == 0) {
+                $modelname = '共享模型';
+                foreach($cache_categorys as $cid=>$cate) {
+                    if($models[$cate['modelid']]['master_table']!='content_share' || $cate['siteid']!=$siteid) continue;
+                    if($cate['type']==0) {
+                        $cate['cid'] = $cid;
+                        $categorys[$cid] = $cate;
+                    }
+                }
+            } else {
+                $modelid = $cache_categorys[$cid]['modelid'];
+                $model = $models[$modelid];
+                $modelname = $model['name'];
+                foreach($cache_categorys as $cid=>$cate) {
+                    if($model['master_table']=='content_share') {
+                        if($models[$cate['modelid']]['master_table']=='content_share' && $cate['type']==0 && $cate['siteid']==$siteid) {
+                            $cate['cid'] = $cid;
+                            $categorys[$cid] = $cate;
+                        }
+                    } else {
+                        if($modelid==$cate['modelid'] && $cate['siteid']==$siteid) {
+                            $cate['cid'] = $cid;
+                            if($cate['pid']==1) {
+                                $cate['pid'] = 0;
+                            }
+                            $categorys[$cid] = $cate;
+                        }
+                    }// && $cate['modelid']!=$modelid) || $cate['siteid']!=$siteid
+
+                }
+            }
+
+            $ids = empty($GLOBALS['ids']) ? '' : implode(',',$GLOBALS['ids']);
+        echo $form->tree_select($categorys, 0, 'name="cid" style="height:260px;width:260px;" class="form-control" size=2', '≡ 请选择栏目 ≡');
+
     }
 }

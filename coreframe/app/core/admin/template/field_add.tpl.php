@@ -98,7 +98,7 @@ $submenuid = $menu_r['menuid'];
                   <tr>
                     <td class="td5">相关参数</td>
                     <td class="hidden-phone td5">
-                      <div class="col-sm-8">
+                      <div class="col-sm-12">
                         <?php if(isset($field_config[$formtype][ 'system_field'])) { include $this->
                           core_path.$formtype.'/form_setting.php'; } else { include $this->m_path.$formtype.'/form_setting.php';
                           } ?>

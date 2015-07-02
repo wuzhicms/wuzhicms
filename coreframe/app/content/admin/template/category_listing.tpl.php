@@ -16,6 +16,7 @@ include $this->template('header','core');
                             <tr>
                                 <th class="tablehead">排序</th>
                                 <th class="tablehead">ID</th>
+                                <th class="tablehead">所属站点</th>
                                 <th class="tablehead">栏目名称</th>
                                 <th class="tablehead">类型</th>
                                 <th class="tablehead">所属模型</th>

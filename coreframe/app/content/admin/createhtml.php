@@ -200,7 +200,7 @@ class createhtml extends WUZHI_admin {
         foreach($result as $key=>$rs) {
             if($rs['route']>1) continue;
             $id = $rs['id'];
-            $urls = $this->urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$rs['addtime'],'page'=>1,'route'=>$rs['route']));
+            $urls = $this->urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$rs['addtime'],'page'=>1,'route'=>$rs['route'],'productid'=>$rs['productid']));
             $this->db->update($master_table,array('url'=>$urls['url']),array('id'=>$id));
 
             $startid = $startid+1;

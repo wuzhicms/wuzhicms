@@ -272,7 +272,7 @@ th {
 }
 .glyphicon {
   position: relative;
-  top: 1px;
+  top: 3px;
   display: inline-block;
   font-family: 'Glyphicons Halflings';
   font-style: normal;
@@ -4692,7 +4692,7 @@ a.list-group-item.active > .badge,
   line-height: 1.42857143;
   background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 0px;
   -webkit-transition: border .2s ease-in-out;
        -o-transition: border .2s ease-in-out;
           transition: border .2s ease-in-out;
@@ -4812,7 +4812,7 @@ a.thumbnail.active {
 }
 .progress {
   height: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   overflow: hidden;
   background-color: #f5f5f5;
   border-radius: 4px;
@@ -5122,7 +5122,7 @@ a.list-group-item-danger.active:focus {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 16px;
-  color: inherit;
+  color: #26496d;
 }
 .panel-title > a {
   color: inherit;

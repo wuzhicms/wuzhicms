@@ -1,4 +1,4 @@
 <?php exit();?>
-	private function images($field, $value) {
-        return array2string($value);
+	private function images($config, $value) {
+        return p_addslashes(array2string($value));
 	}

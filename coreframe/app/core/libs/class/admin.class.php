@@ -12,9 +12,22 @@ defined('IN_WZ') or exit('No direct script access allowed');
 define('IN_ADMIN',TRUE);
 load_class('session');
 class WUZHI_admin {
+    /**
+     * 菜单
+     *
+     * @var array
+     */
     public $lang_menu;
+    /**
+     * 后台访问参数
+     *
+     * @var string
+     */
     public $_su;
 
+    /**
+     * Class constructor
+     */
     function __construct() {
         if(M =='core' && F =='index' && V === 'login') {
             return true;
@@ -24,12 +37,24 @@ class WUZHI_admin {
         $this->logs();
     }
 
-    //后台模版模版调用
+    /**
+     * 后台模版模版调用
+     *
+     * @param $name 文件名
+     * @param string $m 模块，app名
+     * @return string 模板路径
+     */
     public function template($name,$m = '') {
         if(empty($m)) $m = M;
         return COREFRAME_ROOT.'app/'.$m.'/admin/template/'.$name.'.tpl.php';
     }
 
+    /**
+     * 返回后台链接URL
+     *
+     * @param bool $showmenu 是否返回完整后台登录参数，默认为“是”
+     * @return string 返回后台链接URL参数
+     */
     final public function su($showmenu = TRUE) {
         static $su;
         if(empty($su) || !$showmenu) {
@@ -45,6 +70,14 @@ class WUZHI_admin {
         return $su;
     }
 
+    /**
+     * 后台菜单
+     *
+     * @param $pid 上级菜单id
+     * @param string $apend_str url追加参数，例如：&isme=1
+     * @param string $append_menu 追加字符串，例如：<a href=''>这里是追加的菜单</a>
+     * @return string 返回菜单HTML
+     */
     final public function menu($pid, $apend_str = '',$append_menu = '') {
         $pid = intval($pid);
         if(!$pid) return '';
@@ -84,6 +117,9 @@ class WUZHI_admin {
         return $str;
     }
 
+    /**
+     * 日志记录
+     */
     final private function logs() {
         $db = load_class('db');
         //权限检查
@@ -95,14 +131,8 @@ class WUZHI_admin {
                 exit;
             }
         }
-        if(V=='listing' || M =='core' && F =='index' && V === 'keep_alive') return '';
 
-        //后台管理日志配置
-        include COREFRAME_ROOT.'configs/wz_config.php';
-
-        if (defined('ADMIN_LOG') && 0 == ADMIN_LOG) {
-            return '';
-        }
+        if(V=='listing' || V=='keep_alive') return '';
 
         $formdata = array();
         $formdata['uid'] = $_SESSION['uid'];
@@ -113,7 +143,7 @@ class WUZHI_admin {
         $formdata['ip'] = get_ip();
         $newdata = '';
         foreach($GLOBALS as $key=>$value) {
-            if(in_array($key,array('m','f','v','_menuid','_submenuid','_su'))) continue;
+            if(in_array($key,array('m','f','v','_menuid','_submenuid','_su','_startTime'))) continue;
             if($key=='page' && $value==0) continue;
             if(is_string($value)) {
                 if(strlen($value) > 100) $value = '-MAX100-';

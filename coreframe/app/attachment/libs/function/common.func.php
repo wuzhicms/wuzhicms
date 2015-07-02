@@ -45,7 +45,7 @@ function strpos_array($haystack, $needles)
 	//创建目录，格式：/dirname/2014/07/07/
 	function createdir($dirname = '') {
 		$dirname = empty($dirname) ? '' : $dirname.'/';
-		$target_dir = $dirname.date('Y/m/di').'/';
+		$target_dir = $dirname.date('Y/m/d').'/';
 		if (!file_exists(ATTACHMENT_ROOT.$target_dir)) {
 			mkdir(ATTACHMENT_ROOT.$target_dir,0777,1);
 		}

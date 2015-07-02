@@ -33,6 +33,9 @@ class WUZHI_category_cache{
             $tmp['type'] = $v['type'];
             $tmp['showhtml'] = $v['showhtml'];
             $tmp['listhtml'] = $v['listhtml'];
+            $tmp['language'] = $v['language'];
+            $tmp['siteid'] = $v['siteid'];
+            $tmp['icon'] = $v['icon'];
             if($v['domain']) $tmp['domain'] = $v['domain'];
             $all[$v['cid']] = $tmp;
             set_cache('category_'.$v['cid'],$v,'content');

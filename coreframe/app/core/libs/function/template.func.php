@@ -34,25 +34,11 @@ function globs($dir) {
     //$files = array();
     foreach($project_tmp as $_tmp) {
         if(is_dir($_tmp)) {
-            if(basename($_tmp)=='mobile') continue;
+            if(basename($_tmp)=='mobile' || basename($_tmp)=='package') continue;
             globs($_tmp.'/');
         } else {
             $GLOBALS['tplfiles'][] = str_replace($dir,'',$_tmp);
         }
     }
     return $GLOBALS['tplfiles'];
-}
-
-/**
- * 获取可用的模板风格列表
- */
-function template_list() {
-    $list = glob(COREFRAME_ROOT.'templates/*', GLOB_ONLYDIR);
-    $template_dirs = array();
-
-    foreach ($list as $v) {
-        $dirname = basename($v);
-        $template_dirs[$dirname] = $dirname;
-    }
-    return $template_dirs;
 }

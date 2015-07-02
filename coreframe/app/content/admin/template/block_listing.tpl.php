@@ -41,7 +41,7 @@ include $this->template('header','core');
                                 <td ><?php echo time_format($r['updatetime']);?></td>
 
                                 <td>
-                                    <?php if($r['type']==1) {?><a href="?m=content&f=block&v=item_listing&blockid=<?php echo $r['blockid'];?><?php echo $this->su();?>" class="btn btn-info btn-xs">列表</a><?php }?>
+                                    <?php if($r['type']==1) {?><a href="?m=content&f=block&v=item_listing&blockid=<?php echo $r['blockid'];?><?php echo $this->su();?>" class="btn btn-info btn-xs">管理内容</a><?php }?>
                                     <a href="?m=content&f=block&v=edit&blockid=<?php echo $r['blockid'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">修改</a>
                                     <a href="javascript:makedo('?m=content&f=block&v=delete&blockid=<?php echo $r['blockid'];?><?php echo $this->su();?>', '确认删除该记录？')"
                                        class="btn btn-danger btn-xs">删除</a>

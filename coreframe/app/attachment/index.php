@@ -11,6 +11,15 @@ load_function('common','attachment');
  * 附件上传
  */
 class index {
+    function __construct()
+    {
+        $this->db = load_class('db');
+        $this->userkeys = get_cookie('userkeys');
+        if(empty($this->userkeys)) {
+            $this->userkeys = substr(md5(uniqid()),5,8);
+            set_cookie('userkeys',$this->userkeys);
+        }
+    }
 
     //ueditor百度编辑器 上传
     public function upload()
@@ -34,9 +43,11 @@ class index {
 
             case 'listimage':/* 列出图片 */
             case 'listfile':/* 列出文件 */
-                $result = $ueditor->lists($action);
+                $result = $ueditor->lists();
                 break;
-
+            case 'searchimg':/* 搜索图片 */
+                $result = $ueditor->searchimg();
+                break;
             case 'catchimage':/* 抓取远程文件 */
                 $result = $ueditor->saveRemote();
                 break;
@@ -47,7 +58,13 @@ class index {
                 ));
                 break;
         }
-        exit( json_encode($result) );
+        $callback = $GLOBALS['callback'];
+        if($callback) {
+            exit($callback.'('.json_encode($result).')');
+        } else {
+            exit( json_encode($result) );
+        }
+
     }
     //html5 上传
     public function h5upload() {
@@ -123,26 +140,33 @@ class index {
             // Strip the temp .part suffix off
             rename("{$filePath}.part", $filePath);
         }
-        if($stream_input) {
-            $image = load_class('image');
-            $image->set_image($filePath);
-            $image->createImageFromFile();
-            $image->water_mark(WWW_ROOT.'res/images/watermark.png',9);
-            $image->save();
-        }
+        
 
         $insert['path'] = $fileurl.$fileName;
         $insert['addtime'] = SYS_TIME;
         $insert['filesize'] = $_FILES['file']['size'] ? $_FILES['file']['size'] : filesize($filePath);
         $insert['ip'] = get_ip();
-        $insert['userid'] = get_cookie('_uid');;
-        $attachment = load_class('attachment',M);
-        $id = $attachment->insert($insert);
+        $_username = get_cookie('_username');
+        $wz_name = get_cookie('wz_name');
+        $insert['username'] = $_username ? $_username : $wz_name ? $wz_name : '';
+        if($insert['username']=='') die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Not allow guest upload."}, "id" : "id"}');
+        $md5file = md5_file(ATTACHMENT_ROOT.$insert['path']);
+        if($r = $this->db->get_one('attachment', array('md5file' => $md5file))) {
+            unlink(ATTACHMENT_ROOT.$insert['path']);
+            $id = $r['id'];
+            die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.ATTACHMENT_URL.$r['path'].'", "id" : "'.$id.'", "filename" : "'.$r['name'].'" }');
+        } else {
+            $attachment = load_class('attachment',M);
+            $insert['md5file'] = $md5file;
+            $id = $attachment->insert($insert);
 
-        // Return Success JSON-RPC response
-        $info = pathinfo($insert['name']);
-        $file_name =  basename($insert['name'], '.'.$info['extension']);
-        die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.ATTACHMENT_URL.$fileurl.$fileName.'", "id" : "'.$id.'", "filename" : "'.$file_name.'" }');
+            // Return Success JSON-RPC response
+            $info = pathinfo($insert['name']);
+            $file_name =  basename($insert['name'], '.'.$info['extension']);
+            die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.ATTACHMENT_URL.$fileurl.$fileName.'", "id" : "'.$id.'", "filename" : "'.$file_name.'" }');
+        }
+
+
     }
     //上传弹窗调用
     public function upload_dialog()
@@ -158,6 +182,7 @@ class index {
         if($ext=='' || md5($ext._KEY)!=$token) {
             MSG('参数错误！');
         }
+        $maxsize = ini_get('upload_max_filesize');
         $extimg = array('gif','bmp','jpg','jpeg','png');
         $extzip = array('zip','7z','rar','gz','tar');
         $extpdf = 'pdf';
@@ -177,6 +202,7 @@ class index {
         } else {
             $extimg = '';
         }
+
         $extzip = array_intersect($extzip,$exts);
         if($extzip) {
             $extzip = implode(',',$extzip);
@@ -194,6 +220,18 @@ class index {
             $extpdf = '';
         }
         include T('attachment','upload_dialog');
+    }
+    //删除附件，仅允许删除 $this->userkeys 的值。即当前cookie下有效
+    public function remove_file() {
+        $id = intval($GLOBALS['file_id']);
+        $r = $this->db->get_one('attachment', array('id' => $id,'userkeys'=>$this->userkeys));
+        if($r) {
+            $this->db->delete('attachment', array('id' => $id,'userkeys'=>$this->userkeys));
+            unlink(ATTACHMENT_ROOT.$r['path']);
+            echo json_encode(array('code'=>200));
+        } else {
+            echo json_encode(array('code'=>100));
+        }
     }
 }
 ?>
