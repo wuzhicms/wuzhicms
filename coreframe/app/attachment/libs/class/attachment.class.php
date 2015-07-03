@@ -8,10 +8,17 @@
 // +----------------------------------------------------------------------
 defined('IN_WZ') or exit('No direct script access allowed');
 load_function('common','attachment');
-//附件处理类
+
+/**
+ * 附件处理类
+ */
 class WUZHI_attachment{
-    private $image = '';
-	public $water_mark = true;
+    /**
+     * 是否开启图片水印
+     *
+     * @var bool true or false
+     */
+	public $water_mark = false;
     function __construct() {
         $this->image = load_class('image');
     }
@@ -28,6 +35,11 @@ class WUZHI_attachment{
 	public function insert($insert)
 	{
 		$db = load_class('db');
+        $insert['userkeys'] = get_cookie('userkeys');
+        $ext = get_ext($insert['path']);
+        if(in_array($ext,array('jpg','gif','bmp','png','jpeg'))) {
+            $insert['isimage'] = 1;
+        }
 		return $id = $db->insert('attachment',$insert);
 	}
 

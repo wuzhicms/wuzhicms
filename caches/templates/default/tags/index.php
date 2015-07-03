@@ -12,7 +12,7 @@ if (method_exists($tags_template_parse, 'listing')) {
 	$rs = $tags_template_parse->listing(array('order'=>'number DESC','start'=>'0','pagesize'=>'10','page'=>$page,));
 	$pages = $tags_template_parse->pages;$number = $tags_template_parse->number;}?>
 <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-<li><?php echo $r['tid'];?> <a href="<?php echo $r['url'];?>"><?php echo safe_htm($r['tag']);?></a>(<?php echo $r['number'];?>)</li>
+<li><?php echo $r[tid];?> <a href="<?php echo $r[url];?>"><?php echo safe_htm($r['tag']);?></a>(<?php echo $r['number'];?>)</li>
 <?php $n++;}?>
 <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
 </ul>

@@ -109,10 +109,14 @@ class WUZHI_encrypt {
         return rtrim(mcrypt_decrypt(MCRYPT_DES, $key, $data, MCRYPT_MODE_CBC, $init_vect), "\0");
     }
 
+
     /**
+     * _add_cipher_noise()
      *
-     * @param	string
-     * @param	string
+     * Function description
+     *
+     * @param	string	$data
+     * @param	string	$key
      * @return	string
      */
     protected function _add_cipher_noise($data, $key)
@@ -134,7 +138,7 @@ class WUZHI_encrypt {
     }
 
     /**
-     * _add_cipher_noise()
+     * _remove_cipher_noise()
      *
      * Function description
      *

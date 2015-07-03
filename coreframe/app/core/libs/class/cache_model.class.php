@@ -10,7 +10,12 @@ defined('IN_WZ') or exit('No direct script access allowed');
  * 模型缓存
  */
 class WUZHI_cache_model {
-    //获取字段列表
+	/**
+	 * 获取字段列表
+	 * @param $m 模块名
+	 * @param bool $unique 是否为唯一值
+	 * @return array
+	 */
     public function get_fields($m, $unique = TRUE) {
         static $_system_field;
         if(empty($_system_field)) {
@@ -41,7 +46,11 @@ class WUZHI_cache_model {
             }
         }
     }
-    //获取字段详情
+	/**
+	 * 获取字段详情
+	 * @param $m 模块名
+	 * @return array
+	 */
     public function get_fields_info($m) {
         $fields = $this->get_fields($m,FALSE);
         //print_r($fields);exit;
@@ -62,7 +71,11 @@ class WUZHI_cache_model {
         }
         return $filed_info;
     }
-    //生成指定模块表单缓存
+	/**
+	 * 生成指定模块表单缓存
+	 * @param $m 模块名
+	 * @return bool
+	 */
     public function cache_form($m) {
         $fields = $this->get_fields($m);
         //form,format,update
@@ -91,7 +104,10 @@ class WUZHI_cache_model {
         }
         return TRUE;
     }
-    //更新字段缓存 cache_field
+	/**
+	 * 更新字段缓存
+	 * @return bool
+	 */
     public function cache_field() {
         //多个不同的模块用模型功能，模型可能会有很多，需要分批更新
         //每次取100条，然后分批更新
@@ -127,6 +143,11 @@ class WUZHI_cache_model {
         }
         return TRUE;
     }
+
+	/**
+	 * 缓存所有模型，要缓存的模块在配置文件：/www/configs/model_config.php
+	 * @return bool
+	 */
     public function cache_all() {
         $model_config = get_config('model_config');
         // $cache_model = load_class('cache_model');

@@ -10,7 +10,7 @@ if (method_exists($tags_template_parse, 'content')) {
 	$rs = $tags_template_parse->content(array('tid'=>$tid,'order'=>'id DESC','start'=>'0','pagesize'=>'10','page'=>$page,));
 	$pages = $tags_template_parse->pages;$number = $tags_template_parse->number;}?>
 <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-<li><?php echo $r['id'];?> <a href="<?php echo $r['url'];?>"><?php echo safe_htm($r['title']);?></a></li>
+<li><?php echo $r[id];?> <a href="<?php echo $r[url];?>"><?php echo safe_htm($r['title']);?></a></li>
 <?php $n++;}?>
 <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
 

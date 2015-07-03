@@ -1,6 +1,7 @@
 <?php
  return array (
   'cid' => '26',
+  'siteid' => '1',
   'keyid' => 'content',
   'name' => '积分商城',
   'mb' => '积分商城',
@@ -14,6 +15,7 @@
   'domain' => '',
   'url' => '/index.php?v=listing&cid=26&page=1',
   'thumb' => '',
+  'icon' => '',
   'workflowid' => '0',
   'showloop' => '0',
   'ismenu' => '1',

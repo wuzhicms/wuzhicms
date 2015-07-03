@@ -30,7 +30,7 @@
 
                         <ul id="myTab" class="nav nav-tabs" role="tablist">
                             <?php if($this->memberinfo['modelid']!=23) { ?>
-                            <li role="presentation" ><a href="http://www.h1jk.cn/index.php?m=member&f=friend&v=listing" id="1tab" >为你推荐</a></li>
+                            <li role="presentation" ><a href="?m=member&f=friend&v=listing" id="1tab" >为你推荐</a></li>
                             <?php } ?>
 
                             <li role="presentation" class=""><a href="?m=member&f=friend&v=myfriend">我的好友</a></li>

@@ -73,6 +73,13 @@ include $this->template('header','core');
                             </div>
                         </div>
 
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">栏目icon</label>
+                              <div class="col-sm-4 input-group">
+                                  <div class="input-group"><?php echo $form->attachment('','1','form[icon]',$r['icon']);?></div>
+                              </div>
+                          </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">工作流</label>
                             <div class="col-sm-4 input-group">

@@ -46,8 +46,7 @@ if($share_model) {
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">内容页默认模版</label>
                                 <div class="col-sm-4 input-group">
-                                    <input type="text" name="template" class="form-control" value="show" style="text-align: right">
-                                    <span class="input-group-addon">.html</span>
+                                    <?php echo WUZHI_form::templates('content','','name="template"  class="form-control" style="width:auto;"','show');?>
                                 </div>
                             </div>
                             <div class="form-group">

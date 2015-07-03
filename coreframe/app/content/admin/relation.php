@@ -31,11 +31,15 @@ class relation extends WUZHI_admin {
         }
         $show_dialog = 1;
         $form = load_class('form');
-        $where = array('keyid'=>M);
+        $siteid = get_cookie('siteid');
+        $r = $this->db->get_one('category', array('cid' => $cid));
+
+        $where = array('keyid'=>M,'siteid'=>$siteid,'language'=>$r['language']);
         $categorys = $this->db->get_list('category', $where, '*', 0, 200, 0, '', '', 'cid');
         foreach($categorys as $_cid=>$_value) {
             if($_cid==$cid) $categorys[$_cid]['selected'] = 'selected';
         }
+        
         include $this->template('relation_manage');
     }
 
@@ -43,13 +47,18 @@ class relation extends WUZHI_admin {
         $where = '';
         $keywords = '';
         $cid = intval($GLOBALS['cid']);
-        $categorys = get_cache('category','content');
+        $this->categorys = $categorys = get_cache('category','content');
         $modelid = $categorys[$cid]['modelid'];
 
         $model_r = $this->db->get_one('model',array('modelid'=>$modelid));
         $master_table = $model_r['master_table'];
-        $where = "cid='$cid'";
-
+        if($this->categorys[$cid]['child']) {
+            $this->get_child($cid);
+            $cids = implode(',', $this->childs);
+            $where = "cid IN($cids) AND `status`=9 ";
+        } else {
+            $where = "cid='$cid' AND `status`=9 ";
+        }
         if(isset($GLOBALS['keywords'])) {
             if(isset($GLOBALS['charset']) && strtolower(CHARSET)=='gbk') {
                 $keywords = iconv('utf-8','gbk',$GLOBALS['keywords']);
@@ -62,7 +71,7 @@ class relation extends WUZHI_admin {
                 $where .= " AND `publisher` = '$keywords'";
             } else {
                 $GLOBALS['keytype'] = 'keywords';
-                $where .= "AND `title` LIKE '%$keywords%'";
+                $where .= " AND `title` LIKE '%$keywords%'";
             }
         }
         $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
@@ -76,5 +85,13 @@ class relation extends WUZHI_admin {
         $rid = intval($GLOBALS['rid']);
         $this->db->delete('content_relation',array('rid'=>$rid));
         exit('200');
+    }
+    private function get_child($k_id) {
+        foreach($this->categorys as $id => $value) {
+            if($value['pid'] == $k_id) {
+                $this->childs[] = $id;
+                $this->get_child($id);
+            }
+        }
     }
 }

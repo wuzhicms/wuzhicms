@@ -1,11 +1,12 @@
 <?php
  return array (
   'cid' => '36',
+  'siteid' => '1',
   'keyid' => 'content',
   'name' => '手机推广',
   'mb' => '推广',
   'catdir' => 'shoujituiguang',
-  'parentdir' => '',
+  'parentdir' => 'shoujituiguang',
   'pid' => '0',
   'type' => '1',
   'child' => '0',
@@ -14,6 +15,7 @@
   'domain' => '',
   'url' => '/index.php?v=listing&cid=36&page=1',
   'thumb' => '',
+  'icon' => '',
   'workflowid' => '0',
   'showloop' => '0',
   'ismenu' => '0',

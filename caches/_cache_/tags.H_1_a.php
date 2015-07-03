@@ -1,8 +1,8 @@
 <?php
  return array (
-  'title' => '鐑棬鍏虫敞',
-  'keyword' => 'tags,鏍囩',
-  'desc' => 'tags鏍囩鍔熻兘',
+  'title' => '热门关注',
+  'keyword' => 'tags,标签',
+  'desc' => 'tags标签功能',
   'show_mode' => '1',
   'rewrite' => '2',
   'linkage' => '2',

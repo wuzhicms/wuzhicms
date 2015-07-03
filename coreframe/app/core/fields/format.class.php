@@ -34,4 +34,8 @@ class form_format {
 
 		return $info;
 	}
+    function set_config($modelid) {
+        $this->modelid = $modelid;
+        $this->fields = get_cache('field_'.$modelid,'model');
+    }
 }exit();?>

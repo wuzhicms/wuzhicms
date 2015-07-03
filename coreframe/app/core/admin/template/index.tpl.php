@@ -21,15 +21,19 @@
                 <!-- userinfo dropdown start-->
                 <li class="dropdown userinfo">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <img alt="" src="<?php echo R;?>images/userimg.jpg" class="userimg">
-                        <span class="username"><?php echo $truename;?></span>
+                        <img src="<?php echo R;?>images/userimg.jpg" class="userimg" id="siteimg">
+                        <span class="username" id="sitename"><?php echo $sitelist[$siteid]['name'];?></span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended userullist" id="userullist">
-                        <li><a href="javascript:void(1);">本次登陆IP:<?php echo $ip;?></a></li>
-                        <li><a href="javascript:void(1);">上次登陆IP:<?php echo $last_rs['ip'];?></a></li>
-                        <li><a href="javascript:void(1);">上次登陆时间:<?php echo time_format($last_rs['logintime']);?></a></li>
-                        <li><a href="?m=core&f=panel&v=edit_info&_su=wuzhicms&_menuid=20" target="iframeid">个人信息设置/密码修改</a></li>
+                        <div class="log-arrow-up"><i class="icon-sort-up"></i></div>
+                        <li class="usersettitle"><h5>切换站点</h5></li>
+                        <?php
+                        foreach($sitelist as $site) {
+                            echo '<li><a href="javascript:changesite('.$site['siteid'].',\''.$site['name'].'\')">'.$site['name'].'</a></li>';
+                        }
+                        ?>
+
                     </ul>
                 </li>
                 <!-- userinfo dropdown end -->
@@ -69,7 +73,7 @@
     <!--sidebar end-->
     <!--main content start-->
     <section id="main-content">
-        <div class="main-nav"><div class="pull-right crumbsbutton"><a href="?m=core&f=cache_all&v=index<?php echo $this->su();?>" target="iframeid">更新缓存</a><a href="?m=content&f=createhtml&v=index&setcache=1&startid=2<?php echo $this->su();?>" target="iframeid">生成首页</a><a href="#" onclick="refresh_iframe()">刷新</a><a href="javascript:new_window();" target="_blank">新建窗口</a><a href="<?php echo WEBURL;?>" target="_blank">站点首页</a></div><i class="icon-desktop2"></i><span id="position">我的面板<span>></span>系统首页<span>></span></span> </div>
+        <div class="main-nav"><div class="pull-right crumbsbutton"><a href="?m=core&f=cache_all&v=index<?php echo $this->su();?>" target="iframeid">更新缓存</a><a href="?m=content&f=createhtml&v=index&setcache=1&startid=2<?php echo $this->su();?>" target="iframeid">生成首页</a><a href="#" onclick="refresh_iframe()">刷新</a><a href="javascript:new_window();" target="_blank">新建窗口</a><a href="<?php echo WEBURL.'index.php?siteid='.$siteid;?>" target="_blank" id="weburl">站点首页</a></div><i class="icon-desktop2"></i><span id="position">我的面板<span>></span>系统首页<span>></span></span> </div>
         <div class="alert alert-warning fade in fadeInDown hide" id="alert-warning">
             <button class="close close-sm" type="button" onclick="$('#alert-warning').addClass('hide');"><i class="icon-times2"></i></button>
             <span id="warning-tips"><strong>安全提示：</strong> 建议您将网站admin目录设置为644或只读，<a href="#">点击查看设置方法！</a></span>
@@ -85,6 +89,7 @@
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
 <script src="<?php echo R;?>js/wuzhicms.js"></script>
 <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
+
 <style type="text/css">
     .validate-has-error {border-color: #EC7876;box-shadow: 0 0 0 2px rgba(236, 89, 86, 0.35);border: #EC7876 1px dotted;}
 </style>
@@ -248,7 +253,20 @@
     function keep_alive() {
         $.get("?m=core&f=index&v=keep_alive<?php echo $this->su();?>");
     }
-    setInterval("keep_alive()",100000);
+    setInterval("keep_alive()",30000);
+
+    function changesite(siteid,sitename) {
+        $.post("?m=core&f=site&v=changesite<?php echo $this->su();?>", { siteid:siteid, time: Math.random() },
+            function(data){
+                $('#sitename').html(sitename);
+                $('#alert-warning').addClass('alert-danger');
+                $('#alert-warning').removeClass('hide');
+                $('#warning-tips').html('<strong>切换成功，请刷新</strong>');
+                $("#weburl").attr('href','<?php WEBURL;?>index.php?siteid='+siteid);
+                refresh_iframe();
+                setTimeout("$('#alert-warning').addClass('hide');",2000)
+            });
+    }
 </script>
 
 

@@ -1,13 +1,13 @@
 <?php
  return array (
   'type' => '1',
-  'modelid' => '26',
+  'modelid' => '0',
   'codetype' => '1',
   'name' => '推荐礼品',
   'max_number' => '500',
-  'createhtml' => '1',
-  'updatetime' => '1429595633',
-  'timing' => '1429599233',
+  'createhtml' => '0',
+  'updatetime' => '1435747704',
+  'timing' => '1435751304',
   'status' => '9',
   'code' => '{wz:content action="block" pagesize="5" type="1" blockid="10"}
 <ul>

@@ -9,14 +9,14 @@ include $this->template('header','core');
 <section class="panel">
     <?php echo $this->menu($GLOBALS['_menuid']);?>
     <header class="panel-heading">
-        <span>区块：<?php echo $rs['name'];?>，列表内容修改</span>
+        <span>推荐位：<?php echo $rs['name'];?></span>
     </header>
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">标题 <font color="red">＊</font></label>
-                <div class="col-sm-4 input-group">
+                <div class="col-sm-8 input-group">
                     <input type="text" class="form-control" name="form[title]" value="<?php echo $r['title'];?>" datatype="*" errormsg="标题不能为空">
                 </div>
             </div>
@@ -34,12 +34,18 @@ include $this->template('header','core');
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">描述</label>
-                <div class="col-sm-8 input-group">
+                <div class="col-sm-4 input-group">
                     <textarea name="form[remark]" style="width: 100%;height: 80px;"><?php echo p_htmlentities($r['remark']);?></textarea>
                 </div>
             </div>
             <?php if($attach) {
+                $showdiy = false;
                 foreach($attach as $field=>$value) {
+                    if($r['isdiy'] && in_array($field,array('subtitle','smalltitle'))) continue;
+                    if(in_array($field,array('sex','age','purpose','interest1','interest2','interest3'))) {
+                        $showdiy = true;
+                        continue;
+                    }
             ?>
 
             <div class="form-group">
@@ -51,7 +57,64 @@ include $this->template('header','core');
                 <?php
                 }
             }
+            if($showdiy) {
+                if(is_string($attach['sex'])) {
+                    $attach['sex'] = explode(',',trim($attach['sex'],','));
+                    $attach['age'] = explode(',',trim($attach['age'],','));
+                }
             ?>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">子标题</label>
+                <div class="col-sm-4 input-group">
+                    <input type="text" class="form-control" name="attform[subtitle]" value="<?php echo $attach['smalltitle'];?>">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">小标题</label>
+                <div class="col-sm-4 input-group">
+                    <input type="text" class="form-control" name="attform[smalltitle]" value="<?php echo $attach['smalltitle'];?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">性别</label>
+                <div class="col-sm-4 input-group">
+                    <label style="font-weight: normal;"><input type="checkbox" name='attform[sex][]'  value="1" <?php if(in_array(1,$attach['sex'])) echo 'checked';?>> 男</label> <label class="radio-inline"><input type="checkbox" name='attform[sex][]'  value="2" <?php if(in_array(2,$attach['sex'])) echo 'checked';?>> 女</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">年龄</label>
+                <div class="col-sm-4 input-group">
+                    <label style="font-weight: normal;"><input type="checkbox" name='attform[age][]'  value="1"  <?php if(in_array(1,$attach['age'])) echo 'checked';?>> 18以下 </label> <label class="radio-inline"><input type="checkbox" name='attform[age][]'  value="2"   <?php if(in_array(2,$attach['age'])) echo 'checked';?>> 18~30</label> <label class="radio-inline"><input type="checkbox" name='attform[age][]'  value="3"  <?php if(in_array(3,$attach['age'])) echo 'checked';?>> 30~45</label> <label class="radio-inline"><input type="checkbox" name='attform[age][]'  value="4" <?php if(in_array(4,$attach['age'])) echo 'checked';?>> 45以上</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">第一兴趣</label>
+                <div class="col-sm-10 input-group">
+                    <?php
+                    echo $form->radio($interest, $attach['interest1'], 'name="attform[interest1]"');
+                    ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">第二兴趣</label>
+                <div class="col-sm-10 input-group">
+                    <?php
+                    array_unshift($interest,'不选择');
+                    echo $form->radio($interest, $attach['interest2'], 'name="attform[interest2]"');
+                    ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">第三兴趣</label>
+                <div class="col-sm-10 input-group">
+                    <?php
+                    echo $form->radio($interest, $attach['interest3'], 'name="attform[interest3]"');
+                    ?>
+                </div>
+            </div>
+<?php } ?>
             <div class="form-group">
                 <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10 input-group">

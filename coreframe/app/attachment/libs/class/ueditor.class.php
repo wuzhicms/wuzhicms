@@ -181,7 +181,7 @@ class WUZHI_ueditor{
 		$return_list = $files = array();
 		foreach($lists AS $k=>$v)
 		{
-			$file_name =  iconv('gbk', 'utf-8', pathinfo($v['name'], PATHINFO_FILENAME) );
+			$file_name =  pathinfo($v['name'], PATHINFO_FILENAME);
 			$files[] = array(
 			'url'=> ATTACHMENT_URL.$v['path'],
 			'mtime'=> $v['addtime'],
@@ -200,6 +200,49 @@ class WUZHI_ueditor{
 		return $result;
 	}
 
+    /**
+     *
+     * 搜索图片
+     * @return array
+     */
+    public static function searchimg()
+    {
+        $seatchtype = intval($GLOBALS['s']);
+        //1 文件名搜索，2文件夹搜索
+        $callback = $GLOBALS['callback'];
+        if(!$callback) return '';
+        $db = load_class('db');
+        $pagesize = isset($GLOBALS['size']) ? intval($GLOBALS['size']) : 20;
+        $page = $GLOBALS['start']  ? intval($GLOBALS['start']) : 1;
+        if($page > 1) $page = ceil($page/$pagesize);
+        $q = sql_replace(iconv('gbk','utf-8',$GLOBALS['word']));
+        $where = '';
+        if($seatchtype==1) {
+            $where = "`name` like '%$q%' AND `isimage`=1";
+        } elseif($seatchtype==2) {
+            $where = "`diycat` like '%$q%' AND `isimage`=1";
+        }
+
+        $lists = $db->get_list('attachment',$where,'path,addtime,name', 0, $pagesize, $page, 'id DESC');
+        $return_list = $files = array();
+        foreach($lists AS $k=>$v)
+        {
+            $file_name =  pathinfo($v['name'], PATHINFO_FILENAME);
+            $files[] = array(
+                'url'=> ATTACHMENT_URL.$v['path'],
+                'mtime'=> $v['addtime'],
+                'title'=> $file_name,
+            );
+            $return_list = $files;
+        }
+        $total = $db->number;
+        unset($lists,$files);
+        $result = array(
+            "listNum"=> 1996,
+            "data"=>$return_list
+        );
+        return $result;
+    }
 /**
  * 抓取远程图片
  *

@@ -58,7 +58,7 @@ a,a:hover,a:focus{text-decoration:none;outline:none;-webkit-transition:all 0.3s;
 .topmenunav ul li a.active{color: #3B4658;background-color: #DBDFE3;}
 .top-nav ul li{float: left;}
 .top-nav ul li a{color: #C8CCD1;display: block;padding: 21px 20px;}
-.top-nav ul li a:hover,.top-nav ul li.userinfo a.dropdown-toggle:hover, .top-nav ul li.userinfo a.dropdown-toggle:focus,.top-nav ul li.open a{color: #fff;background-color: #31343b;}
+.top-nav ul li.userinfo a.dropdown-toggle:hover, .top-nav ul li.userinfo a.dropdown-toggle:focus,.top-nav ul li.open a{color: #fff;background-color: #31343b;}
 .top-nav ul li i{float: left;margin: 3px 5px 0px 0px;font-size: 14px;}
 .top-menu{margin:0;}
 .top-nav ul.top-menu > li .dropdown-menu.userullist{width:216px !important;margin-top: 18px;}
@@ -233,7 +233,7 @@ ul.sidebar-menu li a.active span{color:#3B4658;}
 .tagsinput .tag:hover{background-color:#308CCA;color:#ffffff;padding-left:12px;padding-right:20px;}
 .tagsinput .tag:hover .tagsinput-remove-link{color:#ffffff;opacity:1;display:block\9;}
 .tagsinput .tag span,.tagsinput-remove-link:before{vertical-align: middle;}
-.tagsinput input{background:transparent;border:none;color:#3B4658;font-size:12px;margin:0px;padding:0 0 0 5px;outline:0;margin-right:5px;margin-bottom:5px;width:100%;}
+.tagsinput input{background:transparent;border:none;color:#3B4658;font-family:"Lato",sans-serif;font-size:14px;margin:0px;padding:0 0 0 5px;outline:0;margin-right:5px;margin-bottom:5px;width:100%;}
 .tagsinput-remove-link{bottom:0;color:#ffffff;cursor:pointer;font-size:12px;opacity:0;padding:7px 7px 5px 0;position:absolute;right:0;text-align:right;text-decoration:none;top:0;width:100%;z-index:2;display:none\9;}
 .tagsinput-remove-link:before{color:#ffffff;content:"\f00d";font-family:"pxgridsicons";}
 .tagsinput-add-container{vertical-align:middle;display:inline-block;zoom:1;*display:inline;}
@@ -288,9 +288,10 @@ ul.sidebar-menu li a.active span{color:#3B4658;}
 .treelistmain .categoryserach input{width: 157px;}
 .treelistmain .categoryserach input::-webkit-input-placeholder {color:#a9a9a9;}
 .treelistmain .categoryserach input:-moz-placeholder {color:#a9a9a9;}
-.treelistmain .treetools ul{padding: 0;}
+.treelistmain .treetools{padding: 15px 15px 20px 15px;}
+.treelistmain .treetools ul{padding: 0;margin-left: -10px;}
 .treelistmain .treetools ul li{float: left;}
-.treelistmain .treetools ul li a{padding: 10px 10px 10px 14px;display: block;}
+.treelistmain .treetools ul li a{position: relative;padding: 10px 10px 10px 13px;}
 .treelistmain .treetools ul li a i{font-size: 20px;color: #787B89;}
 .treelistmain .treetools ul li a:hover i{color:#FF6C60; }
 .treelistmain .treetools ul li.active a i {color: #FF6C60;}
@@ -331,13 +332,6 @@ ul.sidebar-menu li a.active span{color:#3B4658;}
 .attaclist textarea{vertical-align: middle;width: 550px;border: solid 1px #E2E2E4;height: 32px;padding: 6px;}
 .attaclist textarea:focus{border-color: #3498DB;}
 .form-inline .uploaduser,.form-inline .filename,.form-inline .tags{width: 100px;}
-.table>tbody>tr>td.tdnames{word-wrap: break-word;word-break: normal;}
-.tablefixed{table-layout:fixed;}
-.thw5{width: 5%;}
-.thw10{width: 10%;}
-.thw15{width: 15%;}
-.thw20{width: 20%;}
-.thw25{width: 25%;}
 /*---- Tabs------*/
 #myTab {margin-bottom: 20px;}
 /*---- Caces------*/

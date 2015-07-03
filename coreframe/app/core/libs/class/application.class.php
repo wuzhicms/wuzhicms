@@ -10,21 +10,42 @@ defined('IN_WZ') or exit('No direct script access allowed');
  * M/F/V 路由
  */
 final class WUZHI_application {
+	/**
+	 * @var app，模块名，取值方式：M
+	 */
     private $_m;
+	/**
+	 * @var 文件名 取值方式：F
+	 */
     private $_f;
+	/**
+	 * @var 方法名 取值方式：V
+	 */
     private $_v;
+
+	/**
+	 * Class constructor
+	 */
     public function __construct() {
         self::setconfig();
         define('M',$this->_m);
         define('F',$this->_f);
         define('V',$this->_v);
     }
+
+	/**
+	 * 设置路由
+	 */
     private function setconfig() {
         $route_config = get_config('route_config','default');
         $this->_m = input('m') ? input('m') : $route_config['m'];
         $this->_f = input('f') ? input('f') : $route_config['f'];
         $this->_v = input('v') ? input('v') : $route_config['v'];
     }
+
+	/**
+	 * 运行
+	 */
     public function run() {
         $file = $this->load_file();
         if(!defined('IN_ADMIN')) {
@@ -44,12 +65,13 @@ final class WUZHI_application {
         }
     }
 
-    /**
-     * 加载文件
-     * @param string $filename
-     * @param string $app
-     * @return obj
-     */
+	/**
+	 * 加载文件
+	 * @param string $filename 文件名
+	 * @param string $app 所属模块
+	 * @param string $param 初始化参数
+	 * @return bool
+	 */
     public static function load_file($filename = '', $app = '', $param = '') {
         static $static_file = array();
         if(isset($GLOBALS['_su']) && $GLOBALS['_su']== _SU) {

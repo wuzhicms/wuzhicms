@@ -22,21 +22,21 @@ class set extends WUZHI_admin {
      */
     public function basic() {
         if(isset($GLOBALS['submit'])) {
-            $formdata = $GLOBALS['form'];
+            $formdata = array_map('remove_xss',$GLOBALS['form']);
+            $formdata['copyright'] = $GLOBALS['form']['copyright'];
+            $formdata['statcode'] = $GLOBALS['form']['statcode'];
             set_cache('siteconfigs',$formdata);
             $serialize_data = serialize($formdata);
             $updatetime = date('Y-m-d H:i:s',SYS_TIME);
             $this->db->update('setting',array('data'=>$serialize_data,'updatetime'=>$updatetime),array('keyid'=>'configs','m'=>'core'));
             load_function('admin');
             set_web_config('CLOSE',intval($formdata['close']));
-            set_web_config('TPLID', "'" . $formdata['default_template'] . "'");
             MSG(L('edit success'),HTTP_REFERER);
         } else {
             $setting = array();
             $r = $this->db->get_one('setting',array('keyid'=>'configs','m'=>'core'));
             $setting = unserialize($r['data']);
             load_class('form');
-            load_function('template');
             include $this->template('set_basic');
         }
     }

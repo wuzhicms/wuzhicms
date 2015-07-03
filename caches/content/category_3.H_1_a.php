@@ -1,6 +1,7 @@
 <?php
  return array (
   'cid' => '3',
+  'siteid' => '1',
   'keyid' => 'content',
   'name' => '图片演示',
   'mb' => '图片',
@@ -14,6 +15,7 @@
   'domain' => '',
   'url' => '/index.php?v=listing&cid=3&page=1',
   'thumb' => '',
+  'icon' => '',
   'workflowid' => '0',
   'showloop' => '1',
   'ismenu' => '1',

@@ -12,6 +12,16 @@ defined('IN_WZ') or exit('No direct script access allowed');
 load_class('admin');
 class block extends WUZHI_admin {
 	private $db;
+    private $status_array = array(
+        9=>'审核通过',
+        8=>'定时发送',
+        1=>'一审',
+        2=>'二审',
+        3=>'三审',
+        0=>'回收站',
+        7=>'退稿',
+        6=>'草稿',
+    );
 	function __construct() {
 		$this->db = load_class('db');
 	}
@@ -21,14 +31,18 @@ class block extends WUZHI_admin {
         $page = intval($GLOBALS['page']);
         $result = $this->db->get_list('block', $where, '*', 0, 20, $page,'blockid DESC');
         $pages = $this->db->pages;
+
         include $this->template('block_listing');
     }
     public function item_listing() {
+        $sitelist = get_cache('sitelist');
+        $siteid = get_cookie('siteid');
         $blockid = intval($GLOBALS['blockid']);
-        $where = array('blockid'=>$blockid);
+        $where = array('blockid'=>$blockid,'siteid'=>$siteid);
         $page = intval($GLOBALS['page']);
         $result = $this->db->get_list('block_data', $where, '*', 0, 20, $page,'sort ASC,id DESC');
         $pages = $this->db->pages;
+
         include $this->template('item_listing');
     }
     /**
@@ -58,10 +72,12 @@ class block extends WUZHI_admin {
         $id = intval($GLOBALS['id']);
         if(isset($GLOBALS['submit'])) {
             $formdata = $GLOBALS['form'];
+            $formdata['addtime'] = SYS_TIME;
 
             $formdata = array_map('remove_xss',$formdata);
             if(isset($GLOBALS['attform'])) {
                 $attform = $GLOBALS['attform'];
+
                 $attform = array_map('remove_xss',$attform);
                 $formdata['attach'] = serialize($attform);
             }
@@ -83,6 +99,9 @@ class block extends WUZHI_admin {
             $rs = $this->db->get_one('block',array('blockid'=>$r['blockid']));
             $attach = '';
             if($r['attach']) $attach = unserialize($r['attach']);
+
+            $result = $this->db->get_list('kind', array('keyid'=>'interest'), '*', 0, 50, 0, 'kid ASC');
+            $interest = key_value($result,'maxid','name');
             include $this->template('blockitem_edit');
         }
     }
@@ -183,7 +202,7 @@ class block extends WUZHI_admin {
             } elseif($formdata['type']==4) {
                 $str = 'type="4" blockid="'.$blockid.'" url="'.$formdata['url'].'"';
             }
-            $formdata['code'] = str_replace('#wz#',$str,$code);
+            $formdata['code'] = addslashes(str_replace('#wz#',$str,$code));
             $this->db->update('block',$formdata,array('blockid'=>$blockid));
             set_cache('block_'.$blockid,$formdata,'block');
             //生成静态
@@ -196,6 +215,7 @@ class block extends WUZHI_admin {
             $show_formjs = 1;
             $form = load_class('form');
             $r = $this->db->get_one('block',array('blockid'=>$blockid));
+            $r['code'] = stripslashes($r['code']);
             $models = $this->db->get_list('model', '', '*', 0, 100, 0, 'modelid ASC');
             include $this->template('block_edit');
         }
@@ -236,5 +256,40 @@ class block extends WUZHI_admin {
             }
         }
         if($return) MSG(L('create success'));
+    }
+
+    /**
+     * 添加自定义内容
+     */
+    public function add_content() {
+        $blockid = $GLOBALS['blockid'];
+        if(isset($GLOBALS['submit'])) {
+            $formdata = $GLOBALS['form'];
+            $formdata['keyid'] = '';
+            $formdata['blockid'] = $blockid;
+            $formdata['addtime'] = SYS_TIME;
+            $formdata['siteid'] = get_cookie('siteid');
+            $formdata['isdiy'] = 1;
+
+            $formdata = array_map('remove_xss',$formdata);
+            if(isset($GLOBALS['attform'])) {
+                $attform = $GLOBALS['attform'];
+                $attform = array_map('remove_xss',$attform);
+                $formdata['attach'] = serialize($attform);
+            }
+            $this->db->insert('block_data',$formdata);
+
+            $forward = '?m=content&f=block&v=item_listing&blockid='.$blockid.$this->su();
+            MSG(L('add success'),$forward);
+        } else {
+            $show_formjs = 1;
+            $form = load_class('form');
+            $rs = $this->db->get_one('block',array('blockid'=>$blockid));
+            $attach = '';
+
+            $result = $this->db->get_list('kind', array('keyid'=>'interest'), '*', 0, 50, 0, 'kid ASC');
+            $interest = key_value($result,'maxid','name');
+            include $this->template('block_add_content');
+        }
     }
 }

@@ -16,7 +16,7 @@
                                         $values[] = $rs['blockid'];
                                 }
                         }
-                        $values = implode(',',$values);
+                        if($values) $values = implode(',',$values);
                 }
         }
         $string = $this->form->checkbox($option,$values,"name='form[$field][]' $ext_code",1,$field);

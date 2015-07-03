@@ -263,6 +263,6 @@ class WUZHI_mysql {
 	}
 
 	public function halt($message = '', $sql = '') {
-		MSG('sql_error:'.$message.'<br /><br />'.$sql.'<br /> '.mysql_error());
+		MSG('sql_error:'.$message.'<br /><br />'.$sql.'<br />msg: '.mysql_error());
 	}
 }

@@ -39,52 +39,52 @@
 <div id="fullscreen" class="main">
 
     <div id="home" class="section" style="top:0%;">
-        <p class="title"><?php echo $fullpage['0']['Title'];?></p>
-        <p class="info"><?php echo $fullpage['0']['Description'];?></p>
+        <p class="title"><?php echo $fullpage[0]['Title'];?></p>
+        <p class="info"><?php echo $fullpage[0]['Description'];?></p>
         <div class="home_img">
-            <img class="mz_img meinv1" src="<?php echo $fullpage['0']['PicUrl']['1'];?>" />
-            <img class="mz_img meinv2" src="<?php echo $fullpage['0']['PicUrl']['2'];?>" />
+            <img class="mz_img meinv1" src="<?php echo $fullpage[0]['PicUrl'][1];?>" />
+            <img class="mz_img meinv2" src="<?php echo $fullpage[0]['PicUrl'][2];?>" />
         </div>
         <div class="section_child"></div>
     </div>
     <div id="screen" class="section" style="top:100%;">
-        <p class="title"><?php echo $fullpage['1']['Title'];?></p>
-        <p class="info"><?php echo $fullpage['1']['Description'];?></p>
-        <img class="mz_img" src="<?php echo $fullpage['1']['PicUrl']['1'];?>" />
+        <p class="title"><?php echo $fullpage[1]['Title'];?></p>
+        <p class="info"><?php echo $fullpage[1]['Description'];?></p>
+        <img class="mz_img" src="<?php echo $fullpage[1]['PicUrl'][1];?>" />
         <div class="section_child"></div>
     </div>
     <div id="cpu" class="section" style="top:200%;">
-        <p class="title"><?php echo $fullpage['2']['Title'];?></p>
-        <p class="info"><?php echo $fullpage['2']['Description'];?></p>
-        <img class="mz_img" src="<?php echo $fullpage['2']['PicUrl']['1'];?>" />
+        <p class="title"><?php echo $fullpage[2]['Title'];?></p>
+        <p class="info"><?php echo $fullpage[2]['Description'];?></p>
+        <img class="mz_img" src="<?php echo $fullpage[2]['PicUrl'][1];?>" />
         <div class="section_child"></div>
     </div>
     <div id="dsds" class="section" style="top:300%;">
-        <p class="title"><?php echo $fullpage['3']['Title'];?></p>
-        <p class="info"><?php echo $fullpage['3']['Description'];?></p>
-        <img class="mz_img p3_1" src="<?php echo $fullpage['3']['PicUrl']['1'];?>" />
-        <img class="mz_img p3_2" src="<?php echo $fullpage['3']['PicUrl']['2'];?>" />
-        <img class="mz_img p3_3" src="<?php echo $fullpage['3']['PicUrl']['3'];?>" />
+        <p class="title"><?php echo $fullpage[3]['Title'];?></p>
+        <p class="info"><?php echo $fullpage[3]['Description'];?></p>
+        <img class="mz_img p3_1" src="<?php echo $fullpage[3]['PicUrl'][1];?>" />
+        <img class="mz_img p3_2" src="<?php echo $fullpage[3]['PicUrl'][2];?>" />
+        <img class="mz_img p3_3" src="<?php echo $fullpage[3]['PicUrl'][3];?>" />
         <div class="section_child"></div>
     </div>
 
 
     <div id="battery" class="section" style="top:400%;">
         <div class="battery_text">
-            <p class="title"><?php echo $fullpage['4']['Title'];?></p>
-            <p class="info"><?php echo $fullpage['4']['Description'];?></p>
+            <p class="title"><?php echo $fullpage[4]['Title'];?></p>
+            <p class="info"><?php echo $fullpage[4]['Description'];?></p>
         </div>
-        <img class="mz_img phone1" src="<?php echo $fullpage['4']['PicUrl']['1'];?>" />
-        <img class="mz_img phone2" src="<?php echo $fullpage['4']['PicUrl']['2'];?>" />
+        <img class="mz_img phone1" src="<?php echo $fullpage[4]['PicUrl'][1];?>" />
+        <img class="mz_img phone2" src="<?php echo $fullpage[4]['PicUrl'][2];?>" />
         <div class="section_child"></div>
     </div>
 
     <div id="color" class="section" style="top:500%;">
-        <p class="title"><?php echo $fullpage['5']['Title'];?></p>
-        <p class="info"><?php echo $fullpage['5']['Description'];?></p>
+        <p class="title"><?php echo $fullpage[5]['Title'];?></p>
+        <p class="info"><?php echo $fullpage[5]['Description'];?></p>
         <div class="color_img">
-            <img class="mz_img" src="<?php echo $fullpage['5']['PicUrl']['1'];?>" />
-            <img class="mz_img" src="<?php echo $fullpage['5']['PicUrl']['2'];?>" />
+            <img class="mz_img" src="<?php echo $fullpage[5]['PicUrl'][1];?>" />
+            <img class="mz_img" src="<?php echo $fullpage[5]['PicUrl'][2];?>" />
 
         </div>
         <div class="section_child"></div>
