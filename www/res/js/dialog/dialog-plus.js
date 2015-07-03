@@ -719,7 +719,7 @@
         backdropBackground: '#000',
 
         // 设置遮罩透明度
-        backdropOpacity: 0.4,
+        backdropOpacity: 0.7,
 
         // 消息内容
         content: '<span class="ui-dialog-loading">Loading..</span>',

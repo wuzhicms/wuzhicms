@@ -11,7 +11,7 @@ if (method_exists($content_template_parse, 'category')) {
 	$rs = $content_template_parse->category(array('cid'=>'29','order'=>'sort ASC','start'=>'0','pagesize'=>'10','page'=>'0',));
 	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?>
         <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-        <a href="<?php echo $r['url'];?>"><?php echo $r['name'];?></a>  |
+        <a href="<?php echo $r[url];?>"><?php echo $r['name'];?></a>  |
         <?php $n++;}?>
         <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
         <a href="<?php echo WEBURL;?>index.php?m=link">友情链接</a>

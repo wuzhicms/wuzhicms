@@ -42,10 +42,10 @@ if (method_exists($content_template_parse, 'category')) {
                 <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
                 <?php if($r['pid']==0 && $r['ismenu']) { ?>
                 <li class="dropdown <?php if($elasticid==$r['cid']) { ?>active<?php } ?>" id="c<?php echo $r['cid'];?>">
-                    <?php if($r['child']) { ?><a href="<?php echo $r['url'];?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $r['name'];?><span class="caret"></span></a><?php } else { ?><a href="<?php echo $r['url'];?>" ><?php echo $r['name'];?></a><?php } ?>
+                    <?php if($r['child']) { ?><a href="<?php echo $r[url];?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $r['name'];?><span class="caret"></span></a><?php } else { ?><a href="<?php echo $r[url];?>" ><?php echo $r['name'];?></a><?php } ?>
                     <ul class="dropdown-menu" role="menu">
                         <?php $n=1;if(is_array($rs)) foreach($rs AS $rn) { ?>
-                        <?php if($rn['pid']==$r['cid']) { ?><li><a href="<?php echo $rn['url'];?>"><?php echo $rn['name'];?></a></li><?php } ?>
+                        <?php if($rn['pid']==$r['cid']) { ?><li><a href="<?php echo $rn[url];?>"><?php echo $rn['name'];?></a></li><?php } ?>
                         <?php $n++;}?>
                     </ul>
                 </li>

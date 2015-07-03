@@ -270,9 +270,9 @@ UE.I18N['zh-cn'] = {
             'lang_imgLoading':"　图片加载中……",
             'lang_start_upload':"开始上传",
             'lock':{'title':"锁定宽高比例"}, //属性
-            'searchType':{'title':"图片类型", 'options':["新闻", "壁纸", "表情", "头像"]}, //select的option
+            'searchType':{'title':"搜索类型", 'options':["图片名称", "文件夹名称"]}, //select的option
             'searchTxt':{'value':"请输入搜索关键词"},
-            'searchBtn':{'value':"百度一下"},
+            'searchBtn':{'value':"站内搜索"},
             'searchReset':{'value':"清空搜索"},
             'noneAlign':{'title':'无浮动'},
             'leftAlign':{'title':'左浮动'},
@@ -352,7 +352,7 @@ UE.I18N['zh-cn'] = {
             'lang_alignment':"对齐方式",
             'videoSearchTxt':{'value':"请输入搜索关键字！"},
             'videoType':{'options':["全部", "热门", "娱乐", "搞笑", "体育", "科技", "综艺"]},
-            'videoSearchBtn':{'value':"百度一下"},
+            'videoSearchBtn':{'value':"站内搜索"},
             'videoSearchReset':{'value':"清空结果"},
 
             'lang_input_fileStatus':' 当前未上传文件',

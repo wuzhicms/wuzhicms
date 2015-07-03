@@ -20,6 +20,8 @@
             $master_table = $models[$modelid]['master_table'];
             $r = $this->db->get_one($master_table, array('id' => $formdata['origin_id']));
             $formdata['thumb'] = $r['thumb'];
+            $formdata['subtitle'] = $r['subtitle'];
+            $formdata['smalltitle'] = $r['smalltitle'];
             $this->db->insert('content_relation',$formdata);
         }
     }

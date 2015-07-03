@@ -20,9 +20,16 @@ class copyfrom extends WUZHI_admin {
 	 * 来源列表
 	 */
 	public function listing() {
+        $siteid = get_cookie('siteid');
         $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
         $page = max($page,1);
-		$result = $this->db->get_list('copyfrom', '', '*', 0, 20,$page);
+        if(isset($GLOBALS['keywords'])) {
+            $keywords = $GLOBALS['keywords'];
+            $where = "`name` LIKE '%$keywords%'";
+        } else {
+            $where = '';
+        }
+		$result = $this->db->get_list('copyfrom', $where, '*', 0, 20,$page);
 		$pages = $this->db->pages;
         $total = $this->db->number;
 		include $this->template('copyfrom_listing');
@@ -36,6 +43,7 @@ class copyfrom extends WUZHI_admin {
             $formdata['name'] = remove_xss($GLOBALS['form']['name']);
             $formdata['url'] = remove_xss($GLOBALS['form']['url']);
             $formdata['logo'] = remove_xss($GLOBALS['form']['logo']);
+            $formdata['remark'] = remove_xss($GLOBALS['form']['remark']);
             $formdata['updatetime'] = '0000-00-00 00:00:00';
 
 			$this->db->insert('copyfrom',$formdata);
@@ -58,6 +66,7 @@ class copyfrom extends WUZHI_admin {
             $formdata['name'] = remove_xss($GLOBALS['form']['name']);
             $formdata['url'] = remove_xss($GLOBALS['form']['url']);
             $formdata['logo'] = remove_xss($GLOBALS['form']['logo']);
+            $formdata['remark'] = remove_xss($GLOBALS['form']['remark']);
             $formdata['updatetime'] = '0000-00-00 00:00:00';
 
             $this->db->update('copyfrom',$formdata,array('fromid'=>$fromid));

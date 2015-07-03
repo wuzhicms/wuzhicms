@@ -91,24 +91,41 @@ class model extends WUZHI_admin {
 			}
 			
 		} else {
+            load_class('form');
+            load_function('template');
 			include $this->template('model_add');
 		}
 	}
 
     //修改模型
     public function edit() {
+        $siteid = get_cookie('siteid');
         $modelid = intval($GLOBALS['modelid']);
         if(isset($GLOBALS['submit'])) {
+            $r = $this->db->get_one('model',array('modelid'=>$modelid));
+            $template_set = unserialize($r['template_set']);
             $formdata = array();
             $formdata['name'] = $GLOBALS['name'];
             $formdata['template'] = $GLOBALS['template'];
             $formdata['remark'] = $GLOBALS['remark'];
             $formdata['css'] = $GLOBALS['css'];
+            $sitelist = get_cache('sitelist');
+            foreach($sitelist as $sid=>$site) {
+                if($siteid==$sid) {
+                    $template_set[$sid] = $formdata['template'];
+                }
+            }
+            $formdata['template_set'] = serialize($template_set);
+
             $this->db->update('model',$formdata,array('modelid'=>$modelid));
             $forward = isset($GLOBALS['forward']) ? $GLOBALS['forward'] : HTTP_REFERER;
             MSG(L('update success'),$forward);
         } else {
+            load_class('form');
+            load_function('template');
             $r = $this->db->get_one('model',array('modelid'=>$modelid));
+            $template_set = unserialize($r['template_set']);
+            $r['template'] = $template_set[$siteid];
             include $this->template('model_edit');
         }
     }
@@ -150,8 +167,8 @@ class model extends WUZHI_admin {
 			$formdata['formtype'] = $formtype;
 			//master_field 是要添加到主表的
 			$formdata['master_field'] = intval($formdata['master_field']);
-			$formdata['setting'] = isset($GLOBALS['setting']) ? serialize($GLOBALS['setting']) : '';
-			$formdata['unsetgids'] = isset($GLOBALS['unsetgids']) ? implode(',',$GLOBALS['unsetgids']) : '';
+            $formdata['setting'] = isset($GLOBALS['setting']) ? p_addslashes(serialize($GLOBALS['setting'])) : '';
+            $formdata['unsetgids'] = isset($GLOBALS['unsetgids']) ? implode(',',$GLOBALS['unsetgids']) : '';
 			$formdata['unsetroles'] = isset($GLOBALS['unsetroles']) ? implode(',',$GLOBALS['unsetroles']) : '';
 
 			$field = $formdata['field'];

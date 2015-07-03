@@ -1,6 +1,7 @@
 <?php
  return array (
   'cid' => '9',
+  'siteid' => '1',
   'keyid' => 'content',
   'name' => '家族信托',
   'mb' => '家族信托',
@@ -14,6 +15,7 @@
   'domain' => '',
   'url' => '/index.php?v=listing&cid=9&page=1',
   'thumb' => '',
+  'icon' => '',
   'workflowid' => '0',
   'showloop' => '1',
   'ismenu' => '1',

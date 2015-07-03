@@ -5,9 +5,9 @@
   'codetype' => '1',
   'name' => '首页头条推荐（4条）',
   'max_number' => '500',
-  'createhtml' => '1',
-  'updatetime' => '1429595958',
-  'timing' => '1429599558',
+  'createhtml' => '0',
+  'updatetime' => '1435747716',
+  'timing' => '1435751316',
   'status' => '9',
   'code' => '{wz:content action="block" pagesize="4" type="1" blockid="5"}
 <h3>首页头条推荐<span class="lm_more"></span></h3>

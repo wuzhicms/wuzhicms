@@ -47,9 +47,9 @@
                             点击这里登录</button></a></li>
                     </ul>
                 </li>-->
-                <li class="dropdown" id="my-panel1">
+                <li class="dropdown hide" id="my-panel1">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">个人中心 <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu " role="menu">
                         <li><a href="/index.php?m=order&f=order_goods&v=listing&acbar=3">我的订单</a></li>
                         <li><a href="/index.php?m=order&f=order_form&v=subscribe&acbar=3">我的预约</a></li>
                         <li><a href="/index.php?m=member&f=favorite&v=tuan">我收藏的套餐</a></li>
@@ -58,7 +58,7 @@
                         <li><a href="/index.php?m=member">会员中心</a></li>
                     </ul>
                 </li>
-                <li class="dropdown" id="my-panel2">
+                <li class="dropdown hide" id="my-panel2" >
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">企业中心 <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/index.php?m=order&f=order_goods&v=listing&acbar=3">我的订单</a></li>
@@ -67,7 +67,7 @@
                         <li><a href="/index.php?m=member">企业中心</a></li>
                     </ul>
                 </li>
-                <li class="dropdown" id="my-panel3">
+                <li class="dropdown hide" id="my-panel3">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">机构中心 <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/index.php?m=content&f=postinfo&v=listing">发布产品</a></li>
@@ -80,10 +80,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">帮助中心 <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/index.php?m=guestbook&f=myissue&v=newask">我要提问</a></li>
-                        <li><a href="/index.php?v=listing&cid=433&page=1">购买流程</a></li>
-                        <li><a href="/index.php?v=listing&cid=434&page=1">体检流程</a></li>
                         <li class="divider"></li>
-                        <li><a href="/index.php?v=listing&cid=425&page=1">帮助中心</a></li>
+                        <li><a href="/index.php?v=listing&cid=31&page=1">联系我们</a></li>
                     </ul>
                 </li>
             </ul>

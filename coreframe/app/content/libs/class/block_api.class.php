@@ -18,7 +18,7 @@ class WUZHI_block_api {
         if($posids=='') return true;
         $formdata = $tmp = '';
         foreach($datas as $key=>$value) {
-            if(in_array($key,array('title','thumb','url','remark','addtime'))) {
+            if(in_array($key,array('title','thumb','url','remark','addtime','status'))) {
                 $formdata[$key] = $value;
             } else {
                 $tmp[$key] = $value;
@@ -28,12 +28,14 @@ class WUZHI_block_api {
         $posid_str = implode(',',$posids);
 
         $this->db->delete('block_data',"`keyid`='$keyid' AND `blockid` NOT IN($posid_str)");
+        $siteid = get_cookie('siteid');
         foreach($posids as $blockid) {
             if($this->db->get_one('block_data',array('keyid'=>$keyid,'blockid'=>$blockid))) {
                 $formdata['blockid'] = $blockid;
                 $this->db->update('block_data',$formdata,array('keyid'=>$keyid,'blockid'=>$blockid));
             } else {
                 $formdata['keyid'] = $keyid;
+                $formdata['siteid'] = $siteid;
                 $formdata['cid'] = $cid;
                 $formdata['blockid'] = $blockid;
                 $formdata['sort'] = '50';

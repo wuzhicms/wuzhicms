@@ -1,6 +1,8 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed');?>
 <?php
 include $this->template('header','core');
+$menu_r = $this->db->get_one('menu',array('m'=>'content','f'=>'block','v'=>'item_listing'));
+$submenuid = $menu_r['menuid'];
 ?>
 <body>
 
@@ -11,7 +13,7 @@ include $this->template('header','core');
 
 <form name="myform" action="?m=content&f=block&v=item_sort<?php echo $this->su();?>" method="post">
             <section class="panel">
-                <?php echo $this->menu($GLOBALS['_menuid']);?>
+                <?php echo $this->menu($submenuid,"&blockid=$blockid");?>
 
                 <div class="panel-body" id="panel-bodys">
                     <table class="table table-striped table-advance table-hover">
@@ -19,8 +21,10 @@ include $this->template('header','core');
                         <tr>
                             <th>排序</th>
                             <th class="hidden-phone">ID</th>
+                            <th class="hidden-phone">所属站点</th>
                             <th>标题</th>
                             <th class="hidden-phone">更新时间</th>
+                            <th class="hidden-phone">原文状态</th>
                             <th width="180">管理操作</th>
                         </tr>
                         </thead>
@@ -31,9 +35,11 @@ include $this->template('header','core');
                             <tr>
                                 <td><input class='center' name="sorts[<?php echo $r['id'];?>]" type='text' size='3' value='<?php echo $r['sort'];?>'></td>
                                 <td><?php echo $r['id'];?></td>
-                                <td><?php echo $r['title'];?></td>
+                                <td><?php echo $sitelist[$r['siteid']]['name'];?></td>
+                                <td><?php echo '<a href="'.$r['url'].'" target="_blank">'.$r['title'].'</a>';?></td>
 
                                 <td ><?php echo time_format($r['addtime']);?></td>
+                                <td ><?php echo $this->status_array[$r['status']];?></td>
 
                                 <td>
                                     <a href="?m=content&f=block&v=item_edit&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">修改</a>

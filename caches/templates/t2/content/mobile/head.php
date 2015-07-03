@@ -28,7 +28,7 @@ if(!class_exists('content_template_parse')) {
 }
 if (method_exists($content_template_parse, 'category')) {
 	$rs = $content_template_parse->category(array('mshow'=>'1','order'=>'sort ASC','start'=>'0','pagesize'=>'100','page'=>'0',));
-	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?><?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?><li><a href="<?php echo $r['url'];?>" <?php if(isset($cid) && $cid==$r['cid']) { ?>class="ac"<?php } ?>><?php echo $r['mb'];?></a></li><?php $n++;}?><?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
+	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?><?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?><li><a href="<?php echo $r[url];?>" <?php if(isset($cid) && $cid==$r['cid']) { ?>class="ac"<?php } ?>><?php echo $r['mb'];?></a></li><?php $n++;}?><?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
         </ul>
     </header>
 </section>

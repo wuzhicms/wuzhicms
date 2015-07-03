@@ -38,4 +38,12 @@ $(function(){
     });
 });
 
-
+$(function(){
+    var h=document.body.scrollHeight;
+    if(h>1200) {
+        $("#tjcenter_right_box").smartFloat();
+    }
+    $(".animated").mouseover(function(){
+        $(this).addClass('flipInX');
+    });
+});

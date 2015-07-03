@@ -5,9 +5,9 @@
   'codetype' => '1',
   'name' => '首页幻灯片',
   'max_number' => '500',
-  'createhtml' => '1',
-  'updatetime' => '1429582297',
-  'timing' => '1429585897',
+  'createhtml' => '0',
+  'updatetime' => '1435747711',
+  'timing' => '1435751311',
   'status' => '9',
   'code' => '{wz:content action="block" pagesize="3" type="1" blockid="6"}
 {loop $rs $r}

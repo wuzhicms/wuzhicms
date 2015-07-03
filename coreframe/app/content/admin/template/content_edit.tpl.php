@@ -292,4 +292,12 @@ if (data == 'ok') {
         });
 
     }
+<?php
+if($cate_config['workflowid'] && $_SESSION['role']!=1) {
+?>
+$("input[name='form[status]'][value='9']").attr("disabled",true);
+$("input[name='form[status]'][value='8']").attr("disabled",true);
+$("input[name='form[status]'][value='1']").attr("checked",true);
+
+<?php }?>
 </script>

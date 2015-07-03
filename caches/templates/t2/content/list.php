@@ -18,8 +18,8 @@ if (method_exists($content_template_parse, 'listing')) {
 	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?>
                 <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
                 <div class="bignewsbox">
-                    <div class="Nhead"><a href="<?php echo $r['url'];?>"><?php echo $r['title'];?></a></div>
-                    <div class="Nbd"><?php if($r[thumb]) { ?><a href="<?php echo $r['url'];?>"><img src="<?php echo $r['thumb'];?>"></a><?php } ?>
+                    <div class="Nhead"><a href="<?php echo $r[url];?>"><?php echo $r['title'];?></a></div>
+                    <div class="Nbd"><?php if($r[thumb]) { ?><a href="<?php echo $r[url];?>"><img src="<?php echo $r[thumb];?>"></a><?php } ?>
                         <p><?php echo strcut($r['remark'],180,'...');?></p>
                     </div>
                     <div class="Nfoot">

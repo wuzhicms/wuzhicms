@@ -8,19 +8,44 @@
 defined('IN_WZ') or exit('No direct script access allowed');
 /**
  * 数据操作类，支持读写分离
+ *
+ * 使用方法：$db = load_class('db');
  */
 class WUZHI_db {
-	
-	//数据库配置
+    /**
+     * @var array 数据库配置
+     */
 	protected $mysql_config = '';
-	//使用的数据库配置
+    /**
+     * @var string 当前的数据库配置
+     */
 	public $db_key = 'default';
+    /**
+     * @var string 数据表前缀
+     */
 	public $tablepre = 'wz_';
+    /**
+     * @var string 数据库名
+     */
 	public $dbname = '';
+    /**
+     * @var string 数据库编码，一般为：utf8 、gbk
+     */
 	public $dbcharset = '';
+    /**
+     * @var string 分页结果集
+     */
 	public $pages = '';
+    /**
+     * @var int 查询结果总数
+     */
 	public $number = 0;
 
+    /**
+     * Class constructor
+     *
+     * @param string $config_file 配置文件
+     */
 	public function __construct($config_file = 'mysql_config') {
 		$this->mysql_config = get_config($config_file);
 		$this->dbname = $this->mysql_config[$this->db_key]['dbname'];
@@ -41,6 +66,12 @@ class WUZHI_db {
 			$this->read_db = $this->master_db;
 		}
 	}
+
+    /**
+     * 数组转化为sql格式
+     * @param $data array
+     * @return string
+     */
 	private function array2sql($data) {
 		if(empty($data)) return '';
 		if(is_array($data)) {
@@ -53,14 +84,23 @@ class WUZHI_db {
 			return $data;
 		}
 	}
-	/**
-	 * 查询多条数据并根据参数分页
-	 * @param $where
-	 * @param $order
-	 * @param $page
-	 * @param $pagesize
-	 * @return unknown_type
-	 */
+
+    /**
+     * 查询多条数据
+     * @param $table 数据表名
+     * @param array|string $where 条件 ，数组或者字符串 .如：array('id'=>1,'cid'=>1) 或 `id`=1 AND `cid`=1
+     * @param string $field 要查询的字段
+     * @param int $startid 开始索引，如果是从第二条开始，那么则为1，mysql从0开始索引
+     * @param int $pagesize 每页显示数量，如果不分页，则显示为总数
+     * @param int $page 当前页
+     * @param string $order 排序
+     * @param string $group mysql group by 属性
+     * @param string $keyfield 以某字段名为结果索引
+     * @param string $urlrule url规则
+     * @param array $array url规则中的参数名和参数值，二维数组
+     * @param int $colspan 分页显示总列数
+     * @return array
+     */
 	final public function get_list($table, $where = '', $field = '*', $startid = 0, $pagesize = 200, $page = 0, $order = '', $group = '', $keyfield = '', $urlrule = '',$array = array(),$colspan = 10) {
 		$where = $this->array2sql($where);
 		$offset = 0;
@@ -76,8 +116,6 @@ class WUZHI_db {
 			return $this->read_db->get_list($table, $where, $field, "$offset,$pagesize", $order, $group, $keyfield);
 		}
 	}
-
-
 
 	/**
 	 * get list count for custom query sql

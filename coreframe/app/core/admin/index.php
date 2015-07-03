@@ -22,15 +22,7 @@ final class index extends WUZHI_admin {
         $lang = get_cookie('lang') ? get_cookie('lang') : LANG;
         require COREFRAME_ROOT.'languages/'.$lang.'/admin_menu.lang.php';
         $_panels = $panels = array();
-
         $result = $this->db->get_list('menu', 'pid<20 AND display=1', '*', 0, 1000, 0, 'sort ASC', '', 'menuid');
-
-        //限制非超管用户的访问菜单
-        if (1 != $_SESSION['role']) {
-            $admin_private = $this->db->get_list('admin_private', 'chk=0 AND role='.$_SESSION['role'],'*', 0, 1000, 0, '', '', 'id');
-            $result = array_diff_key($result, $admin_private);
-        }
-
         foreach($result as $key=>$r) {
             if($key<20) {
                 $panels[$key] = $r;
@@ -38,12 +30,25 @@ final class index extends WUZHI_admin {
                 $_panels[$r['pid']][$key] = $r;
             }
         }
+        //       $username = get_cookie('username');
         $username = get_cookie('username');
         $truename = get_cookie('wz_name');
         $ip = $_SESSION['ip'];
         $show_dialog = 1;
         $last_rs = $this->db->get_one('logintime',array('uid'=>$_SESSION['uid'],'status'=>1));
-
+        $sitelist = get_cache('sitelist');
+		if(empty($sitelist)) {
+			$sitelist = array(1=>array(
+				'siteid'=>'1',
+				'name'=>'默认站点',
+				)
+			);
+		}
+        $siteid = get_cookie('siteid');
+        if(!$siteid) {
+            $siteid = 1;
+            set_cookie('siteid',1);
+        }
         include $this->template('index');
 
     }

@@ -20,7 +20,7 @@ if (method_exists($content_template_parse, 'category')) {
 	$rs = $content_template_parse->category(array('cid'=>'0','order'=>'sort ASC','start'=>'0','pagesize'=>'100','page'=>'0',));
 	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?>
                     <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-                   <?php if($r['ismenu']) { ?><li><a href="<?php echo $r['url'];?>"><?php echo $r['name'];?></a></li><?php } ?>
+                   <?php if($r['ismenu']) { ?><li><a href="<?php echo $r[url];?>"><?php echo $r['name'];?></a></li><?php } ?>
                     <?php $n++;}?>
               <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
                                 </ul>
@@ -42,7 +42,7 @@ if (method_exists($affiche_template_parse, 'listing')) {
 	$rs = $affiche_template_parse->listing(array('order'=>'id DESC','status'=>'status=2','start'=>'0','pagesize'=>'5','page'=>$page,));
 	$pages = $affiche_template_parse->pages;$number = $affiche_template_parse->number;}?>
                                         <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-                                        <li><a href="<?php echo $r['url'];?>">
+                                        <li><a href="<?php echo $r[url];?>">
                                             <div class="newstitle"><h3><?php echo safe_htm($r['title']);?></h3></div></a>
                                             <p><?php echo safe_htm(strcut(strip_tags($r['content']),100));?>.</p>
                                         </li>

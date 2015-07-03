@@ -165,7 +165,7 @@ class index extends WUZHI_admin{
 			$altid = $fileid;
 			$fileid++;
 			$bakfile_path = CACHE_ROOT.'db_bak/'.CACHE_EXT.'/';
-            if($i==1 && !file_exists($bakfile_path)) {
+            if(!file_exists($bakfile_path)) {
                 mkdir($bakfile_path,0777,true);
             }
 			$bakfile = $bakfile_path.$filename;

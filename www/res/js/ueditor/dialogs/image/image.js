@@ -1055,7 +1055,7 @@
                 key = $G('searchTxt').value,
                 type = $G('searchType').value,
                 keepOriginName = editor.options.keepOriginName ? "1" : "0",
-                url = "http://image.baidu.com/i?ct=201326592&cl=2&lm=-1&st=-1&tn=baiduimagejson&istype=2&rn=32&fm=index&pv=&word=" + _this.encodeToGb2312(key) + type + "&keeporiginname=" + keepOriginName + "&" + +new Date;
+                url = "/index.php?m=attachment&f=index&v=upload&action=searchimg&word=" + _this.encodeToGb2312(key) + type + "&keeporiginname=" + keepOriginName + "&" + +new Date;
 
             $G('searchListUl').innerHTML = lang.searchLoading;
             ajax.request(url, {
@@ -1065,11 +1065,11 @@
                     var list = [];
                     if(json && json.data) {
                         for(var i = 0; i < json.data.length; i++) {
-                            if(json.data[i].objURL) {
+                            if(json.data[i].url) {
                                 list.push({
-                                    title: json.data[i].fromPageTitleEnc,
-                                    src: json.data[i].objURL,
-                                    url: json.data[i].fromURL
+                                    title: json.data[i].title,
+                                    src: json.data[i].url,
+                                    url: json.data[i].url
                                 });
                             }
                         }

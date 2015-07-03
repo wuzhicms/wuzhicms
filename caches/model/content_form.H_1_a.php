@@ -24,7 +24,8 @@ class form_build {
 
 	public function execute($formdata = array()) {
 		$this->formdata = $formdata;
-		$info = array();
+        $this->id = $this->formdata['id'] ? $this->formdata['id'] : 0;
+        $info = array();
 		foreach($this->fields as $field=>$field_config) {
             $value = '';
 			if($this->check_field($field)===FALSE) continue;
@@ -81,7 +82,7 @@ class form_build {
                                         $values[] = $rs['blockid'];
                                 }
                         }
-                        $values = implode(',',$values);
+                        if($values) $values = implode(',',$values);
                 }
         }
         $string = $this->form->checkbox($option,$values,"name='form[$field][]' $ext_code",1,$field);
@@ -129,6 +130,51 @@ class form_build {
 		return $string;
 	}
 
+    private function box_sql($config, $value) {
+        extract($config,EXTR_SKIP);
+        extract($setting,EXTR_SKIP);
+        $boxtype = isset($boxtype) ? $boxtype : 'select';
+        if($value=='') $value = $defaultvalue;
+        $option = array();
+        if($boxtype=='select') {
+            $option[] = '请选择 ...';
+        }
+        $res = $this->db->query($sql);
+        while($r = $this->db->fetch_array($res)) {
+            $option[$r[$field_value]] = $r[$field_name];
+        }
+
+
+        $values = explode(',',$value);
+        $value = array();
+        foreach($values as $_k) {
+            if($_k != '') $value[] = $_k;
+        }
+        $value = implode(',',$value);
+        switch($boxtype) {
+            case 'radio'://radio($options = array(), $value = 0, $str = '')
+                if($field=='type' && isset($GLOBALS['type']) && $GLOBALS['type']==2) {
+                    $value = 2;
+                }
+                $string = $this->form->radio($option,$value,"name='form[$field]' $ext_code",$field);
+                break;
+
+            case 'checkbox':
+                $string = $this->form->checkbox($option,$value,"name='form[$field][]' $ext_code",1,$field);
+                break;
+
+            case 'select':
+
+                $string = $this->form->select($option,$value,"name='form[$field]' class='form-control' style='width:auto;' id='$field' $ext_code");
+                break;
+
+            case 'multiple':
+                $string = $this->form->select($option,$value,"name='form[$field][]' id='$field ' size=2 multiple='multiple' style='height:60px;' $ext_code");
+                break;
+        }
+        return $string;
+    }
+
 	private function cid($config, $value) {
 		if(!$value) $value = $this->cid;
         extract($config,EXTR_SKIP);
@@ -144,7 +190,7 @@ class form_build {
 
 	private function copyfrom($config, $value) {
         extract($config,EXTR_SKIP);
-		$copyfrom_array = $this->db->get_list('copyfrom', '', '*', 0, 20);
+		$copyfrom_array = $this->db->get_list('copyfrom', '', '*', 0, 1000);
         $copyfrom_array = key_value($copyfrom_array,'fromid','name');
         $holder = '演示站点|www.wuzhicms.com';
 		return "<div class='col-sm-4 input-group pull-left'><input type='text' id='$field' name='form[$field]' placeholder='$holder' value='$value' class='form-control input-text'></div><div class='col-sm-4'>".$this->form->select($copyfrom_array,$value,"name='{$field}_data' class='form-control' onchange='change_value(\"$field\",this.value)'","选择已有来源")."</div>";
@@ -330,13 +376,19 @@ return $str;
 	}
 
 	private function template($config, $value) {
+    if($value=='') {
+        $siteid = get_cookie('siteid');
+        $models = get_cache('model_content','model');
+        $template_set = unserialize($models[$this->modelid]['template_set']);
+        $value = $template_set[$siteid];
+    }
         extract($config,EXTR_SKIP);
 		return $this->form->templates('content',$value,'name="form['.$field.']" id="'.$field.'" class="form-control" style="width:auto;"','show');
 	}
 
 	private function text($config, $value) {
 		extract($config,EXTR_SKIP);
-        extract($setting,EXTR_SKIP);
+        if($setting) extract($setting,EXTR_SKIP);
 		if(!$value) $value = $defaultvalue;
 		$type = $ispassword ? 'password' : 'text';
 		return '<input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="form-control" '.$ext_code.' >';
@@ -423,22 +475,31 @@ return '<div style="max-width: 400px;" title="单网页链接地址：请修改�
 		return $string;
 	}
 
-	private function relation($config, $value) {
-         extract($config,EXTR_SKIP);
-         if(is_array($setting)) extract($setting,EXTR_SKIP);
-		if(!$value && isset($defaultvalue)) $value = $defaultvalue;
-$iframeurl = '?m=content&f=relation&v=manage&cid='.$GLOBALS['cid'].'&_su='.$GLOBALS['_su'];
-		return "<div class='input-group'>
-    <input type='hidden' name='form[relation]' id='relation' value='$value' >
+private function relation($config, $value) {
+    extract($config,EXTR_SKIP);
+    if(is_array($setting)) extract($setting,EXTR_SKIP);
+    if(!$value && isset($defaultvalue)) $value = $defaultvalue;
+    $iframeurl = '?m=content&f=relation&v=manage&cid='.$GLOBALS['cid'].'&_su='.$GLOBALS['_su'];
+    //content_relation
+    $lists = '';
+    if($this->id) {
+        $result = $this->db->get_list('content_relation',array('id'=>$this->id,'cid'=>$this->cid), '*', 0, 100, 0, 'rid ASC');
+        foreach($result as $rs) {
+        $lists .= '<li><strong>标题：</strong><a href="'.$rs['url'].'" target="_blank">'.$rs['title'].'</a> <a class="btn btn-default btn-xs" href="javascript:void();" onclick="remove_relation(this,'.$rs['rid'].');">移除</a></li>';
+        }
+    }
+
+    return "<div class='input-group'>
+    <input type='hidden' name='form[relation]' id='relation' value='' >
     <input type='text' name='search' id='relation_search' class='form-control' style='width: 200px;'>
-<span class='input-group-btn pull-left'>
-<button class='btn btn-white' type='button' onclick='relation_add(\"$iframeurl\");'>搜索</button>
-</span>
-</div>
-<div class='tasks-widget'>
-    <ul class='task-list' id='relation_result'></ul>
-</div>
-";
-	}
+    <span class='input-group-btn pull-left'>
+    <button class='btn btn-white' type='button' onclick='relation_add(\"$iframeurl\");'>搜索</button>
+    </span>
+    </div>
+    <div class='tasks-widget'>
+        <ul class='task-list' id='relation_result'>$lists</ul>
+    </div>
+    ";
+    }
 
 } ?>

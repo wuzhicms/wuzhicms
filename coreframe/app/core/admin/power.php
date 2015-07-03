@@ -47,11 +47,10 @@ class power extends WUZHI_admin {
                 $factor = substr(random_string('md5'),0,6);
                 $password = md5(md5($GLOBALS['form']['password']).$factor);
                 $formdata['password'] = $password;
-                $formdata['role'] = intval($GLOBALS['form']['role']);
-                $formdata['truename'] = remove_xss($GLOBALS['form']['truename']);
                 $formdata['factor'] = $factor;
             }
-			
+            $formdata['role'] = intval($GLOBALS['form']['role']);
+            $formdata['truename'] = remove_xss($GLOBALS['form']['truename']);
 			$this->db->insert('admin',$formdata);
 			MSG(L('operation success'));
 		} else {

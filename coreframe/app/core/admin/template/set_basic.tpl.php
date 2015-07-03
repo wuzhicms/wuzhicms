@@ -73,14 +73,6 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">默认模板</label>
-                <div class="col-sm-4">
-                    <?php
-                        echo WUZHI_form::select(template_list(), TPLID, 'name="form[default_template]" class="form-control"');
-                    ?>
-                </div>
-            </div>
-            <div class="form-group">
                 <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
                     <input class="btn btn-info" type="submit" name="submit" value="提交">

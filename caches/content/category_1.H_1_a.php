@@ -1,6 +1,7 @@
 <?php
  return array (
   'cid' => '1',
+  'siteid' => '1',
   'keyid' => 'content',
   'name' => '新闻A',
   'mb' => '新闻',
@@ -14,6 +15,7 @@
   'domain' => '',
   'url' => '/index.php?v=listing&cid=1&page=1',
   'thumb' => '',
+  'icon' => '',
   'workflowid' => '0',
   'showloop' => '1',
   'ismenu' => '1',

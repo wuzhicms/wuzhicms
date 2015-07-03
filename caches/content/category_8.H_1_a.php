@@ -1,6 +1,7 @@
 <?php
  return array (
   'cid' => '8',
+  'siteid' => '1',
   'keyid' => 'content',
   'name' => '保险',
   'mb' => '保险',
@@ -14,6 +15,7 @@
   'domain' => '',
   'url' => '/index.php?v=listing&cid=8&page=1',
   'thumb' => '',
+  'icon' => '',
   'workflowid' => '0',
   'showloop' => '1',
   'ismenu' => '1',

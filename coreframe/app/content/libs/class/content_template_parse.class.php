@@ -71,8 +71,12 @@ class WUZHI_content_template_parse {
             if($this->categorys[$cid]['child']) {
                 $this->childs = '';
                 $this->get_child($cid);
-                $cids = implode(',',$this->childs);
-                $where = '`cid` IN ('.$cids.') AND `status`=9';
+                if($this->childs) {
+                    $cids = implode(',',$this->childs);
+                    $where = '`cid` IN ('.$cids.') AND `status`=9';
+                } else {
+                    $where = '`cid`='.$cid.' AND `status`=9';
+                }
             } else {
                 $where = '`cid`='.$cid.' AND `status`=9';
             }
@@ -216,7 +220,8 @@ class WUZHI_content_template_parse {
                 }
 
             } else {
-                $where = array('blockid'=>$c['blockid'],'status'=>9);
+                $siteid = isset($c['siteid']) ? $c['siteid'] : 1;
+                $where = array('blockid'=>$c['blockid'],'status'=>9,'siteid'=>$siteid);
             }
             $order = isset($c['order']) ? $c['order'] : 'sort DESC,id DESC';
             $result = $this->db->get_list('block_data', $where, '*', $c['start'], $c['pagesize'], 0,$order);
