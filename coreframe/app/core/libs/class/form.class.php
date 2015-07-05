@@ -253,7 +253,6 @@ class WUZHI_form {
 	 * @return string
 	 */
 	public static function templates($m, $value = '', $str = '', $fix = ''){
-		$siteid = get_cookie('siteid');
 		$tems = select_template($m);
 		$string = '';
 		$string .= '<select ' . $str . '>';
@@ -261,7 +260,7 @@ class WUZHI_form {
 		foreach ($tems as $project => $tpls) {
 			if (!is_array($tpls)) continue;
 			foreach ($tpls as $tpl) {
-				if ($siteid != $project) continue;
+				if (TPLID != $project) continue;
 				if ($fix && strpos($tpl, $fix) === false) continue;
 				$selected = '';
 				$v = $project . ':' . substr($tpl, 0, -5);
