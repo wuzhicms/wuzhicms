@@ -167,7 +167,7 @@ class model extends WUZHI_admin {
 			$formdata['formtype'] = $formtype;
 			//master_field 是要添加到主表的
 			$formdata['master_field'] = intval($formdata['master_field']);
-            $formdata['setting'] = isset($GLOBALS['setting']) ? p_addslashes(serialize($GLOBALS['setting'])) : '';
+            $formdata['setting'] = isset($GLOBALS['setting']) ? serialize($GLOBALS['setting']) : '';
             $formdata['unsetgids'] = isset($GLOBALS['unsetgids']) ? implode(',',$GLOBALS['unsetgids']) : '';
 			$formdata['unsetroles'] = isset($GLOBALS['unsetroles']) ? implode(',',$GLOBALS['unsetroles']) : '';
 
@@ -268,6 +268,7 @@ class model extends WUZHI_admin {
 
             $r = $this->db->get_one('model_field',array('id'=>$id));
             $setting = unserialize($r['setting']);
+
             $formtype = $r['formtype'];
             include $this->template('field_edit');
         }
