@@ -40,7 +40,7 @@ class category extends WUZHI_admin {
 		$tree_data = '';
 
 		//格式字符串
-		$str="<tr><td class='categorytd'><div><input class='center'style='padding:3px' name='sorts[\$cid]' type='text' size='3' value='\$sort'></div></td><td>\$cid</td><td>\$siteid</td></td><td id='\$cid' \$selected>\$spacer\$name</td><td>\$ctype</td><td>\$modelname</td><td>\$url</td><td>\$str_manage</td></tr>";
+		$str="<tr><td class='categorytd'><div><input class='center'style='padding:3px' name='sorts[\$cid]' type='text' size='3' value='\$sort'></div></td><td>\$cid</td><td>\$siteid</td><td id='\$cid' \$selected>\$spacer\$name</td><td>\$ctype</td><td>\$modelname</td><td>\$url</td><td>\$str_manage</td></tr>";
 		 
 		//返回树
 		$tree_data.=$tree->create(0,$str);
