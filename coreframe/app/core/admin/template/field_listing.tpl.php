@@ -50,8 +50,18 @@ $submenuid = $menu_r['menuid'];
 
                                             <a href="?m=core&f=model&v=field_edit&id=<?php echo $r['id'];?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>"
                                                class="btn btn-primary btn-xs">修改</a>
-                                            <a href="?m=core&f=model&v=field_edit&id=<?php echo $r['id'];?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>"
-                                               class="btn btn-default btn-xs">禁用</a>
+                                            <?php
+                                            if($r['disabled']) {
+                                                ?>
+                                                <a href="?m=core&f=model&v=field_baned&id=<?php echo $r['id'];?>&modelid=<?php echo $r['modelid'];?>&ban_field=0<?php echo $this->su();?>"
+                                                   class="btn btn-danger btn-xs" title="点击开启">已禁用</a>
+                                                <?php
+                                            } else {?>
+                                                <a href="?m=core&f=model&v=field_baned&id=<?php echo $r['id'];?>&modelid=<?php echo $r['modelid'];?>&ban_field=1<?php echo $this->su();?>"
+                                                   class="btn btn-default btn-xs" title="点击禁用">使用中</a>
+                                                <?php
+                                            }?>
+
                                             <a href="javascript:makedo('?m=core&f=model&v=field_delete&id=<?php echo $r['id'];?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>', '确认删除该记录？')"
                                                class="btn btn-danger btn-xs">删除</a>
 

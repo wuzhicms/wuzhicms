@@ -160,6 +160,7 @@ class model extends WUZHI_admin {
 		if(isset($GLOBALS['submit'])) {
 
 			$formdata = $GLOBALS['form'];
+			$formdata['field'] = trim($formdata['field']);
 			//检查是否存在该字段
 			$r =$this->db->get_one('model_field',array('modelid'=>$modelid,'field'=>$formdata['field']));
 			if($r) MSG(L('field exists'));
@@ -220,6 +221,7 @@ class model extends WUZHI_admin {
         if(isset($GLOBALS['submit'])) {
             $oldfield = $GLOBALS['oldfield'];
             $formdata = $GLOBALS['form'];
+			$formdata['field'] = trim($formdata['field']);
             //检查是否存在该字段
             $r =$this->db->get_one('model_field',array('modelid'=>$modelid,'field'=>$formdata['field']));
             if(!$r) MSG(L('field not exists'));
@@ -333,14 +335,13 @@ class model extends WUZHI_admin {
      * 字段禁用
      */
     public function field_baned() {
-        if(isset($GLOBALS['submit'])) {
-            foreach($GLOBALS['sorts'] as $cid => $n) {
-                $n = intval($n);
-                $this->db->update('model_field',array('sort'=>$n),array('id'=>$cid));
-            }
-            MSG(L('operation success'),HTTP_REFERER);
+        $id = intval($GLOBALS['id']);
+        $ban_field = intval($GLOBALS['ban_field']);
+        $this->db->update('model_field',array('disabled'=>$ban_field),array('id'=>$id));
+        if($ban_field) {
+            MSG('字段禁用成功！',HTTP_REFERER);
         } else {
-            MSG(L('operation failure'));
+            MSG('字段开启成功！',HTTP_REFERER);
         }
     }
 }
