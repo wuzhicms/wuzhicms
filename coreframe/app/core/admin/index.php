@@ -92,7 +92,7 @@ final class index extends WUZHI_admin {
     //登录
     function login() {
         //已经登陆的用户重定向到后台首页
-        if (isset($_SESSION['uid'])) {
+        if (isset($_SESSION['uid']) && !empty($_SESSION['uid'])) {
             MSG(L('already login'), '?m=core&f=index'.$this->su(0));
         }
 
