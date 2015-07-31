@@ -36,7 +36,7 @@ class form_build {
 			if($value !== FALSE) {
 				$star = $field_config['minlength'] || $field_config['pattern'] ? 1 : 0;
 				$location = $field_config['location'];
-				$info[$location][$field] = array('name'=>$field_config['name'], 'remark'=>$field_config['remark'], 'form'=>$value, 'star'=>$star,'powerful_field'=>$field_config['powerful_field'],'formtype'=>$field_config['formtype'],'ban_contribute'=>$field_config['ban_contribute']);
+				$info[$location][$field] = array('name'=>$field_config['name'],'field'=>$field, 'remark'=>$field_config['remark'], 'form'=>$value, 'star'=>$star,'powerful_field'=>$field_config['powerful_field'],'formtype'=>$field_config['formtype'],'ban_contribute'=>$field_config['ban_contribute']);
 			}
 		}
 		//如果表单没不分左侧和右侧，那么需要合并数据为一个二维数组
@@ -45,7 +45,7 @@ class form_build {
 
 	private function check_field($field){
 		//page_type 分页方式／max_string 每页最大字符
-		if(!isset($this->fields[$field]) || value_exists($field,'id,max_string,page_type')) return FALSE;
+		if(!isset($this->fields[$field]) || value_exists($field,'max_string,page_type')) return FALSE;
 		if(defined('IN_ADMIN')) {
 			if(value_exists($_SESSION['role'], $this->fields[$field]['unsetroles'])) return FALSE;
 		} else {

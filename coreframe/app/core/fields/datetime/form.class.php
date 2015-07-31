@@ -24,5 +24,6 @@
 			$isdatetime = 1;
 			$timesystem = 0;
 		}
-		return $this->form->calendar("form[$field]",$value,$isdatetime,1,'true',$timesystem);
+		if($value=='0000-00-00') $value = '';
+		return $this->form->calendar("form[$field]",$value,$isdatetime,1,$timesystem,$ext_code);
 	}

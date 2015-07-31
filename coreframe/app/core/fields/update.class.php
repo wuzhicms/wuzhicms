@@ -24,6 +24,9 @@ class form_update {
         $this->formdata = $datas;
         $this->id = $datas['id'];
 		$this->cid = $datas['cid'];//tuzwu 栏目id
+        if($this->modelid==1001) {
+            $datas['pics'] = 1;
+        }
 		foreach($datas as $field=>$value) {
 			if(!isset($this->fields[$field])) continue;
 			$func = $this->fields[$field]['formtype'];

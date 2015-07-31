@@ -51,7 +51,7 @@ class form_add {
 			$func = $field_config['formtype'];
 			//在field_config 必须包含的键值：field
 			if(method_exists($this, $func)) $value = $this->$func($field_config, $value);
-            if(is_string($value)) {
+            if(is_string($value) || is_numeric($value)) {
                 if($field_config['master_field']) {
                     $info['master_data'][$field] = $value;
                 } else {
@@ -144,6 +144,15 @@ class form_add {
 		return $value;
 	}
 
+	private function datetime($config, $value) {
+		extract($config,EXTR_SKIP);
+		extract($setting,EXTR_SKIP);
+		if($fieldtype=='int') {
+			$value = strtotime($value);
+		}
+		return $value;
+	}
+
 	private function downfile($field, $value) {
 		return trim($value);
 	}
@@ -174,7 +183,7 @@ class form_add {
 	}
 
 	private function images($config, $value) {
-        return p_addslashes(array2string($value));
+        return array2string($value);
 	}
 
 
@@ -184,6 +193,26 @@ class form_add {
          } else {
             return $value;
          }
+	}
+
+
+	private function linkage($config, $value) {
+			$field = $config['field'];
+			$linkageid = $config['setting']['linkageid'];
+			$values[$field] = $GLOBALS['LK'.$linkageid.'_3'];
+			$values[$field.'_1'] = $GLOBALS['LK'.$linkageid.'_1'];
+			$values[$field.'_2'] = $GLOBALS['LK'.$linkageid.'_2'];
+		return $values;
+	}
+
+
+	private function linkage_box($config, $value) {
+		extract($config,EXTR_SKIP);
+		extract($setting,EXTR_SKIP);
+		if(!is_array($value) || empty($value)) return false;
+		array_shift($value);
+		$value = ','.implode(',', $value).',';
+		return $value;
 	}
 
 	private function price_group($config, $value) {
@@ -200,6 +229,24 @@ class form_add {
 		
 		if(!$config['setting']['enablehtml']) $value = strip_tags($value);
 		return $value;
+	}
+
+	private function text_select($config, $value) {
+        extract($config,EXTR_SKIP);
+        extract($setting,EXTR_SKIP);
+        if($boxtype == 'checkbox') {
+            if(!is_array($value) || empty($value)) return false;
+            array_shift($value);
+            $value = ','.implode(',', $value).',';
+            return $value;
+        } elseif($boxtype == 'multiple') {
+            if(is_array($value) && count($value)>0) {
+            $value = ','.implode(',', $value).',';
+            return $value;
+        }
+        } else {
+            return $value;
+        }
 	}
 
 

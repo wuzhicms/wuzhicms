@@ -27,7 +27,7 @@ class model extends WUZHI_admin {
         $this->cache_form();//TODO 删除该行
 
 		$m = $this->m;
-		$where = array('m'=>$m);
+		// $where = array('m'=>$m);
 		$result = $this->db->get_list('model', $where, '*', 0, 100,0,'modelid ASC');
 		include $this->template('model_listing');
 	}

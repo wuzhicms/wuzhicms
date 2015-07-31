@@ -4,5 +4,6 @@
         if($setting) extract($setting,EXTR_SKIP);
 		if(!$value) $value = $defaultvalue;
 		$type = $ispassword ? 'password' : 'text';
-		return '<input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="form-control" '.$ext_code.' >';
+		if(!isset($placeholder)) $placeholder = '';
+		return '<input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" placeholder="'.$placeholder.'" value="'.$value.'" class="form-control" '.$ext_code.' >';
 	}

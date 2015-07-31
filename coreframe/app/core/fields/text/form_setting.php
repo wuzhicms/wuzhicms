@@ -4,9 +4,13 @@
       <td width="100">文本框长度</td>
       <td><input type="text" name="setting[size]" value="<?php echo output($setting,'size');?>" size="10" class="input-text"></td>
     </tr>
-	<tr> 
-      <td>默认值</td>
-      <td><input type="text" name="setting[defaultvalue]" value="<?php echo output($setting,'defaultvalue');?>" size="40" class="input-text"></td>
+	<tr>
+        <td>默认值</td>
+        <td><input type="text" name="setting[defaultvalue]" value="<?php echo output($setting,'defaultvalue');?>" size="40" class="input-text"></td>
+    </tr>
+    <tr>
+        <td>placeholder</td>
+        <td><input type="text" name="setting[placeholder]" value="<?php echo output($setting,'placeholder');?>" size="40" class="input-text"></td>
     </tr>
 	<tr> 
       <td>是否为密码框</td>
