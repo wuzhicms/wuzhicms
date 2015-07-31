@@ -36,7 +36,7 @@ class form_build {
 			if($value !== FALSE) {
 				$star = $field_config['minlength'] || $field_config['pattern'] ? 1 : 0;
 				$location = $field_config['location'];
-				$info[$location][$field] = array('name'=>$field_config['name'], 'remark'=>$field_config['remark'], 'form'=>$value, 'star'=>$star,'powerful_field'=>$field_config['powerful_field'],'formtype'=>$field_config['formtype'],'ban_contribute'=>$field_config['ban_contribute']);
+				$info[$location][$field] = array('name'=>$field_config['name'],'field'=>$field, 'remark'=>$field_config['remark'], 'form'=>$value, 'star'=>$star,'powerful_field'=>$field_config['powerful_field'],'formtype'=>$field_config['formtype'],'ban_contribute'=>$field_config['ban_contribute']);
 			}
 		}
 		//如果表单没不分左侧和右侧，那么需要合并数据为一个二维数组
@@ -45,7 +45,7 @@ class form_build {
 
 	private function check_field($field){
 		//page_type 分页方式／max_string 每页最大字符
-		if(!isset($this->fields[$field]) || value_exists($field,'id,max_string,page_type')) return FALSE;
+		if(!isset($this->fields[$field]) || value_exists($field,'max_string,page_type')) return FALSE;
 		if(defined('IN_ADMIN')) {
 			if(value_exists($_SESSION['role'], $this->fields[$field]['unsetroles'])) return FALSE;
 		} else {
@@ -108,10 +108,8 @@ class form_build {
 		}
 		$value = implode(',',$value);
 		switch($boxtype) {
-			case 'radio'://radio($options = array(), $value = 0, $str = '')
-				if($field=='type' && isset($GLOBALS['type']) && $GLOBALS['type']==2) {
-					$value = 2;
-				}
+			case 'radio':
+				$value = $value[0];
 				$string = $this->form->radio($option,$value,"name='form[$field]' $ext_code",$field);
 			break;
 
@@ -138,6 +136,16 @@ class form_build {
         $option = array();
         if($boxtype=='select') {
             $option[] = '请选择 ...';
+        }
+        preg_match_all('/\$([a-z0-9_]+)/',$sql,$_sqls);
+        if(!empty($_sqls)) {
+            foreach($_sqls[0] as $_k=>$_sql) {
+                $_field = $_sqls[1][$_k];
+                if(!$GLOBALS[$_field]) {
+                    $GLOBALS[$_field] = $this->formdata[$_field];
+                }
+                $sql = str_replace($_sql,$GLOBALS[$_field],$sql);
+            }
         }
         $res = $this->db->query($sql);
         while($r = $this->db->fetch_array($res)) {
@@ -221,7 +229,8 @@ class form_build {
 			$isdatetime = 1;
 			$timesystem = 0;
 		}
-		return $this->form->calendar("form[$field]",$value,$isdatetime,1,'true',$timesystem);
+		if($value=='0000-00-00') $value = '';
+		return $this->form->calendar("form[$field]",$value,$isdatetime,1,$timesystem,$ext_code);
 	}
 
 	private function downfile($config, $value) {
@@ -233,9 +242,9 @@ private function editor($config, $value) {
     extract($config,EXTR_SKIP);
     extract($setting,EXTR_SKIP);
     if($toolbar=='textarea') {
-        return '<textarea name="form['.$field.']" id="'.$field.'" class="form-control" rows="8" boxid="'.$field.'" datatype="*" nullmsg="请输入内容" errormsg="内容不能为空">'.$value.'</textarea>';
+        return '<textarea name="form['.$field.']" id="'.$field.'" class="form-control" rows="3" boxid="'.$field.'" datatype="*" nullmsg="请输入'.$name.'" errormsg="'.$name.'不能为空">'.$value.'</textarea>';
     } else {
-        return '<textarea name="form['.$field.']" id="'.$field.'" boxid="'.$field.'" datatype="*" nullmsg="请输入内容" errormsg="内容不能为空">'.$value.'</textarea>'.$this->form->editor($field,$field,'',$toolbar);
+        return '<textarea name="form['.$field.']" id="'.$field.'" boxid="'.$field.'" datatype="*" nullmsg="请输入'.$name.'" errormsg="'.$name.'不能为空">'.$value.'</textarea>'.$this->form->editor($field,$field,'',$toolbar);
     }
 }
 
@@ -252,20 +261,28 @@ private function editor($config, $value) {
 
 	private function image($config, $value) {
         extract($config,EXTR_SKIP);
-        return '<div class="input-group">'.$this->form->attachment($setting['upload_allowext'],1,"form[$field]","$value","callback_thumb_dialog",0,$setting['images_width'],$setting['images_height'],$setting['images_cut']).'</div>';
+        return '<div class="input-group">'.$this->form->attachment($setting['upload_allowext'],1,"form[$field]","$value","callback_thumb_dialog",0,$setting['images_width'],$setting['images_height'],$setting['images_cut'],$setting['is_water'],$setting['is_allow_show_img'],$ext_code).'</div>';
     }
 
-	private function images($config, $value) {
-        if(!empty($value)) $value = string2array($value);
-        extract($config,EXTR_SKIP);
-$str = '<script>
-    $(function() {
-        $( "#huanjing_ul" ).sortable();
-        $( "#huanjing_ul" ).disableSelection();
-    });
+private function images($config, $value){
+	if (!empty($value)) $value = string2array($value);
+	extract($config, EXTR_SKIP);
+	$str = '<script>
+	$(function() {
+		$( "#'.$field.'_ul" ).sortable();
+		$( "#'.$field.'_ul" ).disableSelection();
+	});
 </script>';
-        return $str.'<div class="attaclist">'.$this->form->attachment("jpg|png|gif|bmp",20,"form[$field]",$value,'callback_more_dialog',0).'</div>';
-    }
+	$default_multiple = '';
+	if ($value && is_array($value)) {
+		foreach ($value AS $k => $v) {
+			$default_multiple .= '<li id="file_node_' . $k . '"><input type="hidden" name="' . $field . '[' . $k . '][url]" value="' . $v['url'] . '"> <img src="' . $v['url'] . '" alt="' . $v['alt'] . '" onclick="img_view(this.src);"> <textarea name="' . $field . '[' . $k . '][alt]" >' . $v['alt'] . '</textarea> <a class="btn btn-danger btn-xs" href="javascript:remove_file(' . $k . ');">移除</a></li>';
+		}
+	}
+	$str2 = '<div id="' . $field . '"><ul id="' . $field . '_ul">' . $default_multiple . '</ul></div>';
+
+	return $str . '<div class="attaclist">' . $str2 . $this->form->attachment("jpg|png|gif|bmp", 20, "form[$field]", $value, 'callback_images2', 0,true) . '</div>';
+}
 	private function keyword($config, $value) {
          extract($config,EXTR_SKIP);
          if(is_array($setting)) extract($setting,EXTR_SKIP);
@@ -286,6 +303,51 @@ $str = '<script>
 			});
 		})</script>';
 		return $str."<input type='text' name='form[$field]' id='$field' value='$value' placeholder='输入关键词后，请回车' {$ext_code} class='input-text form-control contentkeyword ".$field."'>";
+	}
+
+	private function linkage($config, $value) {
+		extract($config,EXTR_SKIP);
+		if($setting) extract($setting,EXTR_SKIP);
+		if(!$value) $value = $defaultvalue;
+		if(V=='add') {
+		$value = explode(',',$value);
+		$values[1] = $value[0];
+		$values[2] = $value[1];
+		$values[3] = $this->formdata[$field];
+		} else {
+		$values[1] = $this->formdata[$field.'_1'];
+		$values[2] = $this->formdata[$field.'_2'];
+		$values[3] = $this->formdata[$field];
+		}
+		return linkage($linkageid, 'form['.$field.']',1,$ext_code,$values);
+	}
+
+	private function linkage_box($config, $value) {
+		extract($config,EXTR_SKIP);
+		if($setting) extract($setting,EXTR_SKIP);
+		$string = '';
+		if($value) {
+			$where = '';
+			$value = trim($value,',');
+			$values = explode(',',$value);
+			$value = $values[0];
+			if($value) {
+				$rs = $this->db->get_one('linkage_data', array('lid' => $value));
+				$pid = $rs['pid'];
+				$where = "`pid` = '$pid'";
+
+				$result = $this->db->get_list('linkage_data', $where, '*', 0, 50, 0, 'sort ASC,lid ASC');
+				foreach($result as $r) {
+				$checked = '';
+				if(in_array($r['lid'],$values)) $checked = 'checked';
+					$string .= '<label class="checkbox-inline"><input type="checkbox" name="form['.$field.'][]" value="'.$r['lid'].'" '.$checked.'>'.$r['name'].'</label>';
+				}
+			} else {
+				$string .= '请选择所属区域';
+			}
+
+		}
+		return '<input type="hidden" name="form['.$field.'][]" value="no_value"><div id="'.$field.'_div" class="col-sm-12 input-group">'.$string.'</div>';
 	}
 
 	private function number($config, $value) {
@@ -391,14 +453,43 @@ return $str;
         if($setting) extract($setting,EXTR_SKIP);
 		if(!$value) $value = $defaultvalue;
 		$type = $ispassword ? 'password' : 'text';
-		return '<input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="form-control" '.$ext_code.' >';
+		if(!isset($placeholder)) $placeholder = '';
+		return '<input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" placeholder="'.$placeholder.'" value="'.$value.'" class="form-control" '.$ext_code.' >';
+	}
+
+	private function text_select($config, $value) {
+
+		extract($config,EXTR_SKIP);
+		extract($setting,EXTR_SKIP);
+        $boxtype = isset($boxtype) ? $boxtype : 'select';
+		if($value=='') $value = $defaultvalue;
+		$options = explode("\n",$options);
+		foreach($options as $_k) {
+			$v = explode("|",$_k);
+			$k = trim($v[1]);
+			$option[$k] = $v[0];
+		}
+		$values = explode(',',$value);
+		$value = array();
+		foreach($values as $_k) {
+			if($_k != '') $value[] = $_k;
+		}
+		$value = implode(',',$value);
+		switch($boxtype) {
+			case 'select':
+				$string = $this->form->select($option,$value,"name='attr_$field' class='form-control' style='width:auto;' id='$field' $ext_code");
+			break;
+		}
+
+		return '<div class="col-sm-4 text-left"><input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" placeholder="'.$placeholder.'" value="'.$value.'" class="form-control" ></div>
+'.$string;
 	}
 
 	private function textarea($config, $value) {
 		extract($config,EXTR_SKIP);
         extract($setting,EXTR_SKIP);
         if(!$value) $value = $defaultvalue;
-    return '<textarea name="form['.$field.']" class="form-control" cols="60" rows="3">'.$value.'</textarea>';
+    return '<textarea name="form['.$field.']" class="form-control" cols="60" rows="3" '.$ext_code.'>'.$value.'</textarea>';
 	}
 
 	private function title($config, $value) {

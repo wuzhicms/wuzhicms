@@ -8,6 +8,16 @@
         if($boxtype=='select') {
             $option[] = '请选择 ...';
         }
+        preg_match_all('/\$([a-z0-9_]+)/',$sql,$_sqls);
+        if(!empty($_sqls)) {
+            foreach($_sqls[0] as $_k=>$_sql) {
+                $_field = $_sqls[1][$_k];
+                if(!$GLOBALS[$_field]) {
+                    $GLOBALS[$_field] = $this->formdata[$_field];
+                }
+                $sql = str_replace($_sql,$GLOBALS[$_field],$sql);
+            }
+        }
         $res = $this->db->query($sql);
         while($r = $this->db->fetch_array($res)) {
             $option[$r[$field_value]] = $r[$field_name];

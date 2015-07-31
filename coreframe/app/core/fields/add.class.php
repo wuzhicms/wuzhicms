@@ -51,7 +51,7 @@ class form_add {
 			$func = $field_config['formtype'];
 			//在field_config 必须包含的键值：field
 			if(method_exists($this, $func)) $value = $this->$func($field_config, $value);
-            if(is_string($value)) {
+            if(is_string($value) || is_numeric($value)) {
                 if($field_config['master_field']) {
                     $info['master_data'][$field] = $value;
                 } else {

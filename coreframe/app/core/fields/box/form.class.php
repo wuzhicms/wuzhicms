@@ -18,10 +18,8 @@
 		}
 		$value = implode(',',$value);
 		switch($boxtype) {
-			case 'radio'://radio($options = array(), $value = 0, $str = '')
-				if($field=='type' && isset($GLOBALS['type']) && $GLOBALS['type']==2) {
-					$value = 2;
-				}
+			case 'radio':
+				$value = $value[0];
 				$string = $this->form->radio($option,$value,"name='form[$field]' $ext_code",$field);
 			break;
 

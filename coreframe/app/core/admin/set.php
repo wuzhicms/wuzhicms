@@ -22,7 +22,7 @@ class set extends WUZHI_admin {
      */
     public function basic() {
         if(isset($GLOBALS['submit'])) {
-            $formdata = array_map('remove_xss',$GLOBALS['form']);
+            $formdata = array_map('strip_tags',$GLOBALS['form']);
             $formdata['copyright'] = $GLOBALS['form']['copyright'];
             $formdata['statcode'] = $GLOBALS['form']['statcode'];
             set_cache('siteconfigs',$formdata);
