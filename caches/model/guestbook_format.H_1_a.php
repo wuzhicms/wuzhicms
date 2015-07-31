@@ -154,6 +154,24 @@ class form_format {
         }
     }
 
+	private function datetime($field, $value) {
+		$setting = $this->fields[$field]['setting'];
+		if($setting) extract($setting);
+		if($fieldtype=='date' || $fieldtype=='datetime') {
+			return $value;
+		} else {
+			$format_txt = $format;
+		}
+		if(strlen($format_txt)<6) {
+			$isdatetime = 0;
+		} else {
+			$isdatetime = 1;
+		}
+		if(!$value) $value = SYS_TIME;
+		$value = date($format_txt,$value);
+		return $value;
+	}
+
     private function downfile($field, $value) {
         $setting = $this->fields[$field]['setting'];
         if($setting['linktype']) {
@@ -182,6 +200,45 @@ class form_format {
 	private function price_group($field, $value) {
 		return $value;
 	}
+
+    function text_select($field, $value) {
+        extract($this->fields[$field]['setting']);
+        if($outputtype) {
+            return $value;
+        } else {
+            $options = explode("\n",$options);
+            foreach($options as $_k) {
+                $v = explode("|",$_k);
+                $k = trim($v[1]);
+                $option[$k] = $v[0];
+            }
+            $string = '';
+            switch($boxtype) {
+                case 'radio':
+                    $string = $option[$value];
+                    break;
+
+                case 'checkbox':
+                    $value_arr = explode(',',$value);
+                    foreach($value_arr as $_v) {
+                        if($_v) $string .= $option[$_v].' 、';
+                    }
+                    break;
+
+                case 'select':
+                    $string = $option[$value];
+                    break;
+
+                case 'multiple':
+                    $value_arr = explode(',',$value);
+                    foreach($value_arr as $_v) {
+                        if($_v) $string .= $option[$_v].' 、';
+                    }
+                    break;
+            }
+            return $string;
+        }
+    }
 
 	private function title($field, $value) {
 		$value = p_htmlentities($value);

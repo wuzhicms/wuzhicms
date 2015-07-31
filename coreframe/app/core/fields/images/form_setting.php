@@ -9,7 +9,7 @@
     </tr>
 	<tr> 
       <td>是否在图片上添加水印</td>
-      <td><input type="radio" name="setting[watermark]" value="1"> 是 <input type="radio" name="setting[watermark]" value="0" checked> 否</td>
+      <td><input type="radio" name="setting[is_water]" value="1"> 是 <input type="radio" name="setting[is_water]" value="0" checked> 否</td>
     </tr>
 	<tr> 
       <td>是否从已上传中选择</td>
