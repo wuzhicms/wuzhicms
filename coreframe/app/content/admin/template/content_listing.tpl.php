@@ -5,7 +5,7 @@ include $this->template('header','core');
 <body class="body">
 <style type="text/css">
     .table>tbody>tr>td, .table>thead>tr>th {
-        padding: 10px 10px;
+        padding: 5px 10px;
     }
     .table>thead>tr>th.tablehead {
         padding: 10px 10px;

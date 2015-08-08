@@ -18,8 +18,8 @@
                         <th class="tablehead">发件人</th>
                         <th class="tablehead">收件人</th>
                         <th class="tablehead">内容</th>
-                        <th class="tablehead" width="120">时间</th>
-                        <th class="tablehead" width="60">管理</th>
+                        <th class="tablehead">时间</th>
+                        <th class="tablehead">管理</th>
                     </tr>
                     </thead>
                     <tbody>

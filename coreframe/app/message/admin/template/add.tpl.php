@@ -15,24 +15,25 @@ include $this->template('header','core');
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 control-label">收件人</label>
-                <div class="col-sm-8 input-group">
+                <label class="col-sm-2 col-xs-6 control-label">收件人</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <input type="text" name="usernames" id="title" maxlength="80" class="form-control" value="<?php echo $r['title'];?>" placeholder="多个收件人用逗号隔开"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">内容</label>
-                <div class="col-sm-9 input-group">
+                <label class="col-sm-2 col-xs-6 control-label">内容</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <textarea name="content" class="form-control" rows="10"></textarea>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-10 input-group">
-                    <input class="btn btn-info" type="submit" name="submit" value="提交">
+                <label class="col-sm-2 col-xs-4 control-label"></label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                 </div>
             </div>
+
         </form>
     </div>
 </section>

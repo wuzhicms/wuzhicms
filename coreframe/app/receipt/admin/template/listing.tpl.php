@@ -10,6 +10,7 @@
         <section class="panel">
             <?php echo $this->menu($GLOBALS['_menuid']);?>
             <form action="?m=affiche&f=index&v=sort<?php echo $this->su();?>" name="myform" method="post">
+            <header class="panel-heading"><span>发票申请管理</span></header>
             <div class="panel-body" id="panel-bodys">
                 <table class="table table-striped table-advance table-hover">
                     <thead>

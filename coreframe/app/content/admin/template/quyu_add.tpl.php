@@ -25,14 +25,14 @@ include $this->template('header','core');
       <div role="tabpanel" class="tab-pane fade active in" id="tabs1" aria-labelledby="1tab">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">上级城市</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">上级城市</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <?php echo $r['name'];?>
                                 </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">名称|拼音</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">名称|拼音</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
 
                                 <div id="batch_add">
                                     <textarea class="form-control" maxlength="255" style="height:60px;" datatype="*" errormsg="请输入栏目名称" onblur="set_category(this.value)"></textarea><span class="Validform_checktip"></span><br>例如：<font color="#959595"><br>海淀区|haidian<br>昌平区|changping<br></font>竖线以及后面的英文名可留空，默认会自动生成区域的拼音
@@ -43,9 +43,9 @@ include $this->template('header','core');
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-4 input-group">
-                                <input class="btn btn-info" type="submit" name="submit" value="提交">
+                            <label class="col-sm-2 col-xs-4 control-label"></label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                             </div>
                         </div>
                     </form>

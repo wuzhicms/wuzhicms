@@ -16,7 +16,7 @@ display: none;
 <section class="wrapper">
 <div class="row">
 <div class="col-lg-12">
-<section class="panel">
+<section class="panel" style="border-top: 2px solid #2E3238;">
 <header class="panel-heading addpos"><?php echo catpos($cid, ' &gt; ', 'target="_blank"'); ?></header>
 <div class="panel-body" id="panel-bodys">
 <form name="myform" class="form-horizontal tasi-form" action="" method="post">

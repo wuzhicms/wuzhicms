@@ -22,7 +22,7 @@
                     &nbsp;来源名称： <input type="text" size="52" value="<?php echo $GLOBALS['keywords'];?>" name="keywords">
                     &nbsp;
 
-                    <button type="submit" class="btn btn-info" value="submit">搜索</button>
+                    <button type="submit" class="btn btn-info btn-sm" value="submit">搜索</button>
                 </form>
             </header>
             <div class="panel-body" id="panel-bodys">

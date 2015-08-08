@@ -12,36 +12,36 @@ include $this->template('header','core');
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 control-label">用户名</label>
-                <div class="col-sm-2 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">用户名</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <input type="text" class="form-control" name="username">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">操作类型</label>
-                <div class="col-sm-8 input-group">
-                    <label style="width: 60px;"> <input type="radio" name="plus_minus" value="1" checked> 增加</label>
-                    <label style="width: 60px;"> <input type="radio" name="plus_minus" value="-1" > 减少</label>
+                <label class="col-sm-2 col-xs-4 control-label">操作类型</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <label class="radio-inline"> <input type="radio" name="plus_minus" value="1" checked> 增加</label>
+                    <label class="radio-inline"> <input type="radio" name="plus_minus" value="-1" > 减少</label>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">积分数量</label>
-                <div class="col-sm-2 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">积分数量</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <input type="text" class="form-control" name="point" value="" placeholder="正整数">
                 </div>
             </div>
 
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">备注</label>
-                <div class="col-sm-4 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">备注</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <textarea name="note" class="form-control" cols="60" rows="3"></textarea>                </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-10 input-group">
-                    <input class="btn btn-info" type="submit" name="submit" value="提交">
+                <label class="col-sm-2 col-xs-4 control-label"></label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                 </div>
             </div>
         </form>

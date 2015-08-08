@@ -13,21 +13,21 @@ include $this->template('header','core');
         <form class="form-horizontal tasi-form" method="post" action="">
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">角色名称</label>
-                <div class="col-sm-4 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">角色名称</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <input type="text" class="form-control" name="form[name]" color="#000000" datatype="s2-30" errormsg="别名至少2个字符,最多30个字符！">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">角色描述</label>
-                <div class="col-sm-4 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">角色描述</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <textarea name="form[remark]" class="form-control" cols="60" rows="3"></textarea>                </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-10 input-group">
-                    <input class="btn btn-info" type="submit" name="submit" value="提交">
+                <label class="col-sm-2 col-xs-4 control-label"></label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                 </div>
             </div>
         </form>
