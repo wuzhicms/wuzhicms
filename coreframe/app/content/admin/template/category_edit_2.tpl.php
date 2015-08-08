@@ -23,8 +23,8 @@ include $this->template('header','core');
 
       <div role="tabpanel" class="tab-pane fade active in" id="tabs1" aria-labelledby="1tab">
           <div class="form-group">
-              <label class="col-sm-2 control-label">上级栏目</label>
-              <div class="col-sm-4 input-group">
+              <label class="col-sm-2 col-xs-4 control-label">上级栏目</label>
+              <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                   <?php
 
                   echo $form->tree_select($categorys, $pid, 'name="form[pid]" class="form-control" onchange="check_parent(this.value)"', '≡ 无上级栏目 ≡');
@@ -33,14 +33,14 @@ include $this->template('header','core');
               </div>
           </div>
           <div class="form-group">
-              <label class="col-sm-2 control-label">栏目名称</label>
-              <div class="col-sm-4 input-group">
+              <label class="col-sm-2 col-xs-4 control-label">栏目名称</label>
+              <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                   <input type="text" class="form-control" id="name" name="form[name]" value="<?php echo $r['name'];?>">
               </div>
           </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">链接地址</label>
-            <div class="col-sm-4 input-group">
+            <label class="col-sm-2 col-xs-4 control-label">链接地址</label>
+            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                 <input type="text" class="form-control" id="url" name="url" value="<?php echo $r['url'];?>">
                 <span class="help-block">格式为：http://www.wuzhicms.cn/ </span>
             </div>
@@ -48,17 +48,17 @@ include $this->template('header','core');
 
 
           <div class="form-group">
-              <label class="col-sm-2 control-label">是否在导航中显示</label>
-              <div class="col-sm-4 input-group">
-                  <input type="radio" name="form[ismenu]" value="1" <?php if($r['ismenu']) echo "checked";?>> 是&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input type="radio" name="form[ismenu]" value="0" <?php if(!$r['ismenu']) echo "checked";?>> 否
+              <label class="col-sm-2 col-xs-4 control-label">是否在导航中显示</label>
+              <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                  <label class="radio-inline"><input type="radio" name="form[ismenu]" value="1" <?php if($r['ismenu']) echo "checked";?>> 是</label>
+                  <label class="radio-inline"><input type="radio" name="form[ismenu]" value="0" <?php if(!$r['ismenu']) echo "checked";?>> 否</label>
               </div>
           </div>
           <div class="form-group">
-              <label class="col-sm-2 control-label"></label>
-              <div class="col-sm-4 input-group">
+              <label class="col-sm-2 col-xs-4 control-label"></label>
+              <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                   <input type="hidden" name="type" value="2">
-                  <input class="btn btn-info" type="submit" name="submit" value="提交">
+                  <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
               </div>
           </div>
       </div>

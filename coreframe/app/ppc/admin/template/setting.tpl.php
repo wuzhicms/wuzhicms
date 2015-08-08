@@ -15,13 +15,13 @@ include $this->template('header','core');
                 <div class="panel-body">
                     <form class="form-horizontal tasi-form" method="post" action="">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">推广页面地址</label>
+                            <label class="col-sm-2 col-xs-4 control-label">推广页面地址</label>
                             <div class="col-sm-8 input-group">
                                 <input type="text" name="form[redirect_url]" id="redirect_url" maxlength="200" value="<?php echo $setting['redirect_url'];?>" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">积分奖励</label>
+                            <label class="col-sm-2 col-xs-4 control-label">积分奖励</label>
                             <div class="col-sm-10 input-group">
                                 <div class="row">
                                     <div class="col-sm-2">
@@ -34,19 +34,19 @@ include $this->template('header','core');
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">积分兑换商品地址</label>
+                            <label class="col-sm-2 col-xs-4 control-label">积分兑换商品地址</label>
                             <div class="col-sm-8 input-group">
                                 <input type="text" name="form[point2goods]" id="redirect_url" maxlength="200" value="<?php echo $setting['point2goods'];?>" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">会员复制推广链接提示语</label>
+                            <label class="col-sm-2 col-xs-4 control-label">会员复制推广链接提示语</label>
                             <div class="col-sm-8 input-group">
                                 <input type="text" name="form[tips]" id="redirect_url" maxlength="200" value="<?php echo $setting['tips'];?>" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
+                            <label class="col-sm-2 col-xs-4 control-label"></label>
                             <div class="col-sm-10 input-group">
                                 <input class="btn btn-info" type="submit" name="submit" value="提交">
                             </div>

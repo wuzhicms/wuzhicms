@@ -17,7 +17,7 @@ include $this->template('header','core');
                         <div class="form-group">
                             <label class="col-sm-2 control-label">公告名称</label>
                             <div class="col-sm-8 input-group">
-                                <input type="text" style="<?php echo $r['css'];?>" name="form[title]" id="title" maxlength="80" value="<?php echo $r['title'];?>" class="form-control" value="<?php echo $r['title'];?>"/><span class="input-group-btn"><input type="hidden" id="title_css" name="title_css" value="<?php echo $color;?>"><img id="title_color" src="<?php echo R;?>js/colorpicker/picker.png" height="34" hx="#c00"></span><span class="input-group-btn"><input type="hidden" name="font_weight" id="font_weight" value="<?php echo $font_weight;?>"><button class="btn btn-white" type="button" onclick="change_fontweight();"><strong>B</strong></button></span>
+                                <input type="text" style="<?php echo $r['css'];?>" name="form[title]" id="title" maxlength="80" value="<?php echo $r['title'];?>" class="form-control" value="<?php echo $r['title'];?>"/><span class="input-group-btn"><input type="hidden" id="title_css" name="title_css" value="<?php echo $color;?>"><img id="title_color" src="<?php echo R;?>js/colorpicker/picker.png" height="30" hx="#c00"></span><span class="input-group-btn"><input type="hidden" name="font_weight" id="font_weight" value="<?php echo $font_weight;?>"><button class="btn btn-white" type="button" onclick="change_fontweight();"><strong>B</strong></button></span>
                             </div>
                         </div>
                         <div class="form-group">

@@ -14,26 +14,26 @@ $submenuid = $menu_r['menuid'];
                 <div class="panel-body">
                     <form class="form-horizontal tasi-form" method="post" action="">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">广告名称</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">广告名称</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[title]" datatype="*2-60" errormsg="别名至少2个字符,最多60个字符！" value="<?php echo $r['title'];?>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">广告子标题</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">广告子标题</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[subtitle]" value="<?php echo $r['subtitle'];?>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">关键字</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">关键字</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[keywords]" value="<?php echo $r['keywords'];?>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">类型</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">类型</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <label class="radio-inline">
                                     <input type="radio" name="form[template]" value="show_pic" checked="" onclick="change_radio(this.value)" <?php if($r['template']=='show_pic') echo 'checked';?>>图片
                                 </label>
@@ -44,29 +44,29 @@ $submenuid = $menu_r['menuid'];
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">图片地址</label>
-                            <div class="col-sm-6 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">图片地址</label>
+                            <div class="col-lg-3 col-sm-6 col-xs-6 input-group">
                                 <div class="input-group"><?php echo $form->attachment('gif|jpg|png','1','form[file]',$r['file']);?></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">小图地址</label>
-                            <div class="col-sm-6 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">小图地址</label>
+                            <div class="col-lg-3 col-sm-6 col-xs-6 input-group">
                                 <div class="input-group"><?php echo $form->attachment('gif|jpg|png','1','form[icon]',$r['icon']);?></div>
                             </div>
                         </div>
                         <div class="form-group" id="url_div">
-                            <label class="col-sm-2 control-label">链接地址</label>
-                            <div class="col-sm-6 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">链接地址</label>
+                            <div class="col-lg-3 col-sm-6 col-xs-6 input-group">
                                 <div class="input-group"><?php echo $form->attachment('gif|jpg|png|mp4|3gp|mp3|apk','1','form[url]',$r['url']);?></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-10 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label"></label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="hidden" name="forward" value="<?php echo HTTP_REFERER;?>">
-                                <input class="btn btn-info" type="submit" name="submit" value="提交">
+                                <input class="btn btn-info col-lg-12 col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                             </div>
                         </div>
                     </form>

@@ -14,8 +14,8 @@ include $this->template('header','core');
 
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">发送方式</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 col-xs-4 control-label">发送方式</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
 
                         <input type="radio" name="form[mail_type]" value="1" readonly <?php if(IS_WIN) echo 'disabled ';if(output($setting,'mail_type')) echo 'checked';?> onclick="change_type(1)"> 使用PHP的mail函数发送(Linux内核)
 <br><br>
@@ -27,22 +27,22 @@ include $this->template('header','core');
             </div>
 
             <div class="form-group group-smtp">
-                <label class="col-sm-2 control-label">SMTP 服务器地址</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 col-xs-4 control-label">SMTP 服务器地址</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <input type="text" class="form-control" name="form[smtp_server]" color="#000000" value="<?php echo output($setting,'smtp_server');?>" >
                 </div>
             </div>
 
             <div class="form-group group-smtp">
-                <label class="col-sm-2 control-label">SMTP 端口</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 col-xs-4 control-label">SMTP 端口</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <input type="text" class="form-control" name="form[smtp_port]" color="#000000" value="<?php echo output($setting,'smtp_port');?>" >
 
                 </div>
             </div>
             <div class="form-group group-smtp">
-                <label class="col-sm-2 control-label">SMTP 身份验证</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 col-xs-4 control-label">SMTP 身份验证</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <label class="radio-inline">
                         <input type="radio" name="form[auth]" value="1" <?php if(output($setting,'auth')) echo 'checked';?> >是
                     </label>
@@ -52,8 +52,8 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group group-smtp">
-                <label class="col-sm-2 control-label">使用SSL加密方式</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 col-xs-4 control-label">使用SSL加密方式</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <label class="radio-inline">
                         <input type="radio" name="form[openssl]" value="1" <?php echo $support_ssl;if(output($setting,'openssl')) echo 'checked';?> >是
                     </label>
@@ -65,45 +65,45 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group group-smtp">
-                <label class="col-sm-2 control-label">邮箱用户名</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 col-xs-4 control-label">邮箱用户名</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <input type="text" class="form-control" name="form[smtp_user]" color="#000000" value="<?php echo output($setting,'smtp_user');?>" >
 
                 </div>
             </div>
             <div class="form-group group-smtp">
-                <label class="col-sm-2 control-label">邮箱密码</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 col-xs-4 control-label">邮箱密码</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <input type="text" class="form-control" name="password" color="#000000" value="<?php echo output($setting,'password');?>" placeholder="输入新密码">
 
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">发件人邮箱</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 col-xs-4 control-label">发件人邮箱</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <input type="text" class="form-control" name="form[send_email]" color="#000000" value="<?php echo output($setting,'send_email');?>" >
 
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">发件人昵称</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 col-xs-4 control-label">发件人昵称</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <input type="text" class="form-control" name="form[nickname]" color="#000000" value="<?php echo output($setting,'nickname');?>" >
 
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">邮件签名</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 col-xs-4 control-label">邮件签名</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <textarea name="form[sign]" class="form-control" cols="60" rows="3"><?php echo output($setting,'sign');?></textarea>
 
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-10">
-                    <input class="btn btn-info" type="submit" name="submit" value="提交">
+                <label class="col-sm-2 col-xs-4 control-label"></label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                 </div>
             </div>
         </form>

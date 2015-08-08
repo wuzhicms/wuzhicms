@@ -39,7 +39,7 @@ include $this->template('header','core');
 		$options['3'] = '上传时间倒序';
 		$options['4'] = '上传时间正序';
 		echo WUZHI_form::select( $options, isset($GLOBALS['order']) ? intval($GLOBALS['order']) : '' , 'name="order" class="form-control" ');?>
-		<button type="submit" class="btn btn-info">搜索</button>
+		<button type="submit" class="btn btn-info btn-sm">搜索</button>
 		</form>
 	</header>
 

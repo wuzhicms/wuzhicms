@@ -16,7 +16,7 @@
                 <table class="table table-striped table-advance table-hover">
                     <thead>
                     <tr>
-                        <th class="tablehead" colspan="7">设置内容管理权限</th>
+                        <th class="tablehead" colspan="8">设置内容管理权限</th>
                     </tr>
                     </thead>
                     <tbody>

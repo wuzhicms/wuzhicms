@@ -15,21 +15,23 @@ include $this->template('header','core');
         <form class="form-horizontal tasi-form" method="post" action="">
 
 			<div class="form-group">
-                <label class="col-sm-2 control-label">自定义目录名</label>
-                <div class="col-sm-4">
-                    <div class="input-group"><input type="text" value="" class="form-control" id="attachment_test" name="diycat" size="20" maxlength="20"></div>
+                <label class="col-sm-2 col-xs-4 control-label">自定义目录名</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4">
+                    <input type="text" value="" class="form-control" id="attachment_test" name="diycat">
                 </div>
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 control-label">批量上传附件</label>
-                <div class="col-sm-10 attaclist"><?php echo WUZHI_form::attachment('jpg|jpep|gif|png|txt|zip|rar|gzip|gz|doc|docx|xls|xlsx|ppt|pptx|mp4|mp3|pdf','100','files','', 'callback_more_dialog',0);?></div>
+                <label class="col-sm-2 col-xs-4 control-label">批量上传附件</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 attaclist"><?php echo WUZHI_form::attachment('jpg|jpep|gif|png|txt|zip|rar|gzip|gz|doc|docx|xls|xlsx|ppt|pptx|mp4|mp3|pdf','100','files','', 'callback_more_dialog',0);?>
+                </div>
+                <span class="help-block col-lg-10 col-sm-10 col-xs-10">支持格式：jpg，jpep，gif，png，txt，zip，rar，gzip，gz，doc，docx，xls，xlsx，ppt，pptx，mp4，mp3，pdf</span>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-10">
-                    <input class="btn btn-info" type="submit" name="submit" value="<?php echo L('dosubmit');?>">
+                <label class="col-sm-2 col-xs-4 control-label"></label>
+                <div class="col-lg-3 col-sm-4 col-xs-4">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="<?php echo L('dosubmit');?>">
                 </div>
             </div>
         </form>

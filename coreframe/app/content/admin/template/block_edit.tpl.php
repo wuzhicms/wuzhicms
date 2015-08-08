@@ -20,52 +20,52 @@ include $this->template('header','core');
                 <div class="panel-body">
                     <form class="form-horizontal tasi-form" method="post" action="">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">类型</label>
-                            <div class="col-sm-8 input-group">
-                                <label style="padding-right: 15px;"><input name="type" type="radio" value="1"  onclick="change_type(this.value);" <?php if($r['type']==1) echo "checked";?>> 列表</label>
-                                <label style="padding-right: 15px;"><input name="type" type="radio" value="2" onclick="change_type(this.value);" <?php if($r['type']==2) echo "checked";?>> 代码</label>
-                                    <label style="padding-right: 15px;"><input name="type" type="radio" value="3" onclick="change_type(this.value);" <?php if($r['type']==3) echo "checked";?>> RSS</label>
-                                        <label style="padding-right: 15px;"><input name="type" type="radio" value="4" onclick="change_type(this.value);" <?php if($r['type']==4) echo "checked";?>> JSON</label>
-                                            <label style="padding-right: 15px;"><input name="type" type="radio" value="5" onclick="change_type(this.value);" disabled> RPC</label>
-                                <label style="padding-right: 15px;"><input name="type" type="radio" value="6" onclick="change_type(this.value);" disabled> 自定义列表</label>
+                            <label class="col-sm-2 col-xs-4 control-label">类型</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <label class="radio-inline"><input name="type" type="radio" value="1"  onclick="change_type(this.value);" <?php if($r['type']==1) echo "checked";?>> 列表</label>
+                                <label class="radio-inline"><input name="type" type="radio" value="2" onclick="change_type(this.value);" <?php if($r['type']==2) echo "checked";?>> 代码</label>
+                                    <label class="radio-inline"><input name="type" type="radio" value="3" onclick="change_type(this.value);" <?php if($r['type']==3) echo "checked";?>> RSS</label>
+                                        <label class="radio-inline"><input name="type" type="radio" value="4" onclick="change_type(this.value);" <?php if($r['type']==4) echo "checked";?>> JSON</label>
+                                            <label class="radio-inline"><input name="type" type="radio" value="5" onclick="change_type(this.value);" disabled> RPC</label>
+                                <label class="radio-inline"><input name="type" type="radio" value="6" onclick="change_type(this.value);" disabled> 自定义列表</label>
 
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">名称</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">名称</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[name]" color="#000000" datatype="*"  errormsg="请输入标题" value="<?php echo $r['name'];?>">
                             </div>
                         </div>
                         <div class="form-group hide" id="models">
-                            <label class="col-sm-2 control-label">绑定模型</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">绑定模型</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <?php echo WUZHI_form::select(key_value($models,'modelid','name'), $r['modelid'], 'name="modelid" class="form-control "', '--不限模型--');?>
                             </div>
                         </div>
                         <div class="form-group hide" id="rssid">
-                            <label class="col-sm-2 control-label">RSS源</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">RSS源</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[rssurl]" color="#000000" datatype="url|*0-100"  errormsg="请输入正确的网址！" value="<?php echo $r['url'];?>">
                             </div>
                         </div>
                         <div class="form-group hide" id="jsonid">
-                            <label class="col-sm-2 control-label">JSON源</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">JSON源</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[jsonurl]" color="#000000" datatype="url|*0-100"  errormsg="请输入正确的网址" value="<?php echo $r['url'];?>">
                             </div>
                         </div>
                         <div class="form-group hide" id="template_codeid">
-                            <label class="col-sm-2 control-label">模版</label>
-                            <div class="col-sm-8 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">模版</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <textarea type="text" class="form-control" name="form[template_code]" rows="6">
 <?php if($r['type']!=2) echo p_htmlspecialchars($r['code']);?>
 </textarea>
                             </div>
                         </div>
                         <div class="form-group " id="codeid">
-                            <label class="col-sm-2 control-label">代码</label>
-                            <div class="col-sm-8 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">代码</label>
+                            <div class="col-lg-8 col-sm-8 col-xs-8 input-group">
                                 <textarea name="form[code]" id="code" style="width:100%;height: 300px;"><?php echo $r['code'];?></textarea>
                                 <br>
 
@@ -76,17 +76,17 @@ include $this->template('header','core');
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">生成静态列表</label>
-                            <div class="col-sm-8 input-group">
-                                <label style="padding-right: 15px;"><input name="createhtml" type="radio" value="1" <?php if($r['createhtml']==1) echo "checked";?>> 是 － 生成html页面</label>
-                                <label style="padding-right: 15px;"><input name="createhtml" type="radio" value="0" <?php if($r['createhtml']==0) echo "checked";?>> 否 （通用标签不受此限制可调用）</label>
+                            <label class="col-sm-2 col-xs-4 control-label">生成静态列表</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <label class="radio-inline"><input name="createhtml" type="radio" value="1" <?php if($r['createhtml']==1) echo "checked";?>> 是 － 生成html页面</label>
+                                <label class="radio-inline"><input name="createhtml" type="radio" value="0" <?php if($r['createhtml']==0) echo "checked";?>> 否 （通用标签不受此限制可调用）</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-10 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label"></label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="hidden" name="codetype" id="codetype" value="<?php echo $r['codetype'];?>">
-                                <input class="btn btn-info" type="submit" name="submit" value="提交">
+                                <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                             </div>
                         </div>
                     </form>

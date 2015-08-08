@@ -50,7 +50,7 @@ $submenuid = $menu_r['menuid'];
                         </label>
                         </div>
                         <div class="col-sm-8">
-                        <span class="tablewarnings">当列表中调用时，建议添加到主表</span>
+                        <span class="tablewarnings"><i class="icon-info-circle"></i> 当列表中调用时，建议添加到主表</span>
                         </div>
                       </div>
                       </div>
@@ -71,7 +71,7 @@ $submenuid = $menu_r['menuid'];
                         <input type="text" name="form[field]" id="field" size="20" class="input-text form-control" datatype="/^[a-zA-Z]{1}([a-zA-Z0-9]|[_]){0,19}$/" errormsg="至少1个字符,最多30个字符！">
                         </div>
                         <div class="col-sm-8">
-                        <span class="tablewarnings">只能由英文字母、数字和下划线组成，并且仅能字母开头</span>
+                        <span class="tablewarnings"><i class="icon-info-circle"></i> 只能由英文字母、数字和下划线组成，并且仅能字母开头</span>
                       </div>
                       </div>
                     </td>
@@ -114,7 +114,7 @@ $submenuid = $menu_r['menuid'];
                         <input type="text" name="form[ext_code]" value="" size="50" class="input-text form-control">
                         </div>
                         <div class="col-sm-8">
-                        <span class="tablewarnings">可以通过此处向表单加入任何属性</span>
+                        <span class="tablewarnings"><i class="icon-info-circle"></i> 可以通过此处向表单加入任何属性</span>
                         </div>
                       </div>
                     </td>
@@ -133,7 +133,7 @@ $submenuid = $menu_r['menuid'];
                             value="" size="5">
                           </div>
                           <div class="col-sm-8">
-                          <span class="tablewarnings">系统将在表单提交时检测数据长度范围是否符合要求，如果不想限制长度请留空</span>
+                          <span class="tablewarnings"><i class="icon-info-circle"></i> 系统将在表单提交时检测数据长度范围是否符合要求，如果不想限制长度请留空</span>
                           </div>
                         </div>
                       </div>
@@ -165,7 +165,7 @@ $submenuid = $menu_r['menuid'];
                             </select>
                           </div>
                           <div class="col-sm-8">
-                          <span class="tablewarnings">系统将通过此正则校验表单提交的数据合法性，如果不想校验数据请留空</span>
+                          <span class="tablewarnings"><i class="icon-info-circle"></i> 系统将通过此正则校验表单提交的数据合法性，如果不想校验数据请留空</span>
                           </div>
                         </div>
                       </div>
@@ -248,7 +248,7 @@ $submenuid = $menu_r['menuid'];
                                 </label>
                         </div>
                         <div class="col-sm-10">
-                        <span class="tablewarnings">必须与超级字段结合起来使用，否则内容添加的时候不会正常显示</span>
+                        <span class="tablewarnings"><i class="icon-info-circle"></i> 必须与超级字段结合起来使用，否则内容添加的时候不会正常显示</span>
                         </div>
                       </div>
                     </td>
@@ -286,7 +286,7 @@ $submenuid = $menu_r['menuid'];
                     <div class="col-sm-4">
                       <input name="forward" type="hidden" value="<?php echo HTTP_REFERER;?>">
                       <input name="modelid" type="hidden" value="<?php echo $modelid;?>">
-                      <input name="submit" type="submit" class="btn btn-info" value="提交">
+                      <input name="submit" type="submit" class="btn btn-info col-sm-12 col-xs-12" value="提交">
                       </div>
                     </td>
                   </tr>

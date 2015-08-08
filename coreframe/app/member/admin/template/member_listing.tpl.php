@@ -19,7 +19,7 @@
 						<?php }?>
 					</select>
 				</div>
-				<input type="text" name="keyValue" class="usernamekey" value="<?php echo $keyValue?>"/>
+				<input type="text" name="keyValue" class="usernamekey form-control" value="<?php echo $keyValue?>"/>
 				<div class="input-group">
 					<select name="groupid" class="form-control">
 						<option value='' >会员组</option>
@@ -30,7 +30,7 @@
 				</div>
 				　　注册时间 <?php echo WUZHI_form::calendar('regTimeStart', $regTimeStart ? date('Y-m-d', $regTimeStart) : '');?>- <?php echo WUZHI_form::calendar('regTimeEnd', $regTimeEnd ? date('Y-m-d', $regTimeEnd) : '');?>
 				　　登录时间 <?php echo WUZHI_form::calendar('loginTimeStart', $loginTimeStart ? date('Y-m-d', $loginTimeStart) : '');?>- <?php echo WUZHI_form::calendar('loginTimeEnd', $loginTimeEnd ? date('Y-m-d', $loginTimeEnd) : '');?>
-				<button type="submit" class="btn btn-info">搜索</button>
+				<button type="submit" class="btn btn-info btn-sm">搜索</button>
 			</form>
 		</header>
 		<form name="myform" method="post" action="?m=member&f=index&v=del<?php echo $this->su();?>">

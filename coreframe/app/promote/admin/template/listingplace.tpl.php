@@ -28,7 +28,7 @@
                     <input type="text" size="52" value="" name="keywords">
                     &nbsp;
 
-                    <button type="submit" class="btn btn-info" value="submit">搜索</button>
+                    <button type="submit" class="btn btn-sm btn-info" value="submit">搜索</button>
                 </form>
             </header>
             <div class="panel-body" id="panel-bodys">
@@ -54,11 +54,11 @@
                             <td><?php echo $r['name'];?></td>
                             <td>宽：<?php if($r['width']) echo $r['width'].'px';else echo '不限';?>  -- 高：<?php if($r['height']) echo $r['height'].'px';else echo '不限';?></td>
                             <td><a href="?m=promote&f=index&v=view&pid=<?php echo $r['pid'].$this->su();?>" target="_blank">预览</a></td>
-                            <td><a href="?m=promote&f=index&v=listing&pid=<?php echo $r['pid'].$this->su();?>" class="btn btn-inverse btn-xs"><i class="icon-gears2 btn-icon"></i>管理广告</a></td>
+                            <td><a href="?m=promote&f=index&v=listing&pid=<?php echo $r['pid'].$this->su();?>" class="btn btn-inverse btn-xs"><i class="icon-gears2 btn-icon" style="color: #fff;font-size: 12px;"></i>管理广告</a></td>
                             <td><?php echo time_format($r['addtime']);?></td>
 
                             <td>
-<a href="?m=promote&f=index&v=add&pid=<?php echo $r['pid'];?><?php echo $this->su();?>" class="btn btn-warning btn-xs"><i class="icon-plus btn-icon"></i>添加广告</a>
+<a href="?m=promote&f=index&v=add&pid=<?php echo $r['pid'];?><?php echo $this->su();?>" class="btn btn-info btn-xs"><i class="icon-plus btn-icon" style="color: #fff;font-size: 12px;"></i>添加广告</a>
                                 <a href="?m=promote&f=index&v=editplace&pid=<?php echo $r['pid'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">修改</a>
                                 <a href="javascript:makedo('?m=promote&f=index&v=deleteplace&pid=<?php echo $r['pid'];?><?php echo $this->su();?>', '确认删除该记录？')"
                                    class="btn btn-danger btn-xs">删除</a>

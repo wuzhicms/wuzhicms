@@ -19,13 +19,13 @@ $submenuid = $menu_r['menuid'];
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th>排序</th>
-                            <th class="hidden-phone">ID</th>
-                            <th class="hidden-phone">所属站点</th>
-                            <th>标题</th>
-                            <th class="hidden-phone">更新时间</th>
-                            <th class="hidden-phone">原文状态</th>
-                            <th width="180">管理操作</th>
+                            <th class="tablehead">排序</th>
+                            <th class="hidden-phone tablehead">ID</th>
+                            <th class="hidden-phone tablehead">所属站点</th>
+                            <th class="tablehead">标题</th>
+                            <th class="tablehead">更新时间</th>
+                            <th class="tablehead">原文状态</th>
+                            <th width="180" class="tablehead">管理操作</th>
                         </tr>
                         </thead>
                         <tbody>

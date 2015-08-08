@@ -34,7 +34,7 @@
                     </div>
                     <input type="text" name="keywords" class="usernamekey" value="<?php echo $keywords?>"/>
 
-                    <button type="submit" class="btn btn-info">搜索</button>
+                    <button type="submit" class="btn btn-sm btn-info">搜索</button>
                 </form>
             </header>
             <form action="?m=affiche&f=index&v=sort<?php echo $this->su();?>" name="myform" method="post">
