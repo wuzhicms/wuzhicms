@@ -37,5 +37,5 @@ var Script = function () {
 
 var Script = function () {
 // 自定义滚动条
-    $("html").niceScroll({autohidemode:false,cursorcolor : "#cacbcf",cursorwidth: '10',cursorborder:"none",horizrailenabled:false,mousescrollstep:55});
+    $("html").niceScroll({autohidemode:false,cursorcolor : "#bfc2cb",cursorwidth: '8',cursorborder:"none",horizrailenabled:false,mousescrollstep:55});
 }();
