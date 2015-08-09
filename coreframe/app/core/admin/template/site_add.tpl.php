@@ -13,19 +13,19 @@ include $this->template('header','core');
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">站点名称</label>
-                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <input type="text" class="form-control" name="form[name]" datatype="s2-80" errormsg="至少2个字符,最多80个字符！">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">网站logo</label>
-                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <div class="input-group"><?php echo WUZHI_form::attachment('png|jpg|gif|jpeg','1','form[logo]','');?></div>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label"></label>
-                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                 </div>
             </div>
