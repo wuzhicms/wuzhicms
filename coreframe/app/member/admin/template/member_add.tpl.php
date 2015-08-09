@@ -19,37 +19,37 @@
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">用户名</label></td>
 						<td>
-							<div class="col-lg-4 col-sm-6 col-xs-6 input-group"><input type="text" name="info[username]" class="form-control" placeholder="请输入用户名" datatype="/^[a-z0-9\u4E00-\u9FA5\uf900-\ufa2d\-]{3,20}$/i" errormsg="用户名为3-20位数字、字母、汉字和-组成" sucmsg="OK" ajaxurl="index.php?m=member&f=index&v=public_check_user"/></div>
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><input type="text" name="info[username]" class="form-control" placeholder="请输入用户名" datatype="/^[a-z0-9\u4E00-\u9FA5\uf900-\ufa2d\-]{3,20}$/i" errormsg="用户名为3-20位数字、字母、汉字和-组成" sucmsg="OK" ajaxurl="index.php?m=member&f=index&v=public_check_user"/></div>
 						</td>
 					</tr>
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">密码</label></td>
 						<td>
-							<div class="col-lg-4 col-sm-6 col-xs-6 input-group"><input type="password" name="info[password]" class="form-control" placeholder="请输入密码" /></div>
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><input type="password" name="info[password]" class="form-control" placeholder="请输入密码" /></div>
 						</td>
 					</tr>
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">确认密码</label></td>
 						<td>
-							<div class="col-lg-4 col-sm-6 col-xs-6 input-group"><input type="password" name="info[pwdconfirm]" class="form-control" placeholder="请重复输入密码" recheck="info[password]" errormsg="您两次输入的账号密码不一致！" sucmsg="OK" /></div>
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><input type="password" name="info[pwdconfirm]" class="form-control" placeholder="请重复输入密码" recheck="info[password]" errormsg="您两次输入的账号密码不一致！" sucmsg="OK" /></div>
 						</td>
 					</tr>
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">邮箱</label></td>
 						<td>
-							<div class="col-lg-4 col-sm-6 col-xs-6 input-group"><input type="text" name="info[email]" class="form-control" value="" datatype="e" errormsg="请输入正确的Email" sucmsg="OK" ajaxurl="index.php?m=member&f=index&v=public_check_email" /></div>
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><input type="text" name="info[email]" class="form-control" value="" datatype="e" errormsg="请输入正确的Email" sucmsg="OK" ajaxurl="index.php?m=member&f=index&v=public_check_email" /></div>
 						</td>
 					</tr>
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">手机</label></td>
 						<td>
-							<div class="col-lg-4 col-sm-6 col-xs-6 input-group"><input type="text" name="info[mobile]" class="form-control" value="" datatype="m|*0-0" errormsg="请输入正确的手机号" sucmsg="OK" ajaxurl="index.php?m=member&f=index&v=public_check_mobile" /></div>
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><input type="text" name="info[mobile]" class="form-control" value="" datatype="m|*0-0" errormsg="请输入正确的手机号" sucmsg="OK" ajaxurl="index.php?m=member&f=index&v=public_check_mobile" /></div>
 						</td>
 					</tr>
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">会员组</label></td>
 						<td>
-							<div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group">
 							<select name="info[groupid]" class="form-control">
 								<?php if(is_array($group))foreach($group as $v){?>
 								<option value="<?php echo $v['groupid']?>"><?php echo $v['name']?></option>
@@ -61,7 +61,7 @@
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">用户模型</label></td>
 						<td>
-							<div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group">
 							<select name="info[modelid]" class="form-control">
 							<?php if($this->model)foreach($this->model as $k=>$t){?>
 								<option value="<?php echo $t['modelid']?>" ><?php echo $t['name'];?></option>
@@ -73,17 +73,17 @@
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">VIP</label></td>
 						<td>
-							<div class="col-lg-4 col-sm-6 col-xs-6 input-group"><?php echo WUZHI_form::calendar('info[viptime]', '', 1);?></div>
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><?php echo WUZHI_form::calendar('info[viptime]', '', 1);?></div>
 						</td>
 					</tr>
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">锁定</label></td>
-						<td><div class="col-lg-4 col-sm-6 col-xs-6 input-group"><?php echo WUZHI_form::calendar('info[locktime]', '', 1);?></div></td>
+						<td><div class="col-lg-3 col-sm-4 col-xs-4 input-group"><?php echo WUZHI_form::calendar('info[locktime]', '', 1);?></div></td>
 					</tr>
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label"></label></td>
 						<td>
-							<div class="col-lg-4 col-lg-4 col-sm-6 col-xs-6 input-group panel-footer">
+							<div class="col-lg-4 col-lg-3 col-sm-4 col-xs-4 input-group panel-footer">
                     		<input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                 			</div>
 						</td>
