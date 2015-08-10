@@ -171,7 +171,7 @@ class WUZHI_form {
 
 		$token = md5($ext . _KEY);
 		$up_url = '/index.php' . link_url(array('m' => 'attachment', 'f' => 'index', 'v' => 'upload_dialog', 'callback' => $callback, 'htmlid' => $id, '_su' => '', 'limit' => $limit, 'is_thumb' => $is_thumb, 'width' => $width, 'height' => $height, 'htmlname' => $formname, 'ext' => $ext, 'token' => $token, 'cut' => $cut,'is_water'=>$is_water,'is_allow_show_img'=>$is_allow_show_img));
-		$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="openiframe(\'' . $up_url . '\',\'' . $id . '\',\'loading...\',810,400,' . $limit . ')">上传文件</button></span>';
+		$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="openiframe(\'' . $up_url . '\',\'' . $id . '\',\'loading...\',810,400,' . $limit . ')"><i class="icon-paperclip btn-icon"></i>上传文件</button></span>';
 		return $str;
 	}
 
