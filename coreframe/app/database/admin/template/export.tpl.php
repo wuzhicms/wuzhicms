@@ -20,16 +20,20 @@ include $this->template('header','core');
 					</tr>
 					</thead>
 					<tr>
-						<td>每个分卷文件大小</td>
+						<td class="col-sm-4 col-xs-4">每个分卷文件大小</td>
 						<td><input type="text" name="sizelimit" value="2048" size=5> K</td>
 					</tr>
 					<tr>
-						<td>建表语句格式</td>
+						<td class="col-sm-4 col-xs-4">建表语句格式</td>
 						<td><input type="radio" name="sqlcompat" value="" checked> 默认&nbsp; <input type="radio" name="sqlcompat" value="MYSQL41"> 5.x</td>
 					</tr>
 					<tr>
-						<td>强制字符集</td>
+						<td class="col-sm-4 col-xs-4">强制字符集</td>
 						<td><input type="radio" name="sqlcharset" value="" checked> 默认&nbsp; <input type="radio" name="sqlcharset" value="latin1"> LATIN1 &nbsp; <input type="radio" name="sqlcharset" value='utf8'> UTF-8</td>
+					</tr>
+					<tr>
+						<td class="col-sm-4 col-xs-4">请先选择备份的数据表，再点击备份按钮！</td>
+						<td><input type="submit" name="dosubmit" class="btn btn-info btn-sm" value="备 份"></td>
 					</tr>
 					</table>
 
@@ -70,7 +74,7 @@ include $this->template('header','core');
                     <div class="panel-body">
         <div class="row">
             <div class="col-lg-12">
-            	<input type="submit" name="dosubmit" class="btn btn-info" value="导出">
+            	<input type="submit" name="dosubmit" class="btn btn-info" value="备份">
 		    </div>
 		</div>
 	</div>

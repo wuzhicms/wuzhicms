@@ -21,47 +21,47 @@ include $this->template('header','core');
                 <div class="panel-body">
                     <form class="form-horizontal tasi-form" method="post" action="">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">上级菜单</label>
-                            <div class="col-sm-4">
+                            <label class="col-sm-2 col-xs-4 control-label">上级菜单</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <?php
                                 echo '<input type="hidden" name="form[pid]" value="'.$r['pid'].'">'.$parentname;
                                 ?>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">菜单中文名</label>
-                            <div class="col-sm-4">
+                            <label class="col-sm-2 col-xs-4 control-label">菜单中文名</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[name]" value="<?php echo $r['name'];?>" color="#000000">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">m</label>
-                            <div class="col-sm-4">
+                            <label class="col-sm-2 col-xs-4 control-label">模块名</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[m]" value="<?php echo $r['m'];?>" title="模块英文名">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">f</label>
-                            <div class="col-sm-4">
+                            <label class="col-sm-2 col-xs-4 control-label">文件名</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[f]" value="<?php echo $r['f'];?>" title="文件名">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">v</label>
-                            <div class="col-sm-4">
+                            <label class="col-sm-2 col-xs-4 control-label">方法名</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[v]" value="<?php echo $r['v'];?>" title="视图：方法名">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">附加参数</label>
-                            <div class="col-sm-6">
+                            <label class="col-sm-2 col-xs-4 control-label">附加参数</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[data]" value="<?php echo $r['data'];?>">
                                 <span class="help-block">例如：type=1&flag=open</span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-10">
+                            <label class="col-sm-2 col-xs-4 control-label"></label>
+                            <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                                 <div class="radioscross">
                                     <label class="label_radio" for="radio-01">
                                         <input name="form[display]" id="radio-01" value="1" type="radio" <?php if($r['display']==1) echo 'checked';?> /> 显示
@@ -79,11 +79,13 @@ include $this->template('header','core');
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-10">
-                                <input class="btn btn-info" type="submit" name="submit" value="提交">
+                            <label class="col-sm-2 col-xs-4 control-label"></label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <input type="hidden" name="forward" value="<?php echo HTTP_REFERER;?>">
+                                <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                             </div>
                         </div>
+
                         <input type="hidden" name="forward" value="<?php echo HTTP_REFERER?>">
                         <input type="hidden" name="id" value="<?php echo $r['menuid'];?>">
                     </form>

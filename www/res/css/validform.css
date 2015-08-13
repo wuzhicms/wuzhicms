@@ -10,14 +10,14 @@
     margin-top: 8px;
 }
 .Validform_right{
-    color:#14cccc;
+    color:#0AA00E;
     padding-left:20px;
     width: 125px;
     background:url(../images/right.png) no-repeat left center;
     background-image:-webkit-image-set(url('../images/right.png') 1x,url('../images/right@2x.png') 2x);
 }
 .Validform_wrong{
-    color:#999;
+    color:#E74B4B;
     padding-left:20px;
     white-space:nowrap;
     background:url(../images/error.png) no-repeat left center;

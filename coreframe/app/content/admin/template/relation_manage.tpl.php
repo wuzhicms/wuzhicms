@@ -28,7 +28,7 @@ include $this->template('header','core');
                             echo $form->tree_select($categorys, $cid, 'name="cid" id="cid" class="form-control"');
                             ?>
                         </div>
-                        <button type="submit" name="button" class="btn btn-info" onclick="search_form();">搜索</button>
+                        <button type="submit" name="button" class="btn btn-info btn-sm" onclick="search_form();">搜索</button>
                         <div class="pull-right"><button type="button" class="btn btn-primary" onclick="add_relation();">自定义添加</button></div>
                     </form>
 

@@ -29,17 +29,15 @@ include $this->template('header','core');
                             ?>
                             </tbody>
                         </table>
-                    </div>
-                </section>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="pull-left"> <button type="submit" name="submit" class="btn btn-default btn-sm">提交</button>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="pull-left"> <button type="submit" name="submit" class="btn btn-info btn-sm">提交</button></div>
+                                </div>
                             </div>
-
                         </div>
                     </div>
-
+                </section>
 
             </div>
 

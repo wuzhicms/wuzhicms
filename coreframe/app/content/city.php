@@ -44,7 +44,7 @@ class city{
                     break;
                 }
             }
-//header("Location:http://www.h1jk.cn/list-69/");
+//header("Location:<?php echo WEBURL;?>/list-69/");
             include T('content','index-city',TPLID);
         }
 

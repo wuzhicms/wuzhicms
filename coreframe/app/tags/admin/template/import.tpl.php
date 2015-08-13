@@ -15,12 +15,12 @@ include $this->template('header','core');
         <form class="form-horizontal tasi-form" method="post" action="" enctype="multipart/form-data">
 
 				<div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo L('tags_batch');?></label>
+                <label class="col-sm-2 col-xs-4 control-label"><?php echo L('tags_batch');?></label>
                 <div class="row">
-                    <div class="col-sm-5">
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
                     <textarea class="form-control" name="import" id="import"  cols="80" rows="10"></textarea>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <?php echo L('batch_note');?>
                 </div>
                 </div>
@@ -28,17 +28,17 @@ include $this->template('header','core');
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo L('tags_upload');?></label>
-                <div class="col-sm-5">
+                <label class="col-sm-2 col-xs-4 control-label"><?php echo L('tags_upload');?></label>
+                <div class="col-lg-3 col-sm-4 col-xs-4">
                     <input type="file" accept=".txt" name="file" id="file" value="<?php echo L('select_file');?>" /> 
-                    <span class="help-block"><?php echo L('file_note');?></span>
+                    <span class="help-block"><i class="icon-info-circle"></i><?php echo L('file_note');?></span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-5">
-                    <input class="btn btn-info" type="submit" name="dosubmit" value="<?php echo L('submit');?>">
+                <label class="col-sm-2 col-xs-4 control-label"></label>
+                <div class="col-lg-3 col-sm-4 col-xs-4">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="dosubmit" value="<?php echo L('submit');?>">
                 </div>
             </div>
         </form>

@@ -21,26 +21,26 @@ $submenuid = $menu_r['menuid'];
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 control-label">所属上级</label>
-                <div class="col-sm-4 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">所属上级</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <input type="text" class="form-control" name="form[pid]" color="#000000" value="<?php echo $r['name'];?>" readonly>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">选项名称</label>
-                <div class="col-sm-4 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">选项名称</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <textarea name="form[names]" class="form-control" cols="60" rows="3" placeholder="一行一个选项"></textarea>                </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">描述</label>
-                <div class="col-sm-4 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">描述</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <textarea name="form[remark]" class="form-control" cols="60" rows="3"></textarea>                </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-10 input-group">
-                    <input class="btn btn-info" type="submit" name="submit" value="提交">
+                <label class="col-sm-2 col-xs-4 control-label"></label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                 </div>
             </div>
         </form>

@@ -12,8 +12,8 @@ include $this->template('header','core');
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 control-label">所属类别</label>
-                <div class="col-sm-4 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">所属类别</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <?php
                     echo $form->select($options, 1, 'name="form[kid]" class="form-control"');
                     ?>
@@ -21,33 +21,31 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">链接名称</label>
-                <div class="col-sm-4 input-group">
-                    <input type="text" class="form-control" name="form[sitename]" datatype="s2-60" errormsg="别名至少2个字符,最多60个字符！">
-                </div>
+                <label class="col-sm-2 col-xs-4 control-label">链接名称</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <input type="text" class="form-control" name="form[sitename]" datatype="s2-60" errormsg="别名至少2个字符,最多60个字符！"></div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">链接地址</label>
-                <div class="col-sm-4 input-group">
-                    <input type="text" class="form-control" name="form[url]" datatype="url" errormsg="请填写正确的网址">
-                </div>
+                <label class="col-sm-2 col-xs-4 control-label">链接地址</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <input type="text" class="form-control" name="form[url]" datatype="url" errormsg="请填写正确的网址"></div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">logo</label>
-                <div class="col-sm-4 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">logo</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <div class="input-group"><?php echo $form->attachment('','1','form[logo]','');?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">备注</label>
-                <div class="col-sm-4 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">备注</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <textarea name="form[remark]" class="form-control" cols="60" rows="3"></textarea>                </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-10 input-group">
-                    <input class="btn btn-info" type="submit" name="submit" value="提交">
+                <label class="col-sm-2 col-xs-4 control-label"></label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                 </div>
             </div>
         </form>

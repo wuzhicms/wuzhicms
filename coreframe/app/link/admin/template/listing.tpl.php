@@ -39,7 +39,7 @@
                             <td><?php echo $r['linkid'];?></td>
                             <td><?php echo '<a href="'.$r['url'].'" target="_blank">'.$r['sitename'];?></a></td>
                             <td><?php echo $r['remark'];?></td>
-                            <td><?php if($r['logo']) echo '<img src="'.$r['logo'].'" style="max-height:100px;max-width:150px;">';?></td>
+                            <td><?php if($r['logo']) echo '<img src="'.$r['logo'].'" style="max-height:35px;max-width:80px;">';?></td>
                             <td><?php echo $r['username'];?></td>
                             <td><?php echo time_format($r['addtime']);?></td>
 

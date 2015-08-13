@@ -100,7 +100,7 @@ $submenuid = $menu_r['menuid'];
                   <tr>
                     <td>相关参数</td>
                     <td class="hidden-phone">
-                      <div class="col-sm-8">
+                      <div class="col-sm-12">
                         <?php if(isset($field_config[$formtype][ 'system_field'])) { include $this->
                           core_path.$formtype.'/form_setting.php'; } else { include $this->m_path.$formtype.'/form_setting.php';
                           } ?>
@@ -285,7 +285,7 @@ $submenuid = $menu_r['menuid'];
                     <div class="col-sm-4">
                         <input name="forward" type="hidden" value="<?php echo HTTP_REFERER;?>">
                         <input name="modelid" type="hidden" value="<?php echo $modelid;?>">
-                      <input name="submit" type="submit" class="btn btn-info" value="提交">
+                      <input name="submit" type="submit" class="btn btn-info col-sm-12 col-xs-12" value="提交">
                       </div>
                     </td>
                   </tr>

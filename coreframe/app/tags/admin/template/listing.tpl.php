@@ -19,7 +19,7 @@ div#wz_linkage{display: inline;}
 		<input type="hidden" name="_menuid" value="<?php echo $GLOBALS['_menuid'];?>" />
 		<input type="hidden" name="_submenuid" value="<?php echo $GLOBALS['_submenuid'];?>" />
 		<input type="hidden" name="dosearch" value="1" />
-		创建时间<?php echo WUZHI_form::calendar('start',$GLOBALS['start'],1);?>- <?php echo WUZHI_form::calendar('end',$GLOBALS['end'],1);?>
+		创建时间<?php echo WUZHI_form::calendar('start',$GLOBALS['start'],1);?> - <?php echo WUZHI_form::calendar('end',$GLOBALS['end'],1);?>
 		&nbsp;Tag <input type="text" size="12" value="<?php echo $GLOBALS['tags'];?>" name="tags">
 		&nbsp;
             <div class="input-group"><?php echo linkage(output($this->_cache,'linkage'),'linkage');?></div>
@@ -31,7 +31,7 @@ div#wz_linkage{display: inline;}
 		$options['4'] = '创建时间正序';
 		echo WUZHI_form::select( $options,  intval( output($GLOBALS,'order') )  , 'name="order" class="form-control"');?>
             </div>
-		<button type="submit" class="btn btn-info">搜索</button>
+		<button type="submit" class="btn btn-info btn-sm">搜索</button>
 		</form>
 	</header>
 

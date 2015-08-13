@@ -2,7 +2,7 @@
 <?php
 include $this->template('header','core');
 ?>
-<body>
+<body style="background-color: #fff;">
 <section class="wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -16,20 +16,20 @@ include $this->template('header','core');
                         <input name="_su" value="<?php echo $GLOBALS['_su'];?>" type="hidden">
                         <input name="status" value="<?php echo $status;?>" type="hidden">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">搜索类型</label>
-                            <div class="col-sm-2 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">搜索类型</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <?php echo $form->select($options, $stype, 'name="stype" id="stype" class="form-control"');?>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">关键字</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">关键字</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="keywords" value="<?php echo $keywords;?>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">所属栏目 </label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">所属栏目 </label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <?php
                                 echo $form->tree_select($categorys, $cid, 'name="cid" class="form-control" ', '≡ 全部 ≡');
 
@@ -39,18 +39,20 @@ include $this->template('header','core');
 
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">发布时间 </label>
-                            <div class="col-sm-8 input-group">
-                                <?php echo WUZHI_form::calendar('start',$start,1);?> - <?php echo WUZHI_form::calendar('end',$end,1);?>
+                            <label class="col-sm-2 col-xs-4 control-label">发布时间 </label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <div class="col-lg-3 col-sm-6 col-xs-6 input-group pull-left" style="margin-right:1px"><?php echo WUZHI_form::calendar('start',$start,1);?></div>
+                                <div class="col-lg-3 col-sm-6 col-xs-6 input-group pull-left"><?php echo WUZHI_form::calendar('end',$end,1);?></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-10 input-group">
-                                <input class="btn btn-info" type="submit" name="submit" value="提交">
+                            <label class="col-sm-2 col-xs-4 control-label"></label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                             </div>
                         </div>
+
                     </form>
                 </div>
             </section>

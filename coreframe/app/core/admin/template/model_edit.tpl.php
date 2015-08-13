@@ -16,39 +16,39 @@ include $this->template('header','core');
 
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">模型别名</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">模型别名</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <input type="text" class="form-control" name="name"  value="<?php echo $r['name'];?>" datatype="s2-20" errormsg="别名至少2个字符,最多20个字符！">
                                 </div>
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">主表</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">主表</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <input type="text" class="form-control"  value="<?php echo $r['master_table'];?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">附属表</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">附属表</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <input type="text" class="form-control" value="<?php echo $r['attr_table'];?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">备注</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">备注</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <textarea name="remark" class="form-control" cols="60" rows="3"><?php echo p_htmlentities($r['remark']);?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">内容页默认模版</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">内容页默认模版</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                    <?php echo WUZHI_form::templates('content',$r['template'],'name="template"  class="form-control" style="width:auto;"','show');?>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">模型标识图（可选）</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">模型标识图（可选）</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <input type="text" id="iconcss" name="css" class="form-control" value="<?php echo $r['css'];?>">
                                     <div class="input-group-btn">
                                         <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">选择图标 <span class="caret"></span></button>
@@ -64,10 +64,10 @@ include $this->template('header','core');
 
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label"></label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <input type="hidden" name="forward" value="<?php echo HTTP_REFERER;?>">
-                                    <input class="btn btn-info" type="submit" name="submit" value="提交">
+                                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                                 </div>
                             </div>
                         </form>

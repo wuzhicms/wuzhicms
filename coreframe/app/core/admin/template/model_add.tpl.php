@@ -19,39 +19,39 @@ if($share_model) {
                         <form id="myform" name="myfrom" class="form-horizontal tasi-form" method="post" action="">
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">共享表名</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">共享表名</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                    <input type="text" class="form-control" name="form[name]"  value="<?php echo $master_table;?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">模型别名</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">模型别名</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <input type="text" class="form-control" name="name"  value="" datatype="s2-20" errormsg="别名至少2个字符,最多20个字符！">
                                 </div>
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">数据表名</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">数据表名</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <input type="text" class="form-control" name="tablename"  value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">备注</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">备注</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <textarea name="remark" class="form-control" cols="60" rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">内容页默认模版</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">内容页默认模版</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <?php echo WUZHI_form::templates('content','','name="template"  class="form-control" style="width:auto;"','show');?>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">模型标识图（可选）</label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label">模型标识图（可选）</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <input type="text" id="iconcss" name="css" class="form-control" value="">
                                     <div class="input-group-btn">
                                         <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">选择图标 <span class="caret"></span></button>
@@ -65,12 +65,11 @@ if($share_model) {
                                 </div>
                             </div>
 
-
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-4 input-group">
+                                <label class="col-sm-2 col-xs-4 control-label"></label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <input type="hidden" name="forward" value="<?php echo HTTP_REFERER;?>">
-                                    <input class="btn btn-info" type="submit" name="submit" value="提交">
+                                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                                 </div>
                             </div>
                         </form>
@@ -90,21 +89,21 @@ if($share_model) {
                     <form class="form-horizontal tasi-form" method="post" action="">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">模型别名</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">模型别名</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="name" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">数据表名</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">数据表名</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="tablename" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">创建表数量</label>
+                            <label class="col-sm-2 col-xs-4 control-label">创建表数量</label>
 
-                            <div class="col-sm-4 input-group">
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                             <label class="radio-inline">
                             <input type="radio" name="att" id="inlineRadio1" value="1" > 1个
                             </label>
@@ -115,22 +114,22 @@ if($share_model) {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">备注</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">备注</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <textarea name="remark" class="form-control" cols="60" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">内容页默认模版</label>
-                            <div class="col-sm-4 input-group">
+                            <label class="col-sm-2 col-xs-4 control-label">内容页默认模版</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <input type="text" name="template" class="form-control" value="show" style="text-align: right">
                                 <span class="input-group-addon">.html</span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-4 input-group">
-                                <input class="btn btn-info" type="submit" name="submit" value="提交">
+                            <label class="col-sm-2 col-xs-4 control-label"></label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                             </div>
                         </div>
                     </form>

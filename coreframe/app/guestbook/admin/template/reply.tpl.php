@@ -15,7 +15,7 @@ include $this->template('header','core');
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 control-label">留言时间</label>
+                <label class="col-sm-2 col-xs-4 control-label">留言时间</label>
                 <div class="col-sm-8 input-group">
                     <?php echo date('Y-m-d H:i',$r['addtime']);?>
                 </div>
@@ -38,28 +38,28 @@ include $this->template('header','core');
                     }
                     ?>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"><?php echo $info['name']?></label>
-                        <div class="col-sm-4 input-group"><?php echo $r[$field];?></div>
+                        <label class="col-sm-2 col-xs-4 control-label"><?php echo $info['name']?></label>
+                        <div class="col-lg-3 col-sm-4 col-xs-4 input-group"><?php echo $r[$field];?></div>
                     </div>
                 <?php }?>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">回复</label>
+                <label class="col-sm-2 col-xs-4 control-label">回复</label>
                 <div class="col-sm-9 input-group">
                     <?php echo WUZHI_form::editor('reply','reply',$r['reply']);?>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">回复人</label>
-                <div class="col-sm-2 input-group">
+                <label class="col-sm-2 col-xs-4 control-label">回复人</label>
+                <div class="col-sm-2 col-xs-4 control-label">
                     <input type="text" class="form-control" name="reply_user" placeholder="<?php echo $reply_user;?>">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-10 input-group">
+                <label class="col-sm-2 col-xs-4 control-label"></label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <input name="forward" type="hidden" value="<?php echo HTTP_REFERER;?>">
-                    <input class="btn btn-info" type="submit" name="submit" value="提交">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                 </div>
             </div>
         </form>

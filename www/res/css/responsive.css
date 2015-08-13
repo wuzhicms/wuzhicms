@@ -2,11 +2,13 @@
     像素格工作室 Pixel grid studio www.pxgrids.com
 */
 @media (min-width: 1400px) and (max-width: 1920px) {
-    .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
+    .table>tbody>tr>td, .table>thead>tr>th{padding: 5px 20px;}
+    .personal-task>tbody>tr>td{padding: 10px 20px;}
     #sidebar .appicon img{width: 60px;}
     .topnav ul li a{padding: 8px 10px 5px 10px;}
     .topmenunav ul li a{padding: 23px 25px 20px 25px;}
     .top-menu{padding-left: 10px;}
+    .table>thead>tr>th.tablehead{padding: 10px 20px;}
     .wrapper{padding: 15px;}
     .table>thead>tr>th.tableth15{padding: 15px }
     .header,.footer{padding:0 15px;}
@@ -71,7 +73,7 @@
 @media (min-width: 990px) and (max-width: 1100px) {
     .topmenunav ul li a{padding: 23px 15px 20px 15px;}
     #menu{display:block;}
-    .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
+    .table>tbody>tr>td, .table>thead>tr>th{padding: 7px 20px;}
     .table>tbody>tr>td.paydescription{width: 685px;}
     .table>tbody>tr>td.td5{padding: 5px 20px;}
     .table>thead>tr>th.tablehead{padding: 10px 20px;}
@@ -113,7 +115,7 @@
      #sidebar .appicon img{width: 60px;}
      .topmenunav{display: none;}
      .wrapper{padding: 15px !important;}
-     .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
+     .table>tbody>tr>td, .table>thead>tr>th{padding: 5px 20px;}
      .table>thead>tr>th.tablehead{padding: 10px;}
      .form-inline .uploaduser, .form-inline .filename, .form-inline .tags {width: 75px;}
      .panel-heading form .date {width: 85px;}

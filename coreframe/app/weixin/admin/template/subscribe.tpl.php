@@ -12,8 +12,8 @@ include $this->template('header','core');
                 <div class="panel-body">
                     <form class="form-horizontal tasi-form" method="post" action="">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">文本类型</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-2 col-xs-4 control-label">文本类型</label>
+                            <div class="col-sm-8 input-group">
                                 <label class="radio-inline">
                                     <input type="radio" name="msgtype" value="1" <?php if(output($setting,'msgtype')) echo 'checked';?> onclick="set_type(this.value)">文本回复
                                 </label>
@@ -23,7 +23,7 @@ include $this->template('header','core');
                             </div>
                         </div>
                         <div class="msgtype0 form-group <?php if($setting['msgtype']==1) echo 'hide';?>" style="border-top: 2px #F1F2F7 outset;padding-top: 10px;">
-                            <label class="col-sm-2 control-label">内容1</label>
+                            <label class="col-sm-2 col-xs-4 control-label">内容1</label>
                             <div class="col-sm-8">
                                 <table class="table">
                                     <tr>
@@ -47,7 +47,7 @@ include $this->template('header','core');
                             </div>
                         </div>
                         <div class="msgtype0 form-group <?php if($setting['msgtype']==1) echo 'hide';?>" style="border-top: 2px #F1F2F7 outset;padding-top: 10px;">
-                            <label class="col-sm-2 control-label">内容2</label>
+                            <label class="col-sm-2 col-xs-4 control-label">内容2</label>
                             <div class="col-sm-8">
                                 <table class="table">
                                     <tr>
@@ -67,7 +67,7 @@ include $this->template('header','core');
                             </div>
                         </div>
                         <div class="msgtype0 form-group <?php if($setting['msgtype']==1) echo 'hide';?>"  style="border-top: 2px #F1F2F7 outset;padding-top: 10px;">
-                            <label class="col-sm-2 control-label">内容3</label>
+                            <label class="col-sm-2 col-xs-4 control-label">内容3</label>
                             <div class="col-sm-8">
                                 <table class="table">
                                     <tr>
@@ -88,19 +88,19 @@ include $this->template('header','core');
                         </div>
 
                         <div class="msgtype1 form-group <?php if($setting['msgtype']==0) echo 'hide';?>" style="border-top: 2px #F1F2F7 outset;padding-top: 10px;">
-                            <label class="col-sm-2 control-label">文本内容</label>
-                            <div class="col-sm-8">
-                                <textarea name="text_content" class="form-control" cols="60" rows="15"><?php echo $text_content;?></textarea>
+                            <label class="col-sm-2 col-xs-4 control-label">文本内容</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <textarea name="text_content" class="form-control" cols="60" rows="5"><?php echo $text_content;?></textarea>
                             </div>
                         </div>
-
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-10">
-                                <input class="btn btn-info" type="submit" name="submit" value="提交">
+                            <label class="col-sm-2 col-xs-4 control-label"></label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                             </div>
                         </div>
+
                     </form>
                 </div>
 
