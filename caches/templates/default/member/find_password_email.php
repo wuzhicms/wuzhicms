@@ -30,11 +30,11 @@
 					<div class="form-group">
 						<label class="control-label">验证码</label>
 						<div class="col-sm-8">
-							<input type="text" name="checkcode" class="form-control" id="Verificationcode" placeholder="请输入验证码" datatype="*4-4"	errormsg="请输入验证码" sucmsg="输入正确" onfocus="if($('#code_img').attr('src') == '<?php echo R;?>images/logincode.gif')$('#code_img').attr('src', '<?php echo WEBURL;?>index.php?m=core&f=identifying_code&w=112&h=40&rd='+Math.random());" />
-							<img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新"	onclick="$(this).attr('src', '<?php echo WEBURL;?>index.php?m=core&f=identifying_code&w=112&h=40&rd='+Math.random());">
+							<input type="text" name="checkcode" class="form-control" id="Verificationcode" placeholder="请输入验证码" datatype="*4-4"	errormsg="请输入验证码" sucmsg="输入正确" onfocus="if($('#code_img').attr('src') == '<?php echo R;?>images/logincode.gif')$('#code_img').attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&h=40&rd='+Math.random());" />
+							<img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新"	onclick="$(this).attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&h=40&rd='+Math.random());">
 							<span class="Validform_wrong">请输入验证码</span>
 						</div>
-					</div>					
+					</div>
 					<div class="form-group">
 						<label class="control-label"></label>
 						<input type="submit" name="submit" class="btn btn-login" value="立即找回" />
@@ -52,8 +52,8 @@
                     <div class="form-group">
 						<label class="control-label">验证码</label>
 						<div class="col-sm-8">
-							<input type="text" name="checkcode" class="form-control" id="Verificationcode" placeholder="请输入验证码" datatype="*4-4"	errormsg="请输入验证码" sucmsg="输入正确" onfocus="if($('#code_img').attr('src') == '<?php echo R;?>images/logincode.gif')$('#code_img').attr('src', '<?php echo WEBURL;?>index.php?m=core&f=identifying_code&w=112&h=40&rd='+Math.random());" />
-							<img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新"	onclick="$(this).attr('src', '<?php echo WEBURL;?>index.php?m=core&f=identifying_code&w=112&h=40&rd='+Math.random());">
+							<input type="text" name="checkcode" class="form-control" id="Verificationcode" placeholder="请输入验证码" datatype="*4-4"	errormsg="请输入验证码" sucmsg="输入正确" onfocus="if($('#code_img').attr('src') == '<?php echo R;?>images/logincode.gif')$('#code_img').attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&h=40&rd='+Math.random());" />
+							<img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新"	onclick="$(this).attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&h=40&rd='+Math.random());">
 							<span class="Validform_wrong">请输入验证码</span>
 						</div>
 					</div>
@@ -62,9 +62,9 @@
 						<input type="submit" name="submit" class="btn btn-login" value="确认提交" />
 					</div>
 				</form>
-				<?php } ?>	
+				<?php } ?>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
