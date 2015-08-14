@@ -44,7 +44,6 @@ class city{
                     break;
                 }
             }
-//header("Location:<?php echo WEBURL;?>/list-69/");
             include T('content','index-city',TPLID);
         }
 

@@ -96,3 +96,20 @@ function callback_dianping(filename,htmlid,is_thumb,htmlname)
 	dialog.close(str).remove();
 	return false;
 }
+
+function callback_images2(filename,htmlid,is_thumb,htmlname)
+{
+	var file_array = filename.split('|');
+	var str = '';
+	$.each( file_array, function(i, n) {
+		var temp = n.split(',');
+		var file_url = temp[0];
+		var file_alt = temp[1];
+		var file_id = temp[2];
+		str += '<li id="file_node_'+file_id+'"><table class="table table-striped table-advance table-hover"><tr><td><input type="hidden" name="'+htmlname+'['+file_id+'][url]" value="'+file_url+'"> <img src="'+file_url+'" alt="'+file_alt+'" onclick="img_view(this.src);"></td><td> <textarea style="height:50px;" name="'+htmlname+'['+file_id+'][alt]" onfocus="if(this.value == this.defaultValue) this.value = \'\'" onblur="if(this.value.replace(\' \',\'\') == \'\') this.value = this.defaultValue;">'+file_alt+'</textarea></td><td><a class="btn btn-danger btn-xs" href="javascript:remove_file('+file_id+');">移除</a></td></tr></table></li>';
+	});
+
+	var dialog = top.dialog.get(window);
+	dialog.close(str).remove();
+	return false;
+}
