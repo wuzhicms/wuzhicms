@@ -32,7 +32,7 @@ include $this->template('header','core');
 
 			<div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label"><?php echo L('test_attachment_more');?></label>
-                <div class="col-lg-3 col-sm-4 col-xs-4 attaclist"><?php echo WUZHI_form::attachment('','10','setting[attachment_more_test]',isset($setting['attachment_more_test']) ? $setting['attachment_more_test'] : '', 'callback_more_dialog',0);?></div>
+                <div class="col-lg-10 col-sm-10 col-xs-10 attaclist"><?php echo WUZHI_form::attachment('','10','setting[attachment_more_test]',isset($setting['attachment_more_test']) ? $setting['attachment_more_test'] : '', 'callback_more_dialog',0);?></div>
             </div>
 
             <div class="form-group">
