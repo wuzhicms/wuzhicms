@@ -198,6 +198,11 @@ class WUZHI_mysqli {
 		}
 		$this->querynum++;
 		$this->histories[] = $sql;
+		if(defined('SQL_LOG')) {
+			if(substr($sql,0,21)!='INSERT INTO `wz_logs`' && substr($sql,0,6)!='SELECT' && substr($sql,0,24)!='DELETE FROM `wz_session`' && substr($sql,0,25)!='REPLACE INTO `wz_session`') {
+				error_log(date('Y-m-d H:i:s',SYS_TIME).' '.$sql."\r\n", 3, CACHE_ROOT."sql_log.".CACHE_EXT.'.sql');
+			}
+		}
 		return $query;
 	}
 

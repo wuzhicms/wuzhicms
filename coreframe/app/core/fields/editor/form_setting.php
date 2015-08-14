@@ -17,13 +17,13 @@ if(V=='field_add') {
         <td><textarea name="setting[defaultvalue]" rows="2" cols="20" id="defaultvalue" style="height:100px;width:250px;"><?php echo output($setting,'defaultvalue');?></textarea></td>
     </tr>
 
-    <tr>
+    <!-- <tr>
         <td>是否保存远程图片：</td>
         <td><input type="radio" name="setting[enablesaveimage]" value="1" <?php if(output($setting,'enablesaveimage')==1) echo 'checked';?>> 是 <input type="radio" name="setting[enablesaveimage]" value="0"  <?php if(output($setting,'enablesaveimage')==0) echo 'checked';?>> 否</td>
     </tr>
-
+    
     <tr>
         <td>是否添加水印：</td>
         <td> <input type="radio" name="setting[watermark_enable]" value="1" <?php if(output($setting,'watermark_enable')==1) echo 'checked';?>>是 <input type="radio" name="setting[watermark_enable]" value="0" <?php if(output($setting,'watermark_enable')==0) echo 'checked';?>> 否</td>
-    </tr>
+    </tr> -->
 </table>
