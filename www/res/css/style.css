@@ -331,7 +331,7 @@ ul.sidebar-menu li a.active span{color:#3B4658;font-weight: bold;}
 .attaclist ul li{border-bottom: 1px dotted #EAEAEA;}
 .attachment_thumb{border: 1px solid #DDD;padding: 5px;border-radius:4px;}
 .attaclist img{min-width: 80px;width: 80px;height: auto;border: 1px solid #DDD;padding: 2px;border-radius:2px;margin: 10px 0;vertical-align: middle;}
-.attaclist textarea{vertical-align: middle;width: 550px;border: solid 1px #E2E2E4;height: 32px;padding: 6px;}
+.attaclist textarea{vertical-align: middle;min-width: 400px;border: solid 1px #E2E2E4;height: 32px;padding: 6px;}
 .attaclist textarea:focus{border-color: #3498DB;}
 .form-inline .uploaduser,.form-inline .filename,.form-inline .tags{width: 100px;}
 /*---- Tabs------*/
