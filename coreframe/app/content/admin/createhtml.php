@@ -99,10 +99,10 @@ class createhtml extends WUZHI_admin {
                     if($this->categorys[$_id]['showhtml']) $catids[] = $_id;
                 }
             }
+            set_cache('cache-html-'.$uid,$catids);
         }
         if(empty($catids)) MSG('生成完成！','?m=content&f=createhtml&v=listing'.$this->su());
         $cid = array_shift($catids);
-        set_cache('cache-html-'.$uid,$catids);
 
         $this->category = get_cache('category_'.$cid,'content');
         $this->urlclass->set_category($this->category);
@@ -176,10 +176,10 @@ class createhtml extends WUZHI_admin {
             } else {
                 $catids = $GLOBALS['catids'];
             }
+            set_cache('cache-html-'.$uid,$catids);
         }
         if(empty($catids)) MSG('url更新完成！','?m=content&f=createhtml&v=listing'.$this->su());
         $cid = array_shift($catids);
-        set_cache('cache-html-'.$uid,$catids);
 
         $this->category = get_cache('category_'.$cid,'content');
         $this->urlclass->set_category($this->category);
