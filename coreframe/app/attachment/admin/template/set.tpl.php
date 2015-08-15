@@ -30,11 +30,6 @@ include $this->template('header','core');
                 <div class="col-lg-3 col-sm-4 col-xs-4"><?php echo WUZHI_form::attachment('','1','setting[attachment_thumb_test]',isset($setting['attachment_thumb_test']) ? $setting['attachment_thumb_test'] : '', '',true);?></div>
             </div>
 
-			<div class="form-group">
-                <label class="col-sm-2 col-xs-4 control-label"><?php echo L('test_attachment_more');?></label>
-                <div class="col-lg-3 col-sm-4 col-xs-4 attaclist"><?php echo WUZHI_form::attachment('','10','setting[attachment_more_test]',isset($setting['attachment_more_test']) ? $setting['attachment_more_test'] : '', 'callback_more_dialog',0);?></div>
-            </div>
-
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label"></label>
                 <div class="col-lg-3 col-sm-4 col-xs-4">
