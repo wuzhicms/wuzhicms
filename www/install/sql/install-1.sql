@@ -2292,6 +2292,8 @@ CREATE TABLE IF NOT EXISTS `wz_content_relation` (
   `rid` int(10) unsigned NOT NULL,
   `id` int(10) unsigned NOT NULL COMMENT '内容id索引',
   `cid` mediumint(8) unsigned NOT NULL COMMENT '栏目id',
+  `origin_id` int(10) unsigned NOT NULL COMMENT '原内容ID',
+  `origin_cid` mediumint(8) unsigned NOT NULL COMMENT '原内容栏目ID',
   `title` varchar(100) NOT NULL COMMENT '标题',
   `url` varchar(100) NOT NULL COMMENT '链接地址',
   `addtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间'
@@ -2520,6 +2522,7 @@ CREATE TABLE IF NOT EXISTS `wz_copyfrom` (
   `name` char(20) NOT NULL,
   `url` char(40) NOT NULL,
   `logo` char(250) NOT NULL,
+  `remark` char(250) NOT NULL,
   `usetimes` mediumint(8) unsigned NOT NULL,
   `updatetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='来源表';
