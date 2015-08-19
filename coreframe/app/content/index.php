@@ -44,13 +44,16 @@ class index{
         $siteconfigs = $this->siteconfigs;
         $id = isset($GLOBALS['id']) ? intval($GLOBALS['id']) : MSG(L('parameter_error'));
         $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : MSG(L('parameter_error'));
+        if($cid==0) MSG(L('parameter_error'));
         $categorys = get_cache('category','content');
         //查询数据
         $category = get_cache('category_'.$cid,'content');
         $models = get_cache('model_content','model');
-
+        if(!$category) MSG(L('parameter_error'));
         $model_r = $models[$category['modelid']];
+        if(!$model_r) MSG(L('parameter_error'));
         $master_table = $model_r['master_table'];
+
         $data = $this->db->get_one($master_table,array('id'=>$id));
         if(!$data || $data['status']!=9) MSG('信息不存在或者未通过审核！');
         if($model_r['attr_table']) {

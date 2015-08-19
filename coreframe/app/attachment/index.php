@@ -58,7 +58,7 @@ class index {
                 ));
                 break;
         }
-        $callback = $GLOBALS['callback'];
+        $callback = strip_tags($GLOBALS['callback']);
         if($callback) {
             exit($callback.'('.json_encode($result).')');
         } else {
