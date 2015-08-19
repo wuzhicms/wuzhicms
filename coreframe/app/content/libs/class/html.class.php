@@ -105,7 +105,7 @@ class WUZHI_html {
         foreach($format_data as $_key=>$_value) {
             $$_key = $_value['data'];
         }
-        $seo_title = $category['name'].'_'.$siteconfigs['sitename'];
+        $seo_title = $title.'_'.$category['name'].'_'.$siteconfigs['sitename'];
         $seo_keywords = !empty($keywords) ? implode(',',$keywords) : '';
         $seo_description = $remark;
         $elasticid = elasticid($cid);
