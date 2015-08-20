@@ -1,9 +1,9 @@
 /*
     像素格工作室 Pixel grid studio www.pxgrids.com
 */
-body{color:#797979;background:#f1f2f7;padding:0px !important;margin:0px !important;font-size:12px;font-family: "微软雅黑","Microsoft YaHei UI", "Segoe UI", Arial, Verdana, Sans-Serif, sans-serif;}
+body{color:#797979;background:#f1f2f7;padding:0px !important;margin:0px !important;font-size:12px;font-family: "微软雅黑","Microsoft YaHei","Microsoft YaHei UI", "Segoe UI", Arial, Verdana, Sans-Serif, sans-serif;}
 ul li{list-style:none;}
-h1,h2,h3,h4,h5,h6,a,p,span{font-family: "微软雅黑","Microsoft YaHei UI","Hiragino Sans GB W3","Segoe UI", Arial, Verdana, Sans-Serif, sans-serif;}
+h1,h2,h3,h4,h5,h6,a,p,span{font-family: "微软雅黑","Microsoft YaHei","Microsoft YaHei UI","Hiragino Sans GB W3","Segoe UI", Arial, Verdana, Sans-Serif, sans-serif;}
 a,a:hover,a:focus{text-decoration:none;outline:none;-webkit-transition:all 0.3s;transition:all 0.3s;-moz-transition:all 0.3s;-o-transition:all 0.3s;}
 ::selection{background:#FF6C60;color:#fff;}
 ::-moz-selection{background:#FF6C60;color:#fff;}
@@ -331,7 +331,7 @@ ul.sidebar-menu li a.active span{color:#3B4658;font-weight: bold;}
 .attaclist ul li{border-bottom: 1px dotted #EAEAEA;}
 .attachment_thumb{border: 1px solid #DDD;padding: 5px;border-radius:4px;}
 .attaclist img{min-width: 80px;width: 80px;height: auto;border: 1px solid #DDD;padding: 2px;border-radius:2px;margin: 10px 0;vertical-align: middle;}
-.attaclist textarea{vertical-align: middle;min-width: 400px;border: solid 1px #E2E2E4;height: 32px;padding: 6px;}
+.attaclist textarea{vertical-align: middle;width: 500px;border: solid 1px #E2E2E4;height: 32px;padding: 6px;}
 .attaclist textarea:focus{border-color: #3498DB;}
 .form-inline .uploaduser,.form-inline .filename,.form-inline .tags{width: 100px;}
 /*---- Tabs------*/
