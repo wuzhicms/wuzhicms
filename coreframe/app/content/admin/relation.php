@@ -34,7 +34,7 @@ class relation extends WUZHI_admin {
         $siteid = get_cookie('siteid');
         $r = $this->db->get_one('category', array('cid' => $cid));
 
-        $where = array('keyid'=>M,'siteid'=>$siteid,'language'=>$r['language']);
+        $where = array('keyid'=>M,'siteid'=>$siteid);
         $categorys = $this->db->get_list('category', $where, '*', 0, 200, 0, '', '', 'cid');
         foreach($categorys as $_cid=>$_value) {
             if($_cid==$cid) $categorys[$_cid]['selected'] = 'selected';
