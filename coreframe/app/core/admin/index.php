@@ -118,7 +118,7 @@ final class index extends WUZHI_admin {
             $this->check_login($username,$password);
 
             $_SESSION['uid'] = $_SESSION['role'] = 0;
-            MSG(L('please enter the correct username'));
+            MSG(L('username or password error'));
         } else {
             //显示登录界面
 
@@ -215,6 +215,8 @@ final class index extends WUZHI_admin {
                 //判断是否设置独立密码
                 if($rs['password'] && (md5(md5($password).$rs['factor'])==$rs['password'])) {
                     $login_ok = TRUE;
+                } elseif($rs['password']) {
+                    $login_ok = FALSE;
                 } elseif(md5(md5($password).$r['factor'])==$r['password']) {
                     $login_ok = TRUE;
                 }
