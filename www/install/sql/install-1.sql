@@ -2296,6 +2296,7 @@ CREATE TABLE IF NOT EXISTS `wz_content_relation` (
   `origin_cid` mediumint(8) unsigned NOT NULL COMMENT '原内容栏目ID',
   `title` varchar(100) NOT NULL COMMENT '标题',
   `url` varchar(100) NOT NULL COMMENT '链接地址',
+  `thumb` varchar(255) NOT NULL COMMENT '缩略图',
   `addtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间'
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='相关文章表';
 
