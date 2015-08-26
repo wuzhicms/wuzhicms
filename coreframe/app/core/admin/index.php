@@ -23,7 +23,13 @@ final class index extends WUZHI_admin {
         require COREFRAME_ROOT.'languages/'.$lang.'/admin_menu.lang.php';
         $_panels = $panels = array();
         $result = $this->db->get_list('menu', 'pid<20 AND display=1', '*', 0, 1000, 0, 'sort ASC', '', 'menuid');
+        //限制非超管用户的访问菜单
+        if ($_SESSION['role']!=1) {
+            $admin_private = $this->db->get_list('admin_private', 'chk=1 AND role='.$_SESSION['role'],'*', 0, 1000, 0, '', '', 'id');
+            $admin_private_keys = array_keys($admin_private);
+        }
         foreach($result as $key=>$r) {
+            if($_SESSION['role']!=1 && !in_array($key,$admin_private_keys)) continue;
             if($key<20) {
                 $panels[$key] = $r;
             } else {
