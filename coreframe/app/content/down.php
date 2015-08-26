@@ -25,8 +25,11 @@ class down{
             $file = decode($GLOBALS['s']);
             if (strpos($file, 'wZ:') !== false) {
                 $file = str_replace('wZ:',ATTACHMENT_ROOT,$file);
-                //echo $file;
+                echo $file;
                 download($file);
+            } elseif(preg_match('/^http:|https:|ftp:/',$file)) {
+                //远程地址下载
+                header("Location:".$file);
             }
         }
     }
@@ -67,12 +70,18 @@ class down{
             require get_cache_path('content_format','model');
             $form_format = new form_format($model_r['modelid']);
             $data = $form_format->execute($data);
-
             foreach($data as $_key=>$_value) {
                 if($_key=='downfile') continue;
                 $$_key = $_value['data'];
             }
+			$_groupid = get_cookie('_groupid');
 
+			if(!empty($groups)) {
+				$groups_arr = explode(',',$groups);
+				if(!in_array($_groupid,$groups_arr)) {
+					MSG('您所在到会员组没有下载权限');
+				}
+			}
             $seo_title = $title.'下载_'.$siteconfigs['sitename'];
         } else {
             $seo_title = '文件下载_'.$siteconfigs['sitename'];
