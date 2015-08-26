@@ -1,6 +1,5 @@
 <?php exit();?>
 	private function box($config, $value) {
-
 		extract($config,EXTR_SKIP);
 		extract($setting,EXTR_SKIP);
         $boxtype = isset($boxtype) ? $boxtype : 'select';
@@ -19,7 +18,6 @@
 		$value = implode(',',$value);
 		switch($boxtype) {
 			case 'radio':
-				$value = $value[0];
 				$string = $this->form->radio($option,$value,"name='form[$field]' $ext_code",$field);
 			break;
 
