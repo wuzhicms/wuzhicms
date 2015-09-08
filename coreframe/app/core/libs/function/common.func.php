@@ -675,7 +675,7 @@ function linkage($linkageid, $name, $returnid = 1, $extjs = ''){
 		$str .= '<div id="wz_' . $id . '">';
 		$str .= '<input type="hidden" id="' . $id . '" name="' . $name . '" value="0">';
 		for ($i = 1; $i <= $config['level']; $i++) {
-			$str .= '<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><select class="LK' . $linkageid . '_' . $i . ' form-control" name="LK' . $linkageid . '_' . $i . '" onchange="linkage(\'' . $id . '\',this.value)" ' . $extjs . '></select></div>';
+			$str .= '<div class="col-lg-3 col-sm-4 col-xs-4" style="padding-left: 0;"><select class="LK' . $linkageid . '_' . $i . ' form-control" name="LK' . $linkageid . '_' . $i . '" onchange="linkage(\'' . $id . '\',this.value)" ' . $extjs . '></select></div>';
 		}
 		$str .= '</div>';
 		$str .= '<script src="' . R . 'js/jquery.wuzhicms-select.js"></script>';
