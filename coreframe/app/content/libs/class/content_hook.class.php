@@ -12,11 +12,11 @@ defined('IN_WZ') or exit('No direct script access allowed');
 
 class WUZHI_content_hook {
 	function __construct() {
-
+		$this->db = load_class('db');
 	}
-	function run_hook($hookid,$key = '') {
+	function run_hook($hookid,$data = '',$attend = array()) {
 		switch ($hookid) {
-			case 'footer':
+			case 'test_hookid':
 				echo 'content hook ok';
 				break;
 		}

@@ -27,7 +27,7 @@ class model extends WUZHI_admin {
         $this->cache_form();//TODO 删除该行
 
 		$m = $this->m;
-		// $where = array('m'=>$m);
+		$where = array('m'=>$m);
 		$result = $this->db->get_list('model', $where, '*', 0, 100,0,'modelid ASC');
 		include $this->template('model_listing');
 	}
@@ -109,14 +109,6 @@ class model extends WUZHI_admin {
             $formdata['template'] = $GLOBALS['template'];
             $formdata['remark'] = $GLOBALS['remark'];
             $formdata['css'] = $GLOBALS['css'];
-            $sitelist = get_cache('sitelist');
-            foreach($sitelist as $sid=>$site) {
-                if($siteid==$sid) {
-                    $template_set[$sid] = $formdata['template'];
-                }
-            }
-            $formdata['template_set'] = serialize($template_set);
-
             $this->db->update('model',$formdata,array('modelid'=>$modelid));
             $forward = isset($GLOBALS['forward']) ? $GLOBALS['forward'] : HTTP_REFERER;
             MSG(L('update success'),$forward);
@@ -185,7 +177,9 @@ class model extends WUZHI_admin {
 			$model_r = $this->db->get_one('model',"modelid=".$modelid);
 			//print_r($model_r);exit;
 			//在扩张配置中的选项，选择，是vachar,char,smallint,int
-			$action = 'add';
+            if(isset($GLOBALS['setting']['fieldtype'])) $config['field_type'] = $GLOBALS['setting']['fieldtype'];
+
+            $action = 'add';
 
 			require $this->core_path.'db.php';
 

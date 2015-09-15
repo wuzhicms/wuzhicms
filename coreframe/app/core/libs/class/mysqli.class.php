@@ -52,7 +52,7 @@ class WUZHI_mysqli {
 		$group = $group ? ' GROUP BY '.$group : '';
 		$limit = $limit ? ' LIMIT '.$limit : '';
 
-		$sql = 'SELECT '.$field.' FROM `'.$this->tablepre.$table.'`'.$where.$order.$group.$limit;
+		$sql = 'SELECT '.$field.' FROM `'.$this->tablepre.$table.'`'.$where.$group.$order.$limit;
 		$query = $this->query($sql);
 		return $this->fetch_array($query);
 	}

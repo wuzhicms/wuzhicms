@@ -4,6 +4,10 @@
 defined('IN_WZ') or exit('No direct script access allowed');
 
 return array(
-	0=>'content',
+	/*
+	'test_hookid'=>array(
+		'content'
+	),
+	*/
 );
 ?>

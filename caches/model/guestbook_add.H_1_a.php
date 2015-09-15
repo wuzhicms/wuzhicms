@@ -12,10 +12,11 @@ class form_add {
 		$this->modelid = $modelid;
 		$this->fields = get_cache('field_'.$modelid,'model');
 		$this->extdata = '';
-		//TODO 初始化勾子，在程序提交前处理
+		$this->hook = load_class('hook');
     }
 
 	public function execute($formdata) {
+		$this->hook->run_hook('form_add',$formdata,array('modelid'=>$this->modelid));
 		$this->formdata = $formdata;
 		$info = array();
 		foreach($formdata as $field=>$value) {

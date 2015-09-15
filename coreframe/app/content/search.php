@@ -40,9 +40,9 @@ class search{
         if($keywords) {
             if($starttime) {
                 $stime = SYS_TIME-$starttime*86400;
-                $where = "`status`=9 AND (`addtime`>$stime AND `keywords` LIKE '%$keywords%') or (`addtime`>$stime AND `remark` LIKE '%$keywords%')";
+                $where = "`status`=9 AND (`addtime`>$stime AND `title` LIKE '%$keywords%') or (`addtime`>$stime AND `remark` LIKE '%$keywords%')";
             } else {
-                $where = "`status`=9 AND `keywords` LIKE '%$keywords%' or `remark` LIKE '%$keywords%'";
+                $where = "`status`=9 AND `title` LIKE '%$keywords%' or `remark` LIKE '%$keywords%'";
             }
             $page = intval($GLOBALS['page']);
 

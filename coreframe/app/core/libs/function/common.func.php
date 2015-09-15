@@ -660,7 +660,7 @@ function link_url($array){
  * @param $linkageid
  * @param $id
  */
-function linkage($linkageid, $name, $returnid = 1, $extjs = ''){
+function linkage($linkageid, $name, $returnid = 1, $extjs = '',$values = array(),$level = ''){
 	$id = preg_match("/\[(.*)\]/", $name, $m) ? $m[1] : $name;
 	$config = @get_cache('config_' . $linkageid, 'linkage');
 	if (!$config) {
@@ -671,20 +671,24 @@ function linkage($linkageid, $name, $returnid = 1, $extjs = ''){
 
 	if ($config['display_type'] == 1) {
 		//select 选项框
+		if($values[1]=='') $values[1] = 0;
+		$level = $level=='' ? $config['level'] : $level;
 		$str = '';
 		$str .= '<div id="wz_' . $id . '">';
 		$str .= '<input type="hidden" id="' . $id . '" name="' . $name . '" value="0">';
-		for ($i = 1; $i <= $config['level']; $i++) {
-			$str .= '<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><select class="LK' . $linkageid . '_' . $i . ' form-control" name="LK' . $linkageid . '_' . $i . '" onchange="linkage(\'' . $id . '\',this.value)" ' . $extjs . '></select></div>';
+		for ($i = 1; $i <= $level; $i++) {
+			if($i==$level) $extjs = '';
+			$str .= '<div class="col-sm-4"><select class="LK' . $linkageid . '_' . $i . ' form-control" name="LK' . $linkageid . '_' . $i . '" id="LK' . $linkageid . '_' . $i . '" onchange="linkage(\'' . $id . '\',this.value,this)" ' . $extjs . ' data-value="'.$values[$i].'"></select></div>';
 		}
 		$str .= '</div>';
 		$str .= '<script src="' . R . 'js/jquery.wuzhicms-select.js"></script>';
 		$str .= "\r\n" . '<script>';
 		$str .= "\r\n" . '$.wuzhicmsSelect.defaults.url = "' . WEBURL . 'index.php?m=linkage&f=json&returnid=' . $returnid . '&linkageid=' . $linkageid . '/wz.json";';
+		//$str .= "\r\n" . '$.wuzhicmsSelect.defaults.url = "/res/js/linkage/' . $linkageid . '.json";';
 		$str .= "\r\n" . '$("#wz_' . $id . '").wuzhicmsSelect({';
 		$str .= "\r\n" . 'selects : [';
-		for ($i = 1; $i <= $config['level']; $i++) {
-			$di = $i == $config['level'] ? '' : ',';
+		for ($i = 1; $i <= $level; $i++) {
+			$di = $i == $level ? '' : ',';
 			$str .= '"LK' . $linkageid . '_' . $i . '"' . $di;
 		}
 		$str .= ']';
