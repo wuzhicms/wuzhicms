@@ -93,7 +93,7 @@ class WUZHI_html {
         $urlrule = WWW_PATH.$urlrules[0].'|'.WWW_PATH.$urlrules[1];
         $year = date('Y',$data['addtime']);
         $variables = array('year'=>$year,'cid'=>$cid,'id'=>$data['id']);
-        $pages = pages($num, $current_page, 1, $urlrule, $variables,10);
+
         $GLOBALS['catdir'] = $this->category['catdir'];
         $GLOBALS['categorydir'] = $this->category['parentdir'];
 
@@ -122,6 +122,7 @@ class WUZHI_html {
         $styles = explode(':',$_template);
         $project_css = isset($styles[0]) ? $styles[0] : 'default';
         $_template = isset($styles[1]) ? $styles[1] : 'show';
+        $addtime = $data['addtime'];
 
         $page = 1;
         //手动分页
@@ -130,9 +131,15 @@ class WUZHI_html {
             $contents = array_filter(explode('_wuzhicms_page_tag_', $content));
             $pagetotal = count($contents);
             foreach($contents as $cons) {
-                $urls = $this->urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$data['addtime'],'page'=>$page,'route'=>$data['route']));
+
+                $urls = $this->urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>$page,'route'=>$data['route']));
                 $file_root = $urls['root'];
-                $data['content'] = $cons;
+                $content = $cons;
+                $content_pages = pages($pagetotal, $page, 1, $urlrule, $variables,10);
+                $tmp_year = date('Y',$addtime);
+                $tmp_month = date('m',$addtime);
+                $tmp_day = date('d',$addtime);
+                $content_pages = pages($pagetotal,$page,1,$urlrule,array('categorydir'=>$category['parentdir'],'year'=>$tmp_year,'month'=>$tmp_month,'day'=>$tmp_day,'catdir'=>$category['catdir'],'cid'=>$cid,'id'=>$id));
                 //写入
                 ob_start();
                 include T('content',$_template,$project_css);

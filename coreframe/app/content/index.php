@@ -67,7 +67,12 @@ class index{
         } else {
             $modelid = $model_r['modelid'];
         }
-
+        $data_r = $data;
+        $urlrule = $category['showurl'];
+        if($category['showhtml']) {
+            $urlrules = explode('|',$urlrule);
+            $urlrule = WWW_PATH.$urlrules[0].'|'.WWW_PATH.$urlrules[1];
+        }
         require get_cache_path('content_format','model');
         $form_format = new form_format($modelid);
         $data = $form_format->execute($data);
@@ -87,6 +92,8 @@ class index{
         $styles = explode(':',$_template);
         $project_css = isset($styles[0]) ? $styles[0] : 'default';
         $_template = isset($styles[1]) ? $styles[1] : 'show';
+        $addtime = $data_r['addtime'];
+
         $elasticid = elasticid($cid);
         $seo_title = $title.'_'.$category['name'].'_'.$siteconfigs['sitename'];
         $seo_keywords = !empty($keywords) ? implode(',',$keywords) : '';
@@ -105,7 +112,8 @@ class index{
             $tmp_year = date('Y',$addtime);
             $tmp_month = date('m',$addtime);
             $tmp_day = date('d',$addtime);
-            $content_pages = pages($pagetotal,$page,1,$category['showurl'],array('year'=>$tmp_year,'month'=>$tmp_month,'day'=>$tmp_day,'catdir'=>$category['catdir'],'cid'=>$cid,'id'=>$id));
+            $content_pages = pages($pagetotal,$page,1,$urlrule,array('categorydir'=>$category['parentdir'],'year'=>$tmp_year,'month'=>$tmp_month,'day'=>$tmp_day,'catdir'=>$category['catdir'],'cid'=>$cid,'id'=>$id));
+
         } else {
             $content_pages = '';
         }
