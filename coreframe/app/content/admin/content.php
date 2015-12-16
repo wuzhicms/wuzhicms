@@ -561,44 +561,91 @@ class content extends WUZHI_admin {
      * 内容删除
      */
     public function delete() {
+    	//获取提交的数据
         $id = intval($GLOBALS['id']);
         $cid = intval($GLOBALS['cid']);
+        
+        //数据校验
         if(!$cid) MSG(L('parameter_error'));
+        
+        //读取缓存数据
         $category_r = get_cache('category_'.$cid,'content');
         $models = get_cache('model_content','model');
+        
+        //获取对应栏目的模型数据
         $model_r = $models[$category_r['modelid']];
         $master_table = $model_r['master_table'];
-        $data = $this->db->delete($master_table,array('id'=>$id));
-        if($model_r['attr_table']) {
-            $attrdata = $this->db->delete($model_r['attr_table'],array('id'=>$id));
+        
+        //删除共享模型内容
+        if ($master_table == 'content_share') {
+        	//查询内容
+        	$r = $this->db->get_one($master_table, array('id' => $id));
+        	
+        	if (isset($r['modelid'])) $model_r = $models[$r['modelid']];
         }
-        $this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+
+        //删除主表数据
+        $data = $this->db->delete($master_table, array('id' => $id));
+        
+        //删除附属表数据
+        if($model_r['attr_table']) $attrdata = $this->db->delete($model_r['attr_table'], array('id' => $id));
+        
+        //删除排名数据
+        $this->db->delete('content_rank', array('cid' => $cid, 'id' => $id));
+        
+        //删除 Block 数据
         $keyid = $id.'-'.$cid;
         $this->db->delete('block_data', array('keyid' => $keyid));
-        MSG(L('delete success'),HTTP_REFERER,1);
+        
+        //返回回收站
+        MSG(L('delete success'), TTP_REFERER, 1000);
     }
 
     /**
      * 内容批量删除
      */
     public function delete_more() {
+    	//获取提交的数据
+    	$cid = intval($GLOBALS['cid']);
+    	
+    	//数据校验
         if(empty($GLOBALS['ids'])) MSG('没有选择任何文章');
-        $cid = intval($GLOBALS['cid']);
         if(!$cid) MSG(L('parameter_error'));
+        
+        //读取缓存数据
         $category_r = get_cache('category_'.$cid,'content');
         $models = get_cache('model_content','model');
+        
+        //获取对应栏目的模型数据
         $model_r = $models[$category_r['modelid']];
         $master_table = $model_r['master_table'];
+        
+        //批量删除数据
         foreach($GLOBALS['ids'] as $id) {
-            $data = $this->db->delete($master_table,array('id'=>$id));
-            if($model_r['attr_table']) {
-                $attrdata = $this->db->delete($model_r['attr_table'],array('id'=>$id));
-            }
-            $this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+        	//共享模型
+        	if ($master_table == 'content_share') {
+        		//查询内容
+        		$r = $this->db->get_one($master_table, array('id' => $id));
+        		 
+        		if (isset($r['modelid'])) $model_r = $models[$r['modelid']];
+        	}
+        	
+        	//删除主表数据
+            $data = $this->db->delete($master_table, array('id' => $id));
+            
+            //删除附属表数据
+            if($model_r['attr_table']) $attrdata = $this->db->delete($model_r['attr_table'], array('id' => $id));
+
+            //删除排名数据
+            $this->db->delete('content_rank', array('cid' => $cid, 'id' => $id));
+            
+            //删除 Block 数据
             $keyid = $id.'-'.$cid;
             $this->db->delete('block_data', array('keyid' => $keyid));
         }
-        MSG(L('delete success'),HTTP_REFERER,1);
+        
+        //返回回收站
+        MSG(L('delete success'), HTTP_REFERER, 1000);
     }
     /**
      * 内容审核
