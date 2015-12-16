@@ -598,7 +598,7 @@ class content extends WUZHI_admin {
         $this->db->delete('block_data', array('keyid' => $keyid));
         
         //返回回收站
-        MSG(L('delete success'), TTP_REFERER, 1000);
+        MSG(L('delete success'), HTTP_REFERER, 1000);
     }
 
     /**
