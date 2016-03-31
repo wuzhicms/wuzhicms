@@ -77,10 +77,17 @@ class WUZHI_db {
 		if(is_array($data)) {
 			$sql = '';
 			foreach ($data as $key => $val) {
+				$val = str_replace("%20", '', $val);
+				$val = str_replace("%27", '', $val);
+				$val = str_replace("(", '', $val);
+				$val = str_replace(")", '', $val);
+				$val = str_replace("'", '', $val);
 				$sql .= $sql ? " AND `$key` = '$val' " : " `$key` = '$val' ";
 			}
 			return $sql;
 		} else {
+			$data = str_replace("%20", '', $data);
+			$data = str_replace("%27", '', $data);
 			return $data;
 		}
 	}
