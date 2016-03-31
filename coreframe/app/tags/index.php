@@ -55,6 +55,7 @@ class index{
             } else {
                 $tid = urldecode($GLOBALS['tid']);
             }
+            $tid = sql_replace($tid);
 			$where = array('tag'=>$tid);
 		}
 
@@ -90,6 +91,7 @@ class index{
 	public function ajax_auto_complete()
 	{
 		$tag = isset($GLOBALS['term']) ? remove_xss($GLOBALS['term']) : MSG(L('parameter_error'));
+		$tag = sql_replace($tag);
 		$where = ' tag like "%'.$tag.'%" ';
 		$tag_info = $this->db->get_list('tag', $where, 'tag',0,10,1);
 		foreach($tag_info AS $k=>$v)
