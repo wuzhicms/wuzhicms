@@ -193,10 +193,7 @@ function p_stripslashes($string) {
     if ( ! is_array($string)){
         return stripslashes($string);
     }
-    foreach ($string as $key => $val){
-        $string[$key] = p_stripslashes($val);
-    }
-    return $string;
+    return array_map('p_stripslashes', $string);
 }
 
 function gpc_stripslashes($data) {
