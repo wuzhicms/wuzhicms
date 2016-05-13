@@ -82,11 +82,11 @@ class index {
         $fileurl = createdir();
         $target_dir = ATTACHMENT_ROOT.$fileurl;
 
-        // Get a file name
+        // Get a file name 当文件名字中有,的时候前端会报错
         if (isset($GLOBALS["name"])) {
-            $fileName = $GLOBALS["name"];
+         $fileName = str_replace(",","_",$GLOBALS["name"]);
         } elseif (!empty($_FILES)) {
-            $fileName = $_FILES["file"]["name"];
+            $fileName = str_replace(",","_",$_FILES["file"]["name"]);
         } else {
             $fileName = uniqid("file_");
         }
