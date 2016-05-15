@@ -10,20 +10,28 @@
  */
 class BuildPackageCommand
 {
+    private $code;
+    private $version;
+    private $diffFile;
     public function __construct($argc)
     {
-        var_dump($argc, $argv);
+        $this->code    = $code;
+        $this->version = $version;
+        $this->diff    = $diffFile;
     }
 
     private $root = __DIR__.'/../..';
     //需要三个参数
     public function execute()
     {
+        echo "\n\n开始制作升级包\n\n";
         $packageDirectory = $this->createDirectory('MAIN', '2.0.5');
-        $diffFile         = '/build/diff-2.0.5';
+        $diffFile         = 'build/diff-2.0.5';
         $this->generateFile($diffFile, $packageDirectory);
 
-        $this->copyUpgradeScript($packageDirectory, $version);
+        $this->copyUpgradeScript($packageDirectory, $this->version);
+
+        echo "升级包制作完毕\n";
     }
 
     /**
@@ -36,44 +44,48 @@ class BuildPackageCommand
     {
         $path = "{$this->root}/build/{$name}_{$version}";
 
-        if (!file_exists($path)) {
-            mkdir($path);
-        };
+        if (file_exists($path)) {
+            $this->remove($path);
+        }
+
+        mkdir($path);
         return $path;
     }
 
     private function generateFile($diffFile, $packageDirectory)
     {
-        if (!file_exists($diffFile)) {
+        $filePath = "{$this->root}/$diffFile";
+
+        if (!file_exists($filePath)) {
             echo "{$diffFile} 差异文件不存在,无法生成差异文件!\n";
             return false;
         }
 
-        $file = fopen($this->root.$diffFile, 'r');
+        $file = fopen($filePath, 'r');
 
         while (!feof($file)) {
             $line = fgets($file);
 
             if (!in_array($line[0], array('M', "A", 'D'))) {
-                echo "无法处理该文件: {$line[0]}";
+                echo "无法处理该文件: {$line[0]}\n\n";
                 continue;
             }
 
             $opFile = trim(substr($line, 1));
 
             if (empty($opFile)) {
-                echo "无法处理该文件: {$opFile}";
+                echo "无法处理该文件: {$opFile}\n";
             }
 
 //假如升级脚本放在这个地方,则忽略该文件下的文件
             if (strpos($opFile, 'app/DoctrineMigrations') === 0) {
-                echo "忽略文件：{$opFile}";
+                echo "忽略文件：{$opFile}\n";
                 continue;
             }
 
 //忽略安装文件,如果有其他的忽略文件也需要在这里处理
             if (strpos($opFile, 'www/install') === 0) {
-                echo "忽略文件：{$opFile}";
+                echo "忽略文件：{$opFile}\n";
                 continue;
             }
 
@@ -101,6 +113,22 @@ class BuildPackageCommand
 
         $root = __DIR__.'/../..';
         $this->copy("{$root}/{$opFile}", $destPath);
+    }
+
+    private function copyUpgradeScript($dir, $version)
+    {
+        echo "拷贝升级脚本：\n";
+        var_dump($dir);
+
+        $path = realpath(__DIR__."/../../www/app/data/scripts/")."/upgrade-".$this->version.".php";
+
+        if (!file_exists($path)) {
+            echo "无升级脚本\n";
+        } else {
+            $targetPath = realpath($dir).'/Upgrade.php';
+            echo $path." -> {$targetPath}\n";
+            $this->copy($path, $targetPath, true);
+        }
     }
 
     private function insertDelete($opFile, $packageDirectory)
@@ -140,6 +168,29 @@ class BuildPackageCommand
                 throw new \Exception(sprintf('Failed to copy %s to %s', $originFile, $targetFile));
             }
         }
+    }
+
+    private function remove($dir)
+    {
+        if (!file_exists($dir)) {
+            return false;
+        }
+
+        $iter = new RecursiveDirectoryIterator($dir);
+
+        foreach (new RecursiveIteratorIterator($iter, RecursiveIteratorIterator::CHILD_FIRST) as $f) {
+            if (in_array($f->getFileName(), array('.', '..'))) {
+                continue;
+            }
+
+            if ($f->isDir()) {
+                rmdir($f->getPathname());
+            } else {
+                unlink($f->getPathname());
+            }
+        }
+
+        rmdir($dir);
     }
 }
 
