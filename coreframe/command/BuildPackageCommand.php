@@ -5,28 +5,37 @@
  * User: Simon
  * Date: 4/23/16
  * Time: 20:43
+ *
+ * use: php BuildPackageCommand.php code version  diff  eg.  php BuildPackageCommand.php MAIN 2.1.0 build/diff-2.1.0
  */
 class BuildPackageCommand
 {
-    private $root = __DIR__ . '/../..';
+    public function __construct($argc)
+    {
+        var_dump($argc, $argv);
+    }
+
+    private $root = __DIR__.'/../..';
     //需要三个参数
     public function execute()
     {
         $packageDirectory = $this->createDirectory('MAIN', '2.0.5');
-        $diffFile         = '/build/diff-2.03';
+        $diffFile         = '/build/diff-2.0.5';
         $this->generateFile($diffFile, $packageDirectory);
+
+        $this->copyUpgradeScript($packageDirectory, $version);
     }
 
     /**
      * 生成目录,如果已经存在,递归删除文件和目录,此处先简化处理
-     * @param $name
-     * @param $version
+     * @param  $name
+     * @param  $version
      * @return string
      */
     private function createDirectory($name, $version)
     {
-
         $path = "{$this->root}/build/{$name}_{$version}";
+
         if (!file_exists($path)) {
             mkdir($path);
         };
@@ -39,24 +48,30 @@ class BuildPackageCommand
             echo "{$diffFile} 差异文件不存在,无法生成差异文件!\n";
             return false;
         }
-        $file = fopen($this->root . $diffFile, 'r');
+
+        $file = fopen($this->root.$diffFile, 'r');
 
         while (!feof($file)) {
             $line = fgets($file);
+
             if (!in_array($line[0], array('M', "A", 'D'))) {
                 echo "无法处理该文件: {$line[0]}";
                 continue;
             }
+
             $opFile = trim(substr($line, 1));
+
             if (empty($opFile)) {
                 echo "无法处理该文件: {$opFile}";
             }
-            //假如升级脚本放在这个地方,则忽略该文件下的文件
+
+//假如升级脚本放在这个地方,则忽略该文件下的文件
             if (strpos($opFile, 'app/DoctrineMigrations') === 0) {
                 echo "忽略文件：{$opFile}";
                 continue;
             }
-            //忽略安装文件
+
+//忽略安装文件,如果有其他的忽略文件也需要在这里处理
             if (strpos($opFile, 'www/install') === 0) {
                 echo "忽略文件：{$opFile}";
                 continue;
@@ -67,32 +82,46 @@ class BuildPackageCommand
 
                 $this->copyFileAndDir($opFile, $packageDirectory);
             }
+
+            if ($line[0] == 'D') {
+                echo "增加删除文件: {$opFile}\n";
+                //如果有软连接,需要处理软连接的地址
+                $this->insertDelete($opFile, $packageDirectory);
+            }
         }
     }
 
     private function copyFileAndDir($opFile, $packageDirectory)
     {
-        $destPath = $packageDirectory . '/source/' . $opFile;
+        $destPath = $packageDirectory.'/source/'.$opFile;
 
         if (!file_exists(dirname($destPath))) {
             mkdir(dirname($destPath), 0777, true);
         }
-        $root = __DIR__ . '/../..';
+
+        $root = __DIR__.'/../..';
         $this->copy("{$root}/{$opFile}", $destPath);
     }
 
+    private function insertDelete($opFile, $packageDirectory)
+    {
+        file_put_contents("{$packageDirectory}/delete", "{$opFile}\n", FILE_APPEND);
+    }
 
     public function copy($originFile, $targetFile, $override = false)
     {
         var_dump($originFile);
+
         if (stream_is_local($originFile) && !is_file($originFile)) {
             throw new Exception(sprintf('Failed to copy %s because file not exists', $originFile));
         }
+
         if (!is_dir(dirname($targetFile))) {
             mkdir(dirname($targetFile), 0777, true);
         }
 
         $doCopy = true;
+
         if (!$override && null === parse_url($originFile, PHP_URL_HOST) && is_file($targetFile)) {
             $doCopy = filemtime($originFile) > filemtime($targetFile);
         }
@@ -112,7 +141,6 @@ class BuildPackageCommand
             }
         }
     }
-
 }
 
 $command = new BuildPackageCommand();
