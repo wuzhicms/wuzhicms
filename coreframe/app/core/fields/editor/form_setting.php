@@ -9,6 +9,13 @@ if(V=='field_add') {
 ?>
 <table cellpadding="0" cellspacing="0" width="100%" class="table table-striped table-advance table-hover">
     <tr>
+        <td>编辑器类型：</td>
+        <td><input type="radio" name="setting[editor_type]" value="ckeditor" <?php if(output($setting,'editor_type')=='ckeditor') echo 'checked';?>> ckeditor（推荐）
+            <input type="radio" name="setting[editor_type]" value="ueditor"  <?php if(output($setting,'editor_type')=='ueditor') echo 'checked';?>> Ueditor（百度编辑器）
+            <input type="radio" name="setting[editor_type]" value="ewebeditor"  <?php if(output($setting,'editor_type')=='ewebeditor') echo 'checked';?>> Ewebeditor
+        </td>
+    </tr>
+    <tr>
         <td width="175">编辑器样式：</td>
         <td><input type="radio" name="setting[toolbar]" value="basic" <?php if(output($setting,'toolbar')=='basic') echo 'checked';?>> 简洁型 <input type="radio" name="setting[toolbar]" value="normal" <?php if(output($setting,'toolbar')=='normal') echo 'checked';?>> 标准型 <input type="radio" name="setting[toolbar]" value="full" <?php if(output($setting,'toolbar')=='full') echo 'checked';?>> 全功能 <input type="radio" name="setting[toolbar]" value="textarea" <?php if(output($setting,'toolbar')=='textarea') echo 'checked';?>> 文本框 </td>
     </tr>

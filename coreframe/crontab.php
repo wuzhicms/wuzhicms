@@ -112,6 +112,6 @@ $crontab_file = COREFRAME_ROOT.'crontab/'.M.'/'.F.'.php';
 if(file_exists($crontab_file)) {
     include $crontab_file;
 } else {
-    M("Control file does not exists!\r\n\t".$crontab_file);
+    MSG("Control file does not exists!\r\n\t".$crontab_file);
 }
 ?>

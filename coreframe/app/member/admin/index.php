@@ -22,7 +22,7 @@ class index extends WUZHI_admin {
 	 */
 	public function listing() {
 		$page = max(1, (isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1));
-
+		$sta_arr = array(-1=>'所有状态',1=>'审核通过',0=>'待审核',3=>'审核不通过');
 		$keyArr = array('username'=>'用户名', 'uid'=>'UID', 'email'=>'Email', 'mobile'=>'手机');
 		$keyType = isset($GLOBALS['keyType']) && isset($keyArr[$GLOBALS['keyType']]) ? $GLOBALS['keyType'] : 'username';
 		$keyValue = isset($GLOBALS['keyType']) ? sql_replace($GLOBALS['keyValue']) : '';
@@ -31,34 +31,200 @@ class index extends WUZHI_admin {
 		$loginTimeStart = isset($GLOBALS['loginTimeStart']) ? strtotime($GLOBALS['loginTimeStart']) : '';
 		$loginTimeEnd = isset($GLOBALS['loginTimeEnd']) ? strtotime($GLOBALS['loginTimeEnd']) : '';
 		$groupid = isset($GLOBALS['groupid']) ? intval($GLOBALS['groupid']) : '';
-			
-		$where = '';
-		if(isset($GLOBALS['search'])){
-			if($keyValue){
-				$where = ' AND '.$keyType.'="'.$keyValue.'"';
-			}else{
+		$modelid = isset($GLOBALS['modelid']) ? intval($GLOBALS['modelid']) : 10;
+		$checkmec = isset($GLOBALS['checkmec']) ? intval($GLOBALS['checkmec']) : -1;
+		$extgid = intval($GLOBALS['extgid']);
+		$modelid = intval($GLOBALS['modelid']);
+
+		$group = $ext_group = array();
+		foreach($this->group as $gr) {
+			if($gr['issystem']==1) {
+				$group[$gr['groupid']] = $gr;
+			} else {
+				//TODO
+				//if(in_array($gr['groupid'],array(20,22,32,34))) $gr['pid'] = 0;
+				$gr['selected'] = $extgid==$gr['groupid'] ? 'selected' : '';
+				$ext_group[$gr['groupid']] = $gr;
+			}
+		}
+
+		$tree = load_class('tree','core',$ext_group);
+		$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
+		//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');
+		$tree_data = '';
+
+		//格式字符串
+		$str = "<option value=\$id \$selected \$disable>\$spacer\$name</option>";
+		//返回树
+		$tree_data.=$tree->create(0,$str);
+		$string = '<select name="extgid" class="form-control">';
+		$string .= "<option>≡ 扩展会员组 ≡</option>";
+		$string .= $tree_data;
+		$string .= '</select>';
+
+		if($extgid) {
+			$where = "m.uid=e.uid";
+			if(isset($GLOBALS['search'])){
+
+				if($keyType=='username' || $keyType=='fullname'|| $keyType=='fullname_en') {
+					$where .= " AND m.`$keyType` LIKE '%$keyValue%'";
+				}elseif($keyValue){
+					$where .= ' AND m.'.$keyType.'="'.$keyValue.'"';
+				}
+				$where .= $groupid ? ' AND m.groupid = '.$groupid : '';
+				$where .= ' AND e.groupid = '.$extgid;
+				$where .= $modelid ? " AND m.modelid LIKE '%".$modelid."%'" : '';
+
+				if($regTimeStart) {
+					$where .= ' AND m.regtime >= '.$regTimeStart;
+				}
+				if($regTimeEnd) {
+					$regTimeEnd = $regTimeEnd+86400;
+					$where .= ' AND m.regtime <= '.$regTimeEnd;
+				}
+
+				$where .= $loginTimeStart ? ' AND m.lasttime >= '.$loginTimeStart : '';
+				$where .= $loginTimeEnd ? ' AND m.lasttime <= '.$loginTimeEnd+86400 : '';
+
+			}
+			$models = get_cache('model_member','model');
+			$sql1 = "SELECT count(DISTINCT(m.uid)) as num FROM wz_member m,wz_member_group_extend e WHERE ".$where." ";
+			$sql2 = "SELECT *,m.groupid FROM wz_member m,wz_member_group_extend e WHERE ".$where." GROUP BY m.uid ORDER BY m.uid DESC";
+			$s_count  = $this->db->get_page_list_count($sql1,$where);
+			$result_arr = $this->db->get_page_list($sql2,0,10,$page);
+			$pages = pages($s_count['num'], $page, 10);
+			$result = array();
+			foreach($result_arr as $r) {
+				$r['group_extend'] = $this->db->get_list('member_group_extend', array('uid'=>$r['uid']), '*', 0, 20, 0, 'extid ASC');
+				$r['modelid'] = explode(',',$r['modelid']);
+
+				$result[] = $r;
+			}
+		} else {
+			if(isset($GLOBALS['search'])){
+				$where = "1";
+				if($keyType=='username' || $keyType=='fullname'|| $keyType=='fullname_en') {
+					$where .= " AND `$keyType` LIKE '%$keyValue%'";
+				}elseif($keyValue) {
+					$where .= ' AND '.$keyType.'="'.$keyValue.'"';
+				}
 				$where .= $groupid ? ' AND groupid = '.$groupid : '';
-				$where .= $regTimeStart ? ' AND regtime >= '.$regTimeStart : '';
-				$where .= $regTimeEnd ? ' AND regtime <= '.$regTimeEnd+86400 : '';
+				$where .= $modelid ? " AND modelid LIKE '%".$modelid."%'" : '';
+				if($regTimeStart) {
+					$where .= ' AND regtime >= '.$regTimeStart;
+				}
+				if($regTimeEnd) {
+					$regTimeEnd = $regTimeEnd+86400;
+					$where .= ' AND regtime <= '.$regTimeEnd;
+				}
+
 				$where .= $loginTimeStart ? ' AND lasttime >= '.$loginTimeStart : '';
 				$where .= $loginTimeEnd ? ' AND lasttime <= '.$loginTimeEnd+86400 : '';
+				if($checkmec>-1) {
+					$where .= ' AND checkmec = '.$checkmec;
+				}
 			}
-			$where = substr($where, 4);
+			$models = get_cache('model_member','model');
+			$result_arr = $this->db->get_list('member', $where, '*', 0, 10, $page,'uid DESC');
+			$pages = $this->db->pages;
+			$result = array();
+			foreach($result_arr as $r) {
+				$r['group_extend'] = $this->db->get_list('member_group_extend', array('uid'=>$r['uid']), '*', 0, 10, 0, 'extid ASC');
+				$r['modelid'] = explode(',',$r['modelid']);
+				$result[] = $r;
+			}
 		}
-		$result = $this->db->get_list('member', $where, '*', 0, 20, $page,'uid DESC');
-		$pages = $this->db->pages;
-		$group = $this->group;
 		include $this->template('member_listing', M);
 	}
 	/**
 	 * 添加用户
 	 */
 	public function add() {
+		$models = get_cache('model_member','model');
 		if(isset($GLOBALS['submit'])) {
-			if(!$this->member->add($GLOBALS['info'])) MSG(L('operation_failure'));
+			if(!isset($GLOBALS['info']['email'])) MSG('邮件不能为空');
+
+			$GLOBALS['info']['modelid'] = implode(',',$GLOBALS['modelids']);
+
+			if(!$uid = $this->member->add($GLOBALS['info'])) MSG(L('operation_failure'));
+			$file = WWW_ROOT.'uploadfile/member/'.substr(md5($uid), 0, 2).'/'.$uid.'/';
+			if(!is_dir($file)) mkdir($file,0777,true);
+
+			if($GLOBALS['avatar'] && file_exists(substr(WWW_ROOT,0,-1).$GLOBALS['avatar'])) {
+				copy(WWW_ROOT.$GLOBALS['avatar'],$file.'180x180.jpg');
+				$this->db->update('member', array('avatar'=>1), array('uid' => $uid));
+			}
+			foreach($GLOBALS['groups'] as $groupid) {
+				$formdata = array();
+				$formdata['uid'] = $uid;
+				$formdata['groupid'] = $groupid;
+				$this->db->insert('member_group_extend', $formdata);
+			}
+			if($GLOBALS['islock']==1) {//未激活
+//发送激活邮件
+				$sys_name = intval($GLOBALS['sys_name']);
+				$this->db->update('member', array('islock'=>1,'sys_name'=>$sys_name), array('uid' => $uid));
+				$config = get_cache('sendmail');
+				$password = decode($config['password']);
+
+				$username = $GLOBALS['info']['username'];
+				$sendtime = date('F j, Y H:i',SYS_TIME);//January 20, 2016 17:14
+				//Wed Jan 20 18:21:37 GMT-8 2016
+				$subject = 'Activate your IIIS website account';
+				$randtime = rand(10000,99999);
+				$activecode = md5($uid.$randtime);
+				$linkurl = WEBURL.'index.php?m=member&f=active_account&activecode='.$activecode.'&uid='.$uid.'&randtime='.$randtime;
+				$weburl = WEBURL;
+				ob_start();
+				include T('member', 'mail_active');
+				$message = ob_get_contents();
+				ob_end_clean();
+
+				$mail = load_class('sendmail');
+				$mail->setServer($config['smtp_server'], $config['smtp_user'], $password); //设置smtp服务器，普通连接
+				$mail->setFrom($config['send_email']); //设置发件人
+				$mail->setReceiver($GLOBALS['info']['email']); //设置收件人，多个收件人，调用多次
+
+				$mail->setMail($subject, $message); //设置邮件主题、内容
+				$mail->sendMail(); //发送
+				if($mail->_errorMessage) {
+					MSG($mail->_errorMessage);
+				}
+			} else {
+
+			}
 			MSG(L('operation_success'),'?m=member&f=index&v=listing'.$this->su());
 		} else {
-			$group = $this->group;
+
+			$group_extend_result = $this->db->get_list('member_group_extend', array('uid'=>$uid), '*', 0, 50, 0, 'groupid ASC');
+			$group_extend = array();
+			foreach($group_extend_result as $er) {
+				$group_extend[] = $er['groupid'];
+			}
+			$group = $ext_group = array();
+			foreach($this->group as $gr) {
+				if($gr['issystem']==1) {
+					$group[$gr['groupid']] = $gr;
+				} else {
+					//if(in_array($gr['groupid'],array(20,22,32,34))) $gr['pid'] = 0;
+
+					$gr['selected'] = in_array($gr['groupid'],$group_extend) ? 'checked' : '';
+					$gr['trbg'] = in_array($gr['groupid'],$group_extend) ? 'trbg' : '';
+					$ext_group[$gr['groupid']] = $gr;
+				}
+
+			}
+			$tree = load_class('tree','core',$ext_group);
+			$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
+			//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');
+			$tree_data = '';
+
+			//格式字符串
+			$str="<tr id='gid\$groupid' class='\$trbg'><td class='categorytd'><input  name='groups[]' type='checkbox' value='\$groupid' id='box\$groupid' \$selected onclick='set_gp(\$groupid,\$pid);'><input name='pids[]' type='hidden' value='\$pid' id='hgid\$groupid'></td><td>\$groupid</td><td>\$spacer\$name</td></tr>";
+
+			//返回树
+			$tree_data.=$tree->create(0,$str);
+			$form = load_class('form');
 			include $this->template('member_add', M);
 		}
 	}
@@ -66,51 +232,129 @@ class index extends WUZHI_admin {
 	 * 编辑用户
 	 */
 	public function edit() {
+
 		$uid = (int)$GLOBALS['uid'];
 		if($uid)$member = $this->db->get_one('member', '`uid`='.$uid, '*');
 		if(empty($member))MSG(L('user not_exists'));
+		$models = get_cache('model_member','model');
 		if(isset($GLOBALS['submit'])) {
+			if(empty($GLOBALS['groups'])) MSG('请选择会员组');
+			if(empty($GLOBALS['modelids'])) MSG('请选择模型');
 			$GLOBALS['info']['factor'] = $member['factor'];
-			$GLOBALS['info']['username'] = $member['username'];
+			//$GLOBALS['info']['username'] = $member['username'];
+			$GLOBALS['info']['modelid'] = implode(',',$GLOBALS['modelids']);
+
 			if(!$this->member->edit($GLOBALS['info'], $uid)) MSG(L('operation_failure'));
+			$file = WWW_ROOT.'uploadfile/member/'.substr(md5($uid), 0, 2).'/'.$uid.'/';
+			if(!is_dir($file)) mkdir($file,0777,true);
+			if($GLOBALS['avatar'] && file_exists(WWW_ROOT.$GLOBALS['avatar'])) {
+				copy(WWW_ROOT.$GLOBALS['avatar'],$file.'180x180.jpg');
+				$this->db->update('member', array('avatar'=>1), array('uid' => $uid));
+			}
+
 			$modelid = (int)$GLOBALS['info']['modelid'];
-			
-			//	判断是否有变更用户模型
-			if($modelid != $member['modelid']){
-				//	判断新的模型是否有用户数据
-				if(!$this->db->get_one($this->model[$modelid]['attr_table'], 'uid='.$uid, 'uid')){
-					$this->db->insert($this->model[$modelid]['attr_table'], array('uid'=>$uid));
-				}else{
-					//	删除旧模型的数据
-					$this->db->query('DELETE FROM `wz_'.$this->model[$member['modelid']]['attr_table'].'` WHERE `uid`='.$uid);
+			$formdata = $GLOBALS['form'];
+
+			$data = $data_en = array();
+			foreach($formdata as $field=>$value) {
+				$fields = explode('_',$field);
+				$field = $fields[0];
+				$modelid = $fields[1];
+				if(is_array($value)) {
+					$value = ','.implode(',',$value).',';
+				}
+				if($fields[2]) {
+					$data_en[$modelid][$field] = $value;
+				} else {
+
+					$data[$modelid][$field] = $value;
 				}
 			}
-			//	判断模型是否有设置字段
-			$formdata = isset($GLOBALS['form']) ? $GLOBALS['form'] : '';
-			if($formdata){
-				require get_cache_path('member_add', 'model');
-				$form = new form_add($modelid);
-				$formdata = $form->execute($formdata);
-            	if($formdata['attr_table'])$this->db->update($formdata['attr_table'],$formdata['attr_data'], '`uid`='.$uid);
-				//执行更新
-				require get_cache_path('member_update', 'model');
-				$form_update = new form_update($modelid);
-				$form_update->execute($formdata);
+			//print_r($data);exit;
+			foreach($data as $modelid=>$rs) {
+
+				$table = $models[$modelid]['attr_table'];
+
+				$rd = $this->db->get_one($table, array('uid' => $uid));
+				if($rd) {
+					$this->db->update($table, $rs, array('uid' => $uid));
+				} else {
+					$rs['uid'] = $uid;
+					$this->db->insert($table, $rs);
+				}
 			}
-			MSG(L('operation_success').'<script>$("#u_'.$uid.' td", top.window.frames["iframeid"].document).css("background-color", "#EFD04C");top.dialog.get(window).close().remove();</script>');
+			foreach($data_en as $modelid=>$rs) {
+				$table = $models[$modelid]['attr_table'].'_en';
+				$rd = $this->db->get_one($table, array('uid' => $uid));
+				if($rd) {
+					$this->db->update($table, $rs, array('uid' => $uid));
+				} else {
+					$rs['uid'] = $uid;
+					$this->db->insert($table, $rs);
+				}
+			}
+			//保存扩展会员组
+			$this->db->delete('member_group_extend', array('uid' => $uid));
+
+			foreach($GLOBALS['groups'] as $groupid) {
+				$formdata = array();
+				$formdata['uid'] = $uid;
+				$formdata['groupid'] = $groupid;
+				$this->db->insert('member_group_extend', $formdata);
+			}
+			MSG('信息修改成功!',HTTP_REFERER);
 		} else {
-			if(isset($GLOBALS['modelid']) && $GLOBALS['modelid'] != $member['modelid']){
-				$modelid = (int)$GLOBALS['modelid'];
-			}else{
-				$modelid = $member['modelid'];
-			}
+			$modelid = $member['modelid'];
 			//	判断是否有模型id参数
-			if($modelid){
-				require get_cache_path('member_form','model');
-				$form_build = new form_build($modelid);
-            	$formdata = $form_build->execute($member);
+
+//print_r($models);
+			if($modelid=='') $modelid = 10;
+			$modelids = explode(',',$modelid);
+			asort($modelids);
+			$is_load = false;
+			foreach($modelids as $modelid) {
+
+				if($is_load==false) {
+					require get_cache_path('member_form','model');
+					$form_build = new form_build($modelid);
+					$is_load = true;
+				}
+
+				$form_build->fields = get_cache('field_'.$modelid,'model');
+				$tmp = $this->db->get_one($models[$modelid]['attr_table'], array('uid' => $uid));
+				$formdata = 'formdata_'.$modelid;
+				$formdata2 = 'formdata2_'.$modelid;
+				$$formdata = $form_build->execute($tmp,$modelid);
 			}
-			$group = $this->group;
+			$group_extend_result = $this->db->get_list('member_group_extend', array('uid'=>$uid), '*', 0, 50, 0, 'groupid ASC');
+			$group_extend = array();
+			foreach($group_extend_result as $er) {
+				$group_extend[] = $er['groupid'];
+			}
+			$group = $ext_group = array();
+			foreach($this->group as $gr) {
+				if($gr['issystem']==1) {
+					$group[$gr['groupid']] = $gr;
+				} else {
+					$gr['selected'] = in_array($gr['groupid'],$group_extend) ? 'checked' : '';
+					$gr['trbg'] = in_array($gr['groupid'],$group_extend) ? 'trbg' : '';
+					$ext_group[$gr['groupid']] = $gr;
+				}
+
+			}
+		$tree = load_class('tree','core',$ext_group);
+		$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
+		//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');
+		$tree_data = '';
+
+		//格式字符串
+		$str="<tr id='gid\$groupid' class='\$trbg'><td class='categorytd'><input  name='groups[]' type='checkbox' value='\$groupid' id='box\$groupid' \$selected onclick='set_gp(\$groupid,\$pid);'><input name='pids[]' type='hidden' value='\$pid' id='hgid\$groupid'></td><td>\$groupid</td><td>\$spacer\$name</td></tr>";
+
+		//返回树
+		$tree_data.=$tree->create(0,$str);
+
+			$form = load_class('form');
+			$avatar = avatar($uid,180);
 			include $this->template('member_edit', M);
 		}
 	}
@@ -253,4 +497,74 @@ class index extends WUZHI_admin {
             $group = $this->group;
             include $this->template('member_view', M);
     }
+	public function setcompany() {
+		$uid = intval($GLOBALS['uid']);
+		$check_company = intval($GLOBALS['check_company']);
+
+
+		$this->db->update('member', array('checkmec'=>$check_company), array('uid' => $uid));
+		MSG('<script>setTimeout("top.dialog.get(window).close().remove();",2000)</script>更新成功');
+	}
+	/**
+	 * 审批用户列表
+	 */
+	public function check_list() {
+		$group = $this->group;
+		$page = max(1, (isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1));
+		$sta_arr = array(-1=>'所有状态',1=>'审核通过',0=>'待审核',3=>'审核不通过');
+		$keyArr = array('username'=>'登录名', 'uid'=>'UID', 'email'=>'Email', 'mobile'=>'手机');
+		$keyType = isset($GLOBALS['keyType']) && isset($keyArr[$GLOBALS['keyType']]) ? $GLOBALS['keyType'] : 'username';
+		$keyValue = isset($GLOBALS['keyType']) ? sql_replace($GLOBALS['keyValue']) : '';
+		$regTimeStart = isset($GLOBALS['regTimeStart']) ? strtotime($GLOBALS['regTimeStart']) : '';
+		$regTimeEnd = isset($GLOBALS['regTimeEnd']) ? strtotime($GLOBALS['regTimeEnd']) : '';
+		$loginTimeStart = isset($GLOBALS['loginTimeStart']) ? strtotime($GLOBALS['loginTimeStart']) : '';
+		$loginTimeEnd = isset($GLOBALS['loginTimeEnd']) ? strtotime($GLOBALS['loginTimeEnd']) : '';
+		$groupid = 5;
+		$checkmec = isset($GLOBALS['checkmec']) ? intval($GLOBALS['checkmec']) : -1;
+		$extgid = intval($GLOBALS['extgid']);
+		$modelid = intval($GLOBALS['modelid']);
+
+			$where = $groupid ? ' groupid = '.$groupid : '1';
+			if(isset($GLOBALS['search'])){
+
+				if($keyType=='username' || $keyType=='fullname'|| $keyType=='fullname_en') {
+					$where .= " AND `$keyType` LIKE '%$keyValue%'";
+				}elseif($keyValue) {
+					$where .= ' AND '.$keyType.'="'.$keyValue.'"';
+				}
+
+				$where .= $modelid ? " AND modelid LIKE '%".$modelid."%'" : '';
+				if($regTimeStart) {
+					$where .= ' AND regtime >= '.$regTimeStart;
+				}
+				if($regTimeEnd) {
+					$regTimeEnd = $regTimeEnd+86400;
+					$where .= ' AND regtime <= '.$regTimeEnd;
+				}
+
+				$where .= $loginTimeStart ? ' AND lasttime >= '.$loginTimeStart : '';
+				$where .= $loginTimeEnd ? ' AND lasttime <= '.$loginTimeEnd+86400 : '';
+				if($checkmec>-1) {
+					$where .= ' AND checkmec = '.$checkmec;
+				}
+			}
+			$models = get_cache('model_member','model');
+			$result_arr = $this->db->get_list('member', $where, '*', 0, 10, $page,'uid DESC');
+			$pages = $this->db->pages;
+			$result = array();
+			foreach($result_arr as $r) {
+				$r['group_extend'] = $this->db->get_list('member_group_extend', array('uid'=>$r['uid']), '*', 0, 10, 0, 'extid ASC');
+				$r['modelid'] = explode(',',$r['modelid']);
+				$result[] = $r;
+			}
+
+		include $this->template('member_check', M);
+	}
+	public function check() {
+		if(isset($GLOBALS['submit'])) {
+			$uid = intval($GLOBALS['uid']);
+			$this->db->update('member', array('groupid'=>3), array('uid' => $uid));
+			MSG('审核通过',HTTP_REFERER);
+		}
+	}
 }

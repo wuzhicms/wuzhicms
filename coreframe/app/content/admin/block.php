@@ -12,6 +12,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
 load_class('admin');
 class block extends WUZHI_admin {
 	private $db;
+    private $siteid;
     private $status_array = array(
         9=>'审核通过',
         8=>'定时发送',
@@ -24,10 +25,11 @@ class block extends WUZHI_admin {
     );
 	function __construct() {
 		$this->db = load_class('db');
+        $this->siteid = get_cookie('siteid');
 	}
 
     public function listing() {
-        $where = array('status'=>9);
+        $where = array('siteid'=>$this->siteid);
         $page = intval($GLOBALS['page']);
         $result = $this->db->get_list('block', $where, '*', 0, 20, $page,'blockid DESC');
         $pages = $this->db->pages;
@@ -40,7 +42,7 @@ class block extends WUZHI_admin {
         $blockid = intval($GLOBALS['blockid']);
         $where = array('blockid'=>$blockid,'siteid'=>$siteid);
         $page = intval($GLOBALS['page']);
-        $result = $this->db->get_list('block_data', $where, '*', 0, 20, $page,'sort ASC,id DESC');
+        $result = $this->db->get_list('block_data', $where, '*', 0, 20, $page,'sort DESC,id DESC');
         $pages = $this->db->pages;
 
         include $this->template('item_listing');
@@ -109,10 +111,12 @@ class block extends WUZHI_admin {
     public function add() {
         if(isset($GLOBALS['submit'])) {
             $formdata = array();
+            $formdata['tplid'] = TPLID;
             $formdata['type'] = intval($GLOBALS['type']);
             $formdata['modelid'] = intval($GLOBALS['modelid']);
             $formdata['codetype'] = intval($GLOBALS['codetype']);
             $formdata['name'] = remove_xss($GLOBALS['form']['name']);
+            $formdata['siteid'] = $this->siteid;
             $formdata['max_number'] = 500;
             if($formdata['type']==1) {
                 $code = $GLOBALS['form']['template_code'];

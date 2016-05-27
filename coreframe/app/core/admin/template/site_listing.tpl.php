@@ -18,6 +18,7 @@
                     <tr>
                         <th class="hidden-phone tablehead">ID</th>
                         <th class="tablehead">站点名称</th>
+                        <th class="tablehead">站点域名</th>
                         <th class="tablehead">后台logo</th>
                         <th class="tablehead">管理操作</th>
                     </tr>
@@ -29,6 +30,7 @@
                         <tr>
                             <td><?php echo $r['siteid'];?></td>
                             <td><?php echo $r['name'];?></td>
+                            <td><?php echo $r['url'];?></td>
                             <td><img src="<?php echo $r['logo'];?>" style="height: 30px;"></td>
                             <td>
                                 <a href="?m=core&f=site&v=edit&siteid=<?php echo $r['siteid'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">修改</a>

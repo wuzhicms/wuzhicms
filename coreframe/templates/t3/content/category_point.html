@@ -1,0 +1,131 @@
+{T "content","head",TPLID}
+<nav class="navbar1 navbar-default">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar1" class="container">
+        <ul class="nav navbar-nav" style="padding-left: 86px">
+            <li class="active"><a href="{$category['url']}">{$category['name']}首页</a></li>
+            {loop $sub_categorys $cats}
+            <li><a href="{$cats['url']}">{$cats['name']}</a></li>
+            {/loop}
+        </ul>
+    </div><!--/.nav-collapse -->
+</nav>
+
+<div class="jifenmall-one-screen">
+    <div class="container">
+        <div class="lm-title margin_bottom15">
+            <h3 class="lm-title-left">精品推荐 <span class="fubiaoti" style="color: #777777">&nbsp;&nbsp; 积分多多 优惠多多 </span></h3>
+        </div>
+        <div class="row">
+            {wz:content action="listing" pagesize="4" order="sort DESC,id DESC" cid="$cid" urlrule="$urlrule"}
+            {loop $rs $r}
+            <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control_g max-height-hide262" >
+                        <a href="{$r['url']}"><img src="{imagecut($r['thumb'],271,181,4)}" alt="..."></a>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><a href="{$r['url']}"><strong>兑换礼品：{$r['title']}</strong></a><br>
+                            <span class="titles-sm"><strong class="color_success">{$r['point']}</strong> 积分  &nbsp; {if $r['price']!='0.00'}{if $r['point_money']!=0}<strong class="color_success">{$r['point_money']}</strong> 积分+{/if}<strong class="color_qiyecheng">{$r['price']}</strong>元{/if}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {/loop}
+            {/wz}
+        </div>
+    </div>
+</div>
+
+{loop $sub_categorys $photocid $cats}
+<div class=" jifenmall-one-screen">
+    <div class="container">
+        <div class="lm-title margin_bottom15">
+            <h3 class="lm-title-left"><a href="{$cats['url']}" >{$cats['name']}</a><span class="fubiaoti" style="color: #777777">&nbsp;&nbsp; 积分多多 优惠多多 </span></h3>
+        </div>
+        <div class="row" id="cat_{$photocid}">
+            {wz:content action="listing" pagesize="8" order="sort DESC,id DESC" cid="$photocid" urlrule="$urlrule"}
+            {loop $rs $r}
+            <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control_g max-height-hide262" >
+                        <a href="{$r['url']}"><img src="{imagecut($r['thumb'],271,181,4)}" alt="..."></a>
+                    </div>
+                    <div class="caption">
+                        <div  class="titles manhangyichu"><strong>{$r['title']}</strong><br>
+                            <span class="titles-sm"><strong class="color_success">{$r['point']}</strong> 积分   &nbsp; {if $r['price']!='0.00'}{if $r['point_money']!=0}<strong class="color_success">{$r['point_money']}</strong> 积分 + {/if}  <strong class="color_qiyecheng">{$r['price']}</strong>元{/if}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/loop}
+            {/wz}
+        </div>
+    </div>
+</div>
+{/loop}
+<!--
+<div class="jifenmall-one-screen">
+    <div class="container">
+        <div class="lm-title margin_bottom15">
+            <h3 class="lm-title-left">生活汇 <span class="fubiaoti" style="color: #777777">&nbsp;&nbsp; 积分多多 优惠多多 </span></h3>
+            <a href="" class="lm-title-right">更多 <span class="glyphicon glyphicon-circle-arrow-right"
+                                                       aria-hidden="true" style="font-size: smaller"></span></a>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control_g max-height-hide262">
+                        <a href="jifenmal-content.html"><img src="{R}t3/image/temp/temp1.jpg" alt="..."></a>
+                    </div>
+                    <div class="caption">
+                        <div  class="titles manhangyichu"><strong>Ctrip 特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒</strong><br>
+                            <span class="titles-sm"><strong class="color_success">11500</strong> 积分   &nbsp;&nbsp; <strong class="color_success">9500</strong> 积分 + <strong class="color_qiyecheng">20</strong>元</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control_g max-height-hide262">
+                        <a href=""><img src="{R}t3/image/temp/temp2.jpg" alt="..."></a>
+                    </div>
+                    <div class="caption">
+                        <div  class="titles manhangyichu"><strong>Ctrip 特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒</strong><br>
+                            <span class="titles-sm"><strong class="color_success">11500</strong> 积分   &nbsp;&nbsp; <strong class="color_success">9500</strong> 积分 + <strong class="color_qiyecheng">20</strong>元</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control_g max-height-hide262">
+                        <a href=""><img src="{R}t3/image/temp/temp1.jpg" alt="..."></a>
+                    </div>
+                    <div class="caption">
+                        <div  class="titles manhangyichu"><strong>Ctrip 特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒</strong><br>
+                            <span class="titles-sm"><strong class="color_success">11500</strong> 积分   &nbsp;&nbsp; <strong class="color_success">9500</strong> 积分 + <strong class="color_qiyecheng">20</strong>元</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control_g max-height-hide262">
+                        <a href=""><img src="{R}t3/image/temp/temp1.jpg" alt="..."></a>
+                    </div>
+                    <div class="caption">
+                        <div  class="titles manhangyichu"><strong>Ctrip 特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒特制方巾礼盒</strong><br>
+                            <span class="titles-sm"><strong class="color_success">11500</strong> 积分   &nbsp;&nbsp; <strong class="color_success">9500</strong> 积分 + <strong class="color_qiyecheng">20</strong>元</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+-->
+
+{T "content","foot",TPLID}

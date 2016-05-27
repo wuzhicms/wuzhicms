@@ -17,47 +17,64 @@ class WUZHI_form {
 	 * @param string $editname 编辑器id名
 	 * @param string $value    初始化内容
 	 * @param string $toolbars 编辑器样式,可选风格：basic，normal
+	 * @param string $edit_type 编辑器类型
 	 * @return string
 	 */
-	public static function editor($name = 'content', $editname = 'content', $value = '', $toolbars = ''){
+	public static function editor($name = 'content', $editname = 'content', $value = '', $toolbars = '',$editor_type = 'ckeditor',$area_load = 0){
 		if (!defined('IN_ADMIN')) $toolbars = 'basic';
 		$str = '';
-		$str .= '<script id="' . $editname . '" name="' . $name . '" type="text/plain">' . $value . '</script>';
-		if (!defined('UEDITOR')) {
-			define('UEDITOR', TRUE);
+		if($editor_type=='ueditor') {
+			$str .= '<script id="' . $editname . '" name="' . $name . '" type="text/plain">' . $value . '</script>';
+			if (!defined('UEDITOR')) {
+				define('UEDITOR', TRUE);
 
-			//$str .= '<script type="text/javascript">';
-			//$str .= 'window.UEDITOR_HOME_URL="'.R.'js/ueditor/";';
-			//$str .= '</script>';
-			$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
-			$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js"></script>';
-		}
+				//$str .= '<script type="text/javascript">';
+				//$str .= 'window.UEDITOR_HOME_URL="'.R.'js/ueditor/";';
+				//$str .= '</script>';
+				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
+				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js"></script>';
+			}
 
-		$str .= '<script type="text/javascript">';
+			$str .= '<script type="text/javascript">';
 
-		$str .= 'var ue = UE.getEditor("' . $editname . '", {';
-		if ($toolbars == 'basic') {
-			$str .= 'toolbars: [';
-			$str .= "['fullscreen', 'undo', 'redo', 'bold','italic', 'underline', 'strikethrough', 'removeformat', 'formatmatch', 'forecolor', 'backcolor',
+			$str .= 'var ue = UE.getEditor("' . $editname . '", {';
+			if ($toolbars == 'basic') {
+				$str .= 'toolbars: [';
+				$str .= "['fullscreen', 'undo', 'redo', 'bold','italic', 'underline', 'strikethrough', 'removeformat', 'formatmatch', 'forecolor', 'backcolor',
              'fontfamily', 'fontsize',
             'justifyleft', 'justifycenter', 'justifyright',
             'link', 'unlink','simpleupload','inserttable']";
-			$str .= '],';
-		} elseif ($toolbars == 'normal') {
-			$str .= 'toolbars: [';
-			$str .= "['fullscreen', 'source', 'undo', 'redo',
+				$str .= '],';
+			} elseif ($toolbars == 'normal') {
+				$str .= 'toolbars: [';
+				$str .= "['fullscreen', 'source', 'undo', 'redo',
             'bold', 'italic', 'underline', 'strikethrough', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain',  'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist',
             'rowspacingtop', 'rowspacingbottom', 'lineheight',
              'fontfamily', 'fontsize', 'indent',
             'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify',
             'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
             'simpleupload', 'insertimage', 'emotion', 'insertvideo', 'music', 'attachment', 'map','|','inserttable', 'deletetable', 'insertparagraphbeforetable','insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols','pagebreak']";
-			$str .= '],';
+				$str .= '],';
+			}
+			$str .= 'autoHeightEnabled: false,';
+			$str .= 'autoFloatEnabled: false';
+			$str .= '});';
+			$str .= '</script>';
+		} else {
+			if (!defined('CKEDITOR')) {
+				define('CKEDITOR', TRUE);
+				$str .= '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
+			}
+			if($area_load==0) {
+				$str .= '<textarea name="'.$name.'" id="'.$editname.'" rows="3"></textarea>';
+			}
+			$str .= '<script type="text/javascript">';
+			$str .= "CKEDITOR.config.toolbar = '$toolbars';";
+			if(!defined('IN_ADMIN')) $str .= "CKEDITOR.config.removeButtons = 'Source, BidiLtr,BidiRtl,Image';";
+			$str .= 'CKEDITOR.replace("' . $editname . '");';
+			$str .= '</script>';
 		}
-		$str .= 'autoHeightEnabled: false,';
-		$str .= 'autoFloatEnabled: false';
-		$str .= '});';
-		$str .= '</script>';
+
 		return $str;
 	}
 
@@ -139,9 +156,15 @@ class WUZHI_form {
 	 * @author tuzwu
 	 * @return string
 	 */
-	public static function attachment($ext = 'png|jpg|gif|doc|docx', $limit = 1, $formname = 'file', $default_val = '', $callback = 'callback_thumb_dialog', $is_thumb = 0, $width = '', $height = '', $cut = 0,$is_water = false,$is_allow_show_img=false,$ext_code = ''){
-		if ($ext == '') $ext = 'png|jpg|gif|doc|docx';
-		$id = preg_match("/\[(.*)\]/", $formname, $m) ? $m[1] : $formname;
+	public static function attachment($ext = 'png|jpg|gif|doc|docx', $limit = 1, $formname = 'file', $default_val = '', $callback = 'callback_thumb_dialog', $is_thumb = 1, $width = '', $height = '', $cut = 0,$is_water = false,$is_allow_show_img=false,$ext_code = ''){
+		if ($ext == '') $ext = 'png|jpg|gif';
+		if(strpos($formname,'][')===false) {
+			$id = preg_match("/\[(.*)\]/", $formname, $m) ? $m[1] : $formname;
+		} else {
+			$_GET['attr_id'] = $_GET['attr_id'] ? $_GET['attr_id']+1 : 1;
+			$pos = strpos($formname,'[');
+			$id = substr($formname,0,$pos).$_GET['attr_id'];
+		}
 		$str = '';
 		if (!defined('PUPLOAD_INIT')) {
 			define('PUPLOAD_INIT', TRUE);
@@ -156,14 +179,16 @@ class WUZHI_form {
 			if ($is_thumb) {
 				$input_type = 'hidden';
 				$default_thumb = $default_val ? $default_val : R . 'images/upload-thumb.png';
-				$thumb_w = $width ? $width : '135';
+				$thumb_w = $width ? $width : '200';
 				$thumb_h = $height ? $height : '113';
-				$str .= '<img class="attachment_thumb" id="' . $id . '_thumb" src="' . $default_thumb . '" onclick="img_view(this.src);"  width="' . $thumb_w . '" height="' . $thumb_h . '" />';
+				$style = "max-width:".$thumb_w."px;";
+				$style .= "max-height:".$thumb_h."px;";
+				$str .= '<img class="attachment_thumb" id="' . $id . '_thumb" src="' . $default_thumb . '" onclick="img_view(this.src);"  style="' . $style . '" " />';
 			} else {
 				$input_type = 'text';
 			}
 
-			$str .= '<input type="' . $input_type . '" value="' . $default_val . '" ondblclick="img_view(\'?m=core&f=image_privew&imgurl=\'+this.value);" class="form-control" id="' . $id . '" name="' . $formname . '" size="100" '.$ext_code.'>';
+			$str .= '<input type="' . $input_type . '" value="' . $default_val . '" ondblclick="img_view(\'?m=core&f=image_privew&imgurl=\'+this.value);" class="form-control" id="' . $id . '" name="' . $formname . '" size="100" '.$ext_code.' placeholder="允许上传的后缀：'.str_replace('|','、',$ext).'">';
 		} else //多文件上传,需要借助回调生成多个框
 		{
 
@@ -184,15 +209,25 @@ class WUZHI_form {
 	 * @return string
 	 */
 	public static function select($options = array(), $value = 0, $str = '', $default_option = ''){
-
+		$value = trim($value,',');
 		$string = '<select ' . $str . '>';
 		$default_selected = (empty($value) && $default_option) ? 'selected' : '';
 		if ($default_option) $string .= "<option value='' $default_selected>$default_option</option>";
 		if (is_array($options) && count($options) > 0) {
-			foreach ($options as $key => $v) {
-				$selected = $key == $value ? 'selected' : '';
-				if($key===0) $key = '';
-				$string .= '<option value="' . $key . '" ' . $selected . '>' . $v . '</option>';
+			if($value && strpos($value,',')===false) {
+				foreach ($options as $key => $v) {
+					$selected = $key == $value ? 'selected' : '';
+					if($key===0) $key = '';
+					$string .= '<option value="' . $key . '" ' . $selected . '>' . $v . '</option>';
+				}
+			} else {
+
+				$value = explode(',',$value);
+				foreach ($options as $key => $v) {
+					$selected = in_array($key,$value) ? 'selected' : '';
+					if($key===0) $key = '';
+					$string .= '<option value="' . $key . '" ' . $selected . '>' . $v . '</option>';
+				}
 			}
 		}
 		$string .= '</select>';
@@ -253,14 +288,24 @@ class WUZHI_form {
 		$string = '';
 		$string .= '<select ' . $str . '>';
 		$string .= '<option value="">默认</option>';
+		$tplid = TPLID;
+		if(ENABLE_SITES) {
+			$siteid = get_cookie('siteid');
+			$tplid = $tplid.'-'.$siteid;
+			$sitelist = get_cache('sitelist');
+		}
+
 		foreach ($tems as $project => $tpls) {
 			if (!is_array($tpls)) continue;
 			foreach ($tpls as $tpl) {
-				if (TPLID != $project) continue;
+				if ($tplid != $project) continue;
 				if ($fix && strpos($tpl, $fix) === false) continue;
 				$selected = '';
 				$v = $project . ':' . substr($tpl, 0, -5);
 				if ($value == $v) $selected = 'selected';
+				if(ENABLE_SITES) {
+					$tpl = '【'.$sitelist[$siteid]['name'].'】'.$tpl.'';
+				}
 				$string .= '<option ' . $selected . ' value="' . $v . '">' . $tpl . "</option>";
 			}
 		}
@@ -295,6 +340,7 @@ class WUZHI_form {
 	 * @return string
 	 */
 	public static function checkbox($array = array(), $value = '', $str = '', $default = '', $field = ''){
+		if(empty($array)) return '';
 		$string = '';
 		$value = trim($value);
 		if ($value != '') $value = strpos($value, ',') ? explode(',', $value) : array($value);

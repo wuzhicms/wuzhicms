@@ -10,6 +10,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
  * 广告管理
  */
 load_class('admin');
+load_function('common','promote');
 class index extends WUZHI_admin {
 	private $db;
 
@@ -107,8 +108,11 @@ class index extends WUZHI_admin {
             $formdata['param2'] = $GLOBALS['form']['param2'];
             $formdata['addtime'] = SYS_TIME;
             $formdata['updatetime'] = SYS_TIME;
-            $this->db->insert('promote',$formdata);
+            $formdata['starttime'] = strtotime($GLOBALS['starttime']);
+            $formdata['endtime'] = strtotime($GLOBALS['endtime']);
+            $id = $this->db->insert('promote',$formdata);
             $this->set_cache();
+            $this->cache_js($id);
             MSG(L('add success'),'?m=promote&f=index&v=listing&pid='.$formdata['pid'].$this->su());
         } else {
             $show_formjs = 1;
@@ -136,15 +140,20 @@ class index extends WUZHI_admin {
             $formdata['appid'] = $GLOBALS['form']['appid'];
             $formdata['param1'] = $GLOBALS['form']['param1'];
             $formdata['param2'] = $GLOBALS['form']['param2'];
+            $formdata['starttime'] = strtotime($GLOBALS['starttime']);
+            $formdata['endtime'] = strtotime($GLOBALS['endtime']);
             $this->db->update('promote',$formdata,array('id'=>$id));
             $forward = $GLOBALS['forward'];
             $this->set_cache();
+            $this->cache_js($id);
             MSG(L('edit success'),$forward);
         } else {
             $show_formjs = 1;
             $form = load_class('form');
             $r = $this->db->get_one('promote',array('id'=>$id));
             $pid = $r['pid'];
+            $starttime = date('Y-m-d H:i:s',$r['starttime']);
+            $endtime = date('Y-m-d H:i:s',$r['endtime']);
             include $this->template('edit');
         }
     }
@@ -247,4 +256,55 @@ class index extends WUZHI_admin {
             include $this->template('batch_add');
         }
     }
+
+    /**
+     * 生成js
+     * @param $id 广告id
+     */
+    private function cache_js($id) {
+        $r = $this->db->get_one('promote', array('id' => $id));
+        //查询到广告位id。
+        $pid = $r['pid'];
+        $pr = $this->db->get_one('promote_place', array('pid' => $pid));
+        $where = "`pid`='$pid' AND starttime<".SYS_TIME." AND endtime>".SYS_TIME;
+        $result = $this->db->get_list('promote', $where, '*', 0, 10, 0, 'id DESC');
+        $rand_key = array_rand($result,1);
+        $rand_result = $result[$rand_key];
+        $template = $r['template'];
+        $file = WWW_ROOT.'promote/'.$pid.'.js';
+
+        ob_start();
+        include T('promote',$template);
+        $data = ob_get_contents();
+        ob_clean();
+        $dir = dirname($file);
+        if(!is_dir($dir)) {
+            mkdir($dir, 0777,1);
+        }
+        $strlen = file_put_contents($file, $data);
+        if(!is_writable($file)) {
+            $file = str_replace(WWW_ROOT,'',$file);
+            MSG(L('file').'：'.$file.'<br>'.L('not_writable'));
+        }
+    }
+
+	/**
+	 * 广告统计
+	 */
+	public function stat() {
+		$pid = intval($GLOBALS['pid']);
+		$month = date('Ym',SYS_TIME);
+		$r = $this->db->count('promote_stat_'.$month, '', "COUNT(*) AS num", 0, '', '');
+		$result = $this->db->query("SELECT COUNT(*) as num,day FROM `wz_promote_stat_$month` WHERE pid=$pid GROUP by day");
+		$page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
+		$page = max($page,1);
+		$result_detail = $this->db->get_list('promote_stat_'.$month, '', '*', 0, 20, $page, '');
+		$ip_location = load_class('ip_location');
+		foreach($result_detail as $key=>$rs) {
+			$result_detail[$key]['ip_location'] = $ip_location->seek($rs['ip'],1);
+		}
+		$pages = $this->db->pages;
+		$total = $this->db->number;
+		include $this->template('stat');
+	}
 }

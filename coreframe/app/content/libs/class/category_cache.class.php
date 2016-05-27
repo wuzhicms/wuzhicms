@@ -18,7 +18,7 @@ class WUZHI_category_cache{
      */
     public function cache_all() {
         $db = load_class('db');
-        $result = $db->get_list('category', '', '*', 0, 10000,'sort ASC,cid ASC');
+        $result = $db->get_list('category', array('keyid'=>'content'), '*', 0, 10000,'sort ASC,cid ASC');
         //所有内容模块栏目缓存，仅缓存name，url，cid，pid，child
         $all = array();
         foreach($result as $v) {
@@ -27,6 +27,7 @@ class WUZHI_category_cache{
             $tmp['pid'] = $v['pid'];
             $tmp['child'] = $v['child'];
             $tmp['modelid'] = $v['modelid'];
+            $tmp['ismenu'] = $v['ismenu'];
             $tmp['catdir'] = $v['catdir'];
             $tmp['url'] = $v['url'];
             $tmp['showloop'] = $v['showloop'];

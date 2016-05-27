@@ -62,7 +62,7 @@ include $this->template('header','core');
 								<td><?php echo $info['collation'];?></td>
 								<td><?php echo $info['rows'];?></td>
 								<td><?php echo sizecount($info['size']);?></td>
-								<td><?php echo $info['data_free'];?></td>
+								<td><?php echo sizecount($info['data_free']);?></td>
 								<td>
 								<a href="?m=database&f=index&v=public_repair&operation=optimize&tables=<?php echo $info['name']?><?php echo $this->su();?>" class="btn btn-primary btn-xs">优化</a>
 								<a href="?m=database&f=index&v=public_repair&operation=repair&tables=<?php echo $info['name']?><?php echo $this->su();?>" class="btn btn-info btn-xs">修复</a>								</td>

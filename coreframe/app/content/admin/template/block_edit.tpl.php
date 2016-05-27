@@ -57,8 +57,8 @@ include $this->template('header','core');
                         </div>
                         <div class="form-group hide" id="template_codeid">
                             <label class="col-sm-2 col-xs-4 control-label">模版</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <textarea type="text" class="form-control" name="form[template_code]" rows="6">
+                            <div class="col-lg-8 col-sm-9 col-xs-8 input-group">
+                                <textarea type="text" class="form-control" name="form[template_code]" rows="12">
 <?php if($r['type']!=2) echo p_htmlspecialchars($r['code']);?>
 </textarea>
                             </div>

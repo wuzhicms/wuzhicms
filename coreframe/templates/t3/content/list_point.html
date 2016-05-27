@@ -1,0 +1,45 @@
+{T "content","head",TPLID}
+<div style="background: #f3f3f3">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="{WEBURL}">首页</a><span> &gt;</span></li>
+            {catpos($cid)}
+        </ol>
+    </div>
+</div>
+<br>
+
+
+<div class="jifenmall-one-screen">
+    <div class="container">
+        <div class="row">
+            {wz:content action="listing" page="$page" pagesize="20" order="sort DESC,id DESC" cid="$cid" urlrule="$urlrule"}
+            {loop $rs $r}
+            <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control_g max-height-hide262" >
+                        <a href="{$r['url']}"><img src="{imagecut($r['thumb'],271,181,4)}" alt="..."></a>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><a href="{$r['url']}"><strong>兑换礼品：{$r['title']}</strong></a><br>
+                            <span class="titles-sm">会员积分：<strong class="color_success">{$r['point']}</strong> 积分   &nbsp;&nbsp; {if $r['price']!='0.00'}<strong class="color_success">{$r['point_money']}</strong> 积分 + <strong class="color_qiyecheng">{$r['price']}</strong>元{/if}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {/loop}
+            {/wz}
+        </div>
+    </div>
+    <div style="text-align:center;">
+        {if $this->db->number>20}
+        <nav style="text-align: center;">
+            <ul class="pagination">
+                {$pages}
+            </ul>
+        </nav>
+        {/if}
+    </div>
+</div>
+{T "content","foot",TPLID}

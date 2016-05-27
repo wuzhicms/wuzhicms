@@ -1,0 +1,52 @@
+{T "content","head",TPLID}
+<section class="pdbox">
+    <div class="subnav">
+        <div class="panel-body">
+            {loop $sub_categorys $cats}
+            <a href="{$cats['url']}">{$cats['name']}</a>
+            {/loop}
+        </div>
+    </div>
+    <article>
+        <ul class="colst" id="wzlist">
+            {wz:content action="listing" pagesize="20" order="sort DESC,id DESC" cid="$cid" page="$page"}
+            {loop $rs $r}
+            <li>
+                <div class="bl">
+                    <div><a href="{$r['url']}">{safe_htm($r['title'])}</a></div>
+                    <div><span class="nums">{$categorys[$r['cid']]['name']}</span><span class="times">{date('Y-m-d',$r['updatetime'])}</span></div>
+                </div>
+                {if $r['thumb']}<div class="mimg"><a href="{$r['url']}"><img src="{$r['thumb']}" width="60" height="60"/></a></div>{/if}
+            </li>
+            {/loop}
+            {/wz}
+        </ul>
+        <div class="loading-div" onclick="load_lists()"><span id="morebutton" class="button-bg morebutton">更多{$category['name']}</span></div>
+    </article>
+</section>
+<script type="text/javascript">
+    var page = 2;
+    function load_lists() {
+        $("#morebutton").removeClass("button-bg");
+        $("#morebutton").html("<img src='{R}images/loading.gif'>");
+        $.getJSON("{WEBURL}index.php?m=content&f=json&v=listing&cid={$cid}&pagesize=20&page="+page, function(data) {
+            if(data=='finish') {
+                $("#morebutton").html("已经是最后一页了");
+            } else {
+                $.each(data, function(i,item){
+                    $("#wzlist").append('<li><div class="bl"><div><a href="'+item.url+'">'+item.title+'</a></div><div><span class="nums">'+item.catname+'</span><span class="times">'+item.updatetime+'</span></div></div></li>');
+
+                });
+                $("#morebutton").addClass("button-bg");
+                $("#morebutton").html("更多{$category['name']}");
+            }
+        });
+
+        page = page+1;
+    }
+</script>
+<footer class="ft">
+    Copyright 2005 - 2015 WuzhiCMS. All Rights Reserved
+</footer>
+</body>
+</html>

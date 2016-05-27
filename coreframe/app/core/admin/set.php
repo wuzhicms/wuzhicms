@@ -25,11 +25,13 @@ class set extends WUZHI_admin {
             $formdata = array_map('strip_tags',$GLOBALS['form']);
             $formdata['copyright'] = $GLOBALS['form']['copyright'];
             $formdata['statcode'] = $GLOBALS['form']['statcode'];
-            set_cache('siteconfigs',$formdata);
+
             $serialize_data = serialize($formdata);
             $updatetime = date('Y-m-d H:i:s',SYS_TIME);
             $this->db->update('setting',array('data'=>$serialize_data,'updatetime'=>$updatetime),array('keyid'=>'configs','m'=>'core'));
             load_function('admin');
+            $cache_global = load_class('cache_global_vars');
+            $cache_global->cache_all();
             set_web_config('CLOSE',intval($formdata['close']));
             MSG(L('edit success'),HTTP_REFERER);
         } else {
@@ -143,4 +145,70 @@ class set extends WUZHI_admin {
             include $this->template('set_sendmail_test');
         }
     }
+
+    /**
+     * 自定义全局变量
+     */
+    public function global_vars() {
+
+        $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
+        $page = max($page,1);
+        $result = $this->db->get_list('setting', array('m'=>'global_vars'), '*', 0, 20,$page);
+        $pages = $this->db->pages;
+        $total = $this->db->number;
+        include $this->template('global_vars');
+    }
+
+    /**
+     * 自定义全局变量添加
+     */
+    public function add_global_vars() {
+        if(isset($GLOBALS['submit'])) {
+            $r = $this->db->get_one('setting', array('keyid' => $GLOBALS['var'],'m'=>'global_vars'));
+            if($r) MSG('变量已存在');
+            $formdata = array();
+            $formdata['m'] = 'global_vars';
+            $formdata['title'] = $GLOBALS['title'];
+            $formdata['keyid'] = $GLOBALS['var'];
+            $formdata['data'] = $GLOBALS['data'];
+            $this->db->insert('setting', $formdata);
+            $cache = load_class('cache_global_vars');
+            $cache->cache_all();
+            MSG('添加成功','?m=core&f=set&v=global_vars'.$this->su());
+        } else {
+            $show_formjs = 1;
+            include $this->template('global_vars_add');
+        }
+    }
+    /**
+     * 自定义全局变量修改
+     */
+    public function edit_global_vars() {
+        $id = intval($GLOBALS['id']);
+        if(isset($GLOBALS['submit'])) {
+            $formdata = array();
+            $formdata['title'] = $GLOBALS['title'];
+            $formdata['keyid'] = $GLOBALS['var'];
+            $formdata['data'] = $GLOBALS['data'];
+            $this->db->update('setting', $formdata,array('id'=>$id));
+            $cache = load_class('cache_global_vars');
+            $cache->cache_all();
+            MSG('更新成功','?m=core&f=set&v=global_vars'.$this->su());
+        } else {
+            $show_formjs = 1;
+            $data = $this->db->get_one('setting', array('id' => $id));
+            include $this->template('global_vars_edit');
+        }
+    }
+    /**
+     * 自定义全局变量删除
+     */
+    public function delete_global_vars() {
+        $id = intval($GLOBALS['id']);
+        $this->db->delete('setting',array('id'=>$id,'m'=>'global_vars'));
+        $cache = load_class('cache_global_vars');
+        $cache->cache_all();
+        MSG('删除成功','?m=core&f=set&v=global_vars'.$this->su());
+    }
+
 }

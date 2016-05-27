@@ -30,7 +30,7 @@ class index extends WUZHI_foreground {
         if(!preg_match('/^([a-z]{1,}[a-z0-9]+)/',$keyid)) MSG('keyid参数错误');
         if(isset($GLOBALS['submit'])) {
             $r = $this->db->get_one('dianping', array('keyid' => $keyid,'uid'=>$memberinfo['uid']));
-            if($r) MSG('您已经点评过当前信息，感谢您的参与！',HTTP_REFERER,2500);
+            //if($r) MSG('您已经点评过当前信息，感谢您的参与！',HTTP_REFERER,2500);
             $formdata = array();
             $fields = array_keys($GLOBALS['form']);
             foreach($fields as $_fields) {
@@ -45,10 +45,6 @@ class index extends WUZHI_foreground {
             $formdata['addtime'] = SYS_TIME;
 
             $data = $GLOBALS['form']['data'];
-            //print_r($formdata);exit;
-            //print_r($data);
-            //exit;
-           // $data = explode(",",$data);
             if(!empty($data)) {
                 $data_arr = array();
                 foreach($data as $rs) {
@@ -57,34 +53,23 @@ class index extends WUZHI_foreground {
                 $data_arr = implode("\r\n",$data_arr);
                 $formdata['data'] = $data_arr;
             }
-            //赠送积分,TODO 点评配置
             $this->db->insert('dianping',$formdata);
-            //@h1jk 私有
             //$where = "`avg_price ,avg_total,avg_env,avg_service,hits";
-            $query = $this->db->query("SELECT COUNT(*) as hits,SUM(field1) as field1,SUM(field2) as field2,SUM(field3) as field3,SUM(field4) as field4 FROM wz_dianping");
+            $query = $this->db->query("SELECT COUNT(*) as hits,SUM(field1) as field1,SUM(field2) as field2,SUM(field3) as field3,SUM(field4) as field4 FROM wz_dianping WHERE `keyid`='$keyid'");
             $statics = $this->db->fetch_array($query);
-/*
- *
-Array
-(
-    [hits] => 37
-    [field1] => 158
-    [field2] => 131
-    [field3] => 113
-    [field4] => 48972
-)
-
- */
-
+            $key = substr($keyid,0,3);
             $id = substr($keyid,3);
+            $dianping_api = load_class($key.'_api','dianping');
+            $db_tablename = $dianping_api->db_tablename;
+            $filed_array = $dianping_api->filed_array;
+            $n=1;
             $formdata = array();
-            $formdata['avg_price'] = $statics['field4']/$statics['hits'];
-            $formdata['avg_total'] = sprintf("%.1f",$statics['field1']/$statics['hits']);
-            $formdata['avg_env'] = sprintf("%.1f",$statics['field2']/$statics['hits']);
-            $formdata['avg_service'] = sprintf("%.1f",$statics['field3']/$statics['hits']);
+            foreach($filed_array as $_field) {
+                $formdata[$_field] = sprintf("%.1f",$statics['field'.$n]/$statics['hits']);
+                $n++;
+            }
             $formdata['hits'] = $statics['hits'];
-            //print_r($formdata);exit;
-            $this->db->update('mec', $formdata, array('id' => $id));
+            $this->db->update($db_tablename, $formdata, array('id' => $id));
 
             MSG('感谢您的点评',HTTP_REFERER);
         } else {
@@ -93,8 +78,11 @@ Array
             $id = substr($keyid,3);
             $dianping_api = load_class($key.'_api','dianping');
             $data = $dianping_api->get($id);
-
-            include T('dianping','comment');
+            if($key=='car') {
+                include T('dianping','comment_car');
+            } else {
+                include T('dianping','comment');
+            }
         }
     }
 
@@ -106,7 +94,14 @@ Array
         $page = max($page,1);
         $memberinfo = $this->memberinfo;
         $uid = $this->memberinfo['uid'];
-        $result = $this->db->get_list('dianping', "`uid`='$uid' AND `keyid` LIKE 'mec%'", '*', 0, 20,$page,'id DESC');
+        $result = $this->db->get_list('dianping', "`uid`='$uid' AND `keyid` LIKE 'gdx%'", '*', 0, 20,$page,'id DESC');
+        foreach($result as $_id=>$r) {
+            $key = substr($r['keyid'],0,3);
+            $id = substr($r['keyid'],3);
+            $dianping_api = load_class($key.'_api','dianping');
+            $db_tablename = $dianping_api->db_tablename;
+            $result[$_id]['datas'] = $this->db->get_one($db_tablename, array('id' => $id));
+        }
         $pages = $this->db->pages;
         $total = $this->db->number;
         load_function('global','dianping');

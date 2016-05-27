@@ -9,7 +9,7 @@ $submenuid = $menu_r['menuid'];
         <div class="row">
             <div class="col-lg-12">
                 <section class="panel">
-                    <?php echo $this->menu($submenuid,'&modelid='.$GLOBALS['modelid']);?>
+                    <?php echo $this->menu($submenuid,'&app='.$m.'&modelid='.$GLOBALS['modelid']);?>
                     <div class="panel-body" id="panel-bodys">
                         <form name="myform" method="post" action="?m=core&f=model&v=field_sort<?php echo $this->su();?>">
                             <table class="table table-striped table-advance table-hover">
@@ -48,21 +48,21 @@ $submenuid = $menu_r['menuid'];
 
                                         <td>
 
-                                            <a href="?m=core&f=model&v=field_edit&id=<?php echo $r['id'];?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>"
+                                            <a href="?m=core&f=model&v=field_edit&id=<?php echo $r['id'];?>&app=<?php echo $m;?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>"
                                                class="btn btn-primary btn-xs">修改</a>
                                             <?php
                                             if($r['disabled']) {
                                                 ?>
-                                                <a href="?m=core&f=model&v=field_baned&id=<?php echo $r['id'];?>&modelid=<?php echo $r['modelid'];?>&ban_field=0<?php echo $this->su();?>"
+                                                <a href="?m=core&f=model&v=field_baned&id=<?php echo $r['id'];?>&app=<?php echo $m;?>&modelid=<?php echo $r['modelid'];?>&ban_field=0<?php echo $this->su();?>"
                                                    class="btn btn-danger btn-xs" title="点击开启">已禁用</a>
                                                 <?php
                                             } else {?>
-                                                <a href="?m=core&f=model&v=field_baned&id=<?php echo $r['id'];?>&modelid=<?php echo $r['modelid'];?>&ban_field=1<?php echo $this->su();?>"
+                                                <a href="?m=core&f=model&v=field_baned&id=<?php echo $r['id'];?>&app=<?php echo $m;?>&modelid=<?php echo $r['modelid'];?>&ban_field=1<?php echo $this->su();?>"
                                                    class="btn btn-default btn-xs" title="点击禁用">使用中</a>
                                                 <?php
                                             }?>
 
-                                            <a href="javascript:makedo('?m=core&f=model&v=field_delete&id=<?php echo $r['id'];?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>', '确认删除该记录？')"
+                                            <a href="javascript:makedo('?m=core&f=model&v=field_delete&id=<?php echo $r['id'];?>&app=<?php echo $m;?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>', '确认删除该记录？')"
                                                class="btn btn-danger btn-xs">删除</a>
 
                                         </td>
@@ -83,8 +83,12 @@ $submenuid = $menu_r['menuid'];
                 </section>
             </div>
     </section>
+    <script>
+        $("#model-field_listing").html('字段管理 - <?php echo $model_data['name'];?>');
+    </script>
     <script src="<?php echo R;?>js/bootstrap.min.js"></script>
     <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
+
     </body>
     </html>

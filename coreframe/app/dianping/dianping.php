@@ -19,6 +19,16 @@ class dianping {
         $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
         $page = max($page,1);
         if(!preg_match('/([a-z0-9_\-])/',$GLOBALS['template'])) exit('模板错误');
+        $total = $this->db->count_result('dianping',array('keyid'=>$keyid));
+        $count_1 = $this->db->count_result('dianping',array('keyid'=>$keyid,'field1'=>1));
+        $count_2 = $this->db->count_result('dianping',array('keyid'=>$keyid,'field1'=>2));
+        $count_3 = $this->db->count_result('dianping',array('keyid'=>$keyid,'field1'=>3));
+        $count_4 = $this->db->count_result('dianping',array('keyid'=>$keyid,'field1'=>4));
+        $count_5 = $this->db->count_result('dianping',array('keyid'=>$keyid,'field1'=>5));
+        $id = intval($GLOBALS['id']);
+        $key = substr($keyid,0,3);
+        $dianping_api = load_class($key.'_api','dianping');
+        $data = $dianping_api->get($id);
         $template = $GLOBALS['template'];
         include T('dianping',$template);
     }

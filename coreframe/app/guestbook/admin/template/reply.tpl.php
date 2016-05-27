@@ -24,7 +24,7 @@ include $this->template('header','core');
             if(is_array($formdata['0']))
                 foreach($formdata['0'] as $field=>$info){
                     if($info['powerful_field']) continue;
-                    if($info['formtype']=='powerful_field') {
+                    if($info['formtype']=='powerful') {
                         foreach($formdata['0'] as $_fm=>$_fm_value) {
                             if($_fm_value['powerful_field']) {
                                 $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);

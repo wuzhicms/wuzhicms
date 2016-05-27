@@ -22,6 +22,14 @@ function catpos($cid, $symbol=' &gt; ', $target = ''){
     echo '<a href="'.$categorys[$cid]['url'].'" '.$target.'>'.$categorys[$cid]['name'].'</a>';
     echo $symbol;
 }
+
+/**
+ * 内容模块: 弹性d栏目id, 父级或子级栏目id
+ * 当有子栏目,则为当前id,如果无子栏目,则为上级栏目id,如果为一级栏目,无子栏目,则为当前栏目id
+ *
+ * @param $cid
+ * @return mixed
+ */
 function elasticid($cid) {
     static $categorys;
     if(empty($categorys)) {
@@ -161,12 +169,12 @@ function fuwuicon($ids) {
     }
     return $str;
 }
-function mecinfo($username) {
+function companyinfo($username) {
     if(empty($username)) return '';
     $db = load_class('db');
-    $r = $db->get_one('member',array('username'=>$username),'mecid');
+    $r = $db->get_one('member',array('username'=>$username),'uid');
     if(!$r) return '';
-    return $db->get_one('mec',array('id'=>$r['mecid']));
+    return $db->get_one('company',array('id'=>$r['uid']));
 }
 
 /**
@@ -284,7 +292,171 @@ function imagesize($url,$return_type = 1) {
         $result['height'] = $size[1];
         return $result;
     } else {
-        //width="1024" height="891"
         return $size[3];
     }
+}
+
+/**
+ * 获取顶级栏目名称
+ * @param $cid
+ */
+function getcategoryname($cid){
+    $categorys = get_cache('category','content');
+    if(LANGUAGE=='en') {
+        $name = $categorys[$cid]['en_name'];
+    } else {
+        $name = $categorys[$cid]['name'];
+    }
+
+    $pid = $categorys[$cid]['pid'];
+    if(!$pid){
+        echo $name;
+    }else{
+        getcategoryname($pid);
+    }
+}
+
+/**
+ * 获取顶级栏目cid
+ * @param $cid
+ * @return mixed
+ */
+function getcategoryid($cid){
+    $categorys = get_cache('category','content');
+    $pid = $categorys[$cid]['pid'];
+    if($pid == 0){
+        return $cid;
+    }else{
+        $f = getcategoryid($pid);
+        return $f;
+    }
+}
+function get_persion($id) {
+    $arr_data = array();
+    $db = load_class('db');
+    load_class('py');
+    $data_r = $db->get_one('dymlist', array('id' => $id));
+    $groupid = $data_r['groupids'];
+    $showname = explode(',', $data_r['showname']);
+    $field_br = explode(',', $data_r['field_br']);
+    $ban_show = explode(',', $data_r['ban_show']);
+    $diy = string2array($data_r['diy']);
+    $tpl = $data_r['tpl'];
+    $uids = explode(',', $data_r['uids']);
+
+    $models = get_cache('model_member','model');
+    $field_result = array();
+    $fields = array();
+    $fields = explode(',',$data_r['field']);
+    $arr_data['fields'] = $fields;
+    $modelids = explode(',',$data_r['modelids']);
+    $arr_data['configs'] = array('showname' => $showname, 'field_br' => $field_br, 'diy' => $diy, 'tpl' => $tpl,'ban_show'=>$ban_show);
+    $tmp = array();
+    foreach($modelids as $modelid) {
+        $field_result[$modelid] = $field_arr = get_cache('field_'.$modelid,'model');
+
+        if($field_arr) {
+            foreach($field_arr as $field_key=>$fed) {
+                $tmp[$field_key] = $fed;
+            }
+        }
+
+
+        //$field_result[$modelid] = $tmp;
+    }
+
+    $arr_data['field_result'] = $tmp;
+    if($data_r['sorttype']==1) {//按照字母排序
+        $member_result = array();
+        $result_query = $db->query("SELECT * FROM wz_member_group_extend e,wz_member m WHERE e.uid=m.uid AND e.groupid IN($groupid)");
+        while($data = $db->fetch_array($result_query)) {
+            foreach($modelids as $modelid) {
+                $attr_table = $models[$modelid]['attr_table'];
+                if(LANGUAGE=='en') {
+                    $attr_table .= '_en';
+                }
+                $mr = $db->get_one($attr_table, array('uid' => $data['uid']));
+                if($mr) $data = array_merge($data,$mr);
+            }
+
+            if(LANGUAGE=='en') {
+                $pre = WUZHI_py::encode($data['LastName']); //编码为拼音首字母
+                //$pre = WUZHI_py::encode($data['FirstName']); //编码为拼音首字母
+            } else {
+                $pre = WUZHI_py::encode($data['LastName']); //编码为拼音首字母
+            }
+
+            $pre = strtolower($pre);
+            $member_result[$pre.$data['uid']] = $data;
+        }
+
+        ksort($member_result);
+        //print_r($member_result);
+        $arr_data['member_result'] = $member_result;
+
+    } elseif($data_r && $groupid==$data_r['groupids']) {
+        $member_result = $tmp = $keys = array();
+        $result_query = $db->query("SELECT * FROM wz_member_group_extend e,wz_member m WHERE e.uid=m.uid AND e.groupid IN($groupid)");
+        while ($data = $db->fetch_array($result_query)) {
+            foreach($modelids as $modelid) {
+                $attr_table = $models[$modelid]['attr_table'];
+                if(LANGUAGE=='en') {
+                    $attr_table .= '_en';
+                }
+                $mr = $db->get_one($attr_table, array('uid' => $data['uid']));
+                if($mr) $data = array_merge($data,$mr);
+            }
+            $tmp[$data['uid']] = $data;
+            $keys[] = $data['uid'];
+        }
+        foreach ($uids as $uid) {
+            $member_result[] = $tmp[$uid];
+        }
+        $diff_keys = '';
+        $diff_keys = array_diff($keys, $uids);
+        if (!empty($diff_keys)) {
+            foreach ($diff_keys as $uid) {
+                $member_result[] = $tmp[$uid];
+            }
+        }
+        $arr_data['member_result'] = $member_result;
+    }
+    return $arr_data;
+}
+function is_en($str) {
+    if(preg_match('/([a-z]+)/i',$str)) return true;
+    return false;
+}
+function get_contentids($cid) {
+    $db = load_class('db');
+    $where = "`status`=9 AND `cid`='$cid'";
+    $table = 'content_share';
+    if(LANGUAGE=='en') {
+        $table .= '_en';
+    }
+    $result = $db->get_list($table, $where, 'id,title', 0, 50, 0, 'id ASC','','id');
+    return $result;
+}
+function type_field($cid) {
+
+    $db = load_class('db');
+    $type_field = array();
+    $max_year = date('Y')+1;
+    $year = date('Y');
+    $starttimes = strtotime($year.'-01-01');
+    $year_r = $db->get_one('content_share', "`cid`='$cid' AND `status`=9 AND `typeid`='$year' AND `addtime`>$starttimes",'id');
+
+    if(!$year_r) $max_year--;
+    $starttimes = strtotime($max_year.'-01-01');
+    $year_r = $db->get_one('content_share', "`cid`='$cid' AND `status`=9 AND `typeid`='$year' AND  `addtime`>$starttimes",'id');
+    //print_r($year_r);
+    if(!$year_r) $max_year--;
+    if($cid=='322') {
+        $setting = get_config('setting_config');
+        $max_year = $setting['type_field'][$cid];
+    }
+    for($i=$max_year;$i>2000;$i--) {
+        $type_field[$i] = $i;
+    }
+    return $type_field;
 }

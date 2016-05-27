@@ -9,8 +9,11 @@ include $this->template('header','core');
 <link href="<?php echo R;?>js/colorpicker/style.css" rel="stylesheet">
 <link href="<?php echo R;?>js/jquery-ui/jquery-ui.css" rel="stylesheet">
 <script src="<?php echo R;?>js/colorpicker/color.js"></script>
-
-
+<?php
+echo '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
+echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
+echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js"></script>';
+?>
 <section class="wrapper">
     <div class="row">
      <div class="col-lg-12">
@@ -18,7 +21,7 @@ include $this->template('header','core');
         <header class="panel-heading addpos"><?php echo catpos($cid,' &gt; ','target="_blank"');?></header>
         <div class="panel-body" id="panel-bodys">
         <form name="myform" class="form-horizontal tasi-form" action="" method="post">
-        <table class="table table-striped table-advance table-hover" id="contenttable">
+        <table class="table table-striped table-advance" id="contenttable">
         <tbody>
         <?php
         if(isset($formdata['5']['title'])) {
@@ -49,12 +52,12 @@ include $this->template('header','core');
     
     <div id="myTabContent" class="tab-content">
       <div role="tabpanel" class="tab-pane fade active in" id="tabs1" aria-labelledby="1tab">
-          <table class="table table-striped table-advance table-hover" id="contenttable">
+          <table class="table table-striped table-advance" id="contenttable">
             <?php
             if(is_array($formdata['0'])) {
                 foreach($formdata['0'] as $field=>$info) {
                     if($info['powerful_field']) continue;
-                    if($info['formtype']=='powerful_field') {
+                    if($info['formtype']=='powerful') {
                         foreach($formdata['0'] as $_fm=>$_fm_value) {
                             if($_fm_value['powerful_field']) {
                                 $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
@@ -91,12 +94,12 @@ include $this->template('header','core');
       </div>
 
       <div role="tabpanel" class="tab-pane fade" id="tabs2" aria-labelledby="2tab">
-          <table class="table table-striped table-advance table-hover" id="contenttable">
+          <table class="table table-striped table-advance" id="contenttable">
           <?php
           if (is_array($formdata['1'])) {
               foreach ($formdata['1'] as $field => $info) {
                   if ($info['powerful_field']) continue;
-                  if ($info['formtype'] == 'powerful_field') {
+                  if ($info['formtype'] == 'powerful') {
                       foreach ($formdata['0'] as $_fm => $_fm_value) {
                           if ($_fm_value['powerful_field']) {
                               $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
@@ -133,12 +136,12 @@ include $this->template('header','core');
       </div>
 
       <div role="tabpanel" class="tab-pane fade" id="tabs3" aria-labelledby="3tab">
-          <table class="table table-striped table-advance table-hover" id="contenttable">
+          <table class="table table-striped table-advance" id="contenttable">
               <?php
               if(is_array($formdata['2'])) {
                   foreach($formdata['2'] as $field=>$info) {
                       if($info['powerful_field']) continue;
-                      if($info['formtype']=='powerful_field') {
+                      if($info['formtype']=='powerful') {
                           foreach($formdata['0'] as $_fm=>$_fm_value) {
                               if($_fm_value['powerful_field']) {
                                   $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
@@ -181,8 +184,13 @@ include $this->template('header','core');
         <tr>
         <td>
         <div class="contentsubmit text-center">
+            <input type="hidden" name="modelid" value="<?php echo $modelid;?>">
         <input name="submit" type="submit" class="save-bt btn btn-info" value=" 提 交 "> &nbsp;&nbsp;&nbsp;
-        <input name="submit2" type="submit" class="btn  btn-primary" value=" 发布并继续添加 ">
+            <?php
+            if(V=='add') {
+            ?>
+        <input name="submit2" type="submit" class="btn  btn-primary" value=" <?php echo $_lang=='zh' ? '提交&发布英语' : '提交&发布中文';?>">
+            <?php }?>
         </div>
         </td>
         </tr>
@@ -245,6 +253,14 @@ include $this->template('header','core');
                 });
         }
     }
+    function remove_obj(obj) {
+        $(obj).parent().remove();
+    }
+    function add_newfile(divid) {
+        var str = $('#text_'+divid).val();
+        str = '<li>'+str+'</li>';
+        $('#'+divid+"_ul").append(str);
+    }
 <?php
 if($cate_config['workflowid'] && $_SESSION['role']!=1) {
 ?>
@@ -254,4 +270,3 @@ if($cate_config['workflowid'] && $_SESSION['role']!=1) {
 
 <?php }?>
 </script>
-

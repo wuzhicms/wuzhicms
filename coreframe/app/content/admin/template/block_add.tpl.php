@@ -49,8 +49,8 @@ include $this->template('header','core');
                         </div>
                         <div class="form-group hide" id="template_codeid">
                             <label class="col-sm-2 col-xs-4 control-label">模版</label>
-                            <div class="col-sm-8 input-group">
-                                <textarea type="text" class="form-control" name="form[template_code]" rows="6">
+                            <div class="col-lg-8 col-sm-9 col-xs-8 input-group">
+                                <textarea type="text" class="form-control" name="form[template_code]" rows="12">
                                 {wz:content action="block" pagesize="10" #wz#}
                                 <ul>
                                 {loop $rs $r}

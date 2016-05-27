@@ -139,7 +139,7 @@
 </div>
 <link rel="stylesheet" href="<?php echo R;?>js/dialog/ui-dialog.css" />
 <script src="<?php echo R;?>js/dialog/dialog-plus.js"></script>
-<script src="<?php echo R;?>js/wuzhicms.js"></script>
+<script src="<?php echo R;?>js/base.js"></script>
 <script type="text/javascript">
     var usepoint = false;
     var maxpoint = <?php echo $memberinfo['points'];?>;

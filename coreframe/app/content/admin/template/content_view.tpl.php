@@ -1,95 +1,47 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed');?>
-<?php
-include $this->template('header','core');
-?>
-<body class="body">
+<?php include $this->template('header','core');?>
+<body id="body" style="overflow-y :scroll;overflow-x:auto;">
+<link href="<?php echo R;?>css/validform.css" rel="stylesheet">
+<script src="<?php echo R;?>js/validform.min.js"></script>
 <style>
-    .tables{width: 100%;}
-    .tables td{padding: 10px;border-bottom: 1px dashed #eaeaea;}
-    .m-panel{
-        position: fixed;
-        z-index: 2000;
-        background-color: rgba(148, 189, 207, 0.33);
-        float: right;
-        top: 200px;
-        right: 15px;
-        width: 150px;
-        border: 1px #D222AE dashed;
-        font-size: 16px;
-        line-height: 03.42857143;
-        color: #F91E0C;
+    img{
+        max-width: 450px;;
     }
-    .m-panel>ul>li{
-        line-height: 36px;
-    }
+    .field{color: #b5b5b5;}
 </style>
-<link href="http://dev.wuzhicms.com/res/css/validform.css" rel="stylesheet">
-<script src="http://dev.wuzhicms.com/res/js/validform.min.js"></script>
-<section class="wrapper">
-    <form name="myform" method="post" action="">
-    <div class="row">
+<section class="panel">
+	<div class="panel-body">
+        <div class="main-nav"><i class="icon-desktop2"></i><span id="position">当前位置 : 系统后台<span>&gt;</span><?php echo $category['name'];?><span>&gt;</span>查看信息</span> </div>
+        <table class="table table-striped table-advance table-hover">
+            <?php
+            foreach($data as $key=>$r) {
+                if(!isset($fields[$key])) continue;
+?>
+                <tr>
+                    <td width="180"><?php echo $fields[$key]['name'];?></td>
+                    <td width="80" class="field"><?php echo $key;?></td>
+                    <td><?php if($fields[$key]['formtype']=='image'){echo "<img src='".$r['data']."'>";} else {echo $r['data'];}?></td>
 
-<div class="m-panel">
-    <ul>
-        <li>上一篇</li>
-        <li>下一篇</li>
-        <li>编辑</li>
-        <li>通过审核</li>
-        <li>删除</li>
+                </tr>
 
-    </ul>
-
-</div>
-        <div class="col-lg-12">
-            <section class="panel">
-                <div class="panel-body">
-<table cellpadding="5" cellspacing="5" border="0" class="tables">
-    <?php
-    if(is_array($data)) {
-    foreach($data as $key=>$info) {
-
-    ?>
-    <tr>
-        <td width="120"><?php echo $info['name']?></td>
-        <td><?php if(is_array($info['data'])) {
-                echo implode(',',$info['data']);
-            } else {
-                if($key=='addtime') {
-                    echo date('Y-m-d H:i:s',$info['data']);
-                } elseif($key=='status') {
-                    echo $this->status_array[$info['data']];
-                } elseif($key=='thumb') {
-                    echo "<a href='".$info['data']."' target='_blank'><img src='".$info['data']."' width='100'></a>";
-                } elseif($key=='allowcomment') {
-                    if($info['data']==1) {
-                        echo "是";
-                    } else {
-                        echo "否";
-                    }
-                } else {
-                    echo $info['data'];
-                }
+            <?php
             }
-            ?></td>
-    </tr>
-    <?php
-    }
-    }
-    ?>
-</table>
+            ?>
 
-
-
-
-                </div>
-            </section>
-
-    </div>
-</form>
-
+        </table>
+	</div>
 </section>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
 <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$(".form-horizontal").Validform({
+			tiptype:3,
+            callback:function(form){
+                $("#submit").click();
+            }
 
+        });
+        $("#body").niceScroll({styler:"fb",cursorcolor:"#CAD3D5",cursorwidth: '3', cursorborderradius: '10px', background: '#E2E7E8', cursorborder: '',horizrailenabled:false});
 
+    });
+</script>

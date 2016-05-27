@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+trigger_error('The bridge console is deprecatad since version 1.4 and will be removed in 2.0', E_USER_DEPRECATED);
+
+require_once 'vendor/autoload.php';
+
+use SLLH\StyleCIBridge\Console\Application;
+
+$application = new Application();
+$application->run();

@@ -1,5 +1,6 @@
 <?php exit();?>
     private function downfile($field, $value) {
+        if(empty($value)) return '';
         $setting = $this->fields[$field]['setting'];
         if($setting['linktype']) {
             if($setting['downloadtype']) {

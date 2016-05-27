@@ -1,0 +1,39 @@
+{# @deprecated since 1.4, will be removed in 2.0 #}
+<?php
+
+namespace SLLH\StyleCIBridge\StyleCI;
+
+/**
+ * This class was auto-generated from StyleCI/Config repository.
+ *
+ * @link https://github.com/StyleCI/Config/blob/master/src/Config.php
+ */
+class Fixers
+{
+{% for group,fixers in fixersTab %}
+    /**
+     * @var string[]
+     */
+    public static ${{ group }} = array(
+{% for fixer in fixers %}
+{% if fixer['key'] is defined %}
+        '{{ fixer['key'] }}' => '{{ fixer['name'] }}',
+{% else %}
+        '{{ fixer['name'] }}',
+{% endif %}
+{% endfor %}
+    );
+{% if not loop.last %}
+
+{% endif %}
+
+{% endfor %}
+    public static function getPresets()
+    {
+        return array(
+{% for preset in presets %}
+            '{{ preset }}' => self::${{ preset }}_fixers,
+{% endfor %}
+        );
+    }
+}

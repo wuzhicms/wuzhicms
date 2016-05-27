@@ -34,8 +34,9 @@
 
                         ?>
                         <tr>
-
+                               <!---排序--->
                             <td><input name="sorts[<?php echo $r['linkid'];?>]" type="text" class="center" style="padding:3px" value="<?php echo $r['sort'];?>" size="3"></td>
+
                             <td><?php echo $r['linkid'];?></td>
                             <td><?php echo '<a href="'.$r['url'].'" target="_blank">'.$r['sitename'];?></a></td>
                             <td><?php echo $r['remark'];?></td>

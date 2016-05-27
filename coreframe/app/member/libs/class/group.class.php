@@ -18,8 +18,8 @@ class WUZHI_group {
 	 */
 	public function add($data){
 		$info = $this->format($data);
-		if(is_array($info))$groupid = $this->db->insert('member_group', $info, true);
-		return $groupid ? true : false;
+		if(is_array($info)) $groupid = $this->db->insert('member_group', $info, true);
+		return $groupid ? $groupid : false;
 	}
 	/**
 	 * 编辑
@@ -62,6 +62,7 @@ class WUZHI_group {
 		if(!is_array($data))return false;
 		$info = array();
 		$info['name'] = $this->check_name($data['name'], $groupid) ? $data['name'] : MSG(L('group_exist', '', 'member'));
+		$info['pid'] = intval($data['pid']);
 		$info['sort'] = intval($data['sort']);
 		$info['points'] = intval($data['points']);
 		$info['upgrade'] = isset($data['upgrade']) ? 1 : 0;

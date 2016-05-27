@@ -10,8 +10,8 @@ defined('IN_WZ') or exit('No direct script access allowed');
  * 内容模版，标签解析
  */
 class WUZHI_dianping_template_parse {
-	public $number = 0;//初始化查询总数
-	public $pages = '';//分页
+    public $number = 0;//初始化查询总数
+    public $pages = '';//分页
     public function __construct() {
         $this->db = load_class('db');
     }
@@ -35,7 +35,11 @@ class WUZHI_dianping_template_parse {
         foreach($result as $rs) {
             if($rs['uid']) {
                 $r = $this->db->get_one('member', array('uid' => $rs['uid']));
-                $rs['username'] = $r['username'];
+                if($r['mobile']==$r['username']) {
+                    $rs['username'] = substr($r['username'],0,3).'*****'.substr($r['username'],-3);
+                } else {
+                    $rs['username'] = $r['username'];
+                }
                 $rs['groupid'] = $r['groupid'];
                 $rs['groupname'] = $groups[$r['groupid']]['name'];
             }
@@ -46,5 +50,5 @@ class WUZHI_dianping_template_parse {
             $this->number = $this->db->number;
         }
         return $newdata;
-	}
+    }
 }

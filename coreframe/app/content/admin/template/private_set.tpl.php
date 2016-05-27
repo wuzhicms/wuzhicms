@@ -36,10 +36,7 @@
 <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
 <script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
 <script type="text/javascript">
-    function set_timer() {
-       var t=setTimeout(function(){parent.$('#alert-warning').addClass('hide');clearInterval(t);},3000);
-    }
-
+    
     function st(cid,obj) {
         if($(obj).is(':checked')) {
             var chk=1;
@@ -52,7 +49,7 @@
             parent.$('#alert-warning').addClass('alert-success');
             parent.$('#alert-warning').removeClass('hide');
             parent.$('#warning-tips').html('<strong>更新成功</strong>');
-            set_timer();
+            top.set_timer();
         });
     }
 function select_tr(cid,obj) {
@@ -73,7 +70,7 @@ function select_tr(cid,obj) {
         parent.$('#alert-warning').addClass('alert-success');
         parent.$('#alert-warning').removeClass('hide');
         parent.$('#warning-tips').html('<strong>更新成功</strong>');
-        set_timer();
+        top.set_timer();
     });
 }
 </script>

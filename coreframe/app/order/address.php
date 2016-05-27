@@ -32,7 +32,7 @@ class address extends WUZHI_foreground{
         $memberinfo = $this->memberinfo;
         $this->db->update('express_address',array('isdefault'=>0),array('uid'=>$memberinfo['uid']));
         $this->db->update('express_address',array('isdefault'=>1),array('addressid'=>$addressid));
-        MSG('默认地址设置成功','index.php?m=order&f=address&v=listing');
+        if($GLOBALS['forward']!=1) MSG('默认地址设置成功','index.php?m=order&f=address&v=listing');
     }
     public function add() {
         $memberinfo = $this->memberinfo;
@@ -57,7 +57,7 @@ class address extends WUZHI_foreground{
                 $this->setdefault();
             }
             if($GLOBALS['forward']==1) {
-                MSG(L('operation_success'),'/index?m=order&f=order_goods&v=cart');
+                MSG('添加成功！<script>top.dialog.get(window).close();</script>');
             } else {
                 MSG(L('operation_success'),'/index.php?m=order&f=address&v=listing&acbar=1');
             }

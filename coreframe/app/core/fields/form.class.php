@@ -22,7 +22,40 @@ class form_build {
 		//TODO 初始化勾子，在程序提交前处理
     }
 
-	public function execute($formdata = array()) {
+	public function execute($formdata = array(),$modelid = '',$set_language = '') {
+		if($modelid) {
+			$tmp = $tmp2 = array();
+			if($set_language) {
+				foreach($this->fields as $field=>$r) {
+					$r['name'] = $r['name'].'['.$set_language.']';
+					$r['field'] = $field.'_'.$set_language;
+					$tmp[$field.'_'.$set_language] = $r;
+				}
+				if(!empty($formdata)) {
+					$formdata_tmp = $formdata;
+					$formdata = array();
+					foreach ($formdata_tmp as $field => $data) {
+						$formdata[$field . '_' . $modelid . '_' . $set_language] = $data;
+					}
+				}
+			} else {
+				foreach($this->fields as $field=>$r) {
+					$r['field'] = $field.'_'.$modelid;
+					$tmp[$r['field']] = $r;
+				}
+				if(!empty($formdata)) {
+					$formdata_tmp = $formdata;
+					$formdata = array();
+					foreach($formdata_tmp as $field=>$data) {
+						$formdata[$field.'_'.$modelid] = $data;
+					}
+				}
+			}
+
+			$this->fields = $tmp;
+
+		}
+		//if($set_language) print_r($formdata);
 		$this->formdata = $formdata;
         $this->id = $this->formdata['id'] ? $this->formdata['id'] : 0;
         $info = array();
@@ -36,7 +69,7 @@ class form_build {
 			if($value !== FALSE) {
 				$star = $field_config['minlength'] || $field_config['pattern'] ? 1 : 0;
 				$location = $field_config['location'];
-				$info[$location][$field] = array('name'=>$field_config['name'],'field'=>$field, 'remark'=>$field_config['remark'], 'form'=>$value, 'star'=>$star,'powerful_field'=>$field_config['powerful_field'],'formtype'=>$field_config['formtype'],'ban_contribute'=>$field_config['ban_contribute']);
+				$info[$location][$field] = array('name'=>$field_config['name'],'field'=>$field, 'remark'=>$field_config['remark'], 'form'=>$value, 'star'=>$star,'powerful_field'=>$field_config['powerful_field'],'formtype'=>$field_config['formtype'],'ban_contribute'=>$field_config['ban_contribute'],'master_field'=>$field_config['master_field']);
 			}
 		}
 		//如果表单没不分左侧和右侧，那么需要合并数据为一个二维数组

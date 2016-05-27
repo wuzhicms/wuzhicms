@@ -730,7 +730,7 @@
     click        : undefined,
     half         : false,
     halfShow     : true,
-    hints        : ['很差', '差', '一般', '好', '很好'],
+    hints        : ['很不满意', '不满意', '一般', '满意', '很满意'],
     iconRange    : undefined,
     mouseout     : undefined,
     mouseover    : undefined,

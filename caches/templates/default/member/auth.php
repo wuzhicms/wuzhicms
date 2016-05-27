@@ -34,7 +34,7 @@
                         <label class="control-label">验证码</label>
                         <div class="col-sm-8">
                             <input type="text" name="checkcode" class="form-control" placeholder="请输入验证码" datatype="*4-4" errormsg="请输入验证码" sucmsg="输入正确" onfocus="if($('#code_img_r').attr('src') == '<?php echo R;?>images/logincode.gif')$('#code_img_r').attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&h=40&rd='+Math.random());" />
-                            <img src="<?php echo R;?>images/logincode.gif" id="code_img_r" alt="点击刷新" onclick="$(this).attr('src', '<?php echo WEBURL;?>api/identifying_code.php&w=112&h=40&rd='+Math.random());"> <span class="Validform_wrong">请输入验证码</span>
+                            <img src="<?php echo R;?>images/logincode.gif" id="code_img_r" alt="点击刷新" onclick="$(this).attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&h=40&rd='+Math.random());"> <span class="Validform_wrong">请输入验证码</span>
                         </div>
                     </div>
 					<div class="form-group">

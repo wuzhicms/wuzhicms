@@ -66,7 +66,7 @@ class index extends WUZHI_admin {
             if(!$r) {//数据不存在时，添加最初始的模版
                 $uid = $_SESSION['uid'];
                 $username = get_cookie('username');
-                $code = addslashes($code);
+                //$code = addslashes($code);
                 $this->db->insert('template_history',array('keyid'=>$keyid,'dir'=>$dir,'file'=>$file,'data'=>$code,'addtime'=>SYS_TIME,'uid'=>$uid,'username'=>$username));
             }
             $ext = '.html';

@@ -1,23 +1,23 @@
 (function($){
 	$.fn.wuzhicmsSelect = function(settings){
-		
+
 		var wuzhicmsSelect = {
 			settings : $.extend({}, $.wuzhicmsSelect.defaults, settings),
 			dom : {
 				box : this
 			}
 		};
-		
+
 		wuzhicmsSelect.init = function(){
 			var _this = this;
 
 			// 父容器不存在、未设置选择器组
 			if (!_this.dom.box.length) {return};
 			if (!_this.settings.selects.length) {return};
-			
+
 			_this.selectArray = [];
 			_this.selectSum = _this.settings.selects.length;
-			
+
 			for (var i = 0; i < _this.selectSum; i++) {
 				if (!_this.dom.box.find('select.' + _this.settings.selects[i])) {break};
 
@@ -59,7 +59,7 @@
 		// 获取下拉框内容
 		wuzhicmsSelect.getNewOptions = function(elemJquery, json){
 			if (!elemJquery) {return};
-			
+
 			var _title = this.settings.firstTitle;
 			var _value = this.settings.firstValue;
 			var _dataTitle = elemJquery.data('firstTitle');
@@ -79,10 +79,12 @@
 			};
 
 			$.each(json, function(i, v){
+				var isgroup='';
+				if(v.g==1) isgroup='disabled';
 				if (typeof(v.v) === 'string' || typeof(v.v) === 'number' || typeof(v.v) === 'boolean') {
-					_html += '<option value="'+v.v+'">' + v.n + '</option>';
+					_html += '<option value="'+v.v+'" '+isgroup+'>' + v.n + '</option>';
 				} else {
-					_html += '<option value="'+v.n+'">' + v.n + '</option>';
+					_html += '<option value="'+v.n+'" '+isgroup+'>' + v.n + '</option>';
 				};
 			});
 
@@ -172,7 +174,7 @@
 				this.selectArray[selectNext].html(_html).prop('disabled', false).css({'display':'', 'visibility':''}).trigger('change');
 			};
 		};
-		
+
 		wuzhicmsSelect.init();
 	};
 

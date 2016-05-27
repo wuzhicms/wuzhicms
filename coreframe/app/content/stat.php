@@ -29,7 +29,10 @@ if($qkey=='') {
 $db->insert('content_stat',$formdata);
 
 $r = $db->get_one('content_rank',array('cid'=>$formdata['cid'],'id'=>$formdata['id']));
-if(!$r) exit('-4');
+if(!$r) {
+    $db->insert('content_rank', array('cid'=>$formdata['cid'],'id'=>$formdata['id']));
+    $r['views'] = 0;
+}
 $views = $r['views'] + 1;
 $yesterdayviews = (date('Ymd', $r['updatetime']) == date('Ymd', strtotime('-1 day'))) ? $r['dayviews'] : $r['yesterdayviews'];
 $dayviews = (date('Ymd', $r['updatetime']) == date('Ymd', SYS_TIME)) ? ($r['dayviews'] + 1) : 1;

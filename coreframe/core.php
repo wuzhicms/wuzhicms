@@ -9,7 +9,7 @@ defined('WWW_ROOT') or exit('No direct script access allowed');
 /**
  * 核心文件
  */
-define('VERSION','2.1.7');
+define('VERSION','3.0.0');
 
 $GLOBALS = array();
 define('SYSTEM_NAME','wuzhicms');
@@ -53,6 +53,7 @@ if(extension_loaded("zlib") && !ob_start("ob_gzhandler")) ob_start();
 set_globals();
 load_function('common');
 autoload();
+$_POST['SUPPORT_MOBILE'] = SUPPORT_MOBILE;
 
 /**
  * 加载类函数
@@ -123,7 +124,7 @@ function get_config($filename,$param = '') {
         $config[$filename] = include WWW_ROOT.'configs/'.$filename.'.php';
     } else {
         $full_dir = '';
-        if(OPEN_DEBUG) $full_dir = WWW_ROOT.'config/';
+        if(OPEN_DEBUG) $full_dir = WWW_ROOT.'configs/';
         echo 'Unable to locate the specified config: '.$full_dir.$filename.'.php';
         exit();
     }
@@ -173,6 +174,10 @@ function set_globals() {
         $GLOBALS['page'] = 0;
     }
     $_COOKIE = gpc_stripslashes($_COOKIE);
+    $GLOBALS['_groupid'] = get_cookie('_groupid');
+    if(!$GLOBALS['_groupid']) {
+        $GLOBALS['_groupid'] = 4;
+    }
 }
 
 function p_addslashes($string) {
@@ -290,7 +295,7 @@ function log_exception( Exception $e) {
 
     if (ERROR_REPORT) {
         if(IS_CLI==0) {
-            print "<div style='text-align: center;'>";
+            print "<!DOCTYPE html><div style='text-align: center;'>";
             print "<h5 style='color: rgb(190, 50, 50);'>WuzhiCMS Exception Occured:</h5>";
             print "<table style='width: 800px; display: inline-block;'>";
             print "<tr style='background-color:rgb(230,230,230);text-align:left;'><th style='width: 80px;'>Type</th><td>" . $data['type'] . "</td></tr>";
@@ -312,17 +317,6 @@ function log_exception( Exception $e) {
     } else {
         $message = "Time: " . date('Y-m-d H:i:s') . "; Type: " . $data['type'] . "; Message: {$e->getMessage()}; File: {$data['file']}; Line: {$data['line']};";
         @file_put_contents(CACHE_ROOT. "logs/error-".CACHE_EXT.'-'.date("ym").".log", $message . PHP_EOL, FILE_APPEND );
-    }
-    if(function_exists('curl_init')) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'http://ms.wuzhicms.com/index.php?m=help&f=error');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
-        curl_setopt($ch, CURLOPT_POST, true);//启用POST提交
-        curl_setopt($ch, CURLOPT_TIMEOUT, 3);//3s超时
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data); //设置POST提交的字符串
-        curl_exec($ch);
-        curl_close($ch);
     }
 }
 

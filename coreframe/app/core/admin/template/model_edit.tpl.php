@@ -40,12 +40,16 @@ include $this->template('header','core');
                                     <textarea name="remark" class="form-control" cols="60" rows="3"><?php echo p_htmlentities($r['remark']);?></textarea>
                                 </div>
                             </div>
+                            <?php
+                            if($module_config['show_content_tpl']) {
+                            ?>
                             <div class="form-group">
                                 <label class="col-sm-2 col-xs-4 control-label">内容页默认模版</label>
                                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                    <?php echo WUZHI_form::templates('content',$r['template'],'name="template"  class="form-control" style="width:auto;"','show');?>
                                 </div>
                             </div>
+                            <?php }?>
                             <div class="form-group">
                                 <label class="col-sm-2 col-xs-4 control-label">模型标识图（可选）</label>
                                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
@@ -59,6 +63,12 @@ include $this->template('header','core');
                                             <li><a href="javascript:s_icon('icon-file-movie-o');"><i class="icon-file-movie-o btn-sm"></i>图标 4</a></li>
                                         </ul>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 col-xs-4 control-label">管理列表页模版</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                    <input type="text" id="iconcss" name="manage_template" class="form-control" value="<?php echo $r['manage_template'];?>">
                                 </div>
                             </div>
 

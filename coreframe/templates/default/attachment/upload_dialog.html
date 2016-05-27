@@ -56,13 +56,14 @@
             chunk_size: '10mb',
                         filters : {
                             // Maximum file size
-                            max_file_size : '1000mb',
-                                // Specify what files to browse for
-                                    mime_types: [
-                                {title : "Image files", extensions : "jpg,gif,png"},
-                                {title : "Zip files", extensions : "zip"},
-                                {title : "Word files", extensions : "docx"},
-                                {title : "pdf", extensions : "pdf"},
+                     max_file_size : '{$maxsize}',
+                         // Specify what files to browse for
+                             mime_types: [
+                         {title : "Image files", extensions : "{$extimg}"},
+                         {title : "Zip files", extensions : "{$extzip}"},
+                         {title : "Word files", extensions : "{$extword}"},
+                         {title : "pdf", extensions : "{$extpdf}"},
+                         {title : "other", extensions : "{$extother}"},
                             ]
                         },
                         init: {

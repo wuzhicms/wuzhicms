@@ -21,22 +21,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						<?php if(is_array($result))foreach($result as $r) {?>
-							<tr id="g_<?php echo $r['groupid'];?>">
-								<td><input type="checkbox" name="groupid[]" value="<?php echo $r['groupid'];?>" <?php if($r['issystem'])echo 'disabled'?>></td>
-								<td><input type="text" class="text-center" style="padding:3px" name="sorts[<?php echo $r['groupid'];?>]" value="<?php echo $r['sort'];?>" size="3" /></td>
-								<td><?php echo $r['groupid'];?></td>
-								<td><?php echo $r['name'];?></td>
-								<td><?php echo $r['issystem'] ? '<font color="red">是</font>' : '<font color="green">否</font>';?></td>
-								<td><?php echo $r['upgrade'] ? '<font color="green">是</font>' : '<font color="red">否</font>';?></td>
-								<td>
-									<a href="javascript:void(0)" onclick="edit(<?php echo $r['groupid'];?>)" class="btn btn-primary btn-xs">修改</a>
-									<?php if(empty($r['issystem'])){?>
-									<a href="javascript:void(0)" onclick="del(<?php echo $r['groupid'];?>)" class="btn btn-danger btn-xs">删除</a>
-									<?php }?>
-								</td>
-							</tr>
-						<?php }	?>
+						<?php echo $tree_data;?>
 						</tbody>
 					</table>
 				</div>

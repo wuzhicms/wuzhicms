@@ -1,0 +1,143 @@
+{T "content","head",TPLID}
+<!--路径导航-->
+<div style="background: #f3f3f3">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="/">首页</a><span> &gt;</span></li>
+            {catpos($cid)}
+        </ol>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ad-box" style="height: 120px; width: 100%; background: #dddddd"><script  src="{WEBURL}promote/21.js"></script></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="down-one-screen">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8">
+
+                <div class="row">
+                    <div class="col-xs-6 ">
+                        <div class="list-group">
+                            {wz:content action="block" pagesize="6" type="1" blockid="41"}
+                            {php $active_num=1}
+                                {loop $rs $r}
+                                    <a href="{$r['url']}" class="list-group-item manhangyichu {if $active_num==1}active{/if}">{$r['title']}</a>
+                                    {$active_num++}
+                                {/loop}
+                            {/wz}
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 ">
+                        <div class="list-group">
+                            {wz:content action="block" pagesize="6" type="1" blockid="42"}
+                            {php $active_num1=1}
+                            {loop $rs $r}
+                            <a href="{$r['url']}" class="list-group-item manhangyichu {if $active_num1==1}active{/if}">{$r['title']}</a>
+                            {$active_num1++}
+                            {/loop}
+                            {/wz}
+                        </div>
+                    </div>
+                </div>
+                <div class="ad-box" style="height: 120px; width: 100%; background: #dddddd"><script  src="{WEBURL}promote/22.js"></script></div>
+
+
+                <!--news-tabs-box-->
+                <div class="headline-news-list">
+                    {wz:content action="listing" page="$page" pagesize="10" order="sort DESC,id DESC" cid="$cid" urlrule="$urlrule"}
+                    {loop $rs $r}
+                    <div class="media">
+                        <div class="media-left">
+                            {if $r['thumb']}
+                            <a href="{$r[url]}"><img src="{$r[thumb]}" width="165px" height="110px"></a>
+                            {/if}
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading manhangyichu"><a href="{$r['url']}">{$r['title']}</a></h4>
+                            <div class="media-content" >{strcut($r['remark'],200,'...')}</div>
+                            <div  class="media-time"><span class="left font_size12">发布时间：{date('Y-m-d',$r['updatetime'])}</span><span class="right font_size12"><span class="glyphicon glyphicon-fire font_size12 color_ccc" aria-hidden="true"></span> <samp  id="view_{$cid}_{$r['id']}">0</samp> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small><a href="{$r['url']}"> <span class="glyphicon glyphicon-arrow-down font_size12 color_ccc" ></span> 下载</a></span></div>
+                        </div>
+                    </div>
+                    {/loop}
+                    {/wz}
+                    <!-- start-五指分页-->
+                    <div style="text-align:center;">
+                        {if $this->db->number>10}
+                        <nav style="text-align: center;">
+                            <ul class="pagination">
+                                {$pages}
+                            </ul>
+                        </nav>
+                        {/if}
+                    </div>
+                    <!--end  五指分页 -->
+                    <script>
+                        var views_keyid = new Array();
+                        {loop $rs $r}
+                        views_keyid.push('{$cid}_{$r['id']}');
+                        {/loop}
+                        $.getJSON("index.php", {f: "stats", keyid: views_keyid },
+                                function(data){
+                                    $.each(data, function( index, value ) {
+                                        console.log(value);
+                                        $("#view_"+value.cid+'_'+value.id).html(value.views);
+                                    });
+                                });
+                    </script>
+                </div>
+            </div><!-- col-xs-8  -->
+
+            <div class="col-xs-4 ">
+                <div class="right-bg-box xielinebg" style="  padding-bottom: 20px;">
+                    <div class="lm-title margin_bottom15">
+                        <h3 class="lm-title-left">下载分类</h3>
+                    </div>
+                    <div class="down-class">
+                        {wz:content action="category" cid="$elasticid" pagesize="100" order="sort ASC"}
+                        {loop $rs $r}
+                        {if $r['ismenu']}<a href="{$r['url']}">{$r['name']}</a>{/if}
+                        {/loop}
+                        {/wz}
+
+                    </div>
+
+                    <div class="ad-box" style="height: 300px; width: 100%; background: #dddddd"><script  src="{WEBURL}promote/23.js"></script></div>
+
+                    <div class="lm-title margin_bottom15">
+                        <h3 class="lm-title-left">下载排行 </h3>
+                    </div>
+                    <div class="list-ol-box-2">
+                        <ol class="rectangle-list-2">
+                            {wz:content action="rank" pagesize="10" order="weekviews DESC" cid="$cid" urlrule="$urlrule"}
+                            {loop $rs $r}
+                            <li ><a href="{$r[url]}">{$r['title']}</a></li>
+                            {/loop}
+                            {/wz}
+                        </ol>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{T "content","foot",TPLID}

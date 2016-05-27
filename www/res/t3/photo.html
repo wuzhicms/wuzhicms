@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Note there is no responsive meta tag here -->
+
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>图片</title>
+
+    <!-- CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/hover.css" rel="stylesheet">
+    <link href="css/pindao-style.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/non-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.wuzhicms.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse-primary">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar" class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">
+                <img alt="Brand" src="image/logo_ov.png">
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="news.html">新闻</a></li>
+            <li><a href="photo.html">图片</a></li>
+            <li><a href="video.html">视频</a></li>
+            <li><a href="down.html">下载</a></li>
+            <li><a href="tuangou.html">团购   </a></li>
+            <li><a href="jifenmall.html">积分商城</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown serch--dropdown-menu">
+                <a href="#"  title="搜索"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 5px;"></span> </a>
+                <ul class="dropdown-menu ">
+                    <div class="input-group  select-search" style="margin-top: 6px">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;&nbsp;&nbsp;全站&nbsp;&nbsp;&nbsp;&nbsp; <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">新闻</a></li>
+                                <li><a href="#">图片</a></li>
+                                <li><a href="#">视频</a></li>
+                                <li><a href="#">团购</a></li>
+                                <li><a href="#">积分商城</a></li>
+                            </ul>
+                        </div><!-- / input-group-btn-->
+                        <input type="text" class="form-control" placeholder="请输入关键词">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button">&nbsp;&nbsp;&nbsp;&nbsp;搜索&nbsp;&nbsp;&nbsp;&nbsp; </button>
+                      </span>
+                    </div><!-- /input-group -->
+                </ul>
+            </li>
+            <li class="dropdown mall--dropdown-menu">
+                <a href="#"  title="购物车"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true" style="padding-top: 5px;"></span> </a>
+                <ul class="dropdown-menu">
+                    您的购物车有 <strong class="color_qiyecheng">10</strong> 件商品
+                </ul>
+            </li>
+            <li><a href="" title="进入会员中心"><img src="image/temp/tuxiang.png" class="img-circle" height="24px;" style="border: 2px solid #fff"> wuzhicms</a></li>
+            <!--<li class="dropdown login--dropdown-menu">
+                <a href="#"  title="登录"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="image/temp/tuxiang.png" class="img-circle" height="24px;" style="border: 2px solid #fff"> </a>
+                <ul class="dropdown-menu">
+                    <form>
+                        <p class="help-block text-right color_999">还不是会员? <a href="">立即注册</a></p>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="username" placeholder="用户名">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="密码">
+                        </div>
+                        <div class="checkbox font_size12">
+                            <label>
+                                <input type="checkbox"> 下次自动登录
+                            </label>
+                            <a  href="" class="color_warning pading_left_10px" style=" float: right">忘记密码？</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block"><span class="font_size16">登录</span></button>
+                    </form>
+
+                    <div class=" disanfang_ico">
+                        <div  style=" color: #999999; padding-bottom: 8px;">使用第三方账号登录</div>
+                        <li><a href="http://dev.wuzhicms.com/index.php?m=member&amp;f=index&amp;v=auth&amp;type=qq"><img src="../images/qqlogin.png" alt="使用QQ帐号登录" title="使用QQ帐号登录" width="30px"></a></li>                    <li><a href="http://dev.wuzhicms.com/index.php?m=member&amp;f=index&amp;v=auth&amp;type=sina"><img src="../images/weibologin.png" alt="使用微博帐号登录" title="使用微博帐号登录" width="30px"></a></li>                    <li><a href="http://dev.wuzhicms.com/index.php?m=member&amp;f=index&amp;v=auth&amp;type=weixin"><img src="../images/weichatlogin.png" alt="使用微信帐号登录" title="使用微信帐号登录" width="30px"></a></li>
+                    </div>
+
+                </ul>
+            </li>-->
+        </ul>
+
+
+    </div><!--/.nav-collapse -->
+
+</nav>
+
+<nav class="navbar1 navbar-default">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar1" class="container">
+        <ul class="nav navbar-nav" style="padding-left: 86px">
+            <li class="active"><a href="index.html">图片首页</a></li>
+            <li><a href="#contact">图说</a></li>
+            <li><a href="#contact">摄影</a></li>
+            <li><a href="#">纪实</a></li>
+            <li><a href="#">记忆</a></li>
+            <li><a href="#contact">时尚</a></li>
+        </ul>
+
+
+    </div><!--/.nav-collapse -->
+</nav>
+
+
+
+
+
+<div class="photo-one-screen">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                           <a href=""><img src=" image/temp/photo1.jpg" alt="..."></a>
+                            <div class="carousel-caption">
+                                <h3 class="margin_bottom20 line_height1d8">这些年的喧嚣和纷争，总在买和不买之间</h3>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a href=""><img src=" image/temp/photo1.jpg" alt="..."></a>
+                            <div class="carousel-caption">
+                                <h3 class="margin_bottom20 line_height1d8">这些年的喧嚣和纷争，总在买和不买之间</h3>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a href=""><img src=" image/temp/photo1.jpg" alt="..."></a>
+                            <div class="carousel-caption">
+                                <h3 class="margin_bottom20 line_height1d8">这些年的喧嚣和纷争，总在买和不买之间</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 图片 -->
+<div class="container">
+    <div class="index-pic-box ">
+
+            <div class="center-lanmu-title changlangbg">
+                <h2 class="text-center "><a href="photo-list.html" >图说</a></h2>
+            </div>
+
+        <div class="row">
+
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp5.jpg" alt="" height="380">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp4.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ad-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="index-pic-box ">
+
+        <div class="center-lanmu-title changlangbg">
+            <h2 class="text-center "><a href="photo-list.html" >摄影</a></h2>
+        </div>
+
+        <div class="row">
+
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp5.jpg" alt="" height="380">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp4.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp2.jpg" alt="" height="">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+    <div class="container">
+        <div class="friend-link">
+
+                <a href="http://www.52pk.com/" target="_blank">52PK游戏网 </a><a href="http://www.chinaz.com" target="_blank">站长之家</a><a href="http://www.admin5.com/" target="_blank">站长网</a><a href="http://www.leiphone.com/" target="_blank">雷锋网</a><a href="http://www.ctocio.com.cn/" target="_blank">IT专家网 </a><a href="http://www.ithome.com/" target="_blank">IT之家</a><a href="http://www.ebrun.com/" target="_blank">亿邦动力网</a><a href="http://www.weiphone.com/" target="_blank">iPhone威锋网</a><a href="http://www.yzmg.com" target="_blank">亿智蘑菇</a><a href="http://www.tompda.com/" target="_blank">智能手机</a><a href="http://www.ikanchai.com" target="_blank">砍柴网</a><a href="http://www.fengniao.com/" target="_blank">蜂鸟网</a><a href="http://www.weiot.net " target="_blank">威腾网</a><a href="http://www.dop2p.com/" target="_blank">互联网金融门户</a><a href="http://www.3533.com/" target="_blank">手机世界</a><a href="http://www.uc.cn/" target="_blank">手机浏览器</a><a href="http://www.9466.com/" target="_blank">9466网页助手</a><a href="http://www.hqbpc.com" target="_blank">华强北电脑网</a><a href="http://www.uisdc.com/" target="_blank">优秀网页设计</a><a href="http://hao.360.cn/" target="_blank">360安全网址导航</a><a href="http://www.1616.net/" target="_blank">1616个人门户</a><a href="http://www.sudu.cn/" target="_blank">华夏名网</a><a href="http://www.szsmw.com/Default.shtml" target="_blank">神州商贸网</a><a href="http://www.ciotimes.com/" target="_blank">CIO时代网</a><a href="http://www.nmglabs.com/" target="_blank">内蒙古IT实验室</a><a href="http://www.cnzz.cn/" target="_blank">中国站长</a><a href="http://www.xmtnews.com/" target="_blank">新媒体观察</a><a href="http://www.oneplusbbs.com" target="_blank">一加手机</a>
+
+        </div>
+    </div>
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center  line_height2d0">
+                联系电话：010-82463345    QQ:282198327  Email:zhw@wuzhicms.com <br>
+                五指简介  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="">联系我们</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>  用户协议 <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>  法律声明<small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> 付款方式<br>
+                Copyright © 2015 北京五指互联科技有限公司 All Rights Reserved<br>
+                京ICP备14036160号-1</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+
+<script src="js/my.js"></script>
+<script src="js/bootstrap-hover-dropdown.min.js"></script>
+
+
+</body>
+</html>

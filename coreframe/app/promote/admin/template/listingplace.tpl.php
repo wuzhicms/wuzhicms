@@ -59,6 +59,7 @@
 
                             <td>
 <a href="?m=promote&f=index&v=add&pid=<?php echo $r['pid'];?><?php echo $this->su();?>" class="btn btn-info btn-xs"><i class="icon-plus btn-icon" style="color: #fff;font-size: 12px;"></i>添加广告</a>
+<a href="?m=promote&f=index&v=stat&pid=<?php echo $r['pid'];?><?php echo $this->su();?>" class="btn btn-default btn-xs">广告统计</a>
                                 <a href="?m=promote&f=index&v=editplace&pid=<?php echo $r['pid'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">修改</a>
                                 <a href="javascript:makedo('?m=promote&f=index&v=deleteplace&pid=<?php echo $r['pid'];?><?php echo $this->su();?>', '确认删除该记录？')"
                                    class="btn btn-danger btn-xs">删除</a>
@@ -85,8 +86,12 @@
                     </div>
                 </div>
             </div>
-        </section>
 
+        </section>
+        <div class="alert alert-success fade in">
+            <strong>广告调用方法:</strong>
+            &lt;script&nbsp; src=&quot;<?php echo WEBURL;?>promote/替换广告位PID.js&quot;&gt;&lt;/script&gt;
+        </div>
     </div>
 
 </div>

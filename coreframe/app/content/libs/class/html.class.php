@@ -74,6 +74,8 @@ class WUZHI_html {
             }
         }
         $sub_categorys = sub_categorys($cid);
+        $top_categoryid = getcategoryid($cid);
+        $top_category = $categorys[$top_categoryid];
         ob_start();
         include T('content',$_template,$project_css);
         return $this->write($file);
@@ -82,6 +84,7 @@ class WUZHI_html {
         $id = $data['id'];
         $previous_page = $data['previous_page'];
         $next_page = $data['next_page'];
+        if(!isset($next_page['url'])) $next_page['url'] = '';
         unset($data['previous_page'],$data['next_page']);
         $siteconfigs = $this->siteconfigs;
         $categorys = $this->categorys;
@@ -122,8 +125,10 @@ class WUZHI_html {
         $styles = explode(':',$_template);
         $project_css = isset($styles[0]) ? $styles[0] : 'default';
         $_template = isset($styles[1]) ? $styles[1] : 'show';
-        $addtime = $data['addtime'];
-
+        $original_addtime = $data['addtime'];
+        $top_categoryid = getcategoryid($cid);
+        $top_category = $categorys[$top_categoryid];
+        
         $page = 1;
         //手动分页
         $CONTENT_POS = strpos($content, '_wuzhicms_page_tag_');
@@ -132,13 +137,13 @@ class WUZHI_html {
             $pagetotal = count($contents);
             foreach($contents as $cons) {
 
-                $urls = $this->urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>$page,'route'=>$data['route']));
+                $urls = $this->urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$original_addtime,'page'=>$page,'route'=>$data['route']));
                 $file_root = $urls['root'];
                 $content = $cons;
                 $content_pages = pages($pagetotal, $page, 1, $urlrule, $variables,10);
-                $tmp_year = date('Y',$addtime);
-                $tmp_month = date('m',$addtime);
-                $tmp_day = date('d',$addtime);
+                $tmp_year = date('Y',$original_addtime);
+                $tmp_month = date('m',$original_addtime);
+                $tmp_day = date('d',$original_addtime);
                 $content_pages = pages($pagetotal,$page,1,$urlrule,array('categorydir'=>$category['parentdir'],'year'=>$tmp_year,'month'=>$tmp_month,'day'=>$tmp_day,'catdir'=>$category['catdir'],'cid'=>$cid,'id'=>$id));
                 //写入
                 ob_start();

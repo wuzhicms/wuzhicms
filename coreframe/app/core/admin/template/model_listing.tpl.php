@@ -33,11 +33,11 @@ include $this->template('header','core');
                                     <td><?php echo $r[ 'master_table'];?></td>
                                     <td><?php echo $r[ 'attr_table'];?></td>
                                     <td>
-                                        <a href="?m=core&f=model&v=field_listing&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>"
+                                        <a href="?m=core&f=model&v=field_listing&app=<?php echo $m;?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>"
                                            class="btn btn-info btn-xs">字段管理</a>
-                                        <a href="?m=core&f=model&v=edit&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>"
+                                        <a href="?m=core&f=model&v=edit&app=<?php echo $m;?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>"
                                            class="btn btn-primary btn-xs">修改</a>
-                                        <a href="javascript:makedo('?m=core&f=model&v=delete&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>', '确认删除该记录？')"
+                                        <a href="javascript:makedo('?m=core&f=model&v=delete&app=<?php echo $m;?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>', '确认删除该记录？')"
                                            class="btn btn-danger btn-xs">删除</a>
                                     </td>
                                 </tr>
