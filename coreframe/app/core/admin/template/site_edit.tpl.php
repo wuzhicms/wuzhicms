@@ -18,6 +18,12 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 col-xs-4 control-label">站点域名</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <input type="text" class="form-control" name="form[url]" value="<?php echo $r['url'];?>">
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">网站logo</label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <div class="input-group"><?php echo WUZHI_form::attachment('png|jpg|gif|jpeg','1','form[logo]',$r['logo']);?></div>

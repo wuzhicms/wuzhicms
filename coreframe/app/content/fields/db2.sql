@@ -2,7 +2,7 @@
 CREATE TABLE `$basic_tablename` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `cid` smallint(5) unsigned NOT NULL default '0',
-  `title` char(80) NOT NULL default '',
+  `title` char(120) NOT NULL default '',
   `css` char(24) NOT NULL default '',
   `thumb` char(100) NOT NULL default '',
   `keywords` char(40) NOT NULL default '',

@@ -1,0 +1,166 @@
+{T "content","head",TPLID}
+<nav class="navbar1 navbar-default">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar1" class="container">
+        <ul class="nav navbar-nav" style="padding-left: 86px">
+            <li class="active"><a href="{$category['url']}">{$category['name']}首页</a></li>
+            {loop $sub_categorys $cats}
+            <li><a href="{$cats['url']}">{$cats['name']}</a></li>
+            {/loop}
+        </ul>
+
+
+    </div><!--/.nav-collapse -->
+</nav>
+
+<div class="down-one-screen">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-8">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                {block=35}
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 " style="padding-left: 16px;">
+                        {block=36}
+                    </div>
+                </div>
+                <div class="news-tabs-box" style="padding-top: 25px;">
+                    <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+                        <ul id="myTabs" class="nav nav nav-tabs" role="tablist"><!--<ul id="myTabs" class="nav nav-pills nav-stacked" role="tablist">-->  <!--胶囊标签  /  竖向标签 -->
+                            <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">最新更新</a></li>
+
+                            {loop $sub_categorys $downcid $cats}
+                            <li role="presentation" class=""><a href="#cat_{$downcid}" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">{$cats['name']}</a></li>
+                            {/loop}
+                        </ul>
+
+                        <div id="myTabContent" class="tab-content ">
+                            <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+                                <div class="headline-news-list">
+                                    {wz:content action="listing" page="$page" pagesize="20" order="sort DESC,updatetime DESC" cid="$cid" urlrule="$urlrule"}
+                                    {loop $rs $r}
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="{$r[url]}"><img src="{$r[thumb]}" width="120px;"></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading manhangyichu" style="max-width:480px;"><strong><a href="{$r[url]}" target="_blank">{$r['title']}</a></strong></h4>
+                                            <p style="width:599px;"><span class="down_wds"><a href="{$categorys[$r['cid']]['url']}">{$categorys[$r['cid']]['name']}</a> | {$r['soft_license']} | 大小:{$r['soft_size']} | 环境:{$r['soft_env']} | 人气:{$r['down_numbers']}</span><br>
+                                                {strcut($r['remark'],180,'...')}<br>
+                                                <small style="float:right"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> 更新日期：{date('Y.m.d',$r['updatetime'])}</small></p>
+
+                                        </div>
+                                    </div>
+                                    {/loop}
+                                    {/wz}
+                                    {if $this->db->number>5}
+                                    <nav style="text-align: center;">
+                                        <ul class="pagination">
+                                            {$pages}
+                                        </ul>
+                                    </nav>
+                                    {/if}
+                                </div>
+                            </div>
+
+                            <!------------------------------------------->
+                            {loop $sub_categorys $downcid $cats}
+                            <div role="tabpanel" class="tab-pane fade" id="cat_{$downcid}" aria-labelledby="profile-tab">
+                                <div class="headline-news-list">
+                                    {wz:content action="listing" page="$page" pagesize="6" order="sort DESC,updatetime DESC" cid="$downcid" urlrule="$urlrule"}
+                                    {loop $rs $r}
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="{$r[url]}"><img src="{$r[thumb]}" width="120px;"></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading manhangyichu" style="max-width:480px;"><strong><a href="{$r[url]}" target="_blank">{$r['title']}</a></strong></h4>
+                                            <p style="width:599px;"><span class="down_wds"><a href="{$categorys[$r['cid']]['url']}">{$categorys[$r['cid']]['name']}</a> | {$r['soft_license']} | 大小:{$r['soft_size']} | 环境:{$r['soft_env']} | 人气:{$r['down_numbers']}</span><br>
+                                                {strcut($r['remark'],180,'...')}<br>
+                                                <small style="float:right"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> 更新日期：{date('Y.m.d',$r['updatetime'])}</small></p>
+
+                                        </div>
+                                    </div>
+                                    {/loop}
+                                    {/wz}
+                                </div>
+                            </div>
+                            {/loop}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 ">
+                <div class="right-bg-box xielinebg">
+                    <div class="lm-title margin_bottom15">
+                        <h3 class="lm-title-left">推荐</h3>
+                    </div>
+                    <div class="headline-news-list right-bg-media">
+                        {block=37}
+                    </div>
+
+                </div>
+                <div>&nbsp;</div>
+                <div class="right-bg-box" style="padding-top: 20px; padding-bottom: 20px;">
+                    <div class="ad-box-first" style="height: 300px; width: 100%; background: #dddddd"><script  src="{WEBURL}promote/20.js"></script></div>
+                    <div class="lm-title margin_bottom15">
+                        <h3 class="lm-title-left">下载排行 </h3>
+                    </div>
+                    <div class="list-ol-box-2">
+                        <ol class="rectangle-list-2">
+                            {wz:content action="rank" pagesize="10" order="monthviews DESC" cid="$cid" urlrule="$urlrule"}
+                            {loop $rs $r}
+                            <li ><a href="{$r[url]}">{$r['title']}</a></li>
+                            {/loop}
+                            {/wz}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!------------------------------------------------------------------------------------------------------>
+<div class="news-second-screen" style="margin-top: 32px">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8">
+                <!--news-tabs-box-->
+
+            </div><!-- col-xs-8  -->
+<!----------------------------------------------------------------------------------------------------------->
+            <div class="col-xs-4 ">
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{T "content","foot",TPLID}

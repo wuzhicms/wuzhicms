@@ -12,23 +12,25 @@ include $this->template('header','core');
                 <div class="panel-body" id="formid">
                     <form class="form-horizontal tasi-form" method="post" action="">
                         <div class="form-group">
-                            <label class="col-sm-2 col-xs-4 control-label">优惠券前缀</label>
+                            <label class="col-sm-2 col-xs-4 control-label">批号</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="text" class="form-control" name="pre" value="" placeholder="例如：WZ （五指互联）"  datatype="s0-4" errormsg="最多4个字符">
+                                <input type="text" class="form-control" id="groupname" name="groupname" value="<?php if(isset($GLOBALS['groupname'])) { echo $GLOBALS['groupname'];} else {echo date('Ymd');}?>"  datatype="n4-10" errormsg="只能为数字" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">优惠券名称</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="text" class="form-control" name="form[title]" value="" datatype="s2-80" errormsg="请输入2-80个字符">
+                                <input type="text" class="form-control" id="title" name="form[title]" value="<?php echo $title;?>" datatype="s2-80" errormsg="请输入2-80个字符">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-xs-4 control-label">使用限制</label>
+                            <label class="col-sm-2 col-xs-4 control-label">优惠券前缀</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="radio" name="form[usetype]" value="0" checked onclick="$('#numberid').show();"> 仅能使用一次  <input type="radio"  name="form[usetype]" value="1" onclick="$('#numberid').hide();"> 全站会员均可使用一次
+                                <input type="text" class="form-control" name="pre" value="" placeholder="例如：WZ （五指互联）"  datatype="s0-4" errormsg="最多4个字符">
                             </div>
                         </div>
+
+        
                         <div class="form-group" id="numberid">
                             <label class="col-sm-2 col-xs-4 control-label">生成数量</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
@@ -38,19 +40,7 @@ include $this->template('header','core');
                         <div class="form-group" id="numberid">
                             <label class="col-sm-2 col-xs-4 control-label">面值</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="text" class="form-control" name="form[mount]" value="" placeholder="单位（元）格式：1.00" datatype="s1-6" errormsg="请输入1-6位金额">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 col-xs-4 control-label">绑定套餐（产品）</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <div class="input-group">
-                                    <input type="hidden" name="form[id]" id="relation" value="">
-                                    <input type="text" name="relation_search" id="relation_search" class="form-control" readonly datatype="*1-100" nullmsg="请选择套餐">
-<span class="input-group-btn">
-<button class="btn btn-white" type="button" onclick="select_content(2)">选择套餐</button>
-</span>
-                                </div>
+                                <input type="text" id="mount" class="form-control" name="form[mount]" value="<?php echo $mount;?>" placeholder="单位（元）格式：1.00" datatype="s1-6" errormsg="请输入1-6位金额">
                             </div>
                         </div>
                         <div class="form-group">
@@ -123,6 +113,16 @@ include $this->template('header','core');
             }
         }).showModal(this);
     }
+    <?php
+    if($groupname) {
+    ?>
+    $("#groupname").attr('disabled','disabled');
+    $("#title").attr('disabled','disabled');
+    $("#endtime").attr('disabled','disabled');
+    $("#mount").attr('disabled','disabled');
+    <?php
+    }
+ ?>
 </script>
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
 <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>

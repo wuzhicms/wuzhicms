@@ -1,218 +1,76 @@
-<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T('member','head'); ?>
-<link rel="stylesheet" href="http://www.h1jk.cn/res/js/dialog/ui-dialog.css" />
-<script src="http://www.h1jk.cn/res/js/dialog/dialog-plus.js"></script>
-<!--正文部分-->
-<div class="container adframe">
+<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("member","head"); ?>
+<body class="gray-bg">
+<?php if($set_iframe==0) { ?>
+    <?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("member","iframetop"); ?>
+<?php } else { ?>
+    <div style="padding-top: 15px;"></div>
+<?php } ?>
+<div class="container-fluid  ie8-member">
     <div class="row">
-        <div class="col-lg-12 col-xs-12">
-            
-        </div>
-    </div>
-</div>
-
-<div class="container memberframe">
-    <div class="row">
-        <div class="col-lg-12 col-xs-12">
-            <!--左侧开始-->
-            <div class="memberleft">
-                <div class="membertitle"><h3>会员中心</h3></div>
-                <div class="memberborder">
-                    <?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T('member','left'); ?>
+        <?php if($set_iframe==0) { ?>
+        <div class="col-sm-3">
+            <!--左侧导航-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="nav-close"><i class="fa fa-times-circle"></i>
                 </div>
-            </div>
-            <!--左侧结束-->
+                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+                    <div class="sidebar-collapse" style="width: auto; height: 100%;">
+                        <?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("member","left"); ?>
+                    </div>
+                </div>
+            </nav>
+            <!--end 左侧导航-->
+        </div><!--col-sm-3--><?php } ?>
 
-            <!--右侧开始-->
-            <div class="memberright">
+        <div class="<?php if($set_iframe==0) { ?>col-sm-9<?php } else { ?>col-sm-12<?php } ?>">
 
-                <div class="memberbordertop">
-                    <section class="panel">
-                        <header class="panel-heading"><span class="title">我的发布</span></header>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <ul class="nav nav-tabs">
+                                <li ><a href="index.php?m=content&f=postinfo&v=newinfo&cid=<?php echo $cid;?>&set_iframe=<?php echo $set_iframe;?>"><?php echo $catname;?> - 信息发布</a></li>
+                                <li class="active"><a href="index.php?m=content&f=postinfo&v=listing&cid=<?php echo $cid;?>&set_iframe=<?php echo $set_iframe;?>">我发布的<?php echo $catname;?></a>
+                                </li>
+                            </ul>
 
-                        <ul id="myTab" class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#tabs1" id="1tab" role="tab" data-toggle="tab" aria-controls="tabs1" aria-expanded="true">最新信息</a></li>
-                            <li role="presentation" class=""><a href="#tabs2" role="tab" id="2tab" data-toggle="tab" aria-controls="tabs2" aria-expanded="false">显示中的信息</a></li>
-                            <li role="presentation" class=""><a href="#tabs3" role="tab" id="3tab" data-toggle="tab" aria-controls="tabs3" aria-expanded="false">审核中的信息</a></li>
-                            <li role="presentation" class=""><a href="#tabs4" role="tab" id="4tab" data-toggle="tab" aria-controls="tabs4" aria-expanded="false">已删除的信息</a></li>
-                        </ul>
+                            <div class="project-list">
 
-                        <div class="submitbtn"><a href="?m=content&f=postinfo&v=newinfo" class="btn">免费发布信息</a></div>
-
-
-                        <div id="myTabContent" class="tab-content tabsbordertop">
-
-                            <div role="tabpanel" class="tab-pane fade active in" id="tabs1" aria-labelledby="1tab">
-                                <div class="panel-body" id="panel-bodys">
-                                    <table class="table table-striped table-advance table-hover text-center">
-                                        <tbody>
-                                        <?php $n=1;if(is_array($result1)) foreach($result1 AS $r) { ?>
-                                        <tr>
-                                            <td colspan="3" class="text-left mysubmit"><span class="uptime">更新时间: <?php echo date('Y-m-d H:i:s',$r['updatetime']);?></span> <span class="number">编号：<?php echo $r['id'];?></span> <span class="pull-right"><a href="?m=content&f=mecinfo&v=editinfo&id=<?php echo $r['id'];?>" class="btn btn-order">修改</a> <a href="?m=content&f=mecinfo&v=delinfo&id=<?php echo $r['id'];?>"  class="btn btn-del">删除</a></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="submitlist"><a href="<?php echo $r['url'];?>"><?php echo $r['title'];?></a></td>
-                                            <td><div class="progress">
-                                                <?php if($r['status']==9) { ?>
-                                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">显示中</div>
-                                                <?php } elseif ($r['status']==0) { ?>
-                                                <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">已删除</div>
-                                                <?php } elseif ($r['status']>0) { ?>
-                                                <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">审核中</div>
-                                                <?php } ?>
-                                            </div></td>
-                                            <td><a href="javascript:referer(<?php echo $r['id'];?>);" class="btn btn-white">刷新</a> <a href="javascript:settop(<?php echo $r['id'];?>);" class="btn btn-white">置顶</a></td>
-                                        </tr>
-<?php $n++;}?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <?php if($total>20) { ?>
-                                <!--分页开始-->
-                                <div class="paginationpage text-center">
-                                    <nav>
-                                        <ul class="pagination">
-                                            <?php echo $pages;?>
-                                        </ul>
-                                    </nav>
-                                </div>
-                                <?php } ?>
-                                <!--分页结束-->
-
-                            </div>
-
-
-                            <div role="tabpanel" class="tab-pane fade" id="tabs2" aria-labelledby="2tab">
-                                <table class="table table-striped table-advance table-hover text-center">
+                                <table class="table table-hover">
                                     <tbody>
-                                    <?php $n=1;if(is_array($result2)) foreach($result2 AS $r) { ?>
+                                    <?php $n=1;if(is_array($result)) foreach($result AS $r) { ?>
                                     <tr>
-                                        <td colspan="3" class="text-left mysubmit"><span class="uptime">更新时间: <?php echo date('Y-m-d H:i:s',$r['updatetime']);?></span> <span class="number">编号：<?php echo $r['id'];?></span> <span class="pull-right"><a href="?m=content&f=mecinfo&v=editinfo&id=<?php echo $r['id'];?>" class="btn btn-order">修改</a> <a href="?m=content&f=mecinfo&v=delinfo&id=<?php echo $r['id'];?>"  class="btn btn-del">删除</a></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="submitlist"><a href="<?php echo $r['url'];?>"><?php echo $r['title'];?></a></td>
-                                        <td><div class="progress">
-                                            <?php if($r['status']==9) { ?>
-                                            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">显示中</div>
-                                            <?php } elseif ($r['status']==0) { ?>
-                                            <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">已删除</div>
-                                            <?php } elseif ($r['status']>0) { ?>
-                                            <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">审核中</div>
-                                            <?php } ?>
-                                        </div></td>
-                                        <td><a href="javascript:referer(<?php echo $r['id'];?>);" class="btn btn-white">刷新</a> <a href="javascript:settop(<?php echo $r['id'];?>);" class="btn btn-white">置顶</a></td>
+
+                                        <td class="project-title">
+                                            <?php if($r['status']==9) { ?> <a href="<?php echo $r['url'];?>"><?php echo $r['title'];?></a><?php } else { ?><strong><?php echo $r['title'];?></strong><?php } ?>
+                                            <br/>
+                                            <small>时间: <?php echo date('Y-m-d H:i:s',$r['addtime']);?></small>
+                                        </td>
+                                        <td class="project-status" width="100">
+                                            <?php if($r['status']==0) { ?><span class="label label-default">已删除</span><?php } elseif ($r['status']==9) { ?><span class="label label-primary">审核通过</span><?php } else { ?><span class="label label-danger">待审核</span><?php } ?>
+                                        </td>
+                                        <td class="project-actions">
+                                            <a href="?m=content&f=postinfo&v=edit&cid=<?php echo $r['cid'];?>&id=<?php echo $r['id'];?>" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 编辑 </a>
+                                            <?php if($r['status']!=0) { ?>
+                                            <a href="?m=content&f=postinfo&v=delinfo&cid=<?php echo $r['cid'];?>&id=<?php echo $r['id'];?>" class="btn btn-white btn-sm"><i class="fa fa-recycle"></i> 删除 </a><?php } ?>
+                                        </td>
                                     </tr>
                                     <?php $n++;}?>
                                     </tbody>
                                 </table>
                             </div>
-
-                            <div role="tabpanel" class="tab-pane fade" id="tabs3" aria-labelledby="3tab">
-                                <table class="table table-striped table-advance table-hover text-center">
-                                    <tbody>
-                                    <?php $n=1;if(is_array($result3)) foreach($result3 AS $r) { ?>
-                                    <tr>
-                                        <td colspan="3" class="text-left mysubmit"><span class="uptime">更新时间: <?php echo date('Y-m-d H:i:s',$r['updatetime']);?></span> <span class="number">编号：<?php echo $r['id'];?></span> <span class="pull-right"><a href="?m=content&f=mecinfo&v=editinfo&id=<?php echo $r['id'];?>" class="btn btn-order">修改</a> <a href="?m=content&f=mecinfo&v=delinfo&id=<?php echo $r['id'];?>"  class="btn btn-del">删除</a></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="submitlist"><a href="<?php echo $r['url'];?>"><?php echo $r['title'];?></a></td>
-                                        <td><div class="progress">
-                                            <?php if($r['status']==9) { ?>
-                                            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">显示中</div>
-                                            <?php } elseif ($r['status']==0) { ?>
-                                            <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">已删除</div>
-                                            <?php } elseif ($r['status']>0) { ?>
-                                            <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">审核中</div>
-                                            <?php } ?>
-                                        </div></td>
-                                        <td></td>
-                                    </tr>
-                                    <?php $n++;}?>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div role="tabpanel" class="tab-pane fade" id="tabs4" aria-labelledby="4tab">
-                                <table class="table table-striped table-advance table-hover text-center">
-                                    <tbody>
-                                    <?php $n=1;if(is_array($result4)) foreach($result4 AS $r) { ?>
-                                    <tr>
-                                        <td colspan="3" class="text-left mysubmit"><span class="uptime">更新时间: <?php echo date('Y-m-d H:i:s',$r['updatetime']);?></span> <span class="number">编号：<?php echo $r['id'];?></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="submitlist"><a href="<?php echo $r['url'];?>"><?php echo $r['title'];?></a></td>
-                                        <td><div class="progress">
-                                            <?php if($r['status']==9) { ?>
-                                            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">显示中</div>
-                                            <?php } elseif ($r['status']==0) { ?>
-                                            <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">已删除</div>
-                                            <?php } elseif ($r['status']>0) { ?>
-                                            <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">审核中</div>
-                                            <?php } ?>
-                                        </div></td>
-                                        <td></td>
-                                    </tr>
-                                    <?php $n++;}?>
-                                    </tbody>
-                                </table>
+                            <div class="paginationpage text-center">
+                                <nav>
+                                    <ul class="pagination">
+                                        <?php echo $pages;?>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
-
-
-                    </section>
+                    </div>
                 </div>
-
             </div>
-            <!--右侧结束-->
-
-
         </div>
     </div>
 </div>
-<script>
-    function referer(id) {
-        var d = dialog({
-            title: '提示',
-            content: '刷新将消耗您10点积分',
-            okValue: '确定',
-            ok: function () {
-                $.post("?m=content&f=mecinfo&v=referer", { id: id, time: "2pm" },
-                        function(data){
-                            if(data==1) {
-                                var xb = dialog({
-                                    content: '刷新成功！'
-                                });
-                                xb.show();
-                                setTimeout(function () {
-                                    xb.close().remove();
-                                }, 2000);
-                            } else if(data==2) {
-                                var xb = dialog({
-                                    content: '您的积分不足，刷新失败！'
-                                });
-                                xb.show();
-                                setTimeout(function () {
-                                    xb.close().remove();
-                                }, 2000);
-                            }
-                        });
-
-            },
-            cancelValue: '取消',
-            cancel: function () {}
-        });
-        d.show();
-
-    }
-    function settop(id) {
-        var xb = dialog({
-            content: '置顶功能需要您联系客服！'
-        });
-        xb.show();
-        setTimeout(function () {
-            xb.close().remove();
-        }, 3000);
-    }
-</script>
-<!--正文部分-->
-<?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T('member','foot'); ?>
-
+<?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("member","foot"); ?>

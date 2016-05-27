@@ -3,6 +3,7 @@
 include $this->template('header','core');
 $menu_r = $this->db->get_one('menu',array('m'=>'linkage','f'=>'index','v'=>'item_listing'));
 $submenuid = $menu_r['menuid'];
+
 ?>
 <body class="body pxgrisbody">
 <section class="wrapper">
@@ -11,6 +12,7 @@ $submenuid = $menu_r['menuid'];
     <div class="col-lg-12">
         <section class="panel">
             <?php echo $this->menu($submenuid,'&linkageid='.input('linkageid').'&pid='.$GLOBALS['pid']);?>
+            <div id="position" style="padding: 15px;">当前位置：<?php echo $data['name'].' > '.$this->current_pos($pid);?></div>
             <form action="?m=linkage&f=index&v=sort<?php echo $this->su();?>" name="myform" method="post">
             <div class="panel-body" id="panel-bodys">
                 <table class="table table-striped table-advance table-hover">
@@ -19,6 +21,7 @@ $submenuid = $menu_r['menuid'];
                         <th class="tablehead">排序</th>
                         <th class="hidden-phone tablehead">ID</th>
                         <th class="tablehead">名称</th>
+                        <th class="tablehead">首字母</th>
                         <th class="tablehead">描述</th>
                         <th class="tablehead">管理操作</th>
                     </tr>
@@ -32,10 +35,16 @@ $submenuid = $menu_r['menuid'];
                             <td><input class="center" name="sorts[<?php echo $r['lid'];?>]" type="text" size="3" value="<?php echo $r['sort'];?>"></td>
                             <td><?php echo $r['lid'];?></td>
                             <td><?php echo $r['name'];?></td>
+                            <td><?php echo $r['initial'];?></td>
                             <td><?php echo $r['remark'];?></td>
                             <td>
                                 <a href="?m=linkage&f=index&v=item_listing&linkageid=<?php echo $GLOBALS['linkageid'];?>&pid=<?php echo $r['lid'];?><?php echo $this->su();?>" class="btn btn-info btn-xs">管理子选项</a>
                                 <a href="?m=linkage&f=index&v=add_item&linkageid=<?php echo $GLOBALS['linkageid'];?>&pid=<?php echo $r['lid'];?><?php echo $this->su();?>" class="btn btn-default btn-xs">添加子选项</a>
+                                <?php if($r['isgroup']=='0') {?>
+                                <a href="?m=linkage&f=index&v=set_group&lid=<?php echo $r['lid'];?><?php echo $this->su();?>" class="btn btn-default btn-xs">设为群组项</a>
+                                <?php } else {?>
+                                    <a href="?m=linkage&f=index&v=set_group&lid=<?php echo $r['lid'];?><?php echo $this->su();?>" class="btn btn-warning btn-xs">设为常规项</a>
+                                <?php }?>
                                 <a href="?m=linkage&f=index&v=edit_item&linkageid=<?php echo $GLOBALS['linkageid'];?>&pid=<?php echo $GLOBALS['pid'];?>&lid=<?php echo $r['lid'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">修改</a>
                                 <a href="javascript:makedo('?m=linkage&f=index&v=delete_item&lid=<?php echo $r['lid'];?><?php echo $this->su();?>', '确认删除该记录？')"
                                    class="btn btn-danger btn-xs">删除</a>

@@ -370,3 +370,15 @@ plupload_message i {
 .plupload .ui-sortable-placeholder {
 	height:35px;
 }
+
+@media (max-width: 800px) {
+	.plupload_wrapper {
+		min-width: 460px;
+	}
+
+	.plupload_container {
+		_height: 280px;
+		min-height: 280px;
+		position: relative;
+	}
+}

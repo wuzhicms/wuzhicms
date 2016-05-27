@@ -49,11 +49,24 @@ class json{
     public function get_newmessage() {
         $uid = get_cookie('_uid');
         $arr = array();
-        $r = $this->db->get_one('message', array('touid' => $uid,'status'=>1));
-        if($r) {
-            $arr['newmessage'] = 1;
+        $result = $this->db->get_list('message', array('touid' => $uid,'status'=>1), '*', 0, 9, 0, 'id DESC');
+        $sys_data = $my_data = array();
+        foreach($result as $r) {
+            $r['content'] = mb_strcut($r['content'],0,40);
+            if($r['msgtype']==1) {
+                $sys_data[] = $r;
+            } else {
+                $my_data[] = $r;
+            }
         }
-        echo json_encode($arr);
+        $return_data = array();
+        $return_data['total'] = count($result);
+        $return_data['sys_num'] = count($sys_data);
+        $return_data['sys_data'] = $sys_data;
+        $return_data['my_num'] = count($my_data);
+        $return_data['my_data'] = $my_data;
+
+        echo json_encode($return_data);
     }
     /*
      * 获取会员头像

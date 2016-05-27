@@ -40,7 +40,10 @@ final class WUZHI_template {
 		$cache_file = $cache_path . $template . '.php';
 		$data = file_get_contents($template_file);
 		$data = $this->template_parse($data);
-
+		if(OPEN_DEBUG==1) {
+			$data .= '<div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">结束：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div><script>setTimeout(function(){$(".remove_debug").remove();},20000);</script>';
+			$data = '<!DOCTYPE html><div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">开始：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div>'.$data;
+		}
 		$templatelen = @file_put_contents($cache_file, $data);
 
 		if ($templatelen == false) MSG(str_replace(CACHE_ROOT, 'caches/', $cache_file) . ' is readonly!');
@@ -149,7 +152,7 @@ final class WUZHI_template {
 			$m = $mat[1];
 			$field2 = $mat[2];
 		}
-		preg_match_all("/([a-z]+)\=[\"]?([^\"]+)[\"]?/i", stripslashes($field2), $matches, PREG_SET_ORDER);
+		preg_match_all("/([a-z_]+)\=[\"]?([^\"]+)[\"]?/i", stripslashes($field2), $matches, PREG_SET_ORDER);
 		$arr = array('action', 'cache', 'page', 'pagesize', 'return', 'start');
 		$tools = array('json', 'xml', 'block', 'sql');
 		$datas = array();

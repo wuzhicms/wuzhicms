@@ -11,7 +11,7 @@ private function images($config, $value){
 	$default_multiple = '';
 	if ($value && is_array($value)) {
 		foreach ($value AS $k => $v) {
-			$default_multiple .= '<li id="file_node_' . $k . '"><input type="hidden" name="' . $field . '[' . $k . '][url]" value="' . $v['url'] . '"> <img src="' . $v['url'] . '" alt="' . $v['alt'] . '" onclick="img_view(this.src);"> <textarea name="' . $field . '[' . $k . '][alt]" >' . $v['alt'] . '</textarea> <a class="btn btn-danger btn-xs" href="javascript:remove_file(' . $k . ');">移除</a></li>';
+			$default_multiple .= '<li id="file_node_' . $k . '"><input type="hidden" name="form[' . $field . '][' . $k . '][url]" value="' . $v['url'] . '"> <img src="' . $v['url'] . '" alt="' . $v['alt'] . '" onclick="img_view(this.src);"> <textarea name="form[' . $field . '][' . $k . '][alt]" >' . $v['alt'] . '</textarea> <a class="btn btn-danger btn-xs" href="javascript:remove_file(' . $k . ');">移除</a></li>';
 		}
 	}
 	$str2 = '<div id="' . $field . '"><ul id="' . $field . '_ul">' . $default_multiple . '</ul></div>';

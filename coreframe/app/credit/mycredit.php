@@ -35,6 +35,10 @@ class mycredit extends WUZHI_foreground{
         $memberinfo = $this->memberinfo;
         $money = intval($GLOBALS['money']);
         if($money>$memberinfo['money']) MSG('您的剩余金额不足');
+		if($money<0)  {
+			MSG('金额错误哦!');
+			exit;
+		}
         $point_config = get_cache('point_config');
         if($point_config['exchange_point']) {
             $credit_api = load_class('credit_api','credit');

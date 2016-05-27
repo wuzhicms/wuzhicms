@@ -19,7 +19,8 @@ table.DynarchCalendar-titleCont{font-size:130%;font-weight:bold;color:#444;text-
 .DynarchCalendar-animBody-fwd{position:absolute;top:5px;left:100%}
 .DynarchCalendar-animBody-now{position:absolute;top:5px;left:0}
 .DynarchCalendar-animBody-fwdYear{position:absolute;top:100%;left:0}
-.DynarchCalendar-dayNames{padding-left:15px;padding-right:15px}
+.DynarchCalendar-dayNames{padding-left:3px;padding-right:3px}
+.DynarchCalendar-dayNames table{width:100%;}
 .DynarchCalendar-dayNames div{font-weight:bold;color:#fff;text-shadow:1px 1px 1px #1C7EC0}
 .DynarchCalendar-navBtn{position:absolute;top:13px;z-index:10}
 .DynarchCalendar-navBtn div{background-repeat:no-repeat;background-position:50% 50%;height:15px;width:16px;padding:1px}

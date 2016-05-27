@@ -71,4 +71,59 @@ class index extends WUZHI_admin {
         $this->db->delete('message',array('id'=>$id));
         MSG(L('delete success'),HTTP_REFERER,1500);
     }
+
+    /**
+     * 添加消息模版
+     */
+    public function add_tpl() {
+        if(isset($GLOBALS['submit'])) {
+            if(empty($GLOBALS['content'])) MSG('内容不能为空');
+            $formdata = array();
+            $formdata['content'] = remove_xss($GLOBALS['content']);
+            $formdata['addtime'] = SYS_TIME;
+            $this->db->insert('message_tpl',$formdata);
+            MSG(L('add success'),HTTP_REFERER);
+        } else {
+            $show_formjs = 1;
+            include $this->template('add_tpl');
+        }
+    }
+    /**
+     * 消息模版列表
+     */
+    public function content_listing() {
+        $status_arr = $this->status_arr;
+        $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
+        $page = max($page,1);
+        $result = $this->db->get_list('message_tpl', '', '*', 0, 20,$page,'tplid DESC');
+        $pages = $this->db->pages;
+        $total = $this->db->number;
+        include $this->template('content_listing');
+    }
+    /**
+     * 删除模版
+     */
+    public function delete_tpl() {
+        $tplid = intval($GLOBALS['tplid']);
+        $this->db->delete('message_tpl',array('tplid'=>$tplid));
+        MSG(L('delete success'),HTTP_REFERER,1500);
+    }
+     /**
+     * 修改消息模版
+     */
+    public function edit_tpl() {
+        $tplid = intval($GLOBALS['tplid']);
+        if(isset($GLOBALS['submit'])) {
+            if(empty($GLOBALS['content'])) MSG('内容不能为空');
+            $formdata = array();
+            $formdata['content'] = remove_xss($GLOBALS['content']);
+            $formdata['addtime'] = SYS_TIME;
+            $this->db->update('message_tpl',$formdata,array('tplid' => $tplid));
+            MSG(L('add success'),HTTP_REFERER);
+        } else {
+            $show_formjs = 1;
+            $r = $this->db->get_one('message_tpl', array('tplid' => $tplid));
+            include $this->template('edit_tpl');
+        }
+    }
 }

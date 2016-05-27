@@ -31,22 +31,7 @@ function is_username($username) {
 	}
 	return true;
 }
-/**
- * 获取头像
- * @param int $uid 用户id
- * @param $size 30|45|90|180 default 30
- */
-function avatar($uid, $size=30){
-	$uid = (int)$uid;
-	if($uid){
-		$size = intval($size);
-		$file = 'uploadfile/member/'.substr(md5($uid), 0, 2).'/'.$uid.'/'.$size.'x'.$size.'.jpg';
-		if(file_exists(WWW_ROOT.$file)){
-			return WEBURL.$file;
-		}
-	}
-	return R.'images/userface.png';
-}
+
 if(!function_exists('exif_imagetype')){
 	function exif_imagetype ($filename){
 		if((list($width, $height, $type, $attr) = getimagesize($filename)) !== false){

@@ -85,7 +85,8 @@ if($modelid==0) {
                                     <td title="更新时间：<?php echo date('Y-m-d H:i:s',$r[ 'updatetime']);?>"><?php echo time_format($r[ 'addtime']);?></td>
                                     <td>
                                         <a href="?m=content&f=content&v=edit&id=<?php echo $r['id'];?>&type=<?php echo $GLOBALS['type'];?>&cid=<?php echo $r['cid'].$this->su();?>" class="btn btn-primary btn-xs">编辑</a>
-                                        <a href="?m=content&f=content&v=view&id=<?php echo $r['id'];?>&cid=<?php echo $r['cid'];?><?php echo $this->su();?>" target="_blank" class="btn btn-default btn-xs">审核</a>
+                                        <?php if($r['status']!=9) {?>
+                                        <a href="?m=content&f=content&v=view&id=<?php echo $r['id'];?>&cid=<?php echo $r['cid'];?><?php echo $this->su();?>" target="_blank" class="btn btn-default btn-xs">审核</a><?php }?>
                                         <a href="javascript:makedo('?m=content&f=content&v=<?php if($status!=0) echo 'recycle_';?>delete&id=<?php echo $r['id'];?>&cid=<?php echo $r['cid'].$this->su();?>', '确认删除该记录？')" class="btn btn-danger btn-xs">删除</a>
                                         <?php if($cid==69) {?>
                                         <a href="?m=medical&f=jingjia&v=listing&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-info btn-xs">竞价</a><?php }?>
@@ -109,6 +110,7 @@ if($modelid==0) {
                                         <?php if($cid) {?>
                                         <button type="submit" onclick="$('#v').val('delete_more')" class="btn btn-default btn-sm">批量删除</button><?php }?>
 
+                                        <input name="status" value="<?php echo $status;?>" type="hidden">
                                         <input name="cid" value="<?php echo $cid;?>" type="hidden">
                                     </div>
                                     <div class="pull-right">

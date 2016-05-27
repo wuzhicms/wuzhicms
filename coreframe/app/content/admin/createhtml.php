@@ -146,16 +146,9 @@ class createhtml extends WUZHI_admin {
             }
 
             //上一页
-            if($key) {
-                $data['previous_page'] = array_slice($result, $key, 1);//上一页
-                $data['next_page'] = array_slice($result, $key-2, 1);//下一页
-                if(empty($data['previous_page'])) {
-                    $data['previous_page'] = $this->db->get_one($master_table,"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
-                }
-            } else {
-                $data['previous_page'] = $this->db->get_one($master_table,"`cid`= '$cid' AND `id`>'$id' AND `status`=9",'*',0,'id ASC');
-                $data['next_page'] = $this->db->get_one($master_table,"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
-            }
+            $data['previous_page'] = $this->db->get_one($master_table,"`cid`= '$cid' AND `id`>'$id' AND `status`=9",'*',0,'id ASC');
+            //下一页
+            $data['next_page'] = $this->db->get_one($master_table,"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
 
             $this->html->show($data,1,1,'',$model_r);
 

@@ -144,8 +144,11 @@ class WUZHI_db {
 	 * @return array/null	数据查询结果集,如果不存在，则返回空
 	 * @author jiucai
 	 */
-	final public function get_page_list($sql,$param = array(), $page = 0, $pagesize = 0 ) {
-		return $this->read_db->get_page_list($sql,$param, $page, $pagesize);
+	final public function get_page_list($sql,$startid = 0, $pagesize = 200, $page = 0, $keyfield = '') {
+		$page = max(intval($page), 1);
+		$offset = $pagesize*($page-1)+$startid;
+		$sql .= " Limit ".$offset.','.$pagesize;
+		return $this->read_db->get_page_list($sql, $keyfield);
 	}
 
 
@@ -182,6 +185,7 @@ class WUZHI_db {
 	 * @return boolean
 	 */
 	final public function insert($table, $data, $returnid = TRUE, $replace_into = FALSE) {
+		if(!defined('IN_ADMIN')) $data = $this->get_fields($table, $data);
 		return $this->master_db->insert($table, $data, $returnid, $replace_into);
 	}
 	
@@ -201,6 +205,7 @@ class WUZHI_db {
 	 * @return boolean
 	 */
 	final public function update($table, $data, $where = '') {
+		if(!defined('IN_ADMIN')) $this->get_fields($table, $data);
 		$where = $this->array2sql($where);
 		return $this->master_db->update($table, $data, $where);
 	}
@@ -214,7 +219,7 @@ class WUZHI_db {
 		$where = $this->array2sql($where);
 		return $this->master_db->delete($table, $where);
 	}
-	
+
 	/**
 	 * 计数，求和等
 	 * @param string/array $where 查询条件
@@ -255,6 +260,35 @@ class WUZHI_db {
 
 	final public function fetch_fields($query) {
 		return $this->read_db->fetch_fields($query);
+	}
+
+	/**
+	 * get_fields() 获取表字段
+	 * @return array
+	 */
+
+	final public function get_fields($table,$data = array()) {
+		$fields = array();
+		$query = $this->read_db->query('SHOW COLUMNS FROM wz_'.$table);
+		while($r = $this->read_db->fetch_array($query)) {
+			$fields[]=$r['Field'];
+		}
+		if(empty($data)) {
+			return $fields;
+		} else {
+			if(is_array($data)) {
+				$fields2 = array_keys($data);
+				$keys = array_diff($fields2,$fields);
+				if($keys) {
+					foreach($keys as $k) {
+						unset($data[$k]);
+					}
+					//$keys = implode(',',$keys);
+					//MSG('缺少字段:'.$keys);
+				}
+			}
+		}
+		return $data;
 	}
 
 	/**

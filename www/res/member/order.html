@@ -1,0 +1,477 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>H+ 后台主题UI框架 - 基础表格</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+
+    <!--手机头部+伸缩搜索-->
+    <link rel="stylesheet" href="css/mb-search/component.css">
+
+    <!-- 针对本页 = 重置样式 -->
+    <style>
+        /*标签页*/
+        .nav-tabs {
+            border-bottom: 0px solid #ddd;
+        }
+        .nav-tabs>li>a {
+            margin-right: 2px;
+            line-height: 1.42857143;
+            border: 0px solid transparent;
+            border-radius:0;
+            padding: 10px 20px 10px 20px;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        .nav > li > a:hover,
+        .nav > li > a:focus {
+            text-decoration: none;
+            background-color: #f5f5f5;
+        }
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            background: none;
+            border: none;
+            color: #ff7f50;
+            font-weight: bolder;
+        }
+
+        a{ color: #666666}
+        a:hover{ color: #ff7f50}
+
+        @media (min-width: 992px) {
+            .order-mobil  {
+                display: none;
+            }
+        }
+        @media (max-width: 991px) {
+            .order-pc {
+                display: none;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <!--order-pc-->
+                <div class="ibox float-e-margins order-pc">
+                    <div class="ibox-title">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+                                    <ul id="myTabs" class="nav nav nav-tabs" role="tablist"><!--<ul id="myTabs" class="nav nav-pills nav-stacked" role="tablist">-->  <!--胶囊标签  /  竖向标签 -->
+                                        <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">全部订单</a></li>
+                                        <li role="presentation" class=""><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">待付款</a></li>
+                                        <li role="presentation" class=""><a href="#profile" role="tab" id="profile-tab1" data-toggle="tab" aria-controls="profile" aria-expanded="false">待收款</a></li>
+                                        <li role="presentation" class="small-chat "><a href="#profile" role="tab" id="profile-tab2" data-toggle="tab" aria-controls="profile" aria-expanded="false">待评价</a>
+                                            <span class="badge badge-warning">25</span>
+                                        </li>
+                                        <li style="margin-left: 60px;" ><!--<a href="#"  style="margin-left: 60px;">近三个月订单</a>-->
+                                            <div class="btn-group">
+                                                <button data-toggle="dropdown" class="btn btn-default btn-outline dropdown-toggle" aria-expanded="false" style="border-color: #f5f5f5 ">近三个月订单 <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="buttons.html#">近三个月订单</a>
+                                                    </li>
+                                                    <li><a href="buttons.html#" class="font-bold">近三个月订单</a>
+                                                    </li>
+                                                    <li><a href="buttons.html#">近三个月订单</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li style="margin-left:10px;">
+                                            <div class="btn-group">
+                                                <button data-toggle="dropdown" class="btn btn-default  btn-outline dropdown-toggle" aria-expanded="false" style="border-color: #f5f5f5 ">全部状态 <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="buttons.html#">全部状态</a>
+                                                    </li>
+                                                    <li><a href="buttons.html#" class="font-bold">全部状态</a>
+                                                    </li>
+                                                    <li><a href="buttons.html#">全部状态</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" placeholder="商品名称 / 商品编号 / 订单号" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="table-responsive">
+
+                            <div id="myTabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+                                    <table class="table table-bordered ">
+                                        <thead>
+                                        <tr>
+                                            <th><span style="padding-right: 20px; padding-left: 10px;">2015-12-12 13:12:12</span> 订单号：1221243325</th>
+                                            <th class="text-center">收货人</th>
+                                            <th class="text-center">总计</th>
+                                            <th class="text-center">状态</th>
+                                            <th class="text-center">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!--商品-->
+                                                <table class="table" style="margin-bottom: 0;">
+                                                    <tbody  class="fst--tb">
+                                                    <tr>
+                                                        <td>
+                                                            <div class="media">
+                                                                <div class="media-left">
+                                                                    <a href="#">
+                                                                        <img class="media-object" src="http://temp.im/75x75" alt="...">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body" style="max-width: 300px; vertical-align: middle">
+                                                                    <a style="line-height: 2.0;" href="">
+                                                                        这两个类以前从 v3.3.0 版本开始
+                                                                        这两个类以前也曾经被用在了媒体组件上
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td> ×1</td>
+                                                        <td>返修 / 退换货</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="media">
+                                                                <div class="media-left">
+                                                                    <a href="#">
+                                                                        <img class="media-object" src="http://temp.im/75x75" alt="...">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body" style="max-width: 300px; vertical-align: middle">
+                                                                    <a style="line-height: 2.0;" href="">
+                                                                        这两个类以前从 v3.3.0 版本开始
+                                                                        这两个类以前也曾经被用在了媒体组件上
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td> ×1</td>
+                                                        <td>返修 / 退换货</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="media">
+                                                                <div class="media-left">
+                                                                    <a href="#">
+                                                                        <img class="media-object" src="http://temp.im/75x75" alt="...">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body" style="max-width: 300px; vertical-align: middle">
+                                                                    <a style="line-height: 2.0;" href="">
+                                                                        这两个类以前从 v3.3.0 版本开始
+                                                                        这两个类以前也曾经被用在了媒体组件上
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td> ×1</td>
+                                                        <td>返修 / 退换货</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td class="text-center">王参加</td>
+                                            <td class="text-center"><strong style="color: #000000; font-size: 16px;">¥192.50</strong><br><span style="color: #999999">在线支付</span></td>
+                                            <td class="text-center"><strong>已完成</strong> <br><a href="">订单详情</a></td>
+                                            <td class="text-center">评价晒单 <br> <a class="btn btn-default btn-xs">立即购买</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="table table-bordered ">
+                                        <thead>
+                                        <tr>
+                                            <th><span style="padding-right: 20px; padding-left: 10px;">2015-12-12 13:12:12</span> 订单号：1221243325</th>
+                                            <th class="text-center">收货人</th>
+                                            <th class="text-center">总计</th>
+                                            <th class="text-center">状态</th>
+                                            <th class="text-center">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!--商品-->
+                                                <table class="table" style="margin-bottom: 0;">
+                                                    <tbody  class="fst--tb">
+                                                    <tr>
+                                                        <td>
+                                                            <div class="media">
+                                                                <div class="media-left">
+                                                                    <a href="#">
+                                                                        <img class="media-object" src="http://temp.im/75x75" alt="...">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body" style="max-width: 300px; vertical-align: middle">
+                                                                    <a style="line-height: 2.0;" href="">
+                                                                        这两个类以前从 v3.3.0 版本开始
+                                                                        这两个类以前也曾经被用在了媒体组件上
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td> ×1</td>
+                                                        <td>返修 / 退换货</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td class="text-center">王参加</td>
+                                            <td class="text-center"><strong style="color: #000000; font-size: 16px;">¥192.50</strong><br><span style="color: #999999">在线支付</span></td>
+                                            <td class="text-center"><strong>已完成</strong> <br><a href="">订单详情</a></td>
+                                            <td class="text-center">评价晒单 <br> <a class="btn btn-default btn-xs">立即购买</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab2">
+                                    <table class="table table-bordered ">
+                                        <thead>
+                                        <tr>
+                                            <th><span style="padding-right: 20px; padding-left: 10px;">2015-12-12 13:12:12</span> 订单号：1221243325</th>
+                                            <th class="text-center">收货人</th>
+                                            <th class="text-center">总计</th>
+                                            <th class="text-center">状态</th>
+                                            <th class="text-center">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!--商品-->
+                                                <table class="table" style="margin-bottom: 0;">
+                                                    <tbody  class="fst--tb">
+                                                    <tr>
+                                                        <td>
+                                                            <div class="media">
+                                                                <div class="media-left">
+                                                                    <a href="#">
+                                                                        <img class="media-object" src="http://temp.im/75x75" alt="...">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body" style="max-width: 300px; vertical-align: middle">
+                                                                    <a style="line-height: 2.0;" href="">
+                                                                        这两个类以前从 v3.3.0 版本开始
+                                                                        这两个类以前也曾经被用在了媒体组件上
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td> ×1</td>
+                                                        <td>返修 / 退换货</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td class="text-center">王参加 </td>
+                                            <td class="text-center"><strong style="color: #000000; font-size: 16px;">¥192.50</strong><br><span style="color: #999999">在线支付</span></td>
+                                            <td class="text-center"><span style="color: #999999">已完成</span> <br><a href="">订单详情</a></td>
+                                            <td class="text-center">评价晒单 <br> <a class="btn btn-default btn-xs">立即购买</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!--order-pc-->
+
+
+
+
+                <!--order-mobil-->
+                <div class="order-mobil">
+                    <div class="order-mobil-header">
+                        <a href="javascript:;">
+                            <i></i>
+                        </a>
+                        <h2>全部订单</h2>
+
+                        <div class="column">
+                            <div id="sb-search" class="sb-search">
+                                <form>
+                                    <input class="sb-search-input" placeholder="search..." type="text" value="" name="search" id="search">
+                                    <input class="sb-search-submit" type="submit" value="">
+                                    <span class="sb-icon-search"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 10px;"></span></span>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>2015-12-12 13:12:23<small class="m-l-sm">订单号:123455678</small></h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content" style="display: block;">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" src="http://temp.im/75x75" alt="...">
+                                    </a>
+                                </div>
+                                <div class="media-body" style=" vertical-align: middle">
+                                    <a style="line-height: 2.0;" href="">
+                                        这两个类以前从 v3.3.0 版本开始
+                                        这两个类以前也曾经被用在了媒体组件上
+                                    </a>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div>实付款：<span style="color: #333333; font-size: 16px;">¥193.20</span> <span style="display: inline-block; float: right"><button type="button" class="btn btn-outline btn-primary btn-sm">评价晒单</button> <button type="button" class="btn btn-outline btn-primary btn-sm">再次购买</button></span></div>
+                        </div>
+                    </div>
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>2015-12-12 13:12:23<small class="m-l-sm">订单号:123455678</small></h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content" style="display: block;">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" src="http://temp.im/75x75" alt="...">
+                                    </a>
+                                </div>
+                                <div class="media-body" style=" vertical-align: middle">
+                                    <a style="line-height: 2.0;" href="">
+                                        这两个类以前从 v3.3.0 版本开始
+                                        这两个类以前也曾经被用在了媒体组件上
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" src="http://temp.im/75x75" alt="...">
+                                    </a>
+                                </div>
+                                <div class="media-body" style=" vertical-align: middle">
+                                    <a style="line-height: 2.0;" href="">
+                                        这两个类以前从 v3.3.0 版本开始
+                                        这两个类以前也曾经被用在了媒体组件上
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" src="http://temp.im/75x75" alt="...">
+                                    </a>
+                                </div>
+                                <div class="media-body" style=" vertical-align: middle">
+                                    <a style="line-height: 2.0;" href="">
+                                        这两个类以前从 v3.3.0 版本开始
+                                        这两个类以前也曾经被用在了媒体组件上
+                                    </a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div>实付款：<span style="color: #333333; font-size: 16px;">¥193.20</span> <span style="display: inline-block; float: right"><button type="button" class="btn btn-outline btn-primary btn-sm">评价晒单</button> <button type="button" class="btn btn-outline btn-primary btn-sm">再次购买</button></span></div>
+                        </div>
+                    </div>
+                </div><!--order-mobil-->
+
+            </div><!--col-sm-12-->
+
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.5"></script>
+
+
+
+    <!-- Peity -->
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+
+
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Peity -->
+    <script src="js/demo/peity-demo.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+    <!--统计代码，可删除-->
+
+    <!--手机头部+伸缩搜索-->
+    <script src="js/mb-search/modernizr.custom.js"></script>
+    <script src="js/mb-search/classie.js"></script>
+    <script src="js/mb-search/uisearch.js"></script>
+    <script>
+        new UISearch( document.getElementById( 'sb-search' ) );
+    </script>
+
+</body>
+
+</html>

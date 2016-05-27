@@ -22,27 +22,33 @@ class json {
     }
     public function init() {
         $linkageid = isset($GLOBALS['linkageid']) ? intval($GLOBALS['linkageid']) : exit('-1');
-        $result = $this->db->get_list('linkage_data', array('linkageid'=>$linkageid,'pid'=>0), '*', 0, 200, 0,"sort ASC,lid ASC");
-        $returnid = intval($GLOBALS['returnid']);
-        $str = '[';
-        foreach($result as $rs) {
-            $vid = $returnid ? $rs['lid'] : $rs['name'];
-            $str .= '{"v" : "'.$vid.'", "n" : "'.$rs['name'].'"';
-            if($rs['child']) {
-                $str .= $this->child($rs['lid'],$returnid);
+        $data = get_cache('linkage_'.$linkageid,'linkage');
+        if(empty($data)) {
+            $result = $this->db->get_list('linkage_data', array('linkageid'=>$linkageid,'pid'=>0), '*', 0, 200, 0,"sort ASC,lid ASC");
+            $returnid = intval($GLOBALS['returnid']);
+            $str = '[';
+            foreach($result as $rs) {
+                $vid = $returnid ? $rs['lid'] : $rs['name'];
+                $str .= '{"v" : "'.$vid.'", "n" : "'.$rs['initial'].' '.$rs['name'].'", "g" : "'.$rs['isgroup'].'"';
+                if($rs['child']) {
+                    $str .= $this->child($rs['lid'],$returnid);
+                }
+                $str .= '},';
             }
-           $str .= '},';
+            $str = substr($str,0,-1);
+            $str .= ']';
+            echo $str;
+            set_cache('linkage_'.$linkageid,array('data'=>$str),'linkage');
+        } else {
+            echo $data['data'];
         }
-        $str = substr($str,0,-1);
-        $str .= ']';
-        echo $str;
     }
     private function child($pid,$returnid) {
         $result = $this->db->get_list('linkage_data', array('pid'=>$pid), '*', 0, 200, 0,"sort ASC,lid ASC");
         $str = ', "s" : [';
         foreach($result as $rs) {
             $vid = $returnid ? $rs['lid'] : $rs['name'];
-            $str .= '{"v" : "'.$vid.'", "n" : "'.$rs['name'].'"';
+            $str .= '{"v" : "'.$vid.'", "n" : "'.$rs['name'].'", "g" : "'.$rs['isgroup'].'"';
             if($rs['child']) {
                 $str .= $this->child($rs['lid'],$returnid);
             }

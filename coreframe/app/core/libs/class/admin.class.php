@@ -34,6 +34,7 @@ class WUZHI_admin {
         } else {
             if(!isset($_SESSION['uid']) || !$_SESSION['uid'] || !isset($_SESSION['role'])) MSG(L('admin_login'),'?m=core&f=index&v=login'.$this->su());
         }
+        define('SITEID',get_cookie('siteid'));
         $this->logs();
     }
 
@@ -61,8 +62,8 @@ class WUZHI_admin {
             $_su = isset($GLOBALS['_su']) ? $GLOBALS['_su'] : '';
             $su = '&_su='.$_su;
             if($showmenu===TRUE) {
-                $_menuid = isset($GLOBALS['_menuid']) ? $GLOBALS['_menuid'] : '';
-                $_submenuid = isset($GLOBALS['_submenuid']) ? $GLOBALS['_submenuid'] : '';
+                $_menuid = isset($GLOBALS['_menuid']) ? intval($GLOBALS['_menuid']) : '';
+                $_submenuid = isset($GLOBALS['_submenuid']) ? intval($GLOBALS['_submenuid']) : '';
                 $su .= '&_menuid='.$_menuid;
                 if($_submenuid) $su .= '&_submenuid='.$_submenuid;
             }
@@ -123,9 +124,15 @@ class WUZHI_admin {
     final private function logs() {
         $db = load_class('db');
         //权限检查
-        if($_SESSION['role']!=1) {
-            $keyid = substr(md5($_SESSION['role'].M.F.V),0,16);
-            $r = $db->get_one('admin_private',array('keyid'=>$keyid),'chk');
+        if(strpos($_SESSION['role'],',1,')===false) {
+            $roles = explode(',',trim($_SESSION['role'],','));
+            foreach($roles as $role) {
+                $keyid = substr(md5($role.M.F.V),0,16);
+                $r = $db->get_one('admin_private',array('keyid'=>$keyid),'chk');
+                if($r && $r['chk']==1) {
+                    break;
+                }
+            }
             if(!$r || $r['chk']==0) {
                 MSG(L('no_private'));
                 exit;

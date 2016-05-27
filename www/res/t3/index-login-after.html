@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Note there is no responsive meta tag here -->
+
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>五指cms-门户默认模板</title>
+
+    <!-- CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/hover.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/non-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.wuzhicms.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<nav class="navbar navbar-default-index">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar" class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="image/logo.png">
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="news.html">新闻</a></li>
+            <li><a href="photo.html">图片</a></li>
+            <li><a href="video.html">视频</a></li>
+            <li><a href="down.html">下载</a></li>
+            <li><a href="tuangou.html">团购   </a></li>
+            <li><a href="jifenmall.html">积分商城</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown serch--dropdown-menu">
+                <a href="#"  title="搜索"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 7px;"></span> </a>
+                <ul class="dropdown-menu ">
+                    <div class="input-group  select-search" style="margin-top: 6px">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;&nbsp;&nbsp;全站&nbsp;&nbsp;&nbsp;&nbsp; <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">新闻</a></li>
+                                <li><a href="#">图片</a></li>
+                                <li><a href="#">视频</a></li>
+                                <li><a href="#">团购</a></li>
+                                <li><a href="#">积分商城</a></li>
+                            </ul>
+                        </div><!-- / input-group-btn-->
+                        <input type="text" class="form-control" placeholder="请输入关键词">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button">&nbsp;&nbsp;&nbsp;&nbsp;搜索&nbsp;&nbsp;&nbsp;&nbsp; </button>
+                      </span>
+                    </div><!-- /input-group -->
+                </ul>
+            </li>
+            <li class="dropdown mall--dropdown-menu">
+                <a href="#"  title="购物车"  class="dropdown-toggle " data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true" style="padding-top: 5px;"></span> <span class="font-Arial">3</span></a>
+                <ul class="dropdown-menu">
+                    <p class="font_size12">最近加入的宝贝：</p>
+
+
+                    <ul class="cart-list">
+                        <li>
+                            <div class="cart-item clearfix"><a class="thumb" href="//item.mi.com/1152500016.html"><img alt="" src="image/temp/temp8.jpg " width="60px"></a>
+                                <a class="name" href="//item.mi.com/1152500016.html">小蚁蓝牙遥控器胡歌来测试  黑色</a><span class="price">39元 × 1</span>
+                                <a class="btn-del" href="javascript: void(0);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cart-item clearfix "><a class="thumb" href="//item.mi.com/1153900007.html"><img alt="" src="//i1.mifile.cn/a1/T1XybgBjhT1RXrhCrK.jpg?width=60&amp;height=60"></a>
+                                <a class="name" href="//item.mi.com/1153900007.html">智能唤醒翻盖保护套 黑色</a> <span class="price">39元 × 1</span>
+                                <a class="btn-del" href="javascript: void(0);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cart-item clearfix"><a class="thumb" href="//item.mi.com/1152500016.html"><img alt="" src="//i1.mifile.cn/a1/T1xXxQBCVT1RXrhCrK.jpg?width=60&amp;height=60"></a>
+                                <a class="name" href="//item.mi.com/1152500016.html">小蚁蓝牙遥控器 黑色</a><span class="price">39元 × 1</span>
+                                <a class="btn-del" href="javascript: void(0);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                        </li>
+                    </ul>
+
+
+                    <li role="separator" class="divider" style="margin-top: 0"></li>
+                    <p class="font_size12 text-right">购物车里还有1件宝贝</p>
+                    <a href="#" class=" btn btn-warning btn-sm  float_right">查看我的购物车</a>
+                </ul>
+            </li>
+            <li class="dropdown login--dropdown-menu">
+                <a href="#"  title="进入会员中心"  class="dropdown-toggle" ><img src="image/temp/tuxiang.png" class="img-circle" height="24px;" style="border: 2px solid #fff"> wuzhicms</a>
+            </li>
+            <li>
+                <a href="#"  title="退出会员"  class="dropdown-toggle" >退出</a>
+            </li>
+
+        </ul>
+    </div><!--/.nav-collapse -->
+</nav>
+
+<!--ad-->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ad-box" style="height: 90px; width: 100%; background: #dddddd; text-align: center; ">90</div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--index-one-screen-->
+<div class="index-one-screen">
+    <!--big-headline-news-->
+    <div class="container">
+
+        <div class="big-headline-news ">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="border--bottom1s">
+                        <h2 class="text-center  manhangyichu" ><a href="news-content.html">在我国漫长而灿烂的文化历史中我们的祖先总结解释宇宙在我国漫长而灿烂的文化历史中我们的祖先总结解释宇宙</a></h2>
+                    </div>
+                    </div>
+
+                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="">解释宇宙在我国漫长而灿烂的文化历史中我们的祖先总结解释宇宙</a></div></div>
+                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="">解释宇宙在我国漫长而灿烂的文化历史中我们的祖先总结解释宇宙</a></div></div>
+                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="">解释宇宙在我国漫长而灿烂的文化历史中我们的祖先总结解释宇宙</a></div></div>
+                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="">解释宇宙在我国漫长而灿烂的文化历史中我们的祖先总结解释宇宙</a></div></div>
+            </div>
+
+        </div>
+
+
+        <div class="index-last-new-box">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="narrowArt">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp5.jpg" alt="" height="380">
+                            <h1>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h1>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="narrowArt video">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp4.jpg" alt="" height="">
+                            <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                    <div class="narrowArt poto">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp3.jpg" alt="" height="">
+                            <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+
+                    <div class="headline-news-list">
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading color_qiyelan font_size16" style="font-weight: normal"><a href="">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日新都桥深度赏秋7日</a></h4>
+                                <div class="media-content  color_777 ">今日全国各地的队友到成都集合，领袖户外的领队已经在酒店等大家了。品尝成都特色美食，感受天府之国的休闲生活，顺道采买些路上零食今日全国各地的队友到成都集合，领袖户外的领队已经在酒店等大家了。如果您的时间比较宽裕</div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading color_qiyelan font_size16" style="font-weight: normal">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日</h4>
+                                <div class="media-content color_777">今日全国各地的队友到成都集合如果您的时间比较宽裕领袖户外的领队已经在酒店等大家了。</div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading color_qiyelan font_size16" style="font-weight: normal">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日</h4>
+                                <div class="media-content color_777">今日全国各地的队友到成都集合，领袖户外的领队已经在酒店等大家了。如果您的时间比较宽裕，还可以自行安排在成都市区的自由活动，推荐游览锦里、武侯祠、杜甫草堂、宽窄巷子等景点，品尝成都特色美食，感受天府之国的休闲生活，顺道采买些路上零食今日全国各地的队友到成都集合，领袖户外的领队已经在酒店等大家了。如果您的时间比较宽裕，还可以自行安排在成都市区全国各地的队友到成都集合，领袖户外的领队已经在酒店等大家了。</div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp2.jpg" alt="" height="">
+                            <h2 data-autor="专题推荐">高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp2.jpg" alt="" height="">
+                            <h2 data-autor="专题推荐">高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp2.jpg" alt="" height="">
+                            <h2 data-autor="专题推荐">高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp2.jpg" alt="" height="">
+                            <h2 data-autor="专题推荐">高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 图片 -->
+<div class="container">
+    <div class="index-pic-box">
+    <div class="lanmu-content lanmu-content-bg">
+        <h2 class="lanmu-title">
+            <a href="#" >图片</a>
+        </h2>
+        <nav>
+            <a href="#/pilka-nozna"> 图说  </a>
+            <a href="#/siatkowka">摄影</a>
+            <a href="#/zuzel">纪实</a>
+            <a href="#/sporty-walki">记忆</a>
+            <a href="#/koszykowka">时尚</a>
+        </nav>
+    </div>
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <div class="narArts">
+                    <a title="222" href="#">
+                        <div class="crop">
+                            <img  src=" image/temp/temp3.jpg" alt="">
+                        </div>
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭</h2>
+                    </a>
+                </div>
+                <div class="narArts">
+                    <a title="222" href="#">
+                        <div class="crop">
+                            <img  src=" image/temp/temp6.jpg" alt="">
+                        </div>
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭</h2>
+                    </a>
+                </div>
+                <div class="narArts">
+                    <a title="222" href="#">
+                        <div class="crop">
+                            <img  src=" image/temp/temp6.jpg" alt="">
+                        </div>
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp5.jpg" alt="" height="380">
+                        <h1>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h1>
+                    </a>
+                </div>
+                <div class="narrowArt">
+                    <a href="" title="222">
+                        <img  src=" image/temp/temp3.jpg" alt="" height="182">
+                        <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="narrowArt">
+                            <a href="" title="222">
+                                <img  src=" image/temp/temp4.jpg" alt="" height="">
+                                <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="narrowArt">
+                            <a href="" title="222">
+                                <img  src=" image/temp/temp4.jpg" alt="" height="">
+                                <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="narrowArt">
+                            <a href="" title="222">
+                                <img  src=" image/temp/temp4.jpg" alt="" height="">
+                                <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="narrowArt">
+                            <a href="" title="222">
+                                <img  src=" image/temp/temp4.jpg" alt="" height="">
+                                <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="narrowArt">
+                            <a href="" title="222">
+                                <img  src=" image/temp/temp4.jpg" alt="" height="">
+                                <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="narrowArt">
+                            <a href="" title="222">
+                                <img  src=" image/temp/temp4.jpg" alt="" height="">
+                                <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="ad-box" style="margin-top: 0">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="height: 120px; background: #ddd"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 视频 -->
+    <div class="container">
+        <div class="index-video-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="#" >视频</a>
+                    </h2>
+                    <nav>
+                        <a href="#/pilka-nozna">原创</a>
+                        <a href="#/siatkowka">拍客</a>
+                        <a href="#/zuzel">音乐</a>
+                        <a href="#/sporty-walki">微电影</a>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="#" >浏览排行</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="narArts">
+                        <a title="222" href="#">
+                            <div class="crop">
+                                <img  src=" image/temp/temp3.jpg" alt="">
+                            </div>
+                            <h2><strong>+ 专题 + </strong><br>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭</h2>
+                        </a>
+                    </div>
+                    <div class="narArts">
+                        <a title="222" href="#">
+                            <div class="crop">
+                                <img  src=" image/temp/temp6.jpg" alt="">
+                            </div>
+                            <h2><strong>+ 专题 + </strong><br> 高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭</h2>
+                        </a>
+                    </div>
+                    <div class="narArts ">
+                        <a title="222" href="#">
+                            <div class="crop">
+                                <img  src=" image/temp/temp6.jpg" alt="">
+                            </div>
+                            <h2 ><strong>+ 专题 + </strong><br>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="narrowArt jia-biaoqian video">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp5.jpg" alt="" height="380">
+                            <h1 data-autor="原创">高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h1>
+                        </a>
+                    </div>
+                    <div class="narrowArt video jia-biaoqian">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp3.jpg" alt="" height="182">
+                            <h2 data-autor="原创">123高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="narrowArt video">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp4.jpg" alt="" height="">
+                            <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                    <div class="narrowArt video">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp3.jpg" alt="" height="">
+                            <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                    <div class="narrowArt video">
+                        <a href="" title="222">
+                            <img  src=" image/temp/temp3.jpg" alt="" height="">
+                            <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="list-ol-box">
+                        <ol class="rectangle-list">
+                            <li ><a href="">习近平向金正恩致贺电 刘云山会见金正恩(图)刘云山会见金正恩</a></li>
+                            <li><a href="">李克强送政策大红包</a> </li>
+                            <li><a href="">电动汽车行业获发展良机 </a></li>
+                            <li><a href="">南京大屠杀档案 “申遗”成功</a></li>
+                            <li><a href="">慰安妇档案落选朝鲜将举行建党70周年阅兵</a> </li>
+                            <li><a href="">全国多发1个月工资平壤生活的日与夜 </a></li>
+                            <li><a href="">电动汽车行业获发展良机 </a></li>
+                            <li><a href="">南京大屠杀档案 “申遗”成功</a></li>
+                            <li><a href="">慰安妇档案落选朝鲜将举行建党70周年阅兵</a> </li>
+                            <li><a href="">全国多发1个月工资平壤生活的日与夜 </a></li>
+                            <li><a href="">慰安妇档案落选朝鲜将举行建党70周年阅兵</a> </li>
+                            <li><a href="">全国多发1个月工资平壤生活的日与夜 </a></li>
+                            <li><a href="">电动汽车行业获发展良机 </a></li>
+                            <li><a href="">南京大屠杀档案 “申遗”成功</a></li>
+                            <li><a href="">慰安妇档案落选朝鲜将举行建党70周年阅兵</a> </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="ad-box" style="margin-top: 0">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="height: 120px; background: #ddd"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- 团购 -->
+    <div class="container">
+        <div class="index-tuangou-box">
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="lanmu-content lanmu-content-bg">
+                        <h2 class="lanmu-title">
+                            <a href="#" >团购</a>
+                        </h2>
+                        <nav>
+                            <a href="#/pilka-nozna"> 单品团  </a>
+                            <a href="#/siatkowka">品牌团</a>
+                            <a href="#/zuzel">生活汇</a>
+                            <a href="#/sporty-walki">母婴专场</a>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="lanmu-content lanmu-content-bg-r">
+                        <h2 class="lanmu-title">
+                            <a href="#" >特惠推荐</a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="narArts">
+                        <a title="222" href="#">
+                            <div class="crop">
+                                <img  src=" image/temp/temp3.jpg" alt="">
+                            </div>
+                            <h2><strong>+ 团购专场 + </strong><br> 高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭</h2>
+                        </a>
+                    </div>
+                    <div class="narArts">
+                        <a title="222" href="#">
+                            <div class="crop">
+                                <img  src=" image/temp/temp6.jpg" alt="">
+                            </div>
+                            <h2><strong>+ 团购专场 + </strong><br> 高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="narrowArt tuan-price">
+                        <a href="" title="222">
+                            <ins class="tuan-price_ico"><strong>￥123</strong></ins>
+                            <img  src=" image/temp/temp5.jpg" alt="" height="380">
+                            <h1>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h1>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="narrowArt tuan-price">
+                        <a href="" title="222">
+                            <ins class="tuan-price_ico"><strong>￥123</strong></ins>
+                            <img  src=" image/temp/temp3.jpg" alt="" height="">
+                            <h2>花王纸尿裤 l180</h2>
+                        </a>
+                    </div>
+                    <div class="narrowArt tuan-price">
+                        <a href="" title="222">
+                            <ins class="tuan-price_ico"><strong>￥123</strong></ins>
+                            <img  src=" image/temp/temp3.jpg" alt="" height="">
+                            <h2>花王纸尿裤 l180</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3 right-thumbnail">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="" class="thumbnail box-and-title-img">
+                                <ins class="tuijian_ico">抢购</ins>
+                                <div class="imght">
+                                    <img src=" image/temp/tg1.jpg" alt="..." >
+                                </div>
+                                <div class="caption height-hide97">
+                                    <h4><strong class="color_warning font_size18">￥123</strong> <del class="color_999 font_size12">￥234</del></h4>
+                                    <p class="font_size12">
+                                        A梦的口袋2015春秋新款女童外套中大童装连帽长袖儿童上衣小女孩中长款开衫
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="" class="thumbnail box-and-title-img">
+                                <ins class="tuijian_ico">抢购</ins>
+                                <div class="imght">
+                                    <img src=" image/temp/tg1.jpg" alt="..." >
+                                </div>
+                                <div class="caption height-hide97">
+                                    <h4><strong class="color_warning font_size18">￥123</strong> <del class="color_999 font_size12">￥234</del></h4>
+                                    <p class="font_size12">
+                                        A梦的口袋2015春秋新款女童外套
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="" class="thumbnail box-and-title-img">
+                                <ins class="tuijian_ico">抢购</ins>
+                                <div class="imght">
+                                    <img src=" image/temp/tg1.jpg" alt="..." >
+                                </div>
+                                <div class="caption height-hide97">
+                                    <h4><strong class="color_warning font_size18">￥123</strong> <del class="color_999 font_size12">￥234</del></h4>
+                                    <p class="font_size12">
+                                        A梦的口袋2015春秋新款女童外套中大童装连帽长袖儿童上衣小女孩中长款开衫
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="" class="thumbnail box-and-title-img">
+                                <ins class="tuijian_ico">抢购</ins>
+                                <div class="imght">
+                                    <img src=" image/temp/tg1.jpg" alt="..." >
+                                </div>
+                                <div class="caption height-hide97">
+                                    <h4><strong class="color_warning font_size18">￥123</strong> <del class="color_999 font_size12">￥234</del></h4>
+                                    <p class="font_size12">
+                                        A梦的口袋2015春秋新款女童外套中大童装连帽长袖儿童上衣小女孩中长款开衫
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- 积分商城 -->
+    <div class="container">
+        <div class="index-jifenmall-box">
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="lanmu-content lanmu-content-bg">
+                        <h2 class="lanmu-title">
+                            <a href="#" >积分商城</a>
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="lanmu-content lanmu-content-bg-r">
+                        <h2 class="lanmu-title">
+                            <a href="#" >热门兑换</a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                    <div class="col-xs-3">
+                        <div class="thumbnail">
+                            <div class="pic_Control">
+                                <a href=""><img src="image/temp/temp1.jpg" alt="..." ></a>
+                            </div>
+                            <div class="caption">
+                                <p class="titles manhangyichu"><strong>Ctrip 特制方巾礼盒</strong><br>
+                                    <span><strong class="color_success">11500</strong> 积分   &nbsp;&nbsp; <strong class="color_success">9500</strong> 积分 + <strong class="color_qiyecheng">20</strong>元</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="thumbnail">
+                            <div class="pic_Control">
+                                <a href=""><img src="image/temp/temp2.jpg" alt="..." ></a>
+                            </div>
+                            <div class="caption">
+                                <p class="titles manhangyichu"><strong>Ctrip 特制方巾礼盒</strong><br>
+                                    <span><strong class="color_success">11500</strong> 积分   &nbsp;&nbsp; <strong class="color_success">9500</strong> 积分 + <strong class="color_qiyecheng">20</strong>元</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="thumbnail">
+                            <div class="pic_Control">
+                                <a href=""><img src="image/temp/temp3.jpg" alt="..." ></a>
+                            </div>
+                            <div class="caption">
+                                <p class="titles manhangyichu"><strong>Ctrip 特制方巾礼盒</strong><br>
+                                    <span><strong class="color_success">11500</strong> 积分   &nbsp;&nbsp; <strong class="color_success">9500</strong> 积分 + <strong class="color_qiyecheng">20</strong>元</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+<!--hot-duihuan-->
+                <div class="col-xs-3">
+                    <div class="thumbnail">
+                        <div class="pic_Control">
+                            <a href=""><img src="image/temp/temp3.jpg" alt="..." ></a>
+                            <ins class="tuijian_ico">立即兑换</ins>
+                        </div>
+                        <div class="caption">
+                            <p class="titles manhangyichu"><strong>Ctrip 特制方巾礼盒</strong><br>
+                                <span><strong class="color_success">11500</strong> 积分   &nbsp;&nbsp; <strong class="color_success">9500</strong> 积分 + <strong class="color_qiyecheng">20</strong>元</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="friend-link">
+
+                <a href="http://www.52pk.com/" target="_blank">52PK游戏网 </a><a href="http://www.chinaz.com" target="_blank">站长之家</a><a href="http://www.admin5.com/" target="_blank">站长网</a><a href="http://www.leiphone.com/" target="_blank">雷锋网</a><a href="http://www.ctocio.com.cn/" target="_blank">IT专家网 </a><a href="http://www.ithome.com/" target="_blank">IT之家</a><a href="http://www.ebrun.com/" target="_blank">亿邦动力网</a><a href="http://www.weiphone.com/" target="_blank">iPhone威锋网</a><a href="http://www.yzmg.com" target="_blank">亿智蘑菇</a><a href="http://www.tompda.com/" target="_blank">智能手机</a><a href="http://www.ikanchai.com" target="_blank">砍柴网</a><a href="http://www.fengniao.com/" target="_blank">蜂鸟网</a><a href="http://www.weiot.net " target="_blank">威腾网</a><a href="http://www.dop2p.com/" target="_blank">互联网金融门户</a><a href="http://www.3533.com/" target="_blank">手机世界</a><a href="http://www.uc.cn/" target="_blank">手机浏览器</a><a href="http://www.9466.com/" target="_blank">9466网页助手</a><a href="http://www.hqbpc.com" target="_blank">华强北电脑网</a><a href="http://www.uisdc.com/" target="_blank">优秀网页设计</a><a href="http://hao.360.cn/" target="_blank">360安全网址导航</a><a href="http://www.1616.net/" target="_blank">1616个人门户</a><a href="http://www.sudu.cn/" target="_blank">华夏名网</a><a href="http://www.szsmw.com/Default.shtml" target="_blank">神州商贸网</a><a href="http://www.ciotimes.com/" target="_blank">CIO时代网</a><a href="http://www.nmglabs.com/" target="_blank">内蒙古IT实验室</a><a href="http://www.cnzz.cn/" target="_blank">中国站长</a><a href="http://www.xmtnews.com/" target="_blank">新媒体观察</a><a href="http://www.oneplusbbs.com" target="_blank">一加手机</a>
+
+        </div>
+    </div>
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center  line_height2d0">
+                联系电话：010-82463345    QQ:282198327  Email:zhw@wuzhicms.com <br>
+                五指简介  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="">联系我们</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>  用户协议 <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>  法律声明<small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> 付款方式<br>
+                Copyright © 2015 北京五指互联科技有限公司 All Rights Reserved<br>
+                京ICP备14036160号-1</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+
+<script src="js/my.js"></script>
+<script src="js/bootstrap-hover-dropdown.min.js"></script>
+
+</body>
+</html>

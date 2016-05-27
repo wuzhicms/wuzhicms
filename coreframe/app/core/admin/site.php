@@ -34,6 +34,7 @@ class site extends WUZHI_admin {
             $formdata = array();
             $formdata['name'] = $GLOBALS['form']['name'];
             $formdata['logo'] = $GLOBALS['form']['logo'];
+            $formdata['url'] = $GLOBALS['form']['url'];
             $r = $this->db->get_one('site', array('name' => $formdata['name']));
             if($r) MSG('站点已存在，无需重复添加');
             $this->db->insert('site',$formdata);
@@ -54,6 +55,7 @@ class site extends WUZHI_admin {
             $formdata = array();
             $formdata['name'] = $GLOBALS['form']['name'];
             $formdata['logo'] = $GLOBALS['form']['logo'];
+            $formdata['url'] = $GLOBALS['form']['url'];
             $this->db->update('site',$formdata,array('siteid'=>$siteid));
             MSG(L('operation success'),'?m=core&f=site&v=listing'.$this->su());
         } else {
@@ -69,6 +71,8 @@ class site extends WUZHI_admin {
     public function changesite() {
         $siteid = intval($GLOBALS['siteid']);
         set_cookie('siteid',$siteid);
+        $sitelist = get_cache('sitelist');
+        echo $sitelist[$siteid]['url'];
     }
 
 }

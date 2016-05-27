@@ -8,274 +8,130 @@
 defined('IN_WZ') or exit('No direct script access allowed');
 load_function('content','content');
 /**
- * 团购
+ * 团购页面
  */
-class tuan {
+class tuan{
     private $siteconfigs;
-	public function __construct() {
+    public function __construct() {
         $this->siteconfigs = get_cache('siteconfigs');
         $this->db = load_class('db');
-	}
-    /**
-     * 个人团购首页
-     */
-    public function gr_index() {
-        $tuanindex = 1;
-        $city = $GLOBALS['city'];
-
-        $siteconfigs = $this->siteconfigs;
-        $seo_title = $siteconfigs['sitename'];
-        $seo_keywords = $siteconfigs['seo_keywords'];
-        $seo_description = $siteconfigs['seo_description'];
-        $categorys = get_cache('category','content');
-        $cid = intval($GLOBALS['cid']);
-        $setting_config = get_config('setting_config');
-        foreach($categorys as $cid=>$rs) {
-            if($rs['catdir']==$city) {
-                $cityid = $cid;
-                set_cookie('cityname',$rs['name'],SYS_TIME+86400*7);
-                set_cookie('cityid',$cityid,SYS_TIME+86400*7);
-                $cityname = $rs['name'];
-                break;
-            }
-        }
-        $setting_config = get_config('setting_config');
-        $tese = isset($GLOBALS['tese']) ? $GLOBALS['tese'] : 0;
-        if($tese && isset($GLOBALS['newtese'])) {
-            $tese_arr = $GLOBALS['newtese'];
-            $tese = implode('_',$tese_arr);
-        } elseif($tese) {
-            $tese_arr = explode('_', $tese);
-        } elseif(isset($GLOBALS['newtese'])) {
-            $tese_arr = $GLOBALS['newtese'];
-            $tese = implode('_',$tese_arr);
-        } else {
-            $tese_arr = array();
-        }
-        $price = isset($GLOBALS['price']) ? $GLOBALS['price'] : 0;
-        $forgroup = isset($GLOBALS['forgroup']) ? $GLOBALS['forgroup'] : 0;
-        $tese = isset($GLOBALS['tese']) ? $GLOBALS['tese'] : 0;
-        $listurl = 'index.php?f=tuan&v=index&type=1&cityid={$cityid}&cid={$cid}&forgroup={$forgroup}&price={$price}&area={$area}&tese={$tese}&&sort={$sort}&page={$page}';
-
-        $_POST['page_urlrule'] = $listurl;
-        $page_fields = array();
-        $page_fields['cid'] = $cid;
-        $page_fields['pinpai'] = 2;
-        $page_fields['cityid'] = $cityid;
-        $page_fields['forgroup'] = $forgroup;
-        $page_fields['type'] = 1;
-        $page_fields['price'] = $price;
-        $page_fields['area'] = 5;
-        $page_fields['tese'] = $tese;
-        $page_fields['sort'] = 0;
-        $_POST['page_fields'] = $page_fields;
-
-        include T('content','index-gr-tuan',TPLID);
     }
+
     /**
-     * 个人团购列表
+     * 团购首页
      */
-    public function gr_listing() {
-        $city = $GLOBALS['city'];
-
+    public function init() {
+        $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : MSG(L('parameter_error'));
         $siteconfigs = $this->siteconfigs;
-        $seo_title = $siteconfigs['sitename'];
-        $seo_keywords = $siteconfigs['seo_keywords'];
-        $seo_description = $siteconfigs['seo_description'];
         $categorys = get_cache('category','content');
-        $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : 0;
-        $cityid = isset($GLOBALS['cityid']) ? $GLOBALS['cityid'] : get_cookie('cityid');
-        $setting_config = get_config('setting_config');
-
-        $price = isset($GLOBALS['price']) ? $GLOBALS['price'] : 0;
-        $area = isset($GLOBALS['area']) ? $GLOBALS['area'] : 0;
-        $forgroup = isset($GLOBALS['forgroup']) ? $GLOBALS['forgroup'] : 0;
-        $tese = isset($GLOBALS['tese']) ? $GLOBALS['tese'] : 0;
-        if($tese && isset($GLOBALS['newtese'])) {
-            $tese_arr = $GLOBALS['newtese'];
-            $tese = implode('_',$tese_arr);
-        } elseif($tese) {
-            $tese_arr = explode('_', $tese);
-        } elseif(isset($GLOBALS['newtese'])) {
-            $tese_arr = $GLOBALS['newtese'];
-            $tese = implode('_',$tese_arr);
-        } else {
-            $tese_arr = array();
-        }
-
-        $sort = isset($GLOBALS['sort']) ? $GLOBALS['sort'] : 0;
-        $page = isset($GLOBALS['page']) ? $GLOBALS['page'] : 1;
-        $listurl = '/tuan/'.$city.'/'.$cid.'-'.$forgroup.'-'.$price.'-'.$area.'-'.$tese.'-'.$sort.'-'.$page.'.html';
-
-        $_POST['page_urlrule'] = '/tuan/{$city}/{$cid}-{$forgroup}-{$price}-{$area}-{$tese}-{$sort}-{$page}.html';
-        $page_fields = array();
-        $page_fields['cid'] = $cid;
-        $page_fields['city'] = $city;
-        $page_fields['forgroup'] = $forgroup;
-        $page_fields['price'] = $price;
-        $page_fields['area'] = $area;
-        $page_fields['tese'] = $tese;
-        $page_fields['sort'] = 0;
-        $_POST['page_fields'] = $page_fields;
+        $category = get_cache('category_'.$cid,'content');
+        if(empty($category)) MSG('栏目不存在');
+        $filterurl_config = get_config('filterurl_config','tuan');
 
         $where = '';
-        if($cid) {
-            $where = "`cid`='$cid' AND `type`=1";
-        } else {
-            $where = "`type`=1";
-        }
-        $where .= $where ? " AND (`citys` LIKE '%,$cityid,%' OR `citys` LIKE ',0,%')" : "(`citys` LIKE '%,$cityid,%' OR `citys` LIKE ',0,%')";
-        if($forgroup) {
-            $where .= " AND `forgroup` LIKE '%$forgroup%'";
-        }
-        if($price) {
-            $sqlprice = explode('_',$price);
-            $where .= " AND `price`>'$sqlprice[0]'";
-            if($sqlprice[1]) $where .= " AND `price`<'$sqlprice[1]'";
-        }
-        if($area) {
-            $where .= " AND `areaid`='$area'";
-        }
-        if($tese_arr) {
-            //$where .= " AND ";
-            foreach($tese_arr as $_arr) {
-                $where .= " AND `fuwu` LIKE '%,$_arr,%'";
-            }
-            //$where = substr($where,0,-2);
-        }
-        //$where = "`forgroup`='$forgroup' AND `citys` LIKE '%,$cityid,%'";
-        include T('content','list-gr-tuan',TPLID);
-	}
-    /**
-     * 企业团购首页
-     */
-    public function qy_index() {
-        $tuangouindex = 1;
-        $city = $GLOBALS['city'];
-
-        $siteconfigs = $this->siteconfigs;
-        $seo_title = $siteconfigs['sitename'];
-        $seo_keywords = $siteconfigs['seo_keywords'];
-        $seo_description = $siteconfigs['seo_description'];
-        $categorys = get_cache('category','content');
-        $cid = intval($GLOBALS['cid']);
-        $setting_config = get_config('setting_config');
-        foreach($categorys as $cid=>$rs) {
-            if($rs['catdir']==$city) {
-                $cityid = $cid;
-                set_cookie('cityname',$rs['name'],SYS_TIME+86400*7);
-                set_cookie('cityid',$cityid,SYS_TIME+86400*7);
-                $cityname = $rs['name'];
-                break;
-            }
-        }
-        $setting_config = get_config('setting_config');
-        $tese = isset($GLOBALS['tese']) ? $GLOBALS['tese'] : 0;
-        if($tese && isset($GLOBALS['newtese'])) {
-            $tese_arr = $GLOBALS['newtese'];
-            $tese = implode('_',$tese_arr);
-        } elseif($tese) {
-            $tese_arr = explode('_', $tese);
-        } elseif(isset($GLOBALS['newtese'])) {
-            $tese_arr = $GLOBALS['newtese'];
-            $tese = implode('_',$tese_arr);
-        } else {
-            $tese_arr = array();
+        $field_array = $filterurl_config['field'];
+        $urlrule = $filterurl_config['urlrule'];
+        $variables = array();
+        foreach($field_array as $field) {
+            $variables[$field] = isset($GLOBALS[$field]) ? intval($GLOBALS[$field]) : 0;
         }
 
-        $price = isset($GLOBALS['price']) ? $GLOBALS['price'] : 0;
-        $forgroup = isset($GLOBALS['forgroup']) ? $GLOBALS['forgroup'] : 0;
-        $tese = isset($GLOBALS['tese']) ? $GLOBALS['tese'] : 0;
-        $listurl = 'index.php?f=tuan&v=index&type=2&cityid={$cityid}&cid={$cid}&forgroup={$forgroup}&price={$price}&area={$area}&tese={$tese}&&sort={$sort}&page={$page}';
+        $order = isset($GLOBALS['order']) ? $GLOBALS['order'] : 0;
+        $orderby_arr = array('sort DESC,id DESC','id DESC','price DESC');
+        $orderby = $orderby_arr[$order];
 
-        $_POST['page_urlrule'] = $listurl;
-        $page_fields = array();
-        $page_fields['cid'] = $cid;
-        $page_fields['pinpai'] = 2;
-        $page_fields['cityid'] = $cityid;
-        $page_fields['forgroup'] = $forgroup;
-        $page_fields['type'] = 1;
-        $page_fields['price'] = $price;
-        $page_fields['area'] = 5;
-        $page_fields['tese'] = $tese;
-        $page_fields['sort'] = 0;
-        $_POST['page_fields'] = $page_fields;
-
-        include T('content','index-qy-tuan',TPLID);
-    }
-    /**
-     * 企业团购列表
-     */
-    public function qy_listing() {
-        $city = $GLOBALS['city'];
-
-        $siteconfigs = $this->siteconfigs;
-        $seo_title = $siteconfigs['sitename'];
-        $seo_keywords = $siteconfigs['seo_keywords'];
-        $seo_description = $siteconfigs['seo_description'];
-        $categorys = get_cache('category','content');
-        $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : 0;
-        $cityid = isset($GLOBALS['cityid']) ? $GLOBALS['cityid'] : get_cookie('cityid');
-        $setting_config = get_config('setting_config');
-
-        $price = isset($GLOBALS['price']) ? $GLOBALS['price'] : 0;
-        $area = isset($GLOBALS['area']) ? $GLOBALS['area'] : 0;
-        $forgroup = isset($GLOBALS['forgroup']) ? $GLOBALS['forgroup'] : 0;
-        $tese = isset($GLOBALS['tese']) ? $GLOBALS['tese'] : 0;
-        if($tese && isset($GLOBALS['newtese'])) {
-            $tese_arr = $GLOBALS['newtese'];
-            $tese = implode('_',$tese_arr);
-        } elseif($tese) {
-            $tese_arr = explode('_', $tese);
-        } elseif(isset($GLOBALS['newtese'])) {
-            $tese_arr = $GLOBALS['newtese'];
-            $tese = implode('_',$tese_arr);
-        } else {
-            $tese_arr = array();
-        }
-
-        $sort = isset($GLOBALS['sort']) ? $GLOBALS['sort'] : 0;
         $page = isset($GLOBALS['page']) ? $GLOBALS['page'] : 1;
-        $listurl = '/tuangou/'.$city.'/'.$cid.'-'.$forgroup.'-'.$price.'-'.$area.'-'.$tese.'-'.$sort.'-'.$page.'.html';
+        $page = max($page,1);
+        $_POST['page_urlrule'] = $urlrule;
+        $_POST['page_fields'] = $variables;
 
-        $_POST['page_urlrule'] = '/tuangou/{$city}/{$cid}-{$forgroup}-{$price}-{$area}-{$tese}-{$sort}-{$page}.html';
-        $page_fields = array();
-        $page_fields['cid'] = $cid;
-        $page_fields['city'] = $city;
-        $page_fields['forgroup'] = $forgroup;
-        $page_fields['price'] = $price;
-        $page_fields['area'] = $area;
-        $page_fields['tese'] = $tese;
-        $page_fields['sort'] = 0;
-        $_POST['page_fields'] = $page_fields;
-
+        $kw_style = $kw_house = '';
         $where = '';
-        if($cid) {
-            $where = "`cid`='$cid' AND `type`=2";
-        } else {
-            $where = "`type`=2";
+        if($variables['style']) {
+            $where .= " AND `style`='".$variables['style']."'";
+            $kw_style = $filterurl_config['style'][$variables['style']];
         }
-        $where .= $where ? " AND (`citys` LIKE '%,$cityid,%' OR `citys` LIKE ',0,%')" : "(`citys` LIKE '%,$cityid,%' OR `citys` LIKE ',0,%')";
-        if($forgroup) {
-            $where .= " AND `forgroup` LIKE '%$forgroup%'";
-        }
-        if($price) {
-            $sqlprice = explode('_',$price);
-            $where .= " AND `price`>'$sqlprice[0]'";
-            if($sqlprice[1]) $where .= " AND `price`<'$sqlprice[1]'";
-        }
-        if($area) {
-            $where .= " AND `areaid`='$area'";
-        }
-        if($tese_arr) {
-            //$where .= " AND ";
-            foreach($tese_arr as $_arr) {
-                $where .= " AND `fuwu` LIKE '%,$_arr,%'";
+
+        if($variables['price']) {
+            $min = $filterurl_config['price'][$variables['price']]['min'];
+            $max = $filterurl_config['price'][$variables['price']]['max'];
+            if($min && $max) {
+                $where .= " AND `price` >= $min";
+                $where .= " AND `price` <= $max";
+            } else {
+                if($min) $where .= " AND `price` > $min";
+                if($max) $where .= " AND `price` < $max";
             }
-            //$where = substr($where,0,-2);
+
         }
-        //$where = "`forgroup`='$forgroup' AND `citys` LIKE '%,$cityid,%'";
-        include T('content','list-qy-tuan',TPLID);
+        //标签类中已经带 AND ,这里截取
+        $where = substr($where,4);
+        
+        //权限检查
+        /**
+        $_groupid = $GLOBALS['_groupid'];
+        $priv_data = $this->db->get_one('member_group_priv', array('groupid' => $_groupid,'value'=>$cid,'priv'=>'listview'));
+
+        if(!$priv_data) {
+            MSG('禁止访问');
+        }
+         **/
+        //end 权限检查
+        /**
+        //城市站
+        $city = get_cookie('city');
+        $city = isset($GLOBALS['city']) && !empty($GLOBALS['city']) ? $GLOBALS['city'] : $city=='' ? 'xa' : $city;
+        $cookie_city = $_COOKIE[COOKIE_PRE.'city_key'];
+        $city_config = get_config('city_config');
+        $cityid = $city_config[$city]['cityid'];
+        $cityname = $city_config[$city]['cityname'];
+**/
+
+        //分页初始化
+        $page = max(intval($GLOBALS['page']),1);
+        //分页规则
+        $urlrule = '';
+        $urlrule = WWW_PATH.$category['listurl'];
+        if($category['child']) {
+            $_template = $category['category_template'];
+        } else {
+            $_template = $category['list_template'];
+        }
+        if(ENABLE_SITES) {
+            $siteid = intval($_GET['siteid']);
+            if(!$siteid) $siteid = 1;
+            $tplid = TPLID.'-'.$siteid;
+        } else {
+            $tplid = TPLID;
+        }
+        if(empty($_template))  $_template = $tplid.':list';
+        $styles = explode(':',$_template);
+        $project_css = isset($styles[0]) ? $styles[0] : 'default';
+        $_template = isset($styles[1]) ? $styles[1] : 'show';
+        $seo_title = $category['seo_title'] ? $category['seo_title'] : $category['name'].'_'.$siteconfigs['sitename'];
+        $seo_keywords = $category['seo_keywords'];
+        $seo_description = $category['seo_description'];
+        $elasticid = elasticid($cid);
+        $model_r = get_cache('model_content','model');
+        $master_table = $model_r[$category['modelid']]['master_table'];
+        if($category['type']==1) {
+            $r = $this->db->get_one($master_table,array('cid'=>$cid));
+            if($r) {
+                extract($r,EXTR_SKIP);
+                if($attr_table = $model_r[$category['modelid']]['attr_table']) {
+                    $r = $this->db->get_one($attr_table,array('id'=>$id));
+                    extract($r,EXTR_SKIP);
+                }
+            }
+        }
+
+        $sub_categorys = sub_categorys($elasticid);
+        $modelid = $category['modelid'];
+        $type_field = array();
+        $language_set = 1;
+        $top_categoryid = getcategoryid($cid);
+        $top_category = $categorys[$top_categoryid];
+        include T('content',$_template,$project_css);
     }
 }
 ?>

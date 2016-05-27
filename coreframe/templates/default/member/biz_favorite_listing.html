@@ -1,0 +1,64 @@
+{T  'member','head'}
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>我的收藏</h5>
+                </div>
+                <div class="ibox-content">
+                    {if empty($result)}
+                    <div class="wrapper wrapper-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="text-center animated fadeInRightBig">
+                                    <h3 class="font-bold">还没有收藏任何内容!</h3>
+                                    <div class="error-desc">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {else}
+                    <div class="project-list">
+
+                        <table class="table table-hover">
+                            <tbody>
+                            {loop $result $r}
+                            <tr>
+                                <td class="project-title">
+                                    <a href="{$r['url']}" target="_blank"> {$r['title']}</a>
+                                    <br/>
+                                    <small>时间: {date('Y-m-d H:i:s',$r['addtime'])}</small>
+                                </td>
+
+                                <td class="project-actions">
+                                    <a href="{$r['url']}" class="btn btn-white btn-sm" target="_blank"><i
+                                            class="fa fa-folder"></i> 查看 </a>
+                                    <a href="?m=member&f=biz_favorite&v=delete&fid={$r['fid']}"
+                                       class="btn btn-white btn-sm"><i class="fa fa-recycle"></i> 删除 </a>
+                                </td>
+                            </tr>
+                            {/loop}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="paginationpage text-center">
+                        <nav>
+                            <ul class="pagination">
+                                {$pages}
+                            </ul>
+                        </nav>
+                    </div>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{T "member","foot"}
+</body>
+</html>
+

@@ -10,10 +10,7 @@ include $this->template('header','core');
 
     <div class="panel-body">
 广告预览：<?php echo $r['name'];?><br><br>
-        <?php
-        echo promote($pid,$id);
-        ?>
-
+        <script src="<?php echo WEBURL;?>promote/<?php echo $pid;?>.js"></script>
     </div>
 </section>
 </div>

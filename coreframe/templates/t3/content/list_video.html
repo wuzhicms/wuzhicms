@@ -1,0 +1,58 @@
+{T "content","head",TPLID}
+<!--路径导航-->
+<div style="background: #f3f3f3">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="{WEBURL}">首页</a><span> &gt;</span></li>
+            {catpos($cid)}
+        </ol>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ad-box" style="height: 120px; width: 100%; background: #dddddd"><script  src="{WEBURL}promote/14.js"></script></div>
+        </div>
+    </div>
+</div>
+
+<div class="photo-list-box">
+    <div class="container">
+        <div class="row">
+            {wz:content action="listing" page="$page" pagesize="12" order="sort DESC,id DESC" cid="$cid" urlrule="$urlrule"}
+            {loop $rs $r}
+            <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control_g" style="overflow: hidden;width: 271px;height: 181px;">
+                        <a href="{$r['url']}"><img src="{imagecut($r['thumb'],271,256,4)}" alt="..."></a>
+                    </div>
+                    <div class="caption">
+                        <p  class="manhangyichu margin_bottom0"><a href="{$r['url']}">{$r['title']}</a></p>
+                        <div class="caption-left-and-right">
+                            <div class="caption-left color_999 font_size12">{date('Y-m-d',$r['addtime'])}</div>
+                            <div class="caption-right color_999 font_size12"><a href=""><span class="glyphicon glyphicon-play-circle font_size12 color_ccc" aria-hidden="true"></span> 600</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/loop}
+            {/wz}
+        </div>
+    </div>
+
+    <!-- start-五指分页-->
+    <div style="text-align:center;">
+        {if $this->db->number>12}
+        <nav style="text-align: center;">
+            <ul class="pagination">
+                {$pages}
+            </ul>
+        </nav>
+        {/if}
+    </div>
+    <!--end  五指分页 -->
+</div>
+
+{T "content","foot",TPLID}

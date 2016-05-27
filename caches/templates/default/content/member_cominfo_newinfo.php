@@ -1,7 +1,7 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T('member','head'); ?>
-<link href="http://www.h1jk.cn/res/css/validform.css" rel="stylesheet" />
-<script src="http://www.h1jk.cn/res/js/validform.min.js"></script>
-<script src="http://www.h1jk.cn/res/js/wuzhicms.js"></script>
+<link href="<?php echo R;?>css/validform.css" rel="stylesheet" />
+<script src="<?php echo R;?>js/validform.min.js"></script>
+<script src="<?php echo R;?>js/base.js"></script>
 <!--正文部分-->
 <div class="container adframe">
     <div class="row">

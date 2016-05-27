@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 主页</title>
+
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.0.0" rel="stylesheet">
+    <link href="css/ie8.css" rel="stylesheet">
+    <!-- 全局js -->
+    <script src="//cdn.bootcss.com/jquery/1.12.1/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.5"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/plugins/layer/layer.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="gray-bg">
+
+<div class="container-fluid  ie8-member">
+    <!--top-->
+
+    <div class="row border-bottom" style="margin-bottom: 15px">
+        <div class="col-sm-12">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header"><a class=" minimalize-styl-2" href="#" style="font-size: 24px; color: #243544;"><strong>会员中心</strong>  <span style=" color: #4f7080; font-size: 16px;  font-family: 'Times New Roman', Helvetica, Arial, sans-serif" >/  Member Centre</span> </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="false"><img src="/res/images/userface.png" class="avatar">
+                            <i class="memberusericon"></i><span>wuzhicms</span> &nbsp;<span class="caret"></span>
+                        </a>
+                        <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                            <li class="J_tabShowActive"><a href="http://new.iiis.tsinghua.edu.cn/index.php?m=member&amp;f=index&amp;v=profile" class="J_menuItem" onclick="hide_menu(this)" data-index="6">帐号设置</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="J_tabCloseAll"><a href="http://new.iiis.tsinghua.edu.cn/index.php?m=member&amp;f=index&amp;v=account_safe" class="J_menuItem" onclick="hide_menu(this)" data-index="7">帐号安全</a>
+                            </li>
+                            <li class="J_tabCloseAll"><a href="http://new.iiis.tsinghua.edu.cn/index.php?m=member&amp;f=index&amp;v=edit_password" class="J_menuItem" onclick="hide_menu(this)" data-index="8">修改密码</a>
+                            </li>
+                            <li class="J_tabCloseAll"><a href="http://new.iiis.tsinghua.edu.cn/index.php?m=member&amp;f=index&amp;v=avatar" class="J_menuItem" onclick="hide_menu(this)" data-index="9">设置头像</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="J_tabCloseAll"><a href="http://new.iiis.tsinghua.edu.cn/index.php?m=member&amp;v=logout"><i class="fa fa fa-sign-out"></i> &nbsp;退出</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown hide" id="msg_tips">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-envelope"></i> <span class="label label-warning" id="total_tips">0</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="index.php?m=message&amp;f=message&amp;v=sys_listing" id="sys_msg_i" class="J_menuItem" data-index="10">
+                                    <div>
+                                        <i class="fa fa-volume-up"></i> 您有 <span id="sys_msg_tips">0</span> 条系统未读消息
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="index.php?m=message&amp;f=message&amp;v=listing" id="my_msg_i" class="J_menuItem" data-index="11">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> 您有 <span id="my_msg_tips">0</span> 条新回复
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="dropdown hidden-xs">
+
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container-fluid  ie8-member">
+    <div class="row">
+        <div class="col-sm-3">
+        <!--左侧导航-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="nav-close"><i class="fa fa-times-circle"></i>
+                </div>
+                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;"><div class="sidebar-collapse" style="width: auto; height: 100%;">
+                    <ul class="nav" id="side-menu">
+                        <li class="nav-header">
+                            <div class="dropdown profile-element">
+                                <span><img alt="image" class="img-circle" src="img/profile_small.jpg"></span>
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
+                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                                </span>
+                                </a>
+                                <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                    <li><a class="J_menuItem" href="form_avatar.html" data-index="0">修改头像</a>
+                                    </li>
+                                    <li><a class="J_menuItem" href="profile.html" data-index="1">个人资料</a>
+                                    </li>
+                                    <li><a class="J_menuItem" href="contacts.html" data-index="2">联系我们</a>
+                                    </li>
+                                    <li><a class="J_menuItem" href="mailbox.html" data-index="3">信箱</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="login.html">安全退出</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="logo-element">H+
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-home"></i>
+                                <span class="nav-label">主页</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a class="J_menuItem" href="index_v1.html" data-index="0">主页示例一</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="index_v2.html" data-index="5">主页示例二</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="index_v3.html" data-index="6">主页示例三</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="index_v4.html" data-index="7">主页示例四</a>
+                                </li>
+                                <li>
+                                    <a href="index_v5.html" target="_blank">主页示例五</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="layouts.html" data-index="8"><i class="fa fa-columns"></i> <span class="nav-label">布局</span></a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa fa-bar-chart-o"></i>
+                                <span class="nav-label">统计图表</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a class="J_menuItem" href="graph_echarts.html" data-index="9">百度ECharts</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="graph_flot.html" data-index="10">Flot</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="graph_morris.html" data-index="11">Morris.js</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="graph_rickshaw.html" data-index="12">Rickshaw</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="graph_peity.html" data-index="13">Peity</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="graph_sparkline.html" data-index="14">Sparkline</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="graph_metrics.html" data-index="15">图表组合</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">信箱 </span><span class="label label-warning pull-right">16</span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a class="J_menuItem" href="mailbox.html" data-index="16">收件箱</a>
+                                </li>
+                                <li><a class="J_menuItem" href="mail_detail.html" data-index="17">查看邮件</a>
+                                </li>
+                                <li><a class="J_menuItem" href="mail_compose.html" data-index="18">写信</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">表单</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a class="J_menuItem" href="form_basic.html" data-index="19">基本表单</a>
+                                </li>
+                                <li><a class="J_menuItem" href="form_validate.html" data-index="20">表单验证</a>
+                                </li>
+                                <li><a class="J_menuItem" href="form_advanced.html" data-index="21">高级插件</a>
+                                </li>
+                                <li><a class="J_menuItem" href="form_wizard.html" data-index="22">表单向导</a>
+                                </li>
+                                <li>
+                                    <a href="#">文件上传 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="form_webuploader.html" data-index="23">百度WebUploader</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="form_file_upload.html" data-index="24">DropzoneJS</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="form_avatar.html" data-index="25">头像裁剪上传</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">编辑器 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="form_editors.html" data-index="26">富文本编辑器</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="form_simditor.html" data-index="27">simditor</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="form_markdown.html" data-index="28">MarkDown编辑器</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="code_editor.html" data-index="29">代码编辑器</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="J_menuItem" href="suggest.html" data-index="30">搜索自动补全</a>
+                                </li>
+                                <li><a class="J_menuItem" href="layerdate.html" data-index="31">日期选择器layerDate</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">页面</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a class="J_menuItem" href="contacts.html" data-index="32">联系人</a>
+                                </li>
+                                <li><a class="J_menuItem" href="profile.html" data-index="33">个人资料</a>
+                                </li>
+                                <li>
+                                    <a href="#">项目管理 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="projects.html" data-index="34">项目</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="project_detail.html" data-index="35">项目详情</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="J_menuItem" href="teams_board.html" data-index="36">团队管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="social_feed.html" data-index="37">信息流</a>
+                                </li>
+                                <li><a class="J_menuItem" href="clients.html" data-index="38">客户管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="file_manager.html" data-index="39">文件管理器</a>
+                                </li>
+                                <li><a class="J_menuItem" href="calendar.html" data-index="40">日历</a>
+                                </li>
+                                <li>
+                                    <a href="#">博客 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="blog.html" data-index="41">文章列表</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="article.html" data-index="42">文章详情</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="J_menuItem" href="faq.html" data-index="43">FAQ</a>
+                                </li>
+                                <li>
+                                    <a href="#">时间轴 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="timeline.html" data-index="44">时间轴</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="timeline_v2.html" data-index="45">时间轴v2</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="J_menuItem" href="pin_board.html" data-index="46">标签墙</a>
+                                </li>
+                                <li>
+                                    <a href="#">单据 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="invoice.html" data-index="47">单据</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="invoice_print.html" data-index="48">单据打印</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="J_menuItem" href="search_results.html" data-index="49">搜索结果</a>
+                                </li>
+                                <li><a class="J_menuItem" href="forum_main.html" data-index="50">论坛</a>
+                                </li>
+                                <li>
+                                    <a href="#">即时通讯 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="chat_view.html" data-index="51">聊天窗口</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="webim.html" data-index="52">layIM</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">登录注册相关 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a href="login.html" target="_blank">登录页面</a>
+                                        </li>
+                                        <li><a href="login_v2.html" target="_blank">登录页面v2</a>
+                                        </li>
+                                        <li><a href="register.html" target="_blank">注册页面</a>
+                                        </li>
+                                        <li><a href="lockscreen.html" target="_blank">登录超时</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="J_menuItem" href="404.html" data-index="53">404页面</a>
+                                </li>
+                                <li><a class="J_menuItem" href="500.html" data-index="54">500页面</a>
+                                </li>
+                                <li><a class="J_menuItem" href="empty_page.html" data-index="55">空白页</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-flask"></i> <span class="nav-label">UI元素</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a class="J_menuItem" href="typography.html" data-index="56">排版</a>
+                                </li>
+                                <li>
+                                    <a href="#">字体图标 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li>
+                                            <a class="J_menuItem" href="fontawesome.html" data-index="57">Font Awesome</a>
+                                        </li>
+                                        <li>
+                                            <a class="J_menuItem" href="glyphicons.html" data-index="58">Glyphicon</a>
+                                        </li>
+                                        <li>
+                                            <a class="J_menuItem" href="iconfont.html" data-index="59">阿里巴巴矢量图标库</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">拖动排序 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="draggable_panels.html" data-index="60">拖动面板</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="agile_board.html" data-index="61">任务清单</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="J_menuItem" href="buttons.html" data-index="62">按钮</a>
+                                </li>
+                                <li><a class="J_menuItem" href="tabs_panels.html" data-index="63">选项卡 &amp; 面板</a>
+                                </li>
+                                <li><a class="J_menuItem" href="notifications.html" data-index="64">通知 &amp; 提示</a>
+                                </li>
+                                <li><a class="J_menuItem" href="badges_labels.html" data-index="65">徽章，标签，进度条</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="grid_options.html" data-index="66">栅格</a>
+                                </li>
+                                <li><a class="J_menuItem" href="plyr.html" data-index="67">视频、音频</a>
+                                </li>
+                                <li>
+                                    <a href="#">弹框插件 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="layer.html" data-index="68">Web弹层组件layer</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="modal_window.html" data-index="69">模态窗口</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="sweetalert.html" data-index="70">SweetAlert</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">树形视图 <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li><a class="J_menuItem" href="jstree.html" data-index="71">jsTree</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="tree_view.html" data-index="72">Bootstrap Tree View</a>
+                                        </li>
+                                        <li><a class="J_menuItem" href="nestable_list.html" data-index="73">nestable</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="J_menuItem" href="toastr_notifications.html" data-index="74">Toastr通知</a>
+                                </li>
+                                <li><a class="J_menuItem" href="diff.html" data-index="75">文本对比</a>
+                                </li>
+                                <li><a class="J_menuItem" href="spinners.html" data-index="76">加载动画</a>
+                                </li>
+                                <li><a class="J_menuItem" href="widgets.html" data-index="77">小部件</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-table"></i> <span class="nav-label">表格</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a class="J_menuItem" href="table_basic.html" data-index="78">基本表格</a>
+                                </li>
+                                <li><a class="J_menuItem" href="table_data_tables.html" data-index="79">DataTables</a>
+                                </li>
+                                <li><a class="J_menuItem" href="table_jqgrid.html" data-index="80">jqGrid</a>
+                                </li>
+                                <li><a class="J_menuItem" href="table_foo_table.html" data-index="81">Foo Tables</a>
+                                </li>
+                                <li><a class="J_menuItem" href="table_bootstrap.html" data-index="82">Bootstrap Table
+                                    <span class="label label-danger pull-right">推荐</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-picture-o"></i> <span class="nav-label">相册</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a class="J_menuItem" href="basic_gallery.html" data-index="83">基本图库</a>
+                                </li>
+                                <li><a class="J_menuItem" href="carousel.html" data-index="84">图片切换</a>
+                                </li>
+                                <li><a class="J_menuItem" href="layerphotos.html" data-index="85">layer相册</a>
+                                </li>
+                                <li><a class="J_menuItem" href="blueimp.html" data-index="86">Blueimp相册</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="css_animation.html" data-index="87"><i class="fa fa-magic"></i> <span class="nav-label">CSS动画</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">工具 </span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a class="J_menuItem" href="form_builder.html" data-index="88">表单构建器</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div><div class="slimScrollBar" style="width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 440.564px; background: rgb(0, 0, 0);"></div><div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.9; z-index: 90; right: 1px; background: rgb(51, 51, 51);"></div></div>
+            </nav>
+            <!--end 左侧导航-->
+        </div><!--col-sm-3-->
+
+
+        <div class="col-sm-9">
+
+            <div class="row  border-bottom dashboard-header">
+                <div class="col-sm-12">
+                    <blockquote class="text-warning" style="font-size:14px">您是否需要自己做一款后台、会员中心等等的，但是又缺乏html等前端知识…
+                        <br>您是否一直在苦苦寻找一款适合自己的后台主题…
+                        <br>您是否想做一款自己的web应用程序…
+                        <br>…………
+                        <h4 class="text-danger">那么，现在H+来了</h4>
+                    </blockquote>
+
+                    <hr>
+                </div>
+                <div class="col-sm-3">
+                    <h2>Hello,Guest</h2>
+                    <small>移动设备访问请扫描以下二维码：</small>
+                    <br>
+                    <br>
+                    <img src="img/qr_code.png" width="100%" style="max-width:264px;">
+                    <br>
+                </div>
+                <div class="col-sm-5">
+                    <h2>
+                        H+ 后台主题UI框架
+                    </h2>
+                    <p>H+是一个完全响应式，基于Bootstrap3.3.5最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术，她提供了诸多的强大的可以重新组合的UI组件，并集成了最新的jQuery版本(v2.1.4)，当然，也集成了很多功能强大，用途广泛的jQuery插件，她可以用于所有的Web应用程序，如<b>网站管理后台</b>，<b>网站会员中心</b>，<b>CMS</b>，<b>CRM</b>，<b>OA</b>等等，当然，您也可以对她进行深度定制，以做出更强系统。</p>
+                    <p>
+                        <b>当前版本：</b>v4.0.0
+                    </p>
+                    <p>
+                        <b>定价：</b><span class="label label-warning">&yen;988（不开发票，不议价）</span>
+                    </p>
+                    <br>
+                    <p>
+                        <a class="btn btn-success btn-outline" href="http://wpa.qq.com/msgrd?v=3&uin=516477188&site=qq&menu=yes" target="_blank">
+                            <i class="fa fa-qq"> </i> 联系我
+                        </a>
+                        <a class="btn btn-white btn-bitbucket" href="http://www.zi-han.net" target="_blank">
+                            <i class="fa fa-home"></i> 访问博客
+                        </a>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <h4>H+具有以下特点：</h4>
+                    <ol>
+                        <li>完全响应式布局（支持电脑、平板、手机等所有主流设备）</li>
+                        <li>基于最新版本的Bootstrap 3.3.4</li>
+                        <li>提供3套不同风格的皮肤</li>
+                        <li>支持多种布局方式</li>
+                        <li>使用最流行的的扁平化设计</li>
+                        <li>提供了诸多的UI组件</li>
+                        <li>集成多款国内优秀插件，诚意奉献</li>
+                        <li>提供盒型、全宽、响应式视图模式</li>
+                        <li>采用HTML5 & CSS3</li>
+                        <li>拥有良好的代码结构</li>
+                        <li>更多……</li>
+                    </ol>
+                </div>
+
+            </div>
+            <div class="wrapper wrapper-content">
+                <div class="row">
+                    <div class="col-sm-4">
+
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>二次开发</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <p>我们提供基于H+的二次开发服务，具体费用请联系作者。</p>
+                                <p>同时，我们也提供以下服务：</p>
+                                <ol>
+                                    <li>基于WordPress的网站建设和主题定制</li>
+                                    <li>PSD转WordPress主题</li>
+                                    <li>PSD转XHTML</li>
+                                    <li>Html页面（CSS+XHTML+jQuery）制作</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>联系信息</h5>
+
+                            </div>
+                            <div class="ibox-content">
+                                <p><i class="fa fa-send-o"></i> 博客：<a href="http://www.zi-han.net" target="_blank">http://www.zi-han.net</a>
+                                </p>
+                                <p><i class="fa fa-qq"></i> QQ：<a href="http://wpa.qq.com/msgrd?v=3&uin=516477188&site=qq&menu=yes" target="_blank">516477188</a>
+                                </p>
+                                <p><i class="fa fa-weixin"></i> 微信：<a href="javascript:;">zheng-zihan</a>
+                                </p>
+                                <p><i class="fa fa-credit-card"></i> 支付宝：<a href="javascript:;" class="支付宝信息">zheng-zihan@qq.com / *子涵</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>更新日志</h5>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <div class="panel-body">
+                                    <div class="panel-group" id="version">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v40">v4.0</a><code class="pull-right">2015.10.21更新</code>
+                                                </h5>
+                                            </div>
+                                            <div id="v40" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>升级bootstrap到最新版本3.3.5；</li>
+                                                        <li>升级jquery版本到最新版本2.1.4；</li>
+                                                        <li>升级Font Awesome到最新版本4.4.0；</li>
+                                                        <li>修复了登录页面的一处错误；</li>
+                                                        <li>修复了主页面出现多个滚动条的问题；</li>
+                                                        <li>修复了已知的各种浏览器兼容问题；</li>
+                                                        <li>修复了layphoto和suggest等页面的显示问题；</li>
+                                                        <li>新增Glyphicons字体图标的预览；</li>
+                                                        <li>新增对不支持的浏览器的友好提示；</li>
+                                                        <li>新增视频/音乐播放器的支持；</li>
+                                                        <li>新增Bootstrap Table(推荐)；</li>
+                                                        <li>进一步完善了开发文档；</li>
+                                                        <li>提供了离线支持，开箱即用；</li>
+                                                        <li>对IE系列的浏览器支持更好。</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v32">v3.2</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v32" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>修复360浏览器个别情况下崩溃的问题；</li>
+                                                        <li>优化360浏览器的显示效果；</li>
+                                                        <li>修复layim弹出聊天窗口出错的问题；</li>
+                                                        <li>优化登录、注册、锁屏页面，使其在右侧主体区域打开时转到新页面打开；</li>
+                                                        <li>优化了移动设备的展示效果。</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v31">v3.1</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v31" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>修复登录页面文本框输入字符不可见的问题；</li>
+                                                        <li>修复火狐下conTabs关闭操作按钮不下拉的问题；</li>
+                                                        <li>修复IOS系统下各种浏览器右侧内容不滚动的问题；</li>
+                                                        <li>优化了主页示例三的显示；</li>
+                                                        <li>修复了jqgrid编辑弹框导致页面错位的问题；</li>
+                                                        <li>使百度Echarts图标支持响应式，并优化了其显示；</li>
+                                                        <li>修复Summernote文本编辑器下拉菜单显示不全的问题；</li>
+                                                        <li>修复Toastr通知图标显示多个的问题。</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v301">v3.0.x</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v301" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <p>自H+ v3.0版发布后，又陆续发布了7个小版本，修复了一些兼容性问题，但是没有对外发布，更新日志略过……</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v30">v3.0</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v30" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>今天是情人节，H+终于跨到了v3.0，就是是情人节礼物吧，感谢你们的不离不弃，一路相伴！ <a href="#" class="viewlog"><i class="fa fa-eye"></i> 查看升级日志</a>
+                                                        </li>
+                                                        <li><span class="text-danger">注意：</span>本次更新调整较大，不建议直接覆盖升级！</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v22">v2.2</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v22" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>根据用户的反馈，根据用户的反馈，移除了CDN支持，CDN服务将于2015年6月30日之后结束支持，如果您正在使用CDN服务，请尽快完成迁移，对于给您造成的不便，我们表示非常抱歉；
+                                                        </li>
+                                                        <li>升级Bootstrap到最新版本v3.3.4；
+                                                        </li>
+                                                        <li>修改了style.css，修复了其中的一些bug；
+                                                        </li>
+
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v21">v2.1</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v21" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>增加cdn服务支持，cdn节点使用阿里云服务，可保证您的项目随时使用最新版本的H+，免去反复升级的麻烦；
+                                                        </li>
+                                                        <li>修复一些问题；</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v20">v2.0</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v20" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>增加RTL布局及RTL支持，可点击右上角齿轮按钮选择RTL模式查看；
+                                                        </li>
+                                                        <li>增加上下布局； <a href="index_4.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>在360浏览器6.0以上版本中强制以webkit内核解析，体验更佳；
+                                                        </li>
+                                                        <li>增加<a href="toastr_notifications.html">Toastr通知</a>、<a href="nestable_list.html">嵌套列表</a>、<a href="timeline_v2.html">时间轴</a>、<a href="forum_main.html">论坛</a>、<a href="code_editor.html">代码编辑器</a>、<a href="modal_window.html">模态窗口</a>、<a href="validation.html">表单验证</a>、<a href="tree_view_v2.html">树形视图</a>、<a href="chat_view.html">聊天窗口</a>等页面；
+                                                        </li>
+                                                        <li>升级<a href="icons.html">Font Awesome</a>，<a href="form_simditor.html">Simditor</a>等到最新版本；
+                                                        </li>
+                                                        <li>优化部分内容
+                                                        </li>
+
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v18">v1.8</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v18" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>修复一些错误；
+                                                        </li>
+                                                        <li>修复了WebUploader中的一些问题； <a href="form_webuploader.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v17">v1.7</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v17" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>更新jquery版本到官方最新版v2.1.1；
+                                                        </li>
+                                                        <li>更新Bootstrap版本到官方最新版v3.3.0；
+                                                        </li>
+                                                        <li>增加jqGrid组件； <a href="table_jqgrid.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>修复Summernote编辑器中的一个严重错误； <a href="form_editors.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>修改了一些已知的bug，并修复了演示示例中的一些错误；
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v16">v1.6</a>
+                                                </h5>
+                                            </div>
+                                            <div id="v16" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>优化资源文件路径，删除多余文件
+                                                        </li>
+                                                        <li>增加Markdown编辑器 <a href="form_markdown.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>增加拾色器ColorPicker <a href="form_advanced.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>优化部分页面代码
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v15">v1.5</a>
+                                                </h4>
+                                            </div>
+                                            <div id="v15" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>增加了Bootstrap3表单构建器，表单设计更轻松； <a href="form_builder.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>修改了webim的高度；
+                                                        </li>
+                                                        <li>修复了因缺少jquery.min.map文件而导致页面加载进度条速度过慢的问题；
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#version" href="#v14">v1.4</a>
+                                                </h4>
+                                            </div>
+                                            <div id="v14" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>修复了百度ECharts图表显示不正确的问题； <a href="graph_echarts.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>新增表单验证示例，使用jQuery Validate插件实现； <a href="form_validate.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>新增树形视图示例； <a href="tree_view.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>修复弹框遮罩的Bug；
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v13">v1.3</a>
+                                                </h4>
+                                            </div>
+                                            <div id="v13" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>加入阿里巴巴团队的字体图标库，字体图标可以自定义啦； <a href="iconfont.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>新增头像裁剪上传组件FullAvatareditor； <a href="form_avatar.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>集成网页弹层插件layer； <a href="layer.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>集成日期选择器layerDate； <a href="layerdate.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li class="text-danger"><b>增加web即时通讯功能，可以在系统内在线聊天了；</b> <a href="webim.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>增加主题预览功能，点击右上侧齿轮图标预览；</li>
+                                                        <li>增加左侧边栏固定功能；</li>
+                                                        <li>修复了多处问题。</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v12">v1.2</a>
+                                                </h4>
+                                            </div>
+                                            <div id="v12" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>新增百度WebUploader拖动上传文件组件；<a href="form_webuploader.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>新增国产优秀富文本编辑器插件Simditor；<a href="form_simditor.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>新增百度ECharts统计图表插件；<a href="form_simditor.html" title="去看看"><i class="fa fa-eye"></i></a>
+                                                        </li>
+                                                        <li>修复了几处问题。</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#version" href="#v11">v1.1</a>
+                                                </h4>
+                                            </div>
+                                            <div id="v11" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ol>
+                                                        <li>修复了几处问题。</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>购买说明</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <p>购买后我可以获得什么？</p>
+                                <ol>
+                                    <li>所有源码(未压缩、带注释版本)；</li>
+                                    <li>说明文档；</li>
+                                    <li>终身免费升级服务；</li>
+                                    <li>必要的技术支持；</li>
+                                    <li>付费二次开发服务；</li>
+                                    <li>授权许可；</li>
+                                    <li>……</li>
+                                </ol>
+                                <hr>
+                                <p>如果需要购买H+主题，可直接付款到支付宝：<a href="javascript;">zheng-zihan@qq.com</a>，收款人：<a href="javascript;">*子涵</a>。也可以使用手机支付宝或者微信扫码支付：</p>
+                                <div class="alert alert-warning">
+                                    付款完成后请及时联系作者，或在付款备注中留下邮箱或QQ，方便作者及时联系您。
+                                    <br>如果图片太小，可以点击图片放大。
+                                </div>
+                                <p id="pay-qrcode">
+                                    <a href="javascript:;"><img src="http://cdn.zi-han.net/theme/hplus/pay.png?922" width="100%" alt="请使用手机支付宝或者微信扫码支付">
+                                    </a>
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script id="welcome-template" type="text/x-handlebars-template">
+                <div class="border-bottom white-bg page-heading clearfix">
+                    <h2>更新日志：</h2>
+                    <div>今天是情人节，H+终于跨到了v3.0，就算是情人节礼物吧，感谢你们的不离不弃，一路相伴！</div>
+                    <div class="pull-right">——Beau-zihan / 2015.8.20</div>
+                </div>
+                <div class="m">
+                    <div class="tabs-container">
+                        <div class="tabs-left">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#layouts"><i class="fa fa-columns"></i> 布局
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#new"><i class="fa fa-plus-square"></i> 新增
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#update"><i class="fa fa-arrow-circle-o-up"></i> 升级
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#revise"><i class="fa fa-pencil"></i> 修正
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#optimize"><i class="fa fa-magic"></i> 优化
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" style="line-height:1.8em;">
+                                <div id="layouts" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <ol class="no-left-padding">
+                                            <li class="text-danger"><b>推荐：</b>期待已久的contentTabs效果，支持关闭、双击刷新、左右滑动等；</li>
+                                            <li>固定左侧主菜单栏，并对菜单项做了新的调整；</li>
+                                            <li>增加右侧面板及聊天窗口等。</li>
+                                        </ol>
+
+                                        <p style="margin-left:25px;">
+                                        <hr><span class="label label-danger">特别致谢</span> 感谢[子·梦]同学提供的contentTabs优化方案和代码！</p>
+                                    </div>
+                                </div>
+                                <div id="new" class="tab-pane">
+                                    <div class="panel-body">
+                                        <ol class="no-left-padding">
+                                            <li>表单：搜索自动补全插件suggest、高级表单插件（时间选择，切换按钮，图像裁剪上传，单选复选框美化，文件域美化等)等；</li>
+                                            <li>图表：图表组合页面等；</li>
+                                            <li>页面：团队、社交、客户管理、文章列表、文章详情、新登录页面等；</li>
+                                            <li>UI元素：竖向选项卡、拖动面板、文本对比、加载动画、SweetAlert等；</li>
+                                            <li>相册：layer相册、Blueimp相册等；</li>
+                                            <li>表格：FooTables等。</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div id="update" class="tab-pane">
+                                    <div class="panel-body">
+                                        <ol>
+                                            <li>页面弹层插件layer升级至1.9.3；</li>
+                                            <li>更新jqgrid，支持树形表格；</li>
+                                            <li>更新帮助文档。</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div id="revise" class="tab-pane">
+                                    <div class="panel-body">
+                                        <ol>
+                                            <li>jstree、Simditor等多处错误；</li>
+                                            <li>页面加载进度提示；</li>
+                                            <li>Glyphicon字体图标不显示的问题；</li>
+                                            <li>重新整理开发文档；</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div id="optimize" class="tab-pane">
+                                    <div class="panel-body">
+                                        <ol>
+                                            <li>H+整体视觉效果；</li>
+                                            <li>jstree默认主题显示效果；</li>
+                                            <li>表单验证显示效果；</li>
+                                            <li>iCheck显示效果；</li>
+                                            <li>Tabs显示效果。</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning alert-dismissable m-t-sm">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        同时这也是一个示例，演示了如何从iframe中弹出一个覆盖父页面的层。
+                    </div>
+                </div>
+            </script>
+
+
+
+
+
+
+        </div><!--col-sm-9-->
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 自定义js -->
+<script src="js/hplus.js?v=4.0.0"></script>
+<script type="text/javascript" src="js/contabs.js"></script>
+
+<!-- 第三方插件 -->
+<script src="js/plugins/pace/pace.min.js"></script>
+
+</body>
+
+</html>

@@ -37,6 +37,13 @@ class WUZHI_sinaAuth {
 		}
 	}
 	/**
+	 * 返回用户信息
+	 *
+	 */
+	public function get_user_info($openid = ''){
+		return json_decode(get_curl('https://api.weibo.com/2/users/show.json?access_token='.$this->token.'&openid='.$this->openid.'&uid='.$openid),true);
+	}
+	/**
 	 * 登录
 	 */
 	public function login(){
@@ -51,10 +58,64 @@ class WUZHI_sinaAuth {
 				return array('uid'=>$r['uid']);
 			}
 		}else{
-			$r['authid'] = $db->insert('member_auth', array('type'=>'sina', 'openid'=>$this->openid, 'token'=>$this->token, 'expires_in'=>$this->expires_in), true);
+			$user_info = $this->get_user_info($this->openid);
+			//print_r($user_info);exit;
+			$wz_member = load_class('member','member');
+			$data = array();
+			$data['username'] = str_replace(' ','',$user_info['name']);
+			if($wz_member->check_user($data['username'])==false) {
+				$data['username'] .= random_string('diy',6,'0123456789');
+			}
+			$data['password'] = $data['pwdconfirm'] = random_string('diy',10,'abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+			$data['sex'] = $user_info['gender']=='m' ? 1 : 2;
+			$data['avatar'] = 1;
+			$data['modelid'] = 10;
+
+			$r['uid'] = $wz_member->add($data);
+			$r['authid'] = $db->insert('member_auth', array('type'=>'sina','uid'=>$r['uid'],'nickname'=>$user_info['nickname'], 'openid'=>$this->openid, 'token'=>$this->token, 'expires_in'=>$this->expires_in), true);
+			//保存头像
+			$imgdata = get_curl(str_replace('/50/','/180/',$user_info['profile_image_url']));
+
+			$dir = substr(md5($r['uid']), 0, 2).'/'.$r['uid'].'/';
+			$dir = ATTACHMENT_ROOT.'member/'.$dir;
+			if(!file_exists($dir)) {
+				mkdir($dir, 0777, true);
+			}
+			$filename = $dir.'180x180.jpg';
+			file_put_contents($filename, $imgdata);
+			//file_put_contents()
+			return array('uid'=>$r['uid']);
 		}
 		return array('authid'=>$r['authid']);
 	}
+
+	public function bind_auth($uid) {
+		if(empty($this->openid)) MSG('OPENID ERROR');
+		$db = load_class('db');
+		$r = $db->get_one('member_auth', 'type="sina" AND openid="'.$this->openid.'"', 'uid,authid');
+		//	判断数据库是否已经存在数据
+		if($r){
+			$db->update('member_auth', array('token'=>$this->token, 'expires_in'=>$this->expires_in, 'extend'=>array2string($this->extend)), 'authid='.$r['authid']);
+			//	判断是否是否已经绑定了会员
+			if($uid!=$r['uid']) MSG('帐号已经绑定过其他会员名,如需解绑,请退出后,使用第三方帐号登录,然后解绑.');
+			return array('uid'=>$r['uid']);
+		} else {
+			$user_info = $this->get_user_info($this->openid);
+
+			$imgdata = get_curl(str_replace('/50/','/180/',$user_info['profile_image_url']));
+
+			$dir = substr(md5($uid), 0, 2).'/'.$uid.'/';
+			$dir = ATTACHMENT_ROOT.'member/'.$dir;
+			if(!file_exists($dir)) {
+				mkdir($dir, 0777, true);
+			}
+			$filename = $dir.'180x180.jpg';
+			file_put_contents($filename, $imgdata);
+			$authid = $db->insert('member_auth', array('type'=>'sina','uid'=>$uid,'nickname'=>$user_info['name'], 'openid'=>$this->openid, 'token'=>$this->token, 'expires_in'=>$this->expires_in, 'extend'=>array2string($this->extend)), true);
+			return true;
+		}
+	}
+
 	/**
 	 * 错误返回
 	 */

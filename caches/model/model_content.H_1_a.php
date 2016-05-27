@@ -8,9 +8,10 @@
     'master_table' => 'content_share',
     'attr_table' => 'news_data',
     'remark' => '',
-    'template' => 'show',
+    'template' => '',
     'css' => 'icon-file-word-o',
     'share_model' => '1',
+    'manage_template' => '',
   ),
   2 => 
   array (
@@ -19,22 +20,24 @@
     'name' => '团购',
     'master_table' => 'tuangou',
     'attr_table' => 'tuangou_data',
-    'remark' => '个人团购，企业团购信息',
-    'template' => 'show',
+    'remark' => '',
+    'template' => '',
     'css' => '',
     'share_model' => '0',
+    'manage_template' => '',
   ),
   3 => 
   array (
     'modelid' => '3',
     'm' => 'content',
-    'name' => '体检中心',
+    'name' => '企业库',
     'master_table' => 'mec',
     'attr_table' => 'mec_data',
-    'remark' => '体检中心表：(mec)medical examination center',
-    'template' => 'show',
+    'remark' => '',
+    'template' => '',
     'css' => '',
     'share_model' => '0',
+    'manage_template' => '',
   ),
   5 => 
   array (
@@ -47,6 +50,7 @@
     'template' => 'show',
     'css' => 'icon-file-photo-o',
     'share_model' => '1',
+    'manage_template' => '',
   ),
   6 => 
   array (
@@ -59,6 +63,7 @@
     'template' => 'show',
     'css' => 'icon-file-zip-o',
     'share_model' => '1',
+    'manage_template' => '',
   ),
   7 => 
   array (
@@ -71,6 +76,7 @@
     'template' => 'show',
     'css' => 'icon-file-movie-o',
     'share_model' => '1',
+    'manage_template' => '',
   ),
   8 => 
   array (
@@ -83,6 +89,7 @@
     'template' => 'show',
     'css' => '',
     'share_model' => '0',
+    'manage_template' => '',
   ),
   20 => 
   array (
@@ -95,6 +102,7 @@
     'template' => 'show',
     'css' => '',
     'share_model' => '0',
+    'manage_template' => '',
   ),
   21 => 
   array (
@@ -107,6 +115,7 @@
     'template' => 'show',
     'css' => '',
     'share_model' => '0',
+    'manage_template' => '',
   ),
   22 => 
   array (
@@ -119,5 +128,6 @@
     'template' => 'show',
     'css' => '',
     'share_model' => '0',
+    'manage_template' => '',
   ),
 )?>

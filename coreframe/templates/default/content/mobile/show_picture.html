@@ -1,0 +1,41 @@
+{T "content","head",TPLID}
+<section class="showct">
+    <section class="cbox">
+        <h5>{$title}</h5>
+        <div class="flxbox infobox">
+            <div class="flxz">{date('Y-m-d H:i',$addtime)} {$category['name']}</div>
+        </div>
+        <article class="ctbox">
+            {$content}
+            {loop $pictures $r}
+
+            <figure itemprop="associatedMedia">
+                <a href="{$r['url']}" itemprop="contentUrl" data-size="{imagesize($r['url'])}">
+                    <img src="{imagecut($r['url'],630,460,2)}" itemprop="thumbnail" alt="{$r['alt']}" />
+                </a>
+                <div class="ext-info">
+                    <figcaption itemprop="caption description">{$r['alt']}</figcaption>
+                </div>
+            </figure>
+            {/loop}
+        </article>
+        <div class="share">
+            <dl>
+                <dt>分享到</dt>
+                <dd>
+                    <script type="text/javascript">document.write('<a href="http://v.t.sina.com.cn/share/share.php?url='+encodeURIComponent(location.href)+'&appkey=2831224133&title='+encodeURIComponent('{$title}')+'" title="分享到新浪微博" class="sharewb" target="_blank">&nbsp;</a>');</script>
+                    <script type="text/javascript">document.write('<a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+encodeURIComponent(location.href)+'" title="分享到QQ空间" class="shareqzone" target="_blank">&nbsp;</a>');</script>
+                </dd>
+            </dl>
+        </div>
+    </section>
+
+</section>
+<script type="text/javascript">
+
+</script>
+<footer class="ft">
+    Copyright 2005 - 2015 WuzhiCMS. All Rights Reserved
+</footer>
+</body>
+</html>

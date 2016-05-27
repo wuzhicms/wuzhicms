@@ -25,7 +25,6 @@ class down{
             $file = decode($GLOBALS['s']);
             if (strpos($file, 'wZ:') !== false) {
                 $file = str_replace('wZ:',ATTACHMENT_ROOT,$file);
-                echo $file;
                 download($file);
             } elseif(preg_match('/^http:|https:|ftp:/',$file)) {
                 //远程地址下载

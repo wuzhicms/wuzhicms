@@ -58,45 +58,22 @@ class WUZHI_mysqli {
 	}
 
 
-	// get parameterized sql string
-	private function get_param_sql($sql,$param = array()) {
-		foreach ($param as $key => $value) {
-			$val = "'". $this->escape_string($value). "'";
-			//echo 'k=> ' . $key .' v=> ' .$val. '<br/>';
-			$sql = str_replace($key, $val, $sql);
-		}
-		return $sql;
-	}
-
 	//get sql resultset count
-	public function get_page_list_count($sql,$param = array()) {
-		$arr = array();
-		$sql = ' select count(1) as num from (' . $this->get_param_sql($sql,$param). ' ) tb_wuzhi_cms';
-
-		//echo 'count SQL:' . $sql . '<br/>';
-
+	public function get_page_list_count($sql) {
 		$query = $this->query($sql);
-		$r = $this->fetch_array($query);
-
-		return $r['num'];
+		return $this->fetch_array($query);
 	}
 
 	//get sql resultset detail list
-	public function get_page_list($sql,$param = array(), $page = 0, $pagesize = 0 ) {
+	public function get_page_list($sql, $keyfield = '') {
 		$arr = array();
-		$sql = $this->get_param_sql($sql,$param);
-
-		if($page > 0 && $pagesize > 0){
-			$page = max(intval($page), 1);
-			$offset = $pagesize*($page-1);
-			$sql = $sql. " limit $pagesize offset $offset ";
-		}
-
-		//echo 'SQL:' . $sql . '<br/>';
-
 		$query = $this->query($sql);
 		while($data = $this->fetch_array($query)) {
-			$arr[] = $data;
+			if($keyfield) {
+				$arr[$data[$keyfield]] = $data;
+			} else {
+				$arr[] = $data;
+			}
 		}
 		return $arr;
 	}
@@ -198,8 +175,8 @@ class WUZHI_mysqli {
 		}
 		$this->querynum++;
 		$this->histories[] = $sql;
-		if(defined('SQL_LOG')) {
-			if(substr($sql,0,21)!='INSERT INTO `wz_logs`' && substr($sql,0,6)!='SELECT' && substr($sql,0,24)!='DELETE FROM `wz_session`' && substr($sql,0,25)!='REPLACE INTO `wz_session`') {
+		if(defined('SQL_LOG') && SQL_LOG=='1') {
+			if(substr($sql,0,21)!='INSERT INTO `wz_logs`' &&  substr($sql,0,24)!='DELETE FROM `wz_session`' && substr($sql,0,25)!='REPLACE INTO `wz_session`') {
 				error_log(date('Y-m-d H:i:s',SYS_TIME).' '.$sql."\r\n", 3, CACHE_ROOT."sql_log.".CACHE_EXT.'.sql');
 			}
 		}
