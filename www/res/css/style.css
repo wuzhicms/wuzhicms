@@ -95,7 +95,7 @@ a,a:hover,a:focus{text-decoration:none;outline:none;-webkit-transition:all 0.3s;
 #menu-nav-mobile li{list-style:none;border-top:1px solid #a5a5a5;width:100%;}
 #menu-nav-mobile li:hover{background-color: rgba(255, 255, 255, 0.19);}
 #navigation-mobile li:first-child{border-top:none}
-#navigation-mobile li a{color:#FFFFFF;display:block;font-size:26px;padding:20px 0 24px 0;text-align:center;}
+#navigation-mobile li a{color:#FFFFFF;display:block;font-size:26px;padding:20px 0 24px 0;text-align:center;background-color: transparent;}
 #navigation-mobile li a:hover{color:#fff}
 #navigation-mobile li a.active{box-shadow: none !important;-webkit-box-shadow:none !important;}
 #navigation-mobile li a:focus{}
