@@ -141,7 +141,7 @@ function sql_execute($link,$sql,$tablepre = '') {
     return true;
 }
 
-function import_sql($id){
+function import_sql($id,$weburl){
     global $dbcharset;
     $db = include WWW_ROOT.'configs/mysql_config.php';
     $db = $db['default'];
@@ -155,6 +155,7 @@ function import_sql($id){
     mysql_select_db($db['dbname']);
     if(file_exists(WWW_ROOT."install/sql/install-$id.sql")) {
         $sql = file_get_contents(WWW_ROOT."install/sql/install-$id.sql");
+        $sql = str_replace('http://dev.wuzhicms.com/',$weburl,$sql);
         sql_execute($link,$sql,$db['tablepre']);
     }
 }
@@ -302,6 +303,26 @@ switch($step) {
             $startid = intval($_GET['startid']);
             $startid = max($startid,1);
             $configs = include ($current_cache.'install_cache.php');
+
+            $http_url = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
+            if(isset($_SERVER['HTTP_HOST'])) {
+                $http_url .= $_SERVER['HTTP_HOST'];
+            } else {
+                $http_url .= $_SERVER["SERVER_NAME"];
+            }
+
+            if(isset($_SERVER['REQUEST_URI'])) {
+                $http_url .= $_SERVER['REQUEST_URI'];
+            } else {
+                if(isset($_SERVER['PHP_SELF'])) {
+                    $http_url .= $_SERVER['PHP_SELF'];
+                } else {
+                    $http_url .= $_SERVER['SCRIPT_NAME'];
+                }
+            }
+            $pos = strripos($http_url,'/');
+            $weburl = substr($http_url,0,$pos-7);
+
             switch($startid) {
                 case 1://mysql_config.php
                     if (function_exists('mysqli_connect') && version_compare(PHP_VERSION, '5.5.0') >= 0) {
@@ -355,24 +376,7 @@ switch($step) {
                     $www_path = strlen($www_path)>1 ? $www_path : "/";
                     $res = set_config($res,'WWW_PATH',"'".$www_path."'");
 
-                    $http_url = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
-                    if(isset($_SERVER['HTTP_HOST'])) {
-                        $http_url .= $_SERVER['HTTP_HOST'];
-                    } else {
-                        $http_url .= $_SERVER["SERVER_NAME"];
-                    }
 
-                    if(isset($_SERVER['REQUEST_URI'])) {
-                        $http_url .= $_SERVER['REQUEST_URI'];
-                    } else {
-                        if(isset($_SERVER['PHP_SELF'])) {
-                            $http_url .= $_SERVER['PHP_SELF'];
-                        } else {
-                            $http_url .= $_SERVER['SCRIPT_NAME'];
-                        }
-                    }
-                    $pos = strripos($http_url,'/');
-                    $weburl = substr($http_url,0,$pos-7);
 
                     $res = set_config($res,'WEBURL',"'".$weburl."'");
                     $cookie_pre =install_rand(3, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
@@ -383,7 +387,9 @@ switch($step) {
                     $key2 =install_rand(7);
                     $res = set_config($res,'_KEY',"'".$key1.$key2."'");
                     $res = set_config($res,'CHARSET',"'".$charset."'");
-
+                    $sitelist_cache = file_get_contents($best_cache.'_cache_/sitelist.H_1_a.php');
+                    $sitelist_cache = str_replace('http://dev.wuzhicms.com/',$weburl,$sitelist_cache);
+                    file_put_contents($best_cache.'_cache_/sitelist.H_1_a.php',$sitelist_cache);
                     file_put_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php',$res);
                     if($reinstall) {
                         rename(WWW_ROOT.'configs/'.$reinstall.'web_config.php',WWW_ROOT.'configs/web_config.php');
@@ -392,17 +398,17 @@ switch($step) {
                     break;
                 case 4://开始导入数据库文件 1
                     define('IN_WZ',true);
-                    import_sql(1);
+                    import_sql(1,$weburl);
                     echo '4';
                     break;
                 case 5://开始导入数据库文件 2
                     define('IN_WZ',true);
-                    import_sql(2);
+                    import_sql(2,$weburl);
                     echo '5';
                     break;
                 case 6://开始导入数据库文件 3
                     define('IN_WZ',true);
-                    import_sql(3);
+                    import_sql(3,$weburl);
                     echo '6';
                     break;
                 case 7://开始初始化数据
@@ -420,10 +426,11 @@ switch($step) {
                     //插入管理员账号
                     $factor = install_rand(6);
                     $password = md5(md5($configs['admin_password']).$factor);
-                    mysql_query("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `lock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`) VALUES
+                    mysql_query("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`) VALUES
 (1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0)");
                     mysql_query("INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')");
-                    mysql_query("INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', '1', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')");
+                    mysql_query("INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')");
+
 
                     echo '7';
                     break;
