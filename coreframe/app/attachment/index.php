@@ -100,9 +100,9 @@ class index {
 
         // Get a file name
         if (isset($GLOBALS["name"])) {
-            $fileName = $GLOBALS["name"];
+            $fileName = str_replace(",","_",$_FILES["file"]["name"]);
         } elseif (!empty($_FILES)) {
-            $fileName = $_FILES["file"]["name"];
+            $fileName = str_replace(",","_",$_FILES["file"]["name"]);
         } else {
             $fileName = uniqid("file_");
         }
