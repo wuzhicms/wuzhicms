@@ -121,23 +121,14 @@ class set extends WUZHI_admin {
             if(empty($receive) || !is_email($receive)) {
                 MSG(L('email address error'));
             }
-            $config = get_cache('sendmail');
-            $password = decode($config['password']);
+            
             //load_function('sendmail');
             $subject = '这里是一封来自 wuzhicms 的测试邮件';
             $message = "感谢您选择wuzhicms，看到该内容，说明您已经配置好邮件发送服务器！";
-            $mail = load_class('sendmail');
-            $mail->setServer($config['smtp_server'], $config['smtp_user'], $password); //设置smtp服务器，普通连接方式
-            //$mail->setServer("smtp.gmail.com", "XXXXX@gmail.com", "XXXXX", 465, true); //设置smtp服务器，到服务器的SSL连接
-            $mail->setFrom($config['send_email']); //设置发件人
-            $mail->setReceiver($receive); //设置收件人，多个收件人，调用多次
-            //$mail->setCc("XXXX"); //设置抄送，多个抄送，调用多次
-            //$mail->setBcc("XXXXX"); //设置秘密抄送，多个秘密抄送，调用多次
-            //$mail->addAttachment("XXXX"); //添加附件，多个附件，调用多次
-            $mail->setMail($subject, $message); //设置邮件主题、内容
-            $mail->sendMail(); //发送
-            if($mail->_errorMessage) {
-                MSG($mail->_errorMessage);
+            load_function('sendmail');
+
+            if(send_mail($receive,$subject,$message)===false) {
+                MSG(L('邮件发送失败!'));
             }
             MSG(L('sendmail success'),HTTP_REFERER);
         } else {
