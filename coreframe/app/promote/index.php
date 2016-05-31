@@ -14,7 +14,10 @@ class index{
     public function stat() {
         $id = intval($GLOBALS['id']);
         $pid = intval($GLOBALS['pid']);
-        if(!$id || !$pid) exit();
+        if(!$id || !$pid) {
+            header("Location:https://www.wuzhicms.com/item-34-60-1.html");
+            exit();
+        }
         $qkey = get_cookie('qkey');
         if($qkey=='') {
             $qkey = uniqid();//13位 唯一值，从cookie中获取和写入，用于记录uv和pv

@@ -39,6 +39,7 @@ class WUZHI_promote_cache{
             $rand_result = $result[$rand_key];
 
         } else {
+            $rand_result['pid'] = $pid;
             $rand_result['file'] = 'http://placehold.it/'.$pr['width'].'x'.$pr['height'];
             $rand_result['template'] = 'show_pic';
         }
