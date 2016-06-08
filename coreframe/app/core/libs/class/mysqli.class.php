@@ -37,7 +37,7 @@ class WUZHI_mysqli {
 
 	}
 
-	public function fetch_array($query, $result_type = MYSQL_ASSOC) {
+	public function fetch_array($query, $result_type = MYSQLI_ASSOC) {
 		return mysqli_fetch_array($query, $result_type);
 	}
 
