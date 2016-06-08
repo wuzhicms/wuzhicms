@@ -41,7 +41,7 @@ class content extends WUZHI_admin {
             set_cookie('siteid',1);
         }
         $this->sitelist = get_cache('sitelist');
-        $this->siteurl = $this->sitelist[$this->siteid]['url'];
+        $this->siteurl = isset($this->sitelist[$this->siteid]['url']) ? $this->sitelist[$this->siteid]['url'] : '';
     }
     public function manage() {
         $modelid = isset($GLOBALS['modelid']) ? intval($GLOBALS['modelid']) : 0;
@@ -117,9 +117,11 @@ class content extends WUZHI_admin {
             $categorys = get_cache('category','content');
             if($title) $where .= " AND `title` LIKE '%$title%'";
 			$cids = array();
-			foreach($categorys as $_cid=>$_res) {
-				if($_res['siteid']==$siteid) $cids[] = $_cid;
-			}
+            if(is_array($categorys)){
+                foreach($categorys as $_cid=>$_res) {
+                    if($_res['siteid']==$siteid) $cids[] = $_cid;
+                }
+            }
 			if(!empty($cids)) {
 				$cids = implode(',',$cids);
 				$where .= " AND `cid` IN($cids)";
