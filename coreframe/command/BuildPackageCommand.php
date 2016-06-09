@@ -6,28 +6,27 @@
  * Date: 4/23/16
  * Time: 20:43
  *
- * use: php BuildPackageCommand.php code version  diff  eg.  php BuildPackageCommand.php MAIN 2.1.0 build/diff-2.1.0
+ * use: php BuildPackageCommand.php code version  diff-file-path  eg.  php BuildPackageCommand.php MAIN 2.1.0 build/diff-2.1.0
  */
 class BuildPackageCommand
 {
     private $code;
     private $version;
-    private $diffFile;
-    public function __construct($argc)
+    private $diff;
+    private $root = __DIR__ . '/../..';
+
+    public function __construct($code, $version, $diff)
     {
         $this->code    = $code;
         $this->version = $version;
-        $this->diff    = $diffFile;
+        $this->diff    = $diff;
     }
 
-    private $root = __DIR__.'/../..';
-    //需要三个参数
     public function execute()
     {
         echo "\n\n开始制作升级包\n\n";
-        $packageDirectory = $this->createDirectory('MAIN', '2.0.5');
-        $diffFile         = 'build/diff-2.0.5';
-        $this->generateFile($diffFile, $packageDirectory);
+        $packageDirectory = $this->createDirectory($this->code, $this->version);
+        $this->generateFile($this->diff, $packageDirectory);
 
         $this->copyUpgradeScript($packageDirectory, $this->version);
 
@@ -55,7 +54,6 @@ class BuildPackageCommand
     private function generateFile($diffFile, $packageDirectory)
     {
         $filePath = "{$this->root}/$diffFile";
-
         if (!file_exists($filePath)) {
             echo "{$diffFile} 差异文件不存在,无法生成差异文件!\n";
             return false;
@@ -77,13 +75,13 @@ class BuildPackageCommand
                 echo "无法处理该文件: {$opFile}\n";
             }
 
-//假如升级脚本放在这个地方,则忽略该文件下的文件
+            //假如升级脚本放在这个地方,则忽略该文件下的文件
             if (strpos($opFile, 'app/DoctrineMigrations') === 0) {
                 echo "忽略文件：{$opFile}\n";
                 continue;
             }
 
-//忽略安装文件,如果有其他的忽略文件也需要在这里处理
+            //忽略安装文件,如果有其他的忽略文件也需要在这里处理
             if (strpos($opFile, 'www/install') === 0) {
                 echo "忽略文件：{$opFile}\n";
                 continue;
@@ -105,28 +103,27 @@ class BuildPackageCommand
 
     private function copyFileAndDir($opFile, $packageDirectory)
     {
-        $destPath = $packageDirectory.'/source/'.$opFile;
+        $destPath = $packageDirectory . '/source/' . $opFile;
 
         if (!file_exists(dirname($destPath))) {
             mkdir(dirname($destPath), 0777, true);
         }
 
-        $root = __DIR__.'/../..';
+        $root = __DIR__ . '/../..';
         $this->copy("{$root}/{$opFile}", $destPath);
     }
 
     private function copyUpgradeScript($dir, $version)
     {
         echo "拷贝升级脚本：\n";
-        var_dump($dir);
 
-        $path = realpath(__DIR__."/../../www/app/data/scripts/")."/upgrade-".$this->version.".php";
+        $path = realpath(__DIR__ . "/../../www/app/data/scripts/") . "/upgrade-" . $this->version . ".php";
 
         if (!file_exists($path)) {
             echo "无升级脚本\n";
         } else {
-            $targetPath = realpath($dir).'/Upgrade.php';
-            echo $path." -> {$targetPath}\n";
+            $targetPath = realpath($dir) . '/Upgrade.php';
+            echo $path . " -> {$targetPath}\n";
             $this->copy($path, $targetPath, true);
         }
     }
@@ -138,8 +135,6 @@ class BuildPackageCommand
 
     public function copy($originFile, $targetFile, $override = false)
     {
-        var_dump($originFile);
-
         if (stream_is_local($originFile) && !is_file($originFile)) {
             throw new Exception(sprintf('Failed to copy %s because file not exists', $originFile));
         }
@@ -194,6 +189,11 @@ class BuildPackageCommand
     }
 }
 
-$command = new BuildPackageCommand();
+if (count($argv) !== 4) {
+    echo "\nuse: php BuildPackageCommand.php code version  diff-file-path  eg.  php BuildPackageCommand.php MAIN 2.1.0 build/diff-2.1.0\n";
+    exit();
+}
+
+$command = new BuildPackageCommand($argv[1], $argv[2], $argv[3]);
 
 $command->execute();
