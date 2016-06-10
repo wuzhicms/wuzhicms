@@ -14,7 +14,8 @@ class WUZHI_app
 {
     public function __construct()
     {
-        $this->db = load_class('db');
+        $this->db         = load_class('db');
+        $this->app_client = load_class('app_client', $m = 'appupdate');
     }
 
     public function checkAppUpgrades()
@@ -25,20 +26,21 @@ class WUZHI_app
             $this->addSystemApp();
             $systemApp = $this->db->get_one('cloud_app', array('code' => 'MAIN'));
         }
-        return $systemApp;
-    }
+        $systemApp['latestVersion'] = $systemApp['version'];
 
+        $args           = array('code' => $systemApp['code'], 'version' => $systemApp['version'], 'host' => WEBURL);
+        $upgradePackage = $this->app_client->checkUpgradePackages($args);
+        return empty($upgradePackage) ? $systemApp : $upgradePackage;
+    }
 
     private function addSystemApp()
     {
-        $system = load_class('system');
-
         $app = array(
             'code'          => 'MAIN',
             'name'          => 'WUZHICMS',
             'description'   => 'WUZHICMS主系统',
             'icon'          => '',
-            'version'       => $system::VERSION,  //可以使用全局定义的 VERSION
+            'version'       => $system::VERSION, //可以使用全局定义的 VERSION
             'fromVersion'   => '0.0.0',
             'developerId'   => 1,
             'developerName' => 'WUZHICMS官方',
@@ -48,5 +50,4 @@ class WUZHI_app
 
         $this->db->insert('cloud_app', $app);
     }
-
 }

@@ -121,7 +121,7 @@
         <!--系统升级-->
             <section class="panel">
             <header class="panel-heading bm0">
-                <span>系统更新 </span><span class="badge">1</span>
+                <span>系统更新 </span><span class="badge"><?php if (isset($app['package'])) {?> 1 <?php }?></span>
                     <span class="tools pull-right">
                         <a class="icon-chevron-down" href="javascript:;"></a>
                     </span>
@@ -131,13 +131,27 @@
                     <tbody>
                     <tr>
                         <td>
-                            <strong>版本信息</strong>：<?php echo  $app['version']; ?>已是最新版本 V2.0.3 <!--当前版本 V2.0.3-->
+                            <strong>版本信息</strong>：当前版本 V<!--已是最新版本 V2.0.3 当前版本 V2.0.3-->
+                            <?php if (isset($app['package'])) {?>
+                                <?php echo $app['package']['fromVersion']; ?>
+                            <?php } else {?>
+                                <?php echo $app['latestVersion']; ?>
+                             <?php }?>
                         </td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>
-                            <strong>升级信息</strong>： 当前版本:  V2.0.3  下一版本:  V2.0.5  最新版本: V2.1.0 <button class="btn btn-primary btn-sm active" role="button" data-toggle="modal" data-backdrop="static" data-target="#wuzhicms-upgrade">升级</button>
+
+                            <strong>升级信息</strong>： <!--当前版本:  V2.0.3  下一版本:  V2.0.5  最新版本: V2.1.0  -->
+                            <?php if (isset($app['package'])) {?>
+                                下一版本: V<?php echo $app['package']['toVersion']; ?> 最新版本: V<?php echo $app['latestVersion']; ?> <button class="btn btn-primary btn-sm active" role="button" data-toggle="modal" data-backdrop="static" data-target="#wuzhicms-upgrade">升级</button>
+                            <?php } else {?>
+                                已经是最新版本: V<?php echo $app['latestVersion']; ?>
+                            <?php }?>
+
+
+
                             <div class="modal fade" id="wuzhicms-upgrade" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="wuzhicms-upgrade">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
