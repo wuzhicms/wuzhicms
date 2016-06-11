@@ -40,7 +40,7 @@ class WUZHI_app
             'name'          => 'WUZHICMS',
             'description'   => 'WUZHICMS主系统',
             'icon'          => '',
-            'version'       => $system::VERSION, //可以使用全局定义的 VERSION
+            'version'       => VERSION, //可以使用全局定义的 VERSION
             'fromVersion'   => '0.0.0',
             'developerId'   => 1,
             'developerName' => 'WUZHICMS官方',
