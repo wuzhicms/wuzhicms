@@ -8,3 +8,4 @@ www/configs/weixin_config.php
 /caches/*
 /upgrade/backup/*
 /upgrade/data/*
+/upgrade/build/*

@@ -141,7 +141,7 @@ final class index extends WUZHI_admin
             }
             $filepath = $this->app_client->downloadPackage($packageId);
 
-            $this->unzipPackageFile($filepath, $this->makePackageFileUnzipDir($package));
+            $this->unzipPackageFile($filepath, $this->getPackageFileUnzipDir($package));
         } catch (\Exception $e) {
             $errors[] = $e->getMessage();
         }
@@ -157,12 +157,9 @@ final class index extends WUZHI_admin
      */
     public function beginUpgrade()
     {
-        //TODO LIST 处理删除文件 ,处理需要覆盖的文件, 处理sql脚本
         $errors    = array();
-        $package   = $packageDir = null;
         $packageId = isset($GLOBALS['packageId']) ? intval($GLOBALS['packageId']) : MSG(L('parameter_error'));
-        $type      = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : MSG(L('parameter_error'));
-        $index     = isset($GLOBALS['index']) ? intval($GLOBALS['index']) : MSG(L('parameter_error'));
+        $type      = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : null;
 
 
         try {
@@ -171,35 +168,31 @@ final class index extends WUZHI_admin
             if (empty($package)) {
                 throw $this->createServiceException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
             }
-            $packageDir = $this->makePackageFileUnzipDir($package);
+            $packageDir = $this->getPackageFileUnzipDir($package);
+
         } catch (\Exception $e) {
             $errors[] = $e->getMessage();
             goto last;
         }
 
-        if (empty($index)) {
-            try {
-                $this->_deleteFilesForPackageUpdate($package, $packageDir);
-            } catch (\Exception $e) {
-                $errors[] = "删除文件时发生了错误：{$e->getMessage()}";
-                goto last;
-            }
+        try {
+            $this->_deleteFilesForPackageUpdate($packageDir);
+        } catch (\Exception $e) {
+            $errors[] = "删除文件时发生了错误：{$e->getMessage()}";
+            goto last;
+        }
 
-            try {
-                $this->_replaceFileForPackageUpdate($package, $packageDir);
-            } catch (\Exception $e) {
-                $errors[] = "复制升级文件时发生了错误：{$e->getMessage()}";
-                goto last;
-            }
+        try {
+            $this->_replaceFileForPackageUpdate($packageDir);
+        } catch (\Exception $e) {
+            $errors[] = "复制升级文件时发生了错误：{$e->getMessage()}";
+            goto last;
         }
 
 
         try {
-            $info = $this->_execScriptForPackageUpdate($package, $packageDir, $type, $index);
+            $this->_execScriptForPackageUpdate($package, $packageDir, $type);
 
-            if (isset($info['index'])) {
-                goto last;
-            }
         } catch (\Exception $e) {
             $errors[] = "执行升级/安装脚本时发生了错误：{$e->getMessage()}";
             goto last;
@@ -207,6 +200,7 @@ final class index extends WUZHI_admin
 
 
         try {
+            //deal cache
             $cachePath = $this->getKernel()->getParameter('kernel.root_dir') . '/cache/' . $this->getKernel()->getEnvironment();
             $this->filesystem->remove($cachePath);
 
@@ -216,41 +210,41 @@ final class index extends WUZHI_admin
         }
 
         if (empty($errors)) {
-            $this->updateAppForPackageUpdate($package, $packageDir);
+            $this->updateAppForPackageUpdate($package);
         }
         last:
         $this->createJsonErrors($errors);
     }
 
-    protected function _deleteFilesForPackageUpdate($package, $packageDir)
+    protected function _deleteFilesForPackageUpdate($packageDir)
     {
-        if (!file_exists($packageDir . '/delete')) {
+        if (!$this->filesystem->exists($packageDir . '/delete')) {
             return;
         }
 
-        $fh = fopen($packageDir . '/delete', 'r');
+        $handle = fopen($packageDir . '/delete', 'r');
 
-        while ($filepath = fgets($fh)) {
-            $fullpath = SYSTEM_ROOT . '/' . trim($filepath);
+        while ($filePath = fgets($handle)) {
+            //get file full path
+            $fullPath = SYSTEM_ROOT . trim($filePath);
 
-            if (file_exists($fullpath)) {
-                $this->filesystem->remove($fullpath);
+            if ($this->filesystem->exists($fullPath)) {
+                $this->filesystem->remove($fullPath);
             }
         }
 
-        fclose($fh);
+        fclose($handle);
     }
 
-    protected function _replaceFileForPackageUpdate($package, $packageDir)
+    protected function _replaceFileForPackageUpdate($packageDir)
     {
-        $filesystem = new Filesystem();
-        $filesystem->mirror("{$packageDir}/source", $this->getPackageRootDirectory($package, $packageDir), null, array(
+        $this->filesystem->mirror("{$packageDir}/source", SYSTEM_ROOT, null, array(
             'override'        => true,
             'copy_on_windows' => true
         ));
     }
 
-    protected function updateAppForPackageUpdate($package, $packageDir)
+    protected function updateAppForPackageUpdate($package)
     {
         $newApp = array(
             'code'          => $package['product']['code'],
@@ -312,7 +306,7 @@ final class index extends WUZHI_admin
 
     }
 
-    private function makePackageFileUnzipDir($package)
+    private function getPackageFileUnzipDir($package)
     {
         return DOWNLOAD_PATH . $package['fileName'];
     }
