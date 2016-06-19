@@ -118,17 +118,22 @@ class WUZHI_build_package
     {
         $dest = $packageDirectory . '/source/' . $source;
 
-        if ($this->filesystem->exists(dirname($dest))) {
-            $this->filesystem->mkdir(dirname($dest));
+        try {
+            if ($this->filesystem->exists(dirname($dest))) {
+                $this->filesystem->mkdir(dirname($dest));
+            }
+            $this->filesystem->copy(WWW_ROOT . $source, $dest);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
         }
-        $this->filesystem->copy(WWW_ROOT . $source, $dest);
+
     }
 
     private function copyUpgradeScript($dir, $version)
     {
         echo "copy upgrade sql script：\n";
 
-        $path = realpath(__DIR__ . "/../../www/app/data/scripts/") . "/upgrade-" . $version . ".php";
+        $path = WWW_ROOT . "upgrade/scripts/upgrade-" . $version . ".php";
 
         if (!file_exists($path)) {
             echo "no sql script\n";
