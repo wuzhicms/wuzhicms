@@ -151,59 +151,64 @@
                             <?php }?>
 
 
-
-                            <div class="modal fade" id="wuzhicms-upgrade" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="wuzhicms-upgrade">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">系统升级</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th width="40%">应用名称</th>
-                                                    <th width="25%">版本</th>
-                                                    <th>备份数据库</th>
-                                                    <th>备份文件</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>wuzhicms</td>
-                                                    <td>
-                                                        <!--  <strong class="text-success">2.0.5</strong> -->
-                                                        <strong class="text-muted">2.0.3</strong> -&gt; <strong class="text-success">2.0.5</strong>
-                                                    </td>
-                                                    <td>否</td>
-                                                    <td>否</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <div id="package-update-progress" class="package-update-progress hidden">
-                                                <div class="progress progress-striped active">
-                                                    <div class="progress-bar progress-bar-success" style="width: 0%"></div>
-                                                </div>
-                                                <div class="text-success progress-text"></div>
+                            <?php if (isset($app['package'])) {?>
+                                <div class="modal fade" id="wuzhicms-upgrade" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="wuzhicms-upgrade">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">系统升级</h4>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary btn-wuzhicms-upgrade"
-                                                    data-check-environment-url="?m=appupdate&f=index&v=checkEnvironment&_su=wuzhicms"
-                                                    data-backup-file-url="?m=appupdate&f=index&v=backupFile&_su=wuzhicms"
-                                                    data-backup-db-url="?m=appupdate&f=index&v=backupDb&_su=wuzhicms"
-                                                    data-download-extract-url="?m=appupdate&f=index&v=downloadPackageForUpdate&_su=wuzhicms"
-                                                    data-begin-upgrade-url="?m=appupdate&f=index&v=beginUpgrade&_su=wuzhicms"
+                                            <div class="modal-body">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="40%">应用名称</th>
+                                                        <th width="25%">版本</th>
+                                                        <th>备份数据库</th>
+                                                        <th>备份文件</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>wuzhicms</td>
+                                                        <td>
+                                                            <!--  <strong class="text-success">2.0.5</strong> -->
+                                                            <strong class="text-muted"> <?php echo $app['package']['fromVersion']; ?></strong> -&gt; <strong class="text-success"><?php echo $app['package']['toVersion']; ?></strong>
+                                                        </td>
+                                                        <td>否</td>
+                                                        <td>否</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div style="background-color: #f5f5f5;padding: 15px 20px;">
+                                                    更新日志:</br></br>
+                                                    <?php echo $app['package']['description'];?>
+                                                </div>
+                                                <div id="package-update-progress" class="package-update-progress hidden">
+                                                    <div class="progress progress-striped active">
+                                                        <div class="progress-bar progress-bar-success" style="width: 0%"></div>
+                                                    </div>
+                                                    <div class="text-success progress-text"></div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary btn-wuzhicms-upgrade"
+                                                        data-check-environment-url="?m=appupdate&f=index&v=checkEnvironment&_su=<?php  echo _SU;?>"
+                                                        data-backup-file-url="?m=appupdate&f=index&v=backupFile&_su=<?php  echo _SU;?>"
+                                                        data-backup-db-url="?m=appupdate&f=index&v=backupDb&_su=<?php  echo _SU;?>"
+                                                        data-download-extract-url="?m=appupdate&f=index&v=downloadPackageForUpdate&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
+                                                        data-begin-upgrade-url="?m=appupdate&f=index&v=beginUpgrade&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
 
-                                            >开始升级</button>
-                                            <strong class="text text-danger" id="updating-hint" style="display:none;">正在安装，请不要关闭当前窗口...</strong>
+                                                >开始升级</button>
+                                                <strong class="text text-danger" id="updating-hint" style="display:none;">正在安装，请不要关闭当前窗口...</strong>
 
-                                            <button id="finish-update-btn" data-loading-text="正在完成安装/升级, 请稍等..." class="btn btn-primary" style="display:none">完成安装/升级</button>
+                                                <button id="finish-update-btn" data-loading-text="正在完成安装/升级, 请稍等..." class="btn btn-primary" style="display:none">完成安装/升级</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php }?>
                         </td>
                         <td></td>
                     </tr>
