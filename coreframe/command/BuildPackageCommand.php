@@ -6,7 +6,7 @@
  * Date: 4/23/16
  * Time: 20:43
  *
- * use: php BuildPackageCommand.php code version  diff-file-path  eg.  php BuildPackageCommand.php MAIN 2.1.0 build/diff-2.1.0
+ * use: php BuildPackageCommand.php code version  diff-file-path  eg.   php coreframe/command/BuildPackageCommand.php MAIN 3.0.1 upgrade/build/diff-3.0.1
  */
 class BuildPackageCommand
 {
@@ -34,19 +34,18 @@ class BuildPackageCommand
     }
 
     /**
-     * 生成目录,如果已经存在,递归删除文件和目录,此处先简化处理
+     * 生成目录,如果已经存在,递归删除文件和目录
      * @param  $name
      * @param  $version
      * @return string
      */
     private function createDirectory($name, $version)
     {
-        $path = "{$this->root}/build/{$name}_{$version}";
+        $path = "{$this->root}/upgrade/build/{$name}_{$version}";
 
         if (file_exists($path)) {
             $this->remove($path);
         }
-
         mkdir($path);
         return $path;
     }
@@ -76,13 +75,21 @@ class BuildPackageCommand
             }
 
             //假如升级脚本放在这个地方,则忽略该文件下的文件
-            if (strpos($opFile, 'app/DoctrineMigrations') === 0) {
+
+            //忽略caches文件
+            if (strpos($opFile, 'caches') === 0) {
                 echo "忽略文件：{$opFile}\n";
                 continue;
             }
 
-            //忽略安装文件,如果有其他的忽略文件也需要在这里处理
+            //忽略安装文件
             if (strpos($opFile, 'www/install') === 0) {
+                echo "忽略文件：{$opFile}\n";
+                continue;
+            }
+
+            //忽略升级文件
+            if (strpos($opFile, 'upgrade') === 0) {
                 echo "忽略文件：{$opFile}\n";
                 continue;
             }
@@ -150,7 +157,6 @@ class BuildPackageCommand
         }
 
         if ($doCopy) {
-            // https://bugs.php.net/bug.php?id=64634
             $source = fopen($originFile, 'r');
             // Stream context created to allow files overwrite when using FTP stream wrapper - disabled by default
             $target = fopen($targetFile, 'w', null, stream_context_create(array('ftp' => array('overwrite' => true))));
@@ -190,7 +196,7 @@ class BuildPackageCommand
 }
 
 if (count($argv) !== 4) {
-    echo "\nuse: php BuildPackageCommand.php code version  diff-file-path  eg.  php BuildPackageCommand.php MAIN 2.1.0 build/diff-2.1.0\n";
+    echo "\nuse: php BuildPackageCommand.php code version  diff-file-path  eg.   php coreframe/command/BuildPackageCommand.php MAIN 3.0.1 upgrade/build/diff-3.0.1\n";
     exit();
 }
 
