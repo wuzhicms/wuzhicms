@@ -77,8 +77,6 @@ class WUZHI_build_package
                 echo "无法处理该文件: {$opFile}\n";
             }
 
-            //假如升级脚本放在这个地方,则忽略该文件下的文件
-
             //忽略caches文件
             if (strpos($opFile, 'caches') === 0) {
                 echo "忽略文件：{$opFile}\n";
@@ -100,7 +98,7 @@ class WUZHI_build_package
             if ($line[0] == 'M' || $line[0] == 'A') {
                 echo "增加更新文件: {$opFile}\n";
 
-                $this->copyFileAndDir($opFile, $packageDirectory);
+                $this->copyFileAndDirectory($opFile, $packageDirectory);
             }
 
             if ($line[0] == 'D') {
@@ -118,7 +116,12 @@ class WUZHI_build_package
         }
     }
 
-    private function copyFileAndDir($source, $packageDirectory)
+    /**
+     * @param $source
+     * @param $packageDirectory
+     * copy file and directory
+     */
+    private function copyFileAndDirectory($source, $packageDirectory)
     {
         $dest = $packageDirectory . '/source/' . $source;
 
