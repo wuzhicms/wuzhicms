@@ -21,8 +21,9 @@ final class index extends WUZHI_admin
 
     public function __construct()
     {
-        $this->db = load_class('db');
-        $this->filesystem = load_class('filesystem',$m = 'appupdate');
+        $this->db         = load_class('db');
+        $this->filesystem = load_class('filesystem', $m = 'appupdate');
+        $this->app_client = load_class('app_client', $m = 'appupdate');
     }
 
     /**
@@ -102,7 +103,8 @@ final class index extends WUZHI_admin
     /**
      * 检查是否需要备份文件
      */
-    public function backupFile(){
+    public function backupFile()
+    {
         //TODO LIST
         $errors = array();
 
@@ -114,31 +116,32 @@ final class index extends WUZHI_admin
     /**
      * 检查是否需要备份数据库
      */
-    public function backupDb(){
+    public function backupDb()
+    {
         //TODO LIST
         $errors = array();
         $this->createJsonErrors($errors);
     }
+
     /**
      * @param $packageId
      * @return array
      * 下载文件
      */
-    function downloadPackageForUpdate($packageId)
+    function downloadPackageForUpdate()
     {
-        $errors   = array();
-        $unzipDir = DOWNLOAD_PATH . '/upgrade/seajs-3.0.0';
+        $packageId = isset($GLOBALS['packageId']) ? $GLOBALS['packageId'] : '';
+        $errors    = array();
+
         try {
-            /* $package = $this->getCenterPackageInfo($packageId); //获取url
+            $package = $this->app_client->getUpdatePackage($packageId); //获取url
 
-             if (empty($package)) {
-                 throw $this->createServiceException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
-             }*/
-            //  $filepath = $this->createAppClient()->downloadPackage($packageId);
-            $filepath = $this->download('http://prod.edusoho.com/MAIN_2.0.5.zip');
+            if (empty($package)) {
+                throw $this->createServiceException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
+            }
+            $filepath = $this->app_client->downloadPackage($packageId);
 
-            // $this->unzipPackageFile($filepath, $this->makePackageFileUnzipDir($filepath));
-            $this->unzipPackageFile($filepath, $unzipDir);
+            $this->unzipPackageFile($filepath, $this->makePackageFileUnzipDir($package));
         } catch (\Exception $e) {
             $errors[] = $e->getMessage();
         }
@@ -152,22 +155,23 @@ final class index extends WUZHI_admin
      * 处理下载文件
      * $packageId, $type, $index = 0
      */
-    public function beginUpgrade(){
+    public function beginUpgrade()
+    {
         //TODO LIST 处理删除文件 ,处理需要覆盖的文件, 处理sql脚本
-        $errors =array();
-        $package = $packageDir = null;
+        $errors    = array();
+        $package   = $packageDir = null;
         $packageId = isset($GLOBALS['packageId']) ? intval($GLOBALS['packageId']) : MSG(L('parameter_error'));
-        $type = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : MSG(L('parameter_error'));
-        $index = isset($GLOBALS['index']) ? intval($GLOBALS['index']) : MSG(L('parameter_error'));
+        $type      = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : MSG(L('parameter_error'));
+        $index     = isset($GLOBALS['index']) ? intval($GLOBALS['index']) : MSG(L('parameter_error'));
 
 
         try {
-          /*  $package = $this->getCenterPackageInfo($packageId);
+            $package = $this->app_client->getUpdatePackage($packageId);
 
             if (empty($package)) {
                 throw $this->createServiceException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
             }
-            $packageDir = $this->makePackageFileUnzipDir($package);*/
+            $packageDir = $this->makePackageFileUnzipDir($package);
         } catch (\Exception $e) {
             $errors[] = $e->getMessage();
             goto last;
@@ -203,7 +207,7 @@ final class index extends WUZHI_admin
 
 
         try {
-            $cachePath  = $this->getKernel()->getParameter('kernel.root_dir').'/cache/'.$this->getKernel()->getEnvironment();
+            $cachePath = $this->getKernel()->getParameter('kernel.root_dir') . '/cache/' . $this->getKernel()->getEnvironment();
             $this->filesystem->remove($cachePath);
 
         } catch (\Exception $e) {
@@ -220,14 +224,14 @@ final class index extends WUZHI_admin
 
     protected function _deleteFilesForPackageUpdate($package, $packageDir)
     {
-        if (!file_exists($packageDir.'/delete')) {
+        if (!file_exists($packageDir . '/delete')) {
             return;
         }
 
-        $fh         = fopen($packageDir.'/delete', 'r');
+        $fh = fopen($packageDir . '/delete', 'r');
 
         while ($filepath = fgets($fh)) {
-            $fullpath = SYSTEM_ROOT.'/'.trim($filepath);
+            $fullpath = SYSTEM_ROOT . '/' . trim($filepath);
 
             if (file_exists($fullpath)) {
                 $this->filesystem->remove($fullpath);
@@ -267,43 +271,25 @@ final class index extends WUZHI_admin
             $this->db->insert('cloud_app', $newApp);
             $app = $this->db->get_one('cloud_app', array('code' => $package['product']['code']));
         }
-        $this->db->update('cloud_app', $newApp , array('id' => $app['id']));
+        $this->db->update('cloud_app', $newApp, array('id' => $app['id']));
         return $app;
     }
-    private function download($url)
+
+
+    private function unzipPackageFile($filePath, $unzipDir)
     {
-        $filename = md5($url) . '_' . time();
-        $filepath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $filename;
-        $fp       = fopen($filepath, 'w');
-
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_FILE, $fp);
-        curl_exec($curl);
-        curl_close($curl);
-
-        fclose($fp);
-
-        return $filepath;
-    }
-
-
-    private function unzipPackageFile($filepath, $unzipDir)
-    {
-
-        if (file_exists($unzipDir)) {
+        if ($this->filesystem->exists($unzipDir)) {
             $this->filesystem->remove($unzipDir);
         }
-
         $tmpUnzipDir = $unzipDir . '_tmp';
 
-        if (file_exists($tmpUnzipDir)) {
+        if ($this->filesystem->exists($tmpUnzipDir)) {
             $this->filesystem->remove($tmpUnzipDir);
         }
-        $this->filesystem->makedir($tmpUnzipDir);
+        $this->filesystem->mkdir($tmpUnzipDir);
 
         $zip = new \ZipArchive;
-
-        if ($zip->open($filepath) === true) {
+        if ($zip->open($filePath) === true) {
             $tmpUnzipFullDir = $tmpUnzipDir . '/' . $zip->getNameIndex(0);
             $zip->extractTo($tmpUnzipDir);
             $zip->close();
@@ -313,7 +299,6 @@ final class index extends WUZHI_admin
             throw new \Exception('无法解压缩安装包！');
         }
     }
-
 
     private function createJsonErrors($errors)
     {
@@ -325,5 +310,10 @@ final class index extends WUZHI_admin
             echo json_encode(array('status' => 'error', 'errors' => $errors));
         }
 
+    }
+
+    private function makePackageFileUnzipDir($package)
+    {
+        return DOWNLOAD_PATH . $package['fileName'];
     }
 }

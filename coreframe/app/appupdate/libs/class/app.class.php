@@ -28,7 +28,7 @@ class WUZHI_app
         }
         $systemApp['latestVersion'] = $systemApp['version'];
 
-        $args           = array('code' => $systemApp['code'], 'version' => $systemApp['version'], 'host' => WEBURL);
+        $args           = array('code' => $systemApp['code'], 'version' => $systemApp['version']);
         $upgradePackage = $this->app_client->checkUpgradePackages($args);
         return empty($upgradePackage) ? $systemApp : $upgradePackage;
     }
