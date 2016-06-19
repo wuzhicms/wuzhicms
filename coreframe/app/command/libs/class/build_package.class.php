@@ -8,7 +8,7 @@
 defined('IN_WZ') || exit('No direct script access allowed');
 
 /**
- * 系统升级
+ * system upgrade
  */
 class WUZHI_build_package
 {
@@ -24,7 +24,7 @@ class WUZHI_build_package
 
     public function run($code, $version, $diff)
     {
-        echo "\n\n开始制作升级包\n\n";
+        echo "\n\n begin to build upgrade package \n\n";
 
         $packageDirectory = $this->createDirectory($code, $version);
 
@@ -32,13 +32,12 @@ class WUZHI_build_package
 
         $this->copyUpgradeScript($packageDirectory, $version);
 
-        echo "升级包制作完毕\n";
+        echo "finish building upgrade package \n";
     }
 
     /**
-     * 生成目录,如果已经存在,递归删除文件和目录
-     * @param  $name
-     * @param  $version
+     * @param $code
+     * @param $version
      * @return string
      */
     private function createDirectory($code, $version)
@@ -57,61 +56,55 @@ class WUZHI_build_package
         $filePath = WWW_ROOT . $diffFile;
 
         if (!$this->filesystem->exists($filePath)) {
-            echo "{$diffFile} 差异文件不存在,无法生成差异文件!\n";
+            echo "{$diffFile} diff file does not exist,unable to generate a difference file!\n";
             return false;
         }
 
-        $file = fopen($filePath, 'r');
+        $file = @fopen($filePath, 'r');
 
         while (!feof($file)) {
             $line = fgets($file);
 
             if (!in_array($line[0], array('M', "A", 'D'))) {
-                echo "无法处理该文件: {$line[0]}\n\n";
+                echo "unable to generate a difference file: {$line[0]}\n\n";
                 continue;
             }
 
             $opFile = trim(substr($line, 1));
 
             if (empty($opFile)) {
-                echo "无法处理该文件: {$opFile}\n";
+                echo "unable to generate a difference file: {$opFile}\n";
             }
 
-            //忽略caches文件
             if (strpos($opFile, 'caches') === 0) {
-                echo "忽略文件：{$opFile}\n";
+                echo "ignore file：{$opFile}\n";
                 continue;
             }
 
-            //忽略安装文件
             if (strpos($opFile, 'www/install') === 0) {
-                echo "忽略文件：{$opFile}\n";
+                echo "ignore file：{$opFile}\n";
                 continue;
             }
 
-            //忽略升级文件
             if (strpos($opFile, 'upgrade') === 0) {
-                echo "忽略文件：{$opFile}\n";
+                echo "ignore file：{$opFile}\n";
                 continue;
             }
 
             if ($line[0] == 'M' || $line[0] == 'A') {
-                echo "增加更新文件: {$opFile}\n";
+                echo "append update file: {$opFile}\n";
 
                 $this->copyFileAndDirectory($opFile, $packageDirectory);
             }
 
             if ($line[0] == 'D') {
-                echo "增加删除文件: {$opFile}\n";
-                //如果有软连接,需要处理软连接的地址
+                echo "append delete file: {$opFile}\n";
                 $this->insertDelete($opFile, $packageDirectory);
             }
 
-            //增加模板处理
             if (strpos($opFile, 'coreframe/templates') === 0) {
-                echo "增加模板文件：{$opFile}\n";
-                //如果有软连接,需要处理软连接的地址
-                $this->insertemplates($opFile, $packageDirectory);
+                echo "append template file：{$opFile}\n";
+                $this->insertTemplates($opFile, $packageDirectory);
             }
         }
     }
@@ -133,12 +126,12 @@ class WUZHI_build_package
 
     private function copyUpgradeScript($dir, $version)
     {
-        echo "拷贝升级脚本：\n";
+        echo "copy upgrade sql script：\n";
 
         $path = realpath(__DIR__ . "/../../www/app/data/scripts/") . "/upgrade-" . $version . ".php";
 
         if (!file_exists($path)) {
-            echo "无升级脚本\n";
+            echo "no sql script\n";
         } else {
             $targetPath = realpath($dir) . '/Upgrade.php';
             echo $path . " -> {$targetPath}\n";
@@ -151,7 +144,7 @@ class WUZHI_build_package
         file_put_contents("{$packageDirectory}/delete", "{$opFile}\n", FILE_APPEND);
     }
 
-    private function insertemplates($opFile, $packageDirectory)
+    private function insertTemplates($opFile, $packageDirectory)
     {
         file_put_contents("{$packageDirectory}/template", "{$opFile}\n", FILE_APPEND);
     }
