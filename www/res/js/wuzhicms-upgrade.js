@@ -166,3 +166,7 @@ $.each(steps, function (i, step) {
         exec(step.title, step.url, progressBar, step.progressRange[0], step.progressRange[1]);
     });
 });
+
+$("#wuzhicms-upgrade").on('hidden.bs.modal', function () {
+    console.log('wuzhicms-upgrade');
+});
