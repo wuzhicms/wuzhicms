@@ -39,9 +39,9 @@ $best_cache = substr(INSTALL_ROOT,0,-12).'caches/';
 $in_same_dir = false;
 if(file_exists($best_cache.'install.check')) {
     $current_cache = $best_cache;
-    $in_same_dir = true;
 } elseif(file_exists(WWW_ROOT.'caches/install.check')) {
     $current_cache = WWW_ROOT . 'caches/';
+    $in_same_dir = true;
 } else {
     exit('caches 缓存目录不存在');
 }
@@ -399,7 +399,7 @@ switch($step) {
                     break;
                 case 3://web_config.php
                     $res = file_get_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php');
-                    if($in_same_dir===true) {
+                    if($in_same_dir) {
                         $res = str_replace('-11','-7',$res);
                     }
                     //$res = set_config($res,'COREFRAME_ROOT',"'".$current_iframe."'");
