@@ -36,9 +36,10 @@ header('Content-type: text/html; charset=' . $charset);
 
 $best_iframe = substr(INSTALL_ROOT,0,-12).'coreframe/';
 $best_cache = substr(INSTALL_ROOT,0,-12).'caches/';
-
+$in_same_dir = false;
 if(file_exists($best_cache.'install.check')) {
     $current_cache = $best_cache;
+    $in_same_dir = true;
 } elseif(file_exists(WWW_ROOT.'caches/install.check')) {
     $current_cache = WWW_ROOT . 'caches/';
 } else {
@@ -398,9 +399,12 @@ switch($step) {
                     break;
                 case 3://web_config.php
                     $res = file_get_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php');
+                    if($in_same_dir===true) {
+                        $res = str_replace('-11','-7',$res);
+                    }
+                    //$res = set_config($res,'COREFRAME_ROOT',"'".$current_iframe."'");
+                    //$res = set_config($res,'CACHE_ROOT',"'".$current_cache."'");
 
-                    $res = set_config($res,'COREFRAME_ROOT',"'".$current_iframe."'");
-                    $res = set_config($res,'CACHE_ROOT',"'".$current_cache."'");
                     $randstr = $configs['cache_ext'];
                     $res = set_config($res,'CACHE_EXT',"'".$randstr."'");
                     $PHP_SELF = isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : (isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : $_SERVER['ORIG_PATH_INFO']);
@@ -420,9 +424,9 @@ switch($step) {
                     $key2 =install_rand(7);
                     $res = set_config($res,'_KEY',"'".$key1.$key2."'");
                     $res = set_config($res,'CHARSET',"'".$charset."'");
-                    $sitelist_cache = file_get_contents($best_cache.'_cache_/sitelist.H_1_a.php');
+                    $sitelist_cache = file_get_contents($current_cache.'_cache_/sitelist.H_1_a.php');
                     $sitelist_cache = str_replace('http://dev.wuzhicms.com/',$weburl,$sitelist_cache);
-                    file_put_contents($best_cache.'_cache_/sitelist.H_1_a.php',$sitelist_cache);
+                    file_put_contents($current_cache.'_cache_/sitelist.H_1_a.php',$sitelist_cache);
                     file_put_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php',$res);
                     if($reinstall) {
                         rename(WWW_ROOT.'configs/'.$reinstall.'web_config.php',WWW_ROOT.'configs/web_config.php');
