@@ -445,13 +445,21 @@ switch($step) {
                     break;
                 case 6://开始导入数据库文件 3
                     define('IN_WZ',true);
-                    import_sql(3,$weburl);
+                    //sql 3 只做清理默认数据
+                    if(!$configs['install_value']) {
+                        import_sql(3,$weburl);
+                    }
                     echo '6';
                     break;
                 case 7://开始初始化数据
                     define('IN_WZ',true);
                     $db = include WWW_ROOT.'configs/mysql_config.php';
                     $db = $db['default'];
+                    if($is_mysql) {
+                        $mysql_query_func = 'mysql_query';
+                    } else {
+                        $mysql_query_func = 'mysqli_query';
+                    }
                     if($is_mysql) {
                         $link = mysql_connect($db['dbhost'], $db['username'], $db['password']) or die ('Not connected : ' . mysql_error());
                         $version = mysql_get_server_info();
@@ -461,13 +469,8 @@ switch($step) {
                             mysql_query("SET sql_mode=''");
                         }
                         mysql_select_db($db['dbname']);
-                        //插入管理员账号
-                        $factor = install_rand(6);
-                        $password = md5(md5($configs['admin_password']).$factor);
-                        mysql_query("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`) VALUES
-(1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0)");
-                        mysql_query("INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')");
-                        mysql_query("INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')");
+
+
                     } else {
                         $link = mysqli_connect($db['dbhost'], $db['username'], $db['password']) or die ('Not connected : ' . mysqli_error());
                         $version = mysqli_get_server_info();
@@ -476,17 +479,14 @@ switch($step) {
                         if($version > '5.0') {
                             mysqli_query("SET sql_mode=''");
                         }
-
-                        //插入管理员账号
-                        $factor = install_rand(6);
-                        $password = md5(md5($configs['admin_password']).$factor);
-                        mysqli_query("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`) VALUES
-(1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0)");
-                        mysqli_query("INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')");
-                        mysqli_query("INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')");
                     }
-
-
+                    //插入管理员账号
+                    $factor = install_rand(6);
+                    $password = md5(md5($configs['admin_password']).$factor);
+                    $mysql_query_func("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`) VALUES
+(1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0)");
+                    $mysql_query_func("INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')");
+                    $mysql_query_func("INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')");
 
                     echo '7';
                     break;
