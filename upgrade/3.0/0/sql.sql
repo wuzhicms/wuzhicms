@@ -28,22 +28,22 @@ CREATE TABLE `wz_member_group_extend` (
 -- Indexes for table `wz_member_group_extend`
 --
 ALTER TABLE `wz_member_group_extend`
-  ADD PRIMARY KEY (`extid`),
-  ADD UNIQUE KEY `uid` (`uid`,`groupid`),
-  ADD KEY `groupid` (`groupid`,`disabled`);
+ADD PRIMARY KEY (`extid`),
+ADD UNIQUE KEY `uid` (`uid`,`groupid`),
+ADD KEY `groupid` (`groupid`,`disabled`);
 
 --
--- ÔÚµ¼³öµÄ±íÊ¹ÓÃAUTO_INCREMENT
+-- åœ¨å¯¼å‡ºçš„è¡¨ä½¿ç”¨AUTO_INCREMENT
 --
 
 --
--- Ê¹ÓÃ±íAUTO_INCREMENT `wz_member_group_extend`
+-- ä½¿ç”¨è¡¨AUTO_INCREMENT `wz_member_group_extend`
 --
 ALTER TABLE `wz_member_group_extend`
-  MODIFY `extid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+MODIFY `extid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 
-INSERT INTO `wz_member_group` (`groupid`, `name`, `issystem`, `points`, `upgrade`, `money_y`, `money_m`, `money_d`, `sort`, `icon`) VALUES ('4', 'ÓÎ¿Í', '1', '0', '0', '0.00', '0.00', '0.00', '0', '');
+INSERT INTO `wz_member_group` (`groupid`, `name`, `issystem`, `points`, `upgrade`, `money_y`, `money_m`, `money_d`, `sort`, `icon`) VALUES ('4', 'æ¸¸å®¢', '1', '0', '0', '0.00', '0.00', '0.00', '0', '');
 
 ALTER TABLE `wz_member_group` ADD `pid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0' AFTER `groupid`;
 ALTER TABLE `wz_member` ADD `pw_reset` TINYINT(1) NOT NULL DEFAULT '1';
@@ -63,12 +63,12 @@ ALTER TABLE `wz_block` ADD `lang` VARCHAR(10) NOT NULL AFTER `isopenid`;
 CREATE TABLE `wz_content_ids` (
   `ciid` int(10) UNSIGNED NOT NULL,
   `siteid` tinyint(3) UNSIGNED NOT NULL,
-  `id` int(10) UNSIGNED NOT NULL COMMENT 'Ô­Ê¼ÄÚÈİid',
+  `id` int(10) UNSIGNED NOT NULL COMMENT 'åŸå§‹å†…å®¹id',
   `cid` int(10) UNSIGNED NOT NULL,
-  `new_id` int(10) UNSIGNED NOT NULL COMMENT 'ĞÂµÄid',
+  `new_id` int(10) UNSIGNED NOT NULL COMMENT 'æ–°çš„id',
   `new_siteid` tinyint(3) UNSIGNED NOT NULL,
   `new_cid` int(10) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Õ¾ÈºÄÚÈİ¶ÔÓ¦¹ØÏµ';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='ç«™ç¾¤å†…å®¹å¯¹åº”å…³ç³»';
 
 --
 -- Indexes for dumped tables
@@ -81,18 +81,18 @@ ALTER TABLE `wz_content_ids`
 ADD PRIMARY KEY (`ciid`);
 
 --
--- ÔÚµ¼³öµÄ±íÊ¹ÓÃAUTO_INCREMENT
+-- åœ¨å¯¼å‡ºçš„è¡¨ä½¿ç”¨AUTO_INCREMENT
 --
 
 --
--- Ê¹ÓÃ±íAUTO_INCREMENT `wz_content_ids`
+-- ä½¿ç”¨è¡¨AUTO_INCREMENT `wz_content_ids`
 --
 ALTER TABLE `wz_content_ids`
 MODIFY `ciid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 INSERT INTO `wz_model_field` (`modelid`, `field`, `name`, `remark`, `css`, `minlength`, `maxlength`, `pattern`, `errortips`, `formtype`, `setting`, `ext_code`, `unsetgids`, `unsetroles`, `master_field`, `ban_field`, `location`, `search_field`, `ban_contribute`, `to_fulltext`, `to_block`, `sort`, `disabled`, `powerful_field`, `workflow_field`) VALUES
-  (8, 'point_money', '»ı·Ö£«ÏÖ½ğ', '', '', 0, 0, '', '', 'powerful', 'a:3:{s:8:"formtext";s:138:"<input type="text" name="form[point_money]" id="point_money" value="{FIELD_VALUE}" class="input-text" placeholder="»ı·Ö">\r\n\r\n£« {price}";s:9:"fieldtype";s:7:"varchar";s:9:"minnumber";s:1:"1";}', '', '', '', 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0);
-UPDATE `wz_model_field` SET `field`='price',`name`='ÏÖ½ğ¼Û',`remark`='',`ext_code`='',`minlength`='0',`maxlength`='0',`pattern`='',`errortips`='',`location`='0',`search_field`='0',`ban_contribute`='1',`to_fulltext`='1',`powerful_field`='1',`to_block`='0',`workflow_field`='0',`modelid`='8',`setting`='a:2:{s:9:\"fieldtype\";s:3:\"int\";s:12:\"defaultvalue\";s:0:\"\";}',`unsetgids`='',`unsetroles`=''  WHERE  `id` = '412';
-UPDATE `wz_model_field` SET `field`='point_money',`name`='»ı·Ö£«ÏÖ½ğ',`remark`='',`ext_code`='',`minlength`='0',`maxlength`='0',`pattern`='',`errortips`='',`location`='0',`search_field`='0',`ban_contribute`='1',`to_fulltext`='1',`powerful_field`='0',`to_block`='0',`workflow_field`='0',`modelid`='8',`setting`='a:3:{s:8:\"formtext\";s:138:\"<input type=\"text\" name=\"form[point_money]\" id=\"point_money\" value=\"{FIELD_VALUE}\" class=\"input-text\" placeholder=\"»ı·Ö\">\r\n\r\n£« {price}\";s:9:\"fieldtype\";s:9:\"mediumint\";s:9:\"minnumber\";s:1:\"1\";}',`unsetgids`='',`unsetroles`=''  WHERE  `field` = 'point_money';
+  (8, 'point_money', 'ç§¯åˆ†ï¼‹ç°é‡‘', '', '', 0, 0, '', '', 'powerful', 'a:3:{s:8:"formtext";s:138:"<input type="text" name="form[point_money]" id="point_money" value="{FIELD_VALUE}" class="input-text" placeholder="ç§¯åˆ†">\r\n\r\nï¼‹ {price}";s:9:"fieldtype";s:7:"varchar";s:9:"minnumber";s:1:"1";}', '', '', '', 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0);
+UPDATE `wz_model_field` SET `field`='price',`name`='ç°é‡‘ä»·',`remark`='',`ext_code`='',`minlength`='0',`maxlength`='0',`pattern`='',`errortips`='',`location`='0',`search_field`='0',`ban_contribute`='1',`to_fulltext`='1',`powerful_field`='1',`to_block`='0',`workflow_field`='0',`modelid`='8',`setting`='a:2:{s:9:\"fieldtype\";s:3:\"int\";s:12:\"defaultvalue\";s:0:\"\";}',`unsetgids`='',`unsetroles`=''  WHERE  `id` = '412';
+UPDATE `wz_model_field` SET `field`='point_money',`name`='ç§¯åˆ†ï¼‹ç°é‡‘',`remark`='',`ext_code`='',`minlength`='0',`maxlength`='0',`pattern`='',`errortips`='',`location`='0',`search_field`='0',`ban_contribute`='1',`to_fulltext`='1',`powerful_field`='0',`to_block`='0',`workflow_field`='0',`modelid`='8',`setting`='a:3:{s:8:\"formtext\";s:138:\"<input type=\"text\" name=\"form[point_money]\" id=\"point_money\" value=\"{FIELD_VALUE}\" class=\"input-text\" placeholder=\"ç§¯åˆ†\">\r\n\r\nï¼‹ {price}\";s:9:\"fieldtype\";s:9:\"mediumint\";s:9:\"minnumber\";s:1:\"1\";}',`unsetgids`='',`unsetroles`=''  WHERE  `field` = 'point_money';
 ALTER TABLE `wz_point2goods` CHANGE `price` `price` decimal(10,2) NOT NULL default '0.00';
 ALTER TABLE `wz_payment` ADD PRIMARY KEY(`id`);
 ALTER TABLE `wz_payment` CHANGE `id` `id` TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT;
@@ -102,36 +102,36 @@ DELETE FROM `wz_model_field` WHERE  `modelid` = '2';
 
 
 INSERT INTO `wz_model` (`modelid`, `m`, `name`, `master_table`, `attr_table`, `remark`, `template`, `css`, `share_model`, `manage_template`) VALUES
-  (2, 'content', 'ÍÅ¹º', 'tuangou', 'tuangou_data', '', 'show', '', 0, '');
+  (2, 'content', 'å›¢è´­', 'tuangou', 'tuangou_data', '', 'show', '', 0, '');
 
 
 
 INSERT INTO `wz_model_field` (`modelid`, `field`, `name`, `remark`, `css`, `minlength`, `maxlength`, `pattern`, `errortips`, `formtype`, `setting`, `ext_code`, `unsetgids`, `unsetroles`, `master_field`, `ban_field`, `location`, `search_field`, `ban_contribute`, `to_fulltext`, `to_block`, `sort`, `disabled`, `powerful_field`, `workflow_field`) VALUES
-  (2, 'addtime', 'Ìí¼ÓÊ±¼ä', '', '', 0, 0, '', '', 'datetime', 'a:2:{s:9:"fieldtype";s:3:"int";s:6:"format";s:11:"Y-m-d H:i:s";}', '', '', '', 1, 1, 1, 0, 0, 0, 1, 12, 0, 0, 0),
-  (2, 'block', 'Ìí¼Óµ½Çø¿é', '', '', 0, 0, '', '', 'block', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0),
-  (2, 'groups', 'ÓÃ»§×éÈ¨ÏŞ', '', '', 0, 0, '', '', 'group', 'a:1:{s:6:"groups";s:3:"4,5";}', '', '', '', 0, 0, 2, 0, 0, 0, 0, 18, 0, 0, 0),
-  (2, 'url', 'Á´½ÓµØÖ·', '', '', 0, 0, '', '', 'url', '', '', '', '', 1, 1, 1, 0, 0, 0, 1, 11, 0, 0, 0),
-  (2, 'sort', 'È¨ÖØ', '', '', 0, 255, '', '', 'slider', 'a:1:{s:12:"defaultvalue";s:1:"0";}', '', '', '', 1, 1, 1, 0, 0, 0, 0, 20, 0, 0, 0),
-  (2, 'template', 'ÄÚÈİÒ³Ä£°å', '', '', 0, 0, '', '', 'template', '', '', '', '', 0, 0, 1, 0, 0, 0, 0, 21, 0, 0, 0),
-  (2, 'allowcomment', 'ÔÊĞíÆÀÂÛ', '', '', 0, 0, '', '', 'box', 'a:6:{s:7:"options";s:21:"ÔÊĞí|1\r\n²»ÔÊĞí|0";s:7:"boxtype";s:5:"radio";s:9:"fieldtype";s:7:"tinyint";s:9:"minnumber";s:1:"1";s:12:"defaultvalue";s:1:"1";s:10:"outputtype";s:1:"0";}', '', '', '', 0, 0, 2, 0, 0, 0, 0, 17, 0, 0, 0),
-  (2, 'status', '¸å¼ş×´Ì¬', '', '', 0, 0, '', '', 'box', 'a:6:{s:7:"options";s:50:"Í¨¹ıÉóºË|9\r\n´ıÉó|1\r\n¶¨Ê±·¢ËÍ|8\r\n²İ¸å|6";s:7:"boxtype";s:5:"radio";s:9:"fieldtype";s:7:"tinyint";s:9:"minnumber";s:1:"1";s:12:"defaultvalue";s:1:"9";s:10:"outputtype";s:1:"0";}', '', '', '', 1, 1, 0, 0, 0, 0, 0, 30, 0, 0, 0),
-  (2, 'thumb', 'ËõÂÔÍ¼', '', '', 0, 0, '', '', 'image', 'a:6:{s:12:"defaultvalue";s:0:"";s:15:"upload_allowext";s:20:"gif|jpg|jpeg|png|bmp";s:9:"watermark";s:1:"0";s:13:"isselectimage";s:1:"1";s:12:"images_width";s:0:"";s:13:"images_height";s:0:"";}', '', '', '', 1, 1, 0, 0, 0, 0, 1, 5, 0, 0, 0),
-  (2, 'relation', 'Ïà¹ØÄÚÈİ', '', '', 0, 0, '', '', 'relation', 'a:3:{s:8:"formtext";s:8:"Ïà¹ØÄÚÈİ";s:9:"fieldtype";s:7:"tinyint";s:9:"minnumber";s:1:"1";}', '', '', '', 0, 0, 1, 0, 0, 0, 0, 11, 0, 0, 0),
-  (2, 'remark', 'ÕªÒª', '', '', 0, 0, '', '', 'textarea', 'a:2:{s:12:"defaultvalue";s:0:"";s:10:"enablehtml";s:1:"0";}', '', '', '', 1, 1, 0, 0, 0, 1, 1, 5, 0, 0, 0),
-  (2, 'content', '»î¶¯ÏêÇé', '', '', 0, 0, '', '', 'editor', 'a:1:{s:12:"defaultvalue";s:0:"";}', '', '', '', 0, 0, 0, 0, 0, 1, 0, 27, 0, 0, 0),
-  (2, 'cid', 'ËùÊôÀ¸Ä¿', '', '', 1, 0, '', 'ÇëÑ¡ÔñÀ¸Ä¿', 'cid', '', '', '', '', 1, 1, 5, 0, 0, 0, 0, 1, 0, 0, 0),
-  (2, 'title', '±êÌâ', '', '', 2, 80, '', 'ÇëÊäÈë±êÌâ', 'title', '', '', '', '', 1, 1, 5, 0, 0, 1, 1, 2, 0, 0, 0),
-  (2, 'keywords', '¹Ø¼ü´Ê', '¶à¹Ø¼ü´ÊÖ®¼äÓÃ°ë½Ç¶ººÅ¡°,¡±¸ô¿ª', '', 0, 0, '', '', 'keyword', '', '', '', '', 1, 1, 0, 1, 0, 1, 0, 4, 0, 0, 0),
-  (2, 'endtime', '½ØÖ¹Ê±¼ä', '', '', 0, 0, '', '', 'datetime', 'a:2:{s:9:"fieldtype";s:3:"int";s:6:"format";s:11:"Y-m-d H:i:s";}', '', '', '', 1, 0, 0, 0, 1, 1, 0, 9, 0, 0, 0),
-  (2, 'apply_quantity', '±¨ÃûÈËÊı', '', '', 0, 0, '', '', 'number', '', '', '', '', 1, 0, 0, 0, 0, 1, 0, 7, 0, 0, 0),
-  (2, 'phase', 'µÚ¼¸³¡£¿', '', '', 0, 0, '', '', 'number', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0),
-  (2, 'cylc', '²ÎÓëÁ÷³Ì', '', '', 0, 0, '', '', 'editor', 'a:2:{s:7:"toolbar";s:4:"full";s:12:"defaultvalue";s:0:"";}', '', '', '', 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0),
-  (2, 'price', '±£Ö¤½ğ', '', '', 0, 0, '', '', 'coin', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0),
-  (2, 'subtitle', '¸±±êÌâ', '', '', 0, 0, '', '', 'text', 'a:5:{s:4:"size";s:0:"";s:12:"defaultvalue";s:0:"";s:11:"placeholder";s:0:"";s:10:"ispassword";s:1:"0";s:10:"enablehtml";s:1:"0";}', '', '', '', 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
-  (2, 'smalltitle', 'Ğ¡±êÌâ', '', '', 0, 0, '', '', 'text', 'a:5:{s:4:"size";s:0:"";s:12:"defaultvalue";s:0:"";s:11:"placeholder";s:0:"";s:10:"ispassword";s:1:"0";s:10:"enablehtml";s:1:"0";}', '', '', '', 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
-  (2, 'advantage', 'ÓÅÊÆ', '', '', 0, 0, '', '', 'editor', 'a:2:{s:7:"toolbar";s:5:"basic";s:12:"defaultvalue";s:0:"";}', '', '', '', 1, 0, 0, 0, 1, 1, 0, 25, 0, 0, 0),
-  (2, 'FAQ', '³£¼ûÎÊÌâ', '', '', 0, 0, '', '', 'editor', 'a:2:{s:7:"toolbar";s:5:"basic";s:12:"defaultvalue";s:0:"";}', '', '', '', 1, 0, 0, 0, 1, 1, 0, 26, 0, 0, 0),
-  (2, 'return_point', '·µ»¹»ı·Ö', '', '', 0, 0, '', '', 'number', '', '', '', '', 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0);
+  (2, 'addtime', 'æ·»åŠ æ—¶é—´', '', '', 0, 0, '', '', 'datetime', 'a:2:{s:9:"fieldtype";s:3:"int";s:6:"format";s:11:"Y-m-d H:i:s";}', '', '', '', 1, 1, 1, 0, 0, 0, 1, 12, 0, 0, 0),
+  (2, 'block', 'æ·»åŠ åˆ°åŒºå—', '', '', 0, 0, '', '', 'block', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0),
+  (2, 'groups', 'ç”¨æˆ·ç»„æƒé™', '', '', 0, 0, '', '', 'group', 'a:1:{s:6:"groups";s:3:"4,5";}', '', '', '', 0, 0, 2, 0, 0, 0, 0, 18, 0, 0, 0),
+  (2, 'url', 'é“¾æ¥åœ°å€', '', '', 0, 0, '', '', 'url', '', '', '', '', 1, 1, 1, 0, 0, 0, 1, 11, 0, 0, 0),
+  (2, 'sort', 'æƒé‡', '', '', 0, 255, '', '', 'slider', 'a:1:{s:12:"defaultvalue";s:1:"0";}', '', '', '', 1, 1, 1, 0, 0, 0, 0, 20, 0, 0, 0),
+  (2, 'template', 'å†…å®¹é¡µæ¨¡æ¿', '', '', 0, 0, '', '', 'template', '', '', '', '', 0, 0, 1, 0, 0, 0, 0, 21, 0, 0, 0),
+  (2, 'allowcomment', 'å…è®¸è¯„è®º', '', '', 0, 0, '', '', 'box', 'a:6:{s:7:"options";s:21:"å…è®¸|1\r\nä¸å…è®¸|0";s:7:"boxtype";s:5:"radio";s:9:"fieldtype";s:7:"tinyint";s:9:"minnumber";s:1:"1";s:12:"defaultvalue";s:1:"1";s:10:"outputtype";s:1:"0";}', '', '', '', 0, 0, 2, 0, 0, 0, 0, 17, 0, 0, 0),
+  (2, 'status', 'ç¨¿ä»¶çŠ¶æ€', '', '', 0, 0, '', '', 'box', 'a:6:{s:7:"options";s:50:"é€šè¿‡å®¡æ ¸|9\r\nå¾…å®¡|1\r\nå®šæ—¶å‘é€|8\r\nè‰ç¨¿|6";s:7:"boxtype";s:5:"radio";s:9:"fieldtype";s:7:"tinyint";s:9:"minnumber";s:1:"1";s:12:"defaultvalue";s:1:"9";s:10:"outputtype";s:1:"0";}', '', '', '', 1, 1, 0, 0, 0, 0, 0, 30, 0, 0, 0),
+  (2, 'thumb', 'ç¼©ç•¥å›¾', '', '', 0, 0, '', '', 'image', 'a:6:{s:12:"defaultvalue";s:0:"";s:15:"upload_allowext";s:20:"gif|jpg|jpeg|png|bmp";s:9:"watermark";s:1:"0";s:13:"isselectimage";s:1:"1";s:12:"images_width";s:0:"";s:13:"images_height";s:0:"";}', '', '', '', 1, 1, 0, 0, 0, 0, 1, 5, 0, 0, 0),
+  (2, 'relation', 'ç›¸å…³å†…å®¹', '', '', 0, 0, '', '', 'relation', 'a:3:{s:8:"formtext";s:8:"ç›¸å…³å†…å®¹";s:9:"fieldtype";s:7:"tinyint";s:9:"minnumber";s:1:"1";}', '', '', '', 0, 0, 1, 0, 0, 0, 0, 11, 0, 0, 0),
+  (2, 'remark', 'æ‘˜è¦', '', '', 0, 0, '', '', 'textarea', 'a:2:{s:12:"defaultvalue";s:0:"";s:10:"enablehtml";s:1:"0";}', '', '', '', 1, 1, 0, 0, 0, 1, 1, 5, 0, 0, 0),
+  (2, 'content', 'æ´»åŠ¨è¯¦æƒ…', '', '', 0, 0, '', '', 'editor', 'a:1:{s:12:"defaultvalue";s:0:"";}', '', '', '', 0, 0, 0, 0, 0, 1, 0, 27, 0, 0, 0),
+  (2, 'cid', 'æ‰€å±æ ç›®', '', '', 1, 0, '', 'è¯·é€‰æ‹©æ ç›®', 'cid', '', '', '', '', 1, 1, 5, 0, 0, 0, 0, 1, 0, 0, 0),
+  (2, 'title', 'æ ‡é¢˜', '', '', 2, 80, '', 'è¯·è¾“å…¥æ ‡é¢˜', 'title', '', '', '', '', 1, 1, 5, 0, 0, 1, 1, 2, 0, 0, 0),
+  (2, 'keywords', 'å…³é”®è¯', 'å¤šå…³é”®è¯ä¹‹é—´ç”¨åŠè§’é€—å·â€œ,â€éš”å¼€', '', 0, 0, '', '', 'keyword', '', '', '', '', 1, 1, 0, 1, 0, 1, 0, 4, 0, 0, 0),
+  (2, 'endtime', 'æˆªæ­¢æ—¶é—´', '', '', 0, 0, '', '', 'datetime', 'a:2:{s:9:"fieldtype";s:3:"int";s:6:"format";s:11:"Y-m-d H:i:s";}', '', '', '', 1, 0, 0, 0, 1, 1, 0, 9, 0, 0, 0),
+  (2, 'apply_quantity', 'æŠ¥åäººæ•°', '', '', 0, 0, '', '', 'number', '', '', '', '', 1, 0, 0, 0, 0, 1, 0, 7, 0, 0, 0),
+  (2, 'phase', 'ç¬¬å‡ åœºï¼Ÿ', '', '', 0, 0, '', '', 'number', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0),
+  (2, 'cylc', 'å‚ä¸æµç¨‹', '', '', 0, 0, '', '', 'editor', 'a:2:{s:7:"toolbar";s:4:"full";s:12:"defaultvalue";s:0:"";}', '', '', '', 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0),
+  (2, 'price', 'ä¿è¯é‡‘', '', '', 0, 0, '', '', 'coin', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0),
+  (2, 'subtitle', 'å‰¯æ ‡é¢˜', '', '', 0, 0, '', '', 'text', 'a:5:{s:4:"size";s:0:"";s:12:"defaultvalue";s:0:"";s:11:"placeholder";s:0:"";s:10:"ispassword";s:1:"0";s:10:"enablehtml";s:1:"0";}', '', '', '', 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
+  (2, 'smalltitle', 'å°æ ‡é¢˜', '', '', 0, 0, '', '', 'text', 'a:5:{s:4:"size";s:0:"";s:12:"defaultvalue";s:0:"";s:11:"placeholder";s:0:"";s:10:"ispassword";s:1:"0";s:10:"enablehtml";s:1:"0";}', '', '', '', 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
+  (2, 'advantage', 'ä¼˜åŠ¿', '', '', 0, 0, '', '', 'editor', 'a:2:{s:7:"toolbar";s:5:"basic";s:12:"defaultvalue";s:0:"";}', '', '', '', 1, 0, 0, 0, 1, 1, 0, 25, 0, 0, 0),
+  (2, 'FAQ', 'å¸¸è§é—®é¢˜', '', '', 0, 0, '', '', 'editor', 'a:2:{s:7:"toolbar";s:5:"basic";s:12:"defaultvalue";s:0:"";}', '', '', '', 1, 0, 0, 0, 1, 1, 0, 26, 0, 0, 0),
+  (2, 'return_point', 'è¿”è¿˜ç§¯åˆ†', '', '', 0, 0, '', '', 'number', '', '', '', '', 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0);
 
 DROP TABLE IF EXISTS `wz_tuangou`;
 CREATE TABLE `wz_tuangou` (
@@ -153,7 +153,7 @@ CREATE TABLE `wz_tuangou` (
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0',
   `endtime` int(10) unsigned NOT NULL DEFAULT '0',
   `apply_quantity` int(10) unsigned NOT NULL DEFAULT '0',
-  `apply_quantity2` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'ÕæÊµ±¨ÃûÈËÊı',
+  `apply_quantity2` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'çœŸå®æŠ¥åäººæ•°',
   `phase` int(10) unsigned NOT NULL DEFAULT '0',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `subtitle` char(255) NOT NULL DEFAULT '',
@@ -188,37 +188,38 @@ CREATE TABLE `wz_tuangou_data` (
 
 ALTER TABLE `wz_message` ADD `msgtype` TINYINT(3) NOT NULL DEFAULT '0' AFTER `id`;
 
-UPDATE `wz_menu` SET `name`='ÍÅ¹ºÁĞ±í',`pid`='3',`m`='content',`f`='content',`v`='manage',`data`='modelid=2&type=1',`display`='0'  WHERE  `menuid` = '206';
-UPDATE `wz_menu` SET `name`='ÉÌ¼ÒÁĞ±í',`pid`='3',`m`='content',`f`='content',`v`='manage',`data`='modelid=3',`display`='0'  WHERE  `menuid` = '208';
-UPDATE `wz_menu` SET `name`='ÉÌ¼ÒÀ¸Ä¿',`pid`='46',`m`='content',`f`='category',`v`='listing',`data`='modelid=3',`display`='0'  WHERE  `menuid` = '243' ;
-UPDATE `wz_menu` SET `name`='ÍÅ¹ºÀ¸Ä¿',`pid`='46',`m`='content',`f`='category',`v`='listing',`data`='modelid=2',`display`='0'  WHERE  `menuid` = '242' ;
+UPDATE `wz_menu` SET `name`='å›¢è´­åˆ—è¡¨',`pid`='3',`m`='content',`f`='content',`v`='manage',`data`='modelid=2&type=1',`display`='0'  WHERE  `menuid` = '206';
+UPDATE `wz_menu` SET `name`='å•†å®¶åˆ—è¡¨',`pid`='3',`m`='content',`f`='content',`v`='manage',`data`='modelid=3',`display`='0'  WHERE  `menuid` = '208';
+UPDATE `wz_menu` SET `name`='å•†å®¶æ ç›®',`pid`='46',`m`='content',`f`='category',`v`='listing',`data`='modelid=3',`display`='0'  WHERE  `menuid` = '243' ;
+UPDATE `wz_menu` SET `name`='å›¢è´­æ ç›®',`pid`='46',`m`='content',`f`='category',`v`='listing',`data`='modelid=2',`display`='0'  WHERE  `menuid` = '242' ;
 DELETE FROM `wz_menu` WHERE  `menuid` = '209' ;
 ALTER TABLE `wz_video_data` ADD `youku` CHAR( 255 ) NOT NULL DEFAULT '';
 ALTER TABLE `wz_video_data` ADD `tudou` CHAR( 255 ) NOT NULL DEFAULT '';
-INSERT INTO `wz_model_field`(`master_field`,`field`,`name`,`remark`,`ext_code`,`minlength`,`maxlength`,`pattern`,`errortips`,`location`,`search_field`,`ban_contribute`,`to_fulltext`,`powerful_field`,`to_block`,`workflow_field`,`modelid`,`formtype`,`setting`,`unsetgids`,`unsetroles`) VALUES (7,'tudou','ÍÁ¶¹²¥·Å','','','0','','','','0','0','1','1','0','0','0','7','video_tudou','','','');
-INSERT INTO `wz_model_field`(`master_field`,`field`,`name`,`remark`,`ext_code`,`minlength`,`maxlength`,`pattern`,`errortips`,`location`,`search_field`,`ban_contribute`,`to_fulltext`,`powerful_field`,`to_block`,`workflow_field`,`modelid`,`formtype`,`setting`,`unsetgids`,`unsetroles`) VALUES (7,'youku','ÓÅ¿á²¥·Å','','','0','','','','0','0','1','1','0','0','0','7','video_youku','','','');
-ALTER TABLE `wz_setting` ADD `title` VARCHAR(80) NOT NULL COMMENT 'º¬Òå£¬±êÌâ' AFTER `v`;
-INSERT INTO `wz_menu`(`name`,`pid`,`m`,`f`,`v`,`data`,`display`,`menuid`) VALUES ('×Ô¶¨ÒåÈ«¾Ö±äÁ¿','2','core','set','global_vars','','1','5001');
-INSERT INTO `wz_menu`(`name`,`pid`,`m`,`f`,`v`,`data`,`display`,`menuid`) VALUES ('Ìí¼Ó×Ô¶¨Òå±äÁ¿','5001','core','set','add_global_vars','','1','5002');
-INSERT INTO `wz_menu`(`name`,`pid`,`m`,`f`,`v`,`data`,`display`,`menuid`) VALUES ('ĞŞ¸Ä×Ô¶¨Òå±äÁ¿','5001','core','set','edit_global_vars','','0','5003');
+INSERT INTO `wz_model_field`(`master_field`,`field`,`name`,`remark`,`ext_code`,`minlength`,`maxlength`,`pattern`,`errortips`,`location`,`search_field`,`ban_contribute`,`to_fulltext`,`powerful_field`,`to_block`,`workflow_field`,`modelid`,`formtype`,`setting`,`unsetgids`,`unsetroles`) VALUES (7,'tudou','åœŸè±†æ’­æ”¾','','','0','','','','0','0','1','1','0','0','0','7','video_tudou','','','');
+INSERT INTO `wz_model_field`(`master_field`,`field`,`name`,`remark`,`ext_code`,`minlength`,`maxlength`,`pattern`,`errortips`,`location`,`search_field`,`ban_contribute`,`to_fulltext`,`powerful_field`,`to_block`,`workflow_field`,`modelid`,`formtype`,`setting`,`unsetgids`,`unsetroles`) VALUES (7,'youku','ä¼˜é…·æ’­æ”¾','','','0','','','','0','0','1','1','0','0','0','7','video_youku','','','');
+ALTER TABLE `wz_setting` ADD `title` VARCHAR(80) NOT NULL COMMENT 'å«ä¹‰ï¼Œæ ‡é¢˜' AFTER `v`;
+INSERT INTO `wz_menu`(`name`,`pid`,`m`,`f`,`v`,`data`,`display`,`menuid`) VALUES ('è‡ªå®šä¹‰å…¨å±€å˜é‡','2','core','set','global_vars','','1','5001');
+INSERT INTO `wz_menu`(`name`,`pid`,`m`,`f`,`v`,`data`,`display`,`menuid`) VALUES ('æ·»åŠ è‡ªå®šä¹‰å˜é‡','5001','core','set','add_global_vars','','1','5002');
+INSERT INTO `wz_menu`(`name`,`pid`,`m`,`f`,`v`,`data`,`display`,`menuid`) VALUES ('ä¿®æ”¹è‡ªå®šä¹‰å˜é‡','5001','core','set','edit_global_vars','','0','5003');
 
-INSERT INTO `wz_setting` (`id`, `keyid`, `m`, `f`, `v`, `title`, `data`, `updatetime`) VALUES (NULL, 'cache_all', 'core', 'cache_global_vars', 'cache_all', '', '×Ô¶¨ÒåÈ«¾Ö±äÁ¿', CURRENT_TIMESTAMP);
+INSERT INTO `wz_setting` (`id`, `keyid`, `m`, `f`, `v`, `title`, `data`, `updatetime`) VALUES (NULL, 'cache_all', 'core', 'cache_global_vars', 'cache_all', '', 'è‡ªå®šä¹‰å…¨å±€å˜é‡', CURRENT_TIMESTAMP);
 
-INSERT INTO `wz_setting` (`id`, `keyid`, `m`, `f`, `v`, `title`, `data`, `updatetime`) VALUES (NULL, 'cache_all', 'content', 'block_cache', 'cache_all', '', 'ÍÆ¼öÎ»', CURRENT_TIMESTAMP);
-UPDATE `wz_menu` SET `name`='ºÃÓÑÈ¦',`pid`='6',`m`='member',`f`='friend',`v`='listing',`data`='',`display`='0'  WHERE  `menuid` = '240';
+INSERT INTO `wz_setting` (`id`, `keyid`, `m`, `f`, `v`, `title`, `data`, `updatetime`) VALUES (NULL, 'cache_all', 'content', 'block_cache', 'cache_all', '', 'æ¨èä½', CURRENT_TIMESTAMP);
+UPDATE `wz_menu` SET `name`='å¥½å‹åœˆ',`pid`='6',`m`='member',`f`='friend',`v`='listing',`data`='',`display`='0'  WHERE  `menuid` = '240';
 
 INSERT INTO `wz_setting` (`keyid`, `m`, `f`, `v`, `title`, `data`, `updatetime`) VALUES
-  ('cy_key', 'global_vars', '', '', '³©ÑÔappid_key', 'prod_51cde46e252516e5a1da7093b8db4c12', '2016-04-07 08:10:10'),
-  ('cy_appid', 'global_vars', '', '', '³©ÑÔappid', 'cyrKWBFTI', '2016-04-07 08:00:45');
+  ('cy_key', 'global_vars', '', '', 'ç•…è¨€appid_key', 'prod_51cde46e252516e5a1da7093b8db4c12', '2016-04-07 08:10:10'),
+  ('cy_appid', 'global_vars', '', '', 'ç•…è¨€appid', 'cyrKWBFTI', '2016-04-07 08:00:45');
 
 ALTER TABLE `wz_menu` ADD `isopenid` TINYINT(1) NOT NULL DEFAULT '0' AFTER `display`;
 INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `display`, `isopenid`) VALUES
-  (256, 2, 'Õ¾µã¹ÜÀí', 'core', 'site', 'listing', '', 7, 1, 0),
-  (257, 256, 'Ìí¼ÓÕ¾µã', 'core', 'site', 'add', '', 0, 1, 0),
-  (277, 92, 'Õ¾µãÇĞ»»', 'core', 'site', 'changesite', '', 0, 0, 0);
+  (256, 2, 'ç«™ç‚¹ç®¡ç†', 'core', 'site', 'listing', '', 7, 1, 0),
+  (257, 256, 'æ·»åŠ ç«™ç‚¹', 'core', 'site', 'add', '', 0, 1, 0),
+  (277, 92, 'ç«™ç‚¹åˆ‡æ¢', 'core', 'site', 'changesite', '', 0, 0, 0);
 
-ALTER TABLE `wz_model` CHANGE `master_table` `master_table` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Ö÷±íÃû³Æ';
-ALTER TABLE `wz_model` CHANGE `attr_table` `attr_table` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '¸½Êô±íÃû³Æ';
+ALTER TABLE `wz_model` CHANGE `master_table` `master_table` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ä¸»è¡¨åç§°';
+ALTER TABLE `wz_model` CHANGE `attr_table` `attr_table` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'é™„å±è¡¨åç§°';
 UPDATE wz_block_data SET `keyid`=CONCAT(`keyid`,'-zh');
-INSERT INTO `wz_menu`(`name`,`pid`,`m`,`f`,`v`,`data`,`display`,`isopenid`,`menuid`) VALUES ('ÉóÅúĞÂ»áÔ±','6','member','index','check_list','','1','0','5005');
-INSERT INTO `wz_member_group` (`groupid`, `pid`, `name`, `issystem`, `points`, `upgrade`, `money_y`, `money_m`, `money_d`, `sort`, `icon`) VALUES ('5', '0', '´ıÉóºË', '1', '0', '0', '0.00', '0.00', '0.00', '5', '');
+INSERT INTO `wz_menu`(`name`,`pid`,`m`,`f`,`v`,`data`,`display`,`isopenid`,`menuid`) VALUES ('å®¡æ‰¹æ–°ä¼šå‘˜','6','member','index','check_list','','1','0','5005');
+INSERT INTO `wz_member_group` (`groupid`, `pid`, `name`, `issystem`, `points`, `upgrade`, `money_y`, `money_m`, `money_d`, `sort`, `icon`) VALUES ('5', '0', 'å¾…å®¡æ ¸', '1', '0', '0', '0.00', '0.00', '0.00', '5', '');
+ALTER TABLE `wz_copyfrom` ADD `remark` TEXT NOT NULL AFTER `updatetime`;
