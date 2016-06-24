@@ -2705,7 +2705,8 @@ CREATE TABLE `wz_copyfrom` (
   `url` char(40) NOT NULL,
   `logo` char(50) NOT NULL,
   `usetimes` mediumint(8) UNSIGNED NOT NULL,
-  `updatetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `updatetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `remark` TEXT NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='来源表';
 
 --
