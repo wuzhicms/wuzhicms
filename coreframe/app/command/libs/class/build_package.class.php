@@ -119,9 +119,6 @@ class WUZHI_build_package
         $dest = $packageDirectory . '/source/' . $source;
 
         try {
-            if ($this->filesystem->exists(dirname($dest))) {
-                $this->filesystem->mkdir(dirname($dest));
-            }
             $this->filesystem->copy(WWW_ROOT . $source, $dest);
         } catch (\Exception $e) {
             echo $e->getMessage();
