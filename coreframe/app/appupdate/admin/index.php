@@ -200,9 +200,8 @@ final class index extends WUZHI_admin
 
 
         try {
-            //deal cache
-            $cachePath = $this->getKernel()->getParameter('kernel.root_dir') . '/cache/' . $this->getKernel()->getEnvironment();
-            $this->filesystem->remove($cachePath);
+            //refresh cache
+           // $this->filesystem->remove(CACHE_ROOT);
 
         } catch (\Exception $e) {
             $errors[] = "应用安装升级成功，但刷新缓存失败！请检查{$cachePath}的权限";
@@ -242,6 +241,10 @@ final class index extends WUZHI_admin
             'override'        => true,
             'copy_on_windows' => true
         ));
+    }
+
+    protected  function _execScriptForPackageUpdate($package, $packageDir, $type){
+
     }
 
     protected function updateAppForPackageUpdate($package)
