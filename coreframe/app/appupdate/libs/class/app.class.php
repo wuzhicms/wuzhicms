@@ -30,7 +30,7 @@ class WUZHI_app
 
         $args           = array('code' => $systemApp['code'], 'version' => $systemApp['version']);
         $upgradePackage = $this->app_client->checkUpgradePackages($args);
-        return empty($upgradePackage) ? $systemApp : $upgradePackage;
+        return (empty($upgradePackage) || empty($upgradePackage['package']))  ? $systemApp : $upgradePackage;
     }
 
     private function addSystemApp()
