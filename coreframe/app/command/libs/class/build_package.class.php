@@ -93,18 +93,18 @@ class WUZHI_build_package
 
             if ($line[0] == 'M' || $line[0] == 'A') {
                 //单独处理更新模版
-                echo "拷贝更新文件: {$opFile}\n";
+                echo "增加更新文件: {$opFile}\n";
                 $this->copyFileAndDirectory($opFile, $packageDirectory);
+            }
+
+            if (strpos($opFile, 'coreframe/templates') === 0 && ($line[0] == 'M')) {
+                echo "模版文件：{$opFile}\n";
+                $this->insertTplFile($opFile, $packageDirectory);
             }
 
             if ($line[0] == 'D') {
                 echo "删除文件: {$opFile}\n";
                 $this->insertDelete($opFile, $packageDirectory);
-            }
-
-            if (strpos($opFile, 'coreframe/templates') === 0 && ($line[0] == 'M')) {
-                echo "模版文件：{$opFile}\n";
-                $this->insertTplFile($line, $packageDirectory);
             }
         }
     }
@@ -148,6 +148,6 @@ class WUZHI_build_package
 
     private function insertTplFile($opFile, $packageDirectory)
     {
-         file_put_contents("{$packageDirectory}/template", "{$opFile}", FILE_APPEND);
+         file_put_contents("{$packageDirectory}/template", "{$opFile}\n", FILE_APPEND);
     }
 }
