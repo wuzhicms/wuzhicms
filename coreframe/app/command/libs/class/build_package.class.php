@@ -150,15 +150,4 @@ class WUZHI_build_package
     {
          file_put_contents("{$packageDirectory}/template", "{$opFile}", FILE_APPEND);
     }
-    /*private function copyTplFileAndDirectory($source, $packageDirectory)
-    {
-        $dest = $packageDirectory . '/templates/' . $source;
-
-        try {
-            $this->filesystem->copy(WWW_ROOT . $source, $dest);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        }
-    }*/
-
 }
