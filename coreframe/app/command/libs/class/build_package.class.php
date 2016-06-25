@@ -102,9 +102,9 @@ class WUZHI_build_package
                 $this->insertDelete($opFile, $packageDirectory);
             }
 
-            if (strpos($opFile, 'coreframe/templates') === 0) {
-                echo "append template file：{$opFile}\n";
-                $this->insertTemplates($opFile, $packageDirectory);
+            if (strpos($opFile, 'coreframe/templates') === 0 && ($line[0] == 'M' || $line[0] == 'D')) {
+                echo "append change template file：{$opFile}\n";
+                $this->insertTemplates($line, $packageDirectory);
             }
         }
     }
@@ -151,7 +151,7 @@ class WUZHI_build_package
 
     private function insertTemplates($opFile, $packageDirectory)
     {
-        file_put_contents("{$packageDirectory}/template", "{$opFile}\n", FILE_APPEND);
+        file_put_contents("{$packageDirectory}/template", "{$opFile}", FILE_APPEND);
     }
 
 }
