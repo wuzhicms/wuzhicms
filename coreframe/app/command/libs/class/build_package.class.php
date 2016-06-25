@@ -66,45 +66,45 @@ class WUZHI_build_package
             $line = fgets($file);
 
             if (!in_array($line[0], array('M', "A", 'D'))) {
-                echo "unable to generate a difference file: {$line[0]}\n\n";
+                echo "无法处理该差异文件: {$line[0]}\n\n";
                 continue;
             }
 
             $opFile = trim(substr($line, 1));
 
             if (empty($opFile)) {
-                echo "unable to generate a difference file: {$opFile}\n";
+                echo "无法处理该差异文件: {$opFile}\n";
             }
 
             if (strpos($opFile, 'caches') === 0) {
-                echo "ignore file：{$opFile}\n";
+                echo "忽略缓存文件：{$opFile}\n";
                 continue;
             }
 
             if (strpos($opFile, 'www/install') === 0) {
-                echo "ignore file：{$opFile}\n";
+                echo "忽略安装文件：{$opFile}\n";
                 continue;
             }
 
             if (strpos($opFile, 'upgrade') === 0) {
-                echo "ignore file：{$opFile}\n";
+                echo "忽略升级文件：{$opFile}\n";
                 continue;
             }
 
             if ($line[0] == 'M' || $line[0] == 'A') {
-                echo "append update file: {$opFile}\n";
-
+                //单独处理更新模版
+                echo "拷贝更新文件: {$opFile}\n";
                 $this->copyFileAndDirectory($opFile, $packageDirectory);
             }
 
             if ($line[0] == 'D') {
-                echo "append delete file: {$opFile}\n";
+                echo "删除文件: {$opFile}\n";
                 $this->insertDelete($opFile, $packageDirectory);
             }
 
-            if (strpos($opFile, 'coreframe/templates') === 0 && ($line[0] == 'M' || $line[0] == 'D')) {
-                echo "append change template file：{$opFile}\n";
-                $this->insertTemplates($line, $packageDirectory);
+            if (strpos($opFile, 'coreframe/templates') === 0 && ($line[0] == 'M')) {
+                echo "模版文件：{$opFile}\n";
+                $this->insertTplFile($line, $packageDirectory);
             }
         }
     }
@@ -128,12 +128,12 @@ class WUZHI_build_package
 
     private function copyUpgradeScript($dir, $version)
     {
-        echo "copy upgrade sql script：\n";
+        echo "拷贝升级SQL脚本：\n";
 
         $path = WWW_ROOT . "upgrade/scripts/upgrade-" . $version . ".php";
 
         if (!file_exists($path)) {
-            echo "no sql script\n";
+            echo "没有SQL脚本\n";
         } else {
             $targetPath = realpath($dir) . '/Upgrade.php';
             echo $path . " -> {$targetPath}\n";
@@ -146,9 +146,19 @@ class WUZHI_build_package
         file_put_contents("{$packageDirectory}/delete", "{$opFile}\n", FILE_APPEND);
     }
 
-    private function insertTemplates($opFile, $packageDirectory)
+    private function insertTplFile($opFile, $packageDirectory)
     {
-        file_put_contents("{$packageDirectory}/template", "{$opFile}", FILE_APPEND);
+         file_put_contents("{$packageDirectory}/template", "{$opFile}", FILE_APPEND);
     }
+    /*private function copyTplFileAndDirectory($source, $packageDirectory)
+    {
+        $dest = $packageDirectory . '/templates/' . $source;
+
+        try {
+            $this->filesystem->copy(WWW_ROOT . $source, $dest);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }*/
 
 }
