@@ -106,16 +106,15 @@ function makeErrorsText(title, errors) {
 }
 
 function prepareUrl(url) {
-    if (tplCoveringUpdate == true) {
-        url = url + '&tplCoveringUpdate=' + tplCoveringUpdate;
-        tplCoveringUpdate = false;
+    if (coveringUpdateTpl == true) {
+        url = url + '&coveringUpdateTpl=' + coveringUpdateTpl;
+        coveringUpdateTpl = false;
     }
     return url;
 }
 
 function exec(title, url, progressBar, startProgress, endProgress) {
     progressBar.setProgress(startProgress, '正在' + title);
-
     $.ajax(prepareUrl(url), {
         async: true,
         dataType: 'json',
@@ -128,8 +127,7 @@ function exec(title, url, progressBar, startProgress, endProgress) {
             tplist = data.response.join('<br/>');
             $(".tpl-package-upgrade").removeClass('hidden').find('span').html(tplist);
             $(".update-tpl-btn").on('click', function() {
-                tplCoveringUpdate = $(this).data('update');
-                console.log($(this).data('update'))
+                coveringUpdateTpl = $(this).data('update');
                 progressBar.setProgress(endProgress, title + '完成');
                 $(document).dequeue('update_step_queue');
             })
@@ -170,7 +168,7 @@ var reloadOnClose = function() {
 
 
 var $updateBtn = $(".btn-wuzhicms-upgrade");
-var tplCoveringUpdate = false;
+var coveringUpdateTpl = false;
 
 $updateBtn.click(function() {
     reloadOnClose();
@@ -184,7 +182,7 @@ $("#finish-update-btn").click(function() {
     $(this).button('loading').addClass('disabled');
     setTimeout(function() {
         window.location.reload();
-    }, 3000);
+    }, 2000);
 });
 
 var urls = $updateBtn.data();

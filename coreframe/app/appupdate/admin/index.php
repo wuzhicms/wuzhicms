@@ -212,7 +212,7 @@ final class index extends WUZHI_admin
         $errors    = array();
         $packageId = isset($GLOBALS['packageId']) ? intval($GLOBALS['packageId']) : MSG(L('parameter_error'));
         $type      = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : null;
-        $tplUpdate = isset($GLOBALS['tplCoveringUpdate']) ? intval($GLOBALS['tplCoveringUpdate']) : false;
+        $coveringUpdateTpl = isset($GLOBALS['coveringUpdateTpl']) ? intval($GLOBALS['coveringUpdateTpl']) : false;
 
         try {
             $package = $this->app_client->getUpdatePackage($packageId);
@@ -234,7 +234,7 @@ final class index extends WUZHI_admin
         }
 
         try {
-            $this->_proccessTplFile($packageDir, $tplCoveringUpdate);
+            $this->_proccessTplFile($package, $packageDir, $coveringUpdateTpl);
         } catch (\Exception $e) {
             $errors[] = "处理模板文件时发生了错误：{$e->getMessage()}";
             goto last;
@@ -290,15 +290,15 @@ final class index extends WUZHI_admin
 
     /**
      * 如果存在template文件，则说明用户的模板有更新，此时需要做如下事情
-     * 1. 覆盖更新，最好讲用户的模板内容存放到历史模版中，次之，在coreframe/templates/upgrade/{version}/下覆盖用户的文件
-     * 2. 忽略文件，讲要更新的模版放倒，coreframe/templates/upgrade/{version}/下
+     * 1. 覆盖更新，将讲用户的模板内容存放到历史模版中，次之，在coreframe/templates/upgrade/{version}/下覆盖用户的文件
+     * 2. 忽略文件，将要更新的模版放倒，coreframe/templates/upgrade/{version}/下
      *
      * 按照我的想法更新时不语提示，但是仍要对比md5值,这样就知道用户更改了那些文件，然后对于有更改的文件，直接放倒该模版文件的历史纪录中，升级简单且用户方便查找哪些文件被覆盖了，并且可以在新的模版上继续修改
      * @param  [type] $packageDir        [description]
      * @param  [type] $tplCoveringUpdate [description]
      * @return [type] [description]
      */
-    protected function _proccessTplFile($packageDir, $tplCoveringUpdate)
+    protected function _proccessTplFile($package,$packageDir, $coveringUpdateTpl)
     {
         if (!$this->filesystem->exists($packageDir.'/template')) {
             return;
@@ -310,15 +310,15 @@ final class index extends WUZHI_admin
             $originFile  = SYSTEM_ROOT.trim($filePath);
             $upgradeFile = "{$packageDir}/source/".trim($filePath);
 
-            if ($tplCoveringUpdate) {
-                //备份系统中的模版文件并覆盖更新
-                $targetFile = SYSTEM_ROOT."coreframe/templates/upgrade/{$package['fromVersion']}/cover/".trim($filePath);
+            if ($coveringUpdateTpl) {
+                //覆盖更新  -> 备份系统中的模版文件并覆盖更新
+                $targetFile = SYSTEM_ROOT."coreframe/templates/upgrade/{$package['fromVersion']}/cover/".substr(trim($filePath),20);
                 if ($this->filesystem->exists($originFile)) {
                     $this->filesystem->copy($originFile, $targetFile, $override = true);
                 }
             } else {
-                //删除升级文件中对应的文件模板
-                $targetFile = SYSTEM_ROOT."coreframe/templates/upgrade/{$package['fromVersion']}/".trim($filePath);
+                //忽略更新   -> 删除升级文件中对应的文件模板
+                $targetFile = SYSTEM_ROOT."coreframe/templates/upgrade/{$package['fromVersion']}/".substr(trim($filePath),20);
                 if ($this->filesystem->exists($upgradeFile)) {
                     $this->filesystem->copy($upgradeFile, $targetFile, $override = true);
                     $this->filesystem->remove($upgradeFile);
