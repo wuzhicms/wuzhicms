@@ -124,11 +124,11 @@ final class index extends WUZHI_admin
     }
 
     /**
-     * @param $packageId
-     * @return array
      * 下载文件
+     * @param  $packageId
+     * @return array
      */
-    function downloadPackageForUpdate()
+    public function downloadPackage()
     {
         $packageId = isset($GLOBALS['packageId']) ? $GLOBALS['packageId'] : '';
         $errors    = array();
@@ -137,7 +137,7 @@ final class index extends WUZHI_admin
             $package = $this->app_client->getUpdatePackage($packageId); //获取url
 
             if (empty($package)) {
-                throw $this->createServiceException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
+                throw new \RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
             }
             $filepath = $this->app_client->downloadPackage($packageId);
 
@@ -150,26 +150,77 @@ final class index extends WUZHI_admin
     }
 
     /**
-     * @param $packageId
-     * @return array
+     * [proccessTpl 处理模版]
+     * 对比本次升级包中是否含有更新模板，如果有则将每一个和系统中的该模板对比，如果没有改动则忽略，如果有改动则记录下来，并提示用户是否需要覆盖，或者忽略
+     * @return [type] [description]
+     */
+    public function proccessTpl()
+    {
+        $errors    = array();
+        $packageId = isset($GLOBALS['packageId']) ? intval($GLOBALS['packageId']) : MSG(L('parameter_error'));
+
+        try {
+            $package = $this->app_client->getUpdatePackage($packageId);
+
+            if (empty($package)) {
+                throw new \RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
+            }
+            $packageDir = $this->getPackageFileUnzipDir($package);
+        } catch (\Exception $e) {
+            $errors[] = $e->getMessage();
+            goto last;
+        }
+
+        if (!$this->filesystem->exists($packageDir.'/template')) {
+            goto last;
+        }
+
+        $diffTpls = array();
+
+        $handle = fopen($packageDir.'/template', 'r');
+        while ($filePath = fgets($handle)) {
+            $fullPath        = SYSTEM_ROOT.trim($filePath);
+            $fullUpgradePath = $packageDir.'/source/'.trim($filePath);
+
+            if (md5_file($fullPath) !== md5_file($fullUpgradePath)) {
+                array_push($diffTpls, trim($filePath));
+            }
+        }
+        fclose($handle);
+
+        if (!empty($diffTpls)) {
+            array_walk($diffTpls, function ($tpl, $key, $path) {
+                $key == 0 ? file_put_contents($path, $tpl."\n") : file_put_contents($path, $tpl."\n", FILE_APPEND);
+            }, $packageDir.'/template');
+            return $this->createJsonResponse($diffTpls);
+        } else {
+            $this->filesystem->remove($packageDir.'/template');
+        }
+
+        last:
+        $this->createJsonErrors($errors);
+    }
+
+    /**
      * 处理下载文件
      * $packageId, $type, $index = 0
+     * @param  $packageId
+     * @return array
      */
     public function beginUpgrade()
     {
         $errors    = array();
         $packageId = isset($GLOBALS['packageId']) ? intval($GLOBALS['packageId']) : MSG(L('parameter_error'));
         $type      = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : null;
-
+        $tplUpdate = isset($GLOBALS['tplCoveringUpdate']) ? intval($GLOBALS['tplCoveringUpdate']) : false;
 
         try {
             $package = $this->app_client->getUpdatePackage($packageId);
 
             if (empty($package)) {
-                throw $this->createServiceException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
+                throw new \RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
             }
             $packageDir = $this->getPackageFileUnzipDir($package);
-
         } catch (\Exception $e) {
             $errors[] = $e->getMessage();
             goto last;
@@ -183,26 +234,29 @@ final class index extends WUZHI_admin
         }
 
         try {
+            $this->_proccessTplFile($packageDir, $tplCoveringUpdate);
+        } catch (\Exception $e) {
+            $errors[] = "处理模板文件时发生了错误：{$e->getMessage()}";
+            goto last;
+        }
+
+        try {
             $this->_replaceFileForPackageUpdate($packageDir);
         } catch (\Exception $e) {
             $errors[] = "复制升级文件时发生了错误：{$e->getMessage()}";
             goto last;
         }
 
-
         try {
             $this->_execScriptForPackageUpdate($package, $packageDir, $type);
-
         } catch (\Exception $e) {
             $errors[] = "执行升级/安装脚本时发生了错误：{$e->getMessage()}";
             goto last;
         }
 
-
         try {
             //refresh cache
-           // $this->filesystem->remove(CACHE_ROOT);
-
+            // $this->filesystem->remove(CACHE_ROOT);
         } catch (\Exception $e) {
             $errors[] = "应用安装升级成功，但刷新缓存失败！请检查{$cachePath}的权限";
             goto last;
@@ -217,15 +271,14 @@ final class index extends WUZHI_admin
 
     protected function _deleteFilesForPackageUpdate($packageDir)
     {
-        if (!$this->filesystem->exists($packageDir . '/delete')) {
+        if (!$this->filesystem->exists($packageDir.'/delete')) {
             return;
         }
 
-        $handle = fopen($packageDir . '/delete', 'r');
+        $handle = fopen($packageDir.'/delete', 'r');
 
         while ($filePath = fgets($handle)) {
-            //get file full path
-            $fullPath = SYSTEM_ROOT . trim($filePath);
+            $fullPath = SYSTEM_ROOT.trim($filePath);
 
             if ($this->filesystem->exists($fullPath)) {
                 $this->filesystem->remove($fullPath);
@@ -233,6 +286,48 @@ final class index extends WUZHI_admin
         }
 
         fclose($handle);
+    }
+
+    /**
+     * 如果存在template文件，则说明用户的模板有更新，此时需要做如下事情
+     * 1. 覆盖更新，最好讲用户的模板内容存放到历史模版中，次之，在coreframe/templates/upgrade/{version}/下覆盖用户的文件
+     * 2. 忽略文件，讲要更新的模版放倒，coreframe/templates/upgrade/{version}/下
+     *
+     * 按照我的想法更新时不语提示，但是仍要对比md5值,这样就知道用户更改了那些文件，然后对于有更改的文件，直接放倒该模版文件的历史纪录中，升级简单且用户方便查找哪些文件被覆盖了，并且可以在新的模版上继续修改
+     * @param  [type] $packageDir        [description]
+     * @param  [type] $tplCoveringUpdate [description]
+     * @return [type] [description]
+     */
+    protected function _proccessTplFile($packageDir, $tplCoveringUpdate)
+    {
+        if (!$this->filesystem->exists($packageDir.'/template')) {
+            return;
+        }
+
+        $handle = fopen($packageDir.'/template', 'r');
+
+        while ($filePath = fgets($handle)) {
+            //get file full path
+            $originFile  = SYSTEM_ROOT.trim($filePath);
+            $upgradeFile = "{$packageDir}/source/".trim($filePath);
+
+            if ($tplCoveringUpdate) {
+                //备份系统中的模版文件并覆盖更新
+                $targetFile = SYSTEM_ROOT."coreframe/templates/upgrade/{$package['fromVersion']}/cover/".trim($filePath);
+                if ($this->filesystem->exists($originFile)) {
+                    $this->filesystem->copy($originFile, $targetFile, $override = true);
+                }
+            } else {
+                //删除升级文件中对应的文件模板
+                $targetFile = SYSTEM_ROOT."coreframe/templates/upgrade/{$package['fromVersion']}/".trim($filePath);
+                if ($this->filesystem->exists($upgradeFile)) {
+                    $this->filesystem->copy($upgradeFile, $targetFile, $override = true);
+                    $this->filesystem->remove($upgradeFile);
+                }
+            }
+
+            fclose($handle);
+        }
     }
 
     protected function _replaceFileForPackageUpdate($packageDir)
@@ -243,8 +338,8 @@ final class index extends WUZHI_admin
         ));
     }
 
-    protected  function _execScriptForPackageUpdate($package, $packageDir, $type){
-
+    protected function _execScriptForPackageUpdate($package, $packageDir, $type)
+    {
     }
 
     protected function updateAppForPackageUpdate($package)
@@ -272,13 +367,12 @@ final class index extends WUZHI_admin
         return $app;
     }
 
-
     private function unzipPackageFile($filePath, $unzipDir)
     {
         if ($this->filesystem->exists($unzipDir)) {
             $this->filesystem->remove($unzipDir);
         }
-        $tmpUnzipDir = $unzipDir . '_tmp';
+        $tmpUnzipDir = $unzipDir.'_tmp';
 
         if ($this->filesystem->exists($tmpUnzipDir)) {
             $this->filesystem->remove($tmpUnzipDir);
@@ -287,7 +381,7 @@ final class index extends WUZHI_admin
 
         $zip = new \ZipArchive;
         if ($zip->open($filePath) === true) {
-            $tmpUnzipFullDir = $tmpUnzipDir . '/' . $zip->getNameIndex(0);
+            $tmpUnzipFullDir = $tmpUnzipDir.'/'.$zip->getNameIndex(0);
             $zip->extractTo($tmpUnzipDir);
             $zip->close();
             $this->filesystem->rename($tmpUnzipFullDir, $unzipDir);
@@ -301,16 +395,20 @@ final class index extends WUZHI_admin
     {
         if (empty($errors)) {
             echo json_encode(array('status' => 'ok'));
-        } else if (isset($errors['index'])) {
+        } elseif (isset($errors['index'])) {
             echo json_encode($errors);
         } else {
             echo json_encode(array('status' => 'error', 'errors' => $errors));
         }
+    }
 
+    private function createJsonResponse($response)
+    {
+        echo json_encode(array('status' => 'ok', 'type' => 'tpl', 'response' => $response));
     }
 
     private function getPackageFileUnzipDir($package)
     {
-        return DOWNLOAD_PATH . $package['fileName'];
+        return DOWNLOAD_PATH.$package['fileName'];
     }
 }

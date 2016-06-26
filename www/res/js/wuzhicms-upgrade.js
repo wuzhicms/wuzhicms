@@ -4,8 +4,10 @@ function ProgressBar(option) {
     this.progresstext = $(option.element).find('.progress-text');
 }
 
-ProgressBar.prototype.setProgress = function (progress, text) {
-    this.progressbar.css({width: progress + '%'});
+ProgressBar.prototype.setProgress = function(progress, text) {
+    this.progressbar.css({
+        width: progress + '%'
+    });
     this.progresstext.html(text);
 
     if (progress >= 100) {
@@ -13,82 +15,82 @@ ProgressBar.prototype.setProgress = function (progress, text) {
     }
 }
 
-ProgressBar.prototype.reset = function () {
-    this.progressbar.css({width: '0%'});
+ProgressBar.prototype.reset = function() {
+    this.progressbar.css({
+        width: '0%'
+    });
     this.progresstext.html('');
 }
 
-ProgressBar.prototype.show = function () {
+ProgressBar.prototype.show = function() {
     this.element.removeClass('hidden');
 }
 
-ProgressBar.prototype.hide = function () {
+ProgressBar.prototype.hide = function() {
     this.element.addClass('hidden');
 }
 
-ProgressBar.prototype.active = function () {
+ProgressBar.prototype.active = function() {
     this.element.addClass('active');
 }
 
-ProgressBar.prototype.deactive = function () {
+ProgressBar.prototype.deactive = function() {
     this.element.removeClass('active');
 }
 
-ProgressBar.prototype.text = function (text) {
+ProgressBar.prototype.text = function(text) {
     this.progresstext.html(text);
 }
 
-ProgressBar.prototype.error = function (text) {
+ProgressBar.prototype.error = function(text) {
     this.progressbar.addClass('progress-bar-danger');
     this.progresstext.addClass('text-danger').html(text);
     this.deactive();
 }
 
-ProgressBar.prototype.recovery = function () {
+ProgressBar.prototype.recovery = function() {
     this.progressbar.removeClass('progress-bar-danger');
     this.progresstext.removeClass('text-danger').html('');
     this.active();
 }
 
-ProgressBar.prototype.completed = function () {
+ProgressBar.prototype.completed = function() {
     this.deactive();
-    this.progresstext.text('应用安装/升级成功！');
+    this.progresstext.text('应用升级成功！');
     $("#updating-hint").hide();
     $("#finish-update-btn").show();
 };
 
-ProgressBar.prototype.hasError = function () {
+ProgressBar.prototype.hasError = function() {
     return this.progressbar.hasClass('progress-bar-danger');
 }
 
 function getQueue(urls) {
-    var steps = [
-        {
-            title: '检查系统环境',
-            url: urls.checkEnvironmentUrl,
-            progressRange: [3, 20]
-        },
-        {
-            title: '备份系统文件',
-            url: urls.backupFileUrl,
-            progressRange: [23, 30]
-        },
-        {
-            title: '备份数据库',
-            url: urls.backupDbUrl,
-            progressRange: [33, 40]
-        },
-        {
-            title: '下载安装升级程序',
-            url: urls.downloadExtractUrl,
-            progressRange: [53, 60]
-        },
-        {
-            title: '执行安装升级程序',
-            url: urls.beginUpgradeUrl,
-            progressRange: [62, 100]
-        },
-    ];
+    var steps = [{
+        title: '检查系统环境',
+        url: urls.checkEnvironmentUrl,
+        progressRange: [5, 20]
+    }, {
+        title: '备份系统文件',
+        url: urls.backupFileUrl,
+        progressRange: [25, 30]
+    }, {
+        title: '备份数据库',
+        url: urls.backupDbUrl,
+        progressRange: [35, 40]
+    }, {
+        title: '下载安装升级程序',
+        url: urls.downloadExtractUrl,
+        progressRange: [45, 60]
+    }, {
+        title: '处理模版文件',
+        url: urls.proccessTemplateUrl,
+        progressRange: [65, 80]
+    }, {
+        title: '执行安装升级程序',
+        url: urls.beginUpgradeUrl,
+        progressRange: [85, 100]
+    }, ];
     return steps;
 }
 
@@ -96,23 +98,43 @@ function getQueue(urls) {
 function makeErrorsText(title, errors) {
     var html = '<p>' + title + '<p>';
     html += '<ul>';
-    $.each(errors, function (index, text) {
+    $.each(errors, function(index, text) {
         html += '<li>' + text + '</li>';
     });
     html += '</ul>';
     return html;
 }
 
+function prepareUrl(url) {
+    if (tplCoveringUpdate == true) {
+        url = url + '&tplCoveringUpdate=' + tplCoveringUpdate;
+        tplCoveringUpdate = false;
+    }
+    return url;
+}
+
 function exec(title, url, progressBar, startProgress, endProgress) {
     progressBar.setProgress(startProgress, '正在' + title);
-    $.ajax(url, {
+
+    $.ajax(prepareUrl(url), {
         async: true,
         dataType: 'json',
         type: 'POST'
-    }).done(function (data, jqXHR) {
+    }).done(function(data, jqXHR) {
         if (data.status == 'error') {
             progressBar.error(makeErrorsText(title + '失败：', data.errors));
-        } else if (typeof (data.index) != "undefined") {
+        } else if (data.type == 'tpl') {
+            tpl = data.response;
+            tplist = data.response.join('<br/>');
+            $(".tpl-package-upgrade").removeClass('hidden').find('span').html(tplist);
+            $(".update-tpl-btn").on('click', function() {
+                tplCoveringUpdate = $(this).data('update');
+                console.log($(this).data('update'))
+                progressBar.setProgress(endProgress, title + '完成');
+                $(document).dequeue('update_step_queue');
+            })
+
+        } else if (typeof(data.index) != "undefined") {
             if (url.indexOf('index') < 0) {
                 url = url + '&index=0';
             }
@@ -129,7 +151,7 @@ function exec(title, url, progressBar, startProgress, endProgress) {
             progressBar.setProgress(endProgress, title + '完成');
             $(document).dequeue('update_step_queue');
         }
-    }).fail(function (jqXHR, errorThrown) {
+    }).fail(function(jqXHR, errorThrown) {
         progressBar.error(title + '时，发生了未知错误。');
         $(document).clearQueue('update_step_queue');
     });
@@ -140,19 +162,27 @@ var progressBar = new ProgressBar({
     iframeId: '#iframeid'
 });
 
+var reloadOnClose = function() {
+    $("#wuzhicms-upgrade").on('hidden.bs.modal', function() {
+        window.location.reload();
+    });
+}
+
 
 var $updateBtn = $(".btn-wuzhicms-upgrade");
+var tplCoveringUpdate = false;
 
-$updateBtn.click(function () {
+$updateBtn.click(function() {
+    reloadOnClose();
     $updateBtn.hide();
     progressBar.show();
     $("#updating-hint").show();
     $(document).dequeue('update_step_queue');
 });
 
-$("#finish-update-btn").click(function () {
+$("#finish-update-btn").click(function() {
     $(this).button('loading').addClass('disabled');
-    setTimeout(function () {
+    setTimeout(function() {
         window.location.reload();
     }, 3000);
 });
@@ -161,12 +191,8 @@ var urls = $updateBtn.data();
 
 var steps = getQueue(urls);
 
-$.each(steps, function (i, step) {
-    $(document).queue('update_step_queue', function () {
+$.each(steps, function(i, step) {
+    $(document).queue('update_step_queue', function() {
         exec(step.title, step.url, progressBar, step.progressRange[0], step.progressRange[1]);
     });
-});
-
-$("#wuzhicms-upgrade").on('hidden.bs.modal', function () {
-    console.log('wuzhicms-upgrade');
 });
