@@ -212,7 +212,7 @@ final class index extends WUZHI_admin
         $errors    = array();
         $packageId = isset($GLOBALS['packageId']) ? intval($GLOBALS['packageId']) : MSG(L('parameter_error'));
         $type      = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : null;
-        $coveringUpdateTpl = isset($GLOBALS['coveringUpdateTpl']) ? intval($GLOBALS['coveringUpdateTpl']) : false;
+        $coveringUpdateTpl = isset($GLOBALS['coveringUpdateTpl']) ? boolval($GLOBALS['coveringUpdateTpl']) : false;
 
         try {
             $package = $this->app_client->getUpdatePackage($packageId);
@@ -302,6 +302,10 @@ final class index extends WUZHI_admin
     {
         if (!$this->filesystem->exists($packageDir.'/template')) {
             return;
+        }
+        $backupTplDir = SYSTEM_ROOT."coreframe/templates/upgrade/{$package['fromVersion']}";
+        if($this->filesystem->exists($backupTplDir)){
+            $this->filesystem->remove($backupTplDir);
         }
 
         $handle = fopen($packageDir.'/template', 'r');
