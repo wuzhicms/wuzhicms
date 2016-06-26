@@ -307,7 +307,6 @@ final class index extends WUZHI_admin
         $handle = fopen($packageDir.'/template', 'r');
 
         while ($filePath = fgets($handle)) {
-            //get file full path
             $originFile  = SYSTEM_ROOT.trim($filePath);
             $upgradeFile = "{$packageDir}/source/".trim($filePath);
 
@@ -325,9 +324,8 @@ final class index extends WUZHI_admin
                     $this->filesystem->remove($upgradeFile);
                 }
             }
-
-            fclose($handle);
         }
+        fclose($handle);
     }
 
     protected function _replaceFileForPackageUpdate($packageDir)
