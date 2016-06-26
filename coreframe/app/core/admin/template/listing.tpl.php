@@ -121,7 +121,7 @@
         <!--系统升级-->
             <section class="panel">
             <header class="panel-heading bm0">
-                <span>系统更新 </span><span class="badge"><?php if (isset($app['package'])) {?> 1 <?php }?></span>
+                <span>系统更新 </span><span class="badge" style="background-color:#FF3333"><?php if (isset($app['package'])) {?> new <?php }?></span>
                     <span class="tools pull-right">
                         <a class="icon-chevron-down" href="javascript:;"></a>
                     </span>
