@@ -804,6 +804,28 @@
     border-radius: 0px;
 }
 
+.addmore{ background: #eee; text-align: center; color: #666;}
+.addmore a{ display: block; padding: 6px 0}
+
+
+.video-second-screen .nav-pills > li + li {
+    margin-left: -1px;
+}
+.video-second-screen .nav-pills > li.active > a,
+.video-second-screen .nav-pills > li.active > a:hover,
+.video-second-screen .nav-pills > li.active > a:focus {
+    color: #ffffff;
+    background-color: #3498DB;
+}
+.video-second-screen .nav-pills > li > a {
+    border-radius: 1px;
+    border: 1px solid #eee;
+    position: relative;
+    display: block;
+    padding: 2px 15px;
+}
+
+
 /*评论图片*/
 .media-body .shangchuangimg ul {
     list-style: none;
@@ -1472,3 +1494,36 @@
 .right-bg-boxg .list-group-item.active{
     font-size: 14px;
 }
+
+.right-bg-boxg .list-group-item.active,
+.right-bg-boxg .list-group-item.active:hover,
+.right-bg-boxg .list-group-item.active:focus {
+    z-index: 2;
+    color: #3498db;
+    background: none;
+    border-color: #e8e8e8;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.right-bg-boxg .list-group-item:hover {
+    color: #3498db;
+}
+
+.dingcai{ min-width: 90px;}
+
+.dc-wd{ display: none}
+.dingcai:hover .dc-number{ display: none;}
+.dingcai:hover .dc-wd{ display: inline-block; }
+
+.dingcai .glyphicon-thumbs-up,
+.ding-word .dc-wd,
+.ding-word{ color: #ef982f  }
+
+.dingcaibox .btn-default:hover {
+    color: #333333;
+    background-color: #f5f5f5;
+    border-color: #adadad;
+}
+
+

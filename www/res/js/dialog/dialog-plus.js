@@ -601,7 +601,7 @@
 
 
                 anchor = isNode ? anchor : anchor.target;
-				if(typeof(anchor) == 'undefined') return offset;
+                if(typeof(anchor) == 'undefined') return offset;
                 var ownerDocument = anchor.ownerDocument;
                 var defaultView = ownerDocument.defaultView || ownerDocument.parentWindow;
 
@@ -769,29 +769,29 @@
         // 模板（使用 table 解决 IE7 宽度自适应的 BUG）
         // js 使用 i="***" 属性识别结构，其余的均可自定义
         innerHTML:
-            '<div i="dialog" class="ui-dialog">'
-                +       '<div class="ui-dialog-arrow-a"></div>'
-                +       '<div class="ui-dialog-arrow-b"></div>'
-                +       '<table class="ui-dialog-grid">'
-                +           '<tr>'
-                +               '<td i="header" class="ui-dialog-header">'
-                +                   '<button i="close" class="ui-dialog-close">&#215;</button>'
-                +                   '<div i="title" class="ui-dialog-title"></div>'
-                +               '</td>'
-                +           '</tr>'
-                +           '<tr>'
-                +               '<td i="body" class="ui-dialog-body">'
-                +                   '<div i="content" class="ui-dialog-content"></div>'
-                +               '</td>'
-                +           '</tr>'
-                +           '<tr>'
-                +               '<td i="footer" class="ui-dialog-footer">'
-                +                   '<div i="statusbar" class="ui-dialog-statusbar"></div>'
-                +                   '<div i="button" class="ui-dialog-button"></div>'
-                +               '</td>'
-                +           '</tr>'
-                +       '</table>'
-                +'</div>'
+        '<div i="dialog" class="ui-dialog">'
+        +       '<div class="ui-dialog-arrow-a"></div>'
+        +       '<div class="ui-dialog-arrow-b"></div>'
+        +       '<table class="ui-dialog-grid">'
+        +           '<tr>'
+        +               '<td i="header" class="ui-dialog-header">'
+        +                   '<button i="close" class="ui-dialog-close">&#215;</button>'
+        +                   '<div i="title" class="ui-dialog-title"></div>'
+        +               '</td>'
+        +           '</tr>'
+        +           '<tr>'
+        +               '<td i="body" class="ui-dialog-body">'
+        +                   '<div i="content" class="ui-dialog-content"></div>'
+        +               '</td>'
+        +           '</tr>'
+        +           '<tr>'
+        +               '<td i="footer" class="ui-dialog-footer">'
+        +                   '<div i="statusbar" class="ui-dialog-statusbar"></div>'
+        +                   '<div i="button" class="ui-dialog-button"></div>'
+        +               '</td>'
+        +           '</tr>'
+        +       '</table>'
+        +'</div>'
 
     });
 
@@ -1149,7 +1149,12 @@
 
             /** 设置宽度 */
             width: function (value) {
-                this._$('content').css('width', value);
+                var c_width = screen.width;
+                if(c_width>=value) {
+                    this._$('content').css('width', value);
+                } else {
+                    this._$('content').css('width', c_width-20);
+                }
                 return this.reset();
             },
 
@@ -1192,14 +1197,14 @@
 
                         html +=
                             '<button'
-                                + ' type="button"'
-                                + ' data-id="' + val.id + '"'
-                                + style
-                                + (val.disabled ? ' disabled' : '')
-                                + (val.autofocus ? ' autofocus class="ui-dialog-autofocus"' : '')
-                                + '>'
-                                +   val.value
-                                + '</button>';
+                            + ' type="button"'
+                            + ' data-id="' + val.id + '"'
+                            + style
+                            + (val.disabled ? ' disabled' : '')
+                            + (val.autofocus ? ' autofocus class="ui-dialog-autofocus"' : '')
+                            + '>'
+                            +   val.value
+                            + '</button>';
 
                     });
                 }
@@ -1420,7 +1425,7 @@
             var startType = DragEvent.types.start;
             var noop = function () {};
             var className = elem.className
-                .replace(/^\s|\s.*/g, '') + '-drag-start';
+                    .replace(/^\s|\s.*/g, '') + '-drag-start';
 
             var minX;
             var minY;
@@ -1537,14 +1542,14 @@
                 $iframe = $('<iframe />');
 
                 $iframe.attr({
-                    src: url,
-                    name: api.id,
-                    width: '100%',
-                    height: '100%',
-                    allowtransparency: 'yes',
-                    frameborder: 'no',
-                    scrolling: 'yes'
-                })
+                        src: url,
+                        name: api.id,
+                        width: '100%',
+                        height: '100%',
+                        allowtransparency: 'yes',
+                        frameborder: 'no',
+                        scrolling: 'yes'
+                    })
                     .on('load', function () {
                         var test;
 

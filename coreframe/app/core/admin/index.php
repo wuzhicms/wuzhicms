@@ -18,7 +18,7 @@ final class index extends WUZHI_admin {
 
     function __construct() {
         $this->db = load_class('db');
-        $this->app_update = load_class('app',$m = 'appupdate');
+        $this->app_update = load_class('app','appupdate');
     }
     function init() {
         $lang = get_cookie('lang') ? get_cookie('lang') : LANG;
