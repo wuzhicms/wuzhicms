@@ -47,9 +47,10 @@ final class WUZHI_application {
         } else {
             $route_config = $route_config['default'];
         }
-        $this->_m = input('m') ? input('m') : $route_config['m'];
-        $this->_f = input('f') ? input('f') : $route_config['f'];
-        $this->_v = input('v') ? strip_tags(input('v')) : $route_config['v'];
+        $this->_m = isset($GLOBALS['m']) ? sql_replace($GLOBALS['m']) : $route_config['m'];
+        $this->_f = isset($GLOBALS['f']) ? sql_replace($GLOBALS['f']) : $route_config['f'];
+        $this->_v = isset($GLOBALS['v']) ? sql_replace($GLOBALS['v']) : $route_config['v'];
+        $this->_v = strip_tags($this->_v);
         if(isset($route_config['_get'])) {
             foreach($route_config['_get'] as $key=>$value) {
                 $_GET[$key] = $value;
