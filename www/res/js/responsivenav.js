@@ -34,7 +34,7 @@ PXGRIDS.mobileNav = function(){
 	}
 }
 PXGRIDS.listenerMenu = function(){
-	$('#mobile-nav').on('click', function(e){
+	$('#mobile-nav,#navigation-mobile li a').on('click', function(e){
 		$(this).toggleClass('open');
 		
 		$('#navigation-mobile').stop().slideToggle(350, 'easeOutExpo');

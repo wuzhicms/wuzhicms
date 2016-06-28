@@ -1,86 +1,88 @@
-{T  'member','head'}
-<!--正文部分-->
-<div class="container adframe">
-    <div class="row">
-        <div class="col-lg-12 col-xs-12">
-            {block=23}
-        </div>
-    </div>
-</div>
-
-<div class="container memberframe">
-    <div class="row">
-        <div class="col-lg-12 col-xs-12">
-            <!--左侧开始-->
-            <div class="memberleft">
-                <div class="membertitle"><h3>会员中心</h3></div>
-                <div class="memberborder">
-                    {T 'member','left'}
+{T "member","head"}
+<body class="gray-bg">
+{if $set_iframe==0}
+{T "member","iframetop"}
+{else}
+<div style="padding-top: 15px;"></div>
+{/if}
+<div class="container-fluid  ie8-member">
+    <div class="row row-40" >
+        {if $set_iframe==0}
+        <div class="col-sm-3 left-nav">             <!--左侧导航-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="nav-close"><i class="fa fa-times-circle"></i>
                 </div>
-            </div>
-            <!--左侧结束-->
+                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+                    <div class="sidebar-collapse" style="width: auto; height: 100%;">
+                        {T "member","left"}
+                    </div>
+                </div>
+            </nav>
+            <!--end 左侧导航-->
+        </div><!--col-sm-3-->{/if}
 
-            <!--右侧开始-->
-            <div class="memberright">
+        <div class="{if $set_iframe==0}col-sm-9{else}col-sm-12{/if} paddingleft0">
 
-                <div class="memberbordertop">
-                    <section class="panel">
-                        <header class="panel-heading"><span class="title">绑定手机</span></header>
-
-
-                        <div id="myTabContent" class="tab-content tabsbordertop">
-
-                            <div role="tabpanel" class="tab-pane fade active in" id="tabs1" aria-labelledby="1tab">
-                                <div class="panel-body" id="panel-bodys">
-                                    <form class="form-horizontal" role="form" name="passworform" action="?m=member&f=index&v=edit_mobile" method="post" id="passworform" onsubmit="return check_password();">
-                                        <table class="table  table-hover text-center">
-                                            <tbody>
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">手机号：</label><div class="col-sm-3 text-left"><input type="mobile" class="form-control" id="mobile" placeholder="请输入手机号" name="mobile" type="text" value="{$memberinfo['mobile']}"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">验证码：</label><div class="col-sm-8 text-left"><input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img').src='<?php echo WEBURL;?>api/identifying_code.php?w=110&h=40&rd='+Math.random();void(0);"> <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>api/identifying_code.php?rd='+Math.random();void(0);"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right"> </label><div class="col-sm-3 text-left"><button type="button" name="getsms" class="btn btn-warning" onclick="send_sms();">点击获取短信</button></div></div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">短信验证码：</label><div class="col-sm-3 text-left"><input type="text" class="form-control" id="smscode" placeholder="请输入手机收到的短信验证码" name="smscode"></div></div></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right"> </label><div class="col-sm-3 text-left"><button type="submit" name="submit" class="btn btn-order">提 交</button></div></div></td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                </div>
-
-                            </div>
-
-
-
-
-
-
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>修改手机</h5>
                         </div>
+                        <div class="ibox-content" style="min-height: 500px;">
+                            <div class="row">
+                                <form class="form-horizontal" role="form" name="passworform" action="?m=member&f=index&v=edit_mobile" method="post" id="passworform" onsubmit="return check_form();">
+                                    <table class="table-dashed table-advance table-hover ">
+                                        <tbody>
+
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">手机号：</label><div class="col-sm-3 text-left"><input type="mobile" class="form-control" id="mobile" placeholder="请输入手机号" name="mobile" type="text" value="{$memberinfo['mobile']}"></div></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">验证码：</label><div class="col-sm-8 text-left">
+                                                <div class="input-group">
+                                                    <input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img').src='<?php echo WEBURL;?>api/identifying_code.php?rd='+Math.random();void(0);"> <span class="input-group-btn" style="padding-left: 10px;"><img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>api/identifying_code.php?rd='+Math.random();void(0);">
+                                            </span></div>
+                                            </div></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right"> </label><div class="col-sm-3 text-left"><button type="button" name="getsms" class="btn btn-warning" onclick="send_sms();">点击获取短信</button></div></div></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">短信验证码：</label><div class="col-sm-3 text-left"><input type="text" class="form-control" id="smscode" placeholder="请输入手机收到的短信验证码" name="smscode"></div></div></td>
+                                        </tr>
 
 
-                    </section>
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right"> </label><div class="col-sm-3 text-left"><button type="submit" name="submit" class="btn btn-primary">提 交</button></div></div></td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-            <!--右侧结束-->
-
-
         </div>
     </div>
 </div>
+
+<link rel="stylesheet" href="{R}js/dialog/ui-dialog.css" />
+<script src="{R}js/dialog/dialog-plus.js"></script>
 <!--正文部分-->
+
+
+<script>
+    $(document).ready(function () {
+        $('.form-groupinfo').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+</script>
 
 <script type="text/javascript">
     function send_sms() {
@@ -128,5 +130,21 @@
                 });
 
     }
+    function check_form() {
+        var smscode = $("#smscode").val();
+        if(smscode=='') {
+            var d = dialog({
+                content: '请输入收到的手机短信验证码'
+            });
+            d.show();
+            setTimeout(function () {
+                d.close().remove();
+            }, 5000);
+            $("#smscode").focus();
+            return false;
+        }
+    }
+
 </script>
+
 {T "member","foot"}

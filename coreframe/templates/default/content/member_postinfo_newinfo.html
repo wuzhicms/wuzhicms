@@ -1,11 +1,5 @@
-{T  'member','head'}
-
-<link href="http://www.h1jk.cn/res/css/validform.css" rel="stylesheet" />
-<script src="http://www.h1jk.cn/res/js/validform.min.js"></script>
-<script src="http://www.h1jk.cn/res/js/wuzhicms.js"></script>
-<script type="text/javascript" src="http://www.h1jk.cn/res/js/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="http://www.h1jk.cn/res/js/ueditor/ueditor.all.min.js"></script>
-<!--正文部分-->
+{T "member","head"}
+<body class="gray-bg">
 <style type="text/css">
     label{font-weight: normal;
     }
@@ -16,78 +10,91 @@
     #Validform_msg .Validform_info {
         border: 1px solid #4585E6;
     }
+    .input-group-btn{display: inline-block;padding-left: 10px;}
 </style>
-<div class="container adframe">
-    <div class="row">
-        <div class="col-lg-12 col-xs-12">
-            {block=23}
-        </div>
-    </div>
-</div>
+<link href="{R}css/validform.css" rel="stylesheet" />
+<script src="{R}js/validform.min.js"></script>
+<script src="{R}js/base.js"></script>
+<script type="text/javascript" src="{R}js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="{R}js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="{R}js/ueditor/ueditor.all.min.js"></script>
 
-<div class="container memberframe">
-    <div class="row">
-        <div class="col-lg-12 col-xs-12">
-            <!--左侧开始-->
-            <div class="memberleft">
-                <div class="membertitle"><h3>会员中心</h3></div>
-                <div class="memberborder">
-                    {T 'member','left'}
+<link href="{R}js/jquery-ui/jquery-ui.css" rel="stylesheet">
+<script src="{R}js/jquery-ui-1.10.1.custom.min.js"></script>
+{if $set_iframe==0}
+{T "member","iframetop"}
+{else}
+<div style="padding-top: 15px;"></div>
+{/if}
+<div class="container-fluid  ie8-member">
+    <div class="row row-40" >
+        {if $set_iframe==0}
+        <div class="col-sm-3 left-nav">             <!--左侧导航-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="nav-close"><i class="fa fa-times-circle"></i>
                 </div>
-            </div>
-            <!--左侧结束-->
+                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+                    <div class="sidebar-collapse" style="width: auto; height: 100%;">
+                        {T "member","left"}
+                    </div>
+                </div>
+            </nav>
+            <!--end 左侧导航-->
+        </div><!--col-sm-3-->{/if}
 
-            <!--右侧开始-->
-            <div class="memberright">
+        <div class="{if $set_iframe==0}col-sm-9{else}col-sm-12{/if}">
 
-                <ul id="myTab" class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#tabs1" id="1tab" role="tab" data-toggle="tab" aria-controls="tabs1" aria-expanded="true">产品信息发布</a></li>
-                    <li role="presentation" class=""><a href="?m=content&f=postinfo&v=listing">我发布的信息</a></li>
-                    <li class="tip-a" style="float:right;">温馨提示：我们的客服会在24小时内审核。全国免费咨询电话：010-11111111</li>
-                </ul>
-                <div class="memberbordertop">
-                    <section class="panel">
-                        <div class="panel-body" id="panel-bodys">
-                            <form name="myform" class="form-horizontal" action="" method="post" id="myform">
-                                <table class="table table-striped table-advance table-hover text-center">
-                                    <tr>
-                                        <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod"><font color="red">*</font> 标题：</label><div class="col-sm-10 text-left">
-                                            <input type="text" style="color:#" name="form[title]" id="title" maxlength="80" value="" class="form-control" datatype="*2-80" nullmsg="请输入标题" errormsg="标题至少2个字符,最多80个字符！">                                       </div></div></td>
-                                    </tr>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox-content">
+                        <div class="memberright">
 
-                                    {loop $field_list $info}
-                                    <tr>
-                                        <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod">{if $info['star']}<font color="red">*</font>{/if} {$info['name']}：</label><div class="col-sm-10 text-left">
-                                            {$info['form']}
-                                        </div></div></td>
-                                    </tr>
-                                    {/loop}
-                                    <tr>
-                                        <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod">{if $info['star']}<font color="red">*</font>{/if} {$formdata['5']['content']['name']}：</label><div class="col-sm-10 text-left">
-                                            {$formdata['5']['content']['form']}
-                                        </div></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right"> </label><div class="col-sm-3 text-left"><input type="submit" name="submit" id="submit" value="提交" class="btn btn-order"></div></div></td>
-                                    </tr>
-                                </table>
-                            </form>
+                            <ul id="myTab" class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#tabs1" id="1tab" role="tab" data-toggle="tab" aria-controls="tabs1" aria-expanded="true">{$catname} - 信息发布</a></li>
+                                <li role="presentation" class=""><a href="?m=content&f=postinfo&v=listing&cid={$cid}&set_iframe={$set_iframe}">我发布的{$catname} </a></li>
+                                <li class="tip-a" style="float:right;">温馨提示：我们的客服会在24小时内审核。全国免费咨询电话：010-11111111</li>
+                            </ul>
+                            <div class="memberbordertop">
+                                <form name="myform" class="form-horizontal" action="" method="post" id="myform">
+                                    <table class="table-dashed table-striped table-advance">
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod"><font color="red">*</font> 标题：</label><div class="col-sm-10 text-left">
+                                                <input type="text" style="color:#" name="form[title]" id="title" maxlength="80" value="" class="form-control" datatype="*2-80" nullmsg="请输入标题" errormsg="标题至少2个字符,最多80个字符！">                                       </div></div></td>
+                                        </tr>
+
+                                        {loop $field_list $info}
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod">{if $info['star']}<font color="red">*</font>{/if} {$info['name']}：</label><div class="col-sm-10 text-left">{$info['form']}
+                                            </div></div></td>
+                                        </tr>
+                                        {/loop}
+                                        {if $formdata['5']['content']['name']}
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod">{if $info['star']}<font color="red">*</font>{/if} {$formdata['5']['content']['name']}：</label><div class="col-sm-10 text-left">
+                                                {$formdata['5']['content']['form']}
+                                            </div></div></td>
+                                        </tr>{/if}
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right"> </label><div class="col-sm-3 text-left"><input type="submit" name="submit" id="submit" value="提交" class="btn btn-primary" style="width:100%;"></div></div></td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
                         </div>
-
+                    </div>
                 </div>
-
-                </section>
             </div>
-
-        </div>
-            <!--右侧结束-->
-
-
         </div>
     </div>
 </div>
-<!--正文部分-->
-<script type="text/javascript">
+<script>
+    $(document).ready(function () {
+        $('.form-groupinfo').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+        $('[data-toggle="tooltip"]').tooltip();
+    });
     $("#submit").click(function(){
         t=setTimeout("hide_formtips()",3000);
     });
@@ -100,6 +107,13 @@
             tiptype:1
         });
     })
-    </script>
-{T  'member','foot'}
-
+    function remove_obj(obj) {
+        $(obj).parent().remove();
+    }
+    function add_newfile(divid) {
+        var str = $('#text_'+divid).val();
+        str = '<li>'+str+'</li>';
+        $('#'+divid+"_ul").append(str);
+    }
+</script>
+{T "member","foot"}

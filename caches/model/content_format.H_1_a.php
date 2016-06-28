@@ -122,6 +122,11 @@ class form_format {
         }
     }
 
+	private function content_group($field, $value) {
+		$value = string2array($value);
+		return $value;
+	}
+
     private function copyfrom($field, $value) {
         if(is_numeric($value)) {
             $r = $this->db->get_one('copyfrom',array('fromid'=>$value));
@@ -173,6 +178,7 @@ class form_format {
 	}
 
     private function downfile($field, $value) {
+        if(empty($value)) return '';
         $setting = $this->fields[$field]['setting'];
         if($setting['linktype']) {
             if($setting['downloadtype']) {
@@ -242,6 +248,97 @@ class form_format {
 
 	private function title($field, $value) {
 		$value = p_htmlentities($value);
+		return $value;
+	}
+
+	private function video_tudou($field, $value) {
+		if($value=='') return array();
+		$return_values = array();
+		$return_values['data'] = $value;
+
+		//$value = 'http://www.tudou.com/programs/view/F5-QHb0My9Q/';
+		preg_match('/view\/([A-Za-z0-9=\-_]+)\//is',$value,$_v);
+		if($_v[1]) {
+			$return_values['url'] = 'http://www.tudou.com/programs/view/html5embed.action?type=0&code='.$_v[1].'&from=wuzhicms';
+			$return_values['type'] = 0;
+			$return_values['code'] = $_v[1];
+			$return_values['lcode'] = '';
+			return $return_values;
+		}
+
+		//$value = 'http://www.tudou.com/albumplay/0At_ddWfzlY/6Kl0I2HOlzQ.html';
+		preg_match('/albumplay\/([A-Za-z0-9=\-_]+)\/([A-Za-z0-9=\-_]+)\.html/is',$value,$_v);
+		if($_v[2]) {
+			$return_values['url'] = 'http://www.tudou.com/programs/view/html5embed.action?type=2&code='.$_v[2].'&lcode='.$_v[1].'&from=wuzhicms';
+			$return_values['type'] = 2;
+			$return_values['code'] = $_v[2];
+			$return_values['lcode'] = $_v[1];
+			return $return_values;
+		}
+
+		//$value = 'http://www.tudou.com/listplay/YJR-Rdd0nGM/SZb_7cL2E8M/';
+		preg_match('/listplay\/([A-Za-z0-9=\-_]+)\/([A-Za-z0-9=\-_]+)\//is',$value,$_v);
+		if($_v[2]) {
+			$return_values['url'] = 'http://www.tudou.com/programs/view/html5embed.action?type=1&code='.$_v[2].'&lcode='.$_v[1].'&from=wuzhicms';
+			$return_values['type'] = 1;
+			$return_values['code'] = $_v[2];
+			$return_values['lcode'] = $_v[1];
+			return $return_values;
+		}
+
+		//$value = 'http://www.tudou.com/programs/view/html5embed.action?type=1&code=SkJQ_1zpAMU&lcode=YJR-Rdd0nGM&resourceId=0_';
+		$return_values['url'] = $value;
+		preg_match('/type=([0-9])\&code=([A-Za-z0-9=\-_]+)\&lcode=([A-Za-z0-9=\-_]+)\&/is',$value,$_v);
+		if($_v[1]) {
+			$return_values['type'] = $_v[0];
+			$return_values['code'] = $_v[1];
+			$return_values['lcode'] = $_v[2];
+		}
+
+		$value = 'http://www.tudou.com/programs/view/html5embed.action?type=0&code=F5-QHb0My9Q&lcode=&';
+		preg_match('/\?type=([0-9])\&code=([A-Za-z0-9=\-_]+)\&lcode=([A-Za-z0-9=\-_]*)\&/is',$value,$_v);
+		if($_v[2]) {
+			$return_values['type'] = $_v[1];
+			$return_values['code'] = $_v[2];
+			$return_values['lcode'] = $_v[3];
+		}
+
+		$return_values['url'] = $value;
+		return $return_values;
+	}
+
+private function video_youku($field, $value) {
+	if($value=='') return array();
+	$return_values = array();
+	$return_values['data'] = $value;
+	//$value = 'http://v.youku.com/v_show/id_XMTUyNDkxMDU2OA==.html?f=27017556&from=y1.2-3.2';
+	//$value = '<iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyNDkxMDU2OA==" frameborder=0 allowfullscreen></iframe>';
+	//$value = 'http://player.youku.com/player.php/Type/Folder/Fid/27017556/Ob/1/sid/XMTUyNDkxMDU2OA==/v.swf';
+	//$value = '<embed src="http://player.youku.com/player.php/Type/Folder/Fid/27017556/Ob/1/sid/XMTUyNDkxMDU2OA==/v.swf" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>';
+
+	preg_match('/v_show\/id_([A-Za-z0-9=]+).html/is',$value,$_v);
+	if($_v[1]) {
+		$return_values['url'] = 'http://player.youku.com/embed/'.$_v[1].'&from=wuzhicms';
+		$return_values['code'] = $_v[1];
+		return $return_values;
+	}
+	preg_match('/embed\/([A-Za-z0-9=]+)"/is',$value,$_v);
+	if($_v[1]) {
+		$return_values['url'] = 'http://player.youku.com/embed/'.$_v[1].'&from=wuzhicms';
+		$return_values['code'] = $_v[1];
+		return $return_values;
+	}
+	preg_match('/\/sid\/([A-Za-z0-9=]+)\//is',$value,$_v);
+	if($_v[1]) {
+		$return_values['url'] = 'http://player.youku.com/embed/'.$_v[1].'&from=wuzhicms';
+		$return_values['code'] = $_v[1];
+		return $return_values;
+	}
+	return $return_values;
+}
+
+	private function dymlist($field, $value) {
+
 		return $value;
 	}
 

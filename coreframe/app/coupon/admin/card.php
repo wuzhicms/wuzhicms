@@ -21,12 +21,27 @@ class card extends WUZHI_admin {
     public function listing() {
         $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
         $page = max($page,1);
-        $result = $this->db->get_list('coupon_card', '', '*', 0, 20,$page,'cardid DESC');
+        $result = $this->db->get_list('coupon_card', '', '*', 0, 20,$page,'cardid DESC','groupname');
         $pages = $this->db->pages;
         $total = $this->db->number;
 
-        $status_arr = array('<b>待发送</b>','未预约','已激活','已使用');
+        $status_arr = array('<font color="red">待发送</font>','未使用','已激活','<font color="green">已使用</font>');
         include $this->template('card_listing');
+    }
+    /**
+     * 优惠券列表
+     */
+    public function detail_listing() {
+        $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
+        $page = max($page,1);
+        $groupname = isset($GLOBALS['groupname']) ? strip_tags($GLOBALS['groupname']) : '';
+        $where = $groupname ? "groupname='$groupname'" : '';
+        $result = $this->db->get_list('coupon_card', $where, '*', 0, 20,$page,'cardid DESC');
+        $pages = $this->db->pages;
+        $total = $this->db->number;
+
+        $status_arr = array('<font color="red">待发送</font>','未使用','已激活','<font color="green">已使用</font>');
+        include $this->template('card_detail_listing');
     }
 
     /**
@@ -40,28 +55,23 @@ class card extends WUZHI_admin {
             $batchid = uniqid();
             $tmpdata = iconv('gbk','utf-8','优惠券,面值,截至日期');
             $ip = get_ip();
-            $usetype = intval($GLOBALS['form']['usetype']);
-            if($usetype) {$number=1;}
+            $formdata = array();
+            $formdata['groupname'] = $GLOBALS['groupname'];
+            $formdata['addtime'] = SYS_TIME;
+            $formdata['endtime'] = strtotime($GLOBALS['endtime']);
+            $formdata['status'] = $download==1 ? 1 : 0;
+            $formdata['adminname'] = get_cookie('username');
+            $formdata['usetype'] = 0;
+            $formdata['mount'] = $GLOBALS['form']['mount'];
+            $formdata['title'] = remove_xss($GLOBALS['form']['title']);
+            $formdata['batchid'] = $batchid;
             for($i=0;$i<$number;$i++) {
-                $formdata = array();
-                $formdata['addtime'] = SYS_TIME;
-                $formdata['endtime'] = strtotime($GLOBALS['endtime']);
-                $formdata['status'] = $download==1 ? 1 : 0;
-                $formdata['adminname'] = get_cookie('username');
-                $formdata['id'] = $GLOBALS['form']['id'];
-                $formdata['usetype'] = $usetype;
-                $formdata['mount'] = $GLOBALS['form']['mount'];
-                $formdata['title'] = remove_xss($GLOBALS['form']['title']);
-                $formdata['batchid'] = $batchid;
-                $tr = $this->db->get_one('tuangou',array('id'=>$formdata['id']));
-                $formdata['remark'] = $tr['title'];
-                $formdata['url'] = $tr['url'];
-
                 $cardid = $this->db->insert('coupon_card',$formdata);
 
                 $card_no = $GLOBALS['pre'].rand(100,1000).rand(100,999).str_pad(rand(1,99).$cardid, 6, "0", STR_PAD_LEFT);
-                $this->db->update('coupon_card',array('card_no'=>$card_no),array('cardid'=>$cardid));
-                $tmpdata .= "\r\n".$card_no.','.$formdata['mount'].','.$GLOBALS['endtime'];
+                $password = rand(101010,999999);
+                $this->db->update('coupon_card',array('card_no'=>$card_no,'password'=>$password),array('cardid'=>$cardid));
+                $tmpdata .= "\r\n".$card_no.','.$password.','.$formdata['mount'].','.$GLOBALS['endtime'];
                 if($download) {
                     $formdata2 = array();
                     $formdata2['cardid'] = $cardid;
@@ -92,10 +102,25 @@ class card extends WUZHI_admin {
             }
         } else {
             $show_formjs = '';
-            $endtime = mktime(0,0,0,date('m')+3,date('d'),date('Y'));
-            $endtime = date('Y-m-d',$endtime);
+
             load_class('form');
-            include $this->template('card_add');
+            if(isset($GLOBALS['groupname'])) {
+                $groupname = $GLOBALS['groupname'];
+                $gr = $this->db->get_one('coupon_card', array('groupname' => $groupname));
+                $title = $gr['title'];
+                $endtime = date('Y-m-d',$gr['endtime']);
+                $mount = $gr['mount'];
+                include $this->template('card_add_group');
+            } else {
+                $groupname = '';
+                $title = '';
+                $endtime = mktime(0,0,0,date('m')+3,date('d'),date('Y'));
+                $endtime = date('Y-m-d',$endtime);
+                $mount = '';
+                include $this->template('card_add');
+            }
+
+
         }
     }
     public function send() {
@@ -192,5 +217,123 @@ class card extends WUZHI_admin {
             $email_content = $setting['email_content'];
             include $this->template('email_setting');
         }
+    }
+    /**
+     * 绑定套餐
+     */
+    public function bind() {
+        if(isset($GLOBALS['submit'])) {
+            $formdata = array();
+            $formdata['open'] = $GLOBALS['open'];
+            $formdata['needmoney'] = $GLOBALS['needmoney'];
+            $formdata['deefmoney'] = $GLOBALS['deefmoney'];
+            set_cache('coupon_setting',$formdata,'coupon');
+            $data = serialize($formdata);
+            $this->db->update('setting', array('data'=>$data),array('keyid'=>'coupon_setting','m' => 'coupon'));
+
+            MSG('更新成功',HTTP_REFERER);
+        } else {
+            $r = $this->db->get_one('setting', array('keyid'=>'coupon_setting','m' => 'coupon'));
+            if(!$r) {
+                $formdata = array();
+                $setting = array();
+                $setting['open'] = 0;
+                $setting['needmoney'] = 0;
+                $setting['deefmoney'] = 0;
+                $this->db->insert('setting', array('keyid'=>'coupon_setting','m' => 'coupon','data'=>serialize($setting)));
+            } else {
+                $setting = unserialize($r['data']);
+            }
+            $result = $this->db->get_list('coupon_ids', '', '*', 0, 2000, 0, 'updatetime DESC');
+            $categorys = get_cache('category','content');
+            include $this->template('bind');
+        }
+    }
+    public function bind_select_content() {
+        $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : 0;
+        if(isset($GLOBALS['submit']) && !empty($GLOBALS['ids'])) {
+            foreach($GLOBALS['ids'] as $id) {
+                $formdata = array();
+                $formdata['cid'] = $cid;
+                $formdata['id'] = $id;
+                $formdata['updatetime'] = SYS_TIME;
+                $r = $this->db->get_one('coupon_ids', array('cid'=>$cid,'id' => $id));
+                if($r) {
+                    $this->db->update('coupon_ids', $formdata,array('cid'=>$cid,'id' => $id));
+                } else {
+                    $this->db->insert('coupon_ids', $formdata);
+                }
+            }
+            MSG('更新成功','?m=coupon&f=card&v=bind_select_content&cid='.$cid.$this->su());
+        } else {
+            $show_dialog = 1;
+            $result = array();
+            $stype = isset($GLOBALS['stype']) ? intval($GLOBALS['stype']) : 1;
+            $status = isset($GLOBALS['status']) ? intval($GLOBALS['status']) : 9;
+            $keywords = isset($GLOBALS['keywords']) ? sql_replace($GLOBALS['keywords']) : '';
+            $start = isset($GLOBALS['start']) ? $GLOBALS['start'] : '';
+            $end = isset($GLOBALS['end']) ? $GLOBALS['end'] : '';
+
+            $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : 52;
+
+            $category = get_cache('category_'.$cid,'content');
+            $modelid = $category['modelid'];
+
+            $form = load_class('form');
+            $where = array('modelid'=>$modelid);
+
+            $options = array(1=>'标题',2=>'描述',3=>'发布人');
+            $model_r = $this->db->get_one('model',array('modelid'=>$modelid));
+            $master_table = $model_r['master_table'];
+            $where = "status=9";
+
+            $model_r = $this->db->get_one('model',array('modelid'=>$modelid));
+
+            $master_table = $model_r['master_table'];
+            if($cid) {
+                $where = "`cid`='$cid' AND `status`='$status'";
+            } else {
+                $where = "`status`='$status'";
+            }
+
+            switch($stype) {
+                case 1:
+                    if($keywords) $where .= " AND `title` LIKE '%$keywords%'";
+                    break;
+                case 2:
+                    if($keywords) $where .= " AND `remark` LIKE '%$keywords%'";
+                    break;
+                case 3:
+                    if($keywords) $where .= " AND `publisher`='$keywords'";
+                    break;
+            }
+            if($start) {
+                $where .= " AND `addtime`>'".strtotime($start)."'";
+            }
+            if($end) {
+                $where .= " AND `addtime`<'".strtotime($end)."'";
+            }
+            $page = intval($GLOBALS['page']);
+            $page = max($page,1);
+
+            $result = $this->db->get_list($master_table,$where, '*', 0, 200,$page,'sort DESC');
+            $pages = $this->db->pages;
+
+            $form = load_class('form');
+
+            include $this->template('bind_select_content');
+        }
+
+    }
+    public function delete_content() {
+        if(isset($GLOBALS['submit']) && !empty($GLOBALS['ids'])) {
+            foreach ($GLOBALS['ids'] as $id) {
+                $r = $this->db->delete('coupon_ids', array('id' => $id));
+            }
+            MSG('删除成功', '?m=coupon&f=card&v=set' . $this->su());
+        } else {
+            MSG('请选择要删除的内容', '?m=coupon&f=card&v=set' . $this->su());
+        }
+
     }
 }

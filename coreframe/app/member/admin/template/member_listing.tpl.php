@@ -22,14 +22,27 @@
 				<input type="text" name="keyValue" class="usernamekey form-control" value="<?php echo $keyValue?>"/>
 				<div class="input-group">
 					<select name="groupid" class="form-control">
-						<option value='' >会员组</option>
+						<option value='' > ≡ 主会员组 ≡ </option>
 						<?php if(is_array($group))foreach($group as $v){?>
 						<option value="<?php echo $v['groupid'];?>"<?php echo $v['groupid'] == $groupid ? 'selected' : ''?>><?php echo $v['name'];?></option>
 						<?php }?>
 					</select>
 				</div>
+				<div class="input-group">
+					<?php echo $string;?>
+				</div>
+				<div class="input-group">
+					<select name="modelid" class="form-control">
+						<option value='' > ≡ 所属模型 ≡ </option>
+						<?php if($this->model)foreach($this->model as $k=>$t){?>
+							<option value="<?php echo $t['modelid'];?>" <?php if($t['modelid']==$modelid) echo 'selected';?>><?php echo $t['name'];?></option>
+						<?php } ?>
+					</select>
+				</div>
+
+
 				　　注册时间 <?php echo WUZHI_form::calendar('regTimeStart', $regTimeStart ? date('Y-m-d', $regTimeStart) : '');?>- <?php echo WUZHI_form::calendar('regTimeEnd', $regTimeEnd ? date('Y-m-d', $regTimeEnd) : '');?>
-				　　登录时间 <?php echo WUZHI_form::calendar('loginTimeStart', $loginTimeStart ? date('Y-m-d', $loginTimeStart) : '');?>- <?php echo WUZHI_form::calendar('loginTimeEnd', $loginTimeEnd ? date('Y-m-d', $loginTimeEnd) : '');?>
+				　
 				<button type="submit" class="btn btn-info btn-sm">搜索</button>
 			</form>
 		</header>
@@ -38,13 +51,13 @@
 			<table class="table table-striped table-advance table-hover">
 				<thead>
 					<tr>
-						<th class="tablehead"><input type="checkbox"  id="check_box" onclick="checkall('selectAll',this);"> 全选</th>
+						<th class="tablehead"><input type="checkbox"  id="check_box" onclick="checkall('selectAll',this);"></th>
 						<th class="tablehead">UID</th>
-						<th class="tablehead">用户名</th>
+						<th class="tablehead">登录名</th>
+						<th class="tablehead">姓名</th>
 						<th class="tablehead">Email</th>
 						<th class="tablehead">会员组</th>
-						<th class="tablehead">余额</th>
-						<th class="tablehead">积分</th>
+						<th class="tablehead">模型</th>
 						<th class="tablehead">注册时间</th>
 						<th class="tablehead">登录时间</th>
 						<th class="tablehead">操作</th>
@@ -56,15 +69,27 @@
 						<td><input type="checkbox" name="uid[]" value="<?php echo $r['uid'];?>"></td>
 						<td><?php echo $r['uid'];?></td>
 						<td><?php echo $r['username'];?></td>
-						<td><?php if(strpos($r['email'],'@h1jk.cn')===false) {echo $r['email'];}?></td>
-						<td><?php echo isset($group[$r['groupid']]) ? $group[$r['groupid']]['name'] : '';?></td>
-						<td><?php echo $r['money'];?></td>
-						<td><?php echo $r['points'];?></td>
+						<td><?php echo $r['fullname']."<br>".$r['fullname_en'];?></td>
+						<td><?php echo $r['email'];?></td>
+						<td>
+							<?php
+							echo '<font color="#AD5B0D">'.$group[$r['groupid']]['name']."</font>";
+							foreach($r['group_extend'] as $r2) {
+								echo ' <br>'.$ext_group[$r2['groupid']]['name'];
+							}
+							?></td>
+						<td>
+							<?php
+							foreach($r['modelid'] as $r2) {
+								echo $models[$r2]['name']."<br>";
+							}
+
+							?></td>
 						<td><?php echo date('Y-m-d', $r['regtime']);?></td>
-						<td><?php echo date('Y-m-d', $r['lasttime']);?></td>
+						<td><?php if($r['lasttime']) {echo date('Y-m-d', $r['lasttime']);} else {echo '从未登录';}?></td>
 						<td>
 							<a href="javascript:void(0)" onclick="setpassword(<?php echo $r['uid'];?>, '<?php echo $r['username'];?>', '<?php echo $r['email'];?>')" class="btn btn-warning btn-xs">置密</a>
-							<a href="javascript:void(0)" onclick="edit(<?php echo $r['uid'];?>)" class="btn btn-primary btn-xs">修改</a>
+							<a href="index.php?m=member&f=index&v=edit&uid=<?php echo $r['uid'].$this->su();?>" class="btn btn-primary btn-xs">修改</a>
 							<a href="javascript:void(0)" onclick="del(<?php echo $r['uid'];?>)" class="btn btn-danger btn-xs">删除</a>
 						</td>
 					</tr>

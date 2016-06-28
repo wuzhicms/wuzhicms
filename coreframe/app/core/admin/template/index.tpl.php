@@ -55,13 +55,16 @@
                     <div class="appicon center"><img src="<?php echo R;?>images/appicons/<?php echo $menuid;?>.png" alt=""></div>
                     <?php
                     $n = 1;
-                    foreach($_panels[$menuid] as $_mid=>$_panel) {
-                        $_d = $_panel['data'] ? '&'.$_panel['data'] : '';
-                        $url = '?m='.$_panel['m'].'&f='.$_panel['f'].'&v='.$_panel['v'].$_d;
-                        $selected = $n==1 ? 'class="_p_menu fone active"' : 'class="_p_menu"';
-                        echo '<li><a href="javascript:w(\''.$url.'\');" onclick="_PANEL(this,'.$_mid.',\''.$url.'\')" '.$selected.' ><span>'.$MENU[$_mid].'</span></a></li>';
-                        $n++;
+                    if($_panels[$menuid]) {
+                        foreach($_panels[$menuid] as $_mid=>$_panel) {
+                            $_d = $_panel['data'] ? '&'.$_panel['data'] : '';
+                            $url = '?m='.$_panel['m'].'&f='.$_panel['f'].'&v='.$_panel['v'].$_d;
+                            $selected = $n==1 ? 'class="_p_menu fone active"' : 'class="_p_menu"';
+                            echo '<li><a href="javascript:w(\''.$url.'\');" onclick="_PANEL(this,'.$_mid.',\''.$url.'\')" '.$selected.' ><span>'.$MENU[$_mid].'</span></a></li>';
+                            $n++;
+                        }
                     }
+
                     ?>
                     <li></li>
                 </ul>
@@ -73,7 +76,7 @@
     <!--sidebar end-->
     <!--main content start-->
     <section id="main-content">
-        <div class="main-nav"><div class="pull-right crumbsbutton"><a href="?m=core&f=cache_all&v=index<?php echo $this->su();?>" target="iframeid">更新缓存</a><a href="?m=content&f=createhtml&v=index&setcache=1&startid=2<?php echo $this->su();?>" target="iframeid">生成首页</a><a href="#" onclick="refresh_iframe()">刷新</a><a href="javascript:new_window();" target="_blank">新建窗口</a><a href="<?php echo WEBURL.'index.php?siteid='.$siteid;?>" target="_blank" id="weburl">站点首页</a></div><i class="icon-desktop2"></i><span id="position">我的面板<span>></span>系统首页<span>></span></span> </div>
+        <div class="main-nav"><div class="pull-right crumbsbutton"><a href="?m=core&f=cache_all&v=index<?php echo $this->su();?>" target="iframeid">更新缓存</a><a href="?m=content&f=createhtml&v=index&setcache=1&startid=2<?php echo $this->su();?>" target="iframeid">生成首页</a><a href="#" onclick="refresh_iframe()">刷新</a><a href="javascript:new_window();" target="_blank">新建窗口</a><a href="<?php echo $siteurl;?>" target="_blank" id="weburl">站点首页</a></div><i class="icon-desktop2"></i><span id="position">我的面板<span>></span>系统首页<span>></span></span> </div>
         <div class="alert alert-warning fade in fadeInDown hide" id="alert-warning">
             <button class="close close-sm" type="button" onclick="$('#alert-warning').addClass('hide');"><i class="icon-times2"></i></button>
             <span id="warning-tips"><strong>安全提示：</strong> 建议您将网站admin目录设置为644或只读，<a href="#">点击查看设置方法！</a></span>
@@ -143,7 +146,9 @@
     //刷新主框架
     function refresh_iframe() {
         var _iframe = document.getElementById("iframeid");
-        _iframe.src = $("#iframeid").attr('url');
+        if($("#iframeid").attr('url')) {
+            _iframe.src = $("#iframeid").attr('url');
+        }
     }
 
     function new_window() {
@@ -262,7 +267,7 @@
                 $('#alert-warning').addClass('alert-danger');
                 $('#alert-warning').removeClass('hide');
                 $('#warning-tips').html('<strong>切换成功，请刷新</strong>');
-                $("#weburl").attr('href','<?php WEBURL;?>index.php?siteid='+siteid);
+                $("#weburl").attr('href',data);
                 refresh_iframe();
                 setTimeout("$('#alert-warning').addClass('hide');",2000)
             });

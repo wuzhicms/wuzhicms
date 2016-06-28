@@ -10,12 +10,13 @@ defined('IN_WZ') or exit('No direct script access allowed');
  * 内容模版，标签解析
  */
 class WUZHI_content_template_parse {
-	public $number = 0;//初始化查询总数
-	public $pages = '';//分页
-	public $childs = '';//子栏目
+    public $number = 0;//初始化查询总数
+    public $pages = '';//分页
+    public $childs = '';//子栏目
     public function __construct() {
         $this->db = load_class('db');
         $this->categorys = get_cache('category','content');
+        $this->models = get_cache('model_content','model');
     }
 
     /**
@@ -38,9 +39,11 @@ class WUZHI_content_template_parse {
         if(empty($this->categorys[$cid]) && !isset($c['modelid'])) {
             $master_table = 'content_share';
         } elseif($c['modelid']) {
-            $model_r = $this->db->get_one('model', array('modelid'=>$c['modelid']), 'master_table');
+            $model_r = $this->models[$c['modelid']];
             if(!$model_r) return array();
             $master_table = $model_r['master_table'];
+            $attr_table = $model_r['attr_table'];
+            if(LANGUAGE=='en') $attr_table.='_en';
         } else {
             if(empty($this->categorys[$cid])) return array();
             $modelid = $this->categorys[$cid]['modelid'];
@@ -55,47 +58,118 @@ class WUZHI_content_template_parse {
             $catdir = '';
             $categorydir = '';
         }
-        if($c['where']) {
-            $where = $c['where'];
-            $where = str_replace("\t",'',$where);
-            $where = str_replace("%20",'',$where);
-            $where = str_replace("%27",'',$where);
-            $where = str_replace("*",'',$where);
-            $where = str_replace("\"",'',$where);
-            $where = str_replace("/",'',$where);
-            $where = str_replace(";",'',$where);
-            $where = str_replace("#",'',$where);
-            $where = str_replace("--",'',$where);
-            $where = '`status`=9 AND '.$where;
-        } elseif($cid) {
-            if($this->categorys[$cid]['child']) {
-                $this->childs = '';
-                $this->get_child($cid);
-                if($this->childs) {
-                    $cids = implode(',',$this->childs);
-                    $where = '`cid` IN ('.$cids.') AND `status`=9';
+        $where = $c['where'];
+        $where = str_replace("\t",'',$where);
+        $where = str_replace("%20",'',$where);
+        $where = str_replace("%27",'',$where);
+        $where = str_replace("*",'',$where);
+        $where = str_replace("\"",'',$where);
+        $where = str_replace("/",'',$where);
+        $where = str_replace(";",'',$where);
+        $where = str_replace("#",'',$where);
+        $where = str_replace("--",'',$where);
+        $colspan = isset($c['colspan']) ? $c['colspan'] : 8;
+        $rule_arr = array('cid'=>$cid,'page'=>$c['page'],'catdir'=>$catdir,'categorydir'=>$categorydir);
+        if(isset($c['variables'])) $rule_arr = array_merge($rule_arr,$c['variables']);
+
+        if($attr_table && ($this->categorys[$cid]['yearfield'] || $c['moredata'])) {
+            if($c['where']) {
+                $where = 'a.`status`=9 AND '.$where;
+            } elseif($cid) {
+                if($this->categorys[$cid]['child']) {
+                    $this->childs = '';
+                    $this->get_child($cid);
+                    if($this->childs) {
+                        $cids = implode(',',$this->childs);
+                        $where = 'a.`cid` IN ('.$cids.') AND a.`status`=9';
+                    } else {
+                        $where = 'a.`cid`='.$cid.' AND a.`status`=9';
+                    }
+                } else {
+                    $where = 'a.`cid`='.$cid.' AND a.`status`=9';
+                }
+
+            } else {
+                $where = 'a.`status`=9';
+            }
+            if(isset($c['eliteflag']) && $c['eliteflag']) {
+                $where .= " AND a.`eliteflag`='".$c['eliteflag']."'";
+            } elseif(isset($c['uid'])) {
+                $where .= " AND a.`uid`='".intval($c['uid'])."'";
+            } elseif(isset($c['typeid'])) {
+                $where .= " AND a.`typeid`='".intval($c['typeid'])."'";
+            }
+            $order = isset($c['order']) ? $c['order'] : 'a.id DESC';
+            $colspan = isset($c['colspan']) ? $c['colspan'] : 8;
+            $rule_arr = array('cid'=>$cid,'page'=>$c['page'],'catdir'=>$catdir,'categorydir'=>$categorydir);
+            if(isset($c['variables'])) $rule_arr = array_merge($rule_arr,$c['variables']);
+            if(LANGUAGE=='en') $master_table .= '_en';
+
+            //$result = $this->db->get_list($master_table, $where, '*', $c['start'], $c['pagesize'], $c['page'],$order,'','',$urlrule,$rule_arr,$colspan);
+            $yearfield = $this->categorys[$cid]['yearfield'];
+            if($yearfield) {
+                $order = 'b.'.$yearfield.' DESC';
+            }
+            //($sql,$startid = 0, $pagesize = 200, $page = 0, $keyfield = ''
+            $sql = "SELECT * FROM `wz_$master_table` a LEFT JOIN `wz_$attr_table` b ON a.id=b.id WHERE $where ORDER BY $order";
+            $sql2 = "SELECT count(*) as num FROM `wz_$master_table` a LEFT JOIN `wz_$attr_table` b ON a.id=b.id WHERE $where";
+            $result = $this->db->get_page_list($sql,$c['start'],$c['pagesize'],$c['page']);
+
+            $number_rs  = $this->db->get_page_list_count($sql2,'');
+            $this->number = $number_rs['num'];
+
+            $this->db->pages = pages($this->number, $c['page'], $c['pagesize'],$urlrule,$rule_arr,$colspan);
+
+        } else {
+            if($c['where']) {
+                $where = '`status`=9 AND '.$where;
+            } elseif($cid) {
+                if($this->categorys[$cid]['child']) {
+                    $this->childs = '';
+                    $this->get_child($cid);
+                    if($this->childs) {
+                        $cids = implode(',',$this->childs);
+                        $where = '`cid` IN ('.$cids.') AND `status`=9';
+                    } else {
+                        $where = '`cid`='.$cid.' AND `status`=9';
+                    }
                 } else {
                     $where = '`cid`='.$cid.' AND `status`=9';
                 }
+
             } else {
-                $where = '`cid`='.$cid.' AND `status`=9';
+                $where = '`status`=9';
             }
+            if(isset($c['eliteflag']) && $c['eliteflag']) {
+                $where .= " AND `eliteflag`='".$c['eliteflag']."'";
+            } elseif(isset($c['uid'])) {
+                $where .= " AND `uid`='".intval($c['uid'])."'";
+            } elseif(isset($c['typeid'])) {
+                $where .= " AND `typeid`='".intval($c['typeid'])."'";
+            }
+            $order = isset($c['order']) ? $c['order'] : 'id DESC';
 
+            if(LANGUAGE=='en') $master_table .= '_en';
+
+            $result = $this->db->get_list($master_table, $where, '*', $c['start'], $c['pagesize'], $c['page'],$order,'','',$urlrule,$rule_arr,$colspan);
+            $this->number = $this->db->number;
+        }
+
+
+
+        //print_r($tmp);
+
+        if(empty($result)) {
+            $GLOBALS['result_lists'] = 0;
         } else {
-            $where = '`status`=9';
+            if(LANGUAGE=='en') {
+                foreach($result as $_key=>$_value) {
+                    if(strpos($_value['url'],'://')===false) {
+                        $result[$_key]['url'] = '/en'.$_value['url'];
+                    }
+                }
+            }
         }
-        if(isset($c['eliteflag']) && $c['eliteflag']) {
-            $where .= " AND `eliteflag`='".$c['eliteflag']."'";
-        } elseif(isset($c['uid'])) {
-             $where .= " AND `uid`='".intval($c['uid'])."'";
-        }
-        $order = isset($c['order']) ? $c['order'] : 'id DESC';
-        $colspan = isset($c['colspan']) ? $c['colspan'] : 10;
-        $rule_arr = array('cid'=>$cid,'page'=>$c['page'],'catdir'=>$catdir,'categorydir'=>$categorydir);
-        if(isset($c['variables'])) $rule_arr = array_merge($rule_arr,$c['variables']);
-        $result = $this->db->get_list($master_table, $where, '*', $c['start'], $c['pagesize'], $c['page'],$order,'','',$urlrule,$rule_arr,$colspan);
-
-        if(empty($result)) $GLOBALS['result_lists'] = 0;
         $GLOBALS['pagesize'] = $c['pagesize'];
         $GLOBALS['pages'] = 1;
         if($c['page']) {
@@ -104,7 +178,7 @@ class WUZHI_content_template_parse {
         }
 
         return $result;
-	}
+    }
 
     /**
      * 栏目列表标签
@@ -113,16 +187,22 @@ class WUZHI_content_template_parse {
      * @return mixed
      */
     public function category($c) {
+        $where = "`keyid`='content'";
+        if(isset($c['siteid'])) {
+            $siteid = intval($c['siteid']);
+            $where .= ' AND `siteid`='.$siteid;
+        } else {
+            $where .= ' AND `siteid`=1';
+        }
         if(isset($c['cid'])) {
             $cid = intval($c['cid']);
-            $where = '`pid`='.$cid;
-        } else {
-            $where = '';
+            $where .= ' AND `pid`='.$cid;
         }
         if(isset($c['mshow']) && $c['mshow']) {
-            $where = $where ? " AND `mshow`=1" : "`mshow`=1";
+            $where .= " AND `mshow`=1";
         }
         $order = isset($c['order']) ? $c['order'] : 'id DESC';
+
         $result = $this->db->get_list('category', $where, '*', $c['start'], $c['pagesize'], 0,$order);
         return $result;
     }
@@ -163,7 +243,7 @@ class WUZHI_content_template_parse {
                 $result[$rs['id']] = $rs;
                 $i++;
             }
-           // print_r($result);
+            // print_r($result);
         } else {
             $result = array();
         }
@@ -175,7 +255,7 @@ class WUZHI_content_template_parse {
      * @param $c
      */
     public function rank($c) {
-       //总排行，当日，昨日排行，周排行，月排行
+        //总排行，当日，昨日排行，周排行，月排行
         $order = isset($c['order']) ? $c['order'] : 'views DESC';
         $id = isset($c['id']) ? intval($c['id']) : 0;
         $cid = isset($c['cid']) ? intval($c['cid']) : 0;
@@ -225,6 +305,16 @@ class WUZHI_content_template_parse {
             }
             $order = isset($c['order']) ? $c['order'] : 'sort DESC,id DESC';
             $result = $this->db->get_list('block_data', $where, '*', $c['start'], $c['pagesize'], 0,$order);
+            if(!empty($result)) {
+                foreach ($result as $_key=>$_v) {
+                    if($_v['attach']!='') {
+                        $attach=unserialize($_v['attach']);
+                        foreach($attach as $__key=>$__v) {
+                            $result[$_key][$__key]=$__v;
+                        }
+                    }
+                }
+            }
         }elseif($c['type']==3) {
             $url = $c['url'];
             $data = file_get_contents($url);

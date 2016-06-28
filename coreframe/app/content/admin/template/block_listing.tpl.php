@@ -11,8 +11,7 @@ include $this->template('header','core');
 
 <form name="myform" action="?m=content&f=block&v=html<?php echo $this->su();?>" method="post">
             <section class="panel">
-                <?php echo $this->menu($GLOBALS['_menuid']);?>
-
+                <?php echo $this->menu($GLOBALS['_menuid'],$append_str,$append_menu);?>
                 <div class="panel-body" id="panel-bodys">
                     <table class="table table-striped table-advance table-hover">
                         <thead>

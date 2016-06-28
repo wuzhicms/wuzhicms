@@ -46,7 +46,7 @@ class index extends WUZHI_admin {
             $show_formjs = 1;
             $form = load_class('form');
             $endtime = SYS_TIME+86400*30;
-            $endtime = date('Y-m-d');
+            $endtime = date('Y-m-d',$endtime);
             include $this->template('add');
         }
     }
@@ -70,10 +70,8 @@ class index extends WUZHI_admin {
             $show_formjs = 1;
             $form = load_class('form');
             load_function('admin');
-            $endtime = SYS_TIME+86400*30;
-            $endtime = date('Y-m-d');
             $r = $this->db->get_one('affiche',array('id'=>$id));
-
+            $endtime = date('Y-m-d H:i:s',$r['endtime']);
             $styles = style($r['css']);//color:#ff0000;font-weight:bold
             $font_weight = $styles['font-weight'];
             $color = $styles['color'];

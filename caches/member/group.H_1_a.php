@@ -3,20 +3,8 @@
   1 => 
   array (
     'groupid' => '1',
+    'pid' => '0',
     'name' => '禁止访问',
-    'issystem' => '1',
-    'points' => '0',
-    'upgrade' => '0',
-    'money_y' => '0.00',
-    'money_m' => '0.00',
-    'money_d' => '0.00',
-    'sort' => '1',
-    'icon' => '',
-  ),
-  2 => 
-  array (
-    'groupid' => '2',
-    'name' => '邮件认证',
     'issystem' => '1',
     'points' => '0',
     'upgrade' => '0',
@@ -26,10 +14,11 @@
     'sort' => '2',
     'icon' => '',
   ),
-  3 => 
+  2 => 
   array (
-    'groupid' => '3',
-    'name' => '个人会员',
+    'groupid' => '2',
+    'pid' => '0',
+    'name' => '邮件认证',
     'issystem' => '1',
     'points' => '0',
     'upgrade' => '0',
@@ -37,11 +26,26 @@
     'money_m' => '0.00',
     'money_d' => '0.00',
     'sort' => '3',
+    'icon' => '',
+  ),
+  3 => 
+  array (
+    'groupid' => '3',
+    'pid' => '0',
+    'name' => '个人会员',
+    'issystem' => '1',
+    'points' => '0',
+    'upgrade' => '0',
+    'money_y' => '0.00',
+    'money_m' => '0.00',
+    'money_d' => '0.00',
+    'sort' => '10',
     'icon' => 'level1',
   ),
   6 => 
   array (
     'groupid' => '6',
+    'pid' => '0',
     'name' => 'VIP会员',
     'issystem' => '0',
     'points' => '501',
@@ -49,12 +53,13 @@
     'money_y' => '0.00',
     'money_m' => '0.00',
     'money_d' => '0.00',
-    'sort' => '5',
+    'sort' => '11',
     'icon' => 'level2',
   ),
   7 => 
   array (
     'groupid' => '7',
+    'pid' => '0',
     'name' => '黄金会员',
     'issystem' => '0',
     'points' => '1001',
@@ -62,12 +67,13 @@
     'money_y' => '0.00',
     'money_m' => '0.00',
     'money_d' => '0.00',
-    'sort' => '6',
+    'sort' => '12',
     'icon' => 'level3',
   ),
   8 => 
   array (
     'groupid' => '8',
+    'pid' => '0',
     'name' => '白金会员',
     'issystem' => '0',
     'points' => '5001',
@@ -75,12 +81,13 @@
     'money_y' => '0.00',
     'money_m' => '0.00',
     'money_d' => '0.00',
-    'sort' => '7',
+    'sort' => '13',
     'icon' => 'level4',
   ),
   9 => 
   array (
     'groupid' => '9',
+    'pid' => '0',
     'name' => '钻石会员',
     'issystem' => '0',
     'points' => '20001',
@@ -88,7 +95,35 @@
     'money_y' => '0.00',
     'money_m' => '0.00',
     'money_d' => '0.00',
-    'sort' => '8',
+    'sort' => '14',
     'icon' => 'level5',
+  ),
+  4 => 
+  array (
+    'groupid' => '4',
+    'pid' => '0',
+    'name' => '游客',
+    'issystem' => '1',
+    'points' => '0',
+    'upgrade' => '0',
+    'money_y' => '0.00',
+    'money_m' => '0.00',
+    'money_d' => '0.00',
+    'sort' => '1',
+    'icon' => '',
+  ),
+  5 => 
+  array (
+    'groupid' => '5',
+    'pid' => '0',
+    'name' => '待审核',
+    'issystem' => '1',
+    'points' => '0',
+    'upgrade' => '0',
+    'money_y' => '0.00',
+    'money_m' => '0.00',
+    'money_d' => '0.00',
+    'sort' => '4',
+    'icon' => '',
   ),
 )?>

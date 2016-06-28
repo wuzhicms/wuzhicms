@@ -3,7 +3,7 @@
   'register' => '1',
   'checkemail' => '0',
   'checkmobile' => '0',
-  'checkuser' => '0',
+  'checkuser' => '1',
   'invite' => '0',
   'inviteprice' => '10',
   'invitenum' => 
@@ -23,12 +23,32 @@
       'free' => '5',
       'buy' => '6',
     ),
+    6 => 
+    array (
+      'free' => '',
+      'buy' => '',
+    ),
+    7 => 
+    array (
+      'free' => '',
+      'buy' => '',
+    ),
+    8 => 
+    array (
+      'free' => '',
+      'buy' => '',
+    ),
+    9 => 
+    array (
+      'free' => '',
+      'buy' => '',
+    ),
     4 => 
     array (
       'free' => '',
       'buy' => '',
     ),
-    5 => 
+    10 => 
     array (
       'free' => '',
       'buy' => '',
@@ -70,7 +90,7 @@
 
 五指互联公司',
   'ucenter' => '0',
-  'uc_api' => 'http://bbs.wuzhicms.com/uc_server',
+  'uc_api' => 'http://bbs.phpcms.com/uc_server',
   'uc_ip' => '',
   'uc_appid' => '2',
   'uc_key' => '123456',
@@ -84,6 +104,6 @@
   'qq_appkey' => '57fc75d43a6b5208320dec0b5986a395',
   'sina_key' => '',
   'sina_secret' => '',
-  'baidu_key' => '9h15GjfUX9pl6W6F7fiCD1DF',
-  'baidu_secret' => '0VRTw43EwH7TRxWGP8MYwAqGmSoNXPeL',
+  'weixin_key' => '',
+  'weixin_secret' => '',
 )?>

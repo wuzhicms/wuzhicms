@@ -1,0 +1,105 @@
+
+.sb-search {
+	position: relative;
+	width: 0%;
+	min-width: 34px;
+	height: 34px;
+	float: right;
+	overflow: hidden;
+	-webkit-transition: width 0.3s;
+	-moz-transition: width 0.3s;
+	transition: width 0.3s;
+	-webkit-backface-visibility: hidden;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.sb-search-input {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	outline: none;
+	background: transparent;
+	width: 100%;
+	height: 34px;
+	margin: 0;
+	z-index: 10;
+	padding: 10px 65px 10px 20px;
+}
+
+.sb-search-input::-webkit-input-placeholder {
+	color: #eee;
+}
+.sb-search-input:-moz-placeholder {
+	color: #eee;
+}
+.sb-search-input::-moz-placeholder {
+	color: #eee;
+}
+.sb-search-input:-ms-input-placeholder {
+	color: #eee;
+}
+
+.sb-icon-search,
+.sb-search-submit  {
+	width: 34px;
+	height: 34px;
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 0;
+	margin: 0;
+	line-height: 34px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.sb-search-submit {
+	background: #fff; /* IE needs this */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /* IE 8 */
+    filter: alpha(opacity=0); /* IE 5-7 */
+    opacity: 0;
+	color: transparent;
+	border: none;
+	outline: none;
+	z-index: -1;
+}
+
+
+.sb-icon-search {
+	color: #888;
+	z-index: 90;
+	font-size: 16px;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+
+/* Open state */
+.sb-search.sb-search-open,
+.no-js .sb-search {
+	width: 70%;
+
+}
+
+.sb-search.sb-search-open .sb-icon-search,
+.no-js .sb-search .sb-icon-search {
+	background: #fff;
+	color: #444;
+	z-index: 11;
+}
+
+.sb-search.sb-search-open .sb-search-submit,
+.no-js .sb-search .sb-search-submit {
+	z-index: 90;
+}
+
+.sb-search.sb-search-open .sb-search-input{
+    background: #fff;
+}

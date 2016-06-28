@@ -32,7 +32,12 @@ class WUZHI_url {
         } else {
             $urlrule = $urlrules[1];
         }
-        $configs['categorydir'] = $this->category['parentdir'];
+        if($this->category['pid']) {
+            $configs['categorydir'] = $this->category['parentdir'];
+        } else {
+            $configs['categorydir'] = '';
+        }
+
         $configs['catdir'] = $this->category['catdir'];
         preg_match_all('/{\$([a-z0-9_]+)}/',$urlrule,$_match);
         $replace = array();

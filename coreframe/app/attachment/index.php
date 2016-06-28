@@ -6,6 +6,7 @@
 // | Author: wangcanjia <phpip@qq.com>
 // +----------------------------------------------------------------------
 defined('IN_WZ') or exit('No direct script access allowed');
+
 load_function('common','attachment');
 /**
  * 附件上传
@@ -68,6 +69,21 @@ class index {
     }
     //html5 上传
     public function h5upload() {
+        $insert = array();
+        $_username = get_cookie('_username');
+        $wz_name = get_cookie('wz_name');
+        $_username = $_username ? $_username : $wz_name ? $wz_name : '';
+
+        if($_username!='') {
+            $mr = $this->db->get_one('member', array('username' => $_username),'uid');
+            if(!$mr) {
+                die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Not allow guest upload."}, "id" : "id"}');
+            }
+        } else {
+            die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Not allow guest upload."}, "id" : "id"}');
+        }
+
+        $insert['username'] = $_username;
 
         // Make sure file is not cached (as it happens for example on iOS devices)
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -84,14 +100,14 @@ class index {
 
         // Get a file name
         if (isset($GLOBALS["name"])) {
-            $fileName = $GLOBALS["name"];
+            $fileName = str_replace(",","_",$_FILES["file"]["name"]);
         } elseif (!empty($_FILES)) {
-            $fileName = $_FILES["file"]["name"];
+            $fileName = str_replace(",","_",$_FILES["file"]["name"]);
         } else {
             $fileName = uniqid("file_");
         }
 
-        $insert = array();
+
         $insert['name'] = iconv('utf-8',CHARSET,$fileName);
 
         $fileName = filename($fileName);
@@ -140,16 +156,13 @@ class index {
             // Strip the temp .part suffix off
             rename("{$filePath}.part", $filePath);
         }
-        
+
 
         $insert['path'] = $fileurl.$fileName;
         $insert['addtime'] = SYS_TIME;
         $insert['filesize'] = $_FILES['file']['size'] ? $_FILES['file']['size'] : filesize($filePath);
         $insert['ip'] = get_ip();
-        $_username = get_cookie('_username');
-        $wz_name = get_cookie('wz_name');
-        $insert['username'] = $_username ? $_username : $wz_name ? $wz_name : '';
-        if($insert['username']=='') die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Not allow guest upload."}, "id" : "id"}');
+
         $md5file = md5_file(ATTACHMENT_ROOT.$insert['path']);
         if($r = $this->db->get_one('attachment', array('md5file' => $md5file))) {
             unlink(ATTACHMENT_ROOT.$insert['path']);
@@ -232,6 +245,57 @@ class index {
         } else {
             echo json_encode(array('code'=>100));
         }
+    }
+    //ckeditor 上传
+    public function ckeditor() {
+        $action = remove_xss($GLOBALS['action']);
+        $ckditor = load_class('ckditor',M);
+        switch($action)
+        {
+            case 'config':
+                $config = $ckditor->config();
+                $result = $config;
+                break;
+
+            case 'uploadimage':/* 上传图片 */
+            case 'uploadscrawl':/* 上传涂鸦 */
+            case 'uploadvideo':/* 上传视频 */
+            case 'uploadfile':/* 上传文件 */
+                $result = $ckditor->upload($action);
+                break;
+
+
+            case 'listimage':/* 列出图片 */
+            case 'listfile':/* 列出文件 */
+                $page = $GLOBALS['page']  ? intval($GLOBALS['page']) : 1;
+                $keytype = $GLOBALS['keytype'] ? intval($GLOBALS['keytype']) : 0;
+                $keywords = isset($GLOBALS['keywords']) ? iconv('utf-8','gbk',remove_xss($GLOBALS['keywords'])) : '';
+                 $username = strip_tags($GLOBALS['username']);
+                $result = $ckditor->lists($page,$keytype,$keywords,$username);
+                if(isset($GLOBALS['returnjson'])) {
+                    echo json_encode($result);
+                } else {
+                    $CKEditorFuncNum = intval($GLOBALS['CKEditorFuncNum']);
+                    load_class('form');
+                    $CKEditor = $GLOBALS['CKEditor'];
+                    include T('attachment','listimage');
+                }
+                exit;
+                break;
+            case 'searchimg':/* 搜索图片 */
+                $result = $ckditor->searchimg();
+                break;
+            case 'catchimage':/* 抓取远程文件 */
+                $result = $ckditor->saveRemote();
+                break;
+
+            default:
+                $result = json_encode(array(
+                    'state'=> '请求地址出错'
+                ));
+                break;
+        }
+        exit($result);
     }
 }
 ?>

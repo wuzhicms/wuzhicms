@@ -46,13 +46,13 @@
 .btn-shadow.btn-warning{box-shadow:0 4px #D99120;}
 .btn-shadow.btn-danger{box-shadow:0 4px #d1595a;}
 .btn-shadow.btn-inverse{box-shadow:0 4px #1D2E40;}
-/*text input*/
+/*text border-top: 1px dotted #F9F4F4; vertical-align: middle;background-color: #F9F9FB; input*/
 .form-control{box-shadow:none;border-radius: 0;border: 1px solid #E2E2E4;padding: 4px;font-size: 12px;}
 .form-horizontal .control-label{font-weight:300;font-size:14px;text-align:left;}
 .form-horizontal .checkbox, .form-horizontal .checkbox-inline, .form-horizontal .radio, .form-horizontal .radio-inline{padding-top: 0px;line-height: 22px;}
 input,textarea,select,button{outline:none !important;}
 .m-bot15 {margin-bottom: 15px;}
-.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color: #fcfcfd;}
+.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color: #F9F9FB;}
 .table>tbody>tr>td i{margin: 0 0 0 5px;font-size: 14px;color: #BCBFC9;}
 .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color: #FCFFE9;}
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{border-top: 1px dotted #EAEAEA;vertical-align: middle;}

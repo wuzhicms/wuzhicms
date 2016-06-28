@@ -51,7 +51,6 @@ class favorite extends WUZHI_foreground {
         $result = array();
         foreach($result_rs as $r) {
             $mecr=$this->db->get_one('mec',array('id'=>$r['keyid']));
-            $tuan_list=$this->db->get_list('tuangou',array('link_mec'=>$r['keyid']), '*', 0, 3,0,'id DESC');
             $r['thumb'] =  $mecr['thumb'];
             $r['address'] =  $mecr['address'];
             $r['tuan_list'] =  $tuan_list;

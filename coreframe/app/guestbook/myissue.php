@@ -28,7 +28,7 @@ class myissue extends WUZHI_foreground {
     public function ask() {
         $formdata = array();
         $formdata['title'] = isset($GLOBALS['title']) ? remove_xss($GLOBALS['title']) : strcut($GLOBALS['content'],80);
-        $formdata['content'] = $GLOBALS['content'];
+        $formdata['content'] = remove_xss($GLOBALS['content']);
         $formdata['addtime'] = SYS_TIME;
         $formdata['publisher'] = $this->memberinfo['username'];
         $formdata['ip'] = get_ip();

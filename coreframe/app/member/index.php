@@ -8,6 +8,9 @@
 defined('IN_WZ') or exit('No direct script access allowed');
 load_class('foreground', M);
 load_class('session');
+
+$_POST['SUPPORT_MOBILE'] = 1;
+
 class index extends WUZHI_foreground{
 	function __construct() {
 		$this->member = load_class('member', M);
@@ -19,21 +22,8 @@ class index extends WUZHI_foreground{
 		$memberinfo = $this->memberinfo;
         $uid = $memberinfo['uid'];
         $groups = $this->groups;
-        //自动升级会员组，3，6，7，8，9
-        $points = $memberinfo['points'];
 
-        if($points>$groups[9]['points']) {
-            $memberinfo['groupid'] = 9;
-        } elseif($points>$groups[8]['points']) {
-            $memberinfo['groupid'] = 8;
-        } elseif($points>$groups[7]['points']) {
-            $memberinfo['groupid'] = 7;
-        } elseif($points>$groups[6]['points']) {
-            $memberinfo['groupid'] = 6;
-        } else {//普通会员
-            $memberinfo['groupid'] = 3;
-        }
-        $this->db->update('member', array('groupid'=>$memberinfo['groupid']), array('uid' => $uid));
+
         $GLOBALS['acbar'] = 1;
         //登录日志
         $log_results = $this->db->get_list('logintime', '`uid`='.$uid.' AND status > 1', '*', 0, 10, 0, 'id DESC');
@@ -41,28 +31,8 @@ class index extends WUZHI_foreground{
         foreach($log_results as $key=>$rs) {
             $log_results[$key]['ip_location'] = $ip_location->seek($rs['ip'],1);
         }
-        //今日获取积分数
-        $toay_pint = 0;
 		$groupid = $memberinfo['groupid'];
-		if($groupid==3) {
-			$next_group = 6;
-			$nextpoints = $groups[$next_group]['points']-$points;
-		}elseif($groupid==6) {
-			$next_group = 7;
-			$nextpoints = $groups[$next_group]['points']-$points;
-		} elseif($groupid==7) {
-			$next_group = 8;
-			$nextpoints = $groups[$next_group]['points']-$points;
-		} elseif($groupid==8) {
-			$next_group = 9;
-			$nextpoints = $groups[$next_group]['points']-$points;
-		} elseif($groupid==9) {
-			$next_group = 9;
-			$nextpoints = 0;
-		} else {
-			$next_group = $groupid;
-			$nextpoints = 0;
-		}
+
 		$safe_level = 1;//低
 		if($memberinfo['ischeck_mobile'] && $groupid>2) {
 			$safe_level = 3;//高
@@ -95,8 +65,24 @@ class index extends WUZHI_foreground{
             $result[] = $r;
         }
 		load_function('global','order');
-
-		include T('member','index');
+		$categorys = get_cache('category','content');
+		$postinfo_category = array();
+		foreach($categorys as $_key =>$r) {
+			if($_key==48) continue;
+			$postinfo_category[$_key] = $r;
+		}
+		$admin_rs = $this->db->get_one('admin',array('uid'=>$uid),'role');
+		//TODO 是否为IE8或者使用非框架,如果是跳转到 main
+		$is_ie8 = 0;
+		if(strpos($_SERVER[HTTP_USER_AGENT], "MSIE 8.0")) {
+			$is_ie8 = 1;
+		}
+		$is_iframe = 1;//框架打开
+		if($is_iframe==0 || $is_ie8) {
+			header("Location: index.php?m=member&f=index&v=main");
+		} else {
+			include T('member','index');
+		}
 	}
 	/**
 	 * 登录
@@ -164,6 +150,7 @@ class index extends WUZHI_foreground{
 			}
 			$this->db->query('UPDATE `wz_member` SET `lasttime`='.SYS_TIME.', `lastip`="'.get_ip().'", `loginnum`=`loginnum`+1 WHERE `uid`='.$r['uid'], false);
 			$this->create_cookie($r, $cookietime);
+
             $forward = empty($GLOBALS['forward']) ? 'index.php?m=member' : $GLOBALS['forward'];
 			if(isset($GLOBALS['minilogin'])) {
 				MSG(L('login_success').'<script>setTimeout("top.dialog.get(window).close().remove();",2000)</script>',HTTP_REFERER,3000);
@@ -173,7 +160,8 @@ class index extends WUZHI_foreground{
 		} else {
             $sina_akey = '';
             $seo_title = $seo_keywords = $seo_description = '会员登录';
-            $forward = remove_xss(HTTP_REFERER);
+            $forward = empty($GLOBALS['forward']) ? remove_xss(HTTP_REFERER) : remove_xss(urldecode($GLOBALS['forward']));
+			$forward = safe_htm($GLOBALS['forward']);
 			include T('member','login');
 		}
 	}
@@ -186,8 +174,25 @@ class index extends WUZHI_foreground{
 	public function register(){
 		if(get_cookie('auth'))MSG(L('logined'), 'index.php?m=member', 2000);
 		if(empty($this->setting['register']))MSG(L('close_register'), WEBURL, 2000);
+		$setting = $this->setting;
+
 		if(isset($GLOBALS['submit'])) {
-			checkcode($GLOBALS['checkcode']);
+
+			$mobile = $GLOBALS['mobile'];
+			if(!preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|17[0|1|2|3|5|6|7|8|9]\d{8}|18[0|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8})$/',$mobile)) {
+				MSG('手机号码错误');
+			}
+			//检查短信验证码是否正确
+			if($setting['checkmobile'] && $GLOBALS['smscode']=='') {
+				MSG('短信验证码错误');
+				$posttime = SYS_TIME-300;//5分钟内有效
+				$r = $this->db->get_one('sms_checkcode',"`mobile`='$mobile' AND `posttime`>$posttime",'*',0,'id DESC');
+				if(!$r || $r['code']!=$GLOBALS['smscode']) MSG("手机号验证失败！");
+			} else {
+				checkcode($GLOBALS['checkcode']);
+			}
+
+			//$GLOBALS['username'] = $mobile;
 			$info = array();
 			//	判断是否第三方登录
 			if(isset($_SESSION['authid']) && $_SESSION['authid']){
@@ -212,15 +217,14 @@ class index extends WUZHI_foreground{
 			$info['points'] = (int)$this->setting['points'];
             $info['modelid'] = intval($GLOBALS['modelid']);
 
-            if($this->setting['checkemail']) {
-                $groupid = 2;// 邮件验证
-            }elseif($info['modelid']==23) {
-                $groupid = 5;// 机构
-            } elseif($info['modelid']==11) {
-                $groupid = 4;//企业
-            } else {
-                $groupid = 3;
-            }
+            if($this->setting['checkuser']) {
+				$groupid = 5;//待审会员组
+			}elseif($this->setting['checkemail']) {
+				$groupid = 2;// 邮件验证
+			} else {
+				$groupid = 3;
+			}
+
             $info['groupid'] = $groupid;
 			$info['username'] = $GLOBALS['username'];
 			$info['email'] = $GLOBALS['email'];
@@ -256,7 +260,7 @@ class index extends WUZHI_foreground{
 				MSG(L('register_error'));
 			}
 		} else {
-			$setting = $this->setting;
+
             $seo_title = '会员注册';
             $categorys = get_cache('category','content');
 			include T('member', 'register');
@@ -309,7 +313,8 @@ class index extends WUZHI_foreground{
 	 * 第三方通用登录
 	 */
 	public function auth(){
-		$type = in_array($GLOBALS['type'], array('qq', 'sina', 'baidu')) ? $GLOBALS['type'] : MSG(L('auth_not_exist'));
+		load_function('curl');
+		$type = in_array($GLOBALS['type'], array('qq', 'sina', 'baidu','weixin')) ? $GLOBALS['type'] : MSG(L('auth_not_exist'));
 		$auth = load_class('auth', M);
 		$info = $auth->$type();
 		if($info['uid']){
@@ -339,9 +344,11 @@ class index extends WUZHI_foreground{
 			}
 			$this->db->query('UPDATE `wz_member` SET `lasttime`='.SYS_TIME.', `lastip`="'.get_ip().'", `loginnum`=`loginnum`+1 WHERE `uid`='.$info['uid'], false);
 			$this->create_cookie($r);
-			MSG(L('login_success').$synlogin, '/index.php');
+			MSG(L('login_success'),'index.php?m=member');
 		}else{
+
 			$_SESSION['authid'] = $info['authid'];
+			$this->create_cookie($info);
 			include T('member', 'auth');
 		}
 	}
@@ -352,7 +359,7 @@ class index extends WUZHI_foreground{
 		//	设定图片目录
 		$dir = substr(md5($this->uid), 0, 2).'/'.$this->uid.'/';
 		if(isset($GLOBALS['uid']) && $GLOBALS['uid'] == $this->uid){
-			$dir = WWW_ROOT.'uploadfile/member/'.$dir;
+			$dir = ATTACHMENT_ROOT.'member/'.$dir;
 			if(!file_exists($dir)) {
 				mkdir($dir, 0777, true);
 			}
@@ -411,11 +418,18 @@ class index extends WUZHI_foreground{
 		$email = isset($GLOBALS['email']) && is_email($GLOBALS['email']) ? $GLOBALS['email'] : '';
 		if(isset($GLOBALS['key'])){
 			if($GLOBALS['key'] != md5($email._KEY))MSG(L('illegal_operation'));
+			$key_verify = $this->db->get_one('key_verify', array('keyid'=>$GLOBALS['key']));
+			if(!$key_verify || $key_verify['addtime']<SYS_TIME-3600) {
+				MSG('链接已失效');
+			}
 			if(isset($GLOBALS['submit'])){
 				if($GLOBALS['password'] == '' || $GLOBALS['password'] != $GLOBALS['pwdconfirm'])MSG(L('password_not_identical'));
 				checkcode($GLOBALS['checkcode']);
+
 				if($this->db->query('UPDATE `wz_member` SET `password` = md5(CONCAT("'.md5($GLOBALS['password']).'", `factor`)) WHERE `email`="'.$email.'"')){
-					MSG(L('operation_success'), WEBURL.'index.php?m=member&v=login');
+					$this->db->delete('key_verify', array('keyid'=>$GLOBALS['key']));
+					$forward = urlencode(WEBURL.'index.php?m=member');
+					MSG(L('operation_success'), WEBURL.'index.php?m=member&v=login&forward='.$forward);
 				}else{
 					MSG(L('operation_failure'));
 				}
@@ -427,17 +441,45 @@ class index extends WUZHI_foreground{
 				checkcode($GLOBALS['checkcode']);
 				if($email)$user = $this->db->get_one('member', "email='$email'", 'uid,username,password,groupid,email,modelid');
 				if($user){
-					if($this->send_register_mail($user, 'password')){
-						MSG(L('need_email_authentication'));
-					}else{
-						MSG(L('email_authentication_error'));
-					}
+					$this->send_register_mail($user, 'password');
+					MSG(L('need_email_authentication'));
 				}else{
 					MSG(L('user_not_exist'));
 				}
 			}else{
 				include T('member', 'find_password_email');
 			}
+		}
+	}
+
+	public function public_find_password_mobile(){
+		if(isset($GLOBALS['submit'])){
+			$mobile = $GLOBALS['mobile'];
+
+			//检查验证码是否匹配
+			$password = random_string('diy',6,'23456789abcdefghjkmnpqrstuwxy');
+			if(!preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|17[0|1|2|3|5|6|7|8|9]\d{8}|18[0|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8})$/',$mobile)) {
+				MSG('手机号码错误');
+			}
+			$posttime = SYS_TIME-300;//5分钟内有效
+			$r = $this->db->get_one('sms_checkcode',"`mobile`='$mobile' AND `posttime`>$posttime",'*',0,'id DESC');
+			if(!$r || $r['code']!=$GLOBALS['smscode']) MSG("手机号验证失败！");
+
+			if($this->db->query('UPDATE `wz_member` SET `ischeck_mobile`=1,`pw_reset`=0,`password` = md5(CONCAT("'.md5($password).'", `factor`)) WHERE `mobile`="'.$mobile.'"')) {
+				$this->db->delete('sms_checkcode',array('mobile'=>$mobile));
+				$sendsms = load_class('sms','sms');
+				$returnstr = $sendsms->send_sms($mobile, $password, 5); //发送短信
+				if($sendsms->statuscode==0) {
+					$forward = urlencode(WEBURL.'index.php?m=member');
+					MSG('新密码已发送到您的手机，请查收！', WEBURL.'index.php?m=member&v=login&forward='.$forward);
+				} else {
+					MSG($returnstr) ;
+				}
+			}else{
+				MSG(L('operation_failure'));
+			}
+		} else {
+			include T('member', 'find_password_mobile');
 		}
 	}
 	/**
@@ -480,93 +522,85 @@ class index extends WUZHI_foreground{
      * 个人资料修改
      */
     public function profile() {
-		$point_config = get_cache('point_config');
-        $seo_title = '个人信息';
-        $memberinfo = $this->memberinfo;
-        $uid = $this->memberinfo['uid'];
-        $groups = $this->groups;
-        $modelid = $memberinfo['modelid'];
-        $model_r = $this->db->get_one('model',array('modelid'=>$modelid));
+		$uid = $this->uid;
+		if($uid)$member = $this->db->get_one('member', '`uid`='.$uid, '*');
+		if(empty($member))MSG(L('user not_exists'));
+		$models = get_cache('model_member','model');
+		if(isset($GLOBALS['submit'])) {
 
-        $data = $this->db->get_one($model_r['attr_table'],array('uid'=>$uid));
-		if($data) {
-			$data = array_merge($memberinfo,$data);
-		} else {
-			$data = $memberinfo;
-		}
-        if(isset($GLOBALS['submit'])) {
-            checkcode($GLOBALS['checkcode']);
-            $formdata = '';
-            require get_cache_path('member_add','model');
-            $form_add = new form_add($modelid);
-			if(empty($GLOBALS['form'])) MSG('参数错误');
-            $formdata = $form_add->execute($GLOBALS['form']);
+			$GLOBALS['info']['factor'] = $member['factor'];
+			$GLOBALS['info']['username'] = $member['username'];
+			$GLOBALS['info']['modelid'] = $member['modelid'];
 
-			/**
-            if(is_tel($GLOBALS['mobile'])) {
-                $formdata['master_data']['mobile'] = $GLOBALS['mobile'];
+			$GLOBALS['info']['email'] = $member['email'];
+			if(!$this->member->edit($GLOBALS['info'], $uid)) MSG(L('operation_failure'));
 
-            }
-**/
-            $this->db->update($formdata['master_table'],$formdata['master_data'],array('uid'=>$uid));
-            if(!empty($formdata['attr_table']) && !empty($formdata['attr_data'])) {
-                $this->db->update($formdata['attr_table'],$formdata['attr_data'],array('uid'=>$uid));
-            }
+			$formdata = $GLOBALS['form'];
 
-            //执行更新
-            require get_cache_path('member_update','model');
-            $form_update = new form_update($modelid);
+			$data = $data_en = array();
+			foreach($formdata as $field=>$value) {
+				$fields = explode('_',$field);
+				$field = $fields[0];
+				$modelid = $fields[1];
+				if(is_array($value)) {
+					$value = ','.implode(',',$value).',';
+				}
+				if($fields[2]) {
+					$data_en[$modelid][$field] = $value;
+				} else {
 
-            $formdata['master_data']['uid'] = $uid;
-            $form_update->execute($formdata);
-
-            MSG(L('operation_success'),HTTP_REFERER);
-        } else {
-            require get_cache_path('member_form','model');
-            $form_build = new form_build($modelid);
-
-            $formdata = $form_build->execute($data);
-			//print_r($formdata);
-            $field_list = '';
-            if(is_array($formdata['0'])) {
-                foreach($formdata['0'] as $field=>$info) {
-                    if($info['powerful_field']) continue;
-                    if($info['formtype']=='powerful_field') {
-                        foreach($formdata['0'] as $_fm=>$_fm_value) {
-                            if($_fm_value['powerful_field']) {
-                                $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
-                            }
-                        }
-                        foreach($formdata['1'] as $_fm=>$_fm_value) {
-                            if($_fm_value['powerful_field']) {
-                                $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
-                            }
-                        }
-                    }
-                    $field_list[] = $info;
-                }
-            }
-			$groupid = $memberinfo['groupid'];
-            $points = $memberinfo['points'];
-			if($groupid==3) {
-				$next_group = 6;
-				$nextpoints = $groups[$next_group]['points']-$points;
-			}elseif($groupid==6) {
-				$next_group = 7;
-				$nextpoints = $groups[$next_group]['points']-$points;
-			} elseif($groupid==7) {
-				$next_group = 8;
-				$nextpoints = $groups[$next_group]['points']-$points;
-			} elseif($groupid==8) {
-				$next_group = 9;
-				$nextpoints = $groups[$next_group]['points']-$points;
-			} elseif($groupid==9) {
-				$next_group = 9;
-				$nextpoints = 0;
+					$data[$modelid][$field] = $value;
+				}
 			}
-			$dir = substr(md5($this->uid), 0, 2).'/'.$this->uid.'/';
-			$upurl = base64_encode(WEBURL.'/index.php?m=member&v=avatar&uid='.$this->uid);
 
+			foreach($data as $modelid=>$rs) {
+				$table = $models[$modelid]['attr_table'];
+				$rd = $this->db->get_one($table, array('uid' => $uid));
+				if($rd) {
+					$this->db->update($table, $rs, array('uid' => $uid));
+				} else {
+					$rs['uid'] = $uid;
+					$this->db->insert($table, $rs);
+				}
+			}
+			foreach($data_en as $modelid=>$rs) {
+				$table = $models[$modelid]['attr_table'].'_en';
+				$rd = $this->db->get_one($table, array('uid' => $uid));
+				if($rd) {
+					$this->db->update($table, $rs, array('uid' => $uid));
+				} else {
+					$rs['uid'] = $uid;
+					$this->db->insert($table, $rs);
+				}
+			}
+			MSG('信息修改成功!','?m=member&f=index&v=main');
+		} else {
+			$memberinfo = $this->memberinfo;
+			$groups = $this->groups;
+			$auth_result = $this->db->get_list('member_auth', array('uid'=>$memberinfo['uid']), '*', 0, 20, 0,'','','type');
+
+			$modelid = $member['modelid'];
+			//	判断是否有模型id参数
+
+//print_r($models);
+			$modelids = explode(',',$modelid);
+			asort($modelids);
+			$is_load = false;
+			foreach($modelids as $modelid) {
+				if($is_load==false) {
+					require get_cache_path('member_form','model');
+					$form_build = new form_build($modelid);
+					$is_load = true;
+				}
+
+				$form_build->fields = get_cache('field_'.$modelid,'model');
+				$tmp = $this->db->get_one($models[$modelid]['attr_table'], array('uid' => $uid));
+				//$tmp_en = $this->db->get_one($models[$modelid]['attr_table'].'_en', array('uid' => $uid));
+				$formdata = 'formdata_'.$modelid;
+				$formdata2 = 'formdata2_'.$modelid;
+				$$formdata = $form_build->execute($tmp,$modelid);
+				//$$formdata2 = $form_build->execute($tmp_en,$modelid,'en');
+			}
 			include T('member', 'profile');
         }
     }
@@ -577,12 +611,12 @@ class index extends WUZHI_foreground{
     public function edit_password() {
         $memberinfo = $this->memberinfo;
         if(isset($GLOBALS['submit'])) {
-            checkcode($GLOBALS['checkcode']);
+            //checkcode($GLOBALS['checkcode']);
             $password = $GLOBALS['password'];
             $password2 = $GLOBALS['password2'];
             if($password!=$password2) MSG(L('password_not_identical'));
             $oldpassword = $GLOBALS['oldpassword'];
-            if(md5(md5($oldpassword).$memberinfo['factor']) != $memberinfo['password']) MSG(L('password_error'));
+            if(md5(md5($oldpassword).$memberinfo['factor']) != $memberinfo['password']) MSG('原密码错误!');
 
             $factor = random_string('diy', 6);
             $this->db->update('member', array('factor'=>$factor, 'password'=>md5(md5($password).$factor)), '`uid`='.$memberinfo['uid']);
@@ -592,7 +626,29 @@ class index extends WUZHI_foreground{
             include T('member', 'edit_password');
         }
     }
+	/**
+     * 强制修改新密码
+     */
+    public function pw_reset() {
+        $memberinfo = $this->memberinfo;
+        if(isset($GLOBALS['submit'])) {
+            //checkcode($GLOBALS['checkcode']);
+			if($GLOBALS['password']=='') {
+				MSG('密码不能为空',HTTP_REFERER);
+			}
+            $password = $GLOBALS['password'];
+            $password2 = $GLOBALS['password2'];
+            if($password!=$password2) MSG(L('password_not_identical'));
 
+            $factor = random_string('diy', 6);
+            $this->db->update('member', array('factor'=>$factor, 'password'=>md5(md5($password).$factor)
+,'pw_reset'=>0), '`uid`='.$memberinfo['uid']);
+            MSG(L('operation_success'),'index.php?m=member');
+        } else {
+            $seo_title = '设定新密码';
+            include T('member', 'pw_reset');
+        }
+    }
 	/**
 	 * 账户安全检查
 	 */
@@ -668,15 +724,10 @@ class index extends WUZHI_foreground{
 			$subject = '邮件验证';
 			$message = "尊敬的用户，您正在使用【".$siteconfigs['sitename']."】进行邮箱验证<br>";
 			$message .= "点击链接地址：<a href='$jhurl' target='_blank'>{$jhurl}</a>";
-			$mail = load_class('sendmail');
-			$mail->setServer($config['smtp_server'], $config['smtp_user'], $password); //设置smtp服务器，普通连接方式
-			//$mail->setServer("smtp.gmail.com", "XXXXX@gmail.com", "XXXXX", 465, true); //设置smtp服务器，到服务器的SSL连接
-			$mail->setFrom($config['send_email']); //设置发件人
-			$mail->setReceiver($email); //设置收件人，多个收件人，调用多次
-			$mail->setMail($subject, $message); //设置邮件主题、内容
-			$mail->sendMail(); //发送
-			if($mail->_errorMessage) {
-				MSG($mail->_errorMessage);
+
+			load_function('sendmail');
+			if(send_mail($email,$subject,$message)===false) {
+				MSG(L('邮件发送失败!'));
 			}
 
 
@@ -685,5 +736,68 @@ class index extends WUZHI_foreground{
 			$memberinfo = $this->memberinfo;
 			include T('member', 'edit_email');
 		}
+	}
+	/**
+	 * 设置用户名
+	 */
+	public function set_username() {
+		$memberinfo = $this->memberinfo;
+		if(!$memberinfo['sys_name']) MSG('用户名已经设置成功！无需重复设置！');
+		if(isset($GLOBALS['submit'])) {
+			$username = strip_tags($GLOBALS['username']);
+			$r = $this->db->get_one('member', array('username' => $username));
+			if($r) {
+				MSG('用户名已经被占用，请换其它用户名');
+			}
+			$this->db->update('member', array('username'=>$username,'sys_name'=>0), array('uid' => $this->uid));
+			$r['username'] = $username;
+			$this->create_cookie($r);
+			MSG('用户名设置成功！','index.php?m=member');
+		} else {
+
+			include T('member', 'set_username');
+		}
+	}
+	/**
+	 * 会员首页框架
+	 */
+	public function main() {
+		$memberinfo = $this->memberinfo;
+		$groups = $this->groups;
+		$auth_result = $this->db->get_list('member_auth', array('uid'=>$memberinfo['uid']), '*', 0, 20, 0,'','','type');
+		include T('member', 'main');
+	}
+
+	/**
+	 * 删除授权
+	 */
+	public function remove_auth() {
+		$type = in_array($GLOBALS['type'], array('qq', 'sina', 'baidu','weixin')) ? $GLOBALS['type'] : MSG(L('auth_not_exist'));
+		$r = $this->db->get_one('member_auth', array('uid' => $this->uid,'type'=>$type));
+		if($r) {
+			$this->db->delete('member_auth', array('authid' =>$r['authid']));
+		}
+		MSG('授权删除成功',HTTP_REFERER);
+	}
+
+	/**
+	 * 绑定第三方授权
+	 */
+	public function bind_auth() {
+		$type = in_array($GLOBALS['type'], array('qq', 'sina', 'baidu','weixin')) ? $GLOBALS['type'] : MSG(L('auth_not_exist'));
+
+		$r = $this->db->get_one('member_auth', array('uid' => $this->uid,'type'=>$type));
+		if($r) {
+			MSG('已经授权成功',HTTP_REFERER);
+		} else {
+			load_function('curl');
+			$auth = load_class('auth', M);
+			$auth->bind_auth = $this->uid;
+			$info = $auth->$type();
+			if($info['uid']) {
+
+			}
+		}
+		MSG('授权成功','index.php?m=member&f=index&v=main');
 	}
 }

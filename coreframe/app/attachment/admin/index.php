@@ -124,7 +124,7 @@ class index extends WUZHI_admin
      */
     public function set()
     {
-        if (isset($GLOBALS['dosubmit'])) {
+        if (isset($GLOBALS['submit'])) {
             set_cache(M, $GLOBALS['setting']);
             MSG(L('operation_success'), HTTP_REFERER, 3000);
         }

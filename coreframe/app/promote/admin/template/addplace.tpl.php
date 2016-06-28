@@ -14,7 +14,7 @@ include $this->template('header','core');
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">广告名称</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="text" class="form-control" name="form[name]" datatype="s2-60" errormsg="名称至少2个字符,最多60个字符！"></div>
+                                <input type="text" class="form-control" name="form[name]" datatype="*2-60" errormsg="名称至少2个字符,最多60个字符！"></div>
                         </div>
 
                         <div class="form-group">

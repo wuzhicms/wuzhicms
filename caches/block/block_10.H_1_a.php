@@ -1,14 +1,13 @@
 <?php
  return array (
-  'type' => '1',
+  'blockid' => '10',
+  'tplid' => 't2',
   'modelid' => '0',
+  'siteid' => '1',
+  'type' => '1',
   'codetype' => '1',
   'name' => '推荐礼品',
   'max_number' => '500',
-  'createhtml' => '0',
-  'updatetime' => '1435747704',
-  'timing' => '1435751304',
-  'status' => '9',
   'code' => '{wz:content action="block" pagesize="5" type="1" blockid="10"}
 <ul>
 {loop $rs $r}
@@ -21,4 +20,12 @@
 </ul>
 {/wz}
 ',
+  'url' => '',
+  'updatetime' => '1435747704',
+  'status' => '9',
+  'timing' => '1435751304',
+  'createhtml' => '0',
+  'remark' => '',
+  'isopenid' => '0',
+  'lang' => '',
 )?>

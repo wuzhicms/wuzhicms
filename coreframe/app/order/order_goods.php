@@ -160,8 +160,8 @@ class order_goods extends WUZHI_foreground{
             $module = isset($GLOBALS['module']) ? $GLOBALS['module'] : 'content';
             $memberinfo = $this->memberinfo;
             $order_api = load_class('order_api',$module);
-
-            $ids = implode(',',$GLOBALS['cartids']);
+            $ids = array_map('intval',$GLOBALS['cartids']);
+            $ids = implode(',',$ids);
             //查询购物车中的商品
             $where = "`uid`=".$this->uid." AND `cartid` IN ($ids)";
             $result_rs = $this->db->get_list('order_cart', $where, '*', 0, 20, 0, 'updatetime DESC');
@@ -236,8 +236,8 @@ class order_goods extends WUZHI_foreground{
         $module = isset($GLOBALS['module']) ? $GLOBALS['module'] : 'content';
 
         $order_api = load_class('order_api',$module);
-
-        $ids = implode(',',$GLOBALS['cartids']);
+        $ids = array_map('intval',$GLOBALS['cartids']);
+        $ids = implode(',',$ids);
 
         //查询购物车中的商品
         $where = "`uid`=".$this->uid." AND `cartid` IN ($ids)";
@@ -323,8 +323,8 @@ class order_goods extends WUZHI_foreground{
         $memberinfo = $this->memberinfo;
         $uid = $this->memberinfo['uid'];
         $order_api = load_class('order_api',$module);
-
-        $ids = implode(',',$GLOBALS['cartids']);
+        $ids = array_map('intval',$GLOBALS['cartids']);
+        $ids = implode(',',$ids);
 
         //查询购物车中的商品
         $where = "`uid`=".$this->uid." AND `cartid` IN ($ids)";

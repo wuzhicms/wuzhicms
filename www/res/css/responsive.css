@@ -37,24 +37,45 @@
     .top-menu{padding-left: 0px;}
     #sidebar .appicon img{width: 60px;}
     .topnav ul li a{padding: 8px 10px 5px 10px;}
-    .userinfo a{padding: 10px 10px !important}
-    .top-nav ul li a{padding: 21px 10px;}
+    .userinfo a{padding: 5px 10px !important}
+    .top-nav ul li a{padding: 15px 10px;}
     .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
     .table>thead>tr>th.tableth15{padding: 15px;}
-    #sidebar{width: 175px;}
-    ul.sidebar-menu li a{padding: 12px 0 12px 47px;}
+    #sidebar{width: 130px;}
+    ul.sidebar-menu li a{padding: 9px 0 9px 20px;}
     .wrapper{padding: 15px;}
-    .header,.footer{padding:0 15px;}
+    .footer{padding:0 15px;}
     .main-nav{padding: 10px 15px;}
-    #main-content{margin-left: 175px;}
+    #main-content{margin-left: 130px;}
     .topmenunav{margin-left: 20px;}
     .state-overview .symbol{padding: 25px 31px;}
     #menu{display:block;}
+    ul.sidebar-menu li {margin-left: 2px;}
+    #sidebar .appicon {
+        margin-bottom: 10px;
+        padding-top: 5px;
+    }
+    #sidebar .appicon img {
+        width: 50px;
+    }
+    .topmenunav ul li a {
+        padding: 15px 25px 15px 25px;
+    }
+    .header{
+        min-height: 47px;
+        padding: 0 20px;
+    }
+    .logo img {
+        padding: 8px 0 8px 0;
+    }
+    .userinfo .userimg {
+        width: 37px;
+    }
 }
 
 @media (min-width: 1024px) and (max-width: 1200px) {
     .topmenunav ul li a{padding: 23px 15px 20px 15px;}
-    .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
+    .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 10px;}
     .topnav ul li a{padding: 8px 10px 5px 10px;}
     .top-menu{padding-left: 0px;}
     #sidebar{width: 175px;}

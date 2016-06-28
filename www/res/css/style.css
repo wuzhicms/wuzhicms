@@ -95,7 +95,7 @@ a,a:hover,a:focus{text-decoration:none;outline:none;-webkit-transition:all 0.3s;
 #menu-nav-mobile li{list-style:none;border-top:1px solid #a5a5a5;width:100%;}
 #menu-nav-mobile li:hover{background-color: rgba(255, 255, 255, 0.19);}
 #navigation-mobile li:first-child{border-top:none}
-#navigation-mobile li a{color:#FFFFFF;display:block;font-size:26px;padding:20px 0 24px 0;text-align:center;}
+#navigation-mobile li a{color:#FFFFFF;display:block;font-size:26px;padding:20px 0 24px 0;text-align:center;background-color: transparent;}
 #navigation-mobile li a:hover{color:#fff}
 #navigation-mobile li a.active{box-shadow: none !important;-webkit-box-shadow:none !important;}
 #navigation-mobile li a:focus{}
@@ -235,7 +235,7 @@ ul.sidebar-menu li a.active span{color:#3B4658;font-weight: bold;}
 .tagsinput .tag:hover{background-color:#308CCA;color:#ffffff;padding-left:12px;padding-right:20px;}
 .tagsinput .tag:hover .tagsinput-remove-link{color:#ffffff;opacity:1;display:block\9;}
 .tagsinput .tag span,.tagsinput-remove-link:before{vertical-align: middle;}
-.tagsinput input{background:transparent;border:none;color:#3B4658;font-family:"Lato",sans-serif;font-size:12px;margin:0px;padding:0px;outline:0;margin-right:5px;margin-bottom:5px;width:100%;}
+.tagsinput input{background:transparent;border:none;color:#3B4658;font-size:12px;margin:0px;padding:0px;outline:0;margin-right:5px;margin-bottom:5px;width:100%;}
 .tagsinput-remove-link{bottom:0;color:#ffffff;cursor:pointer;font-size:12px;opacity:0;padding:7px 7px 5px 0;position:absolute;right:0;text-align:right;text-decoration:none;top:0;width:100%;z-index:2;display:none\9;}
 .tagsinput-remove-link:before{color:#ffffff;content:"\f00d";font-family:"pxgridsicons";}
 .tagsinput-add-container{vertical-align:middle;display:inline-block;zoom:1;*display:inline;}
@@ -257,15 +257,22 @@ ul.sidebar-menu li a.active span{color:#3B4658;font-weight: bold;}
 .radioscross label{float: left; width: auto;cursor: pointer;height: 25px;padding-right: 10px;}
 
 /*-------------------------------------8.提示窗口-------------------------------------*/
-.prompt h4{color: #3B4658;}
-.prompt .promptmain{width: 500px;-webkit-box-shadow: 0px 0px 25px #E4E3E3;-moz-box-shadow: 0px 0px 25px #E4E3E3;box-shadow: 0px 0px 25px #E4E3E3;position: relative;margin: 13% auto 0 auto;}
-.prompt .prompthead{margin: 0;padding: 17px 15px;background: #3B4658;border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;}
-.prompt .promptfooter{margin: 0;padding: 6px 15px;background: #3B4658;border-radius:0 0 5px 5px;-webkit-border-radius: 0 0 5px 5px;}
+.prompt h4{color: #7e7e7e; line-height: 1.4}
+.prompt .promptmain{width: 50%;-webkit-box-shadow: 0px 0px 25px #d2d1d1;-moz-box-shadow: 0px 0px 25px #d2d1d1;box-shadow: 0px 0px 25px #d2d1d1;position: relative;margin: 13% auto 0 auto;}
+.prompt .prompthead{margin: 0;padding: 17px 15px;background: #2E6A8C;border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;}
+.prompt .promptfooter{margin: 0;padding: 6px 15px;background: #F9F9F9;border-radius:0 0 5px 5px;-webkit-border-radius: 0 0 5px 5px;}
 .prompt .promptfooter a{color: #B5B8BE;}
 .prompt .prompcontainer{background-color: #FCFCFC;padding: 40px 20px;}
 .prompt .prompcontainer button{margin:-67px -15px 0 0;}
 .prompt a{line-height: 28px;}
 .prompt i{font-size: 18px;padding: 0 10px;}
+
+@media (max-width: 991px){
+    .prompt .promptmain{width: 60%;}
+}
+@media (max-width: 767px){
+    .prompt .promptmain{width: 85%;}
+}
 
 /*-------------------------------------9.JQ UI-------------------------------------*/
 .slider-info{margin-bottom: 6px;}
@@ -328,7 +335,9 @@ ul.sidebar-menu li a.active span{color:#3B4658;font-weight: bold;}
 /*-------------------------------------12.一些细节-------------------------------------*/
 /*---- 附件管理------*/
 .attaclist ul{padding: 0;}
-.attaclist ul li{border-bottom: 1px dotted #EAEAEA;}
+.attaclist ul li{padding-top: 10px;
+    background: #F2F2F2;
+    margin: 10px 0px;}
 .attachment_thumb{border: 1px solid #DDD;padding: 5px;border-radius:4px;}
 .attaclist img{min-width: 80px;width: 80px;height: auto;border: 1px solid #DDD;padding: 2px;border-radius:2px;margin: 10px 0;vertical-align: middle;}
 .attaclist textarea{vertical-align: middle;width: 500px;border: solid 1px #E2E2E4;height: 32px;padding: 6px;}
@@ -358,3 +367,5 @@ ul.sidebar-menu li a.active span{color:#3B4658;font-weight: bold;}
 
 .addpos a{color:#797979;}
 .addpos a:hover{color:rgb(203, 13, 13);}
+.pd10{padding: 10px;}
+.remove_file{display: block;position: absolute;right: 10px;}

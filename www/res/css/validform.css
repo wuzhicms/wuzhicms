@@ -1,6 +1,5 @@
 /*==========以下部分是Validform必须的===========*/
 .Validform_checktip{
-    margin-left:10px;
     line-height:20px;
     height:17px;
     overflow:hidden;
@@ -8,6 +7,7 @@
     font-size:12px;
     position: absolute;
     margin-top: 8px;
+    margin-left: 8px;
 }
 .Validform_right{
     color:#0AA00E;
@@ -17,19 +17,19 @@
     background-image:-webkit-image-set(url('../images/right.png') 1x,url('../images/right@2x.png') 2x);
 }
 .Validform_wrong{
-    color:#E74B4B;
+    color:#777;
     padding-left:20px;
     white-space:nowrap;
     background:url(../images/error.png) no-repeat left center;
     background-image:-webkit-image-set(url('../images/error.png') 1x,url('../images/error@2x.png') 2x);
-    position: absolute;
-    margin-top: 9px;
-    margin-left: 10px;
-    display: inline-block;
+    margin-left: 8px;
+    font-size: 12px;
 }
 .Validform_loading{
-    padding-left:20px;
+    padding-left:0px;
     background:url(../images/onLoad.gif) no-repeat left center;
+    white-space: nowrap;
+    padding-left: 20px;
 }
 .Validform_error{
     background-color:#ffe7e7;
@@ -40,3 +40,17 @@
 #Validform_msg a.Validform_close:link,#Validform_msg a.Validform_close:visited{line-height:22px; position:absolute; right:8px; top:0px; color:#fff; text-decoration:none;}
 #Validform_msg a.Validform_close:hover{color:#cc0;}
 #Validform_msg .Validform_info{padding:8px;border:1px solid #000; border-top:none; text-align:left;}
+
+
+
+
+
+/*-----------------------*/
+/* 针对手机版 + 样式 */
+/*------------------*/
+@media (max-width: 768px) {
+    .Validform_checktip{
+        position: relative;
+        padding-top: 2px;
+    }
+}

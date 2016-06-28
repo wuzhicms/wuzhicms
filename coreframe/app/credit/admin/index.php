@@ -63,6 +63,10 @@ class index extends WUZHI_admin {
             $plus_minus = intval($GLOBALS['plus_minus']);
             $username = get_cookie('username');
             $point = intval($GLOBALS['point']);
+            if($point<0)  {
+                MSG('积分错误!');
+                exit;
+            }
             if($plus_minus==1) {
                 $plus_minus_type = '增加';
                 $plus_minus = '+';

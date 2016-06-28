@@ -1,13 +1,13 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","head",TPLID); ?>
 <link type="text/css" rel="stylesheet" href="<?php echo R;?>h1jk/css/tijiancenter_style.css">
 
-<script src="http://www.h1jk.cn/res/js/wuzhicms.js"></script>
-<link rel="stylesheet" href="http://www.h1jk.cn/res/js/dialog/ui-dialog.css" />
-<script src="http://www.h1jk.cn/res/js/dialog/dialog-plus.js"></script>
-<link href="http://www.h1jk.cn/res/js/jquery-ui/jquery-ui.css" rel="stylesheet">
-<link href="http://www.h1jk.cn/res/css/validform.css" rel="stylesheet" />
-<script src="http://www.h1jk.cn/res/js/validform.min.js"></script>
-<script src="http://www.h1jk.cn/res/js/raty/jquery.raty.js"></script>
+<script src="<?php echo R;?>js/base.js"></script>
+<link rel="stylesheet" href="<?php echo R;?>js/dialog/ui-dialog.css" />
+<script src="<?php echo R;?>js/dialog/dialog-plus.js"></script>
+<link href="<?php echo R;?>js/jquery-ui/jquery-ui.css" rel="stylesheet">
+<link href="<?php echo R;?>css/validform.css" rel="stylesheet" />
+<script src="<?php echo R;?>js/validform.min.js"></script>
+<script src="<?php echo R;?>js/raty/jquery.raty.js"></script>
 <link type="text/css" rel="stylesheet" href="<?php echo R;?>raty/jquery.raty.css">
 
 <!-- ---------------------------------- -->
@@ -58,7 +58,7 @@
          <td style="vertical-align:text-top"><div align="right">上传图片：</div></td>
          <td colspan="2">
           <div class="col-sm-12 input-group">
-           <div class="attaclist"><script src="http://www.h1jk.cn/res/js/dialog/dialog-plus.js"></script><script type="text/javascript" src="http://www.h1jk.cn/res/js/json2.js"></script><script type="text/javascript" src="http://www.h1jk.cn/res/js/html5upload/plupload.full.min.js"></script><script type="text/javascript" src="http://www.h1jk.cn/res/js/html5upload/extension.js"></script><div id="huanjing"><ul id="huanjing_ul" class="ui-sortable"></ul></div><div class="inline-ups"><button type="button" onclick="openiframe('/index.php?m=attachment&f=index&v=upload_dialog&callback=callback_dianping&htmlid=huanjing&limit=20&htmlname=form%5Bdata%5D&amp;','huanjing','loading...',810,400,20)">上传图片</button></div></div>                                <span class="tablewarnings"></span>
+           <div class="attaclist"><script src="<?php echo R;?>js/dialog/dialog-plus.js"></script><script type="text/javascript" src="<?php echo R;?>js/json2.js"></script><script type="text/javascript" src="<?php echo R;?>js/html5upload/plupload.full.min.js"></script><script type="text/javascript" src="<?php echo R;?>js/html5upload/extension.js"></script><div id="huanjing"><ul id="huanjing_ul" class="ui-sortable"></ul></div><div class="inline-ups"><button type="button" onclick="openiframe('/index.php?m=attachment&f=index&v=upload_dialog&callback=callback_dianping&htmlid=huanjing&limit=20&htmlname=form%5Bdata%5D&amp;','huanjing','loading...',810,400,20)">上传图片</button></div></div>                                <span class="tablewarnings"></span>
           </div>
           <p class="help-block color_999 font_size12">单张图片不超过10MB，尺寸不小于300*300px，支持jpg、png和bmp。</p>
          </td>
@@ -121,24 +121,24 @@ if (method_exists($dianping_template_parse, 'listing')) {
  }
  $('#star1').raty({
   score: 5,
-  starOff  : 'http://www.h1jk.cn/res/h1jk/image/xingxing.gif',
-  starOn   : 'http://www.h1jk.cn/res/h1jk/image/xingxingh.gif',
+  starOff  : '<?php echo R;?>h1jk/image/xingxing.gif',
+  starOn   : '<?php echo R;?>h1jk/image/xingxingh.gif',
   click: function(score, evt) {
    $("#field1").val(score);
   }
  });
  $('#star2').raty({
   score: 5,
-  starOff  : 'http://www.h1jk.cn/res/h1jk/image/xingxing.gif',
-  starOn   : 'http://www.h1jk.cn/res/h1jk/image/xingxingh.gif',
+  starOff  : '<?php echo R;?>h1jk/image/xingxing.gif',
+  starOn   : '<?php echo R;?>h1jk/image/xingxingh.gif',
   click: function(score, evt) {
    $("#field2").val(score);
   }
  });
  $('#star3').raty({
   score: 5,
-  starOff  : 'http://www.h1jk.cn/res/h1jk/image/xingxing.gif',
-  starOn   : 'http://www.h1jk.cn/res/h1jk/image/xingxingh.gif',
+  starOff  : '<?php echo R;?>h1jk/image/xingxing.gif',
+  starOn   : '<?php echo R;?>h1jk/image/xingxingh.gif',
   click: function(score, evt) {
    $("#field3").val(score);
   }

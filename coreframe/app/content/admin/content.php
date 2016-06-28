@@ -29,27 +29,51 @@ class content extends WUZHI_admin {
         7=>'退稿',
         6=>'草稿',
     );
+    private $siteid;
+    private $siteurl;
+    private $sitelist;
     function __construct() {
         $this->db = load_class('db');
         $this->private_check();
+        $this->siteid = get_cookie('siteid');
+        if(!$this->siteid) {
+            $this->siteid = 1;
+            set_cookie('siteid',1);
+        }
+        $this->sitelist = get_cache('sitelist');
+        $this->siteurl = isset($this->sitelist[$this->siteid]['url']) ? $this->sitelist[$this->siteid]['url'] : '';
     }
     public function manage() {
         $modelid = isset($GLOBALS['modelid']) ? intval($GLOBALS['modelid']) : 0;
         include $this->template('content_manage');
     }
     public function left() {
-        $siteid = get_cookie('siteid');
-        $where = array('keyid'=>'content','siteid'=>$siteid);
+        $siteid = $this->siteid;
+        $where = "`keyid`='content' AND `siteid`='$siteid' AND `type`<2";
 
         if(isset($GLOBALS['modelid']) && $GLOBALS['modelid']!=0) {
             $where['modelid'] = intval($GLOBALS['modelid']);
-        } else {
-            $result = $this->db->get_list('category', $where, '*', 0, 2000, 0, 'sort ASC', '', 'cid');
         }
+        $role = trim($_SESSION['role'],',');
+        $where2 = "`role` IN ($role) AND `actionid`=1";
+        $private_result = $this->db->get_list('category_private', $where2, '*', 0, 2000, 0, '', '', 'cid');
+        if($private_result) $private_result = array_keys($private_result);
+        $result_tmp = $this->db->get_list('category', $where, '*', 0, 2000, 0, 'sort ASC', '', 'cid');
 
-        if(empty($result)) {
+        if(empty($result_tmp)) {
             $category_tree = '';
         } else {
+            $result = array();
+            if(strpos($_SESSION['role'],',1,')!==false) {
+                $result = $result_tmp;
+            } elseif($private_result) {
+                foreach($result_tmp as $cid=>$rs) {
+                    if(in_array($cid,$private_result)) {
+                        $result[$cid] = $rs;
+                    }
+                }
+            }
+
             $tree = load_class('tree','core',$result);
             $category_tree = $tree->get_treeview(0,'tree', "<li><a href='javascript:w(\$cid);' onclick='o_p(\$cid,this)' class='i-t'>\$name</a></li>","<li><a href='javascript:w(\$cid);' onclick='o_p(\$cid,this)' class='i-t'>\$name</a>");
         }
@@ -58,6 +82,9 @@ class content extends WUZHI_admin {
     public function listing() {
         //默认显示共享模型数据，即modelid为0.
         //默认status为9 通过审核
+        $siteid = get_cookie('siteid');
+        
+
         $type = intval($GLOBALS['type']);
         $title = isset($GLOBALS['title']) ? sql_replace($GLOBALS['title']) : '';
         $status = isset($GLOBALS['status']) ? intval($GLOBALS['status']) : 9;
@@ -66,13 +93,12 @@ class content extends WUZHI_admin {
             $cate_config = get_cache('category_'.$cid,'content');
             if(!$cate_config) MSG(L('category not exists'));
             $modelid = $cate_config['modelid'];
+            if($cate_config['siteid'] !=$this->siteid) MSG('请重新选择栏目');
             $model_r = $this->db->get_one('model',array('modelid'=>$modelid));
-            $master_table = $model_r['master_table'];
-            if($modelid==2) {
-                $where = "`cid`='$cid' AND `status`='$status' AND `type`='$type'";
-            } else {
-                $where = "`cid`='$cid' AND `status`='$status'";
-            }
+            $_master_table = $master_table = $model_r['master_table'];
+
+            $where = "`cid`='$cid' AND `status`='$status'";
+
             if($title) $where .= " AND `title` LIKE '%$title%'";
             //单网页
             if($cate_config['type']==1) {
@@ -85,15 +111,17 @@ class content extends WUZHI_admin {
             }
         } else {
             $modelid = 0;
-			$siteid= get_cookie('siteid');
-            $master_table = 'content_share';
+            $_master_table = $master_table = 'content_share';
+            
             $where = "`status`='$status'";
             $categorys = get_cache('category','content');
             if($title) $where .= " AND `title` LIKE '%$title%'";
 			$cids = array();
-			foreach($categorys as $_cid=>$_res) {
-				if($_res['siteid']==$siteid) $cids[] = $_cid;
-			}
+            if(is_array($categorys)){
+                foreach($categorys as $_cid=>$_res) {
+                    if($_res['siteid']==$siteid) $cids[] = $_cid;
+                }
+            }
 			if(!empty($cids)) {
 				$cids = implode(',',$cids);
 				$where .= " AND `cid` IN($cids)";
@@ -103,11 +131,16 @@ class content extends WUZHI_admin {
         $page = intval($GLOBALS['page']);
         $page = max($page,1);
         $models = get_cache('model_content','model');
-        $result = $this->db->get_list($master_table,$where, '*', 0, 20,$page,'sort DESC');
+        $result = $this->db->get_list($master_table,$where, '*', 0, 20,$page,'addtime DESC');
         //$result = array();
         $pages = $this->db->pages;
-
-        include $this->template('content_listing');
+        if($modelid) {
+            $manage_template = $models[$modelid]['manage_template'];
+            if(!$manage_template) $manage_template = 'content_listing';
+            include $this->template($manage_template);
+        } else {
+            include $this->template('content_listing');
+        }
     }
 
     /**
@@ -132,7 +165,9 @@ class content extends WUZHI_admin {
 		$where .= " AND `cid` IN($cids)";
 
         $result = array();
-        $result[0] = $this->db->get_list('content_share',$where, '*', 0, 20,0,'id DESC');
+        $content_share_table='content_share';
+        
+        $result[0] = $this->db->get_list($content_share_table,$where, '*', 0, 20,0,'id DESC');
         foreach($models as $key=>$model) {
             $master_table = $model['master_table'];
             if($master_table=='content_share') continue;
@@ -142,6 +177,7 @@ class content extends WUZHI_admin {
         include $this->template('content_allcheck');
     }
     public function add() {
+        $_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
         $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : 0;
         $cate_config = get_cache('category_'.$cid,'content');
         if(!$cate_config) MSG(L('category not exists'));
@@ -151,7 +187,15 @@ class content extends WUZHI_admin {
         } else {
             $modelid = $cate_config['modelid'];
         }
-
+        if($cate_config['type']==1) {//单网页,查下是否已经存在该内容
+            $models = get_cache('model_content','model');
+            $master_table = $models[$modelid]['master_table'];
+            
+            $data = $this->db->get_one($master_table, array('cid' => $cid),'id');
+            if($data) {
+                header("Location: ?m=content&f=content&v=edit&cid=".$cid.'&_lang='.$_lang.'&id='.$data['id'].$this->su());
+            }
+        }
         if(isset($GLOBALS['submit']) || isset($GLOBALS['submit2'])) {
             $formdata = $GLOBALS['form'];
 			//插入时间，更新时间，如果用户设置了时间。则按照用户设置的时间
@@ -185,7 +229,7 @@ class content extends WUZHI_admin {
             }
 
             $id = $this->db->insert($formdata['master_table'],$formdata['master_data']);
-            if($cate_config['type']) {
+            if($cate_config['type']==1) {
                 $urls['url'] = $cate_config['url'];
             } elseif($formdata['master_data']['route']>1) {//外部链接
                 $urls['url'] = remove_xss($GLOBALS['url']);
@@ -247,6 +291,14 @@ class content extends WUZHI_admin {
                     if($GLOBALS['result_lists']==0) {
                         break;
                     }
+                }
+                //生成上级栏目
+                if($cate_config['pid']) {
+                    $cate_config2 = get_cache('category_'.$cate_config['pid'],'content');
+                    $urlclass->set_category($cate_config2);
+                    $cateurls = $urlclass->listurl(array('cid'=>$cate_config['pid'],'page'=>1));
+                    $this->html->set_category($cate_config2);
+                    $this->html->listing($cateurls['root'],1);
                 }
             }
             //生成首页
@@ -335,7 +387,7 @@ class content extends WUZHI_admin {
             $title_css = preg_match('/([a-z0-9]+)/i',$GLOBALS['title_css']) ? $GLOBALS['title_css'] : '';
             $formdata['master_data']['css'] = $title_css;
 
-            if($cate_config['type']) {
+            if($cate_config['type']==1) {
                 $urls['url'] = $cate_config['url'];
             } elseif($formdata['master_data']['route']>1) {//外部链接/或者自定义链接
                 $urls['url'] = remove_xss($GLOBALS['url']);
@@ -353,8 +405,18 @@ class content extends WUZHI_admin {
             }
 
             $this->db->update($formdata['master_table'],$formdata['master_data'],array('id'=>$id));
-            if(!empty($formdata['attr_table'])) {
-                $this->db->update($formdata['attr_table'],$formdata['attr_data'],array('id'=>$id));
+            if(!empty($formdata['attr_table']) && $formdata['attr_data']) {
+                $_attr_table = $attr_table = $formdata['attr_table'];
+            
+                //查询从表是否存在数据,不存在则修复数据.
+                $attr_data = $this->db->get_one($attr_table, array('id' => $id),'id');
+                if($attr_data) {
+                    $this->db->update($attr_table,$formdata['attr_data'],array('id'=>$id));
+                } else {
+                    $formdata['attr_data']['id'] = $id;
+                    $this->db->insert($attr_table,$formdata['attr_data']);
+                }
+
             }
 
             //执行更新
@@ -363,6 +425,26 @@ class content extends WUZHI_admin {
 
             $formdata['master_data']['id'] = $id;
             $form_update->execute($formdata);
+            //同步修改
+
+            if($GLOBALS['tb_update']) {
+                foreach($GLOBALS['tb_update'] as $tb_id=>$tb_cid) {
+                    $formdata['master_data']['id'] = $tb_id;
+                    $formdata['master_data']['cid'] = $tb_cid;
+                    if(strpos('://',$formdata['master_data']['url'])===false) {
+                        unset($formdata['master_data']['url']);
+                    }
+
+                    //同步更新如果是外链地址,才更新url,默认保持不更新url
+                    $this->db->update($master_table,$formdata['master_data'],array('id'=>$tb_id));
+                    if(!empty($formdata['attr_table'])) {
+                        $this->db->update($attr_table,$formdata['attr_data'],array('id'=>$tb_id));
+                    }
+                }
+            }
+
+            //end同步修改
+
             //生成静态
             if($cate_config['showhtml'] && $formdata['master_data']['status']==9) {
                 $data = $this->db->get_one($formdata['master_table'],array('id'=>$id));
@@ -380,8 +462,18 @@ class content extends WUZHI_admin {
                 $this->html->load_formatcache();
                 $this->html->show($data,1,1,$urls['root']);
                 $loadhtml = true;
+                if($GLOBALS['old_status']!=9) {
+                    $message_api = load_class('message_api', 'message');
+                    $message_api->send_sys($data['publisher'], '信息通过审核', $data['title'] . ' <a href="' . $data['url'] . '" target="_blank">点击查看</a>');
+                }
             } else {
                 $loadhtml = false;
+                //发送通知短息
+                if($GLOBALS['old_status']!=9) {
+                    $data = $this->db->get_one($formdata['master_table'],array('id'=>$id));
+                    $message_api = load_class('message_api','message');
+                    $message_api->send_sys($data['publisher'],'信息通过审核' ,$data['title'].' <a href="'.$data['url'].'" target="_blank">点击查看</a>');
+                }
             }
             //生成相关栏目列表
             if($cate_config['listhtml']) {
@@ -397,6 +489,14 @@ class content extends WUZHI_admin {
                     if($GLOBALS['result_lists']==0) {
                         break;
                     }
+                }
+                //生成上级栏目
+                if($cate_config['pid']) {
+                    $cate_config2 = get_cache('category_'.$cate_config['pid'],'content');
+                    $urlclass->set_category($cate_config2);
+                    $cateurls = $urlclass->listurl(array('cid'=>$cate_config['pid'],'page'=>1));
+                    $this->html->set_category($cate_config2);
+                    $this->html->listing($cateurls['root'],1);
                 }
             }
             //生成首页
@@ -424,7 +524,7 @@ class content extends WUZHI_admin {
                     $attr_table = $models[$modelid]['attr_table'];
                 }
                 $attrdata = $this->db->get_one($attr_table,array('id'=>$id));
-                $data = array_merge($data,$attrdata);
+                if($attrdata) $data = array_merge($data,$attrdata);
             }
 
             load_function('template');
@@ -433,13 +533,37 @@ class content extends WUZHI_admin {
             require get_cache_path('content_form','model');
             $form_build = new form_build($modelid);
             $form_build->cid = $cid;
-            $category = get_cache('category','content');
+            $categorys = get_cache('category','content');
             $form_build->extdata['catname'] = $cate_config['name'];
             $form_build->extdata['type'] = $cate_config['type'];
             $formdata = $form_build->execute($data);
             load_class('form');
             $show_formjs = 1;
             $show_dialog = 1;
+            //同步更新显示
+            $tb_arr = '';
+            $tb_rs = $this->db->get_one('content_ids', array('new_cid' => $cid,'new_id'=>$id));
+
+            if($tb_rs) {
+                //[ciid] => 1 [siteid] => 1 [id] => 4481 [cid] => 62 [new_id] => 4670 [new_siteid] => 2 [new_cid] => 469
+                $tb_arr[] = array('ciid'=>$tb_rs['ciid'],'siteid'=>$tb_rs['new_siteid'],'id'=>$tb_rs['new_id'],'cid'=>$tb_rs['new_cid'],'new_siteid'=>$tb_rs['siteid'],'new_id'=>$tb_rs['id'],'new_cid'=>$tb_rs['cid']);
+                $tb_result = $this->db->get_list('content_ids', array('cid' => $tb_rs['cid'],'id'=>$tb_rs['id']), '*', 0, 10, 0, 'siteid ASC');
+                foreach($tb_result as $tb_r) {
+                    if($tb_rs['ciid']==$tb_r['ciid']) continue;
+                    $tb_arr[] = $tb_r;
+                }
+                foreach($tb_arr as $key=>$tmp) {
+                    $tb_arr[$key]['names'] = $this->sitelist[$tmp['new_siteid']]['name'].' > ';
+                }
+            } else {
+                $tb_result = $this->db->get_list('content_ids', array('cid' => $cid,'id'=>$id), '*', 0, 10, 0, 'siteid ASC');
+                if(!empty($tb_result)) {
+                    foreach($tb_result as $tb_r) {
+                        $tb_r['names'] = $this->sitelist[$tb_r['new_siteid']]['name'].' > ';
+                        $tb_arr[] = $tb_r;
+                    }
+                }
+            }
 
             include $this->template('content_edit');
         }
@@ -450,30 +574,47 @@ class content extends WUZHI_admin {
      */
     public function view() {
         load_function('content','content');
-        $siteconfigs = get_cache('siteconfigs');
+        $siteconfigs = $this->siteconfigs;
         $id = isset($GLOBALS['id']) ? intval($GLOBALS['id']) : MSG(L('parameter_error'));
         $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : MSG(L('parameter_error'));
+        if($cid==0) MSG(L('parameter_error'));
         $categorys = get_cache('category','content');
         //查询数据
         $category = get_cache('category_'.$cid,'content');
-        if(empty($category)) MSG('栏目不存在');
         $models = get_cache('model_content','model');
+        if(!$category) MSG(L('parameter_error'));
         $model_r = $models[$category['modelid']];
-		$siteid = $category['siteid'];
+        if(!$model_r) MSG(L('parameter_error'));
         $master_table = $model_r['master_table'];
+
         $data = $this->db->get_one($master_table,array('id'=>$id));
+        if(!$data) MSG('信息不存在!');
+        //城市分站信息
+        $city = get_cookie('city');
+        $city = isset($GLOBALS['city']) && !empty($GLOBALS['city']) ? $GLOBALS['city'] : $city ? $city : 'xa';
+        $city_config = get_config('city_config');
+        $cityid = $city_config[$city]['cityid'];
+        $cityname = $city_config[$city]['cityname'];
+
         if($model_r['attr_table']) {
             $attr_table = $model_r['attr_table'];
             if($data['modelid']) {
                 $modelid = $data['modelid'];
                 $attr_table = $models[$modelid]['attr_table'];
+            } else {
+                $modelid = $model_r['modelid'];
             }
             $attrdata = $this->db->get_one($attr_table,array('id'=>$id));
             $data = array_merge($data,$attrdata);
         } else {
             $modelid = $model_r['modelid'];
         }
-		$model_r = $models[$modelid];
+        $data_r = $data;
+        $urlrule = $category['showurl'];
+        if($category['showhtml']) {
+            $urlrules = explode('|',$urlrule);
+            $urlrule = WWW_PATH.$urlrules[0].'|'.WWW_PATH.$urlrules[1];
+        }
         require get_cache_path('content_format','model');
         $form_format = new form_format($modelid);
         $data = $form_format->execute($data);
@@ -481,34 +622,56 @@ class content extends WUZHI_admin {
         foreach($data as $_key=>$_value) {
             $$_key = $_value['data'];
         }
-		if($template) {
-			$_template = $template;
-		} elseif($model_r['template']) {
-			$template_set = unserialize($model_r['template_set']);
-			$_template = $template_set[$siteid];
-		} else {
-			$_template = TPLID.':show';
-		}
-
+        if($template) {
+            $_template = $template;
+        } elseif($category['show_template']) {
+            $_template = $category['show_template'];
+        } elseif($model_r['template']) {
+            $_template = TPLID.':'.$model_r['template'];
+        } else {
+            $_template = TPLID.':show';
+        }
         $styles = explode(':',$_template);
-        $project_css = isset($styles[0]) ? $styles[0] : '1';
+        $project_css = isset($styles[0]) ? $styles[0] : 'default';
         $_template = isset($styles[1]) ? $styles[1] : 'show';
+        $original_addtime = $data_r['addtime'];
+
         $elasticid = elasticid($cid);
         $seo_title = $title.'_'.$category['name'].'_'.$siteconfigs['sitename'];
         $seo_keywords = !empty($keywords) ? implode(',',$keywords) : '';
         $seo_description = $remark;
         //上一页
-        $previous_page = $this->db->get_one($master_table,"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
+        $previous_page = $this->db->get_one($master_table,"`cid`= '$cid' AND `id`>'$id' AND `status`=9",'*',0,'id ASC');
         //下一页
-        $next_page = $this->db->get_one($master_table,"`cid`= '$cid' AND `id`>'$id' AND `status`=9",'*',0,'id ASC');
-
-        include T('content',$_template,$project_css);
+        $next_page = $this->db->get_one($master_table,"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
+        //手动分页
+        $CONTENT_POS = strpos($content, '_wuzhicms_page_tag_');
+        if(!empty($content) && $CONTENT_POS !== false) {
+            $page = max($GLOBALS['page'],1);
+            $contents = array_filter(explode('_wuzhicms_page_tag_', $content));
+            $pagetotal = count($contents);
+            $content = $contents[$page-1];
+            $tmp_year = date('Y',$original_addtime);
+            $tmp_month = date('m',$original_addtime);
+            $tmp_day = date('d',$original_addtime);
+            $content_pages = pages($pagetotal,$page,1,$category['showurl'],array('year'=>$tmp_year,'month'=>$tmp_month,'day'=>$tmp_day,'catdir'=>$category['catdir'],'cid'=>$cid,'id'=>$id));
+        } else {
+            $content_pages = '';
+        }
+        if($model_r['view_template']) {
+            $check_tpl = $this->template($model_r['view_template']);
+            $fields = $form_format->fields;
+            include $check_tpl;
+        } else {
+            include T('content',$_template,$project_css);
+        }
         include $this->template('check_foot');
     }
     /**
      * 内容删除到回收站
      */
     public function recycle_delete() {
+        $_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
         $id = intval($GLOBALS['id']);
         $cid = intval($GLOBALS['cid']);
         if(!$cid) MSG(L('parameter_error'));
@@ -521,8 +684,14 @@ class content extends WUZHI_admin {
         //删除相关文章内容
         $this->db->delete('content_relation',array('origin_id'=>$id,'origin_cid'=>$cid));
         //更新推荐位信息
-        $keyid = $id.'-'.$cid;
+
+        $keyid = $id.'-'.$cid.'-'.$_lang;
         $this->db->update('block_data', array('status'=>0), array('keyid' => $keyid));
+        //删除统计
+        //$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+        //删除推送关联
+        $this->db->delete('content_ids',array('new_id'=>$id,'new_cid'=>$cid));
+
         //删除已生成的文件
         if($cate_config['showhtml']) {
             $r = $this->db->get_one($master_table, array('id' => $id));
@@ -561,96 +730,65 @@ class content extends WUZHI_admin {
      * 内容删除
      */
     public function delete() {
-    	//获取提交的数据
+        $_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
         $id = intval($GLOBALS['id']);
         $cid = intval($GLOBALS['cid']);
-        
-        //数据校验
         if(!$cid) MSG(L('parameter_error'));
-        
-        //读取缓存数据
         $category_r = get_cache('category_'.$cid,'content');
         $models = get_cache('model_content','model');
-        
-        //获取对应栏目的模型数据
         $model_r = $models[$category_r['modelid']];
         $master_table = $model_r['master_table'];
+        $data = $this->db->delete($master_table,array('id'=>$id));
+        $attr_table = $model_r['attr_table'];
         
-        //删除共享模型内容
-        if ($master_table == 'content_share') {
-        	//查询内容
-        	$r = $this->db->get_one($master_table, array('id' => $id));
-        	
-        	if (isset($r['modelid'])) $model_r = $models[$r['modelid']];
+        if($model_r['attr_table']) {
+            $attrdata = $this->db->delete($attr_table,array('id'=>$id));
         }
-
-        //删除主表数据
-        $data = $this->db->delete($master_table, array('id' => $id));
-        
-        //删除附属表数据
-        if($model_r['attr_table']) $attrdata = $this->db->delete($model_r['attr_table'], array('id' => $id));
-        
-        //删除排名数据
-        $this->db->delete('content_rank', array('cid' => $cid, 'id' => $id));
-        
-        //删除 Block 数据
-        $keyid = $id.'-'.$cid;
+        //$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+        $keyid = $id.'-'.$cid.'-'.$_lang;
         $this->db->delete('block_data', array('keyid' => $keyid));
-        
-        //返回回收站
-        MSG(L('delete success'), HTTP_REFERER, 1000);
+        MSG(L('delete success'),HTTP_REFERER,1000);
     }
 
     /**
      * 内容批量删除
      */
     public function delete_more() {
-    	//获取提交的数据
-    	$cid = intval($GLOBALS['cid']);
-    	
-    	//数据校验
         if(empty($GLOBALS['ids'])) MSG('没有选择任何文章');
+        $_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
+        $cid = intval($GLOBALS['cid']);
         if(!$cid) MSG(L('parameter_error'));
-        
-        //读取缓存数据
         $category_r = get_cache('category_'.$cid,'content');
         $models = get_cache('model_content','model');
-        
-        //获取对应栏目的模型数据
         $model_r = $models[$category_r['modelid']];
         $master_table = $model_r['master_table'];
+        $status = intval($GLOBALS['status']);
+        $attr_table = $model_r['attr_table'];
         
-        //批量删除数据
         foreach($GLOBALS['ids'] as $id) {
-        	//共享模型
-        	if ($master_table == 'content_share') {
-        		//查询内容
-        		$r = $this->db->get_one($master_table, array('id' => $id));
-        		 
-        		if (isset($r['modelid'])) $model_r = $models[$r['modelid']];
-        	}
-        	
-        	//删除主表数据
-            $data = $this->db->delete($master_table, array('id' => $id));
-            
-            //删除附属表数据
-            if($model_r['attr_table']) $attrdata = $this->db->delete($model_r['attr_table'], array('id' => $id));
+            if($status==0) {
+                $data = $this->db->delete($master_table,array('id'=>$id));
+                if($model_r['attr_table']) {
 
-            //删除排名数据
-            $this->db->delete('content_rank', array('cid' => $cid, 'id' => $id));
-            
-            //删除 Block 数据
-            $keyid = $id.'-'.$cid;
-            $this->db->delete('block_data', array('keyid' => $keyid));
+                    $attrdata = $this->db->delete($attr_table,array('id'=>$id));
+                }
+                //$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+                $keyid = $id.'-'.$cid.'-'.$_lang;
+                $this->db->delete('block_data', array('keyid' => $keyid));
+            } else {
+                $data = $this->db->update($master_table,array('status'=>0),array('id'=>$id));
+                //$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+                $keyid = $id.'-'.$cid.'-'.$_lang;
+                $this->db->update('block_data', array('status'=>0), array('keyid' => $keyid));
+            }
         }
-        
-        //返回回收站
-        MSG(L('delete success'), HTTP_REFERER, 1000);
+        MSG(L('delete success'),HTTP_REFERER,1);
     }
     /**
      * 内容审核
      */
     public function check() {
+        $_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
         $id = intval($GLOBALS['id']);
         $cid = intval($GLOBALS['cid']);
         if(!$cid) MSG(L('parameter_error'));
@@ -659,6 +797,7 @@ class content extends WUZHI_admin {
         $models = get_cache('model_content','model');
         $model_r = $models[$category_r['modelid']];
         $master_table = $model_r['master_table'];
+        $r = $this->db->get_one($master_table,array('id'=>$id));
         if($GLOBALS['pass']==='0') {
             $status = 7;
         } elseif($workflowid) {
@@ -666,6 +805,7 @@ class content extends WUZHI_admin {
             $role = $_SESSION['role'];
             $workflows = $this->db->get_one('workflow', array('workflowid'=>$workflowid));
             $level = $workflows['level'];
+
             if($level==1) {
                 $level_user = p_unserialize($workflows['level1_user']);
                 if(!in_array($_SESSION['uid'],array_keys($level_user))) {
@@ -673,7 +813,6 @@ class content extends WUZHI_admin {
                 }
                 $status=9;
             } elseif($level>1) {
-                $r = $this->db->get_one($master_table,array('id'=>$id));
                 $level_user = p_unserialize($workflows['level'.$r['status'].'_user']);
                 if(!in_array($_SESSION['uid'],array_keys($level_user))) {
                     MSG(L('no content private'));
@@ -690,11 +829,70 @@ class content extends WUZHI_admin {
         } elseif($GLOBALS['pass']==='1') {
             $status=9;
         }
+        if($status==9 && $r['status']!=9) {//通过审核
+            $message_api = load_class('message_api','message');
+            $message_api->send_sys($r['publisher'],'信息通过审核' ,$r['title'].' <a href="'.$r['url'].'" target="_blank">点击查看</a>');
+            $loadhtml=false;
+            $urlclass = load_class('url','content',$category_r);
+            $urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$r['addtime'],'page'=>1,'route'=>$r['route']));
+            if($category_r['showhtml']) {
+                if($model_r['attr_table']) {
+                    $attrdata = $this->db->get_one($model_r['attr_table'],array('id'=>$id));
+                    $r = array_merge($r,$attrdata);
+                }
+
+                $this->html = load_class('html','content');
+                $this->html->set_category($category_r);
+                $this->html->set_categorys();
+                $this->html->load_formatcache();
+                $this->html->show($r,1,1,$urls['root']);
+                $loadhtml = true;
+            }
+
+            //生成相关栏目列表
+            if($category_r['listhtml']) {
+                if($loadhtml==false) {
+                    $this->html = load_class('html','content');
+                    $this->html->set_category($category_r);
+                    $this->html->set_categorys();
+                    $loadhtml = true;
+                }
+                for($i=1;$i<6;$i++) {
+                    $cateurls = $urlclass->listurl(array('cid'=>$cid,'page'=>$i));
+                    $this->html->listing($cateurls['root'],$i);
+                    if($GLOBALS['result_lists']==0) {
+                        break;
+                    }
+                }
+                //生成上级栏目
+                if($category_r['pid']) {
+                    $cate_config2 = get_cache('category_'.$category_r['pid'],'content');
+                    $urlclass->set_category($cate_config2);
+                    $cateurls = $urlclass->listurl(array('cid'=>$category_r['pid'],'page'=>1));
+                    $this->html->set_category($cate_config2);
+                    $this->html->listing($cateurls['root'],1);
+                }
+            }
+            //生成首页
+            if($loadhtml) {
+                $this->html->index();
+            } else {
+                $this->html = load_class('html','content');
+                $this->html->set_categorys();
+                $this->html->index();
+            }
+        } elseif($status==7) {//退稿
+            $message_api = load_class('message_api','message');
+            $message_api->send_sys($r['publisher'],'很遗憾,您的信息未通过审核' ,$r['title'].' <a href="index.php?m=content&f=postinfo&v=edit&cid='.$r['cid'].'&id=1" target="_blank">点击修改</a>');
+        }
         $this->db->update($master_table,array('status'=>$status),array('id'=>$id));
         //更新推荐位状态
-        $keyid = $id.'-'.$cid;
+        $keyid = $id.'-'.$cid.'-'.$_lang;
         $this->db->update('block_data', array('status'=>$status), array('keyid' => $keyid));
         //TODO 跳转到下一篇审批内容
+        $hook = load_class('hook');
+        $hook->run_hook('content_pass',$r,array('modelid'=>$category_r['modelid'],'status'=>$status));
+
         MSG(L('check success').','.L('auto close')."<script>setTimeout('window.close();',2000)</script>",'',3000);
     }
 
@@ -887,6 +1085,7 @@ class content extends WUZHI_admin {
      * 批量移动文章
      */
     public function move() {
+        $siteid = get_cookie('siteid');
         if(is_array($GLOBALS['ids'])) {
             $cid = intval($GLOBALS['cid']);
             $form = load_class('form');
@@ -907,8 +1106,8 @@ class content extends WUZHI_admin {
                 $model = $models[$modelid];
                 $modelname = $model['name'];
                 foreach($cache_categorys as $cid=>$cate) {
-                    if($cate['modelid']!=$modelid) continue;
-                    if($cate['type']==0) {
+                    if($cate['siteid']!=$siteid || $cate['modelid']!=$modelid) continue;
+                    if($cate['type']<2) {
                         $cate['cid'] = $cid;
                         $categorys[$cid] = $cate;
                     }
@@ -955,19 +1154,23 @@ class content extends WUZHI_admin {
      * 检查内容管理权限
      */
     private function private_check() {
-        $role = $_SESSION['role'];
-        if($role==='1') return true;
+        if(strpos($_SESSION['role'],',1,')!==false) return true;
+
         $actionids = array(1=>'listing',2=>'add',3=>'edit',4=>'delete',5=>'sort');
         if(in_array(V,$actionids)) {
             $cid = intval($GLOBALS['cid']);
             if($cid==0) return true;
             $actionids = array_flip($actionids);
             $actionid = $actionids[V];
-            if(!$this->db->get_one('category_private',array('role'=>$role,'cid'=>$cid,'actionid'=>$actionid))) {
+            $role = trim($_SESSION['role'],',');
+            $where = "`role` IN ($role) AND `cid`='$cid' AND `actionid`='$actionid'";
+            if(!$this->db->get_one('category_private',$where)) {
                 //查看副栏目是否给予权限，如果有，则继承权限
                 $category = get_cache('category_'.$cid,'content');
-                if($category['pid']) {
-                    if($this->db->get_one('category_private',array('role'=>$role,'cid'=>$category['pid'],'actionid'=>$actionid))) {
+                if($category && $category['pid']) {
+                    $pid = $category['pid'];
+                    $where = "`role` IN ($role) AND `cid`='$pid' AND `actionid`='$actionid'";
+                    if($this->db->get_one('category_private',$where)) {
                         return true;
                     }
                 }
@@ -1023,56 +1226,102 @@ class content extends WUZHI_admin {
             $urlclass = load_class('url','content',$category);
             $master_table = $model['master_table'];
             $attr_table = $model['attr_table'];
+            $categorys = get_cache('category','content');
+            //推送中文同时要推送英文,新插入时产生新的主键id,中英文需要相同
             foreach($ids as $id) {
-               //根据标题查询是否推送过，如果推送过，就覆盖原有内容
-				
                 $r = $this->db->get_one($master_table,array('id'=>$id));
+                $this->db->update($master_table,array('push'=>1),array('id'=>$id));
+                //$r_en = $this->db->get_one($master_table.'_en',array('id'=>$id));
+                $this->db->update($master_table.'_en',array('push'=>1),array('id'=>$id));
                 if($master_table=='content_share') {
                     $modelid = $r['modelid'];
                     $attr_table = $models[$modelid]['attr_table'];
                 }
-				$cc = $this->db->get_one($master_table, "`cid`='$cid' AND `title`='".$r['title']."'");
+                $formdata = array();
+                $formdata['siteid'] = $categorys[$r['cid']]['siteid'];
+                $formdata['id'] = $r['id'];
+                $formdata['cid'] = $r['cid'];
+                //推送中文内容
+                //根据是否推送过，如果推送过，就覆盖原有内容
+				$cc = $this->db->get_one($master_table, "`old_id`='$id' AND `cid`='$cid'");
 				$r['cid'] = $cid;
-				unset($r['id']);
+				$r_en['cid'] = $cid;
+                $r['old_id'] = $id;
+                $r_en['old_id'] = $id;
+				unset($r['id'],$r_en['id']);
+                //print_r($r);exit;
 				if($cc) {
-					$r['id'] = $newid = $cc['id'];
+					$r['id'] = $r_en['id'] = $newid = $cc['id'];
 					$this->db->update($master_table, $r,array('id'=>$newid));
+					//$this->db->update($master_table.'_en', $r_en,array('id'=>$newid));
+                    $datas = $r;
+                    $datas_en = $r_en;
 					if($attr_table) {
 						$r2 = $this->db->get_one($attr_table,array('id'=>$id));
-						$r2['id'] = $newid;
+						//$r2_en = $this->db->get_one($attr_table.'_en',array('id'=>$id));
+                        $r2_en['id'] = $r2['id'] = $newid;
+
 						$this->db->update($attr_table, $r2,array('id'=>$newid));
-						$r = array_merge($r,$r2);
+						//$this->db->update($attr_table.'_en', $r2_en,array('id'=>$newid));
+                        $datas = array_merge($r,$r2);
+                        $datas_en = array_merge($r_en,$r2_en);
 					}
 				} else {
+
+                    unset($r['block'],$r_en['block']);
+                    //设置为推送
+                    $r['push'] = $r_en['push'] = 1;
 					$newid = $this->db->insert($master_table, $r);
-
-
+                    $r_en['id'] = $newid;
+					//$this->db->insert($master_table.'_en', $r_en);
+                    $datas = $r;
+                    $datas_en = $r_en;
 					if($attr_table) {
 						$r2 = $this->db->get_one($attr_table,array('id'=>$id));
+						//$r2_en = $this->db->get_one($attr_table.'_en',array('id'=>$id));
 						$r2['id'] = $newid;
+						$r2_en['id'] = $newid;
 						$this->db->insert($attr_table, $r2);
-						$r = array_merge($r,$r2);
+						//$this->db->insert($attr_table.'_en', $r2_en);
+                        $datas = array_merge($r,$r2);
+                        $datas_en = array_merge($r_en,$r2_en);
 					}
-					//判断是否存在，防止意外发生
+                    $formdata['new_id'] = $newid;
+                    $formdata['new_siteid'] = $category['siteid'];
+                    $formdata['new_cid'] = $cid;
+                    $this->db->insert('content_ids', $formdata);
+
+                    //判断是否存在，防止意外发生
 					if(!$this->db->get_one('content_rank',array('cid'=>$cid,'id'=>$newid))) {
 						//统计表加默认数据
 						$this->db->insert('content_rank',array('cid'=>$cid,'id'=>$newid,'updatetime'=>SYS_TIME));
 					}
 				}
+                //只有默认路径使用新的地址
 
-                $urls = $urlclass->showurl(array('id'=>$newid,'cid'=>$cid,'addtime'=>$r['addtime'],'page'=>1,'route'=>$r['route']));
-                $this->db->update($master_table,array('url'=>$urls['url']),array('id'=>$newid));
+                if($r['route']==0) {
+                    $urls = $urlclass->showurl(array('id'=>$newid,'cid'=>$cid,'addtime'=>$r['addtime'],'page'=>1,'route'=>$r['route']));
+                    $this->db->update($master_table,array('url'=>$urls['url']),array('id'=>$newid));
+                    //$this->db->update($master_table.'_en',array('url'=>$urls['url']),array('id'=>$newid));
+                }
+
                 if($category['showhtml'] && $r['status']==9) {
                     //上一页
-                    $data['previous_page'] = $this->db->get_one($master_table,"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
+                    $datas['previous_page'] = $this->db->get_one($master_table,"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
                     //下一页
-                    $data['next_page'] = $this->db->get_one($master_table,"`cid`= '$cid' AND `id`>'$id' AND `status`=9",'*',0,'id ASC');
+                    $datas['next_page'] = $this->db->get_one($master_table,"`cid`= '$cid' AND `id`>'$id' AND `status`=9",'*',0,'id ASC');
                     $this->html = load_class('html','content');
                     $this->html->set_category($category);
                     $this->html->set_categorys();
                     $this->html->load_formatcache();
-                    $this->html->show($r,1,1,$urls['root']);
+                    $this->html->show($datas,1,1,$urls['root']);
+
+                    $datas_en['previous_page'] = $this->db->get_one($master_table.'_en',"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
+                    //下一页
+                    $datas_en['next_page'] = $this->db->get_one($master_table.'_en',"`cid`= '$cid' AND `id`>'$id' AND `status`=9",'*',0,'id ASC');
+                    $this->html->show($datas_en,1,1,$urls['root']);
                 }
+                //----end 推送中文内容
             }
             MSG('推送成功',$GLOBALS['forward']);
         }

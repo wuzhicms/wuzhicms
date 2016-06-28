@@ -19,7 +19,7 @@
     <link href="<?php echo R;?>css/style.css" rel="stylesheet">
     <link href="<?php echo R;?>css/responsive.css" rel="stylesheet" />
     <script src="<?php echo R;?>js/jquery.min.js"></script>
-    <script src="<?php echo R;?>js/wuzhicms.js"></script>
+    <script src="<?php echo R;?>js/base.js"></script>
 
 </head>
 <div class="container">

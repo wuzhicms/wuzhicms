@@ -21,7 +21,7 @@
                                  ?>
                             </div>
                             <div class="text-center createhtmlbtn">
-                            <button type="submit" class="btn btn-primary"><i class="icon-cycle btn-icon"></i>批量生成栏目页</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-cycle btn-icon"></i>生成栏目页html</button>
                             </div>
                         </form>
                         </div>
@@ -36,7 +36,7 @@
                                      ?>
                             </div>
                             <div class="text-center createhtmlbtn">
-                            <button type="submit" class="btn btn-primary"><i class="icon-cycle btn-icon"></i>批量生成内容页</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-cycle btn-icon"></i>生成内容页html</button>
                             </div>
                         </form>
                         </div>
@@ -51,7 +51,7 @@
                                      ?>
                             </div>
                             <div class="text-center createhtmlbtn">
-                            <button type="submit" class="btn btn-primary"><i class="icon-cycle btn-icon"></i>批量生成更新内容页url</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-cycle btn-icon"></i>更新内容页链接</button>
                             </div>
                         </form>
                         </div>

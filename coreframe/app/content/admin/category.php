@@ -21,7 +21,7 @@ class category extends WUZHI_admin {
 	 * 栏目列表
 	 */
 	public function listing() {
-        $types = array('列表','单网页','外链');
+        $types = array('列表','<font color="green">单网页</font>','<font color="#8b0000">外链</font>','隐藏');
         $siteid = get_cookie('siteid');
         $model_cache = get_cache('model_content','model');
         $where = "`keyid`='content' AND `siteid`='$siteid'";
@@ -32,7 +32,7 @@ class category extends WUZHI_admin {
 			$result[$cid]['ctype'] = $types[$r['type']];
 			$result[$cid]['siteid'] = $sitelist[$r['siteid']]['name'];
 			$result[$cid]['modelname'] = $model_cache[$r['modelid']]['name'];
-			$result[$cid]['url'] = '<a href="'.$r['url'].'" target="_blank">访问</a>';
+			$result[$cid]['url'] = strpos('://',$r['url'])===false ? '<a href="'.$sitelist[$r['siteid']]['url'].ltrim($r['url'],'/').'" target="_blank">访问</a>' : '<a href="'.$r['url'].'" target="_blank">访问</a>';
 		}
 		$tree = load_class('tree','core',$result);
 		$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
@@ -275,14 +275,12 @@ class category extends WUZHI_admin {
             //url
             $urlclass->set_category($r);
             if($r['type']==2) {
-                $tmp['url'] = $r['url'];
+                //$tmp['url'] = $r['url'];
             } else {
                 $urls = $urlclass->listurl(array('cid'=>$cid,'page'=>1));
                 $url = $urls['url'];
                 if($url!=$r['url']) $tmp['url'] = $url;
             }
-
-
             if(!empty($tmp)) {
                 $this->db->update('category',$tmp,array('cid'=>$cid));
                 echo $r['name'].',';
@@ -333,7 +331,7 @@ class category extends WUZHI_admin {
             }
             exit('1');
         } else {
-
+			$siteid = get_cookie('siteid');
             $model_cache = get_cache('model_content','model');
             $where = array('keyid'=>M);
             $result = get_cache('category','content');
@@ -345,6 +343,7 @@ class category extends WUZHI_admin {
 
             $categorys = array();
             foreach ($result as $k=>$v) {
+				if($v['siteid']!=$siteid) continue;
                 $v['cid'] = $k;
                 $v['sitename'] = $sitelist[$v['siteid']]['name'];
                 $v['disabled'] = '';
@@ -397,7 +396,7 @@ class category extends WUZHI_admin {
                 $modelname = $model['name'];
                 foreach($cache_categorys as $cid=>$cate) {
                     if($model['master_table']=='content_share') {
-                        if($models[$cate['modelid']]['master_table']=='content_share' && $cate['type']==0 && $cate['siteid']==$siteid) {
+                        if($models[$cate['modelid']]['master_table']=='content_share'  && $cate['siteid']==$siteid) {
                             $cate['cid'] = $cid;
                             $categorys[$cid] = $cate;
                         }

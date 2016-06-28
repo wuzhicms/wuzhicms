@@ -1,0 +1,36 @@
+{T "content","head",TPLID}
+<section class="jdbox">
+    <div class="jdt">{block=7}</div>
+</section>
+{block=8}
+
+{loop $categorys $cid $cat}
+{if $cat['showloop'] && $cat['type']==0}
+<section class="pdbox">
+    <header class="pdtit">
+        <h6>{$cat['name']}</h6>
+    </header>
+    <article>
+        <ul class="colst">
+            {wz:content action="listing" pagesize="8" order="sort DESC,id DESC" cid="$cid"}
+            {loop $rs $r}
+            <li>
+                <div class="bl">
+                    <div><a href="{$r['url']}">{safe_htm($r['title'])}</a></div>
+                    <div><span class="nums">{$categorys[$r['cid']]['name']}</span><span class="times">{date('Y-m-d',$r['updatetime'])}</span></div>
+                </div>
+                {if $r['thumb']}<div class="mimg"><a href="{$r['url']}"><img src="{$r['thumb']}" width="60" height="60"/></a></div>{/if}
+            </li>
+            {/loop}
+            {/wz}
+        </ul>
+        <a href="{$cat['url']}"><div class="more_btn"><span>更多{$cat['name']}</span></div></a>
+    </article>
+</section>
+{/if}
+{/loop}
+<footer class="ft">
+    Copyright 2005 - 2015 WuzhiCMS. All Rights Reserved
+</footer>
+</body>
+</html>

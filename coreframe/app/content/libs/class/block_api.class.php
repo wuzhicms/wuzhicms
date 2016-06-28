@@ -44,4 +44,9 @@ class WUZHI_block_api {
         }
 
     }
+
+    public function delete($keyid) {
+        if($keyid=='') return true;
+        $this->db->delete('block_data',"`keyid`='$keyid'");
+    }
 }

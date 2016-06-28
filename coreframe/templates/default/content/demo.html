@@ -1,0 +1,44 @@
+{T "member","head"}
+<body class="gray-bg">
+{if $set_iframe==0}
+	{T "member","iframetop"}
+{else}
+	<div style="padding-top: 15px;"></div>
+{/if}
+<div class="container-fluid  ie8-member">
+    <div class="row row-40" >
+        {if $set_iframe==0}
+        <div class="col-sm-3 left-nav padding-right0">
+			<!--左侧导航-->
+			<nav class="navbar-default navbar-static-side" role="navigation">
+				<div class="nav-close"><i class="fa fa-times-circle"></i>
+				</div>
+				<div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+					<div class="sidebar-collapse" style="width: auto; height: 100%;">
+						{T "member","left"}
+					</div>
+				</div>
+			</nav>
+			<!--end 左侧导航-->
+		</div><!--col-sm-3-->{/if}
+
+		<div class="{if $set_iframe==0}col-sm-9{else}col-sm-12{/if} paddingleft0">
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+							<h5>这里是标题</h5>
+						</div>
+						<div class="ibox-content" style="min-height: 500px;">
+							<div class="row">
+								这里是正文
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{T "member","foot"}

@@ -47,7 +47,10 @@ function strpos_array($haystack, $needles)
 		$dirname = empty($dirname) ? '' : $dirname.'/';
 		$target_dir = $dirname.date('Y/m/d').'/';
 		if (!file_exists(ATTACHMENT_ROOT.$target_dir)) {
-			mkdir(ATTACHMENT_ROOT.$target_dir,0777,1);
+			//die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Not allow guest upload."}, "id" : "id"}');
+			if(!mkdir(ATTACHMENT_ROOT.$target_dir,0777,1)) {
+				die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "创建目录失败:'.ATTACHMENT_ROOT.$target_dir.' "}, "id" : "id"}');
+			}
 		}
 		return $target_dir;
 	}
@@ -55,12 +58,13 @@ function strpos_array($haystack, $needles)
 		//生成文件名
 	function filename($name) 
 	{
-		$_exts =  array('php','asp','jsp','html','htm','aspx','asa','cs','cgi','js','dhtml','xhtml','vb','exe','shell','bat','php4');
+		$_exts =  array('php','asp','jsp','jspx','html','htm','aspx','asa','cs','cgi','js','dhtml','xhtml','vb','exe','shell','bat','php4','php4','php5','pthml','cdx','cer');
 		$ext = strtolower(pathinfo($name,PATHINFO_EXTENSION));
 		if(in_array($ext, $_exts)) {
 			return FALSE;
 		}
-		$files = date('YmdHis').mt_rand(1000,9999).'.'.$ext;
+		$rand_str = random_string('diy', 6,'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+		$files = date('YmdHis').$rand_str.'.'.$ext;
 		return $files;
 	}
 

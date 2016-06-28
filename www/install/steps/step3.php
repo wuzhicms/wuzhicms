@@ -139,6 +139,25 @@
                     </div>
 
                   </div>
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <section class="panel">
+                              <div class="panel-body">
+
+                                  <div class="form-group">
+                                      <label class="col-sm-4 control-label"><font color="red"> 需要初始化演示数据：</font></label>
+                                      <div class="col-sm-5">
+                                          <input type="checkbox" name="install_value" id="install_value" class="form-control" checked>
+                                      </div>
+                                  </div>
+
+                              </div>
+                          </section>
+                      </div>
+
+
+
+                  </div>
 <div class="text-center stepbtn"><input type="submit" name="submit" class="btn btn-info btn-shadow btn-step" value="开始安装" ></div>
               </fieldset>
            </form>
@@ -174,9 +193,13 @@
           var admin_password=$('#admin_password').val();
           var repassword=$('#repassword').val();
           var admin_email=$('#admin_email').val();
+          if($("#install_value").is(':checked')) {
+              var install_value=1;
+          } else {
+              var install_value=0;
+          }
 
-
-          $.post(url,{dbhost:dbhost,username:username,password:password,dbname:dbname,tablepre:tablepre,admin_username:admin_username,admin_password:admin_password,repassowrd:repassword,admin_email:admin_email}, function(data){
+          $.post(url,{dbhost:dbhost,username:username,password:password,dbname:dbname,tablepre:tablepre,admin_username:admin_username,admin_password:admin_password,repassowrd:repassword,admin_email:admin_email,install_value:install_value}, function(data){
               if(data > 1) {
                   alert(errmsg[data]);
                   if(data==5) {

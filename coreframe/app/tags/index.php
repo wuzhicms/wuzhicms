@@ -55,7 +55,7 @@ class index{
             } else {
                 $tid = urldecode($GLOBALS['tid']);
             }
-            $tid = sql_replace($tid);
+			$tid = sql_replace($tid);
 			$where = array('tag'=>$tid);
 		}
 

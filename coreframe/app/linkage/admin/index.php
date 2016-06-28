@@ -53,6 +53,7 @@ class index extends WUZHI_admin {
      */
     public function add_item() {
         if(isset($GLOBALS['submit'])) {
+            $pinyin = load_class('pinyin');
             $formdata = array();
             if(empty($GLOBALS['form']['names'])) MSG(L('parameter error'));
             $formdata['remark'] = remove_xss($GLOBALS['form']['remark']);
@@ -62,6 +63,10 @@ class index extends WUZHI_admin {
             $names = explode("\n",$GLOBALS['form']['names']);
             foreach($names as $name) {
                 $formdata['name'] = trim(remove_xss($name));
+                $py = $pinyin->return_py($formdata['name']);
+                $formdata['initial'] = strtoupper($py['pinyin']);
+                $formdata['thumb'] = strip_tags($GLOBALS['form']['thumb']);
+                $formdata['pictures'] = array2string($GLOBALS['form']['pictures']);
                 $this->db->insert('linkage_data',$formdata);
             }
             if($formdata['pid']) {
@@ -76,6 +81,27 @@ class index extends WUZHI_admin {
             if(!$r) {
                 $r = $this->db->get_one('linkage',array('linkageid'=>$linkageid));
             }
+
+            $this->form = load_class('form');
+            $value = '';
+            $field = 'pictures';
+            $str = '<script>
+	$(function() {
+		$( "#".$field."_ul" ).sortable();
+		$( "#".$field."_ul" ).disableSelection();
+	});
+</script>';
+            $default_multiple = '';
+            if ($value && is_array($value)) {
+                foreach ($value AS $k => $v) {
+                    $default_multiple .= '<li id="file_node_' . $k . '"><input type="hidden" name="' . $field . '[' . $k . '][url]" value="' . $v['url'] . '"> <img src="' . $v['url'] . '" alt="' . $v['alt'] . '" onclick="img_view(this.src);"> <textarea name="' . $field . '[' . $k . '][alt]" >' . $v['alt'] . '</textarea> <a class="btn btn-danger btn-xs" href="javascript:remove_file(' . $k . ');">移除</a></li>';
+                }
+            }
+            $str2 = '<div id="' . $field . '"><ul id="' . $field . '_ul">' . $default_multiple . '</ul></div>';
+
+            $pictures = $str . '<div class="attaclist">' . $str2 . $this->form->attachment("jpg|png|gif|bmp", 20, "form[$field]", $value, 'callback_images2', 0,true) . '</div>';
+            $show_dialog = 1;
+
             include $this->template('add_item');
         }
     }
@@ -87,6 +113,8 @@ class index extends WUZHI_admin {
         $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
         $page = max($page,1);
         $linkageid = isset($GLOBALS['linkageid']) ? intval($GLOBALS['linkageid']) : 0;
+        $data = $this->db->get_one('linkage', array('linkageid' => $linkageid));
+
         if($linkageid) {
             $where = array('linkageid'=>$linkageid,'pid'=>$pid);
         } else {
@@ -167,16 +195,73 @@ class index extends WUZHI_admin {
     public function edit_item() {
         $lid = intval($GLOBALS['lid']);
         if(isset($GLOBALS['submit'])) {
+            $pinyin = load_class('pinyin');
             $formdata = array();
             $formdata['name'] = remove_xss($GLOBALS['form']['name']);
             $formdata['remark'] = remove_xss($GLOBALS['form']['remark']);
+            $py = $pinyin->return_py($formdata['name']);
+            $formdata['initial'] = strtoupper($py['pinyin']);
+            $formdata['thumb'] = strip_tags($GLOBALS['form']['thumb']);
+            $pictures = $GLOBALS['pictures'];
+            $pictures2 = $GLOBALS['form']['pictures'];
+            if($pictures2 && $pictures) {
+                $pictures = array_merge($pictures,$pictures2);
+            } else {
+                $pictures = $pictures2;
+            }
+            if($pictures) $formdata['pictures'] = array2string($pictures);
+
             $this->db->update('linkage_data',$formdata,array('lid'=>$lid));
             $forward = $GLOBALS['forward'];
             MSG(L('operation success'),$forward);
         } else {
             $show_formjs = 1;
             $r = $this->db->get_one('linkage_data',array('lid'=>$lid));
+            $this->form = load_class('form');
+            $value = string2array($r['pictures']);
+            $field = 'pictures';
+            $str = '<script>
+	$(function() {
+		$( "#".$field."_ul" ).sortable();
+		$( "#".$field."_ul" ).disableSelection();
+	});
+</script>';
+            $default_multiple = '';
+            if ($value && is_array($value)) {
+                foreach ($value AS $k => $v) {
+                    $default_multiple .= '<li id="file_node_' . $k . '"><input type="hidden" name="' . $field . '[' . $k . '][url]" value="' . $v['url'] . '"> <img src="' . $v['url'] . '" alt="' . $v['alt'] . '" onclick="img_view(this.src);"> <textarea name="' . $field . '[' . $k . '][alt]" >' . $v['alt'] . '</textarea> <a class="btn btn-danger btn-xs" href="javascript:remove_file(' . $k . ');">移除</a></li>';
+                }
+            }
+            $str2 = '<div id="' . $field . '"><ul id="' . $field . '_ul">' . $default_multiple . '</ul></div>';
+
+            $pictures = $str . '<div class="attaclist">' . $str2 . $this->form->attachment("jpg|png|gif|bmp", 20, "form[$field]", $value, 'callback_images2', 0,true) . '</div>';
+            $show_formjs = 1;
+            $show_dialog = 1;
             include $this->template('edit_item');
         }
+    }
+
+    /**
+     * 设置为群组项
+     */
+    public function set_group() {
+        $lid = intval($GLOBALS['lid']);
+        $r = $this->db->get_one('linkage_data',array('lid'=>$lid));
+        $formdata = array();
+        if($r['isgroup']) {
+            $formdata['isgroup'] = 0;
+        } else {
+            $formdata['isgroup'] = 1;
+        }
+        $this->db->update('linkage_data', $formdata, array('lid' => $lid));
+        MSG(L('operation success'), HTTP_REFERER);
+    }
+    private function current_pos($pid) {
+        $r = $this->db->get_one('linkage_data', array('lid' => $pid));
+        if($r['pid']) {
+            $str = $this->current_pos($r['pid']);
+        }
+        $str .= "<span>".$r['name'].'&gt;</span>';
+        return $str;
     }
 }

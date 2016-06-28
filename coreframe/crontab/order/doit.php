@@ -7,18 +7,17 @@
 // +----------------------------------------------------------------------
 defined('IN_WZ') or exit('No direct script access allowed');
 /**
- * 采集内容
+ * 内容超时自动失效
  */
-//Example: php /workspace/wwwroot/wuzhicms_v2/coreframe/crontab.php order doit
+//Example: php /workspace/wwwroot/project/cheyouwang/coreframe/crontab.php order doit
 /*
 /Applications/XAMPP/bin/php-5.4.31 /workspace/wwwroot/project/wuzhicms_v2/coreframe/crontab.php order doit
 */
 
-$db=load_class('db');
+$db = load_class('db');
 
-//2->3
-//72小时，失效
-$posttime = SYS_TIME-86400*3;
-$where = "`status`=2 AND `post_time`<$posttime";
-$db->update('order_goods', array('status'=>3), $where);
-exit('ok');
+//24小时
+$posttime = SYS_TIME-86400;
+$where = "`status`=6 AND `addtime`<$posttime";
+$db->update('pay', array('status'=>4), $where);
+echo "ok \r\n";

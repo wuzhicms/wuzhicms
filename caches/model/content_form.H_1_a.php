@@ -22,7 +22,40 @@ class form_build {
 		//TODO 初始化勾子，在程序提交前处理
     }
 
-	public function execute($formdata = array()) {
+	public function execute($formdata = array(),$modelid = '',$set_language = '') {
+		if($modelid) {
+			$tmp = $tmp2 = array();
+			if($set_language) {
+				foreach($this->fields as $field=>$r) {
+					$r['name'] = $r['name'].'['.$set_language.']';
+					$r['field'] = $field.'_'.$set_language;
+					$tmp[$field.'_'.$set_language] = $r;
+				}
+				if(!empty($formdata)) {
+					$formdata_tmp = $formdata;
+					$formdata = array();
+					foreach ($formdata_tmp as $field => $data) {
+						$formdata[$field . '_' . $modelid . '_' . $set_language] = $data;
+					}
+				}
+			} else {
+				foreach($this->fields as $field=>$r) {
+					$r['field'] = $field.'_'.$modelid;
+					$tmp[$r['field']] = $r;
+				}
+				if(!empty($formdata)) {
+					$formdata_tmp = $formdata;
+					$formdata = array();
+					foreach($formdata_tmp as $field=>$data) {
+						$formdata[$field.'_'.$modelid] = $data;
+					}
+				}
+			}
+
+			$this->fields = $tmp;
+
+		}
+		//if($set_language) print_r($formdata);
 		$this->formdata = $formdata;
         $this->id = $this->formdata['id'] ? $this->formdata['id'] : 0;
         $info = array();
@@ -36,7 +69,7 @@ class form_build {
 			if($value !== FALSE) {
 				$star = $field_config['minlength'] || $field_config['pattern'] ? 1 : 0;
 				$location = $field_config['location'];
-				$info[$location][$field] = array('name'=>$field_config['name'],'field'=>$field, 'remark'=>$field_config['remark'], 'form'=>$value, 'star'=>$star,'powerful_field'=>$field_config['powerful_field'],'formtype'=>$field_config['formtype'],'ban_contribute'=>$field_config['ban_contribute']);
+				$info[$location][$field] = array('name'=>$field_config['name'],'field'=>$field, 'remark'=>$field_config['remark'], 'form'=>$value, 'star'=>$star,'powerful_field'=>$field_config['powerful_field'],'formtype'=>$field_config['formtype'],'ban_contribute'=>$field_config['ban_contribute'],'master_field'=>$field_config['master_field']);
 			}
 		}
 		//如果表单没不分左侧和右侧，那么需要合并数据为一个二维数组
@@ -67,12 +100,18 @@ class form_build {
 
 	private function block($config, $value) {
         extract($config,EXTR_SKIP);
-        $where = "`type`=1 AND `modelid` IN(0,".$this->modelid.")";
+        $siteid = SITEID;
+        if(defined('IN_ADMIN')) {
+                $_lang = $GLOBALS['_lang'];
+        } else {
+                $_lang = LANGUAGE;
+        }
+        $where = "`siteid`='$siteid' AND `lang`='".$_lang."' AND `type`=1 AND `modelid` IN(0,".$this->modelid.")";
         $result = $this->db->get_list('block',$where, 'blockid,name', 0, 100);
         $option = key_value($result,'blockid','name');
         $values = '';
         if($value) {
-                $keyid = $this->formdata['id'].'-'.$this->formdata['cid'];
+                $keyid = $this->formdata['id'].'-'.$this->formdata['cid'].'-'.$_lang;
                 $block_data = $this->db->get_list('block_data',array('keyid'=>$keyid), '*', 0, 100);
                 if(!empty($block_data)) {
                         $option_value = array_keys($option);
@@ -191,9 +230,48 @@ class form_build {
 		extract($config,EXTR_SKIP);
 		if(!$value) $value = $defaultvalue;
 		$type = $ispassword ? 'password' : 'text';
-		return '<input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="form-control" '.$ext_code.' >';
+		return '<input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" '.$ext_code.' >';
 	}
 
+private function content_group($config, $value){
+	if (!empty($value)) $value = string2array($value);
+	extract($config, EXTR_SKIP);
+	$formtext = $setting['formtext'];
+	$str = '<script>
+	$(function() {
+		$( "#' . $field . '_ul" ).sortable();
+		$( "#' . $field . '_ul" ).disableSelection();
+	});
+</script>';
+
+	$attaclist_div = "at_" . $field;
+	$default_multiple = '';
+
+	if ($value && is_array($value)) {
+		$keys = array_keys($value);
+
+		$search = array();
+		foreach($keys as $key) {
+			$search[] = '##'.$key.'##';
+		}
+		$i = 0;
+		foreach ($value[$keys[0]] AS $k => $v) {
+			if ($i > 0) $attaclist_div .= $i;
+			$replace = array();
+			foreach($keys as $key) {
+				$replace[] = $value[$key][$k];
+			}
+			$tmp_formtext = str_replace($search,$replace,$formtext);
+			$default_multiple .= '<li id="li_' . $attaclist_div . '"><button class="btn btn-default btn-xs remove_file"  onclick="remove_obj(this);">移除</button>' . $tmp_formtext . '</li>';
+			$i++;
+		}
+	} else {
+		$default_multiple = '<li id="li_' . $attaclist_div . '">' . preg_replace('/##([a-z]+)##/', '', $formtext) . '</li>';
+	}
+	$str2 = '<input type="hidden" name="form[' . $field . ']" value="1"> <div id="' . $field . '"><ul id="' . $field . '_ul">' . $default_multiple . '</ul></div>';
+
+	return $str . '<div class="attaclist" id="' . $attaclist_div . '"><textarea id="text_'.$field.'" style="display:none;">'.preg_replace('/##([a-z]+)##/', '', htmlentities('<button class="btn btn-default btn-xs remove_file"  onclick="remove_obj(this);">移除</button>'.$formtext)).'</textarea>' . $str2 . '<a class="btn btn-primary" href="javascript:add_newfile(\'' . $field . '\');" style="display: block;"> + 增加</a></div>';
+}
 	private function copyfrom($config, $value) {
         extract($config,EXTR_SKIP);
 		$copyfrom_array = $this->db->get_list('copyfrom', '', '*', 0, 1000);
@@ -233,18 +311,31 @@ class form_build {
 
 	private function downfile($config, $value) {
         extract($config,EXTR_SKIP);
-        return '<div class="input-group">'.$this->form->attachment($setting['upload_allowext'],1,"form[$field]","$value").'</div>';
+        return '<div class="input-group">'.$this->form->attachment($setting['upload_allowext'],1,"form[$field]","$value",'callback_thumb_dialog',0).'</div>';
     }
 
-private function editor($config, $value) {
-    extract($config,EXTR_SKIP);
-    extract($setting,EXTR_SKIP);
-    if($toolbar=='textarea') {
-        return '<textarea name="form['.$field.']" id="'.$field.'" class="form-control" rows="3" boxid="'.$field.'" datatype="*" nullmsg="请输入'.$name.'" errormsg="'.$name.'不能为空">'.$value.'</textarea>';
-    } else {
-        return '<textarea name="form['.$field.']" id="'.$field.'" boxid="'.$field.'" datatype="*" nullmsg="请输入'.$name.'" errormsg="'.$name.'不能为空">'.$value.'</textarea>'.$this->form->editor($field,$field,'',$toolbar);
+    private function editor($config, $value) {
+        $value = p_htmlentities($value);
+        extract($config,EXTR_SKIP);
+        if($setting) extract($setting,EXTR_SKIP);
+        if($minlength>0) {
+            $validform = 'datatype="*" nullmsg="请输入\'.$name.\'" errormsg="\'.$name.\'不能为空"';
+        } else {
+            $validform = '';
+        }
+        if($value && $editor_type=='ckeditor') {
+            $value = str_replace('_wuzhicms_page_tag_','<div style="page-break-after: always"><span style="display:none">&nbsp;</span></div>',$value);
+        }
+        if($toolbar=='textarea') {
+            return '<textarea name="form['.$field.']" id="'.$field.'" class="form-control" rows="3" boxid="'.$field.'" '.$validform.'>'.$value.'</textarea>';
+        } else {
+            $style = '';
+            if($GLOBALS['editor_type']=='ewebeditor') {
+                $style = ' style="display:none;"';
+            }
+            return '<textarea name="form['.$field.']" id="'.$field.'" boxid="'.$field.'" '.$validform.$style.'>'.$value.'</textarea>'.$this->form->editor($field,$field,'',$toolbar,$editor_type,1);
+        }
     }
-}
 
 	private function group($config, $value) {
         extract($config,EXTR_SKIP);
@@ -253,13 +344,17 @@ private function editor($config, $value) {
         foreach($lists as $_k=>$_v) {
         $data[$_k] = $_v['name'];
         }
-        if(empty($value)) $value = $groups;
 		return '<input type="hidden" name="form['.$field.']" value="no_value">'.$this->form->checkbox($data,$value,'name="'.$field.'[]" id="'.$field.'"');
 	}
 
 	private function image($config, $value) {
         extract($config,EXTR_SKIP);
-        return '<div class="input-group">'.$this->form->attachment($setting['upload_allowext'],1,"form[$field]","$value","callback_thumb_dialog",0,$setting['images_width'],$setting['images_height'],$setting['images_cut'],$setting['is_water'],$setting['is_allow_show_img'],$ext_code).'</div>';
+        if(defined('IN_ADMIN')) {
+            $show_type = 0;
+        } else {
+            $show_type = intval($setting['member_show_type']);
+        }
+        return '<div class="input-group">'.$this->form->attachment($setting['upload_allowext'],1,"form[$field]","$value","callback_thumb_dialog",$show_type,$setting['images_width'],$setting['images_height'],$setting['images_cut'],$setting['is_water'],$setting['is_allow_show_img'],$ext_code).'</div>';
     }
 
 private function images($config, $value){
@@ -274,7 +369,7 @@ private function images($config, $value){
 	$default_multiple = '';
 	if ($value && is_array($value)) {
 		foreach ($value AS $k => $v) {
-			$default_multiple .= '<li id="file_node_' . $k . '"><input type="hidden" name="' . $field . '[' . $k . '][url]" value="' . $v['url'] . '"> <img src="' . $v['url'] . '" alt="' . $v['alt'] . '" onclick="img_view(this.src);"> <textarea name="' . $field . '[' . $k . '][alt]" >' . $v['alt'] . '</textarea> <a class="btn btn-danger btn-xs" href="javascript:remove_file(' . $k . ');">移除</a></li>';
+			$default_multiple .= '<li id="file_node_' . $k . '"><input type="hidden" name="form[' . $field . '][' . $k . '][url]" value="' . $v['url'] . '"> <img src="' . $v['url'] . '" alt="' . $v['alt'] . '" onclick="img_view(this.src);"> <textarea name="form[' . $field . '][' . $k . '][alt]" >' . $v['alt'] . '</textarea> <a class="btn btn-danger btn-xs" href="javascript:remove_file(' . $k . ');">移除</a></li>';
 		}
 	}
 	$str2 = '<div id="' . $field . '"><ul id="' . $field . '_ul">' . $default_multiple . '</ul></div>';
@@ -349,10 +444,12 @@ private function images($config, $value){
 	}
 
 	private function number($config, $value) {
-        extract($config,EXTR_SKIP);
-		$setting = string2array($setting);
+		extract($config,EXTR_SKIP);
+		if(is_string($setting)) {
+			$setting = string2array($setting);
+		}
 		$size = $setting['size'];
-		if(!$value) $value = $defaultvalue;
+		if($value=='') $value = $setting['defaultvalue'];
 		return "<input type='text' name='form[$field]' id='$field' value='$value' class='input-text' size='$size' {$ext_code}>";
 	}
 
@@ -485,20 +582,20 @@ return $str;
 
 	private function textarea($config, $value) {
 		extract($config,EXTR_SKIP);
-        extract($setting,EXTR_SKIP);
+        if($setting) extract($setting,EXTR_SKIP);
         if(!$value) $value = $defaultvalue;
     return '<textarea name="form['.$field.']" class="form-control" cols="60" rows="3" '.$ext_code.'>'.$value.'</textarea>';
 	}
 
-	private function title($config, $value) {
-        extract($config,EXTR_SKIP);
-        if(!isset($style)) $style = '';
-        $title_css = isset($this->formdata['css']) ? $this->formdata['css'] : '';
-		$str = '<input type="text" style="color:#'.$title_css.'" name="form['.$field.']" id="'.$field.'" maxlength="'.$maxlength.'" value="'.$value.'" class="form-control" datatype="*2-80"  nullmsg="请输入标题" errormsg="标题至少2个字符,最多80个字符！" onBlur="$.post(\'api.php?op=get_keywords&number=3&sid=\'+Math.random()*5, {data:$(\'#title\').val()}, function(data){if(data && $(\'#keywords\').val()==\'\') $(\'#keywords\').val(data); })" />';
-        $str .= '<span class="input-group-btn"><input type="hidden" id="title_css" name="title_css" value="'.$title_css.'"><img id="title_color" src="'.R.'js/colorpicker/picker.png" height="30" hx="#c00"></span><span class="input-group-btn"><button class="btn btn-white" type="button" onclick="check_title();">重复检测</button></span>';
+private function title($config, $value) {
+extract($config,EXTR_SKIP);
+if(!isset($style)) $style = '';
+$title_css = isset($this->formdata['css']) ? $this->formdata['css'] : '';
+$str = '<input type="text" style="color:#'.$title_css.'" name="form['.$field.']" id="'.$field.'" maxlength="'.$maxlength.'" value="'.$value.'" class="form-control" datatype="*'.$minlength.'-'.$maxlength.'"  nullmsg="请输入标题" errormsg="标题至少'.$minlength.'个字符,最多'.$maxlength.'个字符！" onBlur="$.post(\'api.php?op=get_keywords&number=3&sid=\'+Math.random()*5, {data:$(\'#title\').val()}, function(data){if(data && $(\'#keywords\').val()==\'\') $(\'#keywords\').val(data); })" />';
+$str .= '<span class="input-group-btn"><input type="hidden" id="title_css" name="title_css" value="'.$title_css.'"><img id="title_color" src="'.R.'js/colorpicker/picker.png" height="30" hx="#c00"></span><span class="input-group-btn"><button class="btn btn-white" type="button" onclick="check_title();">重复检测</button></span>';
 
-		return $str;
-	}
+return $str;
+}
 
 	private function url($config, $value) {
 		$size = isset($size) ? $size : 25;
@@ -512,7 +609,7 @@ return $str;
         } else {
             $def_type = '默认链接';
         }
-if($this->extdata['type']==0) {
+if($this->extdata['type']==0 || $this->extdata['type']==3) {
     return '<div class="input-group" style="max-width: 500px;">
     <input type="text" name="url" id="url" value="'.$value.'" size="'.$size.'" maxlength="255" class="form-control" placeholder="可自定义：如，wuzhicms-example'.POSTFIX.'" onBlur="fillurl(this,this.value)">
     <div class="input-group-btn">
@@ -539,6 +636,42 @@ return '<div style="max-width: 400px;" title="单网页链接地址：请修改�
 
 	}
 
+	private function video_tudou($config, $value) {
+		extract($config,EXTR_SKIP);
+        if($setting) extract($setting,EXTR_SKIP);
+		if(!$value) $value = $defaultvalue;
+
+		if(!isset($placeholder)) $placeholder = '';
+		return '<input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" placeholder="播放页地址/转发地址均可" value="'.$value.'" class="form-control" '.$ext_code.' >';
+	}
+
+	private function video_youku($config, $value) {
+		extract($config,EXTR_SKIP);
+        if($setting) extract($setting,EXTR_SKIP);
+		if(!$value) $value = $defaultvalue;
+
+		if(!isset($placeholder)) $placeholder = '';
+		return '<input type="text" name="form['.$field.']" id="'.$field.'" size="'.$size.'" placeholder="播放页地址/转发地址均可" value="'.$value.'" class="form-control" '.$ext_code.' >';
+	}
+
+private function dymlist($config, $value) {
+
+	if(!$this->id) {
+		return "<div class='input-group'>
+    <span class='input-group-btn pull-left'>
+    <button class='btn btn-white' type='button' disabled>请先添加后再编辑</button>
+    </span>
+</div>";
+	} else {
+		$iframeurl = '?m=content&f=dymlist&v=manage&id='.$this->id.'&_su='.$GLOBALS['_su'];
+
+		return "<div class='input-group'>
+        <span class='input-group-btn pull-left'>
+        <button class='btn btn-white' type='button' onclick='dymlist(\"$iframeurl\");'>人员选取</button>
+        </span>
+    </div>";
+	}
+}
 	private function link_content($config, $value) {
 		extract($config,EXTR_SKIP);
         $models = get_cache('model_content','model');

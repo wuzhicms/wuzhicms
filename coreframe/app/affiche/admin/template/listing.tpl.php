@@ -33,7 +33,7 @@
                             <td><?php echo $r['id'];?></td>
                             <td><?php echo "<a href='index.php?m=affiche&f=index&v=show&id=".$r['id']."' target='_blank' style='".$r['css']."'>".safe_htm($r['title'])."</a>";?></a></td>
                             <td><?php echo time_format($r['addtime']);?></td>
-                            <td><?php echo time_format($r['endtime']);?></td>
+                            <td><?php echo date('Y-m-d H:i:s',$r['endtime']);?></td>
                             <td><?php echo $status_arr[$r['status']];?></td>
                             <td><?php echo $r['publisher'];?></td>
 

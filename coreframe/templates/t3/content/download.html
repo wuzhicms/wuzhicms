@@ -1,0 +1,90 @@
+{T "content","head",TPLID}
+<!--路径导航-->
+<div style="background: #f3f3f3">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="{WEBURL}">首页</a><span> &gt;</span> </li>
+            {catpos($cid)}
+            <li class="active">正文</li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+
+<div class="down-one-screen">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8">
+
+                <div class="wzcms-tuangou-list " style="margin-bottom: 0px; margin-top: 0px; padding-top: 0px">
+                    <div class="content_title"><h4>{$title}<span style="font-size:12px; float:right; padding-top:25px;">下载次数：{$down_numbers}</span></h4></div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <a href="#" class="thumbnail ">
+                                <img src="{$thumb}" alt="{$title}">
+                            </a>
+                        </div>
+                        <div class="col-xs-7">
+                            <p class="line_height1d8">
+                                <strong>软件作者:</strong> {$soft_author} <br>
+                                <strong>软件大小:</strong> {$soft_size}<br>
+                                <strong>软件类别:</strong> {$category['name']} <br>
+                                <strong>软件语言:</strong> {$soft_language} <br>
+                                <strong>运行环境:</strong> {$soft_env} <br>
+                                <strong>软件授权:</strong> {$soft_license} <br>
+                            </p>
+                            <a href="{$downfile}"><button  type="button" class="btn btn-danger  font_size16 margin_top10"><strong> &nbsp;&nbsp;立即下载&nbsp;&nbsp; </strong></button></a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div><!-- col-xs-8  -->
+
+            <div class="col-xs-4 ">
+                <div class="right-bg-box xielinebg" style="  padding-bottom: 20px;">
+
+                    <div class="lm-title margin_bottom15">
+                        <h3 class="lm-title-left">下载排行 </h3>
+                    </div>
+                    <div class="list-ol-box-2">
+                        <ol class="rectangle-list-2">
+                            {wz:content action="rank" pagesize="10" order="weekviews DESC" cid="$cid" urlrule="$urlrule"}
+                            {loop $rs $r}
+                            <li ><a href="{$r[url]}">{$r['title']}</a></li>
+                            {/loop}
+                            {/wz}
+                        </ol>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function show_qrcode(id,str) {
+        $("#"+id).attr('src',str);
+        $("#"+id).css('display','');
+    }
+    function download_count(cid,id) {
+        $.post("{WEBURL}index.php?f=download_stat", { cid: cid,id:id, time: Math.random()},
+                function(data){
+                });
+
+    }
+    function toDownload() {
+        var download_pos = $("#download_address").offset().top;
+        download_pos = download_pos-60;
+        $("html,body").animate({scrollTop:download_pos},600);
+    }
+</script>
+{T "content","foot",TPLID}

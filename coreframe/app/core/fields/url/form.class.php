@@ -11,7 +11,7 @@
         } else {
             $def_type = '默认链接';
         }
-if($this->extdata['type']==0) {
+if($this->extdata['type']==0 || $this->extdata['type']==3) {
     return '<div class="input-group" style="max-width: 500px;">
     <input type="text" name="url" id="url" value="'.$value.'" size="'.$size.'" maxlength="255" class="form-control" placeholder="可自定义：如，wuzhicms-example'.POSTFIX.'" onBlur="fillurl(this,this.value)">
     <div class="input-group-btn">

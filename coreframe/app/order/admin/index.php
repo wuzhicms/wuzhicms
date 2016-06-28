@@ -20,16 +20,68 @@ class index extends WUZHI_admin {
      * 订单列表
      */
     public function listing() {
-        $status_arr = $this->status_arr;
-        $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
-        $page = max($page,1);
-        $result = $this->db->get_list('order_point', '', '*', 0, 20,$page,'orderid DESC');
-        $pages = $this->db->pages;
-        $total = $this->db->number;
+        load_class('form');
+        $fieldtypes = array('订单ID','标题','下单会员','物流单号');
+        $flag = $GLOBALS['flag'];
         $status = array();
         $status[1] = '待发货';
         $status[2] = '已发货';
         $status[3] = '订单完成';
+
+        $status_arr = $this->status_arr;
+        $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
+        $page = max($page,1);
+        $keyValue = strip_tags($GLOBALS['keyValue']);
+        $fieldtype = intval($GLOBALS['fieldtype']);
+        $where = '1';
+        if($keyValue) {
+            switch($fieldtype) {
+                case 0:
+                    $where .= " AND `order_no`='$keyValue'";
+                    break;
+                case 1:
+                    $where .= " AND `remark` LIKE '%$keyValue%'";
+                    break;
+                case 2:
+                    $r = $this->db->get_one('member', array('username' => $keyValue));
+                    $uid = $r['uid'];
+                    $where .= " AND `uid`='$uid'";
+                    break;
+                case 3:
+                    $where .= " AND `snid`='$keyValue'";
+                    break;
+            }
+        }
+        if($flag!='' && $flag==0 || $flag) $where .=" AND `status`='$flag'";
+        $starttime = '';
+        $endtime = '';
+        if($GLOBALS['starttime']) {
+            $starttime = strtotime($GLOBALS['starttime']);
+            $where .= " AND `addtime`>'$starttime'";
+        }
+        if($GLOBALS['endtime']) {
+            $endtime = strtotime($GLOBALS['endtime']);
+            $where .= " AND `addtime`<'$endtime'";
+        }
+        $result_arr = $this->db->get_list('order_point', $where, '*', 0, 20,$page,'orderid DESC');
+        $pages = $this->db->pages;
+        $total = $this->db->number;
+        $result = array();
+        foreach($result_arr as $r) {
+            $mr = $this->db->get_one('member',array('uid'=>$r['uid']));
+            $addr = $this->db->get_one('express_address',array('addressid'=>$r['addressid']));
+            $r['order_no'] = ' '.$r['order_no'];
+            $r['username'] = $mr['username'];
+            $r['post_time'] = $r['post_time'] ? date('Y-m-d H:i:s',$r['post_time']) : '';
+            $r['addressee'] = $addr['addressee'];
+            $r['mobile'] = $addr['mobile'];
+            $r['tel'] = $addr['tel'];
+            $r['address'] = $addr['province'].' '.$addr['city'].' '.$addr['address'];
+            $result[] = $r;
+        }
+        if(isset($GLOBALS['exp'])) {
+            $this->export_excel($result);
+        }
 
         include $this->template('listing');
     }
@@ -65,5 +117,68 @@ class index extends WUZHI_admin {
         $orderid = intval($GLOBALS['orderid']);
         $r = $this->db->get_one('order_point',array('orderid'=>$orderid));
         include $this->template('view');
+    }
+    private function export_excel($result){
+        $new_field = array(
+            'order_no' => array('name' => '订单ID'),
+            'remark' => array('name' => '名称'),
+            'addtime' => array('name' => '申请时间'),
+            'post_time' => array('name' => '发货时间'),
+            'express' => array('name' => '物流'),
+            'snid' => array('name' => '物流单号'),
+            'username' => array('name' => '下单会员'),
+            'addressee' => array('name' => '收件人'),
+            'mobile' => array('name' => '手机'),
+            'tel' => array('name' => '固话'),
+            'address' => array('name' => '收件地址'),
+        );
+
+        $cell_field = array('', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        require_once COREFRAME_ROOT . 'extend/class/PHPExcel.php';
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+// Set document properties
+        $objPHPExcel->getProperties()->setCreator("wuzhicms.com")->setLastModifiedBy("wuzhicms.com")->setTitle("cheyouwang")->setSubject("cheyouwang Document")->setDescription("cheyouwang")->setKeywords("cheyouwang")->setCategory("Test result file");
+// Add some data
+        $i = 1;
+        foreach ($new_field as $field => $rs) {
+            //echo $cell_field[$i].'1 + '.$rs['name']."\r\n";
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cell_field[$i] . '1', $rs['name']);
+            $i++;
+        }
+
+        $j = 2;
+        foreach ($result as $_rs) {
+            $i = 1;
+            foreach ($new_field as $field => $rs) {
+                if($field=='addtime') {
+                    $_rs[$field] = date('Y-m-d H:i:s',$_rs[$field]);
+                }
+                $pre = '';
+                if($field=='mobile') $pre = ' ';
+                $_rs[$field] = $pre.$_rs[$field];
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cell_field[$i] . $j, $_rs[$field]);
+                $i++;
+            }
+            $j++;
+        }
+//exit;
+// Rename worksheet
+        $objPHPExcel->getActiveSheet()->setTitle('车游网');
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        $objPHPExcel->setActiveSheetIndex(0);
+// Redirect output to a client’s web browser (Excel5)
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="积分兑换.xls"');
+        header('Cache-Control: max-age=0');
+// If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+// If you're serving to IE over SSL, then the following may be needed
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+        header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header('Pragma: public'); // HTTP/1.0
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
     }
 }

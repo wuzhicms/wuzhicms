@@ -19,7 +19,10 @@
     <link href="<?php echo R;?>css/style.css" rel="stylesheet">
     <link href="<?php echo R;?>css/responsive.css" rel="stylesheet" />
     <script src="<?php echo R;?>js/jquery.min.js"></script>
-    <script src="<?php echo R;?>js/wuzhicms.js"></script>
+    <script type="text/javascript">
+        var cookie_pre = "<?php echo COOKIE_PRE;?>";var cookie_domain = '<?php echo COOKIE_DOMAIN;?>';var cookie_path = '<?php echo COOKIE_PATH;?>';var web_url = '<?php echo WEBURL;?>';
+    </script>
+    <script src="<?php echo R;?>js/base.js"></script>
 
 </head>
 <body class="body pxgridsbody">

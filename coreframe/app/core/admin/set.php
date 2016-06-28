@@ -25,11 +25,13 @@ class set extends WUZHI_admin {
             $formdata = array_map('strip_tags',$GLOBALS['form']);
             $formdata['copyright'] = $GLOBALS['form']['copyright'];
             $formdata['statcode'] = $GLOBALS['form']['statcode'];
-            set_cache('siteconfigs',$formdata);
+
             $serialize_data = serialize($formdata);
             $updatetime = date('Y-m-d H:i:s',SYS_TIME);
             $this->db->update('setting',array('data'=>$serialize_data,'updatetime'=>$updatetime),array('keyid'=>'configs','m'=>'core'));
             load_function('admin');
+            $cache_global = load_class('cache_global_vars');
+            $cache_global->cache_all();
             set_web_config('CLOSE',intval($formdata['close']));
             MSG(L('edit success'),HTTP_REFERER);
         } else {
@@ -119,23 +121,14 @@ class set extends WUZHI_admin {
             if(empty($receive) || !is_email($receive)) {
                 MSG(L('email address error'));
             }
-            $config = get_cache('sendmail');
-            $password = decode($config['password']);
+            
             //load_function('sendmail');
             $subject = '这里是一封来自 wuzhicms 的测试邮件';
             $message = "感谢您选择wuzhicms，看到该内容，说明您已经配置好邮件发送服务器！";
-            $mail = load_class('sendmail');
-            $mail->setServer($config['smtp_server'], $config['smtp_user'], $password); //设置smtp服务器，普通连接方式
-            //$mail->setServer("smtp.gmail.com", "XXXXX@gmail.com", "XXXXX", 465, true); //设置smtp服务器，到服务器的SSL连接
-            $mail->setFrom($config['send_email']); //设置发件人
-            $mail->setReceiver($receive); //设置收件人，多个收件人，调用多次
-            //$mail->setCc("XXXX"); //设置抄送，多个抄送，调用多次
-            //$mail->setBcc("XXXXX"); //设置秘密抄送，多个秘密抄送，调用多次
-            //$mail->addAttachment("XXXX"); //添加附件，多个附件，调用多次
-            $mail->setMail($subject, $message); //设置邮件主题、内容
-            $mail->sendMail(); //发送
-            if($mail->_errorMessage) {
-                MSG($mail->_errorMessage);
+            load_function('sendmail');
+
+            if(send_mail($receive,$subject,$message)===false) {
+                MSG(L('邮件发送失败!'));
             }
             MSG(L('sendmail success'),HTTP_REFERER);
         } else {
@@ -143,4 +136,70 @@ class set extends WUZHI_admin {
             include $this->template('set_sendmail_test');
         }
     }
+
+    /**
+     * 自定义全局变量
+     */
+    public function global_vars() {
+
+        $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
+        $page = max($page,1);
+        $result = $this->db->get_list('setting', array('m'=>'global_vars'), '*', 0, 20,$page);
+        $pages = $this->db->pages;
+        $total = $this->db->number;
+        include $this->template('global_vars');
+    }
+
+    /**
+     * 自定义全局变量添加
+     */
+    public function add_global_vars() {
+        if(isset($GLOBALS['submit'])) {
+            $r = $this->db->get_one('setting', array('keyid' => $GLOBALS['var'],'m'=>'global_vars'));
+            if($r) MSG('变量已存在');
+            $formdata = array();
+            $formdata['m'] = 'global_vars';
+            $formdata['title'] = $GLOBALS['title'];
+            $formdata['keyid'] = $GLOBALS['var'];
+            $formdata['data'] = $GLOBALS['data'];
+            $this->db->insert('setting', $formdata);
+            $cache = load_class('cache_global_vars');
+            $cache->cache_all();
+            MSG('添加成功','?m=core&f=set&v=global_vars'.$this->su());
+        } else {
+            $show_formjs = 1;
+            include $this->template('global_vars_add');
+        }
+    }
+    /**
+     * 自定义全局变量修改
+     */
+    public function edit_global_vars() {
+        $id = intval($GLOBALS['id']);
+        if(isset($GLOBALS['submit'])) {
+            $formdata = array();
+            $formdata['title'] = $GLOBALS['title'];
+            $formdata['keyid'] = $GLOBALS['var'];
+            $formdata['data'] = $GLOBALS['data'];
+            $this->db->update('setting', $formdata,array('id'=>$id));
+            $cache = load_class('cache_global_vars');
+            $cache->cache_all();
+            MSG('更新成功','?m=core&f=set&v=global_vars'.$this->su());
+        } else {
+            $show_formjs = 1;
+            $data = $this->db->get_one('setting', array('id' => $id));
+            include $this->template('global_vars_edit');
+        }
+    }
+    /**
+     * 自定义全局变量删除
+     */
+    public function delete_global_vars() {
+        $id = intval($GLOBALS['id']);
+        $this->db->delete('setting',array('id'=>$id,'m'=>'global_vars'));
+        $cache = load_class('cache_global_vars');
+        $cache->cache_all();
+        MSG('删除成功','?m=core&f=set&v=global_vars'.$this->su());
+    }
+
 }

@@ -145,7 +145,7 @@ class index extends WUZHI_admin{
 					$comma = "";
 					$tabledump .= "INSERT INTO `$tables[$i]` VALUES(";
 					for($j = 0; $j < $numfields; $j++) {
-						$tabledump .= $comma."'".mysql_real_escape_string($row[$name[$j]])."'";
+						$tabledump .= $comma."'".$row[$name[$j]]."'";
 						$comma = ",";
 					}
 					$tabledump .= ");\n";

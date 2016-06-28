@@ -40,7 +40,7 @@ class WUZHI_foreground {
 				//	获取用户信息
 				$this->memberinfo = $this->db->get_one('member', '`uid` = '.$uid, '*');
 				//	判断用户是否被锁定
-				if($this->memberinfo['lock'] && (empty($this->memberinfo['lock']) || $this->memberinfo['locktime'] > SYS_TIME))MSG(L('user_lock'), 'index.php');
+				if($this->memberinfo['islock'] && (empty($this->memberinfo['islock']) || $this->memberinfo['locktime'] > SYS_TIME))MSG(L('user_lock'), 'index.php');
 				//	判断用户会员组
 				if($this->memberinfo['groupid'] == 1) {
 					$this->clean_cookie();
@@ -49,6 +49,14 @@ class WUZHI_foreground {
 					$this->clean_cookie();
 					$this->send_register_mail($this->memberinfo);
 					MSG(L('need_email_authentication'));
+				} elseif($this->memberinfo['groupid'] == 5) {
+					MSG('您的帐号正在审核中!');
+				}
+				if($this->memberinfo['islock']) {
+					MSG('您的帐号被锁定!不能登录了!');
+				}
+				if($this->memberinfo['locktime']>SYS_TIME) {
+					MSG('您的帐号被锁定!请在'.date('Y-m-d H:i:s',$this->memberinfo['locktime']).'之后登录!');
 				}
 				//	判断用户密码是否和cookie一致
 				if($this->memberinfo['password'] !== $password){
@@ -61,16 +69,30 @@ class WUZHI_foreground {
 				}
 				//	判断是否存在模型id
 				if($this->memberinfo['modelid']){
-					$model_table = $this->db->get_one('model', 'modelid='.$this->memberinfo['modelid'], 'attr_table');
-					//获取用户模型信息
-					$this->_member_modelinfo = $this->db->get_one($model_table['attr_table'], '`uid` = '.intval($uid), '*');
-					if(is_array($this->_member_modelinfo)) {
-						$this->memberinfo = array_merge($this->memberinfo, $this->_member_modelinfo);
+					$modelids = explode(',',$this->memberinfo['modelid']);
+					foreach($modelids as $_modelid) {
+						$model_table = $this->db->get_one('model', 'modelid='.$_modelid, 'attr_table');
+						//获取用户模型信息
+						$this->_member_modelinfo = $this->db->get_one($model_table['attr_table'], '`uid` = '.intval($uid), '*');
+						if(is_array($this->_member_modelinfo)) {
+							$this->memberinfo = array_merge($this->memberinfo, $this->_member_modelinfo);
+						}
 					}
+
+
+				}
+				//判断用户是否必须要修改密码
+				if($this->memberinfo['pw_reset'] && V!='pw_reset'){
+					MSG('请先设置新密码', 'index.php?m=member&v=pw_reset');
 				}
 				$this->uid = $uid;
 			} else {
-				MSG(L('login_please'), 'index.php?m=member&v=login');
+				if(isset($GLOBALS['setwindow'])) {
+					$forward = urlencode($GLOBALS['forward']);
+				} else {
+					$forward = urlencode(HTTP_REFERER);
+				}
+				MSG(L('login_please'), 'index.php?m=member&v=login&forward='.$forward);
 			}
 		}
 	}
@@ -105,20 +127,23 @@ class WUZHI_foreground {
 		//	得到效验的url
 		if($template == 'register'){
 			$subject = L('activation');
-			$url = WEBURL.'index.php?m=member&v=public_verify_email&uid='.$info['uid'].'&key='.md5($info['uid']._KEY);
+			$key = md5($info['uid']._KEY);
+			$url = WEBURL.'index.php?m=member&v=public_verify_email&uid='.$info['uid'].'&key='.$key;
 		}else{
 			$subject = L('forget_password');
-			$url = WEBURL.'index.php?m=member&v=public_find_password_email&email='.$info['email'].'&key='.md5($info['email']._KEY);
+			$key = md5($info['email']._KEY);
+			$url = WEBURL.'index.php?m=member&v=public_find_password_email&email='.$info['email'].'&key='.$key;
 		}
+		$this->db->insert('key_verify', array('keyid'=>$key,'addtime'=>SYS_TIME));
+
 		//	获取模版
 		ob_start();
 		include T('member', 'mail_'.$template);
 		$template = ob_get_contents();
 		ob_clean();
 		//	发送Email
-		$mail = load_class('sendmail');
-		$mail->setReceiver($info['email']);
-		$mail->setMail($subject, $template);
-		return $mail->sendMail();
+		load_function('sendmail');
+		$fs = send_mail($info['email'],$subject,$template);
+		return $fs;
 	}
 }
