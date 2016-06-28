@@ -54,7 +54,7 @@
 6. 生成升级包
 
     ```[sh]
-    php BuildPackageCommand.php MAIN 3.0.1 upgrade/build/diff-3.0.1
+    php /bin/build.php MAIN 3.0.1 upgrade/build/diff-3.0.1
 
     cd upgrade/build zip -r MAIN_3.0.1.zip MAIN_3.0.1
     ```
