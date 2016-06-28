@@ -39,8 +39,5 @@ define('SUPPORT_MOBILE',1);//0，不支持移动页面，1，自动识别，动�
 define('TPLID','t2');
 
 //版本和升级相关配置
-define('DOWNLOAD_PATH', '/workspace/wwwroot/wuzhicms_v2/src/upgrade/data/');
-define('BACKUP_PATH', '/workspace/wwwroot/wuzhicms_v2/src/upgrade/backup/');
-define('SYSTEM_ROOT','/workspace/wwwroot/wuzhicms_v2/src');
-
-define('DEBUG', false);
+define('DOWNLOAD_PATH', CACHE_ROOT.'upgrade/data/');
+define('BACKUP_PATH', CACHE_ROOT.'upgrade/backup/');
