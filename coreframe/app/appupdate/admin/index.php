@@ -258,7 +258,7 @@ final class index extends WUZHI_admin
             //refresh cache
             // $this->filesystem->remove(CACHE_ROOT);
         } catch (\Exception $e) {
-            $errors[] = "应用安装升级成功，但刷新缓存失败！请检查{$cachePath}的权限";
+            $errors[] = "应用安装升级成功，但刷新缓存失败！请检查权限";
             goto last;
         }
 

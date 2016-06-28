@@ -1,3 +1,5 @@
+执行 这个里面的 sql /Users/Simon/Projects/php/www/wuzhicms/coreframe/app/appupdate/fields/db1.sql
+
 1. 创建release 分支(可选)
 
     ```[sh]

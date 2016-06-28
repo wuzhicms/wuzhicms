@@ -15,7 +15,7 @@ load_function('curl');
 
 class WUZHI_app_client
 {
-    private $api_url = 'http://127.0.0.1:8000/api/';
+    private $api_url = 'http://dev.wuzhi_cloud.com/api/';
 
     public function checkUpgradePackages($args)
     {
@@ -30,8 +30,8 @@ class WUZHI_app_client
     public function downloadPackage($packageId)
     {
         list($url, $args) = $this->prepareHttpUrlAndParams('downloadPackage', array('packageId' => $packageId));
-        $url      = $url . (strpos($url, '?') ? '&' : '?') . http_build_query($args);
-        $filePath = $this->download($url);
+        $url              = $url.(strpos($url, '?') ? '&' : '?').http_build_query($args);
+        $filePath         = $this->download($url);
         return $filePath;
     }
 
@@ -42,7 +42,7 @@ class WUZHI_app_client
         if ($httpMethod == 'POST') {
             $result = post_curl($url, $args);
         } else {
-            $url    = $url . (strpos($url, '?') ? '&' : '?') . http_build_query($args);
+            $url    = $url.(strpos($url, '?') ? '&' : '?').http_build_query($args);
             $result = get_curl($url);
         }
         return json_decode($result, true);
@@ -50,17 +50,17 @@ class WUZHI_app_client
 
     private function prepareHttpUrlAndParams($action, $args)
     {
-        $url           = $this->api_url . $action;
+        $url           = $this->api_url.$action;
         $args['host']  = WEBURL;
-        $args['debug'] = DEBUG;
+        $args['debug'] = DEBUG === true ? DEBUG : false;
 
         return array($url, $args);
     }
 
     private function download($url)
     {
-        $fileName = md5($url) . '_' . time();
-        $filePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName;
+        $fileName = md5($url).'_'.time();
+        $filePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.$fileName;
         $fp       = fopen($filePath, 'w');
 
         $curl = curl_init($url);
@@ -72,5 +72,4 @@ class WUZHI_app_client
 
         return $filePath;
     }
-
 }
