@@ -20,3 +20,4 @@
 /upgrade/backup/*
 /upgrade/data/*
 /upgrade/build/*
+/caches/upgrade/
