@@ -1,4 +1,5 @@
 /build/
+/bin/
 /.idea/*
 /.svn/*
 /caches/content/*
