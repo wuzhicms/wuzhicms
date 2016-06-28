@@ -1,0 +1,45 @@
+{T "content","head",TPLID}
+<!--路径导航-->
+<div style="background: #f3f3f3">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="{WEBURL}">首页</a><span> &gt;</span> </li>
+            {catpos($cid)}
+            <li class="active">正文</li>
+        </ol>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-xs-3">
+
+        <div class="right-bg-boxg   down-one-screen" >
+            <div class="lm-title margin_bottom15">
+                <h3 class="lm-title-left">{$categorys[$elasticid]['name']}</h3>
+            </div>
+            <div class="list-group ">
+                {wz:content action="category" cid="$elasticid" pagesize="100" order="sort ASC"}
+                {loop $rs $r}
+                {if $r['ismenu']}<a href="{$r['url']}" class="list-group-item manhangyichu {if $r['cid']==$cid}active{/if}">
+                {$r['name']}</a>{/if}
+                {/loop}
+                {/wz}
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-9">
+        <div class="news-content">
+            <h2 class="text-center">{$title}</h2>
+            <hr>
+            <div  class="content-p">
+                {$content}
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+{T "content","foot",TPLID}

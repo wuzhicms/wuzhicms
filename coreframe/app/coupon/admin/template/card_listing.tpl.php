@@ -14,38 +14,27 @@
                 <table class="table table-striped table-advance table-hover">
                     <thead>
                     <tr>
-                        <th class="hidden-phone tablehead">优惠券号码</th>
+                        <th class="hidden-phone tablehead">批次号</th>
                         <th class="tablehead">优惠券名</th>
-                        <th class="tablehead">绑定套餐名</th>
                         <th class="tablehead">面值</th>
                         <th class="tablehead">过期时间</th>
-                        <th class="tablehead">使用人</th>
-                        <th class="tablehead">限次</th>
-                        <th class="tablehead">状态</th>
                         <th class="tablehead">管理操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
                     foreach($result AS $r) {
-                        $mr = $this->db->get_one('member',array('uid'=>$r['uid']));
-                        $tr = $this->db->get_one('tuangou',array('id'=>$r['id']));
                         ?>
                         <tr title="生成人：<?php echo $r['adminname'];?> &#10;生成时间：<?php echo time_format($r['addtime']);?>">
-                            <td><?php echo $r['card_no'];?></td>
+                            <td><?php echo $r['groupname'];?></td>
                             <td><?php echo $r['title'];?></td>
-                            <td><?php echo $tr['title'];?></td>
                             <td><?php echo $r['mount'];?></td>
                             <td><?php echo date('Y-m-d',$r['endtime']);?></td>
-                            <td><?php echo $mr['username'];?></td>
-                            <td><?php if($r['usetype']) {echo '不限次';}else{ echo '1次';} ?></td>
-                            <td><?php echo $status_arr[$r['status']];?></td>
                             <td>
-                                <?php
-                                if($r['status']<2) {?>
-                                <a href="?m=coupon&f=card&v=send&cardid=<?php echo $r['cardid'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">发送</a>
-                                <?php }?>
-                                <a href="?m=coupon&f=card&v=history&cardid=<?php echo $r['cardid'];?><?php echo $this->su();?>" class="btn btn-default btn-xs">发送记录</a>
+                                <a href="?m=coupon&f=card&v=bind_select_content&groupname=<?php echo $r['groupname'];?><?php echo $this->su();?>" class="btn btn-danger btn-xs">绑定套餐</a>
+                                <a href="?m=coupon&f=card&v=bind&groupname=<?php echo $r['groupname'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">套餐列表</a>
+                                <a href="?m=coupon&f=card&v=detail_listing&groupname=<?php echo $r['groupname'];?><?php echo $this->su();?>" class="btn btn-default btn-xs">优惠券列表</a>
+                                <a href="?m=coupon&f=card&v=add&groupname=<?php echo $r['groupname'];?><?php echo $this->su();?>" class="btn btn-default btn-xs"><i class="icon-plus btn-icon"></i>新增该批次优惠券</a>
 
                             </td>
                         </tr>

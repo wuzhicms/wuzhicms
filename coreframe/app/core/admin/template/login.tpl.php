@@ -27,7 +27,7 @@
                     <div class="input-group-addon">
                         <i class="icon-qrcode"></i>
                     </div>
-                    <input type="text" id="codeid" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img').src='<?php echo WEBURL;?>api/identifying_code.php?rd='+Math.random();void(0);">
+                    <input type="text" id="codeid" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img').src='<?php echo WWW_PATH;?>api/identifying_code.php?rd='+Math.random();void(0);">
                     <div class="input-group-addon" id="logincode">
                         <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="javascript:this.src='<?php echo WWW_PATH;?>api/identifying_code.php?rd='+Math.random();void(0);">
                     </div>

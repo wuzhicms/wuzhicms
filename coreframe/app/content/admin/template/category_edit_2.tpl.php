@@ -27,7 +27,7 @@ include $this->template('header','core');
               <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                   <?php
 
-                  echo $form->tree_select($categorys, $pid, 'name="form[pid]" class="form-control" onchange="check_parent(this.value)"', '≡ 无上级栏目 ≡');
+                  echo $form->tree_select($categorys, $r['pid'], 'name="form[pid]" class="form-control" onchange="check_parent(this.value)"', '≡ 无上级栏目 ≡');
 
                   ?>
               </div>

@@ -32,10 +32,18 @@ class sms{
             exit('201');
         }
         $checkcode = $GLOBALS['checkcode'];
-        if($checkcode=='') exit('\(^o^)/~');
+        if($checkcode=='') exit('202');
         load_class('session');
         if(strtolower($_SESSION['code']) != strtolower($checkcode)) exit('202');
         $_SESSION['code'] = '';
+
+        $endtime = SYS_TIME-120;
+
+        if($_SESSION['et'] && $_SESSION['et']>$endtime) {
+            exit('204');
+        } else {
+            $_SESSION['et'] = SYS_TIME;
+        }
 
         $posttime = SYS_TIME-86400;
         $ip = get_ip();
@@ -44,34 +52,37 @@ class sms{
         if($num>200) {//单IP 24小时内最大请求次数限定
             exit('203');
         }
+
         //单用户动态短信请求间隔时长限制 ,根据手机号码判断是否为一个用户
         $where = "`mobile`='$mobile'";
         $r = $this->db->get_one('sms_checkcode',$where, '*', 0,'id DESC' );
-        if($r['posttime']>SYS_TIME-60) {//60 秒之内连续请求
+
+        if($r['posttime']>$endtime) {//120 秒之内连续请求
             exit('204');
         }
+
+
         //同一手机号次数限定
-        $where = "`mobile`='$mobile' AND `posttime`>$posttime";
+        $where = "`mobile`='$mobile' AND `posttime`>=$posttime";
         $num = $this->db->count_result('sms_checkcode',$where);
         if($num>200) {//同一手机号次数限定 24小时内最大请求次数限定
             exit('205');
         }
-
-        //验证通过
-    
+//验证通过
         $code = rand(1000,9999);
 
         $sendsms = load_class('sms','sms');
         $code = rand(1000,9999);
+        $formdata = array();
+        $formdata['mobile'] = $mobile;
+        $formdata['uid'] = $uid;
+        $formdata['posttime'] = SYS_TIME;
+        $formdata['code'] = $code;
+        $formdata['ip'] = $ip;
+          $this->db->insert('sms_checkcode', $formdata);
+
         $returnstr = $sendsms->send_sms($mobile, $code, 1); //发送短信
         if($sendsms->statuscode==0) {
-            $formdata = array();
-            $formdata['mobile'] = $mobile;
-            $formdata['uid'] = $uid;
-            $formdata['posttime'] = SYS_TIME;
-            $formdata['code'] = $code;
-            $formdata['ip'] = $ip;
-            $this->db->insert('sms_checkcode', $formdata);
             exit('0');
         } else {
             echo $returnstr;

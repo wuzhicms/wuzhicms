@@ -8,9 +8,10 @@
     'master_table' => 'member',
     'attr_table' => 'member_detail_data',
     'remark' => '',
-    'template' => 'show',
+    'template' => '',
     'css' => '',
     'share_model' => '1',
+    'manage_template' => '',
   ),
   11 => 
   array (
@@ -20,9 +21,10 @@
     'master_table' => 'member',
     'attr_table' => 'member_company_data',
     'remark' => '',
-    'template' => 'show',
+    'template' => '',
     'css' => '',
     'share_model' => '1',
+    'manage_template' => '',
   ),
   23 => 
   array (
@@ -35,5 +37,6 @@
     'template' => 'show',
     'css' => '',
     'share_model' => '1',
+    'manage_template' => '',
   ),
 )?>

@@ -1,6 +1,6 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T('member','head'); ?>
-<link rel="stylesheet" href="http://www.h1jk.cn/res/js/dialog/ui-dialog.css" />
-<script src="http://www.h1jk.cn/res/js/dialog/dialog-plus.js"></script>
+<link rel="stylesheet" href="<?php echo R;?>js/dialog/ui-dialog.css" />
+<script src="<?php echo R;?>js/dialog/dialog-plus.js"></script>
 <!--正文部分-->
 <div class="container adframe">
     <div class="row">

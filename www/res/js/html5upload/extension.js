@@ -91,9 +91,9 @@ function callback_dianping(filename,htmlid,is_thumb,htmlname)
 		var file_id = temp[2];
 		str += '<li id="file_node_'+file_id+'"><input type="hidden" name="'+htmlname+'['+file_id+'][url]" value="'+file_url+'"> <img src="'+file_url+'" alt="'+file_alt+'" onclick="img_view(this.src);"></li>';
 	});
-
 	var dialog = top.dialog.get(window);
 	dialog.close(str).remove();
+
 	return false;
 }
 

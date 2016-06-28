@@ -1,407 +1,772 @@
 <!DOCTYPE html>
-<html>
-<head lang="zh-CN">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<html lang="zh-CN">
+<head>
     <meta charset="utf-8">
-    <title>五指CMS网站内容管理系统</title>
-    <meta name="keywords" content="五指CMS网站内容管理系统">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>五指CMS网站内容管理系统 -  Powered by wuzhicms</title>
+    <meta name="keywords" content="五指CMS网站内容管理系统,cms,wuzhicms系统">
     <meta name="description" content="五指CMS网站内容管理系统">
-    <script type="text/javascript" src="http://dev.wuzhicms.com/res/t2/js/jquery.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="http://dev.wuzhicms.com/res/t2/css/bootstrap.css">
-	<link type="text/css" rel="stylesheet" href="http://dev.wuzhicms.com/res/t2/css/style.css">
-    <script type="text/javascript" src="http://dev.wuzhicms.com/res/t2/js/bootstrap.js"></script>
-    <script type="text/javascript" src="http://dev.wuzhicms.com/res/t2/js/my.js"></script>
-    <script type="text/javascript">
-        var cookie_pre="LRy_";var cookie_domain = '';var cookie_path = '';
-    </script>
-    <script type="text/javascript" src="http://dev.wuzhicms.com/res/js/base.js"></script>
+    <meta name="generator" content="wuzhicms 3.x" />
+    <!-- CSS -->
+    <link href="/res/t3/css/bootstrap.css" rel="stylesheet">
+    <link href="/res/t3/css/style.css" rel="stylesheet">
+    <link href="/res/t3/css/hover.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/res/t3css/non-responsive.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://dev.wuzhicms.com/res/t2/css/style_ie.css" />
+    <script src="//cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.wuzhicms.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+        var cookie_pre = "LRy_";var cookie_domain = '';var cookie_path = '';var web_url = 'http://dev.wuzhicms.com/';
+    </script>
+    <script src="/res/t3/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/res/js/base.js"></script>
 </head>
+
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <!-- Collect the nav links, forms, and other content for toggling -->
-            <ul class="nav navbar-nav">
-                <li class="dropdown active" id="c0">
-                    <a href="http://dev.wuzhicms.com/" class="dropdown-toggle">首页</a>
-                </li>
-                                                                <li class="dropdown " id="c1">
-                    <a href="/index.php?v=listing&cid=1&page=1" class="dropdown-toggle" data-toggle="dropdown">新闻A<span class="caret"></span></a>                    <ul class="dropdown-menu" role="menu">
-                                                                                                                                                                                                                                                <li><a href="/index.php?v=listing&cid=6&page=1">股票</a></li>                                                <li><a href="/index.php?v=listing&cid=7&page=1">基金</a></li>                                                <li><a href="/index.php?v=listing&cid=8&page=1">保险</a></li>                                                <li><a href="/index.php?v=listing&cid=9&page=1">家族信托</a></li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>
-                </li>
-                                                                <li class="dropdown " id="c2">
-                    <a href="/index.php?v=listing&cid=2&page=1" class="dropdown-toggle" data-toggle="dropdown">新闻B<span class="caret"></span></a>                    <ul class="dropdown-menu" role="menu">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="/index.php?v=listing&cid=10&page=1">房地产</a></li>                                                <li><a href="/index.php?v=listing&cid=11&page=1">移民</a></li>                                                <li><a href="/index.php?v=listing&cid=12&page=1">项目投资</a></li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>
-                </li>
-                                                                <li class="dropdown " id="c3">
-                    <a href="/index.php?v=listing&cid=3&page=1" class="dropdown-toggle" data-toggle="dropdown">图片演示<span class="caret"></span></a>                    <ul class="dropdown-menu" role="menu">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="/index.php?v=listing&cid=14&page=1">图片子栏目A</a></li>                                                <li><a href="/index.php?v=listing&cid=15&page=1">图片子栏目B</a></li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>
-                </li>
-                                                                <li class="dropdown " id="c4">
-                    <a href="/index.php?v=listing&cid=4&page=1" class="dropdown-toggle" data-toggle="dropdown">下载演示<span class="caret"></span></a>                    <ul class="dropdown-menu" role="menu">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="/index.php?v=listing&cid=18&page=1">下载子栏目A</a></li>                                                                                                <li><a href="/index.php?v=listing&cid=20&page=1">下载子栏目B</a></li>                                                                                                                                                                                                <li><a href="/index.php?v=listing&cid=35&page=1">下载子栏目C</a></li>                                                                                                                                                                                                                                                                                                                                            </ul>
-                </li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li class="dropdown " id="c26">
-                    <a href="/index.php?v=listing&cid=26&page=1" >积分商城</a>                    <ul class="dropdown-menu" role="menu">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>
-                </li>
-                                                                                                                                                                                                                                                                                            </ul>
-            <ul id="mylogin" class="nav navbar-nav navbar-right">
-                <li><a href="http://dev.wuzhicms.com/index.php?m=member&v=register">注册</a></li>
-                <li><a href="http://dev.wuzhicms.com/index.php?m=member&v=login">登录</a></li>
-            </ul>
-            <ul id="mylogined" class="nav navbar-nav navbar-right hide">
-                <li><a href="http://dev.wuzhicms.com/index.php?m=member"><span id="myname"></span> [会员中心]</a></li>
-                <li><a href="http://dev.wuzhicms.com/index.php?m=member&v=logout">退出</a></li>
-            </ul>
-    </div>
-    <!-- /.container-fluid -->
+
+<nav class="navbar navbar-default-index">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar" class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://dev.wuzhicms.com/">
+                <img alt="Brand" src="/res/t3/image/logo.png">
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+                                                <li><a href="/index.php?v=listing&cid=1&page=1">新闻</a></li>
+                                                <li><a href="/index.php?v=listing&cid=38&page=1">视频</a></li>
+                                                <li><a href="/index.php?v=listing&cid=3&page=1">图片</a></li>
+                                                <li><a href="/index.php?v=listing&cid=4&page=1">下载</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="/index.php?v=listing&cid=27&page=1">团购</a></li>
+                                                <li><a href="/index.php?v=listing&cid=26&page=1">积分商城</a></li>
+                                                                                                                    </ul>
+
+        <ul class="nav navbar-nav navbar-right hide" id="mylogined">
+                        <li>
+                <a href="http://dev.wuzhicms.com/index.php?f=search"  style="padding-top: 18px; padding-bottom: 15px;"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 7px;"></span> </a>
+            </li>
+                        <!--
+            <li class="dropdown  mall--dropdown-menu">
+                <a href="#"   class="dropdown-toggle " data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true" style="padding-top: 5px;"></span> <span class="font-Arial font_size14">3</span></a>
+                <ul class="dropdown-menu">
+                    <p class="font_size12">最近加入的宝贝：</p>
+
+
+                    <ul class="cart-list">
+                        <li>
+                            <div class="cart-item clearfix"><a class="thumb" href=""><img alt="" src="image/temp/temp8.jpg " width="60px"></a>
+                                <a class="name" href="">小蚁蓝牙遥控器胡歌来测试  黑色</a><span class="price">39元 × 1</span>
+                                <a class="btn-del" href="javascript: void(0);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cart-item clearfix "><a class="thumb" href=""><img alt="" src=""></a>
+                                <a class="name" href="">智能唤醒翻盖保护套 黑色</a> <span class="price">39元 × 1</span>
+                                <a class="btn-del" href="javascript: void(0);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+
+                    <li role="separator" class="divider" style="margin-top: 0"></li>
+                    <p class="font_size12 text-right">购物车里还有1件宝贝</p>
+                    <a href="#" class=" btn btn-warning btn-sm  float_right">查看我的购物车</a>
+                </ul>
+            </li>
+            -->
+            <li class="dropdown login--dropdown-menu">
+                <a href="http://dev.wuzhicms.com/index.php?m=member"  title="进入会员中心"  class="dropdown-toggle" ><img src="http://dev.wuzhicms.com/api/myface.php" class="img-circle" height="24px;" style="border: 2px solid #fff"> wuzhicms</a>
+            </li>
+            <li>
+                <a href="http://dev.wuzhicms.com/index.php?m=member&v=logout"  class="dropdown-toggle" >退出</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" id="mylogin">
+                        <li>
+                <a href="http://dev.wuzhicms.com/index.php?f=search"  style="padding-top: 18px; padding-bottom: 15px;"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 7px;"></span> </a>
+            </li>
+                        <li class="dropdown login--dropdown-menu">
+                <a href="#"  title="登录"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> </a>
+                <ul class="dropdown-menu">
+                    <form name="toplogin" action="http://dev.wuzhicms.com/index.php?m=member&v=login" method="post" onsubmit="return formcheck_toplogin();">
+                        <p class="help-block text-right color_999">还不是会员? <a href="http://dev.wuzhicms.com/index.php?m=member&v=register">立即注册</a></p>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="toplogin_username" name="username" placeholder="用户名" >
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="toplogin_password" name="password" placeholder="密码">
+                        </div>
+                        <div class="form-group " style="position: relative;">
+                            <input type="text" name="checkcode" class="form-control" id="toplogin_checkcode" placeholder="请输入验证码" onfocus="if($('#code_img').attr('src') == '/res/images/logincode.gif') $('#code_img').attr('src', 'http://dev.wuzhicms.com/api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" onkeyup="toplogin_keyup(this.value)" >
+                            <img src="/res/images/logincode.gif" id="code_img" alt="点击刷新" onclick="$(this).attr('src', '/res/api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" style="margin-top:2px; position: absolute; top: 0;right: 2px; max-height: 35px;">
+                        </div>
+                        <div class="checkbox font_size12">
+                            <label>
+                                <input type="checkbox" name="savecookie" value="1" checked> 下次自动登录
+                            </label>
+                            <a  href="http://dev.wuzhicms.com/index.php?m=member&v=public_find_password_email" class="color_warning pading_left_10px" style=" float: right">忘记密码？</a>
+                        </div>
+                        <div id="toplogin_msg" class="help-block-g  color_danger hide"></div>
+                        <button type="submit" name="submit" class="btn btn-primary btn-block"><span class="font_size16">登录</span></button>
+                    </form>
+                    <div class=" disanfang_ico">
+                        <div  style=" color: #999999; padding-bottom: 8px;">使用第三方账号登录</div>
+                        <li><a href="http://dev.wuzhicms.com/index.php?m=member&amp;f=index&amp;v=auth&amp;type=qq"><img src="/res/images/qqlogin.png" alt="使用QQ帐号登录" title="使用QQ帐号登录" width="30px"></a></li>                    <li><a href="http://dev.wuzhicms.com/index.php?m=member&amp;f=index&amp;v=auth&amp;type=sina"><img src="/res/images/weibologin.png" alt="使用微博帐号登录" title="使用微博帐号登录" width="30px"></a></li>                    <li><a href="http://dev.wuzhicms.com/index.php?m=member&amp;f=index&amp;v=auth&amp;type=weixin"><img src="/res/images/weichatlogin.png" alt="使用微信帐号登录" title="使用微信帐号登录" width="30px"></a></li>
+                    </div>
+
+                </ul>
+            </li>
+
+        </ul>
+    </div><!--/.nav-collapse -->
 </nav>
 
-<div class="top_box">
-    <div class="container">
-        <div class="top_logo"><a href="http://dev.wuzhicms.com/" title="返回首页"><img src="http://dev.wuzhicms.com/res/t2/image/logo.png"></a></div>
-        <div class="top_ad"><img src="http://placehold.it/450x75" width="450" height="75"></div>
-        <div class="top_search">
-            <p>五指CMS咨询QQ：282198327</p>
-            <form class="navbar-form navbar-right" role="search" method="get" action="http://dev.wuzhicms.com/index.php?f=search">
-                <input name="f" value="search" type="hidden">
-                <div class="form-group">
-                    <input type="text" name="keywords" class="form-control" size="25" placeholder="输入您要搜索的内容">
-                </div>
-                <button type="submit" class="btn btn-primary_g">搜索</button>
-            </form>
+<!--ad-->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ad-box" style="height: 90px; width: 100%; background: #dddddd; text-align: center; "><script  src="http://dev.wuzhicms.com/promote/1.js"></script></div>
         </div>
     </div>
 </div>
-<link type="text/css" rel="stylesheet" href="http://dev.wuzhicms.com/res/css/animate.css">
-<div class="bankuai_1 pd30">
+
+
+
+
+<!--index-one-screen-->
+<div class="index-one-screen">
+    <!--big-headline-news-->
     <div class="container">
-        <div class="row">
-            <div class="col-xs-6">
-                <h3>首页头条推荐<span class="lm_more"></span></h3>
-                <div class="list-group">
-<a href="/index.php?v=show&cid=9&id=142" class="list-group-item">
-                    <h4 class="list-group-item-heading"><span class="badge">家族信托</span> 证券信托成部分信托公司绝对主打</h4>
-                    <p class="list-group-item-text">&nbsp;　　股市自去年走牛以来，截至4月16日，大盘直逼4200点，创7</p>
-                </a>
-<a href="/index.php?v=show&cid=8&id=34" class="list-group-item">
-                    <h4 class="list-group-item-heading"><span class="badge">保险</span> 电商差异化竞争:京东下乡刷墙 阿里做跨境电</h4>
-                    <p class="list-group-item-text">&nbsp;同为电商巨头，近一年来的京东与阿里“完全不在一个频道</p>
-                </a>
-<a href="/index.php?v=show&cid=6&id=16" class="list-group-item">
-                    <h4 class="list-group-item-heading"><span class="badge">股票</span> 祁斌：A股市场具有成为全球最大资本市场的潜</h4>
-                    <p class="list-group-item-text">&nbsp;应梳理和消除沪港通现存国际资本进入的障碍，争取尽快将</p>
-                </a>
-<a href="/index.php?v=show&cid=6&id=134" class="list-group-item">
-                    <h4 class="list-group-item-heading"><span class="badge">股票</span> 马云王健林联手投资乐视体育</h4>
-                    <p class="list-group-item-text">&nbsp;羊城晚报记者昨日获悉，乐视控股旗下乐视体育已完成首轮</p>
-                </a>
-</div>
-            </div>
-            <div class="col-xs-6">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                    </ol>
 
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active"><a href="/index.php?v=show&cid=6&id=134"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1348/201505131448345416.jpg" alt="马云王健林联手投资乐视体育" width="465" height="300"></a>
-                            <div class="carousel-caption"> ... </div>
-                        </div>
-<div class="item "><a href="/index.php?v=show&cid=6&id=133"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1344/201505131444528260.jpg" alt="亚洲首富王健林：“在中国远离政府太假了”" width="465" height="300"></a>
-                            <div class="carousel-caption"> ... </div>
-                        </div>
-<div class="item "><a href="/index.php?v=show&cid=6&id=132"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1340/201505131440275510.jpg" alt="李嘉诚地产航母拟6月在港上市估值高达3300亿" width="465" height="300"></a>
-                            <div class="carousel-caption"> ... </div>
-                        </div>
-
+        <div class="big-headline-news ">
+            <div class="row">
+                <!--头条-->
+                                                                <div class="col-xs-12">
+                    <div class="border--bottom1s">
+                        <h2 class=" text-center  manhangyichu" ><a href="/index.php?v=show&cid=9&id=140" target="_blank">股东纠纷拖累方正证券业绩 20亿信托投资涉嫌违规</a></h2>
                     </div>
+                </div>
+                                                                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="/index.php?v=show&cid=8&id=32">网秦公布年度股东大会结果：股本扩增</a></div></div>
+                                                                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="/index.php?v=show&cid=6&id=13">沪指缩量涨3.36%冲刺3100 中字头股尾盘拉升</a></div></div>
+                                                                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="/index.php?v=show&cid=6&id=133">亚洲首富王健林：“在中国远离政府太假了”</a></div></div>
+                                                                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="/index.php?v=show&cid=8&id=136">商业健康险个税政策试点时间表划定</a></div></div>
+                                                            </div>
 
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> <span class="sr-only">Next</span> </a> </div>
+        </div>
+
+
+        <div class="index-last-new-box">
+            <div class="row">
+                <!--图片区-->
+                                                                <div class="col-xs-6">
+                    <div class="narrowArt">
+                        <a href="/index.php?v=show&cid=9&id=31" title="222" target="_blank">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/img_562_380_201604071500419809.jpg" alt="" height="380">
+                            <h1>谷歌微软反对酒店封杀个人WiFi设备</h1>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                                                                            <div class="narrowArt video">
+                        <a href="/index.php?v=show&cid=6&id=133" title="222" target="_blank">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/img_273_182_201604071422068310.jpg" alt="" height="182">
+                            <h2>亚洲首富王健林：“在中国远离政府太假了”</h2>
+                        </a>
+                    </div>
+                                                                            <div class="narrowArt video">
+                        <a href="/index.php?v=show&cid=7&id=22" title="222" target="_blank">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/img_273_182_201604071428049436.jpg" alt="" height="182">
+                            <h2>任正非：华为将试点以项目为中心的管理方式</h2>
+                        </a>
+                    </div>
+                                                            
+                </div>
+                <div class="col-xs-3">
+
+                    <div class="headline-news-list">
+                        <!--列表区-->
+                                                                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading color_qiyelan font_size16 toutiao-right-title" ><a href="/index.php?v=show&cid=6&id=16" target="_blank">祁斌：A股市场具有成为全球最大资本市场的潜力</a></h4>
+                                <div class="media-content  color_777 ">应梳理和消除沪港通现存国际资本进入的障碍，争取尽快将A股纳入MSCI和FTSE指数　　■本报记者 朱宝琛　　证监会[微博]国际部主任祁斌日前表示，作为资本市场渐进式开放的举措，沪港通的推出实现了内地和香港市场的双赢，两个差异巨大的市场的联通和制度衔接也可以为未来其他</div>
+                            </div>
+                        </div>
+                                                <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading color_qiyelan font_size16 toutiao-right-title" ><a href="/index.php?v=show&cid=6&id=133" target="_blank">亚洲首富王健林：“在中国远离政府太假了”</a></h4>
+                                <div class="media-content  color_777 ">【王健林】　　61岁，大连万达集团股份有限公司董事长。　　2015年3月，福布斯发布2015全球富豪榜，王健林成为中国内地首富；根据彭博华人富豪榜和亚洲富豪榜截至5月1日的数据，王健林以38</div>
+                            </div>
+                        </div>
+                                                <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading color_qiyelan font_size16 toutiao-right-title" ><a href="/index.php?v=show&cid=6&id=131" target="_blank">众筹已死：硬件创业公司如何在中美两地失去了支持者</a></h4>
+                                <div class="media-content  color_777 ">这是一个有着GoPro广告风格的宣传视频：在浩瀚无际的大海旁边，一个戴着黑色墨镜、身穿白色T恤的男子站在巨石上大手一挥，几乎比手掌还小的无人机便一跃而起，飞向遥远的天空。这是深圳市盛祥科技开发有限公司(以下简称“盛祥科技”)推出的安果掌飞自拍无人机在京东众筹发起页上的宣传视频。</div>
+                            </div>
+                        </div>
+                                                                                
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <!--专题区-->
+                                                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="首页专题四" title="222" target="_blank">
+                            <img  src="http://dev.wuzhicms.com/uploadfile/2016/04/07/img_273_182_201604071521498376.jpg" alt="" height="182">
+                            <h2 data-autor="专题推荐">首页专题四</h2>
+                        </a>
+                    </div>
+                </div>
+                                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="首页专题三" title="222" target="_blank">
+                            <img  src="http://dev.wuzhicms.com/uploadfile/2016/04/07/img_273_182_201604071521143191.jpg" alt="" height="182">
+                            <h2 data-autor="专题推荐">首页专题三</h2>
+                        </a>
+                    </div>
+                </div>
+                                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="首页专题二" title="222" target="_blank">
+                            <img  src="http://dev.wuzhicms.com/uploadfile/2016/04/07/img_273_182_201604071520478706.jpg" alt="" height="182">
+                            <h2 data-autor="专题推荐">首页专题二</h2>
+                        </a>
+                    </div>
+                </div>
+                                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="首页专题一" title="222" target="_blank">
+                            <img  src="http://dev.wuzhicms.com/uploadfile/2016/04/07/img_273_182_201604071519406425.jpg" alt="" height="182">
+                            <h2 data-autor="专题推荐">首页专题一</h2>
+                        </a>
+                    </div>
+                </div>
+                                            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="http://dev.wuzhicms.com/promote/2.js"></script></div>
             </div>
         </div>
     </div>
 </div>
-<div class="bankuai_1">
-    <div class="container">
+
+
+<!-- 图片 -->
+<div class="container">
+    <div class="index-pic-box">
+        <div class="lanmu-content lanmu-content-bg">
+            <h2 class="lanmu-title">
+                <a href="/index.php?v=listing&cid=3&page=1" >图片</a>
+            </h2>
+            <nav>
+                                                <a href="/index.php?v=listing&cid=14">图片子栏目A</a>                                <a href="/index.php?v=listing&cid=15&page=1">图片子栏目B</a>                                            </nav>
+        </div>
+
+
         <div class="row">
-            <div class="col-xs-8 ">
-                <h3>新闻A <span class="lm_more">                                        <a href="/index.php?v=listing&cid=6&page=1" target="_blank">股票</a>&nbsp;&nbsp;
-                                        <a href="/index.php?v=listing&cid=7&page=1" target="_blank">基金</a>&nbsp;&nbsp;
-                                        <a href="/index.php?v=listing&cid=8&page=1" target="_blank">保险</a>&nbsp;&nbsp;
-                                        <a href="/index.php?v=listing&cid=9&page=1" target="_blank">家族信托</a>&nbsp;&nbsp;
-                    </span>
-                    </h3>
-                    
-                    <div class="row">
-                    	<div class="col-xs-6">
-
-
-                                        <h4>&#8226; <a href="/index.php?v=listing&cid=6&page=1" target="_blank">股票</a></h4>
-                    <div class="list-group">
-                                            <a href="/index.php?v=show&cid=6&id=134" class="list-group-item_g" target="_blank">马云王健林联手投资乐视体育</a>                                                                    <a href="/index.php?v=show&cid=6&id=133" class="list-group-item_g" target="_blank"><span class="badge">05-15</span>· 亚洲首富王健林：“在中国远离政府太</a>                                                                    <a href="/index.php?v=show&cid=6&id=132" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 李嘉诚地产航母拟6月在港上市估值</a>                                                                    <a href="/index.php?v=show&cid=6&id=131" class="list-group-item_g" target="_blank"><span class="badge">05-15</span>· 万亿市场+十倍空间 农资电商投资潮</a>                                                                    <a href="/index.php?v=show&cid=6&id=17" class="list-group-item_g" target="_blank"><span class="badge">05-04</span>· 美国经济数据超预期 考验中国货币</a>                                                                    <a href="/index.php?v=show&cid=6&id=16" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 祁斌：A股市场具有成为全球最大资本</a>                                        </div>
-                    
-                                        <h4>&#8226; <a href="/index.php?v=listing&cid=7&page=1" target="_blank">基金</a></h4>
-                    <div class="list-group">
-                                                <a href="/index.php?v=show&cid=7&id=139" class="list-group-item_g" target="_blank">ueditor的更多API请看API 文档</a>                                                                        <a href="/index.php?v=show&cid=7&id=135" class="list-group-item_g" target="_blank"><span class="badge">05-16</span>· 股指狂飙 5只杠杆基金3天涨超30%</a>                                                                        <a href="/index.php?v=show&cid=7&id=26" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 12306被曝泄露用户信息 回应称经其</a>                                                                        <a href="/index.php?v=show&cid=7&id=25" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 广东联通总经理乘坐头等舱被处分</a>                                                                        <a href="/index.php?v=show&cid=7&id=24" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 宏碁变更美欧两地运营负责人：一高管</a>                                                                        <a href="/index.php?v=show&cid=7&id=23" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 杜邦先锋称中国批准转基因高油大豆</a>                                            </div>
-                    
+            <div class="col-xs-2">
+                <!--图片区一-->
+                                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=14&id=103" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2015/05/1212/img_300_600_201505121412597711.jpg" alt="西湖，位于浙江省杭州市西面，是中国大陆首批国家重点风景名胜区和中国十大风景名胜之一">
                         </div>
-                    
-                
-                <div class="col-xs-6">
-                                        <h4>&#8226; <a href="/index.php?v=listing&cid=8&page=1" target="_blank">保险</a></h4>
-                    <div class="list-group">
-                                                <a href="/index.php?v=show&cid=8&id=138" class="list-group-item_g" target="_blank">高风险运动如何买保险：医疗救治最有效</a>                                                                        <a href="/index.php?v=show&cid=8&id=137" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 监管酝酿治理新组合拳 隔离机制强</a>                                                                        <a href="/index.php?v=show&cid=8&id=136" class="list-group-item_g" target="_blank"><span class="badge">05-15</span>· 商业健康险个税政策试点时间表划定</a>                                                                        <a href="/index.php?v=show&cid=8&id=34" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 电商差异化竞争:京东下乡刷墙 阿里</a>                                                                        <a href="/index.php?v=show&cid=8&id=33" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 美法官判Facebook必须面对用户隐私</a>                                                                        <a href="/index.php?v=show&cid=8&id=32" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 网秦公布年度股东大会结果：股本扩增</a>                                            </div>
-                                                            <h4>&#8226; <a href="/index.php?v=listing&cid=9&page=1" target="_blank">家族信托</a></h4>
-                    <div class="list-group">
-                                                <a href="/index.php?v=show&cid=9&id=142" class="list-group-item_g" target="_blank">证券信托成部分信托公司绝对主打</a>                                                                        <a href="/index.php?v=show&cid=9&id=141" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 信托业引进行业评级 有望规范展业</a>                                                                        <a href="/index.php?v=show&cid=9&id=140" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 股东纠纷拖累方正证券业绩 20亿信</a>                                                                        <a href="/index.php?v=show&cid=9&id=31" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 谷歌微软反对酒店封杀个人WiFi设备</a>                                                                        <a href="/index.php?v=show&cid=9&id=30" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 美媒：智能手机、4K电视等2015年将不</a>                                                                        <a href="/index.php?v=show&cid=9&id=29" class="list-group-item_g" target="_blank"><span class="badge">05-13</span>· 彩电首现负增长 K市场将成明年家电</a>                                            </div>
-                                    </div>
+                        <h2>西湖，位于浙江省杭州市西面，是中国大陆首批国家重点风景名胜区和中国十大风景名胜之一</h2>
+                    </a>
                 </div>
+                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=14&id=108" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2015/05/1208/img_300_600_201505121608398264.jpg" alt="在画家眼中处处风景如画;在诗人眼里风景如诗如歌;在作家笔下风景则会化作一个个动人心魄的故事。">
+                        </div>
+                        <h2>在画家眼中处处风景如画;在诗人眼里风景如诗如歌;在作家笔下风景则会化作一个个动人心魄的故事。</h2>
+                    </a>
+                </div>
+                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=14&id=173" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2016/03/18/201603181609032031.jpg" alt="西安创拓大厦在西安市雁塔区高新五路2号">
+                        </div>
+                        <h2>西安创拓大厦在西安市雁塔区高新五路2号</h2>
+                    </a>
+                </div>
+                                                                
             </div>
             <div class="col-xs-4">
-                <div class="lipin_box">
-                    <div class="h_title">注册有礼</div>
-                                                            <img src="http://dev.wuzhicms.com/uploadfile/2015/05/1611/201505161511258811.jpg" alt="iPhone 5s 16G版 3G手机（金色）" class="imgys" width="95" height="88">
-                                        
-                    <div class="list-group">
-                                                                                                            <div style="height:105px;">
-                                <a href="/index.php?v=show&cid=26&id=3" class="list-group-item_gg" target="_blank">
-                                    <p>iPhone 5s 16G版 3G手机（金色）</p>
-                                </a>
-                            </div>
-                                                                                                                <a href="/index.php?v=show&cid=26&id=2" class="list-group-item_gg">· 迷你无线路由</a>                                                                                    <a href="/index.php?v=show&cid=26&id=1" class="list-group-item_gg">· 空气净化器</a>                                                                        </div>
-                    <ins class="liimg"></ins>
-                </div>
-                <a href="http://dev.wuzhicms.com/index.php?m=member&v=register" target="_blank"><button type="button" class="big_btn">马上注册</button></a>
-                <div class="rightad_box"><img src="http://placehold.it/300x233" width="300" height="233"></div>
-            </div>
-        </div>
-    </div>
+                <!--图片区二-->
+                <div class="narrowArt">
+    <a href="/index.php?v=show&cid=14&id=81" title="222" target="_blank">
+        <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/img_369_380_201604071547521117.jpg" alt="峡谷" height="380">
+        <h1>峡谷</h1>
+    </a>
 </div>
-
-<div class="bankuai_ad">
-    <div class="container">
-        <img src="http://placehold.it/960x100" width="960" height="100">
-    </div>
+        <div class="narrowArt">
+    <a href="/index.php?v=show&cid=14&id=77" title="222" target="_blank">
+        <img  src=" http://dev.wuzhicms.com/uploadfile/2015/05/1234/img_369_181_img_300_600_201505121334284787.jpg" alt="撒哈拉沙漠" height="182">
+        <h2>撒哈拉沙漠</h2>
+    </a>
 </div>
-
-<div class="bankuai_1">
-    <div class="container">
-        <h3>新闻B<span class="lm_more">                                        <a href="/index.php?v=listing&cid=10&page=1" target="_blank">房地产</a>&nbsp;&nbsp;
-                                        <a href="/index.php?v=listing&cid=11&page=1" target="_blank">移民</a>&nbsp;&nbsp;
-                                        <a href="/index.php?v=listing&cid=12&page=1" target="_blank">项目投资</a>&nbsp;&nbsp;
-                    </span></h3>
-        <div class="row">
-                                    <div class="col-xs-6">
-                <h4><a href="/index.php?v=listing&cid=10&page=1" target="_blank">&#8226; 房地产</a></h4>
-                <div class="row">
-                    <div class="col-xs-4">
-                                                                                <a href="/index.php?v=show&cid=10&id=20" title="神华两天3高管落马首现窝案 事发煤市最辉煌时期" target="_blank"><img src="http://www.haiwaitou.cn/uploadfile/2014/12/25/201412251829171816.jpg" style="width: 150px;height: 280px;" class="imgys" ></a>
-                                                                        </div>
-                    <div class="col-xs-8">
-                        <div class="list-group">
-                                                                                                                <a href="/index.php?v=show&cid=10&id=20" target="_blank">
-                                <h4 class="list-group-item_g-heading">神华两天3高管落马首现窝案 事发煤市最</h4>
-                                <p class="list-group-item_g-text">　　华夏时报记者 王冰凝 北京报道　　反腐败的大火烧到了神华集团，该公司是中...</p>
-                            </a>
-                            <hr/>                                                                                    <a href="/index.php?v=show&cid=10&id=40" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· 朝鲜互联网服务恢复11个小时后再次</a>                                                                                    <a href="/index.php?v=show&cid=10&id=39" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· 中移动包头分公司原总经理因受贿被</a>                                                                                    <a href="/index.php?v=show&cid=10&id=38" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· 创投日报：语音识别将超过人类 家政再</a>                                                                                    <a href="/index.php?v=show&cid=10&id=37" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· 你不知道的时尚电商内幕</a>                                                                                    <a href="/index.php?v=show&cid=10&id=36" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· 万达确认投资快钱周五公布 涉及资本</a>                                                                                    <a href="/index.php?v=show&cid=10&id=35" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· 董明珠称坚决“清场”把那些烂品牌</a>                                                        
-                        </div>
-                    </div>
-                </div>
-            </div>
-                                                                                    <div class="col-xs-6" >
-                                                                                <h4><a href="/index.php?v=listing&cid=11&page=1">&#8226; 移民</a></h4>
-                <div class="row">
-                    <div class="col-xs-4">
-                                                                        <a href="/index.php?v=show&cid=11&id=21" target="_blank"><img src="http://www.haiwaitou.cn/uploadfile/2014/12/25/201412251832017758.jpg" style="width: 150px;height: 110px;" class="imgys"></a>
-                                                                    </div>
-                    <div class="col-xs-8">
-                        <div class="list-group" style="margin-bottom: 0px;">
-                                                                                                                <a href="/index.php?v=show&cid=11&id=21" class="list-group-item_g">任正非：华为将试点以项目为中心的管理方</a>
-                                                                                    <a href="/index.php?v=show&cid=11&id=42" class="list-group-item_g"><span class="badge">15-13</span>· 新浪科技年度风云榜评选 年度最佳</a>                                                        <a href="/index.php?v=show&cid=11&id=41" class="list-group-item_g"><span class="badge">15-13</span>· 明年使用智能手机的地球人将突破25</a>                                                        <a href="/index.php?v=show&cid=11&id=18" class="list-group-item_g"><span class="badge">15-13</span>· 太平洋牵手京东将推互联网证券业务</a>                                                    </div>
-                    </div>
-                </div>
-                                                                <h4><a href="/index.php?v=listing&cid=12&page=1">&#8226; 项目投资</a></h4>
-                <div class="row">
-                    <div class="col-xs-4">
-                                                                        <a href="/index.php?v=show&cid=12&id=43" target="_blank"><img src="http://www.haiwaitou.cn/uploadfile/2014/12/25/201412251932162598.jpg" style="width: 150px;height: 110px;" class="imgys"></a>
-                                                                    </div>
-                    <div class="col-xs-8">
-                        <div class="list-group" style="margin-bottom: 0px;">
-                                                                                                                <a href="/index.php?v=show&cid=12&id=43" class="list-group-item_g">专家警告：2020年人类恐将用尽所有硬盘空</a>
-                                                                                    <a href="/index.php?v=show&cid=12&id=46" class="list-group-item_g"><span class="badge">15-13</span>· 《刺杀金正恩》圣诞将在多家独立影</a>                                                        <a href="/index.php?v=show&cid=12&id=45" class="list-group-item_g"><span class="badge">15-13</span>· 华为效仿小米网络营销战略：智能手机</a>                                                        <a href="/index.php?v=show&cid=12&id=44" class="list-group-item_g"><span class="badge">15-13</span>· GT将出售蓝宝石熔炉：偿还苹果债务</a>                                                    </div>
-                    </div>
-                </div>
-                                            </div>
-        </div>
-    </div>
 </div>
-<div class="bankuai_1">
-    <div class="container">
-        <h3>下载演示<span class="lm_more">                                        <a href="/index.php?v=listing&cid=18&page=1" target="_blank">下载子栏目A</a>&nbsp;&nbsp;
-                                        <a href="/index.php?v=listing&cid=20&page=1" target="_blank">下载子栏目B</a>&nbsp;&nbsp;
-                                        <a href="/index.php?v=listing&cid=35&page=1" target="_blank">下载子栏目C</a>&nbsp;&nbsp;
-                    </span></h3>
-        <div class="row">
-                                    <div class="col-xs-6">
-                <h4><a href="/index.php?v=listing&cid=18&page=1" target="_blank">&#8226; 下载子栏目A</a></h4>
-                <div class="row">
-                    <div class="col-xs-4">
-                                                                                <a href="/index.php?v=show&cid=18&id=146" title="大众点评 V5.8.1 for iPhone" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1314/201505131814024089.png" style="width: 150px;height: 280px;" class="imgys" ></a>
-                                                                        </div>
-                    <div class="col-xs-8">
-                        <div class="list-group">
-                                                                                                                <a href="/index.php?v=show&cid=18&id=146" target="_blank">
-                                <h4 class="list-group-item_g-heading">大众点评 V5.8.1 for iPhone</h4>
-                                <p class="list-group-item_g-text">身在户外、要与朋友吃饭，却不知道附近是否有合适餐馆？坐在餐馆，想知道这家餐厅都...</p>
-                            </a>
-                            <hr/>                                                                                    <a href="/index.php?v=show&cid=18&id=145" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· Dudu嘟嘟语音V3.2.53官方免费版</a>                                                                                    <a href="/index.php?v=show&cid=18&id=144" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· yy语音官方下载2015</a>                                                                                    <a href="/index.php?v=show&cid=18&id=143" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· 暴走战车2015(手机安卓暴走战车2015</a>                                                                                    <a href="/index.php?v=show&cid=18&id=120" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· QQ2015|QQ7.1</a>                                                                                    <a href="/index.php?v=show&cid=18&id=119" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· 五指cms下载演示文件</a>                                                                                    <a href="/index.php?v=show&cid=18&id=118" class="list-group-item_g" target="_blank"><span class="badge">15-13</span>· 五指cms下载演示文件</a>                                                        
-                        </div>
-                    </div>
-                </div>
-            </div>
-                                                                                    <div class="col-xs-6" >
-                                                                                <h4><a href="/index.php?v=listing&cid=20&page=1">&#8226; 下载子栏目B</a></h4>
-                <div class="row">
-                    <div class="col-xs-4">
-                                                                        <a href="/index.php?v=show&cid=20&id=130" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1322/201505131422436793.jpg" style="width: 150px;height: 110px;" class="imgys"></a>
-                                                                    </div>
-                    <div class="col-xs-8">
-                        <div class="list-group" style="margin-bottom: 0px;">
-                                                                                                                <a href="/index.php?v=show&cid=20&id=130" class="list-group-item_g">同花顺免费股票软件 8.50</a>
-                                                                                    <a href="/index.php?v=show&cid=20&id=129" class="list-group-item_g"><span class="badge">15-13</span>· 360壁纸 2.1</a>                                                        <a href="/index.php?v=show&cid=20&id=128" class="list-group-item_g"><span class="badge">15-13</span>· IE9浏览器 中文版</a>                                                        <a href="/index.php?v=show&cid=20&id=127" class="list-group-item_g"><span class="badge">15-13</span>· 植物大战僵尸2电脑版 中文版</a>                                                    </div>
-                    </div>
-                </div>
-                                                                <h4><a href="/index.php?v=listing&cid=35&page=1">&#8226; 下载子栏目C</a></h4>
-                <div class="row">
-                    <div class="col-xs-4">
-                                                                        <a href="/index.php?v=show&cid=35&id=147" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1319/201505131819488109.png" style="width: 150px;height: 110px;" class="imgys"></a>
-                                                                    </div>
-                    <div class="col-xs-8">
-                        <div class="list-group" style="margin-bottom: 0px;">
-                                                                                                                <a href="/index.php?v=show&cid=35&id=147" class="list-group-item_g">爱奇艺影视iphone版(爱奇艺手机版) V4.</a>
-                                                                                    <a href="/index.php?v=show&cid=35&id=125" class="list-group-item_g"><span class="badge">15-13</span>· ACDSee 9.0中文版</a>                                                        <a href="/index.php?v=show&cid=35&id=124" class="list-group-item_g"><span class="badge">15-13</span>· Adobe Photoshop CS5 中文免费版</a>                                                        <a href="/index.php?v=show&cid=35&id=123" class="list-group-item_g"><span class="badge">15-13</span>· 金山毒霸 10</a>                                                    </div>
-                    </div>
-                </div>
-                                            </div>
-        </div>
-    </div>
-</div>
-
-    <div class="container">
+<div class="col-xs-6">
     <div class="row">
-                             <div class="col-xs-6" >
-           <h4><a href="/index.php?v=listing&cid=14&page=1">图片子栏目A</a></h4>
-            <div class="row">
-                                                <div class="col-xs-6">
-                    <div class="thumbnail " style="padding:0px; border:0px; margin-bottom: 30px;">
-                        <div  class="pichend"><a href="/index.php?v=show&cid=14&id=108" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1208/img_222_150_img_300_600_201505121608398264.jpg" class="imgysg animated"></a>
-                        </div>
-                        <div class="caption" style="color: #26496D; text-align:center; background:#f1f1f1">
-                        风景图                        </div>
-                    </div>
-                </div>
-                                <div class="col-xs-6">
-                    <div class="thumbnail " style="padding:0px; border:0px; margin-bottom: 30px;">
-                        <div  class="pichend"><a href="/index.php?v=show&cid=14&id=107" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1259/img_222_150_img_300_600_201505121559579768.jpg" class="imgysg animated"></a>
-                        </div>
-                        <div class="caption" style="color: #26496D; text-align:center; background:#f1f1f1">
-                        高清组图演示：西藏风光                        </div>
-                    </div>
-                </div>
-                                <div class="col-xs-6">
-                    <div class="thumbnail " style="padding:0px; border:0px; margin-bottom: 30px;">
-                        <div  class="pichend"><a href="/index.php?v=show&cid=14&id=106" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1255/img_222_150_img_300_600_201505121555231695.jpg" class="imgysg animated"></a>
-                        </div>
-                        <div class="caption" style="color: #26496D; text-align:center; background:#f1f1f1">
-                        演示集合                        </div>
-                    </div>
-                </div>
-                                <div class="col-xs-6">
-                    <div class="thumbnail " style="padding:0px; border:0px; margin-bottom: 30px;">
-                        <div  class="pichend"><a href="/index.php?v=show&cid=14&id=105" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1251/img_222_150_img_300_600_201505121451528943.jpg" class="imgysg animated"></a>
-                        </div>
-                        <div class="caption" style="color: #26496D; text-align:center; background:#f1f1f1">
-                        人像图片演示                        </div>
-                    </div>
-                </div>
-                                          	</div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=14&id=91" title="222" target="_blank">
+                    <img  src=" http://dev.wuzhicms.com/uploadfile/2015/05/1248/img_273_182_img_300_600_201505121348437298.jpg" alt="余陈秋子时尚服饰写真" height="182">
+                    <h2>余陈秋子时尚服饰写真</h2>
+                </a>
+            </div>
         </div>
-                 <div class="col-xs-6" >
-           <h4><a href="/index.php?v=listing&cid=15&page=1">图片子栏目B</a></h4>
-            <div class="row">
-                                                <div class="col-xs-6">
-                    <div class="thumbnail " style="padding:0px; border:0px; margin-bottom: 30px;">
-                        <div  class="pichend"><a href="/index.php?v=show&cid=15&id=104" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1213/img_222_150_img_300_600_201505121413394090.jpg" class="imgysg animated"></a>
-                        </div>
-                        <div class="caption" style="color: #26496D; text-align:center; background:#f1f1f1">
-                        法国                        </div>
-                    </div>
-                </div>
-                                <div class="col-xs-6">
-                    <div class="thumbnail " style="padding:0px; border:0px; margin-bottom: 30px;">
-                        <div  class="pichend"><a href="/index.php?v=show&cid=15&id=102" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1210/img_222_150_img_300_600_201505121410373787.jpg" class="imgysg animated"></a>
-                        </div>
-                        <div class="caption" style="color: #26496D; text-align:center; background:#f1f1f1">
-                         尼泊尔                        </div>
-                    </div>
-                </div>
-                                <div class="col-xs-6">
-                    <div class="thumbnail " style="padding:0px; border:0px; margin-bottom: 30px;">
-                        <div  class="pichend"><a href="/index.php?v=show&cid=15&id=100" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1208/img_222_150_img_300_600_201505121408272467.jpg" class="imgysg animated"></a>
-                        </div>
-                        <div class="caption" style="color: #26496D; text-align:center; background:#f1f1f1">
-                        罗马                        </div>
-                    </div>
-                </div>
-                                <div class="col-xs-6">
-                    <div class="thumbnail " style="padding:0px; border:0px; margin-bottom: 30px;">
-                        <div  class="pichend"><a href="/index.php?v=show&cid=15&id=98" target="_blank"><img src="http://dev.wuzhicms.com/uploadfile/2015/05/1206/img_222_150_img_300_600_201505121406356561.jpg" class="imgysg animated"></a>
-                        </div>
-                        <div class="caption" style="color: #26496D; text-align:center; background:#f1f1f1">
-                        瑞士                        </div>
-                    </div>
-                </div>
-                                          	</div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=14&id=101" title="222" target="_blank">
+                    <img  src=" http://dev.wuzhicms.com/uploadfile/2015/05/1209/img_273_182_img_300_600_201505121409386456.jpg" alt="北海公园和故宫角楼" height="182">
+                    <h2>北海公园和故宫角楼</h2>
+                </a>
+            </div>
         </div>
-        
-</div>
-</div>
-
-<div class="container">
-
-        <div style="height:6px; background:#AA151B;"></div>
-        <div style="background:#efefef;padding:8px 8px 16px 8px;">
-            <div style="font-size:14px; font-weight:bold; line-height:2; font-family:inherit; padding-left:5px;">合作伙伴</div>
-                                    <a href="http://www.wuzhicms.com" target="_blank"><img src="/res/images/icon/wuzhilogo.gif" width="116" height="41"></a>
-                        <a href="http://bbs.wuzhicms.com" target="_blank"><img src="/res/images/icon/wuzhilogo.gif" width="116" height="41"></a>
-                        <a href="http://sms.phpip.com/index.php?m=member" target="_blank"><img src="/res/images/icon/wuzhilogo.gif" width="116" height="41"></a>
-                                 </div>
-</div>
-
-<div class="container">
-    <hr/>
-    <div style="color: #7D7D7D;text-align: center;" class="foot_category">
-                        <a href="/index.php?v=listing&cid=30&page=1">关于我们</a>  |
-                <a href="/index.php?v=listing&cid=31&page=1">联系我们</a>  |
-                <a href="/index.php?v=listing&cid=32&page=1">用户协议</a>  |
-                <a href="/index.php?v=listing&cid=33&page=1">法律声明</a>  |
-                        <a href="http://dev.wuzhicms.com/index.php?m=link">友情链接</a>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=15&id=54" title="222" target="_blank">
+                    <img  src=" http://dev.wuzhicms.com/uploadfile/2015/05/1240/img_273_182_img_300_600_201505121040226319.jpg" alt="震撼照片展示地球几大奇景" height="182">
+                    <h2>震撼照片展示地球几大奇景</h2>
+                </a>
+            </div>
+        </div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=15&id=56" title="222" target="_blank">
+                    <img  src=" http://dev.wuzhicms.com/uploadfile/2015/05/1243/img_273_182_img_300_600_201505121043523784.jpg" alt="哈勃望远镜25周年绚美太空图像精选" height="182">
+                    <h2>哈勃望远镜25周年绚美太空图像精选</h2>
+                </a>
+            </div>
+        </div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=14&id=96" title="222" target="_blank">
+                    <img  src=" http://dev.wuzhicms.com/uploadfile/2015/05/1202/img_273_182_img_300_600_201505121402082227.jpg" alt="横店圆明新园正式开园" height="182">
+                    <h2>横店圆明新园正式开园</h2>
+                </a>
+            </div>
+        </div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=14&id=51" title="222" target="_blank">
+                    <img  src=" http://dev.wuzhicms.com/uploadfile/2015/05/1237/img_273_182_img_300_600_201505121037257324.jpg" alt="南非洋面现千只海豚捕食浩大场面" height="182">
+                    <h2>南非洋面现千只海豚捕食浩大场面</h2>
+                </a>
+            </div>
+        </div>
+                        
+                </div>
+            </div>
+        </div>
     </div>
-    <div style="text-align: center; padding-top:10px;font-size:12px; color:#7D7D7D"><p >Copyright©2005-2015 版权所有 <a href="http://www.wuzhicms.com/" target="_blank">五指CMS</a>  <a href="http://www.miibeian.gov.cn/" target="_blank">京ICP备14036160号-1 </a> Powered by <a href="http://www.wuzhicms.com" target="_blank">五指CMS</a> </div>
 </div>
 
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="http://dev.wuzhicms.com/promote/3.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- 视频 -->
+<div class="container">
+    <div class="index-video-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=38&page=1" >视频</a>
+                    </h2>
+                    <nav>
+                                                                        <a href="/index.php?v=listing&cid=43&page=1">综艺</a>                                                <a href="/index.php?v=listing&cid=41&page=1">原创</a>                                                <a href="/index.php?v=listing&cid=42&page=1">MV</a>                                                <a href="/index.php?v=listing&cid=44&page=1">娱乐</a>                                                                    </nav>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="#" >浏览排行</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <!--图片区一-->
+                                                <div class="narArts">
+                    <a title="222" href="" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/201604071707214799.jpg" alt="综艺">
+                        </div>
+                        <h2><strong>+ 专题 + </strong><br>综艺</h2>
+                    </a>
+                </div>
+                                <div class="narArts">
+                    <a title="222" href="" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/201604071705063109.jpg" alt="电影">
+                        </div>
+                        <h2><strong>+ 专题 + </strong><br>电影</h2>
+                    </a>
+                </div>
+                                <div class="narArts">
+                    <a title="222" href="" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/201604071702552418.jpg" alt="电视剧">
+                        </div>
+                        <h2><strong>+ 专题 + </strong><br>电视剧</h2>
+                    </a>
+                </div>
+                                            </div>
+            <div class="col-xs-4">
+                                                                <div class="narrowArt jia-biaoqian video">
+                    <a href="/index.php?v=show&cid=41&id=169" title="222" target="_blank">
+                        <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/img_369_380_201604071801274413.jpg" alt="纲到你身边 2016："德云运动会"搞笑来袭 20160404  " height="380">
+                        <h1 data-autor="原创">纲到你身边 2016："德云运动会"搞笑来袭 20160404  </h1>
+                    </a>
+                </div>
+                                                                <div class="narrowArt video jia-biaoqian">
+                    <a href="/index.php?v=show&cid=43&id=167" title="222" target="_blank">
+                        <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/08/img_369_181_201604081324235299.jpg" alt="我们相爱吧 第二季：橙汁CP巴厘岛度" height="182">
+                        <h2 data-autor="原创">我们相爱吧 第二季：橙汁CP巴厘岛度</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                                                                <div class="narrowArt video">
+                    <a href="/index.php?v=show&cid=43&id=168" title="222">
+                        <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/img_273_182_201604071746561834.jpg" alt="林志玲电臀撞球对抗李治廷" height="182">
+                        <h2>林志玲电臀撞球对抗李治廷</h2>
+                    </a>
+                </div>
+                                                               <div class="narrowArt video">
+                    <a href="/index.php?v=show&cid=43&id=165" title="222">
+                        <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/img_273_182_201604071731378872.png" alt="金星秀 2016：金星"手撕"膨胀的明星 20160406 " height="182">
+                        <h2>金星秀 2016：金星"手撕"膨胀的明星 20160406 </h2>
+                    </a>
+                </div>
+                                                               <div class="narrowArt video">
+                    <a href="/index.php?v=show&cid=43&id=166" title="222">
+                        <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/07/img_273_182_201604071729173369.jpg" alt="火星情报局 2016：对不起 这期我们录砸了 160331" height="182">
+                        <h2>火星情报局 2016：对不起 这期我们录砸了 160331</h2>
+                    </a>
+                </div>
+                                                           </div>
+            <div class="col-xs-3">
+                <div class="list-ol-box">
+                    <ol class="rectangle-list">
+                                                                        <li ><a href="/index.php?v=show&cid=43&id=169" target="_blank">纲到你身边&nbsp;2016：</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=181" target="_blank">汪涵率众特工入侵地球&nbsp;20160408</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=180" target="_blank">第20160411期：星爸星妈黑历史大起底&nbsp;汪峰子怡为女儿大...</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=165" target="_blank">金星秀&nbsp;2016：金星&quot;手撕&quot;膨胀的明星&nbsp;20160406</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=179" target="_blank">小岳岳强吻沈腾&nbsp;两季喜剧之王合体喜剧人盛典</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=168" target="_blank">林志玲电臀撞球对抗李治廷</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=167" target="_blank">我们相爱吧&nbsp;第二季：橙汁CP巴厘岛度</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=169" target="_blank">纲到你身边&nbsp;2016：</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=166" target="_blank">火星情报局&nbsp;2016：对不起&nbsp;这期我们录砸了&nbsp;160331</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=160" target="_blank">狼图</a></li>
+                                                <li ><a href="/index.php?v=show&cid=42&id=170" target="_blank">花旦</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=181" target="_blank">汪涵率众特工入侵地球&nbsp;20160408</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=180" target="_blank">第20160411期：星爸星妈黑历史大起底&nbsp;汪峰子怡为女儿大...</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=179" target="_blank">小岳岳强吻沈腾&nbsp;两季喜剧之王合体喜剧人盛典</a></li>
+                                                <li ><a href="/index.php?v=show&cid=44&id=171" target="_blank">春天</a></li>
+                                                                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="http://dev.wuzhicms.com/promote/4.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 团购 -->
+<div class="container">
+    <div class="index-tuangou-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=27&page=1" >团购</a>
+                    </h2>
+                    <nav>
+                                                                        <a href="/index.php?v=listing&cid=50&page=1">品牌团</a>                                                <a href="/index.php?v=listing&cid=48&page=1">单品团</a>                                                                    </nav>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="#" >特惠推荐</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <!--团购专场-->
+                                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=50&id=3" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/08/201604081335331262.jpg" alt="">
+                        </div>
+                        <h2><strong>+ 团购专场 + </strong><br> 4月9日车游买车帮超级团购会，让您买车惠到底</h2>
+                    </a>
+                </div>
+                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=50&id=1" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://dev.wuzhicms.com/uploadfile/2016/03/31/201603311123467600.jpg" alt="">
+                        </div>
+                        <h2><strong>+ 团购专场 + </strong><br> 3月15日至31日车游超级团购会，让您买车惠到底</h2>
+                    </a>
+                </div>
+                                                                
+
+            </div>
+            <!--团购推荐-->
+                                                            <div class="col-xs-4">
+                <div class="narrowArt tuan-price">
+                    <a href="/index.php?v=show&cid=50&id=4">
+                        <ins class="tuan-price_ico"><strong>￥200</strong></ins>
+                        <img  src=" http://dev.wuzhicms.com/uploadfile/2016/04/08/img_369_380_201604081342026646.jpg" alt="苔原地带双人双层野营帐篷" height="380">
+                        <h1>苔原地带双人双层野营帐篷</h1>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                                                            <div class="narrowArt tuan-price">
+                    <a href="/index.php?v=show&cid=50&id=3">
+                        <ins class="tuan-price_ico"><strong>￥200</strong></ins>
+                        <img  src="http://dev.wuzhicms.com/uploadfile/2016/04/08/img_273_181_201604081335331262.jpg" alt="" height="182">
+                        <h2>4月9日车游买车帮超级团购会，让您买车惠到底</h2>
+                    </a>
+                </div>
+                                                            <div class="narrowArt tuan-price">
+                    <a href="/index.php?v=show&cid=50&id=1">
+                        <ins class="tuan-price_ico"><strong>￥200</strong></ins>
+                        <img  src="http://dev.wuzhicms.com/uploadfile/2016/03/31/img_273_181_201603311123467600.jpg" alt="" height="182">
+                        <h2>3月15日至31日车游超级团购会，让您买车惠到底</h2>
+                    </a>
+                </div>
+                                                            </div>
+
+            <div class="col-xs-3 right-thumbnail">
+                <div class="row">
+                    <!--特惠推荐-->
+                                                                                <div class="col-xs-6">
+                        <a href="/index.php?v=show&cid=48&id=7" class="thumbnail box-and-title-img">
+                            <ins class="tuijian_ico">抢购</ins>
+                            <div class="imght">
+                                <img src=" http://dev.wuzhicms.com/uploadfile/2016/04/08/img_126_91_201604081419245440.png" alt="夏诺多吉折叠兵工铲" >
+                            </div>
+                            <div class="caption height-hide97">
+                                <h4><strong class="color_warning font_size18">￥80</strong> <del class="color_999 font_size12">￥100</del></h4>
+                                <p class="font_size12">
+                                    夏诺多吉折叠兵工铲                                </p>
+                            </div>
+                        </a>
+                    </div>
+                                                            <div class="col-xs-6">
+                        <a href="/index.php?v=show&cid=48&id=5" class="thumbnail box-and-title-img">
+                            <ins class="tuijian_ico">抢购</ins>
+                            <div class="imght">
+                                <img src=" http://dev.wuzhicms.com/uploadfile/2016/04/08/img_126_91_201604081347579002.png" alt="蓝贝尔汽车应急电源" >
+                            </div>
+                            <div class="caption height-hide97">
+                                <h4><strong class="color_warning font_size18">￥100</strong> <del class="color_999 font_size12">￥200</del></h4>
+                                <p class="font_size12">
+                                    蓝贝尔汽车应急电源                                </p>
+                            </div>
+                        </a>
+                    </div>
+                                                            <div class="col-xs-6">
+                        <a href="/index.php?v=show&cid=50&id=4" class="thumbnail box-and-title-img">
+                            <ins class="tuijian_ico">抢购</ins>
+                            <div class="imght">
+                                <img src=" http://dev.wuzhicms.com/uploadfile/2016/04/08/img_126_91_201604081342026646.jpg" alt="苔原地带双人双层野营帐篷" >
+                            </div>
+                            <div class="caption height-hide97">
+                                <h4><strong class="color_warning font_size18">￥200</strong> <del class="color_999 font_size12">￥300</del></h4>
+                                <p class="font_size12">
+                                    苔原地带双人双层野营帐篷                                </p>
+                            </div>
+                        </a>
+                    </div>
+                                                            <div class="col-xs-6">
+                        <a href="/index.php?v=show&cid=50&id=1" class="thumbnail box-and-title-img">
+                            <ins class="tuijian_ico">抢购</ins>
+                            <div class="imght">
+                                <img src=" http://dev.wuzhicms.com/uploadfile/2016/03/31/img_126_91_201603311123467600.jpg" alt="3月15日至31日车游超级团购会，让您买车惠到底" >
+                            </div>
+                            <div class="caption height-hide97">
+                                <h4><strong class="color_warning font_size18">￥100.00</strong> <del class="color_999 font_size12">￥199.00</del></h4>
+                                <p class="font_size12">
+                                    3月15日至31日车游超级团购会，让您买车惠到底                                </p>
+                            </div>
+                        </a>
+                    </div>
+                                                                        
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="http://dev.wuzhicms.com/promote/5.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 积分商城 -->
+<div class="container">
+    <div class="index-jifenmall-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=26&page=1" >积分商城</a>
+                    </h2>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=39&page=1" >热门兑换</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+                                                <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control">
+                        <a href="/index.php?v=show&cid=49&id=7"><img src="http://dev.wuzhicms.com/uploadfile/2016/03/16/img_271_181_201603161144085935.jpg" alt="图片" ></a>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><strong>图片</strong><br>
+                            <span><strong class="color_success">555</strong> 积分       <strong class="color_qiyecheng">12.00</strong>元</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                                    <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control">
+                        <a href="/index.php?v=show&cid=49&id=13"><img src="http://dev.wuzhicms.com/uploadfile/2016/03/16/img_271_181_201603161533166017.jpg" alt="短袖" ></a>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><strong>短袖</strong><br>
+                            <span><strong class="color_success">80</strong> 积分       <strong class="color_qiyecheng">65.00</strong>元</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                                    <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control">
+                        <a href="/index.php?v=show&cid=49&id=15"><img src="http://dev.wuzhicms.com/uploadfile/2016/03/17/img_271_181_201603171804391443.jpg" alt="歌曲" ></a>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><strong>歌曲</strong><br>
+                            <span><strong class="color_success">500</strong> 积分   </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                        
+            <!--hot-duihuan-->
+                                                <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control">
+                        <a href="/index.php?v=show&cid=49&id=6"><img src="http://dev.wuzhicms.com/uploadfile/2016/03/16/img_271_181_201603161142329395.jpg" alt="美图" ></a>
+                        <ins class="tuijian_ico">立即兑换</ins>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><strong>美图</strong><br>
+                            <span><strong class="color_success">1123</strong> 积分       <strong class="color_qiyecheng">50.00</strong>元</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                                </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="friend-link">
+                        <a href="http://www.wuzhicms.com" target="_blank">五指互联网站管理系统 </a>
+                <a href="http://bbs.wuzhicms.com" target="_blank">五指CMS论坛 </a>
+                <a href="http://sms.phpip.com/index.php?m=member" target="_blank">短信通 </a>
+                    </div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center  line_height2d0">
+                联系电话：010-82463345    QQ:282198327  Email:zhw@wuzhicms.com <br>
+                <a href="http://www.wuzhicms.com/contact-us/aboutus/" target="_blank">五指简介 </a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=31" target="_blank">联系我们</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=33" target="_blank"> 用户协议 </a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=33" target="_blank"> 法律声明 </a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=36" target="_blank"> 付款方式</a><small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small><a href="http://dev.wuzhicms.com/index.php?m=link">友情链接</a><br>
+                Copyright © 2015 北京五指互联科技有限公司 All Rights Reserved<br>
+                京ICP备14036160号-1</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/res/t3/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="/res/t3/js/ie10-viewport-bug-workaround.js"></script>
+
+<script src="/res/t3/js/my.js"></script>
+<script src="/res/t3/js/bootstrap-hover-dropdown.min.js"></script>
 <script type="text/javascript">
     var _uid=getcookie('_uid');
     if(_uid!=null) {
@@ -411,7 +776,5 @@
         $("#myname").html(_username);
     }
 </script>
-
-    
 </body>
 </html>

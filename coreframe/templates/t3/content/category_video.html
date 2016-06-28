@@ -1,0 +1,103 @@
+{T "content","head",TPLID}
+<nav class="navbar1 navbar-default">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar1" class="container">
+        <ul class="nav navbar-nav" style="padding-left: 86px">
+            <li class="active"><a href="{$category['url']}">{$category['name']}首页</a></li>
+            {loop $sub_categorys $cats}
+            <li><a href="{$cats['url']}">{$cats['name']}</a></li>
+            {/loop}
+        </ul>
+    </div><!--/.nav-collapse -->
+</nav>
+
+<div class="video-one-screen">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="row">
+                    {block=32}
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lm-title margin_bottom15 te-h3">
+                    <h3 class="lm-title-left ">浏览排行 </h3>
+                </div>
+                <div class="list-ol-box">
+                    <ol class="rectangle-list">
+                        {wz:content action="rank" pagesize="9" order="weekviews DESC" cid="$cid" urlrule="$urlrule"}
+                        {loop $rs $r}
+                        <li ><a href="{$r[url]}">{$r['title']}</a></li>
+                        {/loop}
+                        {/wz}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ad-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="{WEBURL}promote/9.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+{php $video_num=10;}
+{loop $sub_categorys $videocid $cats}
+<div class="container">
+    <div class="video-second-screen ">
+
+        <div class="center-lanmu-title changlangbg">
+            <h2 class="text-center "><a href="{$cats['url']}" >{$cats['name']}</a></h2>
+        </div>
+
+        <div class="row" id="cat_{$videocid}">
+            {wz:content action="listing" pagesize="7" order="sort DESC,id DESC" cid="$videocid" urlrule="$urlrule"}
+            {loop $rs $r}
+            {if $n==1}
+            <div class="col-xs-3">
+                <div class="narrowArt">
+                    <a href="{$r['url']}" title="222">
+                        <img  src="{imagecut($r['thumb'],273,380,4)}" alt="" height="380">
+                        <h2>{$r['title']}</h2>
+                    </a>
+                </div>
+            </div>
+            {else}
+            <div class="col-xs-3">
+                <div class="narrowArt" style="overflow: hidden;width: 273px;height: 182px;">
+                    <a href="{$r['url']}" title="{$r['title']}">
+                        <img  src="{imagecut($r['thumb'],273,257,4)}" alt="" height="380">
+                        <h2>{$r['title']}</h2>
+                    </a>
+                </div>
+            </div>
+            {/if}
+            {/loop}
+            {/wz}
+        </div>
+    </div>
+</div>
+
+<div class="ad-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="{WEBURL}promote/{$video_num}.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+{if $video_num<14}
+{$video_num++}
+{/if}
+{/loop}
+
+
+
+
+{T "content","foot",TPLID}

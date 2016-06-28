@@ -45,22 +45,33 @@ $submenuid = $menu_r['menuid'];
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">图片地址</label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <div class="input-group"><?php echo $form->attachment('gif|jpg|png','1','form[file]','');?></div>
+                    <div class="input-group"><?php echo $form->attachment('gif|jpg|png','1','form[file]','','callback_thumb_dialog',0);?></div>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">小图地址</label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <div class="input-group"><?php echo $form->attachment('gif|jpg|png','1','form[icon]','');?></div>
+                    <div class="input-group"><?php echo $form->attachment('gif|jpg|png','1','form[icon]','','callback_thumb_dialog',0);?></div>
                 </div>
             </div>
             <div class="form-group" id="url_div">
                 <label class="col-sm-2 col-xs-4 control-label">链接地址</label>
-                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <div class="input-group"><?php echo $form->attachment('gif|jpg|png|mp4|3gp|mp3|apk','1','form[url]','');?></div>
+                <div class="col-lg-3 col-sm-6 col-xs-6 input-group">
+                    <div class="input-group"><?php echo $form->attachment('gif|jpg|png|mp4|3gp|mp3|apk','1','form[url]','','callback_thumb_dialog',0);?></div>
                 </div>
             </div>
-
+            <div class="form-group" id="url_div">
+                <label class="col-sm-2 col-xs-4 control-label">上线时间</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <div class="input-group"><?php echo WUZHI_form::calendar('starttime',$GLOBALS['starttime'],1);?></div>
+                </div>
+            </div>
+            <div class="form-group" id="url_div">
+                <label class="col-sm-2 col-xs-4 control-label">下线时间</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <div class="input-group"><?php echo WUZHI_form::calendar('endtime',$GLOBALS['endtime'],1);?></div>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label"></label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">

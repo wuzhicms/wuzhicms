@@ -49,7 +49,7 @@ class power extends WUZHI_admin {
                 $formdata['password'] = $password;
                 $formdata['factor'] = $factor;
             }
-            $formdata['role'] = intval($GLOBALS['form']['role']);
+            $formdata['role'] = ','.implode(',',$GLOBALS['form']['role']).',';
             $formdata['truename'] = remove_xss($GLOBALS['form']['truename']);
 			$this->db->insert('admin',$formdata);
 			MSG(L('operation success'));
@@ -78,7 +78,7 @@ class power extends WUZHI_admin {
                 $formdata['factor'] = $factor;
             }
 
-            $formdata['role'] = intval($GLOBALS['form']['role']);
+            $formdata['role'] = ','.implode(',',$GLOBALS['form']['role']).',';
             $formdata['truename'] = remove_xss($GLOBALS['form']['truename']);
 
 

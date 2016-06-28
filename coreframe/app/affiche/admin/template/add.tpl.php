@@ -24,8 +24,6 @@ include $this->template('header','core');
                 <label class="col-sm-2 col-xs-4 control-label">公告群体</label>
                 <div class="col-lg-8 col-sm-8 col-xs-8 input-group">
                     <label class="radio-inline"> <input type="radio" name="form[status]" value="1" checked> 注册会员</label>
-                    <label class="radio-inline"> <input type="radio" name="form[status]" value="2" > 会员+游客</label>
-                    <label class="radio-inline"> <input type="radio" name="form[status]" value="3" disabled> 后台管理员</label>
                 </div>
             </div>
             <div class="form-group">

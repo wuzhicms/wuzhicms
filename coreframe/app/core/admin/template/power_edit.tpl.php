@@ -15,7 +15,7 @@ include $this->template('header','core');
                 <label class="col-sm-2 col-xs-4 control-label">所属角色</label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <?php
-                    echo $form->select(key_value($roles,'role','name'), $r['role'], 'name="form[role]" class="form-control"');
+                    echo $form->select(key_value($roles,'role','name'), $r['role'], 'name="form[role][]" class="form-control" multiple="multiple" style="height:200px;"');
                     ?>
                 </div>
             </div>

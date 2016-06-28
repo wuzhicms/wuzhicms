@@ -7,10 +7,10 @@
         </article>
         <div class="share">
             <dl>
-                <dt>·ÖÏíµ½</dt>
+                <dt>åˆ†äº«åˆ°</dt>
                 <dd>
-                    <script type="text/javascript">document.write('<a href="http://v.t.sina.com.cn/share/share.php?url='+encodeURIComponent(location.href)+'&appkey=3172366919&title='+encodeURIComponent('º«×ÜÍ³ÀîÃ÷²©ºôÓõÈÕ±¾ÓÅÏÈ½â¾öÎ¿°²¸¾ÎÊÌâ')+'" title="·ÖÏíµ½ÐÂÀËÎ¢²©" class="sharewb" target="_blank">&nbsp;</a>');</script>
-                    <script type="text/javascript">document.write('<a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+encodeURIComponent(location.href)+'" title="·ÖÏíµ½QQ¿Õ¼ä" class="shareqzone" target="_blank">&nbsp;</a>');</script>
+                    <script type="text/javascript">document.write('<a href="http://v.t.sina.com.cn/share/share.php?url='+encodeURIComponent(location.href)+'&appkey=3172366919&title='+encodeURIComponent('éŸ©æ€»ç»ŸæŽæ˜Žåšå‘¼åæ—¥æœ¬ä¼˜å…ˆè§£å†³æ…°å®‰å¦‡é—®é¢˜')+'" title="åˆ†äº«åˆ°æ–°æµªå¾®åš" class="sharewb" target="_blank">&nbsp;</a>');</script>
+                    <script type="text/javascript">document.write('<a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+encodeURIComponent(location.href)+'" title="åˆ†äº«åˆ°QQç©ºé—´" class="shareqzone" target="_blank">&nbsp;</a>');</script>
                     <a href="javascript:void(0)" class="sharewx"></a>
                     <a href="javascript:void(0)" class="shareqq"></a>
                 </dd>
@@ -23,7 +23,7 @@
 
 </script>
 <footer class="ft">
-    Copyright 2005 - 2014 WuzhiCMS. All Rights Reserved
+    Copyright 2005 - 2015 WuzhiCMS. All Rights Reserved
 </footer>
 </body>
 </html>

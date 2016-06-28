@@ -34,7 +34,7 @@ if($share_model) {
                             <div class="form-group">
                                 <label class="col-sm-2 col-xs-4 control-label">数据表名</label>
                                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                    <input type="text" class="form-control" name="tablename"  value="">
+                                    <input type="text" class="form-control" name="tablename" value="<?php echo $pre;?>">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -43,12 +43,16 @@ if($share_model) {
                                     <textarea name="remark" class="form-control" cols="60" rows="3"></textarea>
                                 </div>
                             </div>
+                            <?php
+                            if($module_config['show_content_tpl']) {
+                                ?>
                             <div class="form-group">
                                 <label class="col-sm-2 col-xs-4 control-label">内容页默认模版</label>
                                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                     <?php echo WUZHI_form::templates('content','','name="template"  class="form-control" style="width:auto;"','show');?>
                                 </div>
                             </div>
+                            <?php }?>
                             <div class="form-group">
                                 <label class="col-sm-2 col-xs-4 control-label">模型标识图（可选）</label>
                                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
@@ -97,9 +101,12 @@ if($share_model) {
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">数据表名</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="text" class="form-control" name="tablename" >
+                                <input type="text" class="form-control" name="tablename" value="<?php echo $pre;?>">
                             </div>
                         </div>
+                        <?php
+                        if(!isset($module_config['attr_table']) || $module_config['attr_table']==2) {
+                        ?>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">创建表数量</label>
 
@@ -107,25 +114,42 @@ if($share_model) {
                             <label class="radio-inline">
                             <input type="radio" name="att" id="inlineRadio1" value="1" > 1个
                             </label>
+
                             <label class="radio-inline">
                               <input type="radio" name="att" id="inlineRadio2" value="2" checked> 2个
                             </label>
-                            <span class="help-block">当信息量预估单表超过100万条时，建议分成2个表。</span>  
+
+                            <span class="help-block">当信息量预估单表超过100万条时，建议分成2个表。</span>
                             </div>
                         </div>
+                        <?php } else {?>
+                            <div class="form-group">
+                                <label class="col-sm-2 col-xs-4 control-label">创建表数量</label>
+
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="att" id="inlineRadio1" value="1" checked> 1个
+                                    </label>
+                                </div>
+                            </div>
+                        <?php }?>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">备注</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                                 <textarea name="remark" class="form-control" cols="60" rows="3"></textarea>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 col-xs-4 control-label">内容页默认模版</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="text" name="template" class="form-control" value="show" style="text-align: right">
-                                <span class="input-group-addon">.html</span>
+                        <?php
+                        if($module_config['show_content_tpl']) {
+                            ?>
+                            <div class="form-group">
+                                <label class="col-sm-2 col-xs-4 control-label">内容页默认模版</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                    <input type="text" name="template" class="form-control" value="show" style="text-align: right">
+                                    <span class="input-group-addon">.html</span>
+                                </div>
                             </div>
-                        </div>
+                        <?php }?>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label"></label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">

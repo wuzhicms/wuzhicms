@@ -11,7 +11,11 @@ display: none;
 <link href="<?php echo R; ?>js/colorpicker/style.css" rel="stylesheet">
 <link href="<?php echo R; ?>js/jquery-ui/jquery-ui.css" rel="stylesheet">
 <script src="<?php echo R; ?>js/colorpicker/color.js"></script>
-
+<?php
+echo '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
+echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
+echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js"></script>';
+?>
 
 <section class="wrapper">
 <div class="row">
@@ -73,7 +77,7 @@ if (isset($formdata['5']['content'])) {
         if (is_array($formdata['0'])) {
             foreach ($formdata['0'] as $field => $info) {
                 if ($info['powerful_field']) continue;
-                if ($info['formtype'] == 'powerful_field') {
+                if ($info['formtype'] == 'powerful') {
                     foreach ($formdata['0'] as $_fm => $_fm_value) {
                         if ($_fm_value['powerful_field']) {
                             $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
@@ -108,7 +112,25 @@ if (isset($formdata['5']['content'])) {
 
             <?php
             }
-        }?>
+        }
+        if($tb_arr) {
+        ?>
+        <tr>
+            <td style="width: 120px;">
+                <strong>同步更新</strong>
+            </td>
+            <td class="hidden-phone">
+                <div class="col-sm-12 input-group">
+                    <?php
+                    foreach($tb_arr as $tb_r) {
+                        echo '<label class="checkbox-inline"><input type="checkbox" name="tb_update['.$tb_r['new_id'].']" value="'.$tb_r['new_cid'].'"> '.$tb_r['names'].catpos2($tb_r['new_cid']).'ID:'.$tb_r['new_id'].'</label>';
+                    }
+                    ?>
+
+                </div>
+            </td>
+        </tr>
+        <?php }?>
     </table>
 </div>
 
@@ -119,7 +141,7 @@ if (isset($formdata['5']['content'])) {
         if (is_array($formdata['1'])) {
             foreach ($formdata['1'] as $field => $info) {
                 if ($info['powerful_field']) continue;
-                if ($info['formtype'] == 'powerful_field') {
+                if ($info['formtype'] == 'powerful') {
                     foreach ($formdata['0'] as $_fm => $_fm_value) {
                         if ($_fm_value['powerful_field']) {
                             $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
@@ -159,13 +181,13 @@ if (isset($formdata['5']['content'])) {
 </div>
 
 <div role="tabpanel" class="tab-pane fade" id="tabs3" aria-labelledby="3tab">
-    <table class="table table-striped table-advance table-hover"
+    <table class="table table-striped table-advance"
            id="contenttable">
         <?php
         if (is_array($formdata['2'])) {
             foreach ($formdata['2'] as $field => $info) {
                 if ($info['powerful_field']) continue;
-                if ($info['formtype'] == 'powerful_field') {
+                if ($info['formtype'] == 'powerful') {
                     foreach ($formdata['0'] as $_fm => $_fm_value) {
                         if ($_fm_value['powerful_field']) {
                             $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
@@ -212,6 +234,7 @@ if (isset($formdata['5']['content'])) {
 <td>
 <div class="contentsubmit text-center">
 <input type="hidden" name="modelid" value="<?php echo $modelid; ?>">
+<input type="hidden" name="old_status" value="<?php echo $status; ?>">
 <input name="submit" type="submit" class="save-bt btn btn-info" value=" 提 交 ">
 &nbsp;&nbsp;&nbsp;
 <input name="submit2" type="submit" class="btn  btn-primary" value=" 提交后再编辑 ">
@@ -292,6 +315,15 @@ if (data == 'ok') {
         });
 
     }
+
+function remove_obj(obj) {
+    $(obj).parent().remove();
+}
+function add_newfile(divid) {
+    var str = $('#text_'+divid).val();
+    str = '<li>'+str+'</li>';
+    $('#'+divid+"_ul").append(str);
+}
 <?php
 if($cate_config['workflowid'] && $_SESSION['role']!=1) {
 ?>

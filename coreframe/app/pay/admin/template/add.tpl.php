@@ -20,8 +20,8 @@ include $this->template('header','core');
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">充值类型</label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <label class="radio-inline"> <input type="radio" name="plus_minus" value="1" checked> 增加</label>
-                    <label class="radio-inline"> <input type="radio" name="plus_minus" value="-1" > 减少</label>
+                    <label class="radio-inline"> <input type="radio" name="plus_minus" value="-1" checked> 增加</label>
+                    <label class="radio-inline"> <input type="radio" name="plus_minus" value="1" > 减少</label>
                 </div>
             </div>
             <div class="form-group">

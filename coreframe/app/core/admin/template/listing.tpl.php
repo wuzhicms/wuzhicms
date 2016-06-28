@@ -38,7 +38,7 @@
                     <i class="icon-users"></i>
                 </div>
                 <div class="value">
-                    <a href="#"><h1 id="count1">0</h1></a>
+                    <a href="?m=member&f=index&v=listing<?php echo $this->su();?>&_menuid=30"><h1 id="count1">0</h1></a>
                     <p>用户总量</p>
                 </div>
             </section>
@@ -49,7 +49,7 @@
                     <i class="icon-user-add"></i>
                 </div>
                 <div class="value">
-                    <a href="#"><h1 id="count2">0</h1></a>
+                    <a href="?m=member&f=index&v=listing<?php echo $this->su();?>&_menuid=30&search=&keyType=username&&regTimeStart=<?php echo date('Y-m-d',SYS_TIME);?>&regTimeEnd="><h1 id="count2">0</h1></a>
                     <p>今日注册用户</p>
                 </div>
             </section>
@@ -60,7 +60,7 @@
                     <i class="icon-file-word-o"></i>
                 </div>
                 <div class="value">
-                    <a href="#"><h1 id="count3">0</h1></a>
+                    <a href="?m=content&f=content&v=manage<?php echo $this->su();?>&_menuid=26"><h1 id="count3">0</h1></a>
                     <p>文章总数</p>
                 </div>
             </section>
@@ -71,7 +71,7 @@
                     <i class="icon-check-circle"></i>
                 </div>
                 <div class="value">
-                    <a href="#"><h1 id="count4">0</h1></a>
+                    <a href="?m=content&f=content&v=allcheck&status=10<?php echo $this->su();?>&_menuid=26"><h1 id="count4">0</h1></a>
                     <p>待审文章总数</p>
                 </div>
             </section>

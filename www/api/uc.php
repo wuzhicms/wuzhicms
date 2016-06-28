@@ -5,7 +5,7 @@ require COREFRAME_ROOT.'core.php';
 error_reporting(0);
 define('IN_DISCUZ', TRUE);
 
-define('UC_CLIENT_VERSION', '1.5.0');	//note UCenter °æ±¾±êÊ¶
+define('UC_CLIENT_VERSION', '1.5.0');	//note UCenter ç‰ˆæœ¬æ ‡è¯†
 define('UC_CLIENT_RELEASE', '20081031');
 
 define('API_RETURN_SUCCEED', '1');
@@ -16,20 +16,25 @@ define('API_RETURN_FORBIDDEN', '-2');
 defined('MAGIC_QUOTES_GPC') || define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc());
 $setting = get_cache('setting', 'member');
 
-//Í¨ĞÅÏà¹Ø
-define('UC_KEY', $setting['uc_key']);				// Óë UCenter µÄÍ¨ĞÅÃÜÔ¿, ÒªÓë UCenter ±£³ÖÒ»ÖÂ
-define('UC_API', $setting['uc_api']);	// UCenter µÄ URL µØÖ·, ÔÚµ÷ÓÃÍ·ÏñÊ±ÒÀÀµ´Ë³£Á¿
-define('UC_CHARSET', 'gbk');				// UCenter µÄ×Ö·û¼¯
-define('UC_IP', $setting['uc_ip']);					// UCenter µÄ IP, µ± UC_CONNECT Îª·Ç mysql ·½Ê½Ê±, ²¢ÇÒµ±Ç°Ó¦ÓÃ·şÎñÆ÷½âÎöÓòÃûÓĞÎÊÌâÊ±, ÇëÉèÖÃ´ËÖµ
-define('UC_APPID', $setting['uc_appid']);					// µ±Ç°Ó¦ÓÃµÄ ID
+if(is_numeric($setting['uc_key'])) {
+	exit('uc_key is too easy!');
+}
+//é€šä¿¡ç›¸å…³
+define('UC_KEY', $setting['uc_key']);				// ä¸ UCenter çš„é€šä¿¡å¯†é’¥, è¦ä¸ UCenter ä¿æŒä¸€è‡´
+define('UC_API', $setting['uc_api']);	// UCenter çš„ URL åœ°å€, åœ¨è°ƒç”¨å¤´åƒæ—¶ä¾èµ–æ­¤å¸¸é‡
+define('UC_CHARSET', 'gbk');				// UCenter çš„å­—ç¬¦é›†
+define('UC_IP', $setting['uc_ip']);					// UCenter çš„ IP, å½“ UC_CONNECT ä¸ºé mysql æ–¹å¼æ—¶, å¹¶ä¸”å½“å‰åº”ç”¨æœåŠ¡å™¨è§£æåŸŸåæœ‰é—®é¢˜æ—¶, è¯·è®¾ç½®æ­¤å€¼
+define('UC_APPID', $setting['uc_appid']);					// å½“å‰åº”ç”¨çš„ ID
 
 $_DCACHE = $get = $post = array();
 $code = isset($GLOBALS['code']) ? $GLOBALS['code'] : '';
 $get = $GLOBALS;
 parse_str(_authcode($code, 'DECODE', UC_KEY), $get);
-if(MAGIC_QUOTES_GPC)$get = _stripslashes($get);
-if(SYS_TIME - $get['time'] > 3600)exit('Authracation has expiried');
+if(MAGIC_QUOTES_GPC) $get = _stripslashes($get);
+
 if(empty($get))exit('Invalid Request');
+if(SYS_TIME - $get['time'] > 3600) exit('Authracation has expiried');
+if($get['time']>SYS_TIME+3600) exit('Authracation time error');
 
 require_once WWW_ROOT.'./api/uc_client/lib/xml.class.php';
 $post = file_get_contents('php://input');
@@ -52,18 +57,18 @@ class uc_note {
 		define('M', 'member');
 		$this->member = load_class('member', 'member');
 	}
-	
-	// ²âÊÔÍ¨ĞÅ
+
+	// æµ‹è¯•é€šä¿¡
 	public function test() {
 		return API_RETURN_SUCCEED;
 	}
-	//	¸ü¸ÄÓÃ»§Ãû
+	//	æ›´æ”¹ç”¨æˆ·å
 	public function renameuser($get, $post) {
 		return $this->member->renameuser($get['uid'], $get['oldusername'], $get['newusername']) ? API_RETURN_SUCCEED : API_RETURN_FAILED;
 	}
-	//	¸ü¸ÄÓÃ»§ÃÜÂë	
+	//	æ›´æ”¹ç”¨æˆ·å¯†ç 
 	public function updatepw($get, $post) {
-		//	Èç¹ûÃ»ÓĞ´«µİĞÂµÄÃÜÂëÖ±½Ó·µ»Ø³É¹¦
+		//	å¦‚æœæ²¡æœ‰ä¼ é€’æ–°çš„å¯†ç ç›´æ¥è¿”å›æˆåŠŸ
 		if(empty($get['password']))return  API_RETURN_SUCCEED;
 		load_function('preg_check');
 		$factor = random_string('diy', 6);
@@ -73,21 +78,21 @@ class uc_note {
 			return API_RETURN_FAILED;
 		}
 	}
-	//	É¾³ıÓÃ»§
+	//	åˆ é™¤ç”¨æˆ·
 	public function deleteuser($get, $post) {
 		$uids = $get['ids'];
 		!API_DELETEUSER && exit(API_RETURN_FORBIDDEN);
 
 		return API_RETURN_SUCCEED;
 	}
-	//	Í¬²½µÇÂ¼
+	//	åŒæ­¥ç™»å½•
 	function synlogin($get, $post) {
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 		$username = $get['username'];
 		$r = $this->member->db->get_one('member', 'username="'.$username.'"');
 		print_r($r);
 		if($r){
-			$cookietime = COOKIE_TTL ? SYS_TIME.COOKIE_TTL : 0;	
+			$cookietime = COOKIE_TTL ? SYS_TIME.COOKIE_TTL : 0;
 			set_cookie('auth', encode($r['uid']."\t".$r['password']."\t".$cookietime, substr(md5(_KEY), 8, 8)), $cookietime);
 			set_cookie('_uid', $r['uid'], $cookietime);
 			set_cookie('_username', $r['username'], $cookietime);
@@ -95,7 +100,7 @@ class uc_note {
 		}
 		return API_RETURN_SUCCEED;
 	}
-	//	Í¬²½ÍË³ö
+	//	åŒæ­¥é€€å‡º
 	function synlogout($get, $post) {
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 		set_cookie('auth', '', -1);
@@ -104,7 +109,7 @@ class uc_note {
 		set_cookie('_groupid', '', -1);
 		return API_RETURN_SUCCEED;
 	}
-	//	¸üĞÂÓ¦ÓÃÁĞ±í
+	//	æ›´æ–°åº”ç”¨åˆ—è¡¨
 	function updateapps($get, $post) {
 		if(!API_UPDATEAPPS) {
 			return API_RETURN_FORBIDDEN;

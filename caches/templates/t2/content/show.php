@@ -9,7 +9,7 @@
                 <div class="content_title"><?php echo $title;?></div>
                 <div class="bignewsbox">
                     <div class="Nfoot">
-                        <div class="lwd">时间：<?php echo date('Y-m-d H:i',$addtime);?>&nbsp;&nbsp; 来源：<?php echo $copyfrom;?></div>
+                        <div class="lwd">时间：<?php echo $addtime;?>&nbsp;&nbsp; 来源：<?php echo $copyfrom;?></div>
                     </div>
                 </div>
                 <div class="content_p">

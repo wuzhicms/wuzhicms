@@ -157,7 +157,7 @@ class WUZHI_alipay {
         }
 
         //submit按钮控件请不要含有name属性
-        $sHtml = $sHtml."<input type='submit' class='btn btn-danger_g active' value='".$button_name."'></form>";
+        $sHtml = $sHtml."<input type='submit' class='btn btn-warning' value='".$button_name."'></form>";
         if($tosubmit) {
             $sHtml = $sHtml."<script>document.forms['alipaysubmit'].submit();</script>";
         }

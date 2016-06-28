@@ -24,8 +24,6 @@ class model extends WUZHI_admin {
 	}
 	//模型列表
 	public function model_listing() {
-        $this->cache_form();//TODO 删除该行
-
 		$m = $this->m;
 		$where = array('m'=>$m);
 		$result = $this->db->get_list('model', $where, '*', 0, 100,0,'modelid ASC');
@@ -53,6 +51,7 @@ class model extends WUZHI_admin {
 			$formdata['share_model'] = isset($GLOBALS['share_model']) ? intval($GLOBALS['share_model']) : 0;
 			$formdata['template'] = $GLOBALS['template'];
 			$formdata['remark'] = $GLOBALS['remark'];
+			$formdata['manage_template'] = $GLOBALS['manage_template'];
 			//检查表是否存在，若存在则不允许创建
 			$tables = array();
 			$query = $this->db->query("SHOW TABLES");
@@ -85,12 +84,14 @@ class model extends WUZHI_admin {
 				$modelid = $this->db->insert('model',$formdata);
 				$this->db->update('model_field',array('modelid'=>$modelid),array('modelid'=>0));
                 $forward = isset($GLOBALS['forward']) ? $GLOBALS['forward'] : HTTP_REFERER;
+				$this->cache_form();
                 MSG(L('add success'),$forward);
 			} else {
 				MSG(L('add table faild'));
 			}
 			
 		} else {
+			$pre = isset($module_config['pre']) ? $module_config['pre'] : '';
             load_class('form');
             load_function('template');
 			include $this->template('model_add');
@@ -109,8 +110,10 @@ class model extends WUZHI_admin {
             $formdata['template'] = $GLOBALS['template'];
             $formdata['remark'] = $GLOBALS['remark'];
             $formdata['css'] = $GLOBALS['css'];
+            $formdata['manage_template'] = $GLOBALS['manage_template'];
             $this->db->update('model',$formdata,array('modelid'=>$modelid));
             $forward = isset($GLOBALS['forward']) ? $GLOBALS['forward'] : HTTP_REFERER;
+			$this->cache_form();
             MSG(L('update success'),$forward);
         } else {
             load_class('form');
@@ -139,6 +142,7 @@ class model extends WUZHI_admin {
                 @unlink($path);
             }
         }
+		$this->cache_form();
         MSG(L('delete success'),'?m=core&f=model&v=model_listing'.$this->su());
     }
 
@@ -147,6 +151,7 @@ class model extends WUZHI_admin {
 		$modelid = intval($GLOBALS['modelid']);
 		$cache_model = load_class('cache_model');
 		$field_config = $cache_model->get_fields_info($this->m);
+
         $formtype = isset($GLOBALS['formtype']) ? $GLOBALS['formtype'] : 'text';
         //print_r($formtype);exit;
 		if(isset($GLOBALS['submit'])) {
@@ -159,6 +164,7 @@ class model extends WUZHI_admin {
 			$formdata['modelid'] = $modelid;
 			$formdata['formtype'] = $formtype;
 			//master_field 是要添加到主表的
+            //print_r($GLOBALS['setting']);exit;
 			$formdata['master_field'] = intval($formdata['master_field']);
             $formdata['setting'] = isset($GLOBALS['setting']) ? serialize($GLOBALS['setting']) : '';
             $formdata['unsetgids'] = isset($GLOBALS['unsetgids']) ? implode(',',$GLOBALS['unsetgids']) : '';
@@ -182,6 +188,11 @@ class model extends WUZHI_admin {
             $action = 'add';
 
 			require $this->core_path.'db.php';
+			//同时增加英文表字段添加
+			if($this->m=='content') {
+				//$_appendstr = '_en';
+				//require $this->core_path.'db.php';
+			}
 
 			$this->db->insert('model_field',$formdata);
             $this->cache_form();
@@ -191,6 +202,7 @@ class model extends WUZHI_admin {
             if(file_exists(COREFRAME_ROOT.'app/'.$this->m.'/fields/config.php')) {
                 $module_config = include COREFRAME_ROOT.'app/'.$this->m.'/fields/config.php';
             }
+
             $model_r = $this->db->get_one('model',"modelid=".$modelid);
             $addto_master = false;
             if($model_r['attr_table']=='') $addto_master = true;
@@ -201,12 +213,19 @@ class model extends WUZHI_admin {
 				$options[$key] = $value['fieldname'];
 			}
 			$setting = '';
+			$m = $this->m;
+			if(file_exists($this->m_path.$formtype.'/config.php')) {
+				$config = require $this->m_path.$formtype.'/config.php';
+			} else {
+				$config = require $this->core_path.$formtype.'/config.php';
+			}
+
 			include $this->template('field_add');
 		}
 	}
 	public function field_edit() {
         $id = intval($GLOBALS['id']);
-
+		$m = $this->m;
         $modelid = intval($GLOBALS['modelid']);
         $cache_model = load_class('cache_model');
         $field_config = $cache_model->get_fields_info($this->m);
@@ -245,11 +264,16 @@ class model extends WUZHI_admin {
             $formdata['master_field'] = $r['master_field'];
 
             require $this->core_path.'db.php';
+			//同时增加英文表字段添加
+			if($this->m=='content') {
+				//$_appendstr = '_en';
+				//require $this->core_path.'db.php';
+			}
             //入库前，注销不允许修改都的字段
             unset($formdata['master_field'],$formdata['formtype']);
             $this->db->update('model_field',$formdata,array('id'=>$id));
             $this->cache_form();
-            MSG(L('edit success'),$GLOBALS['forward']);
+            MSG(L('edit success'),HTTP_REFERER);
         } else {
             $module_config = '';
             if(file_exists(COREFRAME_ROOT.'app/'.$this->m.'/fields/config.php')) {
@@ -293,6 +317,8 @@ class model extends WUZHI_admin {
 		$modelid = intval($GLOBALS['modelid']);
 		$where = array('modelid'=>$modelid);
 		$result = $this->db->get_list('model_field', $where, '*', 0, 100,0,'sort ASC');
+		$m = $this->m;
+		$model_data = $this->db->get_one('model', array('modelid' => $modelid));
 		include $this->template('field_listing');
 	}
 	//更新所有缓存
@@ -320,6 +346,7 @@ class model extends WUZHI_admin {
                 $n = intval($n);
                 $this->db->update('model_field',array('sort'=>$n),array('id'=>$cid));
             }
+			$this->cache_form();
             MSG(L('operation success'),HTTP_REFERER);
         } else {
             MSG(L('operation failure'));
@@ -332,6 +359,7 @@ class model extends WUZHI_admin {
         $id = intval($GLOBALS['id']);
         $ban_field = intval($GLOBALS['ban_field']);
         $this->db->update('model_field',array('disabled'=>$ban_field),array('id'=>$id));
+		$this->cache_form();
         if($ban_field) {
             MSG('字段禁用成功！',HTTP_REFERER);
         } else {

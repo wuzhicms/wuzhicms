@@ -12,7 +12,7 @@ $submenuid = $menu_r['menuid'];
     <div class="col-lg-12">
       <section class="panel">
         <?php echo $this->
-          menu($submenuid,'&modelid='.$GLOBALS['modelid']);?>
+          menu($submenuid,'&app='.$m.'&modelid='.$GLOBALS['modelid']);?>
           <div class="panel-body" id="panel-bodys">
             <form name="myform" class="form-horizontal tasi-form" action="" method="post">
             <input type="hidden" value="<?php echo $r['field'];?>" name="oldfield">
@@ -265,18 +265,25 @@ $submenuid = $menu_r['menuid'];
                     </td>
                   </tr>
                   <tr>
-                    <td>后台不显示该字段</td>
-                    <td class="hidden-phone">
+                    <td class="td5">工作流字段</td>
+                    <td class="hidden-phone td5">
                       <div class="col-sm-12">
-                      <label class="checkbox-inline ib"><input type="checkbox" id="unsetroleids[]" id="_1" value="1"> 超级管理员</label>
-                      <label class="checkbox-inline ib"><input type="checkbox" id="unsetroleids[]" id="_2" value="2"> 站点管理员</label>
-                      <label class="checkbox-inline ib"><input type="checkbox" id="unsetroleids[]" id="_3" value="3"> 运营总监</label>
-                      <label class="checkbox-inline ib"><input type="checkbox" id="unsetroleids[]" id="_4" value="4"> 总编</label>
-                      <label class="checkbox-inline ib"><input type="checkbox" id="unsetroleids[]" id="_5" value="5"> 编辑</label>
-                      <label class="checkbox-inline ib"><input type="checkbox" id="unsetroleids[]" id="_6" value="6"> 发布人员</label>
-                      </div>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <select name="form[workflow_field]" class="form-control">
+                              <option value="0" <?php if($r['workflow_field']==0) echo "selected";?>>默认-发布人可添加</option>
+                              <option value="1" <?php if($r['workflow_field']==1) echo "selected";?>>1审人员可添加</option>
+                              <option value="2" <?php if($r['workflow_field']==2) echo "selected";?>>2审人员可添加</option>
+                              <option value="3" <?php if($r['workflow_field']==3) echo "selected";?>>3审人员可添加</option>
+                              <option value="4" <?php if($r['workflow_field']==4) echo "selected";?>>4审人员可添加</option>
+                              <option value="5" <?php if($r['workflow_field']==5) echo "selected";?>>5审人员可添加</option>
+                              <option value="-1" <?php if($r['workflow_field']==-1) echo "selected";?>>mailset 特殊字段-仅邮件通知可用</option>
+                            </select>
+                          </div>
+                        </div>
                     </td>
                   </tr>
+
                   <tr>
                     <td>
                     </td>

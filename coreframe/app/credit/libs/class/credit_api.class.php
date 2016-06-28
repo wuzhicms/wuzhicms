@@ -1,28 +1,28 @@
 <?php
 // +----------------------------------------------------------------------
-// | wuzhicms [ ÎåÖ¸»¥ÁªÍøÕ¾ÄÚÈİ¹ÜÀíÏµÍ³ ]
+// | wuzhicms [ äº”æŒ‡äº’è”ç½‘ç«™å†…å®¹ç®¡ç†ç³»ç»Ÿ ]
 // | Copyright (c) 2014-2015 http://www.wuzhicms.com All rights reserved.
 // | Licensed ( http://www.wuzhicms.com/licenses/ )
 // | Author: wangcanjia <phpip@qq.com>
 // +----------------------------------------------------------------------
 defined('IN_WZ') or exit('No direct script access allowed');
 /**
- * »ı·Ö²Ù×÷Àà
- * »ı·Ö»ñÈ¡£¬Ïû·Ñ
+ * ç§¯åˆ†æ“ä½œç±»
+ * ç§¯åˆ†è·å–ï¼Œæ¶ˆè´¹
  */
 class WUZHI_credit_api {
-	public function __construct() {
+    public function __construct() {
         $this->db = load_class('db');
-	}
+    }
 
     /**
-     * »ı·Ö²Ù×÷Àà
+     * ç§¯åˆ†æ“ä½œç±»
      *
-     * @param $uid ÓÃ»§id
+     * @param $uid ç”¨æˆ·id
      * @param $method , + , -
-     * @param $point »ı·ÖÊı£¬ÕıÕûÊı
-     * @param $remark ¼òµ¥ÃèÊö
-     * @param string $note ÏêÇé±¸×¢
+     * @param $point ç§¯åˆ†æ•°ï¼Œæ­£æ•´æ•°
+     * @param $remark ç®€å•æè¿°
+     * @param string $note è¯¦æƒ…å¤‡æ³¨
      */
     public function handle($uid, $method,$point, $remark,$note = '',$keyid = '') {
         $point = intval($point);
@@ -46,7 +46,7 @@ class WUZHI_credit_api {
     }
 
     /**
-     * ¸ù¾İkeyid»ñÈ¡¼ÇÂ¼
+     * æ ¹æ®keyidè·å–è®°å½•
      * @param $keyid
      * @return mixed
      */

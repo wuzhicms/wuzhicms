@@ -18,7 +18,7 @@
                         <tr>
                             <th class="tablehead center">文章id</th>
                             <th class="tablehead center">目标站点</th>
-                            <th class="tablehead center">目标栏目(<?php echo $modelname;?>)</th>
+                            <th class="tablehead center">目标栏目(模型名:<?php echo $modelname;?>)</th>
 
                         </tr>
                         </thead>

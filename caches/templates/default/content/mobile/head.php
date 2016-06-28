@@ -1,7 +1,7 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed'); ?><!doctype html>
 <html>
 <head>
-    <meta charset="gbk">
+    <meta charset="<?php echo CHARSET;?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="format-detection" content="telephone=no" />
     <title><?php echo $seo_title;?></title>
@@ -15,12 +15,12 @@
 <body>
 <section class="tbox">
     <div class="topbar">
-        <!--<aside class="fr tbr"><a href="#">导航</a></aside>-->
-        <div class="logo"><img src="<?php echo R;?>images/mologo.png" height="30" width="100%"/></div><div></div>
+        <!--<aside class="fr tbr"><a href="#">瀵艰埅</a></aside>-->
+        <div class="logo"><a href="<?php echo WEBURL;?>index.php"><img src="<?php echo R;?>images/mologo.png" height="30" width="100%"/></a></div>
     </div>
     <header class="navbox">
         <ul class="navlst">
-            <li><a href="<?php echo WEBURL;?>" <?php if(!isset($cid)) { ?>class="ac"<?php } ?>>首页</a></li><?php if(defined('IN_ADMIN') && !defined('HTML')) {
+            <li><a href="<?php echo WEBURL;?>" <?php if(!isset($cid)) { ?>class="ac"<?php } ?>>棣栭〉</a></li><?php if(defined('IN_ADMIN') && !defined('HTML')) {
 	echo "<div class=\"visual_div\" pc_action=\"content\" data=\"\"><a href=\"javascript:void(0)\" class=\"visual_edit\">淇敼</a>";
 }
 if(!class_exists('content_template_parse')) {
@@ -28,7 +28,7 @@ if(!class_exists('content_template_parse')) {
 }
 if (method_exists($content_template_parse, 'category')) {
 	$rs = $content_template_parse->category(array('mshow'=>'1','order'=>'sort ASC','start'=>'0','pagesize'=>'100','page'=>'0',));
-	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?><?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?><li><a href="<?php echo $r['url'];?>" <?php if(isset($cid) && $cid==$r['cid']) { ?>class="ac"<?php } ?>><?php echo $r['mb'];?></a></li><?php $n++;}?><?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
+	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?><?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?><li><a href="<?php echo $r[url];?>" <?php if(isset($cid) && $cid==$r['cid']) { ?>class="ac"<?php } ?>><?php echo $r['mb'];?></a></li><?php $n++;}?><?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
         </ul>
     </header>
 </section>

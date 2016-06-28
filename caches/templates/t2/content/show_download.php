@@ -8,7 +8,7 @@
                 <div class="content_title"><?php echo $title;?> <span style="font-size:12px; float:right; padding-top:15px;">下载次数：<?php echo $down_numbers;?></span></div>
                 <div class="bignewsbox">
                     <div class="Nfoot">
-                        <div class="lwd">时间：<?php echo date('Y-m-d H:i',$addtime);?>&nbsp;&nbsp; 来源：<?php echo $copyfrom;?>   <div class="btn-group" role="group" aria-label="...">
+                        <div class="lwd">时间：<?php echo $addtime;?>&nbsp;&nbsp; 来源：<?php echo $copyfrom;?>   <div class="btn-group" role="group" aria-label="...">
 
                             <div class="btn-group" role="group">
                                 <button type="button" class=" dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onmousemove="show_qrcode('img1','<?php echo qrcode($url);?>')" style="background:none; border:none;">

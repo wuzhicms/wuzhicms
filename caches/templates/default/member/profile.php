@@ -1,273 +1,216 @@
-<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T('member','head'); ?>
-<script src="<?php echo R;?>member/js/jscarousel.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#jsCarousel').jsCarousel({ onthumbnailclick: function(src) {
-            // 可在这里加入点击图片之后触发的效果
-            $("#overlay_pic").attr('src', src);
-            $(".overlay").show();
-        }, autoscroll: true });
+<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("member","head"); ?>
+<body  class="gray-bg">
+<?php if($set_iframe==0) { ?>
+<?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("member","iframetop"); ?>
+<?php } else { ?>
+<div style="padding-top: 15px;"></div>
+<?php } ?>
+<div class="container-fluid  ie8-member">
+    <div class="row row-40" >
+        <?php if($set_iframe==0) { ?>
+        <div class="col-sm-3 left-nav padding-right0">
+            <!--左侧导航-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="nav-close"><i class="fa fa-times-circle"></i>
+                </div>
+                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+                    <div class="sidebar-collapse" style="width: auto; height: 100%;">
+                        <?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("member","left"); ?>
+                    </div>
+                </div>
+            </nav>
+            <!--end 左侧导航-->
+        </div><!--col-sm-3--><?php } ?>
 
-        $(".overlay").click(function(){
-            $(this).hide();
+        <div class="<?php if($set_iframe==0) { ?>col-sm-9<?php } else { ?>col-sm-12<?php } ?> paddingleft0">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="thumbnail" style="border: none; text-align: center;">
+                                    <img src="<?php echo avatar($this->uid, 180);?>" class="img-circle" style="border: 0px solid #f5f5f5;    box-shadow: 0 0 8px rgba(0,0,0,.15); margin-bottom: 20px; max-height: 120px;">
+                                    <a href="index.php?m=member&f=index&v=avatar&set_iframe=<?php echo $set_iframe;?>" type="btn" class="btn btn-default btn-outline"><i class="fa fa-photo"></i> 更换头像</a>
+                                </div>
+                            </div>
+                            <div class="col-md-5 mm--xinxi">
+                                <h3 style="font-size: 24px; font-weight: 500; margin-top: 30px;">个人信息</h3>
+                                <table class="table table-hover">
+                                    <br>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</th>
+                                        <td><?php echo $memberinfo['username'];?></td>
+                                        <td><a href="index.php?m=member&f=index&v=set_username&set_iframe=<?php echo $set_iframe;?>" type="btn" class="btn btn-default btn-outline btn-xs" style="margin-bottom: 0px"><i class="fa fa-pencil-square-o"></i> 更改</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">真实姓名：</th>
+                                        <td><?php echo $memberinfo['truename'];?></td>
+                                        <td><a href="index.php?m=member&f=index&v=profile&set_iframe=<?php echo $set_iframe;?>" type="btn" class="btn btn-default btn-outline btn-xs" style="margin-bottom: 0px"><i class="fa fa-pencil-square-o"></i> 更改</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">注册邮箱：</th>
+                                        <td><?php echo $memberinfo['email'];?></td>
+                                        <td><a href="index.php?m=member&f=index&v=edit_email&set_iframe=<?php echo $set_iframe;?>" type="btn" class="btn btn-default btn-outline btn-xs" style="margin-bottom: 0px"><i class="fa fa-pencil-square-o"></i> 更改</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">手机号码：
+                                        </th>
+                                        <td><?php echo $memberinfo['mobile'];?></td>
+                                        <td><a href="index.php?m=member&f=index&v=edit_mobile" type="btn" class="btn btn-default btn-outline btn-xs" style="margin-bottom: 0px"><i class="fa fa-pencil-square-o"></i> 更改</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">会 员 组：</th>
+                                        <td><?php echo $groups[$memberinfo['groupid']]['name'];?></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">注册时间：</th>
+                                        <td><?php echo date('Y-m-d',$memberinfo['regtime']);?></td>
+                                        <td>注册IP: <?php echo $memberinfo['regip'];?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">最后登录：</th>
+                                        <td><?php echo date('Y-m-d',$memberinfo['lasttime']);?></td>
+                                        <td>登录IP: <?php echo $memberinfo['lastip'];?></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="m-member-right">
+                                    <h4>第三方授权</h4>
+                                    <br>
+                                    <div style="background: #f5f5f5; padding: 8px 12px; border-left: 2px solid #55aa55; margin-bottom: 5px" >
+                                        <?php if($auth_result['weixin']) { ?>
+                                        <div style="display: inline-block;  "><i class="fa fa-weixin" style="font-size: 24px; color: #55aa55; width: 30px;"></i> &nbsp;&nbsp;已授权&nbsp;&nbsp; 账号：<?php echo $auth_result['weixin']['nickname'];?></div>
+                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=remove_auth&type=weixin" type="btn" class="btn btn-danger  btn-xs"> 取消授权</a></div>
+                                        <?php } else { ?>
+                                        <div style="display: inline-block;  "><i class="fa fa-weixin" style="font-size: 24px; color: #55aa55; width: 30px;"></i> &nbsp;&nbsp;未授权&nbsp;&nbsp; 账号：-</div>
+                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=bind_auth&type=weixin" type="btn" class="btn btn-primary  btn-xs" target="_blank"> 授权</a></div>
+                                        <?php } ?>
+                                    </div>
+                                    <div style="background: #f5f5f5; padding: 8px 12px; border-left: 2px solid #d78a10;margin-bottom: 5px" >
+                                        <?php if($auth_result['sina']) { ?>
+                                        <div style="display: inline-block;  "><i class="fa fa-weibo" style="font-size: 24px; color: #d78a10; width: 30px;"></i> &nbsp;&nbsp;已授权&nbsp;&nbsp; 账号：<?php echo $auth_result['sina']['nickname'];?></div>
+                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=remove_auth&type=sina" type="btn" class="btn btn-danger  btn-xs"> 取消授权</a></div>
+                                        <?php } else { ?>
+                                        <div style="display: inline-block;  "><i class="fa fa-weibo" style="font-size: 24px; color: #d78a10; width: 30px;"></i> &nbsp;&nbsp;未授权&nbsp;&nbsp; 账号：-</div>
+                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=bind_auth&type=sina" type="btn" class="btn btn-primary  btn-xs" target="_blank"> 授权</a></div>
+                                        <?php } ?>
+                                    </div>
+                                    <div style="background: #f5f5f5; padding: 8px 12px; border-left: 2px solid #2ea7ca ;margin-bottom: 5px" >
+                                        <?php if($auth_result['qq']) { ?>
+                                        <div style="display: inline-block; line-height: 24px; "><i class="fa fa-qq" style="font-size: 24px; color: #2ea7ca; width: 30px;"></i> &nbsp;&nbsp;已授权 &nbsp;&nbsp;账号：<?php echo $auth_result['qq']['nickname'];?></div>
+                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=remove_auth&type=qq" type="btn" class="btn btn-danger  btn-xs" > 取消授权</a></div>
+                                        <?php } else { ?>
+                                        <div style="display: inline-block; line-height: 24px; "><i class="fa fa-qq" style="font-size: 24px; color: #2ea7ca; width: 30px;"></i> &nbsp;&nbsp;未授权 &nbsp;&nbsp;账号：-</div>
+                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=bind_auth&type=qq" type="btn" class="btn btn-primary  btn-xs" target="_blank"> 授权</a></div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form id="myform" name="myfrom" class="form-horizontal tasi-form" method="post" action="">
+                            <div class="panel-body">
+                                <ul id="myTab" class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#tabs2" role="tab" id="2tab" data-toggle="tab" aria-controls="tabs2" aria-expanded="false">中文信息</a></li>
+                                </ul>
+                                </li>
+                                </ul>
+
+                                <div id="myTabContent" class="tab-content">
+
+                                    <div role="tabpanel" class="tab-pane fad active ine" id="tabs2" aria-labelledby="2tab">
+                                        <table class="table table-striped table-advance table-hover">
+                                            <tbody>
+
+                                            <?php
+            foreach($modelids as $modelid) {
+                echo '<tr><td colspan="2" style="background-color: #F9F3D7;color: #060000;text-align: center;">'.$models[$modelid]['name'].'</td></tr>';
+                                            $formdata = 'formdata_'.$modelid;
+                                            $data = $$formdata;
+                                            foreach ($data[0] as $field => $info) {
+                                            if ($info['powerful_field'] || $field=='email_10') continue;
+                                            if ($info['formtype'] == 'powerful_field') {
+                                            foreach ($formdata['0'] as $_fm => $_fm_value) {
+                                            if ($_fm_value['powerful_field']) {
+                                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                            }
+                                            }
+                                            foreach ($formdata['1'] as $_fm => $_fm_value) {
+                                            if ($_fm_value['powerful_field']) {
+                                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                            }
+                                            }
+                                            }
+                                            ?>
+                                            <tr>
+                                                <td class="text-right" width="150"><label class="control-label"><?php if ($info['star']) { ?>
+                                                    <font color="red">*</font><?php } ?> <?php echo $info['name'] ?></label></td>
+                                                <td>
+                                                    <?php
+                                            if($info['formtype']=='editor'){
+                                            ?>
+                                                    <div class="col-sm-12 col-xs-12"><?php echo $info['form'] ?><?php echo $info['remark'] ?></div>
+                                                    <?php
+                                            } else {?>
+                                                    <div class="col-sm-6 col-xs-6"><?php echo $info['form'] ?><?php echo $info['remark'] ?></div>
+                                                    <?php
+                                            }
+                                            ?>
+                                                </td>
+                                            </tr>
+                                            <?php }
+
+            }?>
+
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-xs-4 control-label"></label>
+                                    <div class="col-lg-5 col-sm-5 col-xs-5 input-group">
+                                        <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                </div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.form-groupinfo').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
         });
-        <?php if(isset($GLOBALS['tabid'])) { ?>
-        $("#<?php echo $GLOBALS['tabid'];?>").click();
-            <?php } ?>
     });
 </script>
-<!--正文部分-->
-<div class="container adframe">
-    <div class="row">
-        <div class="col-lg-12 col-xs-12">
-
-        </div>
-    </div>
-</div>
-
-<div class="container memberframe">
-    <div class="row">
-        <div class="col-lg-12 col-xs-12">
-            <!--左侧开始-->
-            <div class="memberleft">
-                <div class="membertitle"><h3>会员中心</h3></div>
-                <div class="memberborder">
-                    <?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T('member','left'); ?>
-                </div>
-            </div>
-            <!--左侧结束-->
-
-            <!--右侧开始-->
-            <div class="memberright">
-
-                <div class="memberbordertop">
-                    <section class="panel">
-                        <header class="panel-heading"><span class="title">账户信息</span></header>
-
-                        <ul id="myTab" class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#tabs1" id="1tab" role="tab" data-toggle="tab" aria-controls="tabs1" aria-expanded="true">基本信息</a></li>
-                            <li role="presentation" class=""><a href="#tabs2" role="tab" id="2tab" data-toggle="tab" aria-controls="tabs2" aria-expanded="false">设置密码</a></li>
-                            <li role="presentation" class=""><a href="#tabs3" role="tab" id="3tab" data-toggle="tab" aria-controls="tabs3" aria-expanded="false">账户等级</a></li>
-                            <li role="presentation" class=""><a href="#tabs4" role="tab" id="4tab" data-toggle="tab" aria-controls="tabs4" aria-expanded="false">修改头像</a></li>
-                        </ul>
-
-
-                        <div id="myTabContent" class="tab-content tabsbordertop">
-
-                            <div role="tabpanel" class="tab-pane fade active in" id="tabs1" aria-labelledby="1tab">
-                                <div class="panel-body" id="panel-bodys">
-                                    <form class="form-horizontal" role="form" name="myform" action="" method="post" id="myform" onsubmit="return formsubmit();">
-
-                                        <table class="table table-striped table-advance table-hover text-center">
-                                            <tbody>
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">账户名：</label><div class="col-sm-3 text-left"><p class="form-control-static"><?php echo $memberinfo['username'];?></p></div></div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">账户等级：</label><div class="col-sm-3 text-left"><p class="form-control-static"><a href="#"><i class="smmember <?php echo $groups[$memberinfo['groupid']]['icon'];?>"></i><?php echo $groups[$memberinfo['groupid']]['name'];?></a></p></div></div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">邮箱：</label><div class="col-sm-6 text-left" style="padding-top: 6px;"><?php if(strpos($memberinfo['email'],'@h1jk.cn')===false) { ?><?php echo $memberinfo['email'];?><?php } ?> <?php if($memberinfo['ischeck_email']==0) { ?><a href="?m=member&f=index&v=edit_email" style="color:#2a3bfb;">您的邮箱还未验证通过，验证后可获积分：<?php echo $point_config['email_check'];?>点，点击验证</a> <?php } ?></div></div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">手机：</label><div class="col-sm-6 text-left" style="padding-top: 6px;"><?php echo $memberinfo['mobile'];?> <?php if($memberinfo['ischeck_mobile']==0) { ?><a href="?m=member&f=index&v=edit_mobile" style="color:#2a3bfb;">您的手机还未验证通过，验证后可获积分：<?php echo $point_config['mobile_check'];?>点，点击验证</a> <?php } ?></div></div></td>
-                                            </tr>
-
-                                            <?php $n=1;if(is_array($field_list)) foreach($field_list AS $info) { ?>
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right"><?php if($info['star']) { ?><font color="red">*</font><?php } ?> <?php echo $info['name'];?>：</label><div class="col-sm-3 text-left"><?php echo $info['form'];?><span class="tablewarnings"><?php echo $info['remark'];?></span></div></div></td>
-                                            </tr>
-
-                                            <?php $n++;}?>
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">验证码：</label><div class="col-sm-8 text-left"><input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img').src='<?php echo WEBURL;?>api/identifying_code.php?w=110&h=40&rd='+Math.random();void(0);"> <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>api/identifying_code.php?rd='+Math.random();void(0);"></div></div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right"> </label><div class="col-sm-3 text-left"><button type="submit" name="submit" class="btn btn-order">提 交</button></div></div></td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                </div>
-
-                            </div>
-
-
-                            <div role="tabpanel" class="tab-pane fade" id="tabs2" aria-labelledby="2tab">
-                                <div class="panel-body" id="panel-bodys">
-                                    <form class="form-horizontal" role="form" name="passworform" action="?m=member&f=index&v=edit_password" method="post" id="passworform" onsubmit="return check_password();">
-                                        <table class="table table-striped table-advance table-hover text-center">
-                                            <tbody>
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">原密码：</label><div class="col-sm-3 text-left"><input type="password" class="form-control" id="oldpassword" placeholder="请输入原密码" name="oldpassword" type="password"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">新密码：</label><div class="col-sm-3 text-left"><input type="password" class="form-control" id="password" placeholder="请输入新密码" name="password" type="password"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">确认密码：</label><div class="col-sm-3 text-left"><input type="password" class="form-control" id="repassword" placeholder="请再输入一次" name="password2" type="password"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right">验证码：</label><div class="col-sm-8 text-left"><input type="text" id="Verificationcode" name="checkcode" class="form-control" placeholder="验证码" onfocus="javascript:document.getElementById('code_img2').src='<?php echo WEBURL;?>api/identifying_code.php?w=110&h=40&rd='+Math.random();void(0);"> <img src="<?php echo R;?>images/logincode.gif" id="code_img2" alt="点击刷新" onclick="javascript:this.src='<?php echo WEBURL;?>api/identifying_code.php?rd='+Math.random();void(0);"></div></div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div class="form-groupinfo"><label class="col-sm-3 control-label text-right"> </label><div class="col-sm-3 text-left"><button type="submit" name="submit" class="btn btn-order">提 交</button></div></div></td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <div role="tabpanel" class="tab-pane fade" id="tabs3" aria-labelledby="3tab">
-                                <div class="panel-body" id="panel-bodys">
-                                    <div class="levelinfo">
-                                        <p>您的会员级别是：<i class="smmember <?php echo $groups[$groupid]['icon'];?>"></i><?php echo $groups[$groupid]['name'];?></p>
-                                        <p>您目前的积分为: <strong><?php echo $memberinfo['points'];?></strong>点,再获得<a href="#"><?php echo $nextpoints;?> 点</a> 即可成为 <strong><i class="smmember <?php echo $groups[$next_group]['icon'];?>"></i><?php echo $groups[$next_group]['name'];?></strong></p>
-                                        <p>获得成长值的办法：每日登录、点评体检中心，点评套餐</p>
-                                        <p><a href="?m=credit&f=mycredit&v=listing">【 查看我的账户明细 】</a></p>
-                                    </div>
-                                    <div class="memberlevel">
-                                        <h5>会员级别图示：</h5>
-                                        <ul>
-                                            <li><a href="#"><i class="memberlevel1"></i><span>个人会员</span><p>注册成功即成为普通会员</p></a></li>
-                                            <li><a href="#"><i class="memberlevel2"></i><span>VIP会员</span><p>积分501</p></a></li>
-                                            <li><a href="#"><i class="memberlevel3"></i><span>黄金会员</span><p>积分1001</p></a></li>
-                                            <li><a href="#"><i class="memberlevel4"></i><span>白金会员</span><p>积分5001</p></a></li>
-                                            <li><a href="#"><i class="memberlevel5"></i><span>钻石会员</span><p>积分20001</p></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="tabs4" aria-labelledby="4tab">
-
-
-                                <script language="javascript" type="text/javascript" src="<?php echo R;?>js/swfobject.js"></script>
-                                <script type="text/javascript">
-                                    var flashvars = {
-                                        'upurl':"<?php echo $upurl;?>&callback=return_avatar&"
-                                    };
-                                    var params = {
-                                        'align':'middle',
-                                        'play':'true',
-                                        'loop':'false',
-                                        'scale':'showall',
-                                        'wmode':'window',
-                                        'devicefont':'true',
-                                        'id':'Main',
-                                        'bgcolor':'#fff',
-                                        'name':'Main',
-                                        'allowscriptaccess':'always'
-                                    };
-                                    var attributes = {
-                                    };
-                                    swfobject.embedSWF("<?php echo R;?>js/avatar.swf", "myContent", "490", "434", "9.0.0","<?php echo R;?>js/expressInstall.swf", flashvars, params, attributes);
-
-                                    function return_avatar(data) {
-                                        if(data == 1) {
-                                            window.location.reload();
-                                        } else {
-                                            alert('failure');
-                                        }
-                                    }
-                                </script>
-                                <div class="memberavatar" id="avatarlist" style="float:right;">
-                                    <li>
-                                        <img src="<?php echo WEBURL;?>uploadfile/member/<?php echo $dir;?>/180x180.jpg" height="180" width="180" onerror="this.src='<?php echo R;?>images/userface.png'"><br />
-                                        <?php echo L('avatar');?>180 x 180
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo WEBURL;?>uploadfile/member/<?php echo $dir;?>/90x90.jpg" height="90" width="90" onerror="this.src='<?php echo R;?>images/userface.png'"><br />
-                                        <?php echo L('avatar');?>90 x 90
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo WEBURL;?>uploadfile/member/<?php echo $dir;?>/45x45.jpg" height="45" width="45" onerror="this.src='<?php echo R;?>images/userface.png'"><br />
-                                        <?php echo L('avatar');?>45 x 45
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo WEBURL;?>uploadfile/member/<?php echo $dir;?>/30x30.jpg" height="30" width="30" onerror="this.src='<?php echo R;?>images/userface.png'"><br />
-                                        <?php echo L('avatar');?>30 x 30
-                                    </li>
-                                </div>
-                                <div class="col-auto">
-                                    <div id="myContent"><p>Alternative content</p></div>
-                                </div>
-
-
-                            </div>
-
-
-                        </div>
-
-
-                    </section>
-                </div>
-
-            </div>
-            <!--右侧结束-->
-
-
-        </div>
-    </div>
-</div>
-<!--正文部分-->
-
 <script type="text/javascript">
-    function formsubmit() {
+    $(function(){
+        $(".form-horizontal").Validform({
+            tiptype:3,
+            callback:function(form){
+                $("#submit").click();
+            }
 
-        myform.submit();
-    }
-    function check_password() {
-        if($("#oldpassword").val()=='') {
-            var d = dialog({
-                content: '原密码不能为空！'
-            });
-            d.show();
-            setTimeout(function () {
-                d.close().remove();
-                $("#oldpassword").focus();
-            }, 2000);
+        });
+    });
 
-            return false;
-        }
-        if($("#password").val()=='' || $("#repassword").val()=='') {
-            var d = dialog({
-                content: '新密码不能为空！'
-            });
-            d.show();
-            setTimeout(function () {
-                d.close().remove();
-                if($("#password").val()=='') {
-                    $("#password").focus();
-                } else {
-                    $("#repassword").focus();
-                }
-            }, 2000);
-
-            return false;
-        }
-        if($("#password").val() != $("#repassword").val()) {
-            var d = dialog({
-                content: '新密码输入不一致！'
-            });
-            d.show();
-            setTimeout(function () {
-                d.close().remove();
-                $("#password").focus();
-            }, 2000);
-
-            return false;
-        }
-        passworform.submit();
-    }
 </script>
 <?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("member","foot"); ?>

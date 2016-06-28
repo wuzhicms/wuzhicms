@@ -11,5 +11,6 @@
     'template' => 'show',
     'css' => '',
     'share_model' => '0',
+    'manage_template' => '',
   ),
 )?>

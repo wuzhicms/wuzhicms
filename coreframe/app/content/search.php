@@ -21,13 +21,20 @@ class search{
      * 公共模型搜索
      */
     public function init() {
+        //城市分站信息
+        $city = get_cookie('city');
+        if(!$city) $city = 'xa';
+        $city_config = get_config('city_config');
+        $cityid = $city_config[$city]['cityid'];
+        $cityname = $city_config[$city]['cityname'];
+        $this->siteid = $_GET['siteid'] ? $_GET['siteid'] : 1;
 
         $siteconfigs = $this->siteconfigs;
         $seo_title = '搜索 - '.$siteconfigs['sitename'];
         $seo_keywords = $siteconfigs['seo_keywords'];
         $seo_description = $siteconfigs['seo_description'];
         $categorys = get_cache('category','content');
-        $keywords = sql_replace($GLOBALS['keywords']);
+        $keywords = trim(sql_replace($GLOBALS['keywords']));
         $starttime = isset($GLOBALS['starttime']) ? intval($GLOBALS['starttime']) : 0;
         $runtime = '';
 
@@ -37,20 +44,32 @@ class search{
 
         $models = get_cache('model_content','model');
         $modelid = isset($GLOBALS['modelid']) ? intval($GLOBALS['modelid']) : 0;
+        $searchtype = isset($GLOBALS['searchtype']) ? intval($GLOBALS['searchtype']) : 0;
+        $search_typename = '全站';
+        if($modelid) {
+            $search_typename = $models[$modelid]['name'];
+        }
+
         if($keywords) {
             if($starttime) {
                 $stime = SYS_TIME-$starttime*86400;
                 $where = "`status`=9 AND (`addtime`>$stime AND `title` LIKE '%$keywords%') or (`addtime`>$stime AND `remark` LIKE '%$keywords%')";
             } else {
-                $where = "`status`=9 AND `title` LIKE '%$keywords%' or `remark` LIKE '%$keywords%'";
+                $where = "`status`=9 AND (`title` LIKE '%$keywords%' or `remark` LIKE '%$keywords%')";
             }
             $page = intval($GLOBALS['page']);
 
             if($modelid) {
                 $tablename = $models[$modelid]['master_table'];
+                if($tablename=='') MSG('参数错误!');
+                if($tablename=='content_share') {
+                    $where = "`modelid`='$modelid' AND ".$where;
+                }
             } else {
                 $tablename = 'content_share';
             }
+            //if(LANGUAGE=='en') $tablename .= '_en';
+            
             $result = $this->db->get_list($tablename, $where, '*', 0, 20, $page,'id DESC');
             $result_pages = $this->db->pages;
             $total_number = $this->db->number;
@@ -83,7 +102,21 @@ class search{
                 set_cookie('search_cookie',$search_cookie,SYS_TIME+86400*30);
             }
         }
-        include T('content','search',TPLID);
+        $request_uri = $_SERVER["REQUEST_URI"];
+        if(ENABLE_SITES) {
+            if($keywords=='') {
+                include T('content','search',TPLID.'-'.$this->siteid);
+            } else {
+                include T('content','search_result',TPLID.'-'.$this->siteid);
+            }
+        } else {
+            if($keywords=='') {
+                include T('content','search',TPLID);
+            } else {
+                include T('content','search_result',TPLID);
+            }
+        }
+
 	}
 }
 ?>

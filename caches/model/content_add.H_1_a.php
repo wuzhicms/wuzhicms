@@ -141,6 +141,13 @@ class form_add {
 		return $value;
 	}
 
+	private function content_group($config, $value) {
+		$field = $config['field'];
+			if(!empty($GLOBALS[$field])) {
+			return array2string($GLOBALS[$field]);
+		}
+	}
+
 	private function copyfrom($config, $value) {
 		return $value;
 	}
@@ -159,6 +166,11 @@ class form_add {
 	}
 
 	private function editor($config, $value) {
+		extract($config,EXTR_SKIP);
+		if($setting) extract($setting,EXTR_SKIP);
+		if($value && $editor_type=='ckeditor') {
+			$value = str_replace('<div style="page-break-after: always"><span style="display:none">&nbsp;</span></div>','_wuzhicms_page_tag_',$value);
+		}
 		/*远程图片加载*/
         /*extract($config,EXTR_SKIP);
     		$enablesaveimage = $setting['enablesaveimage'];
@@ -168,6 +180,7 @@ class form_add {
     			$attachment = load_class('attachment','attachment');
     			$value = $attachment->save_remote($value,$watermark_enable);
     		}*/
+
 		return $value;
 	}
 	private function group($config, $value) {
@@ -190,6 +203,7 @@ class form_add {
 
 
 	private function keyword($config, $value) {
+		$value = strip_tags($value);
          if(strpos($value,',')===false) {
             return str_replace(' ',',',$value);
          } else {
@@ -255,6 +269,38 @@ class form_add {
 	private function textarea($config, $value) {
 		
 if(!$config['setting']['enablehtml']) $value = strip_tags($value);
+		return $value;
+	}
+
+	private function video_tudou($config, $value) {
+		$ext = substr($value,-5);
+		if($ext=='v.swf') {
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $value);
+			curl_setopt($ch, CURLOPT_VERBOSE, true);
+			curl_setopt($ch, CURLOPT_HEADER, true);
+			curl_setopt($ch, CURLOPT_NOBODY, true);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+			curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+			$ret = curl_exec($ch);
+			$info = curl_getinfo($ch);
+			curl_close($ch);
+
+			preg_match('/\&code=([A-Za-z0-9=\-_]+)\&/',$info['url'],$_v);
+			preg_match('/\&lCode=([A-Za-z0-9=\-_]+)\&/',$info['url'],$_v2);
+			preg_match('/\&listType=([0-9])\&/',$info['url'],$_v3);
+
+			$str = 'http://www.tudou.com/programs/view/html5embed.action?type='.$_v3[1].'&code='.$_v[1].'&lcode='.$_v2[1].'&';
+			return $str;
+		}
+
+		return $value;
+	}
+
+	private function video_youku($config, $value) {
 		return $value;
 	}
 

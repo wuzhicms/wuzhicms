@@ -1,0 +1,20 @@
+<?php
+ return array (
+  'blockid' => '44',
+  'tplid' => 't3',
+  'modelid' => '0',
+  'siteid' => '1',
+  'type' => '2',
+  'codetype' => '1',
+  'name' => 'foot-联系方式',
+  'max_number' => '500',
+  'code' => '<p>联系电话：010-82463345 &nbsp; &nbsp;QQ:282198327 &nbsp;Email:zhw@wuzhicms.com</p>',
+  'url' => '',
+  'updatetime' => '1462851796',
+  'status' => '9',
+  'timing' => '1462855396',
+  'createhtml' => '0',
+  'remark' => '',
+  'isopenid' => '0',
+  'lang' => '',
+)?>

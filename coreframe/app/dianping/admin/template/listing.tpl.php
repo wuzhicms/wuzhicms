@@ -51,7 +51,6 @@
                             <td><?php echo $mr['username'];?></td>
                             <td>
                                 <a href="javascript:;" onclick="delete_dianping(<?php echo $r['id'];?>,this)" class="btn btn-primary btn-xs">删除</a>
-
                             </td>
                         </tr>
 

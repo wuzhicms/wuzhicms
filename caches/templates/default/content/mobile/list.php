@@ -17,12 +17,12 @@ if (method_exists($content_template_parse, 'listing')) {
                     <div><a href="<?php echo $r['url'];?>"><?php echo safe_htm($r['title']);?></a></div>
                     <div><span class="nums"><?php echo $categorys[$r['cid']]['name'];?></span><span class="times"><?php echo date('Y-m-d',$r['updatetime']);?></span></div>
                 </div>
-                <?php if($r['thumb']) { ?><div class="mimg"><img src="<?php echo $r['thumb'];?>" width="60" height="60"/></div><?php } ?>
+                <?php if($r['thumb']) { ?><div class="mimg"><a href="<?php echo $r['url'];?>"><img src="<?php echo $r['thumb'];?>" width="60" height="60"/></a></div><?php } ?>
             </li>
             <?php $n++;}?>
             <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
         </ul>
-        <div class="loading-div" onclick="load_lists()"><span id="morebutton" class="button-bg morebutton">更多<?php echo $category['name'];?></span></div>
+        <div class="loading-div" onclick="load_lists()"><span id="morebutton" class="button-bg morebutton">鏇村<?php echo $category['name'];?></span></div>
     </article>
 </section>
 <script type="text/javascript">
@@ -32,14 +32,14 @@ if (method_exists($content_template_parse, 'listing')) {
         $("#morebutton").html("<img src='<?php echo R;?>images/loading.gif'>");
         $.getJSON("<?php echo WEBURL;?>index.php?m=content&f=json&v=listing&cid=<?php echo $cid;?>&pagesize=20&page="+page, function(data) {
             if(data=='finish') {
-                $("#morebutton").html("已经是最后一页了");
+                $("#morebutton").html("宸茬粡鏄渶鍚庝竴椤典簡");
             } else {
                 $.each(data, function(i,item){
                     $("#wzlist").append('<li><div class="bl"><div><a href="'+item.url+'">'+item.title+'</a></div><div><span class="nums">'+item.catname+'</span><span class="times">'+item.updatetime+'</span></div></div></li>');
 
                 });
                 $("#morebutton").addClass("button-bg");
-                $("#morebutton").html("更多<?php echo $category['name'];?>");
+                $("#morebutton").html("鏇村<?php echo $category['name'];?>");
             }
         });
 
@@ -47,7 +47,7 @@ if (method_exists($content_template_parse, 'listing')) {
     }
 </script>
 <footer class="ft">
-    Copyright 2005 - 2014 WuzhiCMS. All Rights Reserved
+    Copyright 2005 - 2015 WuzhiCMS. All Rights Reserved
 </footer>
 </body>
 </html>

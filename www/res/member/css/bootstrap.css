@@ -900,7 +900,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Microsoft YaHei", "Microsoft YaHei UI", "Hiragino Sans GB W3", "Segoe UI", Arial, Verdana, Sans-Serif, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
@@ -4511,7 +4511,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   background-color: #eee;
   border-color: #ddd;
 }
-/*·ÖÒ³active±ä»¯*/
+/*ï¿½ï¿½Ò³activeï¿½ä»¯*/
 .pagination > li > .active,
 .pagination > li > .active > span,
 .pagination > li > .active > a:hover,

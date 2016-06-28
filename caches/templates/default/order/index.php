@@ -1,5 +1,5 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","head",TPLID); ?>
-<link type="text/css" rel="stylesheet" href="<?php echo R;?>h1jk/css/tuangou_style.css">
+
 
 <div class="white-section">
     <!--订单内容-->
@@ -8,15 +8,17 @@
     <div id="contenter">
         <div class="jet">
             <div class="shipping-address">
-                <h4 class="font_size14" style="font-weight:700; margin:40px 0px 16px 0px;">选择收货地址</h4>
+                <h3 style="font-weight:500; margin:40px 0px 16px 0px;">选择收货地址</h3>
                 <div class="list">
                     <?php $n=1;if(is_array($address_result)) foreach($address_result AS $r) { ?>
                     <div class="addr <?php if($n==1) { ?>addr-active<?php } ?> " <?php if($n>4) { ?>style='display:none'<?php } ?> onclick="change_add(<?php echo $r['addressid'];?>,this);">
                         <div class="inner">
                             <div class="addr-hd"><?php echo $r['province'];?><?php echo $r['city'];?>(<?php echo $r['addressee'];?>收)</div>
                             <div class="addr-bd"><?php echo $r['area'];?> <?php echo $r['address'];?> <?php if($r['mobile']) { ?><?php echo $r['mobile'];?><?php } else { ?><?php echo $r['tel'];?><?php } ?> </div>
+                            <div class="addr-toolbar"><a title="修改地址">修改</a></div>
                         </div>
-                        <ins class="curmarker"></ins> <a class="defaultaddress" id="def<?php echo $r['addressid'];?>" <?php if($n!=1) { ?>style="display:none;"<?php } ?>>默认地址</a>
+                        <ins class="curmarker"></ins>
+                        <a class="defaultaddress" id="def<?php echo $r['addressid'];?>" <?php if($n!=1) { ?>style="display:none;"<?php } ?>>默认地址</a>
                     <a class="setdefault" onclick="setdefault(<?php echo $r['addressid'];?>,this);">设为默认</a> </div>
                     <?php $n++;}?>
 
@@ -31,9 +33,9 @@
                     <tr>
                         <th class="tube-title">商品</th>
                         <th class="tube-price">积分</th>
+                        <th class="tube-price">现金</th>
                         <th class="tube-amount">数量</th>
                         <th class="tube-promo">优惠</th>
-                        <th class="tube-sum">小计</th>
                         <th class="tube-postage">配送方式</th>
                     </tr>
                     <tr class="row-border">
@@ -54,11 +56,9 @@
                                 <td class="tube-master"><p class="item-title"><a href="#"><?php echo $goods['title'];?></a></p></td>
                                 <td class="tube-sku"></td>
                                 <td class="tube-price"><?php echo $goods['point'];?>点</td>
-                                <td class="tube-amount"><div class="tc-amount">1</div></td>
+                                <td class="tube-price"><?php echo $goods['price'];?>元</td>
+                                <td class="tube-amount"><div class="tc-amount"><?php echo $quantity;?></div></td>
                                 <td class="tube-promo">-</td>
-                                <td class="tube-sum"><span class="itemPay">
-                      <p class="sum"><?php echo $goods['point'];?>点</p>
-                      </span></td>
                             </tr>
                             </tbody>
                         </table></td>
@@ -78,7 +78,7 @@
             <div class="checkbar">
                 <div class="checkbar">
                     <div class="due">
-                        <div class="realPay"><p class="money"><span class="hd">实付：</span><span class="bd"><span class="tc-rmb"></span><strong><?php echo $goods['point'];?>点</strong></span></p></div>
+                        <div class="realPay"><p class="money"><span class="hd">实付：</span><span class="bd"><span class="tc-rmb"></span><strong class="font-Arial"><?php echo intval($goods['point']*$quantity);?>点 <?php if($type) { ?> + <?php echo sprintf('%.2f',$goods['price']*$quantity);?>元<?php } ?></strong></span></p></div>
                 </div>
             </div>
                 <?php $n=1;if(is_array($form_fields)) foreach($form_fields AS $fields) { ?>
@@ -86,7 +86,9 @@
                 <?php $n++;}?>
                 <input type="hidden" name="addressid" id="addressid" value="<?php echo $addressid;?>">
                 <input type="hidden" name="secret_key" value="<?php echo $secret_key;?>">
-                <input type="submit" name="submit" id="copy-button" value="提交订单" class="btn btn-info btn-lg" style="height: 42px;padding-top: 0px;margin-bottom: 10px;">
+                <input type="hidden" name="type" value="<?php echo $type;?>">
+                <input type="hidden" name="quantity" value="<?php echo $quantity;?>">
+                <input type="submit" name="submit" id="copy-button" value="提交订单" class="btn btn-primary btn-lg" style="margin-bottom: 60px;">
         </div>
 
     </form>
@@ -96,7 +98,7 @@
 </div>
 <link rel="stylesheet" href="<?php echo R;?>js/dialog/ui-dialog.css" />
 <script src="<?php echo R;?>js/dialog/dialog-plus.js"></script>
-<script src="<?php echo R;?>js/wuzhicms.js"></script>
+<script src="<?php echo R;?>js/base.js"></script>
 <script type="text/javascript">
     function setdefault(addressid,obj) {
         $.post("index.php?m=order&f=address&v=setdefault&addressid="+addressid, { js: "1"},
