@@ -315,13 +315,13 @@ final class index extends WUZHI_admin
 
             if ($coveringUpdateTpl) {
                 //覆盖更新  -> 备份系统中的模版文件并覆盖更新
-                $targetFile = $this->systemRoot."coreframe/templates/upgrade/{$package['fromVersion']}/cover/".substr(trim($filePath), 20);
+                $targetFile = BACKUP_PATH."{$package['fromVersion']}/cover/coreframe/templates/".substr(trim($filePath), 20);
                 if ($this->filesystem->exists($originFile)) {
                     $this->filesystem->copy($originFile, $targetFile, $override = true);
                 }
             } else {
                 //忽略更新   -> 删除升级文件中对应的文件模板
-                $targetFile = $this->systemRoot."coreframe/templates/upgrade/{$package['fromVersion']}/".substr(trim($filePath), 20);
+                $targetFile = BACKUP_PATH."{$package['fromVersion']}/coreframe/templates/upgrade/".substr(trim($filePath), 20);
                 if ($this->filesystem->exists($upgradeFile)) {
                     $this->filesystem->copy($upgradeFile, $targetFile, $override = true);
                     $this->filesystem->remove($upgradeFile);
