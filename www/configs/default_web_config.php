@@ -42,3 +42,5 @@ define('TPLID','t2');
 define('DOWNLOAD_PATH', '/workspace/wwwroot/wuzhicms_v2/src/upgrade/data/');
 define('BACKUP_PATH', '/workspace/wwwroot/wuzhicms_v2/src/upgrade/backup/');
 define('SYSTEM_ROOT','/workspace/wwwroot/wuzhicms_v2/src');
+
+define('DEBUG', false);
