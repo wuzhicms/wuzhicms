@@ -1,5 +1,6 @@
 /build/
-/bin/
+/caches/upgrade/
+/caches/db_bak
 /.idea/*
 /.svn/*
 /caches/content/*
