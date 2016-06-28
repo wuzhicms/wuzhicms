@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /build/
 /.idea/
 www/configs/mysql_config.php
@@ -10,9 +9,4 @@ www/configs/weixin_config.php
 /upgrade/backup/*
 /upgrade/data/*
 /upgrade/build/*
-=======
-
 www/res/t3/image/xieline_bg - 副本.png
-
-www/res/t3/image/xieline_bg - 副本.png
->>>>>>> master

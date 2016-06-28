@@ -127,6 +127,7 @@ function exec(title, url, progressBar, startProgress, endProgress) {
             tplist = data.response.join('<br/>');
             $(".tpl-package-upgrade").removeClass('hidden').find('span').html(tplist);
             $(".update-tpl-btn").on('click', function() {
+                $(this).parents('.tpl-package-upgrade').addClass('hidden');
                 coveringUpdateTpl = $(this).data('update');
                 progressBar.setProgress(endProgress, title + '完成');
                 $(document).dequeue('update_step_queue');
