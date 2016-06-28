@@ -28,9 +28,9 @@ CREATE TABLE `wz_member_group_extend` (
 -- Indexes for table `wz_member_group_extend`
 --
 ALTER TABLE `wz_member_group_extend`
-ADD PRIMARY KEY (`extid`),
-ADD UNIQUE KEY `uid` (`uid`,`groupid`),
-ADD KEY `groupid` (`groupid`,`disabled`);
+  ADD PRIMARY KEY (`extid`),
+  ADD UNIQUE KEY `uid` (`uid`,`groupid`),
+  ADD KEY `groupid` (`groupid`,`disabled`);
 
 --
 -- 在导出的表使用AUTO_INCREMENT
@@ -40,7 +40,7 @@ ADD KEY `groupid` (`groupid`,`disabled`);
 -- 使用表AUTO_INCREMENT `wz_member_group_extend`
 --
 ALTER TABLE `wz_member_group_extend`
-MODIFY `extid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `extid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 
 INSERT INTO `wz_member_group` (`groupid`, `name`, `issystem`, `points`, `upgrade`, `money_y`, `money_m`, `money_d`, `sort`, `icon`) VALUES ('4', '游客', '1', '0', '0', '0.00', '0.00', '0.00', '0', '');

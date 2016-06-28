@@ -19,7 +19,6 @@ ini_set('display_errors', 1);
 define('INSTALL_ROOT',dirname(__FILE__).'/');
 
 define('WWW_ROOT',str_replace('\\','/',substr(INSTALL_ROOT,0,-8)));
-define('SYSTEM_ROOT',str_replace('\\','/',substr(INSTALL_ROOT,0,-12)));
 $reinstall = '';
 if(!file_exists(WWW_ROOT.'configs/web_config.php')) {
     $reinstall = 'default_';
@@ -425,17 +424,9 @@ switch($step) {
                     $key2 =install_rand(7);
                     $res = set_config($res,'_KEY',"'".$key1.$key2."'");
                     $res = set_config($res,'CHARSET',"'".$charset."'");
-<<<<<<< HEAD
-
-                    $res = set_config($res,'DOWNLOAD_PATH',"'".SYSTEM_ROOT."upgrade/data'");
-                    $res = set_config($res,'BACKUP_PATH',"'".SYSTEM_ROOT."upgrade/backup/'");
-                    $res = set_config($res,'SYSTEM_ROOT',"'".SYSTEM_ROOT."'");
-
-=======
                     $sitelist_cache = file_get_contents($current_cache.'_cache_/sitelist.H_1_a.php');
                     $sitelist_cache = str_replace('http://dev.wuzhicms.com/',$weburl,$sitelist_cache);
                     file_put_contents($current_cache.'_cache_/sitelist.H_1_a.php',$sitelist_cache);
->>>>>>> master
                     file_put_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php',$res);
                     if($reinstall) {
                         rename(WWW_ROOT.'configs/'.$reinstall.'web_config.php',WWW_ROOT.'configs/web_config.php');

@@ -15,7 +15,7 @@ load_function('curl');
 
 class WUZHI_app_client
 {
-    private $api_url = 'http://dev.wuzhi_cloud.com/api/';
+    private $api_url = 'http://127.0.0.1:8000/api/';
 
     public function checkUpgradePackages($args)
     {

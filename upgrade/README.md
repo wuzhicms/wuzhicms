@@ -36,12 +36,21 @@
     ```[sh]
      在bash提示符下输入：
 
-     git config –global core.quotepath false
+     git config --global core.quotepath false
 
      ore.quotepath设为false的话，就不会对0×80以上的字符进行quote。中文显示正常。
     ```
 
     ```[sh]
+      wuzhicms_v3 git:(master) git branch
+      debug/2016062814
+      feature/system-upgrade
+      master
+      pr/53
+      pr/54
+      release/2.1.7
+      v2.1.7
+
     mkdir upgrade/build (if does not exist)
     git diff --name-status  release/3.0.0  release/3.0.1  > upgrade/build/diff-3.0.1 (if release branch has been created)
 
@@ -54,9 +63,14 @@
 6. 生成升级包
 
     ```[sh]
+<<<<<<< HEAD
     php /bin/build.php MAIN 3.0.1 upgrade/build/diff-3.0.1
+=======
+    php bin/build.php MAIN 3.0.1 upgrade/build/diff-3.0.1
+>>>>>>> master
 
-    cd upgrade/build zip -r MAIN_3.0.1.zip MAIN_3.0.1
+    cd upgrade/build
+    zip -r MAIN_3.0.1.zip MAIN_3.0.1
     ```
 
 7. 上传升级包
