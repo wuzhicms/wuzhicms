@@ -117,9 +117,119 @@
             </section>
         </div>
         <!-- 表单 -->
-
-        <!-- 版权信息 -->
         <div class="col-lg-6">
+        <!--系统升级-->
+            <section class="panel">
+            <header class="panel-heading bm0">
+                <span>系统更新 </span><span class="badge" style="background-color:#FF3333"><?php if (isset($app['package'])) {?> new <?php }?></span>
+                    <span class="tools pull-right">
+                        <a class="icon-chevron-down" href="javascript:;"></a>
+                    </span>
+            </header>
+            <div class="panel-body" id="panel-bodys">
+                <table class="table table-hover system-upgrade">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <strong>版本信息</strong>：当前版本 V<!--已是最新版本 V2.0.3 当前版本 V2.0.3-->
+                            <?php if (isset($app['package'])) {?>
+                                <?php echo $app['package']['fromVersion']; ?>
+                            <?php } else {?>
+                                <?php echo $app['latestVersion']; ?>
+                             <?php }?>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <strong>升级信息</strong>： <!--当前版本:  V2.0.3  下一版本:  V2.0.5  最新版本: V2.1.0  -->
+                            <?php if (isset($app['package'])) {?>
+                                下一版本: V<?php echo $app['package']['toVersion']; ?> 最新版本: V<?php echo $app['latestVersion']; ?> <button class="btn btn-primary btn-sm active" role="button" data-toggle="modal" data-backdrop="static" data-target="#wuzhicms-upgrade">升级</button>
+                            <?php } else {?>
+                                已经是最新版本: V<?php echo $app['latestVersion']; ?>
+                            <?php }?>
+
+
+                            <?php if (isset($app['package'])) {?>
+                                <div class="modal fade" id="wuzhicms-upgrade" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="wuzhicms-upgrade">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">系统升级</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="40%">应用名称</th>
+                                                        <th width="25%">版本</th>
+                                                        <th>备份数据库</th>
+                                                        <th>备份文件</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>wuzhicms</td>
+                                                        <td>
+                                                            <!--  <strong class="text-success">2.0.5</strong> -->
+                                                            <strong class="text-muted"> <?php echo $app['package']['fromVersion']; ?></strong> -&gt; <strong class="text-success"><?php echo $app['package']['toVersion']; ?></strong>
+                                                        </td>
+                                                        <td>否</td>
+                                                        <td>否</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div style="background-color: #f5f5f5;padding: 15px 20px;">
+                                                    更新日志:</br></br>
+                                                    <?php echo $app['package']['description'];?>
+                                                </div>
+                                                <div class ="tpl-package-upgrade hidden" style="background-color: #f5f5f5;padding: 15px 20px;">
+                                                    更新模版:</br></br>
+                                                    <span></span>
+                                                    <div>以上模版您编辑过，是否覆盖更新？
+                                                        <button type="button" data-update='false' class="btn btn-sm update-tpl-btn">忽略以上模板</button>
+                                                        <button type="button" data-update='true' class="active btn btn-default btn-sm update-tpl-btn" >覆盖更新</button>
+                                                         <div class="tpl-helper">
+                                                        选择覆盖，您的文件的将会自动备份<br/>
+                                                        选择忽略，以上更新文件将无法升级
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="package-update-progress" class="package-update-progress hidden">
+                                                    <div class="progress progress-striped active">
+                                                        <div class="progress-bar progress-bar-success" style="width: 0%"></div>
+                                                    </div>
+                                                    <div class="text-success progress-text"></div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary btn-wuzhicms-upgrade"
+                                                    data-check-environment-url="?m=appupdate&f=index&v=checkEnvironment&_su=<?php  echo _SU;?>"
+                                                    data-backup-file-url="?m=appupdate&f=index&v=backupFile&_su=<?php  echo _SU;?>"
+                                                    data-backup-db-url="?m=appupdate&f=index&v=backupDb&_su=<?php  echo _SU;?>"
+                                                    data-download-extract-url="?m=appupdate&f=index&v=downloadPackage&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
+                                                     data-proccess-template-url="?m=appupdate&f=index&v=proccessTpl&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
+                                                    data-begin-upgrade-url="?m=appupdate&f=index&v=beginUpgrade&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
+
+                                                >开始升级</button>
+                                                <strong class="text text-danger" id="updating-hint" style="display:none;">正在升级，请不要关闭当前窗口...</strong>
+
+                                                <button id="finish-update-btn" data-loading-text="正在完成升级, 请稍等..." class="btn btn-primary" style="display:none">完成升级</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php }?>
+                        </td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- 版权信息 -->
             <section class="panel">
                 <header class="panel-heading bm0">
                     <span>团队及版权信息</span>
@@ -244,6 +354,9 @@
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
 <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
 <script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
+<?php if (isset($app['package'])) {?>
+    <script src="<?php echo R;?>js/wuzhicms-upgrade.js"></script>
+<?php }?>
 <script type="text/javascript">
     function stat_speed(count,id)
     {

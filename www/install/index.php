@@ -31,16 +31,17 @@ $step = max(1,$step);
 $support = true;
 $charset = 'utf-8';
 $dbcharset = 'utf8';
-
-header('Content-type: text/html; charset='.$charset);
+$is_mysql = function_exists('mysql_connect') ? true : false;
+header('Content-type: text/html; charset=' . $charset);
 
 $best_iframe = substr(INSTALL_ROOT,0,-12).'coreframe/';
 $best_cache = substr(INSTALL_ROOT,0,-12).'caches/';
-
+$in_same_dir = false;
 if(file_exists($best_cache.'install.check')) {
     $current_cache = $best_cache;
 } elseif(file_exists(WWW_ROOT.'caches/install.check')) {
     $current_cache = WWW_ROOT . 'caches/';
+    $in_same_dir = true;
 } else {
     exit('caches 缓存目录不存在');
 }
@@ -99,10 +100,11 @@ function install_rand($length, $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm
     return $hash;
 }
 
-function sql_execute($link,$sql,$tablepre = '') {
-    global $dbcharset;
-    $sql = preg_replace("/ENGINE=(InnoDB|MyISAM|MEMORY) DEFAULT CHARSET=([^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=".$dbcharset,$sql);
-    if($tablepre != 'wz_') $sql = str_replace('`wz_', '`'.$tablepre, $sql);
+function sql_execute($link, $sql, $tablepre = '')
+{
+    global $dbcharset, $is_mysql;
+    $sql = preg_replace("/ENGINE=(InnoDB|MyISAM|MEMORY) DEFAULT CHARSET=([^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=" . $dbcharset, $sql);
+    if ($tablepre != 'wz_') $sql = str_replace('`wz_', '`' . $tablepre, $sql);
     $sql = str_replace("\r", "\n", $sql);
     $ret = array();
     $num = 0;
@@ -132,27 +134,47 @@ function sql_execute($link,$sql,$tablepre = '') {
             }
         }
     } else {
-        if(mysql_query($ret,$link)) {
+        if($is_mysql) {
+            if(mysql_query($ret,$link)) {
 
+            } else {
+                mysql_error();
+            }
         } else {
-            mysql_error();
+            if(mysqli_query($ret,$link)) {
+
+            } else {
+                mysqli_error();
+            }
         }
+
     }
     return true;
 }
 
 function import_sql($id,$weburl){
-    global $dbcharset;
+    global $dbcharset,$is_mysql;
     $db = include WWW_ROOT.'configs/mysql_config.php';
     $db = $db['default'];
-    $link = mysql_connect($db['dbhost'], $db['username'], $db['password']) or die ('Not connected : ' . mysql_error());
-    $version = mysql_get_server_info();
-    mysql_query("SET NAMES '$dbcharset'",$link);
+    if($is_mysql) {
+        $link = mysql_connect($db['dbhost'], $db['username'], $db['password']) or die ('Not connected : ' . mysql_error());
+        $version = mysql_get_server_info();
+        mysql_query("SET NAMES '$dbcharset'",$link);
 
-    if($version > '5.0') {
-        mysql_query("SET sql_mode=''");
+        if($version > '5.0') {
+            mysql_query("SET sql_mode=''");
+        }
+        mysql_select_db($db['dbname']);
+    } else {
+        $link = mysqli_connect($db['dbhost'], $db['username'], $db['password'],$db['dbname']) or die ('Not connected : ' . mysqli_error());
+        $version = mysqli_get_server_info();
+        mysqli_query("SET NAMES '$dbcharset'",$link);
+
+        if($version > '5.0') {
+            mysqli_query("SET sql_mode=''");
+        }
     }
-    mysql_select_db($db['dbname']);
+
     if(file_exists(WWW_ROOT."install/sql/install-$id.sql")) {
         $sql = file_get_contents(WWW_ROOT."install/sql/install-$id.sql");
         $sql = str_replace('http://dev.wuzhicms.com/',$weburl,$sql);
@@ -270,20 +292,32 @@ switch($step) {
             if($admin_password!=$repassowrd) exit('8');
             if(empty($admin_email)) exit('7');
             if(!is_email($admin_email)) exit('9');
+            if($is_mysql) {
+                if(!@mysql_connect($dbhost, $username, $password)) {
+                    exit('2');
+                }
 
-            if(!@mysql_connect($dbhost, $username, $password)) {
-                exit('2');
+                if(!mysql_select_db($dbname)) {
+                    if(!@mysql_query("CREATE DATABASE `$dbname`")) exit('3');
+                    mysql_select_db($dbname);
+                }
+                $tables = array();
+                $query = mysql_query("SHOW TABLES FROM `$dbname`");
+                while($r = mysql_fetch_row($query)) {
+                    $tables[] = $r[0];
+                }
+            } else {
+                if(!@mysqli_connect($dbhost, $username, $password,$dbname)) {
+                    exit('2');
+                }
+                $tables = array();
+                $query = mysqli_query("SHOW TABLES FROM `$dbname`");
+                while($r = mysqli_fetch_row($query)) {
+                    $tables[] = $r[0];
+                }
             }
 
-            if(!mysql_select_db($dbname)) {
-                if(!@mysql_query("CREATE DATABASE `$dbname`")) exit('3');
-                mysql_select_db($dbname);
-            }
-            $tables = array();
-            $query = mysql_query("SHOW TABLES FROM `$dbname`");
-            while($r = mysql_fetch_row($query)) {
-                $tables[] = $r[0];
-            }
+
 
 
             $datas = $_POST;
@@ -365,9 +399,12 @@ switch($step) {
                     break;
                 case 3://web_config.php
                     $res = file_get_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php');
+                    if($in_same_dir) {
+                        $res = str_replace('-11','-7',$res);
+                    }
+                    //$res = set_config($res,'COREFRAME_ROOT',"'".$current_iframe."'");
+                    //$res = set_config($res,'CACHE_ROOT',"'".$current_cache."'");
 
-                    $res = set_config($res,'COREFRAME_ROOT',"'".$current_iframe."'");
-                    $res = set_config($res,'CACHE_ROOT',"'".$current_cache."'");
                     $randstr = $configs['cache_ext'];
                     $res = set_config($res,'CACHE_EXT',"'".$randstr."'");
                     $PHP_SELF = isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : (isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : $_SERVER['ORIG_PATH_INFO']);
@@ -387,9 +424,9 @@ switch($step) {
                     $key2 =install_rand(7);
                     $res = set_config($res,'_KEY',"'".$key1.$key2."'");
                     $res = set_config($res,'CHARSET',"'".$charset."'");
-                    $sitelist_cache = file_get_contents($best_cache.'_cache_/sitelist.H_1_a.php');
+                    $sitelist_cache = file_get_contents($current_cache.'_cache_/sitelist.H_1_a.php');
                     $sitelist_cache = str_replace('http://dev.wuzhicms.com/',$weburl,$sitelist_cache);
-                    file_put_contents($best_cache.'_cache_/sitelist.H_1_a.php',$sitelist_cache);
+                    file_put_contents($current_cache.'_cache_/sitelist.H_1_a.php',$sitelist_cache);
                     file_put_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php',$res);
                     if($reinstall) {
                         rename(WWW_ROOT.'configs/'.$reinstall.'web_config.php',WWW_ROOT.'configs/web_config.php');
@@ -408,29 +445,48 @@ switch($step) {
                     break;
                 case 6://开始导入数据库文件 3
                     define('IN_WZ',true);
-                    import_sql(3,$weburl);
+                    //sql 3 只做清理默认数据
+                    if(!$configs['install_value']) {
+                        import_sql(3,$weburl);
+                    }
                     echo '6';
                     break;
                 case 7://开始初始化数据
                     define('IN_WZ',true);
                     $db = include WWW_ROOT.'configs/mysql_config.php';
                     $db = $db['default'];
-                    $link = mysql_connect($db['dbhost'], $db['username'], $db['password']) or die ('Not connected : ' . mysql_error());
-                    $version = mysql_get_server_info();
-                    mysql_query("SET NAMES '$dbcharset'",$link);
-
-                    if($version > '5.0') {
-                        mysql_query("SET sql_mode=''");
+                    if($is_mysql) {
+                        $mysql_query_func = 'mysql_query';
+                    } else {
+                        $mysql_query_func = 'mysqli_query';
                     }
-                    mysql_select_db($db['dbname']);
+                    if($is_mysql) {
+                        $link = mysql_connect($db['dbhost'], $db['username'], $db['password']) or die ('Not connected : ' . mysql_error());
+                        $version = mysql_get_server_info();
+                        mysql_query("SET NAMES '$dbcharset'",$link);
+
+                        if($version > '5.0') {
+                            mysql_query("SET sql_mode=''");
+                        }
+                        mysql_select_db($db['dbname']);
+
+
+                    } else {
+                        $link = mysqli_connect($db['dbhost'], $db['username'], $db['password']) or die ('Not connected : ' . mysqli_error());
+                        $version = mysqli_get_server_info();
+                        mysqli_query("SET NAMES '$dbcharset'",$link);
+
+                        if($version > '5.0') {
+                            mysqli_query("SET sql_mode=''");
+                        }
+                    }
                     //插入管理员账号
                     $factor = install_rand(6);
                     $password = md5(md5($configs['admin_password']).$factor);
-                    mysql_query("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`) VALUES
+                    $mysql_query_func("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`) VALUES
 (1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0)");
-                    mysql_query("INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')");
-                    mysql_query("INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')");
-
+                    $mysql_query_func("INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')");
+                    $mysql_query_func("INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')");
 
                     echo '7';
                     break;

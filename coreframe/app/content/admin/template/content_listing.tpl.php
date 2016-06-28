@@ -61,7 +61,7 @@ if($modelid==0) {
                 </header>
 
                 <div class="panel-body" id="panel-bodys">
-                    <form name="myform" id="myform" method="post" action="?m=content&f=content&v=sort<?php echo $this->su();?>">
+                    <form name="myform" id="myform" method="post" action="?m=content&f=content&v=sort<?php echo $this->su();?>" onsubmit="return check_myform();">
                         <table class="table table-striped table-advance table-hover">
                             <thead>
                             <tr>
@@ -125,6 +125,17 @@ if($modelid==0) {
             </section>
         </div>
 </section>
+<script>
+    function check_myform() {
+        if($("#v").val()=='delete_more') {
+            if(confirm('批量删除后,无法恢复-请确认?')) {
+
+            } else {
+                return false;
+            }
+        }
+    }
+</script>
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
 <script src="<?php echo R;?>js/hover-dropdown.js"></script>
 <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>

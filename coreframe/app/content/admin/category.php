@@ -21,7 +21,7 @@ class category extends WUZHI_admin {
 	 * 栏目列表
 	 */
 	public function listing() {
-        $types = array('列表','单网页','外链','隐藏');
+        $types = array('列表','<font color="green">单网页</font>','<font color="#8b0000">外链</font>','隐藏');
         $siteid = get_cookie('siteid');
         $model_cache = get_cache('model_content','model');
         $where = "`keyid`='content' AND `siteid`='$siteid'";

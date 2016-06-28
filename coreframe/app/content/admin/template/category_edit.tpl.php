@@ -31,9 +31,16 @@ include $this->template('header','core');
 
     <div id="myTabContent" class="tab-content">
       <div role="tabpanel" class="tab-pane fade active in" id="tabs1" aria-labelledby="1tab">
+          <div class="form-group">
+              <label class="col-sm-2 col-xs-4 control-label">类型</label>
+              <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
+                  <label class="radio-inline"><input type="radio" name="type" value="0" <?php if(!$r['type']) echo 'checked';?>> 列表</label>
+                  <label class="radio-inline"><input type="radio" name="type" value="1" <?php if($r['type']==1) echo 'checked';?>> 单网页</label>
+              </div>
+          </div>
         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">请选择模型</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <?php
 
                                 echo $form->select(key_value($models,'modelid','name'), $r['modelid'], 'name="form[modelid]" class="form-control" datatype="*" errormsg="请选择模型！"',"≡ 请选择模型 ≡");
@@ -44,7 +51,7 @@ include $this->template('header','core');
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">上级栏目</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <?php
 
                                 echo $form->tree_select($categorys, $r['pid'], 'name="form[pid]" class="form-control" onchange="check_parent(this.value)"', '≡ 无上级栏目 ≡',$cid);
@@ -54,13 +61,13 @@ include $this->template('header','core');
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">栏目名称</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                         <input type="text" class="form-control" id="name" name="form[name]" value="<?php echo $r['name'];?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">英文目录</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" id="catdir" name="form[catdir]" value="<?php echo $r['catdir'];?>">
 
                             </div>
@@ -68,21 +75,21 @@ include $this->template('header','core');
 
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">栏目图片</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <div class="input-group"><?php echo $form->attachment('','1','form[thumb]',$r['thumb']);?></div>
                             </div>
                         </div>
 
                           <div class="form-group">
                               <label class="col-sm-2 col-xs-4 control-label">栏目icon</label>
-                              <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                              <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                   <div class="input-group"><?php echo $form->attachment('','1','form[icon]',$r['icon']);?></div>
                               </div>
                           </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">工作流</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <?php
 
                                 echo $form->select(key_value($workflow,'workflowid','name'), $r['workflowid'], 'name="form[workflowid]" class="form-control"', '≡ 无需审核 ≡');
@@ -92,14 +99,14 @@ include $this->template('header','core');
                         </div>
                         <div class="form-group <?php if($r['pid']) echo 'hide';?>" id="domain-div">
                             <label class="col-sm-2 col-xs-4 control-label">绑定域名</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" id="domain" name="form[domain]" value="<?php echo $r['domain'];?>">
                                 <span class="help-block"><i class="icon-info-circle"></i> 可绑定任意域名：格式为：http://www.wuzhicms.cn/ ，绑定域名后，生成静态规则将使用默认规则</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">是否在栏目列表处显示</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <label class="radio-inline"><input type="radio" name="form[showloop]" value="1" <?php if($r['showloop']==1) echo "checked";?>> 是</label>
                                 <label class="radio-inline"><input type="radio" name="form[showloop]" value="0" <?php if($r['showloop']==0) echo "checked";?>> 否</label>
                             </div>
@@ -108,7 +115,7 @@ include $this->template('header','core');
 
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">是否在导航中显示</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <label class="radio-inline"><input type="radio" name="form[ismenu]" value="1" <?php if($r['ismenu']) echo "checked";?>> 是</label>
                                 <label class="radio-inline"><input type="radio" name="form[ismenu]" value="0" <?php if(!$r['ismenu']) echo "checked";?>> 否</label>
                             </div>
@@ -118,14 +125,14 @@ include $this->template('header','core');
       <div role="tabpanel" class="tab-pane fade" id="tabs2" aria-labelledby="2tab">
         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">栏目页生成静态</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <label class="radio-inline"><input type="radio" name="form[listhtml]" value="1" <?php if($r['listhtml']) echo "checked";?> onclick="change_listhtml(1);"> 是</label>
                                 <label class="radio-inline"><input type="radio" name="form[listhtml]" value="0" <?php if(!$r['listhtml']) echo "checked";?> onclick="change_listhtml(0);"> 否</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">内容页生成静态</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <label class="radio-inline"><input type="radio" name="form[showhtml]" value="1" <?php if($r['showhtml']) echo "checked";?> onclick="change_showhtml(1);"> 是</label>
                                 <label class="radio-inline"><input type="radio" name="form[showhtml]" value="0" <?php if(!$r['showhtml']) echo "checked";?> onclick="change_showhtml(0);"> 否</label>
                             </div>
@@ -181,8 +188,8 @@ include $this->template('header','core');
 
       <div role="tabpanel" class="tab-pane fade" id="tabs3" aria-labelledby="3tab">
       <div class="form-group">
-                            <label class="col-sm-2 col-xs-4 control-label">大栏目页模版</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <label class="col-sm-3 col-xs-4 control-label">大栏目页模版 <br><span style="color: #efbd59;">该栏目下有子栏目时生效</span></label>
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <?php
                                 echo $form->templates('content', $r['category_template'],'name="form[category_template]" class="form-control"');
                                 ?>
@@ -190,12 +197,9 @@ include $this->template('header','core');
                             </div>
                         </div>
 
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-2 col-xs-4 control-label">终级栏目页模版</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                        <div class="form-group" style="background-color: #f1f2f7;">
+                            <label class="col-sm-3 col-xs-4 control-label">终级栏目页模版 <br><span style="color: #efbd59;">该栏目没有子栏目时生效</span></label>
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group" style="padding-top: 7px;">
 
                                 <?php
                                 echo $form->templates('content', $r['list_template'],'name="form[list_template]" class="form-control"');
@@ -203,8 +207,8 @@ include $this->template('header','core');
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 col-xs-4 control-label">内容页模版</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <label class="col-sm-3 col-xs-4 control-label">内容页模版</label>
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <?php
                                 echo $form->templates('content', $r['show_template'],'name="form[show_template]" class="form-control"');
                                 ?>
@@ -216,7 +220,7 @@ include $this->template('header','core');
       <div role="tabpanel" class="tab-pane fade" id="tabs4" aria-labelledby="4tab">
       <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">SEO 标题</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[seo_title]" value="<?php echo $r['seo_title'];?>">
                             </div>
                         </div>
@@ -224,7 +228,7 @@ include $this->template('header','core');
 
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">SEO 关键字</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[seo_keywords]" value="<?php echo $r['seo_keywords'];?>">
                             </div>
                         </div>
@@ -232,7 +236,7 @@ include $this->template('header','core');
 
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">SEO 网页描述</label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <input type="text" class="form-control" name="form[seo_description]" value="<?php echo $r['seo_description'];?>">
                             </div>
                         </div>
@@ -241,8 +245,7 @@ include $this->template('header','core');
 
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label"></label>
-                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="hidden" name="type" value="<?php echo $r['type'];?>">
+                            <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
                             </div>
                         </div>

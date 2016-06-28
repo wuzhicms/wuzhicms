@@ -18,6 +18,13 @@ h1 {font: bold 36px/60px  "\5FAE\8F6F\96C5\9ED1";}
 h2 {font: bold 24px/30px  "\5FAE\8F6F\96C5\9ED1";}
 h3 {font: bold 18px/24px   "\5FAE\8F6F\96C5\9ED1";}
 p {line-height: 1.6;}
+
+.lddq {
+    text-justify: auto;
+    text-align: justify;
+    text-justify: inter-ideograph; /*(IE)*/
+}
+
 .hide{display: none;}
 .font_size8 {
     font-size: 8px
@@ -477,7 +484,7 @@ p {line-height: 1.6;}
 .navbar-inverse-primary .navbar-nav > .active > a:before {
     position: absolute;
     bottom: 10px;
-/*    left:calc(50% - 5px);*/
+    /*    left:calc(50% - 5px);*/
     left:44%;
     border-width: 5px;
     border-color:   transparent  transparent   #fff    transparent;
@@ -1270,29 +1277,29 @@ ol ol{
 
 
 /*导航-下拉购物车*/
- .cart-list {
+.cart-list {
     margin: 0;
     padding: 0;
     list-style-type: none;
-     font-size: 12px;
+    font-size: 12px;
 }
- .cart-list li {
+.cart-list li {
     position: relative;
     height: 80px;
     padding: 0;
 }
- .cart-item {
+.cart-item {
     position: relative;
     height: 60px;
     padding: 10px 0;
     border-top: 1px solid #e0e0e0;
     line-height: 20px;
 }
- .cart-item .thumb {
+.cart-item .thumb {
     float: left;
     margin-right: 10px;
-     max-height: 60px;
-     overflow: hidden;
+    max-height: 60px;
+    overflow: hidden;
 }
 .cart-item .name {
     float: left;
@@ -1311,13 +1318,13 @@ ol ol{
     _display: inline;
     margin: 10px 20px 0 5px;
 }
- .cart-item .btn-del {
+.cart-item .btn-del {
     display: none;
     _display: block;
     position: absolute;
     top: 21px;
     right: 0;
-     color: #999;
+    color: #999;
 }
 .cart-item:hover .btn-del {
     display: block;

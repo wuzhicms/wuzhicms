@@ -115,20 +115,22 @@ class WUZHI_html {
 
         if(isset($template) && $template) {
             $_template = $template;
+
         } elseif($category['show_template']) {
             $_template = $category['show_template'];
-        } elseif(isset($model_r['template'])) {
+        } elseif(isset($model_r['template']) && $model_r['template']) {
             $_template = TPLID.':'.$model_r['template'];
         } else {
             $_template = TPLID.':show';
         }
+        
         $styles = explode(':',$_template);
         $project_css = isset($styles[0]) ? $styles[0] : 'default';
         $_template = isset($styles[1]) ? $styles[1] : 'show';
         $original_addtime = $data['addtime'];
         $top_categoryid = getcategoryid($cid);
         $top_category = $categorys[$top_categoryid];
-        
+
         $page = 1;
         //手动分页
         $CONTENT_POS = strpos($content, '_wuzhicms_page_tag_');
