@@ -11,7 +11,7 @@
  */
 require 'command.php';
 
-if (count($argv) !== 4) die("use: php bin/build.php code version  diff-file-path  eg. php bin/build.php MAIN 3.0.1 upgrade/build/diff-3.0.1\n");
+if (count($argv) !== 4) die("use: php bin/build.php code version  diff-file-path  eg. php bin/build.php MAIN 3.0.1 diff-3.0.1\n");
 
 $app = load_class('build_package', $m = 'command');
 

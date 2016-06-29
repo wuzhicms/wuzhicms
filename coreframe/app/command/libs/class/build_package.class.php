@@ -42,7 +42,7 @@ class WUZHI_build_package
      */
     private function createDirectory($code, $version)
     {
-        $path = WWW_ROOT.'upgrade/build/'.$code.'_'.$version;
+        $path = BUILD_PATH.$code.'_'.$version;
 
         if ($this->filesystem->exists($path)) {
             $this->filesystem->remove($path);
@@ -53,7 +53,7 @@ class WUZHI_build_package
 
     private function generateFile($diffFile, $packageDirectory)
     {
-        $filePath = WWW_ROOT.$diffFile;
+        $filePath = BUILD_PATH.$diffFile;
 
         if (!$this->filesystem->exists($filePath)) {
             echo "{$diffFile} diff file does not exist,unable to generate a difference file!\n";
@@ -134,7 +134,7 @@ class WUZHI_build_package
         echo " 拷贝升级SQL脚本：\n";
 
         $version     = explode('.', VERSION);
-        $executefile = WWW_ROOT."upgrade/scripts/upgrade.php";
+        $executefile = WWW_ROOT."upgrade/upgrade.php";
         $sqlfile     = WWW_ROOT.'upgrade/'.$version[0].'.'.$version[1].'/'.$version[2].'/sql.sql';
         if (!file_exists($executefile) || !file_exists($sqlfile)) {
             echo " 没有SQL脚本\n";

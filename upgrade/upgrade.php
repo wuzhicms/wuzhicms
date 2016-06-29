@@ -25,6 +25,13 @@ class upgrade
 
     protected function sql_execute()
     {
+        $sqlfile = dirname(__FILE__).'sql.sql';
+
+        if (!file_exists($sqlfile)) {
+            return false;
+        }
+        $sql = file_get_contents($sqlfile);
+
         $sql = preg_replace("/ENGINE=(InnoDB|MyISAM|MEMORY) DEFAULT CHARSET=([^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql);
         if ($this->db->tablepre != 'wz_') {
             $sql = str_replace('`wz_', '`'.$this->db->tablepre, $sql);

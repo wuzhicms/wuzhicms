@@ -41,3 +41,4 @@ define('TPLID','t2');
 //版本和升级相关配置
 define('DOWNLOAD_PATH', CACHE_ROOT.'upgrade/data/');
 define('BACKUP_PATH', CACHE_ROOT.'upgrade/backup/');
+define('BUILD_PATH', CACHE_ROOT.'upgrade/build/');
