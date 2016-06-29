@@ -10,8 +10,6 @@
 /www/webs/*
 /www/res/t3/*.html
 /caches/sql_log.H_1_a.sql
-/caches/_cache_/sendmail.H_1_a.php
-/www/uploadfile/qr_image/mobile.png
 /www/test.php
 /www/configs/mysql_config.php
 /www/configs/route_config.php
@@ -22,5 +20,4 @@
 /upgrade/data/*
 /upgrade/build/*
 caches/sql_log.H_1_a.sql
-www/configs/mysql_config.php
 caches/upgrade/*
