@@ -21,4 +21,6 @@
 /upgrade/backup/*
 /upgrade/data/*
 /upgrade/build/*
-/caches/upgrade/
+caches/sql_log.H_1_a.sql
+www/configs/mysql_config.php
+caches/upgrade/*
