@@ -63,7 +63,7 @@
                               <legend> </legend>
                               <div class="licenseblock"><div class="license"><h4 class="text-center">WUZHICMS使用协议</h4>
 
-<p>版权所有 (c) 2014-2015，北京五指互联科技有限公司保留所有权利。</p>
+<p>版权所有 (c) 2014-2016，北京五指互联科技有限公司保留所有权利。</p>
 
 <p>感谢您选择WUZHICMS。希望我们的努力能为您提供一个高效快速、强大的跨屏网站整体解决方案，五指互联公司网址为 http://www.wuzhicms.com，产品官方讨论区网址为 http://bbs.wuzhicms.com。</p>
 
