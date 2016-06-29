@@ -188,26 +188,34 @@ include $this->template('header','core');
 
       <div role="tabpanel" class="tab-pane fade" id="tabs3" aria-labelledby="3tab">
       <div class="form-group">
-                            <label class="col-sm-3 col-xs-4 control-label">大栏目页模版 <br><span style="color: #efbd59;">该栏目下有子栏目时生效</span></label>
+                            <label class="col-sm-2 col-xs-4 control-label">大栏目页模版</label>
                             <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <?php
                                 echo $form->templates('content', $r['category_template'],'name="form[category_template]" class="form-control"');
                                 ?>
 
                             </div>
+                            <div class="col-sm-5">
+                                 <span class="tablewarnings" style="color: #efbd59;margin-top: 0;">该栏目下有子栏目时生效</span>
+                            </div>
+
                         </div>
 
                         <div class="form-group" style="background-color: #f1f2f7;">
-                            <label class="col-sm-3 col-xs-4 control-label">终级栏目页模版 <br><span style="color: #efbd59;">该栏目没有子栏目时生效</span></label>
+                            <label class="col-sm-2 col-xs-4 control-label">终级栏目页模版 </label>
                             <div class="col-lg-5 col-sm-4 col-xs-4 input-group" style="padding-top: 7px;">
 
                                 <?php
                                 echo $form->templates('content', $r['list_template'],'name="form[list_template]" class="form-control"');
                                 ?>
                             </div>
+                            <div class="col-sm-5">
+                                 <span class="tablewarnings" style="color: #efbd59;margin-top: 0;">该栏目下有子栏目时生效</span>
+                            </div>
+
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-4 control-label">内容页模版</label>
+                            <label class="col-sm-2 col-xs-4 control-label">内容页模版</label>
                             <div class="col-lg-5 col-sm-4 col-xs-4 input-group">
                                 <?php
                                 echo $form->templates('content', $r['show_template'],'name="form[show_template]" class="form-control"');
