@@ -269,7 +269,7 @@ class WUZHI_db {
 
 	final public function get_fields($table,$data = array()) {
 		$fields = array();
-		$query = $this->read_db->query('SHOW COLUMNS FROM wz_'.$table);
+		$query = $this->read_db->query('SHOW COLUMNS FROM '.$this->tablepre.$table);
 		while($r = $this->read_db->fetch_array($query)) {
 			$fields[]=$r['Field'];
 		}

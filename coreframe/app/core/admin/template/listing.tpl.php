@@ -249,12 +249,12 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td><strong>开发团队</strong>： 屠正武、吴灵辉、汪勇 、王参加、赵宏伟、渠雁云、翟党伟、郝川 </td>
+                            <td><strong>开发团队</strong>： 王参加、赵宏伟、张峰、秦兴忠、王冲、屠正武、吴灵辉、汪勇 、渠雁云、翟党伟、郝川 </td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>
-                                <strong>界面设计</strong>： <a href="http://www.pxgrids.com/" target="_blank">像素格工作室</a>
+                                <strong>界面设计</strong>： 张峰(五指CMS首席设计师)、<a href="http://www.pxgrids.com/" target="_blank">渠雁云</a>(像素格工作室)
                             </td>
                             <td></td>
                         </tr>
