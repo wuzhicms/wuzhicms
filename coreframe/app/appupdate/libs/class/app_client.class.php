@@ -15,8 +15,8 @@ load_function('curl');
 
 class WUZHI_app_client
 {
-    private $api_url = 'http://127.0.0.1:8000/api/';
-
+    private $api_url = 'http://update.wuzhicms.cn/api/';
+    
     public function checkUpgradePackages($args)
     {
         return $this->callRemoteAppServer('POST', 'checkUpgradePackages', $args);
@@ -52,7 +52,7 @@ class WUZHI_app_client
     {
         $url           = $this->api_url.$action;
         $args['host']  = WEBURL;
-        $args['debug'] = DEBUG === true ? DEBUG : false;
+        $args['debug'] = OPEN_DEBUG ? true : false;
 
         return array($url, $args);
     }
