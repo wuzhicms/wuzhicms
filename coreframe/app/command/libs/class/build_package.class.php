@@ -15,7 +15,7 @@ class WUZHI_build_package
     private $code;
     private $version;
     private $diff;
-    private $root = __DIR__ . '/../..';
+    private $root = __DIR__.'/../..';
 
     public function __construct()
     {
@@ -36,13 +36,13 @@ class WUZHI_build_package
     }
 
     /**
-     * @param $code
-     * @param $version
+     * @param  $code
+     * @param  $version
      * @return string
      */
     private function createDirectory($code, $version)
     {
-        $path = WWW_ROOT . 'upgrade/build/' . $code . '_' . $version;
+        $path = BUILD_PATH.$code.'_'.$version;
 
         if ($this->filesystem->exists($path)) {
             $this->filesystem->remove($path);
@@ -53,7 +53,7 @@ class WUZHI_build_package
 
     private function generateFile($diffFile, $packageDirectory)
     {
-        $filePath = WWW_ROOT . $diffFile;
+        $filePath = BUILD_PATH.$diffFile;
 
         if (!$this->filesystem->exists($filePath)) {
             echo "{$diffFile} diff file does not exist,unable to generate a difference file!\n";
@@ -114,34 +114,37 @@ class WUZHI_build_package
     }
 
     /**
+     * copy file and directory
      * @param $source
      * @param $packageDirectory
-     * copy file and directory
      */
     private function copyFileAndDirectory($source, $packageDirectory)
     {
-        $dest = $packageDirectory . '/source/' . $source;
+        $dest = $packageDirectory.'/source/'.$source;
 
         try {
-            $this->filesystem->copy(WWW_ROOT . $source, $dest);
+            $this->filesystem->copy(WWW_ROOT.$source, $dest);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
-
     }
 
     private function copyUpgradeScript($dir, $version)
     {
         echo " 拷贝升级SQL脚本：\n";
 
-        $path = WWW_ROOT . "upgrade/scripts/upgrade-" . $version . ".php";
-
-        if (!file_exists($path)) {
+        $version     = explode('.', VERSION);
+        $executefile = WWW_ROOT."upgrade/upgrade.php";
+        $sqlfile     = WWW_ROOT.'upgrade/'.$version[0].'.'.$version[1].'/'.$version[2].'/sql.sql';
+        if (!file_exists($executefile) || !file_exists($sqlfile)) {
             echo " 没有SQL脚本\n";
         } else {
-            $targetPath = realpath($dir) . '/Upgrade.php';
-            echo $path . " -> {$targetPath}\n";
-            $this->copy($path, $targetPath, true);
+            $targetExecutefile = realpath($dir).'/upgrade.php';
+            $targetSqlPath     = realpath($dir).'/sql.sql';
+            echo $executefile." -> {$targetExecutefile}\n";
+            echo $sqlfile." -> {$targetSqlPath}\n";
+            $this->filesystem->copy($executefile, $targetExecutefile, true);
+            $this->filesystem->copy($sqlfile, $targetSqlPath, true);
         }
     }
 
@@ -152,6 +155,6 @@ class WUZHI_build_package
 
     private function insertTplFile($opFile, $packageDirectory)
     {
-         file_put_contents("{$packageDirectory}/template", "{$opFile}\n", FILE_APPEND);
+        file_put_contents("{$packageDirectory}/template", "{$opFile}\n", FILE_APPEND);
     }
 }

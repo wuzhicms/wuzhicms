@@ -52,7 +52,7 @@
       v2.1.7
 
     mkdir upgrade/build (if does not exist)
-    git diff --name-status  release/3.0.0  release/3.0.1  > upgrade/build/diff-3.0.1 (if release branch has been created)
+    git diff --name-status  release/3.0.0  release/3.0.1  > caches/upgrade/build/diff-3.0.1 (caches/upgrade/build 为web_config.php中的 BUILD_PATH 的路径)
 
     git diff --name-status  pr/13 master  > upgrade/build/diff-3.0.1  (if no release branch was  created)
     cat upgrade/build/diff-3.0.0  (view diff content)
