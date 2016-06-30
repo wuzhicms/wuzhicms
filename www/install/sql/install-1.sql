@@ -6760,10 +6760,6 @@ CREATE TABLE `wz_member` (
   `pw_reset` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
-INSERT INTO `wz_member` (`uid`, `ucuid`, `username`, `truename`, `password`, `factor`, `avatar`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`, `companyname`, `worktype`, `sex`, `marriage`, `identity_card`, `address`, `livecity`, `ischeck_email`, `ischeck_mobile`, `birthday`, `mecid`, `checkmec`) VALUES
-  (1, 0, 'wuzhicms', '', '9fcc0737283ce78e46ed32268c2f3b62', '9hrGek', 0, 0, '0.00', '0', 'wcj@wuzhicms.com', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0, '', '', 0, 0, '', '', '', 0, 0, '', 0, 0);
-
 -- --------------------------------------------------------
 
 --
