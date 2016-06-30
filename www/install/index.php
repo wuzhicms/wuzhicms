@@ -380,9 +380,13 @@ switch($step) {
 
                     file_put_contents(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php',$data);
                     if($reinstall) {
+                        unlink(WWW_ROOT.'configs/mysql_config.php');
                         rename(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php',WWW_ROOT.'configs/mysql_config.php');
+                        unlink(WWW_ROOT.'configs/uc_mysql_config.php');
                         rename(WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php',WWW_ROOT.'configs/uc_mysql_config.php');
+                        unlink(WWW_ROOT.'configs/weixin_config.php');
                         rename(WWW_ROOT.'configs/'.$reinstall.'weixin_config.php',WWW_ROOT.'configs/weixin_config.php');
+                        unlink(WWW_ROOT.'configs/route_config.php');
                         rename(WWW_ROOT.'configs/'.$reinstall.'route_config.php',WWW_ROOT.'configs/route_config.php');
                     }
                     echo '1';
