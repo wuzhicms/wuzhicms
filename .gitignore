@@ -12,3 +12,5 @@
 /caches/sql_log.H_1_a.sql
 /www/test.php
 /caches/upgrade/
+
+www/configs/mysql_config.php

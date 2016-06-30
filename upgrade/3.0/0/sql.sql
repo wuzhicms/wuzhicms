@@ -223,3 +223,5 @@ UPDATE wz_block_data SET `keyid`=CONCAT(`keyid`,'-zh');
 INSERT INTO `wz_menu`(`name`,`pid`,`m`,`f`,`v`,`data`,`display`,`isopenid`,`menuid`) VALUES ('审批新会员','6','member','index','check_list','','1','0','5005');
 INSERT INTO `wz_member_group` (`groupid`, `pid`, `name`, `issystem`, `points`, `upgrade`, `money_y`, `money_m`, `money_d`, `sort`, `icon`) VALUES ('5', '0', '待审核', '1', '0', '0', '0.00', '0.00', '0.00', '5', '');
 ALTER TABLE `wz_copyfrom` ADD `remark` TEXT NOT NULL AFTER `updatetime`;
+ALTER TABLE `wz_content_share` ADD `push` TINYINT(1) NOT NULL DEFAULT '0';
+ALTER TABLE `wz_content_share` ADD `old_id` INT(10) UNSIGNED NOT NULL DEFAULT '0';

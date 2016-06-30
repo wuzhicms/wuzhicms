@@ -2541,7 +2541,9 @@ CREATE TABLE `wz_content_share` (
   `soft_language` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `soft_env` char(255) NOT NULL DEFAULT '',
   `down_numbers` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `downfile` char(255) NOT NULL DEFAULT ''
+  `downfile` char(255) NOT NULL DEFAULT '',
+  `push` TINYINT(1) NOT NULL DEFAULT '0',
+  `old_id` INT(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
