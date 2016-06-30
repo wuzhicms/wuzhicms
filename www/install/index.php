@@ -19,12 +19,7 @@ $wz_version = '3.0.0';
 define('INSTALL_ROOT',dirname(__FILE__).'/');
 
 define('WWW_ROOT',str_replace('\\','/',substr(INSTALL_ROOT,0,-8)));
-$reinstall = '';
-if(!file_exists(WWW_ROOT.'configs/web_config.php')) {
-    $reinstall = 'default_';
-}
-$web_configfile = WWW_ROOT.'configs/'.$reinstall.'web_config.php';
-if(!file_exists($web_configfile)) exit('文件不存在：'.$web_configfile);
+$reinstall = 'default_';
 
 $step = isset($_GET['step']) ? intval($_GET['step']) : 1;
 $step = max(1,$step);
@@ -380,13 +375,21 @@ switch($step) {
 
                     file_put_contents(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php',$data);
                     if($reinstall) {
-                        unlink(WWW_ROOT.'configs/mysql_config.php');
+                        if(file_exists(WWW_ROOT.'configs/mysql_config.php')) {
+                            unlink(WWW_ROOT.'configs/mysql_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php',WWW_ROOT.'configs/mysql_config.php');
-                        unlink(WWW_ROOT.'configs/uc_mysql_config.php');
+                        if(file_exists(WWW_ROOT.'configs/uc_mysql_config.php')) {
+                            unlink(WWW_ROOT.'configs/uc_mysql_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php',WWW_ROOT.'configs/uc_mysql_config.php');
-                        unlink(WWW_ROOT.'configs/weixin_config.php');
+                        if(file_exists(WWW_ROOT.'configs/weixin_config.php')) {
+                            unlink(WWW_ROOT.'configs/weixin_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'weixin_config.php',WWW_ROOT.'configs/weixin_config.php');
-                        unlink(WWW_ROOT.'configs/route_config.php');
+                        if(file_exists(WWW_ROOT.'configs/route_config.php')) {
+                            unlink(WWW_ROOT.'configs/route_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'route_config.php',WWW_ROOT.'configs/route_config.php');
                     }
                     echo '1';
@@ -396,7 +399,9 @@ switch($step) {
                     $res = set_config($res,'WWW_ROOT',"'".WWW_ROOT."'");
                     file_put_contents($current_iframe.'configs/'.$reinstall.'wz_config.php',$res);
                     if($reinstall) {
-                        unlink($current_iframe.'configs/wz_config.php');
+                        if(file_exists($current_iframe.'configs/wz_config.php')) {
+                            unlink($current_iframe.'configs/wz_config.php');
+                        }
                         rename($current_iframe.'configs/'.$reinstall.'wz_config.php',$current_iframe.'configs/wz_config.php');
                     }
 
@@ -434,6 +439,9 @@ switch($step) {
                     file_put_contents($current_cache.'_cache_/sitelist.H_1_a.php',$sitelist_cache);
                     file_put_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php',$res);
                     if($reinstall) {
+                        if(file_exists(WWW_ROOT.'configs/web_config.php')) {
+                            unlink(WWW_ROOT.'configs/web_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'web_config.php',WWW_ROOT.'configs/web_config.php');
                     }
                     echo '3';
