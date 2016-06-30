@@ -13,7 +13,7 @@ set_time_limit(300);
 if(PHP_VERSION < '5.2.0') die('PHP配置需要大于 5.2.0 ');
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', 1);
-
+$wz_version = '3.0.0';
 
 //定义当前的网站物理路径
 define('INSTALL_ROOT',dirname(__FILE__).'/');
@@ -392,6 +392,7 @@ switch($step) {
                     $res = set_config($res,'WWW_ROOT',"'".WWW_ROOT."'");
                     file_put_contents($current_iframe.'configs/'.$reinstall.'wz_config.php',$res);
                     if($reinstall) {
+                        unlink($current_iframe.'configs/wz_config.php');
                         rename($current_iframe.'configs/'.$reinstall.'wz_config.php',$current_iframe.'configs/wz_config.php');
                     }
 
