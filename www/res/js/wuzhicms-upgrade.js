@@ -71,16 +71,12 @@ function getQueue(urls) {
         url: urls.checkEnvironmentUrl,
         progressRange: [5, 20]
     }, {
-        title: '备份系统文件',
-        url: urls.backupFileUrl,
-        progressRange: [25, 30]
-    }, {
-        title: '备份数据库',
-        url: urls.backupDbUrl,
-        progressRange: [35, 40]
-    }, {
         title: '下载安装升级程序',
-        url: urls.downloadExtractUrl,
+        url: urls.downloadPackageUrl,
+        progressRange: [25, 40]
+    }, {
+        title: '备份升级文件',
+        url: urls.backupFileUrl,
         progressRange: [45, 60]
     }, {
         title: '处理模版文件',
@@ -90,10 +86,9 @@ function getQueue(urls) {
         title: '执行安装升级程序',
         url: urls.beginUpgradeUrl,
         progressRange: [85, 100]
-    }, ];
+    }];
     return steps;
 }
-
 
 function makeErrorsText(title, errors) {
     var html = '<p>' + title + '<p>';

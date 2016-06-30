@@ -7,22 +7,18 @@
 // +----------------------------------------------------------------------
 defined('IN_WZ') || exit('No direct script access allowed');
 /**
- * 网站后台首页
- * 每小时内密码错误次数达到5次，锁定登录。
- * 记录用户登录的历史记录
- * 记录用户登录的错误记录
+ * 升级
  */
 load_class('admin');
 
 final class index extends WUZHI_admin
 {
-
     public function __construct()
     {
-        $this->db            = load_class('db');
-        $this->filesystem    = load_class('filesystem', $m = 'appupdate');
-        $this->app_client    = load_class('app_client', $m = 'appupdate');
-        $this->systemRoot   = substr(WWW_ROOT, 0, -4);
+        $this->db         = load_class('db');
+        $this->filesystem = load_class('filesystem', $m = 'appupdate');
+        $this->app_client = load_class('app_client', $m = 'appupdate');
+        $this->systemRoot = substr(WWW_ROOT, 0, -4);
     }
 
     /**
@@ -39,7 +35,7 @@ final class index extends WUZHI_admin
             $errors[] = "php_curl扩展未激活";
         }
 
-        $downloadDirectory =  DOWNLOAD_PATH;
+        $downloadDirectory = DOWNLOAD_PATH;
 
         if (file_exists($downloadDirectory)) {
             if (!is_writeable($downloadDirectory)) {
@@ -145,6 +141,49 @@ final class index extends WUZHI_admin
             $errors[] = $e->getMessage();
         }
 
+        $this->createJsonErrors($errors);
+    }
+
+    /**
+     * 备份升级包中对应的系统文件
+     * @return [type] [description]
+     */
+    public function backupUpgradeFile()
+    {
+        $errors    = array();
+        $packageId = isset($GLOBALS['packageId']) ? intval($GLOBALS['packageId']) : MSG(L('parameter_error'));
+        try {
+            $package = $this->app_client->getUpdatePackage($packageId);
+
+            if (empty($package)) {
+                throw new \RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
+            }
+            $packageDir = $this->getPackageFileUnzipDir($package);
+        } catch (\Exception $e) {
+            $errors[] = $e->getMessage();
+            goto last;
+        }
+
+        if (!$this->filesystem->exists($packageDir.'/backup')) {
+            goto last;
+        }
+
+        $handle = fopen($packageDir.'/backup', 'r');
+
+        if($this->filesystem->exists(BACKUP_PATH."{$package['fromVersion']}")){
+            $this->filesystem->remove(BACKUP_PATH."{$package['fromVersion']}");
+        }
+        while ($filePath = fgets($handle)) {
+            $originFile = $this->systemRoot.trim($filePath);
+
+            $targetFile = BACKUP_PATH."{$package['fromVersion']}/".trim($filePath);
+            if ($this->filesystem->exists($originFile)) {
+                $this->filesystem->copy($originFile, $targetFile, $override = true);
+            }
+        }
+        fclose($handle);
+
+        last:
         $this->createJsonErrors($errors);
     }
 
@@ -302,10 +341,6 @@ final class index extends WUZHI_admin
         if (!$this->filesystem->exists($packageDir.'/template')) {
             return;
         }
-        $backupTplDir = $this->systemRoot."coreframe/templates/upgrade/{$package['fromVersion']}";
-        if ($this->filesystem->exists($backupTplDir)) {
-            $this->filesystem->remove($backupTplDir);
-        }
 
         $handle = fopen($packageDir.'/template', 'r');
 
@@ -315,13 +350,13 @@ final class index extends WUZHI_admin
 
             if ($coveringUpdateTpl) {
                 //覆盖更新  -> 备份系统中的模版文件并覆盖更新
-                $targetFile = BACKUP_PATH."{$package['fromVersion']}/cover/coreframe/templates/".substr(trim($filePath), 20);
+                $targetFile = BACKUP_PATH."{$package['fromVersion']}/cover/".trim($filePath);
                 if ($this->filesystem->exists($originFile)) {
                     $this->filesystem->copy($originFile, $targetFile, $override = true);
                 }
             } else {
                 //忽略更新   -> 删除升级文件中对应的文件模板
-                $targetFile = BACKUP_PATH."{$package['fromVersion']}/coreframe/templates/upgrade/".substr(trim($filePath), 20);
+                $targetFile = BACKUP_PATH."{$package['fromVersion']}/".trim($filePath);
                 if ($this->filesystem->exists($upgradeFile)) {
                     $this->filesystem->copy($upgradeFile, $targetFile, $override = true);
                     $this->filesystem->remove($upgradeFile);
@@ -341,6 +376,13 @@ final class index extends WUZHI_admin
 
     protected function _execScriptForPackageUpdate($package, $packageDir, $type)
     {
+        $upgrade = $packageDir.'/upgrade.php';
+        $name    = 'upgrade';
+        if ($this->filesystem->exists($upgrade)) {
+            require_once $upgrade;
+            $upgrade = new $name();
+            $upgrade->updateScheme();
+        }
     }
 
     protected function updateAppForPackageUpdate($package)
@@ -410,6 +452,6 @@ final class index extends WUZHI_admin
 
     private function getPackageFileUnzipDir($package)
     {
-        return  DOWNLOAD_PATH.$package['fileName'];
+        return DOWNLOAD_PATH.$package['fileName'];
     }
 }
