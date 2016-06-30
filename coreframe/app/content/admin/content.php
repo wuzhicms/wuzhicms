@@ -83,7 +83,7 @@ class content extends WUZHI_admin {
         //默认显示共享模型数据，即modelid为0.
         //默认status为9 通过审核
         $siteid = get_cookie('siteid');
-        
+        $this->siteurl = substr($this->siteurl,0,-1);
 
         $type = intval($GLOBALS['type']);
         $title = isset($GLOBALS['title']) ? sql_replace($GLOBALS['title']) : '';
@@ -1232,7 +1232,7 @@ class content extends WUZHI_admin {
                 $r = $this->db->get_one($master_table,array('id'=>$id));
                 $this->db->update($master_table,array('push'=>1),array('id'=>$id));
                 //$r_en = $this->db->get_one($master_table.'_en',array('id'=>$id));
-                $this->db->update($master_table.'_en',array('push'=>1),array('id'=>$id));
+                //$this->db->update($master_table.'_en',array('push'=>1),array('id'=>$id));
                 if($master_table=='content_share') {
                     $modelid = $r['modelid'];
                     $attr_table = $models[$modelid]['attr_table'];
