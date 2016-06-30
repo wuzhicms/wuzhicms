@@ -144,7 +144,7 @@ class card extends WUZHI_admin {
             $r = $this->db->get_one('coupon_card',array('cardid'=>$cardid));
             if($mobile) {
                 $sendsms = load_class('sms','sms');
-                //尊敬的用户，合一健康网优惠券为：sss，截止日期为：2016-12-1，请登录www.h1jk.cn及时使用！
+                //尊敬的用户，五指CMS优惠券为：sss，截止日期为：2016-12-1，请登录www.h1jk.cn及时使用！
                 $sendsms->send_sms($mobile, $r['card_no'].'||'.date('Y-m-d',$r['endtime']), 269); //发送短信
             }
             if($email) {
@@ -155,7 +155,7 @@ class card extends WUZHI_admin {
                 $config = get_cache('sendmail');
                 $password = decode($config['password']);
                 //load_function('sendmail');
-                $subject = $GLOBALS['email_title'] ? $GLOBALS['email_title'] : '合一健康网－优惠券';
+                $subject = $GLOBALS['email_title'] ? $GLOBALS['email_title'] : '五指CMS－优惠券';
                 $email_content = $GLOBALS['email_content'];
                 $email_content = format_textarea($email_content);
                 $email_content = str_replace('##title##',$r['remark'],$email_content);

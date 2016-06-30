@@ -110,7 +110,7 @@
 
                 <div class="coupon">
                     <input name="check_use" id="check_use" type="checkbox" style="vertical-align:top">
-                    使用合一健康积分 <span id="jifenid" class="jifenduihuan">
+                    使用五指CMS积分 <span id="jifenid" class="jifenduihuan">
                   <input name="usepoint" id="usepoint" type="text" size="6" onblur="change_points(this.value)" value="<?php echo $memberinfo['points'];?>">
                   点 <span class="color_warning">-￥<span id="point_price"> <?php echo sprintf('%.2f',$memberinfo['points']/100);?></span></span>
                   <p style="text-align:left;white-space: nowrap; padding-left:112px; color:#777">(可用<?php echo $memberinfo['points'];?>点)</p>
@@ -119,7 +119,7 @@
                     <div class="realPay">
                         <p class="money"><span class="hd">实付款：</span><span class="bd"><span class="tc-rmb"></span><strong><span id="total_price"><?php echo $total_price;?></span></strong></span></p>
                     </div>
-                    <div class="obtainedPoint"> 可获得合一 <span class="inner">健康积分</span>：<span class="obtain"><strong><?php echo $point;?></strong>点</span> </div>
+                    <div class="obtainedPoint"> 可获得 <span class="inner">健康积分</span>：<span class="obtain"><strong><?php echo $point;?></strong>点</span> </div>
                 </div>
 
                 <div class="action"><a class="back-cart" href="javascript:history.go(-1);">返回购物车修改</a><div class="go-wrapper"><button type="submit" class="btn btn-danger_g active btn-lg">&nbsp;&nbsp;提交订单&nbsp;&nbsp;</button></div></div>

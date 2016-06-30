@@ -106,7 +106,7 @@ if (method_exists($content_template_parse, 'rank')) {
                                         <td class="tuxiang"><img src="<?php echo R;?>h1jk/image/luntanmr.jpg" width="60"></td>
                                         <td class="zhuti">
                                             <div class="title"><a href="<?php echo $r['url'];?>" class="color_heyilan"><?php echo $r['title'];?></a></div>
-                                            <div class="em">合一官网&nbsp;&nbsp; 于<?php echo date('Y-m-d',$r['addtime']);?>发表 <a href="<?php echo $categorys[$r['cid']]['url'];?>">[<?php echo $categorys[$r['cid']]['name'];?>]</a> </div>
+                                            <div class="em">五指CMS&nbsp;&nbsp; 于<?php echo date('Y-m-d',$r['addtime']);?>发表 <a href="<?php echo $categorys[$r['cid']]['url'];?>">[<?php echo $categorys[$r['cid']]['name'];?>]</a> </div>
                                         </td>
                                         <td class="rw">
                                             <div class="liulan"><?php echo get_hits($r['cid'],$r['id'],'views');?></div>
