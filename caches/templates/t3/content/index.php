@@ -116,7 +116,7 @@ if (method_exists($content_template_parse, 'category')) {
                         </div>
                         <div class="form-group " style="position: relative;">
                             <input type="text" name="checkcode" class="form-control" id="toplogin_checkcode" placeholder="请输入验证码" onfocus="if($('#code_img').attr('src') == '<?php echo R;?>images/logincode.gif') $('#code_img').attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" onkeyup="toplogin_keyup(this.value)" >
-                            <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="$(this).attr('src', '<?php echo R;?>api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" style="margin-top:2px; position: absolute; top: 0;right: 2px; max-height: 35px;">
+                            <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="$(this).attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" style="margin-top:2px; position: absolute; top: 0;right: 2px; max-height: 35px;" title="点击更换验证码">
                         </div>
                         <div class="checkbox font_size12">
                             <label>

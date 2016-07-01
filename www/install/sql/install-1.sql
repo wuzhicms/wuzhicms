@@ -39,7 +39,7 @@ CREATE TABLE `wz_cloud_app` (
   `updatedTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='已安装的应用';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='已安装的应用';
 
 -- 升级日志
 DROP TABLE IF EXISTS `wz_cloud_app_logs`;
@@ -58,7 +58,7 @@ CREATE TABLE `wz_cloud_app_logs` (
   `message` text COMMENT '失败原因',
   `createdTime` int(10) unsigned NOT NULL COMMENT '日志记录时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用升级日志';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='应用升级日志';
 
 --
 -- 表的结构 `wz_admin`
