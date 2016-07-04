@@ -363,6 +363,7 @@ CREATE TABLE `wz_attachment` (
   `filesize` int(10) UNSIGNED NOT NULL COMMENT '文件大小',
   `ip` varchar(15) NOT NULL COMMENT '上传者ip',
   `path` varchar(100) NOT NULL COMMENT '文件路径',
+  `userid` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '上传用户id',
   `username` varchar(20) NOT NULL,
   `usertimes` smallint(5) UNSIGNED NOT NULL DEFAULT '1' COMMENT '文件使用次数',
   `tags` varchar(100) NOT NULL COMMENT '图片tags分类',
