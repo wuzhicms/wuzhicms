@@ -21,6 +21,8 @@ class WUZHI_attachment{
 	public $water_mark = false;
     function __construct() {
         $this->image = load_class('image');
+		$this->setting = get_cache('attachment');
+		$this->water_mark = $this->setting['watermark_enable'];
     }
 
 /**
@@ -63,6 +65,7 @@ class WUZHI_attachment{
 	public function save_remote( $str = '', $watermark_enable = false)
 	{
 		if(empty($str)) return false;
+		if($watermark_enable==1) $this->water_mark = true;
 		$list = $replace_array = array();//这里存放结果map
 		$c1 = preg_match_all('/<img\s.*?>/', $str, $m1);//先取出所有img标签文本
 		for($i=0; $i<$c1; $i++) //对所有的img标签进行取属性
@@ -116,7 +119,12 @@ class WUZHI_attachment{
 			if($this->water_mark == true) {
 				$this->image->set_image(ATTACHMENT_ROOT.$new_path);
 				$this->image->createImageFromFile();
-				$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',9);
+				if($this->setting['watermark_enable']==2) {//文字水印
+					$this->image->water_mark($this->setting['watermark_text'],$this->setting['watermark_pos']);
+				} else {//图片水印
+					$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+				}
+
 				$this->image->save();
 			}
 

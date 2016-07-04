@@ -43,7 +43,7 @@ private function baidumap($filed, $value) {
 
 private function block($filed, $value) {
     $block_api = load_class('block_api','content');
-    $_lang = $GLOBALS['_lang'];
+    $_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
     if($value=='1') {
         $posids = array();
         $value = $GLOBALS['form']['block'];

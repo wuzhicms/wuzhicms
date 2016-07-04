@@ -225,3 +225,4 @@ INSERT INTO `wz_member_group` (`groupid`, `pid`, `name`, `issystem`, `points`, `
 ALTER TABLE `wz_copyfrom` ADD `remark` TEXT NOT NULL AFTER `updatetime`;
 ALTER TABLE `wz_content_share` ADD `push` TINYINT(1) NOT NULL DEFAULT '0';
 ALTER TABLE `wz_content_share` ADD `old_id` INT(10) UNSIGNED NOT NULL DEFAULT '0';
+ALTER TABLE `wz_attachment` ADD `userid` INT(10) UNSIGNED NOT NULL DEFAULT '0';

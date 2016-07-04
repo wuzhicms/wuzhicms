@@ -85,6 +85,11 @@ class WUZHI_build_package
                 echo " 忽略安装文件：{$opFile}\n";
                 continue;
             }
+            if (strpos($opFile, 'www/configs') === 0) {
+                echo " 忽略配置文件：{$opFile}\n";
+                continue;
+            }
+            //www/configs/
             if (strpos($opFile, '.gitignore') === 0) {
                 echo " 忽略git文件：{$opFile}\n";
                 continue;
