@@ -1,5 +1,4 @@
 {T "content","head",TPLID}
-<?php //print_r($data_r);?>
 <link rel="stylesheet" href="{R}js/dialog/ui-dialog.css" />
 <script src="{R}js/dialog/dialog-plus.js"></script>
 <!--路径导航-->
@@ -79,7 +78,6 @@
                             <p>{$content}</p>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
-                            123
                             <p class="help-block help-word"><strong class="color_qiyecheng font_size14"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> 保证金退还政策:</strong><br>
                                 {$cylc}
                             </p>
@@ -98,7 +96,7 @@
             </div>
             <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="tuangou-right-box">
-                    <h3><a href=""  title="查看更多往期团购">往期团购</a></h3>
+                    <h3><a href="{WEBURL}index.php?f=huigu&v=listing&cid={$cid}"  title="查看更多往期团购">往期团购</a></h3>
                     {php $pretime = SYS_TIME;$where = " `endtime` < '$pretime'";}
                     {wz:content action="listing" cid="$cid" where="$where"  pagesize="5" order="sort ASC,id DESC" }
                         {loop $rs $r}

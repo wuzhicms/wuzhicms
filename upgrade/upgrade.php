@@ -21,11 +21,12 @@ class upgrade
     {
         $this->sql_execute();
         $this->update_cache_menu();
+        return true;
     }
 
     protected function sql_execute()
     {
-        $sqlfile = dirname(__FILE__).'sql.sql';
+        $sqlfile = dirname(__FILE__).'/sql.sql';
 
         if (!file_exists($sqlfile)) {
             return false;
@@ -69,7 +70,6 @@ class upgrade
 
     protected function update_cache_menu()
     {
-        $upgradefile = load_class('cache_menu');
-        unlink($upgradefile);
+       load_class('cache_menu');
     }
 }

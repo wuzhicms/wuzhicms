@@ -152,6 +152,7 @@ final class index extends WUZHI_admin {
         }
 
         set_cookie('username','');
+        set_cookie('uid','');
         set_cookie('wz_name','');
 
         MSG(L('logout_success'), '?m=core&f=index&v=login'.$this->su(0));
@@ -239,6 +240,7 @@ final class index extends WUZHI_admin {
                 if($login_ok===TRUE) {
                     $_SESSION['uid'] = $uid;
                     $_SESSION['role'] = $rs['role'];
+                    set_cookie('uid',$uid);
                     set_cookie('username',$username);
                     set_cookie('wz_name',$rs['truename']);
                     $_SESSION['ip'] = $ip;

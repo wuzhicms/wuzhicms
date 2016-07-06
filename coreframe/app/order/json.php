@@ -88,7 +88,7 @@ class json extends WUZHI_foreground{
 
             $config = get_cache('sendmail');
             $password = decode($config['password']);
-            $subject = '合一健康网－预约卡';
+            $subject = '五指CMS－预约卡';
 
             $mail = load_class('sendmail');
             $mail->setServer($config['smtp_server'], $config['smtp_user'], $password);

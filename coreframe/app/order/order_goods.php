@@ -452,7 +452,7 @@ class order_goods extends WUZHI_foreground{
         $formdata['status'] = 6;
         $formdata['payment'] = 2;
 
-        $formdata['payname'] = '合一体检套餐';
+        $formdata['payname'] = '在线购买';
         $id = $this->db->insert('pay',$formdata);
         $setting = unserialize($pay_r['setting']);
         $address = $this->db->get_one('express_address', array('addressid' => $addressid,'uid'=>$this->uid));
@@ -530,7 +530,7 @@ class order_goods extends WUZHI_foreground{
             "return_url"	=> WEBURL.'index.php?m=pay&f=callback&v=sync_notify&payment=2&module=order&file=pay_callback',//同步通知地址
             "email"	=> $memberinfo['email'],
             "order_no"	=> $order_no,
-            "payname"	=> '合一体检套餐',
+            "payname"	=> '在线购买',
             "total_fee"	=> $total_price,
             "remark"	=> $order_no,
             "url"	=> WEBURL,

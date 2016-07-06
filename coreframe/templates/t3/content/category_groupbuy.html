@@ -29,7 +29,6 @@
                 <dl>
                     <dt>排序</dt>
                     <dd>
-                        <a class="{if $variables['order']==0}active{/if}" href="{filterurl('tuan','order',0)}">全部</a>
                         {loop $filterurl_config['order'] $_k $_v}
                         <a class="{if $variables['order']==$_k}active{/if}" href="{filterurl('tuan','order',$_k)}">{$_v['name']}</a>
                         {/loop}
@@ -69,9 +68,9 @@
                     <div class="caption">
                         <h4 class="manhangyichu"><a href="{$r['url']}">{$r['title']}</a></h4>
                         <div class="price-and-pingjia">
-                            <div class="p-a-p-price">￥{intval($r['iprice'])} </div>
+                            <div class="p-a-p-price">￥{$r['price']} </div>
                             <div class="p-a-p-pingjia" style="padding-top: 12px">
-                                <del class="color_999  font_size14">￥{intval($r['price'])}</del>
+                                <del class="color_999  font_size14">￥{$r['iprice']}</del>
                             </div>
                         </div>
                     </div>

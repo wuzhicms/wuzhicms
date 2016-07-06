@@ -143,7 +143,7 @@
                     <tr>
                         <td>
 
-                            <strong>升级信息</strong>： <!--当前版本:  V2.0.3  下一版本:  V2.0.5  最新版本: V2.1.0  -->
+                            <strong>升级信息</strong>：
                             <?php if (isset($app['package'])) {?>
                                 下一版本: V<?php echo $app['package']['toVersion']; ?> 最新版本: V<?php echo $app['latestVersion']; ?> <button class="btn btn-primary btn-sm active" role="button" data-toggle="modal" data-backdrop="static" data-target="#wuzhicms-upgrade">升级</button>
                             <?php } else {?>
@@ -163,10 +163,9 @@
                                                 <table class="table">
                                                     <thead>
                                                     <tr>
-                                                        <th width="40%">应用名称</th>
+                                                        <th width="50%">应用名称</th>
                                                         <th width="25%">版本</th>
-                                                        <th>备份数据库</th>
-                                                        <th>备份文件</th>
+                                                        <th>备份升级文件</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -176,14 +175,13 @@
                                                             <!--  <strong class="text-success">2.0.5</strong> -->
                                                             <strong class="text-muted"> <?php echo $app['package']['fromVersion']; ?></strong> -&gt; <strong class="text-success"><?php echo $app['package']['toVersion']; ?></strong>
                                                         </td>
-                                                        <td>否</td>
-                                                        <td>否</td>
+                                                        <td>是</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
                                                 <div style="background-color: #f5f5f5;padding: 15px 20px;">
                                                     更新日志:</br></br>
-                                                    <?php echo $app['package']['description'];?>
+                                                    <?php echo nl2br($app['package']['description']);?>
                                                 </div>
                                                 <div class ="tpl-package-upgrade hidden" style="background-color: #f5f5f5;padding: 15px 20px;">
                                                     更新模版:</br></br>
@@ -207,12 +205,10 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary btn-wuzhicms-upgrade"
                                                     data-check-environment-url="?m=appupdate&f=index&v=checkEnvironment&_su=<?php  echo _SU;?>"
-                                                    data-backup-file-url="?m=appupdate&f=index&v=backupFile&_su=<?php  echo _SU;?>"
-                                                    data-backup-db-url="?m=appupdate&f=index&v=backupDb&_su=<?php  echo _SU;?>"
-                                                    data-download-extract-url="?m=appupdate&f=index&v=downloadPackage&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
-                                                     data-proccess-template-url="?m=appupdate&f=index&v=proccessTpl&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
+                                                    data-download-package-url="?m=appupdate&f=index&v=downloadPackage&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
+                                                    data-proccess-template-url="?m=appupdate&f=index&v=proccessTpl&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
+                                                    data-backup-file-url="?m=appupdate&f=index&v=backupUpgradeFile&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
                                                     data-begin-upgrade-url="?m=appupdate&f=index&v=beginUpgrade&_su=<?php  echo _SU;?>&packageId=<?php echo $app['package']['id'] ?>"
-
                                                 >开始升级</button>
                                                 <strong class="text text-danger" id="updating-hint" style="display:none;">正在升级，请不要关闭当前窗口...</strong>
 
@@ -249,12 +245,12 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td><strong>开发团队</strong>： 屠正武、吴灵辉、汪勇 、王参加、赵宏伟、渠雁云、翟党伟、郝川 </td>
+                            <td><strong>开发团队</strong>： 王参加、赵宏伟、张峰、秦兴忠、王冲、屠正武、吴灵辉、汪勇 、渠雁云、翟党伟、郝川 </td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>
-                                <strong>界面设计</strong>： <a href="http://www.pxgrids.com/" target="_blank">像素格工作室</a>
+                                <strong>界面设计</strong>： 张峰(五指CMS首席设计师)、<a href="http://www.pxgrids.com/" target="_blank">渠雁云</a>(像素格工作室)
                             </td>
                             <td></td>
                         </tr>

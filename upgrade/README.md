@@ -58,7 +58,7 @@
     cat upgrade/build/diff-3.0.0  (view diff content)
     ```
 5. 整理升级sql
-
+   将sql文件放到upgrade/Vx.x/x(upgrade/3.0/1)下,格式和之前一样,同意放到sql.sql文件中.
 
 6. 生成升级包
 

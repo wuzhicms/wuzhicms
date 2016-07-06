@@ -10,7 +10,7 @@
  * 生成sql模板 eg  php bin/sqlgenerate.php
  */
 require 'command.php';
-
+echo WWW_ROOT;
 $sql_path = WWW_ROOT . 'upgrade/migrations/' .VERSION."/".time().".sql";
 $sql_create_date = date('Y-m-d H:i:s');
 

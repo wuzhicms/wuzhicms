@@ -1,5 +1,4 @@
-<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","head",TPLID); ?>
-<?php //print_r($data_r);?>
+<!DOCTYPE html><div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">开始：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div><?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","head",TPLID); ?>
 <link rel="stylesheet" href="<?php echo R;?>js/dialog/ui-dialog.css" />
 <script src="<?php echo R;?>js/dialog/dialog-plus.js"></script>
 <!--路径导航-->
@@ -79,7 +78,6 @@
                             <p><?php echo $content;?></p>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
-                            123
                             <p class="help-block help-word"><strong class="color_qiyecheng font_size14"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> 保证金退还政策:</strong><br>
                                 <?php echo $cylc;?>
                             </p>
@@ -98,7 +96,7 @@
             </div>
             <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="tuangou-right-box">
-                    <h3><a href=""  title="查看更多往期团购">往期团购</a></h3>
+                    <h3><a href="<?php echo WEBURL;?>index.php?f=huigu&v=listing&cid=<?php echo $cid;?>"  title="查看更多往期团购">往期团购</a></h3>
                     <?php $pretime = SYS_TIME;$where = " `endtime` < '$pretime'";?>
                     <?php if(defined('IN_ADMIN') && !defined('HTML')) {
 	echo "<div class=\"visual_div\" pc_action=\"content\" data=\"\"><a href=\"javascript:void(0)\" class=\"visual_edit\">修改</a>";
@@ -207,4 +205,4 @@ if (method_exists($content_template_parse, 'block')) {
     });
 </script>
 <!--缩略图幻灯片 end-->
-<?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","foot",TPLID); ?>
+<?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","foot",TPLID); ?><div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">结束：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div><script>setTimeout(function(){$(".remove_debug").remove();},20000);</script>

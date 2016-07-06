@@ -137,7 +137,7 @@ class card extends WUZHI_admin {
                 $config = get_cache('sendmail');
                 $password = decode($config['password']);
                 //load_function('sendmail');
-                $subject = '合一健康网－预约卡';
+                $subject = '五指CMS－预约卡';
                 $message = "您的预约卡信息如下：<br>卡号：{$r['card_no']} <br> 密码：{$card_password}<br>";
                 $mail = load_class('sendmail');
                 $mail->setServer($config['smtp_server'], $config['smtp_user'], $password);

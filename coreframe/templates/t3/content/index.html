@@ -13,7 +13,7 @@
     <link href="{R}t3/css/style.css" rel="stylesheet">
     <link href="{R}t3/css/hover.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="{R}t3css/non-responsive.css" rel="stylesheet">
+    <link href="{R}t3/css/non-responsive.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="//cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -431,10 +431,17 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 text-center  line_height2d0">
-                联系电话：010-82463345    QQ:282198327  Email:zhw@wuzhicms.com <br>
-                <a href="http://www.wuzhicms.com/contact-us/aboutus/" target="_blank">五指简介 </a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=31" target="_blank">联系我们</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=33" target="_blank"> 用户协议 </a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=33" target="_blank"> 法律声明 </a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=36" target="_blank"> 付款方式</a><small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small><a href="{WEBURL}index.php?m=link">友情链接</a><br>
-                Copyright © 2015 北京五指互联科技有限公司 All Rights Reserved<br>
-                京ICP备14036160号-1</div>
+                {block=44} <br>
+                {wz:content action="category" cid="51" pagesize="10" order="sort ASC"}
+                {loop $rs $r}
+                <a href="{$r[url]}">{$r['name']}</a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                {/loop}
+                {/wz}
+                <a href="{WEBURL}index.php?m=link">友情链接</a>
+            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+            <a href="{WEBURL}index.php?m=affiche&f=index&v=listing">站点公告</a><br>
+                {$siteconfigs['copyright']}{$siteconfigs['statcode']} <a href="http://www.wuzhicms.com" target="_blank">五指CMS提供技术支持</a> </div>
+
         </div>
     </div>
 

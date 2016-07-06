@@ -1,5 +1,5 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed'); ?><!--top-->
-<nav class="navbar   navbar-static-side " role="navigation" style="margin-bottom: 8px;width: 100%">
+<nav class="navbar   navbar-static-side margin_bottom16" role="navigation" style="width: 100%">
     <div class="container-fluid  ie8-member">
         <div class="navbar-header">
             <a class="navbar-brand" href="#"><strong  class="zw-member-c">会员中心</strong>  <span class="en-member-c">/  Member Center</span></a>
@@ -7,7 +7,6 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
-
                 <a class="dropdown-toggle count-info"
                    data-toggle="dropdown"
                    href="#"><img src="<?php echo avatar($this->uid, 180);?>"
@@ -36,7 +35,11 @@
                     </li>
                 </ul>
             </li>
-            <li class="dropdown hide" id="msg_tips">
+
+            <!--mobile-->
+            <div class="top-right-ico"><i class="fa fa-navicon" style="font-size:18px;"></i> </div>
+
+            <!--<li class="dropdown hide" id="msg_tips">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                     <i class="fa fa-envelope"></i> <span class="label label-warning" id="total_tips">0</span>
                 </a>
@@ -61,11 +64,33 @@
             </li>
             <li class="dropdown hidden-xs">
 
-            </li>
-        </ul>
+            </li>-->
+        </ul><!--navbar-right-->
     </div>
 </nav>
+<!--二级导航-->
+<div class="ernav-content">
+    <ul>
+        <li><a href=""><i class="fa fa-home" style="font-size:18px;margin-top:12px;"></i> <br>首页</a></li>
+        <li><a href=""><i class="fa fa-edit" style="font-size:18px;margin-top:12px;"></i> <br>我的信息夹</a></li>
+        <li><a href=""><i class="fa fa-user" style="font-size:18px;margin-top:12px;"></i> <br>账号管理</a></li>
+        <li><a href=""><i class="fa fa-smile-o" style="font-size:18px;margin-top:12px;"></i> <br>客户服务</a></li>
+    </ul>
+</div>
 
+<!--san级导航-->
+<div class="sannav-content">
+    <ul>
+        <li><a href="">我的订单</a></li>
+        <li><a href="">积分兑换</a></li>
+        <li><a href="">私信</a></li>
+        <li><a href="">投稿</a></li>
+    </ul>
+    <ul>
+        <li><a href="">我的提问</a></li>
+        <li><a href="">收货地址管理</a></li>
+    </ul>
+</div>
 
 
 <!--

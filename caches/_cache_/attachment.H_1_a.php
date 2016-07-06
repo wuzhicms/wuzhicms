@@ -1,6 +1,7 @@
 <?php
  return array (
   'show_mode' => '2',
-  'attachment_test' => '',
-  'attachment_thumb_test' => '',
+  'watermark_enable' => '1',
+  'watermark_pos' => '0',
+  'watermark_text' => 'www.wuzhicms.com',
 )?>

@@ -13,18 +13,13 @@ set_time_limit(300);
 if(PHP_VERSION < '5.2.0') die('PHP配置需要大于 5.2.0 ');
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', 1);
-$wz_version = '3.0.0';
+$wz_version = '3.0.1';
 
 //定义当前的网站物理路径
 define('INSTALL_ROOT',dirname(__FILE__).'/');
 
 define('WWW_ROOT',str_replace('\\','/',substr(INSTALL_ROOT,0,-8)));
-$reinstall = '';
-if(!file_exists(WWW_ROOT.'configs/web_config.php')) {
-    $reinstall = 'default_';
-}
-$web_configfile = WWW_ROOT.'configs/'.$reinstall.'web_config.php';
-if(!file_exists($web_configfile)) exit('文件不存在：'.$web_configfile);
+$reinstall = 'default_';
 
 $step = isset($_GET['step']) ? intval($_GET['step']) : 1;
 $step = max(1,$step);
@@ -185,6 +180,7 @@ function import_sql($id,$weburl){
 
 function edit_filename($dir,$cache_ext) {
     global $current_cache;
+
     if(is_dir($dir)) {
         if($dir == $current_cache.'templates') {
             return '';
@@ -316,12 +312,14 @@ switch($step) {
                     $tables[] = $r[0];
                 }
             }
-
-
-
-
+            
             $datas = $_POST;
-            $datas['cache_ext'] = install_rand(5);
+            if($_SERVER["SERVER_ADMIN"]=='phpip@qq.com') {
+                $datas['cache_ext'] = 'H_1_a';
+            } else {
+                $datas['cache_ext'] = install_rand(5);
+            }
+
             $datas = '<?php'."\r\n return ".var_export($datas, TRUE).'?>';
             file_put_contents($current_cache.'install_cache.php',$datas);
             if($tables && in_array($tablepre.'admin', $tables)) {
@@ -380,9 +378,21 @@ switch($step) {
 
                     file_put_contents(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php',$data);
                     if($reinstall) {
+                        if(file_exists(WWW_ROOT.'configs/mysql_config.php')) {
+                            unlink(WWW_ROOT.'configs/mysql_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php',WWW_ROOT.'configs/mysql_config.php');
+                        if(file_exists(WWW_ROOT.'configs/uc_mysql_config.php')) {
+                            unlink(WWW_ROOT.'configs/uc_mysql_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php',WWW_ROOT.'configs/uc_mysql_config.php');
+                        if(file_exists(WWW_ROOT.'configs/weixin_config.php')) {
+                            unlink(WWW_ROOT.'configs/weixin_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'weixin_config.php',WWW_ROOT.'configs/weixin_config.php');
+                        if(file_exists(WWW_ROOT.'configs/route_config.php')) {
+                            unlink(WWW_ROOT.'configs/route_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'route_config.php',WWW_ROOT.'configs/route_config.php');
                     }
                     echo '1';
@@ -392,7 +402,9 @@ switch($step) {
                     $res = set_config($res,'WWW_ROOT',"'".WWW_ROOT."'");
                     file_put_contents($current_iframe.'configs/'.$reinstall.'wz_config.php',$res);
                     if($reinstall) {
-                        unlink($current_iframe.'configs/wz_config.php');
+                        if(file_exists($current_iframe.'configs/wz_config.php')) {
+                            unlink($current_iframe.'configs/wz_config.php');
+                        }
                         rename($current_iframe.'configs/'.$reinstall.'wz_config.php',$current_iframe.'configs/wz_config.php');
                     }
 
@@ -430,6 +442,9 @@ switch($step) {
                     file_put_contents($current_cache.'_cache_/sitelist.H_1_a.php',$sitelist_cache);
                     file_put_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php',$res);
                     if($reinstall) {
+                        if(file_exists(WWW_ROOT.'configs/web_config.php')) {
+                            unlink(WWW_ROOT.'configs/web_config.php');
+                        }
                         rename(WWW_ROOT.'configs/'.$reinstall.'web_config.php',WWW_ROOT.'configs/web_config.php');
                     }
                     echo '3';
@@ -493,12 +508,15 @@ switch($step) {
                     break;
                 case 8://即将完成安装
                     //修改缓存文件名
-                    if(edit_filename(substr($current_cache,0,-1),$configs['cache_ext'])!==false) {
+                    if($_SERVER["SERVER_ADMIN"]=='phpip@qq.com') {
                         echo '8';
                     } else {
-                        echo 'cache_error';
+                        if(edit_filename(substr($current_cache,0,-1),$configs['cache_ext'])!==false) {
+                            echo '8';
+                        } else {
+                            echo 'cache_error';
+                        }
                     }
-
                     break;
                 default:
                     echo 'error';

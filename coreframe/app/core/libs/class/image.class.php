@@ -253,8 +253,9 @@ class WUZHI_image{
             $waterWidth = $waterImgInfo[0];
             $waterHeight = $waterImgInfo[1];
         } else {
+
             $waterText = $waterContent;
-            //$temp = @imagettfbbox(ceil($textFont*2.5),0,"./cour.ttf",$waterContent);
+            $temp = imagettfbbox(ceil($textFont*2.5),0,COREFRAME_ROOT.'app/core/libs/fonts/watermark.ttf',$waterContent);
             if ($temp) {
                 $waterWidth = $temp[2]-$temp[6];
                 $waterHeight = $temp[3]-$temp[7];

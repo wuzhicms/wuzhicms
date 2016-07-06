@@ -21,6 +21,8 @@ class WUZHI_attachment{
 	public $water_mark = false;
     function __construct() {
         $this->image = load_class('image');
+		$this->setting = get_cache('attachment');
+		$this->water_mark = $this->setting['watermark_enable'];
     }
 
 /**
@@ -63,6 +65,7 @@ class WUZHI_attachment{
 	public function save_remote( $str = '', $watermark_enable = false)
 	{
 		if(empty($str)) return false;
+		if($watermark_enable==1) $this->water_mark = true;
 		$list = $replace_array = array();//这里存放结果map
 		$c1 = preg_match_all('/<img\s.*?>/', $str, $m1);//先取出所有img标签文本
 		for($i=0; $i<$c1; $i++) //对所有的img标签进行取属性
@@ -110,13 +113,18 @@ class WUZHI_attachment{
 
 		if($content)
 		{
-			$insert['name'] = isset($file_attr['alt']) ? $file_attr['alt'].'.'.fileext($path) : pathinfo($path,PATHINFO_BASENAME);
+			$insert['name'] = isset($file_attr['alt']) && !empty($file_attr['alt']) ? $file_attr['alt'].'.'.fileext($path) : pathinfo($path,PATHINFO_BASENAME);
 			$new_path = createdir().filename($insert['name']);
 			if(!file_put_contents(ATTACHMENT_ROOT.$new_path, $content)) return false;
 			if($this->water_mark == true) {
 				$this->image->set_image(ATTACHMENT_ROOT.$new_path);
 				$this->image->createImageFromFile();
-				$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',9);
+				if($this->setting['watermark_enable']==2) {//文字水印
+					$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+				} else {//图片水印
+					$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+				}
+
 				$this->image->save();
 			}
 
@@ -124,7 +132,15 @@ class WUZHI_attachment{
 			$insert['addtime'] = SYS_TIME;
 			$insert['filesize'] = strlen($content);
 			$insert['ip'] = get_ip();
-			$insert['userid'] = get_cookie('_uid');
+			$uid = intval(get_cookie('uid'));
+			if($uid) {
+				$insert['userid'] = $uid;
+				$insert['username'] = get_cookie('username');
+			} else {
+				$insert['userid'] = get_cookie('_uid');
+				$insert['username'] = get_cookie('_username');
+			}
+
 			$id = $this->insert($insert);
 			return ATTACHMENT_URL.$new_path;
 		}
@@ -170,7 +186,7 @@ class WUZHI_attachment{
 				{
 					case '301':
 					case '302':
-					$header_info = get_headers($URL,true);
+					$header_info = get_headers($path,true);
 					return $this->get_remote_core($header_info['Location']);
 					break;
 
