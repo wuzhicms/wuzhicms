@@ -1,4 +1,4 @@
-<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><!DOCTYPE html>
+<!DOCTYPE html><div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">开始：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div><?php defined('IN_WZ') or exit('No direct script access allowed'); ?><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -13,7 +13,7 @@
     <link href="<?php echo R;?>t3/css/style.css" rel="stylesheet">
     <link href="<?php echo R;?>t3/css/hover.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="<?php echo R;?>t3css/non-responsive.css" rel="stylesheet">
+    <link href="<?php echo R;?>t3/css/non-responsive.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="//cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -116,7 +116,7 @@ if (method_exists($content_template_parse, 'category')) {
                         </div>
                         <div class="form-group " style="position: relative;">
                             <input type="text" name="checkcode" class="form-control" id="toplogin_checkcode" placeholder="请输入验证码" onfocus="if($('#code_img').attr('src') == '<?php echo R;?>images/logincode.gif') $('#code_img').attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" onkeyup="toplogin_keyup(this.value)" >
-                            <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="$(this).attr('src', '<?php echo R;?>api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" style="margin-top:2px; position: absolute; top: 0;right: 2px; max-height: 35px;">
+                            <img src="<?php echo R;?>images/logincode.gif" id="code_img" alt="点击刷新" onclick="$(this).attr('src', '<?php echo WEBURL;?>api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" style="margin-top:2px; position: absolute; top: 0;right: 2px; max-height: 35px;" title="点击更换验证码">
                         </div>
                         <div class="checkbox font_size12">
                             <label>
@@ -778,10 +778,22 @@ if (method_exists($link_template_parse, 'listing')) {
     <div class="container">
         <div class="row">
             <div class="col-xs-12 text-center  line_height2d0">
-                联系电话：010-82463345    QQ:282198327  Email:zhw@wuzhicms.com <br>
-                <a href="http://www.wuzhicms.com/contact-us/aboutus/" target="_blank">五指简介 </a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=31" target="_blank">联系我们</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=33" target="_blank"> 用户协议 </a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=33" target="_blank"> 法律声明 </a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="http://www.wuzhicms.com/index.php?v=listing&cid=36" target="_blank"> 付款方式</a><small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small><a href="<?php echo WEBURL;?>index.php?m=link">友情链接</a><br>
-                Copyright © 2015 北京五指互联科技有限公司 All Rights Reserved<br>
-                京ICP备14036160号-1</div>
+                <p>联系电话：010-82463345 &nbsp; &nbsp;QQ:282198327 &nbsp;Email:zhw@wuzhicms.com</p> <br>
+                <?php if(defined('IN_ADMIN') && !defined('HTML')) {
+	echo "<div class=\"visual_div\" pc_action=\"content\" data=\"\"><a href=\"javascript:void(0)\" class=\"visual_edit\">修改</a>";
+}
+if(!class_exists('content_template_parse')) {
+	$content_template_parse = load_class("content_template_parse", "content");
+}
+if (method_exists($content_template_parse, 'category')) {
+	$rs = $content_template_parse->category(array('cid'=>'51','order'=>'sort ASC','start'=>'0','pagesize'=>'10','page'=>'0',));
+	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?>
+                <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
+                <a href="<?php echo $r[url];?>"><?php echo $r['name'];?></a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                <?php $n++;}?>
+                <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
+                <a href="<?php echo WEBURL;?>index.php?m=link">友情链接</a> <br>
+                <?php echo $siteconfigs['copyright'];?><?php echo $siteconfigs['statcode'];?> <a href="http://www.wuzhicms.com" target="_blank">五指CMS提供技术支持</a> </div>
         </div>
     </div>
 
@@ -807,3 +819,4 @@ if (method_exists($link_template_parse, 'listing')) {
 </script>
 </body>
 </html>
+<div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">结束：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div><script>setTimeout(function(){$(".remove_debug").remove();},20000);</script>

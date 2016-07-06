@@ -24,7 +24,7 @@ include $this->template('header','core');
 if($modelid==0) {
     ?>
     <a href="?m=content&f=content&v=listing<?php echo $this->su();?>" class="btn btn-info btn-sm">共享模型数据列表</a>
-<?php
+    <?php
 } elseif($master_table=='content_share') {
     ?>
     <a href="#" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="icon-plus btn-icon"></i>添加内容<span class="caret"></span></a>
@@ -36,7 +36,7 @@ if($modelid==0) {
 <?php } else {
     ?>
     <a href="?m=content&f=content&v=add&modelid=<?php echo $modelid;?>&cid=<?php echo $cid.'&type='.$GLOBALS['type'].$this->su();?>" class="btn btn-info btn-sm "><i class="icon-plus btn-icon"></i>添加内容</a>
-<?php
+    <?php
 }?>
                  </span>
                  <span class="dropdown examine">
@@ -81,7 +81,26 @@ if($modelid==0) {
                                     <td><input type="text" class="center" style="width: 30px;padding:3px;" name="sorts[<?php echo $r[ 'id'];?>]" value="<?php echo $r[ 'sort'];?>"></td>
                                     <td><?php echo $r[ 'id'];?></td>
                                     <?php if($modelid==0) echo ' <td>'.$categorys[$r['cid']]['name'].'</td>';?>
-                                    <td><a href="<?php if($r['status']==9) {echo $r['url'];}else{ echo '?m=content&f=content&v=view&id='.$r['id'].'&cid='.$r['cid'].$this->su();};?>" target="_blank"><?php echo p_htmlentities($r['title']);?></a><?php if($r['block']){?><img src="<?php echo R;?>images/icon/good.png" width="12" height="12"><?php } if($r['thumb']){?><img src="<?php echo R;?>images/icon/img.png" width="12" height="12"><?php }?></td>
+                                    <td><a href="<?php if ($r['status'] == 9) {
+                                            if (strpos($r['url'], '://') === false) {
+                                                echo $this->siteurl;
+                                                echo $r['url'];
+                                            } else {
+                                                echo $r['url'];
+                                            }
+
+                                        } else {
+                                            echo '?m=content&f=content&v=view&id=' . $r['id'] . '&cid=' . $r['cid'] . $this->su();
+                                        }; ?>"
+                                            target="_blank"><?php echo p_htmlentities($r['title']); ?></a><?php if ($r['block']) { ?>
+                                            <img src="<?php echo R; ?>images/icon/good.png"
+                                            width="12"
+                                            height="12"><?php }
+                                        if ($r['thumb']) { ?> <img src="<?php echo R; ?>images/icon/img.png"
+                                            width="12"
+                                            height="12"><?php } if ($r['push']) { ?> <img src="<?php echo R; ?>images/icon/push.png"
+                                            width="12"
+                                            height="12"><?php } ?></td>
                                     <td title="更新时间：<?php echo date('Y-m-d H:i:s',$r[ 'updatetime']);?>"><?php echo time_format($r[ 'addtime']);?></td>
                                     <td>
                                         <a href="?m=content&f=content&v=edit&id=<?php echo $r['id'];?>&type=<?php echo $GLOBALS['type'];?>&cid=<?php echo $r['cid'].$this->su();?>" class="btn btn-primary btn-xs">编辑</a>
@@ -108,7 +127,7 @@ if($modelid==0) {
 
                                         <button type="submit" onclick="$('#v').val('move')" class="btn btn-default btn-sm">移动</button>
                                         <?php if($cid) {?>
-                                        <button type="submit" onclick="$('#v').val('delete_more')" class="btn btn-default btn-sm">批量删除</button><?php }?>
+                                            <button type="submit" onclick="$('#v').val('delete_more')" class="btn btn-default btn-sm">批量删除</button><?php }?>
 
                                         <input name="status" value="<?php echo $status;?>" type="hidden">
                                         <input name="cid" value="<?php echo $cid;?>" type="hidden">

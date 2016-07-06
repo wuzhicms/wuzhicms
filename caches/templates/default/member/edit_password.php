@@ -8,8 +8,7 @@
 <div class="container-fluid  ie8-member">
     <div class="row row-40" >
         <?php if($set_iframe==0) { ?>
-        <div class="col-sm-3 left-nav padding-right0">
-            <!--左侧导航-->
+        <div class="col-sm-3 left-nav">             <!--左侧导航-->
             <nav class="navbar-default navbar-static-side" role="navigation">
                 <div class="nav-close"><i class="fa fa-times-circle"></i>
                 </div>
@@ -22,7 +21,7 @@
             <!--end 左侧导航-->
         </div><!--col-sm-3--><?php } ?>
 
-        <div class="<?php if($set_iframe==0) { ?>col-sm-9<?php } else { ?>col-sm-12<?php } ?> paddingleft0">
+        <div class="<?php if($set_iframe==0) { ?>col-sm-9<?php } else { ?>col-sm-12<?php } ?>">
 
             <div class="row">
                 <div class="col-sm-12">

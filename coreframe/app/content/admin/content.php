@@ -83,7 +83,7 @@ class content extends WUZHI_admin {
         //默认显示共享模型数据，即modelid为0.
         //默认status为9 通过审核
         $siteid = get_cookie('siteid');
-        
+        $this->siteurl = substr($this->siteurl,0,-1);
 
         $type = intval($GLOBALS['type']);
         $title = isset($GLOBALS['title']) ? sql_replace($GLOBALS['title']) : '';
@@ -387,14 +387,16 @@ class content extends WUZHI_admin {
             $title_css = preg_match('/([a-z0-9]+)/i',$GLOBALS['title_css']) ? $GLOBALS['title_css'] : '';
             $formdata['master_data']['css'] = $title_css;
 
+            $urlclass = load_class('url','content',$cate_config);
             if($cate_config['type']==1) {
                 $urls['url'] = $cate_config['url'];
             } elseif($formdata['master_data']['route']>1) {//外部链接/或者自定义链接
                 $urls['url'] = remove_xss($GLOBALS['url']);
             } else {
                 //生成url
-                $urlclass = load_class('url','content',$cate_config);
+
                 $productid = 0;
+
                 if(isset($formdata['master_data']['productid'])) $productid = $formdata['master_data']['productid'];
                 $urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1,'route'=>$formdata['master_data']['route'],'productid'=>$productid));
             }
@@ -436,7 +438,7 @@ class content extends WUZHI_admin {
                     }
 
                     //同步更新如果是外链地址,才更新url,默认保持不更新url
-                    $this->db->update($master_table,$formdata['master_data'],array('id'=>$tb_id));
+                    $this->db->update($formdata['master_table'],$formdata['master_data'],array('id'=>$tb_id));
                     if(!empty($formdata['attr_table'])) {
                         $this->db->update($attr_table,$formdata['attr_data'],array('id'=>$tb_id));
                     }
@@ -460,6 +462,7 @@ class content extends WUZHI_admin {
                 $this->html->set_category($cate_config);
                 $this->html->set_categorys();
                 $this->html->load_formatcache();
+
                 $this->html->show($data,1,1,$urls['root']);
                 $loadhtml = true;
                 if($GLOBALS['old_status']!=9) {
@@ -1232,7 +1235,7 @@ class content extends WUZHI_admin {
                 $r = $this->db->get_one($master_table,array('id'=>$id));
                 $this->db->update($master_table,array('push'=>1),array('id'=>$id));
                 //$r_en = $this->db->get_one($master_table.'_en',array('id'=>$id));
-                $this->db->update($master_table.'_en',array('push'=>1),array('id'=>$id));
+                //$this->db->update($master_table.'_en',array('push'=>1),array('id'=>$id));
                 if($master_table=='content_share') {
                     $modelid = $r['modelid'];
                     $attr_table = $models[$modelid]['attr_table'];

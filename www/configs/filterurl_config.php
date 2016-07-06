@@ -51,13 +51,13 @@ return array(
 			),
 		'order' =>
 			array(
-				1=>array(
+				0=>array(
 					'name'=>'智能推荐',
 				),
-				2=>array(
+				1=>array(
 					'name'=>'时间排序',
 				),
-				3=>array(
+				2=>array(
 					'name'=>'价格排序',
 				),
 			),

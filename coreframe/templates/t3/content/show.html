@@ -1,0 +1,89 @@
+{T "content","head",TPLID}
+<!--路径导航-->
+<div style="background: #f3f3f3">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="{WEBURL}">首页</a><span> &gt;</span> </li>
+            {catpos($cid)}
+            <li class="active">正文</li>
+        </ol>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-xs-8">
+        <div class="news-content">
+            <h2 class="text-center">{$title}</h2>
+            <div class="text-center color_999">时间：{$addtime} &nbsp;&nbsp;&nbsp;&nbsp;{if $copyfrom!==""}来源：{/if}{$copyfrom}&nbsp;&nbsp;&nbsp;&nbsp; 访问次数：<span id="hits">0</span></div>
+            <hr>
+            <div  class="content-p">
+                {$content}
+            </div>
+
+            <hr>
+            <div class="before-and-next">
+                <div class="row">
+                    <div>{if $previous_page['url']}<a href="{$previous_page['url']}">上一篇：{strcut($previous_page['title'],50)}</a>{/if}</div>
+                    <div>{if $next_page['url']}<a href="{$next_page['url']}">下一篇：{strcut($next_page['title'],50)}</a>{/if}</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <!--高速版，加载速度快，使用前需测试页面的兼容性-->
+            <div id="SOHUCS"></div>
+            <script>
+                (function(){
+                    var appid = "{$siteconfigs['cy_appid']}",
+                            conf = "{$siteconfigs['cy_key']}";
+                    var doc = document,
+                            s = doc.createElement('script'),
+                            h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+                    s.type = 'text/javascript';
+                    s.charset = 'utf-8';
+                    s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+                    h.insertBefore(s,h.firstChild);
+                    window.SCS_NO_IFRAME = true;
+                })()
+            </script>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="ad-box">
+            <div style="height: 320px; background: #ddd"><script  src="{WEBURL}promote/6.js"></script></div>
+        </div>
+
+
+        <div class="right-bg-box xielinebg  down-one-screen" >
+            <div class="lm-title margin_bottom15">
+                <h3 class="lm-title-left">频道推荐 </h3>
+            </div>
+            <div class="list-group ">
+                {block=38}
+            </div>
+        </div>
+
+        <div class="right-bg-box xielinebg">
+            <div class="lm-title margin_bottom15">
+                <h3 class="lm-title-left">图片新闻 </h3>
+            </div>
+            <div class="headline-news-list right-bg-media">
+                {block=39}
+            </div>
+
+        </div>
+
+        <div class="right-bg-box xielinebg">
+            <div class="lm-title margin_bottom15">
+                <h3 class="lm-title-left">视频新闻 </h3>
+            </div>
+            <div class="headline-news-list right-bg-media">
+                {block=40}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="{WEBURL}index.php?f=stat&id={$id}&cid={$cid}"></script>
+{T "content","foot",TPLID}

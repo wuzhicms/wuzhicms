@@ -66,7 +66,7 @@ class WUZHI_form {
 				$str .= '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
 			}
 			if($area_load==0) {
-				$str .= '<textarea name="'.$name.'" id="'.$editname.'" rows="3"></textarea>';
+				$str .= '<textarea name="'.$name.'" id="'.$editname.'" rows="3">'.$value.'</textarea>';
 			}
 			$str .= '<script type="text/javascript">';
 			$str .= "CKEDITOR.config.toolbar = '$toolbars';";

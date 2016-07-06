@@ -37,6 +37,7 @@ class WUZHI_html {
         $siteconfigs = $this->siteconfigs;
         $categorys = $this->categorys;
         $category = $this->category;
+        if($category['listhtml']==0) return '';
         $cid = $category['cid'];
         $seo_title = $category['seo_title'] ? $category['seo_title'] : $category['name'].'_'.$siteconfigs['sitename'];
         $seo_keywords = $category['seo_keywords'];

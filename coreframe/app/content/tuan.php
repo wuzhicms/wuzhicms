@@ -37,7 +37,7 @@ class tuan{
         }
 
         $order = isset($GLOBALS['order']) ? $GLOBALS['order'] : 0;
-        $orderby_arr = array('sort DESC,id DESC','id DESC','price DESC');
+        $orderby_arr = array('sort DESC,id DESC','sort DESC,id DESC','id DESC','price DESC');
         $orderby = $orderby_arr[$order];
 
         $page = isset($GLOBALS['page']) ? $GLOBALS['page'] : 1;

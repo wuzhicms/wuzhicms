@@ -13,7 +13,7 @@
     'subtitle' => '',
     'keywords' => '',
     'url' => '',
-    'file' => 'http://dev.wuzhicms.com/uploadfile/2016/04/06/201604061655544302.png',
+    'file' => 'http://demo3.wuzhicms.com/uploadfile/2016/04/06/201604061655544302.png',
     'icon' => '',
     'template' => 'show_pic',
     'sort' => '0',
