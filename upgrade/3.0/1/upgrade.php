@@ -10,5 +10,5 @@ defined('IN_WZ') or exit('No direct script access allowed');
 load_class('cache_menu');
 //  设置会员组权限：个人会员 需要升级 ，游客会员组需要判断是否有权限
 
-ALTER TABLE `wz_content_share` ADD `push` TINYINT(1) NOT NULL DEFAULT '0';
-ALTER TABLE `wz_content_share` ADD `old_id` INT(10) UNSIGNED NOT NULL DEFAULT '0';
+//ALTER TABLE `wz_content_share` ADD `push` TINYINT(1) NOT NULL DEFAULT '0';
+//ALTER TABLE `wz_content_share` ADD `old_id` INT(10) UNSIGNED NOT NULL DEFAULT '0';
