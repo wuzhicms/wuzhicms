@@ -22,6 +22,21 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `wz_key_verify`;
+CREATE TABLE `wz_key_verify` (
+  `keyid` char(32) NOT NULL,
+  `addtime` int(10) NOT NULL
+) ;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `wz_key_verify`
+--
+ALTER TABLE `wz_key_verify`
+ADD UNIQUE KEY `keyid` (`keyid`,`addtime`);
 
 -- 当前主产品的版本安装信息
 DROP TABLE IF EXISTS `wz_cloud_app`;
