@@ -387,14 +387,16 @@ class content extends WUZHI_admin {
             $title_css = preg_match('/([a-z0-9]+)/i',$GLOBALS['title_css']) ? $GLOBALS['title_css'] : '';
             $formdata['master_data']['css'] = $title_css;
 
+            $urlclass = load_class('url','content',$cate_config);
             if($cate_config['type']==1) {
                 $urls['url'] = $cate_config['url'];
             } elseif($formdata['master_data']['route']>1) {//外部链接/或者自定义链接
                 $urls['url'] = remove_xss($GLOBALS['url']);
             } else {
                 //生成url
-                $urlclass = load_class('url','content',$cate_config);
+
                 $productid = 0;
+
                 if(isset($formdata['master_data']['productid'])) $productid = $formdata['master_data']['productid'];
                 $urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1,'route'=>$formdata['master_data']['route'],'productid'=>$productid));
             }
@@ -436,7 +438,7 @@ class content extends WUZHI_admin {
                     }
 
                     //同步更新如果是外链地址,才更新url,默认保持不更新url
-                    $this->db->update($master_table,$formdata['master_data'],array('id'=>$tb_id));
+                    $this->db->update($formdata['master_table'],$formdata['master_data'],array('id'=>$tb_id));
                     if(!empty($formdata['attr_table'])) {
                         $this->db->update($attr_table,$formdata['attr_data'],array('id'=>$tb_id));
                     }
@@ -460,6 +462,7 @@ class content extends WUZHI_admin {
                 $this->html->set_category($cate_config);
                 $this->html->set_categorys();
                 $this->html->load_formatcache();
+
                 $this->html->show($data,1,1,$urls['root']);
                 $loadhtml = true;
                 if($GLOBALS['old_status']!=9) {

@@ -122,6 +122,7 @@ class WUZHI_url {
         if(empty($configs['id']) || empty($configs['cid']) || empty($configs['addtime'])) return 'configs error';
         $page = intval($configs['page']);
         $page = max(1,$page);
+        
         $urlrule = $this->category['showurl'];
         $urlrules = explode('|',$urlrule);
         if($page==1) {
