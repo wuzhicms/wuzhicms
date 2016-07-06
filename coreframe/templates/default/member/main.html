@@ -36,7 +36,7 @@
                 <div class="col-sm-12">
                     <div class=" float-e-margins">
 
-                        <div class="ibox-content">
+                        <div class="ibox-content" style="min-height: 800px;">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="thumbnail" style="border: none; text-align: center;">
