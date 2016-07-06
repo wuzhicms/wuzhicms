@@ -3,7 +3,7 @@
     <div class="container">
         <ol class="breadcrumb" style="margin-bottom: 0px">
             您现在的位置：
-            <li><a href="#">B首页</a><span> &gt;</span></li>
+            <li><a href="<?php echo WEBURL;?>">首页</a><span> &gt;</span></li>
             <?php echo catpos($cid);?>
         </ol>
     </div>

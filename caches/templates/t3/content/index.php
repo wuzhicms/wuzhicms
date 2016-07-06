@@ -13,7 +13,7 @@
     <link href="<?php echo R;?>t3/css/style.css" rel="stylesheet">
     <link href="<?php echo R;?>t3/css/hover.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="<?php echo R;?>t3css/non-responsive.css" rel="stylesheet">
+    <link href="<?php echo R;?>t3/css/non-responsive.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="//cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>

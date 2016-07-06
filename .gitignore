@@ -14,5 +14,5 @@
 /caches/upgrade/
 www/configs/mysql_config.php
 caches/templates/*
-
 www/.htaccess
+upgrade/migrations/*

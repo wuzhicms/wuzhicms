@@ -568,7 +568,12 @@
     border: 0px solid #dddddd;
     border-bottom: 1px solid #e8e8e8;
 }
-
+.down-one-screen a.list-group-item:hover,
+.down-one-screen a.list-group-item:focus{
+    text-decoration: none;
+    color: #0099DF;
+    background-color: #f5f5f5;
+}
 .down-one-screen .list-group-item.active,
 .down-one-screen .list-group-item.active:hover,
 .down-one-screen .list-group-item.active:focus {
@@ -807,7 +812,7 @@
 .addmore{ background: #eee; text-align: center; color: #666;}
 .addmore a{ display: block; padding: 6px 0}
 
-
+/*胶囊切换按钮重置*/
 .video-second-screen .nav-pills > li + li {
     margin-left: -1px;
 }
@@ -1526,4 +1531,101 @@
     border-color: #adadad;
 }
 
+/*公告*/
+.notice-list{ padding-right: 30px;}
+.notice-list h4{ }
+.notice-list .list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px 0px;
+    margin-bottom: 0px;
+    background-color: #ffffff;
+    border: none;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+}
+.notice-list .list-group-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.notice-list a.list-group-item:hover,
+.notice-list a.list-group-item:focus
+ {
+    text-decoration: none;
+    color: #ec972f;
+    background: none;
+    border-bottom: 1px solid #ddd;
+}
+.notice-list .badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 5px 7px;
+    font-size: 16px;
+    font-weight: 200;
+    color: #666;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background: none;
+    border-radius: 10px;
+}
+.notice-list  .badge:hover {
+    color: #ec972f;
+}
 
+.notice-right-screen {
+    margin-top: 24px;
+}
+
+.notice-right-screen .list-group {
+    margin-bottom: 0px;
+    padding-left: 0;
+}
+
+.notice-right-screen .list-group-item {
+    position: relative;
+    display: block;
+    padding: 4px 0px;
+    margin-bottom: 0px;
+    background: none;
+    border: 0px solid #dddddd;
+    color: #0099DF;
+    font-weight: 600;
+    line-height: 1.6;
+}
+.notice-right-screen a.list-group-item:hover,
+.notice-right-screen a.list-group-item:focus{
+    text-decoration: none;
+    color: #ec972f;
+    background:none;
+}
+.notice-right-screen .list-group-item.active,
+.notice-right-screen .list-group-item.active:hover,
+.notice-right-screen .list-group-item.active:focus {
+    z-index: 2;
+    color: #3498db;
+    background: none;
+    border-color: #e8e8e8;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.notice-right-screen .list-group-item:first-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.notice-right-screen .list-group-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+/* // 公告*/
+
+
+/*留言板*/
+
+.liuyan-list{ }

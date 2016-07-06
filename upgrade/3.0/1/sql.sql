@@ -1,0 +1,1 @@
+ALTER TABLE `wz_attachment` ADD `userid` INT(10) UNSIGNED NOT NULL DEFAULT '0';

@@ -119,7 +119,7 @@
                     <div class="realPay">
                         <p class="money"><span class="hd">实付款：</span><span class="bd"><span class="tc-rmb"></span><strong><span id="total_price"><?php echo $total_price;?></span></strong></span></p>
                     </div>
-                    <div class="obtainedPoint"> 可获得 <span class="inner">健康积分</span>：<span class="obtain"><strong><?php echo $point;?></strong>点</span> </div>
+                    <div class="obtainedPoint"> 可获得五指CMS <span class="inner">积分</span>：<span class="obtain"><strong><?php echo $point;?></strong>点</span> </div>
                 </div>
 
                 <div class="action"><a class="back-cart" href="javascript:history.go(-1);">返回购物车修改</a><div class="go-wrapper"><button type="submit" class="btn btn-danger_g active btn-lg">&nbsp;&nbsp;提交订单&nbsp;&nbsp;</button></div></div>

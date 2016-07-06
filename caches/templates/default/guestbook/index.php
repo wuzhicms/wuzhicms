@@ -8,42 +8,7 @@
     <div class="row">
         <div class="col-xs-12" style="background:url(<?php echo R;?>h1jk/image/shequbg.png) no-repeat top center;">
             <div class="shequ_box" >
-                <div class="shequ_title">
-                    <div class="row">
-                        <div class="col-xs-3" style="width:192px;">
-                            <a href="/list-81/">
-                                <div class="title">
-                                    <span class="iconfont<?php if($cid!=81) { ?>_g<?php } ?>"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></span>
-                                    <span class="titles">健康行<p class="tiaoshu">条数：<?php echo get_category_item(81);?></p></span>
-                                </div></a>
 
-                        </div>
-                        <div class="col-xs-3" style="width:192px;">
-                            <a href="/list-82/"><div class="title">
-                                <span class="iconfont<?php if($cid!=82) { ?>_g<?php } ?>"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></span>
-                                <span class="titles">健康吧 <p class="tiaoshu">条数：<?php echo get_category_item(82);?></p></span>
-                            </div></a>
-                        </div>
-                        <div class="col-xs-3" style="width:192px;">
-                            <a href="/list-83/"><div class="title">
-                                <span class="iconfont<?php if($cid!=83) { ?>_g<?php } ?>"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>
-                                <span class="titles">健康学 <p class="tiaoshu">条数：<?php echo get_category_item(83);?></p></span>
-                            </div></a>
-                        </div>
-                        <div class="col-xs-3" style="width:192px;">
-                            <a href="/list-84/"><div class="title">
-                                <span class="iconfont<?php if($cid!=84) { ?>_g<?php } ?>"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></span>
-                                <span class="titles">健康知 <p class="tiaoshu">条数：<?php echo get_category_item(84);?></p></span>
-                            </div></a>
-                        </div>
-                        <div class="col-xs-3" style="width:192px;">
-                            <a href="/my-guestbook/"><div class="title">
-                                <span class="iconfont"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></span>
-                                <span class="titles">健康问答 <p class="tiaoshu">条数：<?php echo wzsql('guestbook');?></p></span>
-                            </div></a>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="shequ_list">
                     <div class="header">
@@ -71,7 +36,7 @@ if (method_exists($guestbook_template_parse, 'listing')) {
                                     <tr>
                                         <td class="tuxiang"><img src="<?php echo avatar($r['uid'], 180);?>" width="60"></td>
                                         <td class="zhuti">
-                                            <div class="title"><a href="/index?m=guestbook&v=show&id=<?php echo $r['id'];?>" class="color_heyilan"><?php echo $r['title'];?></a></div>
+                                            <div class="title"><a href="index.php?m=guestbook&v=show&id=<?php echo $r['id'];?>" class="color_heyilan"><?php echo $r['title'];?></a></div>
                                             <div class="em"><?php echo $r['publisher'];?>&nbsp;&nbsp; 于<?php echo date('Y-m-d',$r['addtime']);?>发表 </div>
                                         </td>
                                         <td class="rw">

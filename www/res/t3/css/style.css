@@ -300,6 +300,14 @@ p {line-height: 1.6;}
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
 }
+.manhangyichu-h {
+    overflow: hidden;
+    -webkit-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}  /*溢出高度可在代码里编写。或者同级别css里边写*/
+
 .max-height-hide52{ max-height: 52px; overflow: hidden;}
 
 .height-hide55{height: 55px; overflow: hidden;}
@@ -484,7 +492,7 @@ p {line-height: 1.6;}
 .navbar-inverse-primary .navbar-nav > .active > a:before {
     position: absolute;
     bottom: 10px;
-    /*    left:calc(50% - 5px);*/
+/*    left:calc(50% - 5px);*/
     left:44%;
     border-width: 5px;
     border-color:   transparent  transparent   #fff    transparent;
@@ -896,6 +904,7 @@ ol ol{
 }
 .narrowArt img {
     max-width: 100%;
+    width:100%;
 }
 .narrowArt a {
     position: relative;
@@ -1163,7 +1172,7 @@ ol ol{
 }
 
 /*鼠标滑过图片标题出现样式*/
-.pic_Control { margin:0 auto; position:relative; }
+.pic_Control { margin:0 auto; position:relative; height: 218px;overflow: hidden;}
 .pic_Control .imgtext  { background-color: rgb(26, 188, 156); position:absolute; left:0; bottom:0; width: 100% }
 .pic_Control .text{ padding:8px; color:#FFF; font-size:12px; line-height:1.8; text-align:center }
 .pic_Control:hover{
@@ -1277,29 +1286,29 @@ ol ol{
 
 
 /*导航-下拉购物车*/
-.cart-list {
+ .cart-list {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    font-size: 12px;
+     font-size: 12px;
 }
-.cart-list li {
+ .cart-list li {
     position: relative;
     height: 80px;
     padding: 0;
 }
-.cart-item {
+ .cart-item {
     position: relative;
     height: 60px;
     padding: 10px 0;
     border-top: 1px solid #e0e0e0;
     line-height: 20px;
 }
-.cart-item .thumb {
+ .cart-item .thumb {
     float: left;
     margin-right: 10px;
-    max-height: 60px;
-    overflow: hidden;
+     max-height: 60px;
+     overflow: hidden;
 }
 .cart-item .name {
     float: left;
@@ -1318,13 +1327,13 @@ ol ol{
     _display: inline;
     margin: 10px 20px 0 5px;
 }
-.cart-item .btn-del {
+ .cart-item .btn-del {
     display: none;
     _display: block;
     position: absolute;
     top: 21px;
     right: 0;
-    color: #999;
+     color: #999;
 }
 .cart-item:hover .btn-del {
     display: block;
