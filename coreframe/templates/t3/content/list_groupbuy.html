@@ -47,7 +47,6 @@
             <h3 class="lm-title-left">{$category['name']}列表 <span class="fubiaoti color_777 font_size12 margin_left10">低价优惠 该出手了 </span></h3>
         </div>
         <div class="row">
-            {php $starttime = SYS_TIME;$where = "`endtime` > '$starttime'";}
             {wz:content action="listing" pagesize="8" cid="$cid" where="$where" page="$page" order="$orderby" urlrule="$_POST['page_urlrule']" variables="$variables" modelid="$modelid"}
             {loop $rs $r}
             <div class="col-xs-3">
