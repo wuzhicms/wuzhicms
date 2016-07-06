@@ -29,7 +29,6 @@
                 <dl>
                     <dt>排序</dt>
                     <dd>
-                        <a class="{if $variables['order']==0}active{/if}" href="{filterurl('tuan','order',0)}">全部</a>
                         {loop $filterurl_config['order'] $_k $_v}
                         <a class="{if $variables['order']==$_k}active{/if}" href="{filterurl('tuan','order',$_k)}">{$_v['name']}</a>
                         {/loop}

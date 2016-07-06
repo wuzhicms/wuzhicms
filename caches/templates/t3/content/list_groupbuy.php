@@ -1,4 +1,4 @@
-<!DOCTYPE html><div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">开始：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div><?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","head",TPLID); ?>
+<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","head",TPLID); ?>
 <?php $filterurl_config = get_config('filterurl_config','tuan');?>
 <!-- -------------------------------- -->
 <!--wuzhi-shaixuan-->
@@ -29,7 +29,7 @@
                 <dl>
                     <dt>排序</dt>
                     <dd>
-                        <a class="<?php if($variables['order']==0) { ?>active<?php } ?>" href="<?php echo filterurl('tuan','order',0);?>">全部</a>
+                        
                         <?php $n=1; if(is_array($filterurl_config['order'])) foreach($filterurl_config['order'] AS $_k => $_v) { ?>
                         <a class="<?php if($variables['order']==$_k) { ?>active<?php } ?>" href="<?php echo filterurl('tuan','order',$_k);?>"><?php echo $_v['name'];?></a>
                         <?php $n++;}?>
@@ -65,9 +65,9 @@ if (method_exists($content_template_parse, 'listing')) {
                     <div class="caption">
                         <h4 class="manhangyichu"><a href="<?php echo $r['url'];?>"><?php echo $r['title'];?></a></h4>
                         <div class="price-and-pingjia">
-                            <div class="p-a-p-price">￥<?php echo intval($r['iprice']);?> </div>
+                            <div class="p-a-p-price">￥<?php echo $r['price'];?> </div>
                             <div class="p-a-p-pingjia" style="padding-top: 12px">
-                                <del class="color_999  font_size14">￥<?php echo intval($r['price']);?></del>
+                                <del class="color_999  font_size14">￥<?php echo $r['iprice'];?></del>
                             </div>
                         </div>
                     </div>
@@ -89,4 +89,4 @@ if (method_exists($content_template_parse, 'listing')) {
     <!--end  五指分页 -->
 </div>
 
-<?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","foot",TPLID); ?><div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">结束：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div><script>setTimeout(function(){$(".remove_debug").remove();},20000);</script>
+<?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","foot",TPLID); ?>
