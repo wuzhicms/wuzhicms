@@ -98,7 +98,7 @@
             </div>
             <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="tuangou-right-box">
-                    <h3><a href=""  title="查看更多往期团购">往期团购</a></h3>
+                    <h3><a href="{WEBURL}index.php?f=huigu&v=listing&cid={$cid}"  title="查看更多往期团购">往期团购</a></h3>
                     {php $pretime = SYS_TIME;$where = " `endtime` < '$pretime'";}
                     {wz:content action="listing" cid="$cid" where="$where"  pagesize="5" order="sort ASC,id DESC" }
                         {loop $rs $r}

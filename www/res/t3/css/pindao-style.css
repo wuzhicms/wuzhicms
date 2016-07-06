@@ -1591,9 +1591,7 @@
     margin-bottom: 0px;
     background: none;
     border: 0px solid #dddddd;
-    color: #0099DF;
-    font-weight: 600;
-    line-height: 1.6;
+    border-bottom: 1px solid #e8e8e8;
 }
 .notice-right-screen a.list-group-item:hover,
 .notice-right-screen a.list-group-item:focus{

@@ -47,6 +47,7 @@
             <h3 class="lm-title-left"><?php echo $category['name'];?>列表 <span class="fubiaoti color_777 font_size12 margin_left10">低价优惠 该出手了 </span></h3>
         </div>
         <div class="row">
+            <?php $starttime = SYS_TIME;$where = "`endtime` > '$starttime'";?>
             <?php if(defined('IN_ADMIN') && !defined('HTML')) {
 	echo "<div class=\"visual_div\" pc_action=\"content\" data=\"\"><a href=\"javascript:void(0)\" class=\"visual_edit\">修改</a>";
 }

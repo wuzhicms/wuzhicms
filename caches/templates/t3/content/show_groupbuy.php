@@ -98,7 +98,7 @@
             </div>
             <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="tuangou-right-box">
-                    <h3><a href=""  title="查看更多往期团购">往期团购</a></h3>
+                    <h3><a href="<?php echo WEBURL;?>index.php?f=huigu&v=listing&cid=<?php echo $cid;?>"  title="查看更多往期团购">往期团购</a></h3>
                     <?php $pretime = SYS_TIME;$where = " `endtime` < '$pretime'";?>
                     <?php if(defined('IN_ADMIN') && !defined('HTML')) {
 	echo "<div class=\"visual_div\" pc_action=\"content\" data=\"\"><a href=\"javascript:void(0)\" class=\"visual_edit\">修改</a>";
