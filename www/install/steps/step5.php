@@ -38,7 +38,7 @@
                   <div class="col-lg-12">
                       <section class="panel">
                           <div class="panel-body">
-                          <div class="logo text-center"><a href="http://www.wuzhicms.com/" target="_blank"><img src="img/logo.png" alt=""><span>安装五步曲</span></a></div>
+                              <div class="logo text-center"><a href="http://www.wuzhicms.com/" target="_blank"><span>五指CMS <?php echo $wz_version;?>安装五步曲</span></a></div>
                               <div class="stepy-tab text-center">
                                   <ul id="default-titles" class="stepy-titles clearfix">
                                       <li id="default-title-0" >
