@@ -24,7 +24,7 @@ class WUZHI_build_package
 
     public function run($code, $version, $diff)
     {
-        echo "\n\n begin to build upgrade package \n\n";
+        echo "\n begin to build upgrade package \n";
 
         $packageDirectory = $this->createDirectory($code, $version);
 
@@ -32,7 +32,7 @@ class WUZHI_build_package
 
         $this->copyUpgradeScript($packageDirectory, $version);
 
-        echo "finish building upgrade package \n\n";
+        echo "\n finish building upgrade package \n";
     }
 
     /**
@@ -100,8 +100,9 @@ class WUZHI_build_package
                 continue;
             }
 
+            $this->insterCopyFile($opFile, $packageDirectory);
+
             if ($line[0] == 'M' || $line[0] == 'A') {
-                //单独处理更新模版
                 echo "+增加更新文件: {$opFile}\n";
                 $this->copyFileAndDirectory($opFile, $packageDirectory);
             }
@@ -161,5 +162,10 @@ class WUZHI_build_package
     private function insertTplFile($opFile, $packageDirectory)
     {
         file_put_contents("{$packageDirectory}/template", "{$opFile}\n", FILE_APPEND);
+    }
+
+    private function insterCopyFile($opFile, $packageDirectory)
+    {
+        file_put_contents("{$packageDirectory}/backup", "{$opFile}\n", FILE_APPEND);
     }
 }
