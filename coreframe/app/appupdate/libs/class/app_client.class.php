@@ -60,7 +60,7 @@ class WUZHI_app_client
     private function download($url)
     {
         $fileName = md5($url).'_'.time();
-        $filePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.$fileName;
+        $filePath = CACHE_ROOT.'upgrade/'.$fileName;
         $fp       = fopen($filePath, 'w');
 
         $curl = curl_init($url);
