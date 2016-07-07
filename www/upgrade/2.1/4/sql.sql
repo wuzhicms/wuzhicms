@@ -1,1 +1,0 @@
-ALTER TABLE `wz_content_relation` ADD `thumb` VARCHAR(255) NOT NULL ;

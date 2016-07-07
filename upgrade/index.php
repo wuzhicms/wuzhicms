@@ -16,6 +16,20 @@ define('WWW_ROOT',substr(dirname(__FILE__),0,-7));
 
 require WWW_ROOT.'configs/web_config.php';
 require COREFRAME_ROOT.'core.php';
+
+$versions = '';
+/**
+ * 手动升级用户,通过修改版本号,挨个升级即可.
+ * 比如:之前是:2.1.0版本,$versions填写2.1.0,
+ * 然后执行:http://mydomain/upgrade/
+ * 当前升级版本有:2.1.0 ~ 2.1.2 ~ 2.1.4 ~ 3.0.0 ~ 3.0.1
+ * 依次升级
+ */
+
+//$versions = '3.0.0';
+
+
+if($versions=='') $versions = VERSION;
 $db = load_class('db');
 
 function sql_execute($sql) {
@@ -49,11 +63,7 @@ function sql_execute($sql) {
 	}
 	return true;
 }
-//2.0升级到3.0用户,需要修改这里
-$vers = explode('.','3.0.0');
-
-//3.0之后
-//$vers = explode('.',VERSION);
+$vers = explode('.',$versions);
 
 $packdir = WWW_ROOT.'upgrade/'.$vers[0].'.'.$vers[1].'/'.$vers[2];
 $sqlfile = $packdir.'/sql.sql';
