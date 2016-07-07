@@ -18,3 +18,5 @@ www/.htaccess
 upgrade/migrations/*
 
 www/guanyuwomen/gongsijieshao/index.html
+
+caches/lock.install
