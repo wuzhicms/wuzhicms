@@ -27,8 +27,12 @@ if (method_exists($content_template_parse, 'category')) {
                 <a href="<?php echo $r[url];?>"><?php echo $r['name'];?></a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
                 <?php $n++;}?>
                 <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
-                <a href="<?php echo WEBURL;?>index.php?m=link">友情链接</a> <br>
-                <?php echo $siteconfigs['copyright'];?><?php echo $siteconfigs['statcode'];?> <a href="http://www.wuzhicms.com" target="_blank">五指CMS提供技术支持</a> </div>
+                <a href="<?php echo WEBURL;?>index.php?m=link">友情链接</a>
+                <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                <a href="<?php echo WEBURL;?>index.php?m=affiche&f=index&v=listing">站点公告</a>
+                <br>
+                <?php echo $siteconfigs['copyright'];?><?php echo $siteconfigs['statcode'];?> <a href="http://www.wuzhicms.com" target="_blank">五指CMS提供技术支持</a>
+            </div>
         </div>
     </div>
 

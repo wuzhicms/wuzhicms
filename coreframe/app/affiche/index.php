@@ -15,12 +15,19 @@ class index {
         $page = max($page,1);
         include T('affiche','list');
 	}
+
     public function show() {
         $seo_title = '公告';
         $id = isset($GLOBALS['id']) ? intval($GLOBALS['id']) : MSG('参数错误');
         $this->db = load_class('db');
         $r = $this->db->get_one('affiche',array('id'=>$id));
         $_uid = get_cookie('_uid');
+        //上一页
+        $previous_page = $this->db->get_one(affiche," `id`>'$id' ",'*',0,'id ASC');
+
+        //下一页
+        $next_page = $this->db->get_one(affiche,"`id`<'$id' ",'*',0,'id DESC');
+        //手动分页
 
         if($r['status']==2 || is_numeric($_uid)) {
             extract($r,EXTR_SKIP);

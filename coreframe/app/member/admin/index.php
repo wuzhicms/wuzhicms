@@ -143,7 +143,12 @@ class index extends WUZHI_admin {
 		$models = get_cache('model_member','model');
 		if(isset($GLOBALS['submit'])) {
 			if(!isset($GLOBALS['info']['email'])) MSG('邮件不能为空');
-
+			if(empty($GLOBALS['groups'])) {
+				MSG('请选择会员组');
+			}
+			if(empty($GLOBALS['modelids'])) {
+				MSG('请选择模型');
+			}
 			$GLOBALS['info']['modelid'] = implode(',',$GLOBALS['modelids']);
 
 			if(!$uid = $this->member->add($GLOBALS['info'])) MSG(L('operation_failure'));

@@ -24,7 +24,7 @@
         <div class="<?php if($set_iframe==0) { ?>col-sm-9<?php } else { ?>col-sm-12<?php } ?> paddingleft0">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="ibox float-e-margins">
+                    <div class="ibox ibox-content float-e-margins">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="thumbnail" style="border: none; text-align: center;">

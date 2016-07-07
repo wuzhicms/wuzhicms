@@ -29,7 +29,7 @@
                 <dl>
                     <dt>排序</dt>
                     <dd>
-                        
+
                         <?php $n=1; if(is_array($filterurl_config['order'])) foreach($filterurl_config['order'] AS $_k => $_v) { ?>
                         <a class="<?php if($variables['order']==$_k) { ?>active<?php } ?>" href="<?php echo filterurl('tuan','order',$_k);?>"><?php echo $_v['name'];?></a>
                         <?php $n++;}?>

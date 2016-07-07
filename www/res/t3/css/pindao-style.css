@@ -1587,17 +1587,19 @@
 .notice-right-screen .list-group-item {
     position: relative;
     display: block;
-    padding: 4px 0px;
+    padding: 8px 0px;
     margin-bottom: 0px;
     background: none;
     border: 0px solid #dddddd;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid #dddddd;
+    font-weight: 500;
+    line-height: 1.6;
 }
 .notice-right-screen a.list-group-item:hover,
 .notice-right-screen a.list-group-item:focus{
     text-decoration: none;
     color: #ec972f;
-    background:none;
+    background-color: #f5f5f5;
 }
 .notice-right-screen .list-group-item.active,
 .notice-right-screen .list-group-item.active:hover,
@@ -1627,3 +1629,135 @@
 /*留言板*/
 
 .liuyan-list{ }
+.liuyan-list .form-control {
+    border: 1px solid #EEEEEE;
+}
+.liuyan-list .panel-default > .panel-heading {
+    color: #337AB7;
+    background-color: #eee;
+    border-color: #eee;
+    font-size: 21px;
+    padding:15px 15px;
+}
+.liuyan-list .panel-default {
+    border-color: #ddd;
+}
+.liuyan-list .nav > li > a {
+    position: relative;
+    display: block;
+    padding: 5px 15px;
+    color: #999;
+}
+.liuyan-list  .nav-pills > li.active > a,
+.liuyan-list  .nav-pills > li.active > a:hover,
+.liuyan-list  .nav-pills > li.active > a:focus {
+    color: #ffffff;
+    background-color: #3498db;
+}
+.liuyan-list .nav-pills > li > a {
+    border-radius: 0px;
+}
+.liuyan-hdsx{     border-bottom: 2px solid #3498db; margin-bottom: 10px; }
+
+.liuyan-list .panel-body {
+    color: #888;
+    font-size: 16px;
+}
+
+.liuyan-list .panel-footer {
+    padding: 10px 40px;
+    background-color: #FFF5F5;
+    border: 0px solid #fff;
+    border-top: 1px dashed #efe5e5;
+}
+
+.huifu-hd{ margin-bottom: 10px;}
+.huifu-hd .hd-left{ display: inline-block;}
+.huifu-hd .hd-left h4{  line-height: 1; color: #d9534f; }
+.huifu-hd .hd-right{ float: right}
+
+
+/*
+三角选中标签*/
+.liuyan-list .panel-footer {
+    position: relative;
+}
+.liuyan-list .panel-footer :before {
+    position: absolute;
+    top:-1px;
+    left: 0px;
+    border-width: 20px;
+    border-color: #fff transparent  transparent     #fff  ;
+    border-style: solid dashed    dashed solid;
+    content: '';
+    font-size: 0;
+    width: 0;
+    height: 0;
+}
+
+/*发表留言*/
+.form-box{ background: #eee; padding: 10px; border: 1px solid #ddd;}
+
+.add-pic {
+    border-color: #d5d5d5;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: 0;
+    color: #e29760;
+}
+.add-pic  span {
+    position: relative;
+    height: 65px;
+    width: 65px;
+    margin: 0 5px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    overflow: hidden;
+}
+.add-pic  span.limit {
+    width: 220px;
+    font-size: 12px;
+    color: #999;
+    line-height: 16px;
+}
+
+.form-foot-left{ display: inline-block;}
+.form-foot-right{  float: right}
+
+.liuyan-form-title{ background: #999; padding: 5px 15px; margin-top: 30px; color: #fff; font-size: 21px;}
+.liuyan-form-title .lft-left{ display: inline-block;}
+.liuyan-form-title .lft-right{ float: right;}
+.liuyan-form-title .lft-left a{ }
+.liuyan-form-title .lft-left a:hover{ color: #ddd }
+.liuyan-form-title .lft-left a:after{ content: "|";  color: #aaa; padding-left: 15px; }
+.liuyan-form-title .lft-left a:last-child:after{ content: "";  }
+.liuyan-form-title .lft-left a+a{margin-left: 15px; }
+
+
+/*
+立体标签*/
+.coupon {
+    margin-top: -8px;
+    padding:8px 20px;
+    font-size: 21px;
+    text-align: center;
+    background-color: #f0ad4e;
+    border-bottom: dashed 2px #f3f3f3;
+    color: #FFF;
+    position: relative;
+}
+.coupon:before {
+    position: absolute;
+    top: 0;
+    left: -4px;
+    border-width: 2px;
+    border-color: transparent #DC9D49 #dc9d49 transparent;
+    border-style: dashed solid solid dashed;
+    content: '';
+    font-size: 0;
+    width: 0;
+    height: 0;
+}

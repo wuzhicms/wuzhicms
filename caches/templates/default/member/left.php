@@ -9,6 +9,9 @@
         <ul class="nav nav-second-level">
             <li><a class="<?php if($is_iframe) { ?>J_menuItem<?php } ?>" href="?m=order&f=order_goods&v=listing">我的订单</a></li>
             <li><a class="<?php if($is_iframe) { ?>J_menuItem<?php } ?>" href="?m=order&f=index&v=point_listing">积分兑换</a></li>
+
+            <li><a class="<?php if($is_iframe) { ?>J_menuItem<?php } ?>" href="?m=affiche&f=affiche&v=sys">系统公告</a></li>
+
             <li><a class="<?php if($is_iframe) { ?>J_menuItem<?php } ?>" href="?m=message&f=message&v=listing">私　信</a></li>
             <li><a class="<?php if($is_iframe) { ?>J_menuItem<?php } ?>" href="?f=postinfo&v=contribute_list">投稿</a></li>
             <li><a class="<?php if($is_iframe) { ?>J_menuItem<?php } ?>" href="?m=guestbook&f=myissue&v=listing">我的提问</a></li>

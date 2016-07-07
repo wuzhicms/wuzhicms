@@ -1,0 +1,2 @@
+ALTER TABLE `wz_copyfrom` ADD `remark` VARCHAR(255) NOT NULL ;
+ALTER TABLE `wz_content_relation` ADD `origin_id` INT(10) UNSIGNED NOT NULL DEFAULT '0' , ADD `origin_cid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0' ;

@@ -127,7 +127,7 @@
 <script type="text/javascript">
 	$(function(){
 		$(".form-horizontal").Validform({
-			tiptype:3,
+			tiptype:1,
 			callback:function(form){
 				$("#submit").click();
 			}

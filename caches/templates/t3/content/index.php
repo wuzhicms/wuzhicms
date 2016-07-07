@@ -1,4 +1,4 @@
-<!DOCTYPE html><div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">开始：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div><?php defined('IN_WZ') or exit('No direct script access allowed'); ?><!DOCTYPE html>
+<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -792,8 +792,11 @@ if (method_exists($content_template_parse, 'category')) {
                 <a href="<?php echo $r[url];?>"><?php echo $r['name'];?></a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
                 <?php $n++;}?>
                 <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
-                <a href="<?php echo WEBURL;?>index.php?m=link">友情链接</a> <br>
+                <a href="<?php echo WEBURL;?>index.php?m=link">友情链接</a>
+            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+            <a href="<?php echo WEBURL;?>index.php?m=affiche&f=index&v=listing">站点公告</a><br>
                 <?php echo $siteconfigs['copyright'];?><?php echo $siteconfigs['statcode'];?> <a href="http://www.wuzhicms.com" target="_blank">五指CMS提供技术支持</a> </div>
+
         </div>
     </div>
 
@@ -819,4 +822,3 @@ if (method_exists($content_template_parse, 'category')) {
 </script>
 </body>
 </html>
-<div class="remove_debug" style="position: relative;z-index: 99999;background-color: rgba(171, 166, 159, 0.66);color: #FFFDFD;">结束：<?php echo substr(str_replace(CACHE_ROOT,COREFRAME_ROOT,__FILE__),0,-4).".html";?><span style="float: right;padding: 0px 10px;cursor: pointer;" onclick="remove_debug_div()">关闭</span></div><script>setTimeout(function(){$(".remove_debug").remove();},20000);</script>

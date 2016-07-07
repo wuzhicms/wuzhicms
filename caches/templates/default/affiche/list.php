@@ -1,70 +1,77 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","head",TPLID); ?>
-<div class="headimg"><img src="<?php echo R;?><?php echo TPLID;?>/images/headimg.jpg" alt=""></div>
-<div class="white-section">
+<div style="background: #f3f3f3">
     <div class="container">
-        <div class="crumbs"><a href="<?php echo WEBURL;?>">首页</a><span> &gt; <a href="index.php?m=affiche&f=index&v=listing">网站公告</a></span></div>
-        <div class="row">
-            <div class="span12">
-                <div class="row">
-                    <div class="span256 custom-page-sidebar">
-                        <div class="widget widget_nav_menu">
-                            <div class="menu-services-container">
-                                <ul>
-              <?php if(defined('IN_ADMIN') && !defined('HTML')) {
-	echo "<div class=\"visual_div\" pc_action=\"content\" data=\"\"><a href=\"javascript:void(0)\" class=\"visual_edit\">修改</a>";
-}
-if(!class_exists('content_template_parse')) {
-	$content_template_parse = load_class("content_template_parse", "content");
-}
-if (method_exists($content_template_parse, 'category')) {
-	$rs = $content_template_parse->category(array('cid'=>'0','order'=>'sort ASC','start'=>'0','pagesize'=>'100','page'=>'0',));
-	$pages = $content_template_parse->pages;$number = $content_template_parse->number;}?>
-                    <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-                   <?php if($r['ismenu']) { ?><li><a href="<?php echo $r[url];?>"><?php echo $r['name'];?></a></li><?php } ?>
-                    <?php $n++;}?>
-              <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
-                                </ul>
-                            </div>
-                        </div>
-                    </div><!-- span4 end -->
-                    <div class="span704">
-                        <div id="content">
-                            <div id="contentmian">
-                                <div class="newslist">
-                                    <ul>
-                                        <?php if(defined('IN_ADMIN') && !defined('HTML')) {
+        <ol class="breadcrumb" style="margin-bottom: 0px; font-size: 12px;">
+            您现在的位置：
+            <li><a href="<?php echo WEBURL;?>">首页</a></li>
+            <li class="active"><a href="<?php echo WEBURL;?>index.php?m=affiche&f=index&v=listing">公告</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container">
+    <div class="col-xs-8">
+        <div class="notice-list margin_top30">
+            <h4>网站公告</h4>
+            <div class="list-group">
+                <!--status="status=2"-->
+                <?php if(defined('IN_ADMIN') && !defined('HTML')) {
 	echo "<div class=\"visual_div\" pc_action=\"affiche\" data=\"\"><a href=\"javascript:void(0)\" class=\"visual_edit\">修改</a>";
 }
 if(!class_exists('affiche_template_parse')) {
 	$affiche_template_parse = load_class("affiche_template_parse", "affiche");
 }
 if (method_exists($affiche_template_parse, 'listing')) {
-	$rs = $affiche_template_parse->listing(array('order'=>'id DESC','status'=>'status=2','start'=>'0','pagesize'=>'5','page'=>$page,));
+	$rs = $affiche_template_parse->listing(array('order'=>'addtime desc','start'=>'0','pagesize'=>'10','page'=>$page,));
 	$pages = $affiche_template_parse->pages;$number = $affiche_template_parse->number;}?>
-                                        <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
-                                        <li><a href="<?php echo $r[url];?>">
-                                            <div class="newstitle"><h3><?php echo safe_htm($r['title']);?></h3></div></a>
-                                            <p><?php echo safe_htm(strcut(strip_tags($r['content']),100));?>.</p>
-                                        </li>
-                                        <?php $n++;}?>
-                                        <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
-                                    </ul>
-                                </div>
-                                <div class="page-ination">
-                                    <div class="page-in">
-                                        <ul class="clearfix">
-                                            <?php echo $pages;?>
-                                        </ul>
-                                    </div>
-                                </div>
+                <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
 
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- span8 end -->
-            </div><!-- row end -->
-        </div><!-- span12 end -->
-    </div><!-- row end -->
-</div><!-- conteiner end -->
+                <a href="<?php echo $r[url];?>" class="list-group-item manhangyichu"><span class="badge"><?php echo date('Y-m-d',$r[addtime]);?></span> <?php echo safe_htm($r['title']);?></a>
+                <?php $n++;}?>
+                <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
+
+            </div>
+        </div>
+
+        <!-- start-五指分页-->
+
+        <div class="page-ination" style="text-align:center;">
+            <div class="page-in">
+                <ul class="pagination">
+                    <?php echo $pages;?>
+                </ul>
+            </div>
+        </div>
+        <!--end  五指分页 -->
+
+    </div>
+
+
+    <div class="col-xs-4">
+
+        <div class="right-bg-box xielinebg  notice-right-screen" >
+            <div class="lm-title margin_bottom10">
+                <h3 class="lm-title-left font_size16">最近公告 </h3>
+            </div>
+            <div class="list-group ">
+                <?php if(defined('IN_ADMIN') && !defined('HTML')) {
+	echo "<div class=\"visual_div\" pc_action=\"affiche\" data=\"\"><a href=\"javascript:void(0)\" class=\"visual_edit\">修改</a>";
+}
+if(!class_exists('affiche_template_parse')) {
+	$affiche_template_parse = load_class("affiche_template_parse", "affiche");
+}
+if (method_exists($affiche_template_parse, 'listing')) {
+	$rs = $affiche_template_parse->listing(array('order'=>'addtime desc ','start'=>'0','pagesize'=>'8','page'=>$page,));
+	$pages = $affiche_template_parse->pages;$number = $affiche_template_parse->number;}?>
+                <?php $n=1;if(is_array($rs)) foreach($rs AS $r) { ?>
+
+                <a href="<?php echo $r[url];?>" class="list-group-item manhangyichu"><?php echo safe_htm($r['title']);?></a>
+                <?php $n++;}?>
+                <?php if(defined('IN_ADMIN') && !defined('HTML')) {echo '</div>';}?>
+            </div>
+            <br>
+        </div>
+
+    </div>
+
 </div>
 <?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","foot",TPLID); ?>
