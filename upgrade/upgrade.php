@@ -20,7 +20,7 @@ class upgrade
     public function updateScheme()
     {
         $this->sql_execute();
-        $this->update_cache_menu();
+        $this->auto_execute();
         return true;
     }
 
@@ -68,8 +68,14 @@ class upgrade
         return true;
     }
 
-    protected function update_cache_menu()
+    /**
+     * 执行每次升级的外部php文件
+     */
+    protected function auto_execute()
     {
-       load_class('cache_menu');
+        $db = $this->db;
+        if(file_exists('./auto_execute.php')) {
+            include './auto_execute.php';
+        }
     }
 }
