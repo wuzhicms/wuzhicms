@@ -31,8 +31,8 @@ $uid = $db->insert('member', $formdata2);
 $formdata3 = array();
 $formdata3 = $formdata;
 $formdata3['uid'] = $uid;
-$formdata3['role'] = 1;
+$formdata3['role'] = ',1,';
 $db->insert('admin', $formdata3);
 
-MSG('管理员帐号添加成功');
+MSG('管理员帐号添加成功,密码请打开当前程序查看');
 ?>
