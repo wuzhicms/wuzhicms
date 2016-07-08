@@ -1634,10 +1634,10 @@
 }
 .liuyan-list .panel-default > .panel-heading {
     color: #337AB7;
-    background-color: #eee;
+    background-color: #fff;
     border-color: #eee;
-    font-size: 21px;
-    padding:15px 15px;
+    font-size: 16px;
+    padding:5px 15px;
 }
 .liuyan-list .panel-default {
     border-color: #ddd;
@@ -1657,7 +1657,7 @@
 .liuyan-list .nav-pills > li > a {
     border-radius: 0px;
 }
-.liuyan-hdsx{     border-bottom: 2px solid #3498db; margin-bottom: 10px; }
+.liuyan-hdsx{border-bottom: 1px solid #3498db; margin-bottom: 20px; }
 
 .liuyan-list .panel-body {
     color: #888;
@@ -1671,9 +1671,9 @@
     border-top: 1px dashed #efe5e5;
 }
 
-.huifu-hd{ margin-bottom: 10px;}
+.huifu-hd{  }
 .huifu-hd .hd-left{ display: inline-block;}
-.huifu-hd .hd-left h4{  line-height: 1; color: #d9534f; }
+.huifu-hd .hd-left h4{  line-height: 1; color: #d9534f;  font-size: 16px}
 .huifu-hd .hd-right{ float: right}
 
 
@@ -1727,7 +1727,7 @@
 .form-foot-left{ display: inline-block;}
 .form-foot-right{  float: right}
 
-.liuyan-form-title{ background: #999; padding: 5px 15px; margin-top: 30px; color: #fff; font-size: 21px;}
+.liuyan-form-title{ background: #999; padding: 5px 15px; margin-top: 30px; color: #fff; font-size: 18px; }
 .liuyan-form-title .lft-left{ display: inline-block;}
 .liuyan-form-title .lft-right{ float: right;}
 .liuyan-form-title .lft-left a{ }
@@ -1742,7 +1742,7 @@
 .coupon {
     margin-top: -8px;
     padding:8px 20px;
-    font-size: 21px;
+    font-size: 18px;
     text-align: center;
     background-color: #f0ad4e;
     border-bottom: dashed 2px #f3f3f3;
