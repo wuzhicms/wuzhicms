@@ -1,0 +1,15 @@
+TRUNCATE TABLE `wz_block_data`;
+TRUNCATE TABLE `wz_category`;
+TRUNCATE TABLE `wz_content_rank`;
+TRUNCATE TABLE `wz_content_share`;
+TRUNCATE TABLE `wz_copyfrom`;
+TRUNCATE TABLE `wz_credit`;
+TRUNCATE TABLE `wz_credit_data`;
+TRUNCATE TABLE `wz_news_data`;
+TRUNCATE TABLE `wz_download_data`;
+TRUNCATE TABLE `wz_picture_data`;
+TRUNCATE TABLE `wz_point2goods`;
+TRUNCATE TABLE `wz_tuangou`;
+TRUNCATE TABLE `wz_tuangou_data`;
+TRUNCATE TABLE `wz_video_data`;
+TRUNCATE TABLE `wz_weixin_auto_reply`;

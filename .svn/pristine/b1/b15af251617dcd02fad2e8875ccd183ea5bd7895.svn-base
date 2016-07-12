@@ -1,0 +1,137 @@
+<table border="0" cellspacing="0" cellpadding="1" style="width:600px;border:1px solid #ddd;font-family: &quot;Helvetica Neue&quot;, &quot;Luxi Sans&quot;, &quot;DejaVu Sans&quot;, Tahoma, &quot;Hiragino Sans GB&quot;, STHeiti, &quot;Microsoft YaHei&quot;, Arial, sans-serif;box-shadow:0 0 20px #777;">
+	<tbody><tr>
+		<td bgcolor="d4350e" style="padding-left:20px;color:#ffffff;font-weight:bold;font-size:40px;" height="60">
+			D监控
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="ffffff" style="padding:20px;">
+			<table border="0">
+				<tbody><tr>
+					<td>
+						<img src="http://stat.dnspod.cn/static/warning/down.png">
+
+					</td>
+					<td>
+						<p style="font-weight: bold;font-size:22px;margin:10px;padding:0;"> 您的网站<a href="http://www.wuzhicms.com(182.92.98.248)无法访问" target="_blank">www.wuzhicms<wbr>.com(182.92.<wbr>98.248)无法访问</a></p>
+					</td>
+				</tr>
+				</tbody></table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="padding:0;background-color:#fff;">
+			<table border="0" cellspacing="0" cellpadding="1">
+				<tbody><tr>
+					<td bgcolor="d4350e" width="15" style="padding:0;"></td>
+					<td style="color: #d4350e ;padding:10px; font-weight: bold;font-size:20px;">故障情况</td>
+				</tr>
+				</tbody></table>
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="ffffff" style="font-size:16px;padding-left:30px;padding-top:10px;padding-bottom:15px;">
+			<table width="90%" border="0" cellspacing="0" cellpadding="0">
+				<tbody><tr>
+					<td width="30" height="30" align="center" valign="top"><img src="http://stat.dnspod.cn/static/warning/icon_clock_red.png"></td>
+					<td width="100" height="30" align="center" valign="top">故障时间：</td>
+					<td height="30" align="left" valign="top"><span style="border-bottom:1px dashed #ccc;" t="5" times="">3月4日</span>11时57分</td>
+				</tr>
+				<tr>
+					<td width="30" height="30" align="center" valign="top"><img src="http://stat.dnspod.cn/static/warning/icon_reason.png"></td>
+					<td width="100" height="30" align="center" valign="top">故障原因：</td>
+					<td align="left" valign="top">无法连接服务器</td>
+				</tr>
+				<tr>
+					<td width="30" height="30" align="center" valign="top"><img src="http://stat.dnspod.cn/static/warning/icon_switch.png"></td>
+					<td width="100" height="30" align="center" valign="top">切换结果：</td>
+					<td align="left" valign="top">按设置不切换</td>
+				</tr>
+				<tr>
+					<td width="30" height="30" align="center" valign="top"><img src="http://stat.dnspod.cn/static/warning/icon_link.png"></td>
+					<td width="100" height="30" align="center" valign="top">查看详情：</td>
+					<td align="left" valign="top"><a href="https://stat.dnspod.cn/notify_detail/1181442/127201059/false" target="_blank">点击查看本次故障详情</a></td>
+				</tr>
+				</tbody></table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="padding:0;background-color:#fff;">
+			<table border="0" cellspacing="0" cellpadding="1">
+				<tbody><tr>
+					<td bgcolor="d4350e" width="15" style="padding:0;"></td>
+					<td style="color: #d4350e ;padding:10px; font-weight: bold;font-size:20px;">各线路快照</td>
+				</tr>
+				</tbody></table>
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="ffffff" style="padding-top:10px;padding-left:30px;padding-bottom:10px;font-size:16px;">
+
+			<div width="30%" style="width:30%;float:left;margin-right:10px;">
+                                <span style="vertical-align:bottom;margin-right:10px;">
+                                <img src="http://stat.dnspod.cn/static/warning/icon_error.png">
+
+                                </span>
+                                <span style="vertical-align:top">
+                                上海移动
+                                </span>
+			</div>
+			<div width="30%" style="width:30%;float:left;margin-right:10px;">
+                                <span style="vertical-align:bottom;margin-right:10px;">
+                                <img src="http://stat.dnspod.cn/static/warning/icon_error.png">
+
+                                </span>
+                                <span style="vertical-align:top">
+                                深圳联通
+                                </span>
+			</div>
+			<div width="30%" style="width:30%;float:left;margin-right:10px;">
+                                <span style="vertical-align:bottom;margin-right:10px;">
+                                <img src="http://stat.dnspod.cn/static/warning/icon_error.png">
+
+                                </span>
+                                <span style="vertical-align:top">
+                                上海电信
+                                </span>
+			</div>
+
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="padding:0;" bgcolor="ffffff">
+			<table border="0" cellspacing="0" cellpadding="1">
+				<tbody><tr>
+					<td bgcolor="d4350e" width="15" style="padding:0;"></td>
+					<td style="color: #d4350e ;padding:10px; font-weight: bold;font-size:20px;">友情提醒</td>
+				</tr>
+				</tbody></table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" bgcolor="ffffff" style="padding:10px;font-size:16px;">
+			<ul>
+
+				<li style="line-height:1.5">
+					<a target="_blank" style="text-decoration:none" href="http://blog.dnspod.cn/2013/12/shanghaidianxinfuwuqiipgenghuan/">[通知]上海电信节点服务器IP更换</a>
+				</li>
+				<li style="line-height:1.5">
+					<a target="_blank" style="text-decoration:none" href="http://monitor-feedback.dnspod.cn/feedback/notify_down/yes?u=www.wuzhicms.com%7C1181442%7C3%E6%9C%884%E6%97%A511%E6%97%B657%E5%88%86">我认为本次报警很准确</a> </li>
+				<li style="line-height:1.5">
+					<a target="_blank" style="text-decoration:none" href="http://monitor-feedback.dnspod.cn/feedback/notify_down/no?u=www.wuzhicms.com%7C1181442%7C3%E6%9C%884%E6%97%A511%E6%97%B657%E5%88%86">我认为本次报警是误报</a>
+				</li>
+
+				<li style="line-height:1.5">
+					<a target="_blank" style="text-decoration:none" href="https://monitor.dnspod.cn/?url=/settings/www.wuzhicms.com/notice">我要设置短时间内的宕机不报警</a>
+				</li>
+
+
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="padding:0;background-color:#fff;text-align:right;padding:20px;font-size:16px;">
+			© <span style="border-bottom:1px dashed #ccc;z-index:1" t="7" onclick="return false;" data="2006-2014">2006-2014</span> DNSPod, Inc.
+		</td>
+	</tr>
+	</tbody></table>

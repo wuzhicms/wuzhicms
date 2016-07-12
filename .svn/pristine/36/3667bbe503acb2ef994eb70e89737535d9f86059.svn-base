@@ -1,0 +1,61 @@
+/*---------------------------------------*/
+/* ---- search---- */
+/*---------------------------------------*/
+
+/*search-top-box*/
+
+.search-top-box{background: #f3f3f3; border-bottom: 3px solid #eeeeee; padding: 32px 0; }
+
+
+
+/* ---- search-content ---- */
+
+.wuzhi_search{  background: #ffffff;  padding: 16px 0px;}
+.wuzhi_search_list{background:#FFF; display:block;  margin-right: 16px}
+.wuzhi_search_bd{ min-height:600px; margin-left:16px;}
+.left-line{border-left:1px solid #ddd}
+
+@media (max-width: 767px) {
+    .wuzhi_search_list{ display: none}
+    .left-line{border-left:0px solid #ddd}
+    .wuzhi_search_bd{ min-height:600px; margin-left:auto}
+}
+.list-group-item_gr {
+    position: relative;
+    display: block;
+    padding: 2px 0px;
+}
+a.list-group-item_gr {
+    color:#61656c;
+}
+a.list-group-item_gr:hover,
+a.list-group-item_gr:focus {
+    color:#3498db;
+    text-decoration: none;
+}
+.list-group-item_gr.disabled,
+.list-group-item_gr.disabled:hover,
+.list-group-item_gr.disabled:focus {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #eee;
+}
+.list-group-item_gr.disabled .list-group-item_gr-heading,
+.list-group-item_gr.disabled:hover .list-group-item_gr-heading,
+.list-group-item_gr.disabled:focus .list-group-item_gr-heading {
+ color: inherit;
+}
+.list-group-item_gr.disabled .list-group-item_gr-text,
+.list-group-item_gr.disabled:hover .list-group-item_gr-text,
+.list-group-item_gr.disabled:focus .list-group-item_gr-text {
+    color: #777;
+}
+.list-group-item_gr.active,
+.list-group-item_gr.active:hover,
+.list-group-item_gr.active:focus {
+    z-index: 2;
+    color: #0bb8ee;
+    border-color: #428bca;
+    font-weight:600;
+}
+

@@ -1,0 +1,82 @@
+{T "content","head",TPLID}
+<div class="container Site_map"> 当前位置：<a href="{WEBURL}">首页</a><span> &gt; {catpos($cid)}</span></div>
+
+<div class="bankuai_1 pd30">
+    <div class="container">
+        <div class="subnav">
+            <div class="panel-body">
+                {loop $sub_categorys $cats}
+                <a href="{$cats['url']}">{$cats['name']}</a>
+                {/loop}
+            </div>
+        </div>
+
+    
+    <div class="row">
+            <div class="col-xs-8" style="border-right:1px solid #eee">
+
+             <h3>{$category['name']}</h3>
+                
+                   {wz:content action="listing" page="$page" pagesize="20" order="sort DESC,id DESC" cid="$cid" urlrule="$urlrule"}
+                {loop $rs $r}
+                <div class="media">
+                    <div class="media-left">
+                        <a href="{$r[url]}"><img src="{$r[thumb]}" width="120px;"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading manhangyichu" style="max-width:480px;"><strong><a href="{$r[url]}" target="_blank">{$r['title']}</a></strong></h4>
+                        <p style="width:490px;"><span class="down_wds"><a href="{$categorys[$r['cid']]['url']}">{$categorys[$r['cid']]['name']}</a> | {$r['soft_license']} | 大小:{$r['soft_size']} | 环境:{$r['soft_env']} | 人气:{$r['down_numbers']}</span><br>
+                            {strcut($r['remark'],180,'...')}<br>
+                            <small style="float:right"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> 更新日期：{date('Y.m.d',$r['addtime'])}</small></p>
+
+                    </div>
+                </div>
+                {/loop}
+                {/wz}
+               {if $this->db->number>20}
+                <nav style="text-align: center;">
+                    <ul class="pagination">
+                        {$pages}
+                    </ul>
+                </nav>
+                {/if}
+            </div>
+            <div class="col-xs-4">
+                <div class="rightad_boxg">{block=13}</div>
+                <div class="right_hot">
+                    <h4>常用下载</h4>
+                    <div class="list-group">
+                        {wz:content action="block" pagesize="10" type="1" blockid="14" cid="$cid"}
+                        {loop $rs $r}
+                        <a href="{$r['url']}" class="list-group-item_gr active"><span class="badge_top">{str_pad($n, 2, "0", STR_PAD_LEFT)} </span>&nbsp;{strcut($r['title'],36)}</a>
+                        {/loop}
+                        {/wz}
+                    </div>
+                </div>
+                <div class="right_hot">
+                    <h4>热门推荐</h4>
+                    <div class="list-group">
+                        {wz:content action="block" pagesize="10" type="1" blockid="15" cid="$cid"}
+                        {loop $rs $r}
+                        <a href="{$r['url']}" class="list-group-item_gr active"><span class="badge_top">{str_pad($n, 2, "0", STR_PAD_LEFT)} </span>&nbsp;{strcut($r['title'],36)}</a>
+                        {/loop}
+                        {/wz}
+                    </div>
+                </div>
+                <div class="right_hot">
+                    <h4>浏览排行</h4>
+                    <div class="list-group">
+                        {wz:content action="rank" pagesize="10" order="monthviews DESC" cid="$cid"}
+                        {loop $rs $r}
+                        <a href="{$r['url']}" class="list-group-item_gr active"><span class="badge_top">{str_pad($n, 2, "0", STR_PAD_LEFT)} </span>&nbsp;{strcut($r['title'],36)}</a>
+                        {/loop}
+                        {/wz}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    </div>
+</div>
+{T "content","foot",TPLID}

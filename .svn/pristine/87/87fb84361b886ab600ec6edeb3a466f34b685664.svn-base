@@ -1,0 +1,76 @@
+{T "member","head"}
+<body class="gray-bg">
+{if $set_iframe==0}
+    {T "member","iframetop"}
+{else}
+    <div style="padding-top: 15px;"></div>
+{/if}
+<div class="container-fluid  ie8-member">
+    <div class="row">
+        {if $set_iframe==0}
+        <div class="col-sm-3">
+            <!--左侧导航-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="nav-close"><i class="fa fa-times-circle"></i>
+                </div>
+                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+                    <div class="sidebar-collapse" style="width: auto; height: 100%;">
+                        {T "member","left"}
+                    </div>
+                </div>
+            </nav>
+            <!--end 左侧导航-->
+        </div><!--col-sm-3-->{/if}
+
+        <div class="{if $set_iframe==0}col-sm-9{else}col-sm-12{/if}">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <ul class="nav nav-tabs">
+                                <li ><a href="index.php?m=content&f=postinfo&v=newinfo&cid={$cid}&set_iframe={$set_iframe}">{$catname} - 信息发布</a></li>
+                                <li class="active"><a href="index.php?m=content&f=postinfo&v=listing&cid={$cid}&set_iframe={$set_iframe}">我发布的{$catname}</a>
+                                </li>
+                            </ul>
+
+                            <div class="project-list">
+
+                                <table class="table table-hover">
+                                    <tbody>
+                                    {loop $result $r}
+                                    <tr>
+
+                                        <td class="project-title">
+                                            {if $r['status']==9} <a href="{$r['url']}">{$r['title']}</a>{else}<strong>{$r['title']}</strong>{/if}
+                                            <br/>
+                                            <small>时间: {date('Y-m-d H:i:s',$r['addtime'])}</small>
+                                        </td>
+                                        <td class="project-status" width="100">
+                                            {if $r['status']==0}<span class="label label-default">已删除</span>{elseif $r['status']==9}<span class="label label-primary">审核通过</span>{else}<span class="label label-danger">待审核</span>{/if}
+                                        </td>
+                                        <td class="project-actions">
+                                            <a href="?m=content&f=postinfo&v=edit&cid={$r['cid']}&id={$r['id']}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 编辑 </a>
+                                            {if $r['status']!=0}
+                                            <a href="?m=content&f=postinfo&v=delinfo&cid={$r['cid']}&id={$r['id']}" class="btn btn-white btn-sm"><i class="fa fa-recycle"></i> 删除 </a>{/if}
+                                        </td>
+                                    </tr>
+                                    {/loop}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="paginationpage text-center">
+                                <nav>
+                                    <ul class="pagination">
+                                        {$pages}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{T "member","foot"}

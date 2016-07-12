@@ -1,0 +1,51 @@
+{T  'member','head'}
+<script type="text/javascript" src="{R}js/base.js"></script>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title" >
+                    <h5>系统消息</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <table class="table-dashed table-advance table-hover ">
+                            <tbody>
+                            {loop $result $r}
+                            <tr>
+                                <td class="messagelist">
+                                        <div class="userphoto"><i class="fa fa-volume-up" style="font-size: 16px;"></i></div>
+                                        <div class="username"><h4 style="{$r['css']}">{$r['title']}<span style="color: #999;">{time_format($r['addtime'])}</span></h4></div>
+                                        <div class="usermessage">{$r['content']}</div>
+                                </td>
+                            </tr>
+                            {/loop}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!--分页开始-->
+                    <div class="paginationpage text-center">
+                        <nav>
+                            <ul class="pagination">
+                                {$pages}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{T "member","foot"}
+<script>
+    $(document).ready(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+</script>
+</body>
+</html>

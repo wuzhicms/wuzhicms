@@ -1,0 +1,61 @@
+{T "content","head",TPLID}
+<div style="background: #f3f3f3">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px; font-size: 12px;">
+            您现在的位置：
+            <li><a href="{WEBURL}">首页</a></li>
+            <li class="active"><a href="{WEBURL}index.php?m=affiche&f=index&v=listing">公告</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container">
+    <div class="col-xs-8">
+        <div class="notice-list margin_top30">
+            <h4>网站公告</h4>
+            <div class="list-group">
+                <!--status="status=2"-->
+                {wz:affiche action="listing" page="$page" pagesize="10" order="addtime desc" }
+                {loop $rs $r}
+
+                <a href="{$r[url]}" class="list-group-item manhangyichu"><span class="badge">{date('Y-m-d',$r[addtime])}</span> {safe_htm($r['title'])}</a>
+                {/loop}
+                {/wz}
+
+            </div>
+        </div>
+
+        <!-- start-五指分页-->
+
+        <div class="page-ination" style="text-align:center;">
+            <div class="page-in">
+                <ul class="pagination">
+                    {$pages}
+                </ul>
+            </div>
+        </div>
+        <!--end  五指分页 -->
+
+    </div>
+
+
+    <div class="col-xs-4">
+
+        <div class="right-bg-box xielinebg  notice-right-screen" >
+            <div class="lm-title margin_bottom10">
+                <h3 class="lm-title-left font_size16">最近公告 </h3>
+            </div>
+            <div class="list-group ">
+                {wz:affiche action="listing" page="$page" pagesize="8" order="addtime desc " }
+                {loop $rs $r}
+
+                <a href="{$r[url]}" class="list-group-item manhangyichu">{safe_htm($r['title'])}</a>
+                {/loop}
+                {/wz}
+            </div>
+            <br>
+        </div>
+
+    </div>
+
+</div>
+{T "content","foot",TPLID}

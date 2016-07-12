@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Note there is no responsive meta tag here -->
+
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>视频</title>
+
+    <!-- CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/hover.css" rel="stylesheet">
+    <link href="css/pindao-style.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/non-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.wuzhicms.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse-primary">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar" class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">
+                <img alt="Brand" src="image/logo_ov.png">
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="news.html">新闻</a></li>
+            <li><a href="photo.html">图片</a></li>
+            <li><a href="video.html">视频</a></li>
+            <li><a href="down.html">下载</a></li>
+            <li><a href="tuangou.html">团购   </a></li>
+            <li><a href="jifenmall.html">积分商城</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown serch--dropdown-menu">
+                <a href="#"  title="搜索"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> </a>
+                <ul class="dropdown-menu ">
+                    <div class="input-group  select-search" style="margin-top: 6px">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;&nbsp;&nbsp;全站&nbsp;&nbsp;&nbsp;&nbsp; <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">新闻</a></li>
+                                <li><a href="#">图片</a></li>
+                                <li><a href="#">视频</a></li>
+                                <li><a href="#">团购</a></li>
+                                <li><a href="#">积分商城</a></li>
+                            </ul>
+                        </div><!-- / input-group-btn-->
+                        <input type="text" class="form-control" placeholder="请输入关键词">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button">&nbsp;&nbsp;&nbsp;&nbsp;搜索&nbsp;&nbsp;&nbsp;&nbsp; </button>
+                      </span>
+                    </div><!-- /input-group -->
+                </ul>
+            </li>
+            <li class="dropdown login--dropdown-menu">
+                <a href="#"  title="登录"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> </a>
+                <ul class="dropdown-menu">
+                    搜索
+                </ul>
+            </li>
+            <li class="dropdown mall--dropdown-menu">
+                <a href="#"  title="购物车"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> </a>
+                <ul class="dropdown-menu">
+                    您的购物车有 <strong class="color_qiyecheng">10</strong> 件商品
+                </ul>
+            </li>
+        </ul>
+
+
+    </div><!--/.nav-collapse -->
+
+</nav>
+
+
+
+<!--路径导航-->
+<div style="background: #f3f3f3">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="#">首页</a></li>
+            <li><a href="#">视频</a></li>
+            <li>综艺</li>
+            <li class="active">正文</li>
+        </ol>
+    </div>
+</div>
+
+<div class="video-content-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-9">
+                <h3 class="margin_bottom6  margin_top10">石齐平：中国正从“三条路线”重返世界</h3>
+                <p class="color_999">发布：2015.10.26 &nbsp;&nbsp;&nbsp;&nbsp; 播放：213次&nbsp;&nbsp;&nbsp;&nbsp; 时间：03:24</p>
+                <div>
+                    <img src="image/temp/temp2.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="ad-box" style="height: 59px; background: #ddd; margin-top: 0px">ad</div>
+                <div class="headline-news-list  video-right-list">
+                    <div class="media">
+                        <div class="media-left ">
+                            <a href="#">
+                                <img class="media-object" src="image/temp/temp5.jpg" alt="..." width="72px" >
+                            </a>
+                        </div>
+                        <div class="media-body lddq" style="max-width: 205px">
+                            <h5 class="media-heading"><a href="" class="active">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日</a></h5>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object" src="image/temp/temp4.jpg" alt="..." width="72px">
+                            </a>
+                        </div>
+                        <div class="media-body lddq" style="max-width: 205px">
+                            <h5 class="media-heading"><a href="">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日</a></h5>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object" src="image/temp/temp3.jpg" alt="..." width="72px">
+                            </a>
+                        </div>
+                        <div class="media-body lddq" style="max-width: 205px">
+                            <h5 class="media-heading"><a href="">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日</a></h5>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object" src="image/temp/temp4.jpg" alt="..." width="72px">
+                            </a>
+                        </div>
+                        <div class="media-body lddq" style="max-width: 205px">
+                            <h5 class="media-heading"><a href="">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日</a></h5>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object" src="image/temp/temp3.jpg" alt="..." width="72px">
+                            </a>
+                        </div>
+                        <div class="media-body lddq" style="max-width: 205px">
+                            <h5 class="media-heading"><a href="">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日</a></h5>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object" src="image/temp/temp4.jpg" alt="..." width="72px">
+                            </a>
+                        </div>
+                        <div class="media-body lddq" style="max-width: 205px">
+                            <h5 class="media-heading"><a href="">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日</a></h5>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object" src="image/temp/temp3.jpg" alt="..." width="72px">
+                            </a>
+                        </div>
+                        <div class="media-body lddq" style="max-width: 205px">
+                            <h5 class="media-heading"><a href="">党岭葫芦海-丹巴藏寨-新都桥深度赏秋7日</a></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ad-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="video-second-screen ">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lm-title margin_bottom15">
+                    <h3 class="lm-title-left">热播推荐 </h3>
+                </div>
+               <div class="row">
+                   <div class="col-xs-4">
+                       <div class="narrowArt">
+                           <a href="" title="222">
+                               <img  src=" image/temp/temp4.jpg" alt="" height="">
+                               <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                           </a>
+                       </div>
+                   </div>
+                   <div class="col-xs-4">
+                       <div class="narrowArt">
+                           <a href="" title="222">
+                               <img  src=" image/temp/temp2.jpg" alt="" height="">
+                               <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                           </a>
+                       </div>
+                   </div>
+                   <div class="col-xs-4">
+                       <div class="narrowArt">
+                           <a href="" title="222">
+                               <img  src=" image/temp/temp2.jpg" alt="" height="">
+                               <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                           </a>
+                       </div>
+                   </div>
+                   <div class="col-xs-4">
+                       <div class="narrowArt">
+                           <a href="" title="222">
+                               <img  src=" image/temp/temp2.jpg" alt="" height="">
+                               <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                           </a>
+                       </div>
+                   </div>
+                   <div class="col-xs-4">
+                       <div class="narrowArt">
+                           <a href="" title="222">
+                               <img  src=" image/temp/temp2.jpg" alt="" height="">
+                               <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                           </a>
+                       </div>
+                   </div>
+                   <div class="col-xs-4">
+                       <div class="narrowArt">
+                           <a href="" title="222">
+                               <img  src=" image/temp/temp2.jpg" alt="" height="">
+                               <h2>高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高云翔斑马造型优雅来袭高</h2>
+                           </a>
+                       </div>
+                   </div>
+               </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="lm-title margin_bottom15">
+                    <h3 class="lm-title-left">浏览排行 </h3>
+                </div>
+                <div class="list-ol-box">
+                    <ol class="rectangle-list">
+                        <li ><a href="">习近平向金正恩致贺电 刘云山会见金正恩(图)刘云山会见金正恩</a></li>
+                        <li><a href="">李克强送政策大红包</a> </li>
+                        <li><a href="">电动汽车行业获发展良机 </a></li>
+                        <li><a href="">南京大屠杀档案 “申遗”成功</a></li>
+                        <li><a href="">慰安妇档案落选朝鲜将举行建党70周年阅兵</a> </li>
+                        <li><a href="">全国多发1个月工资平壤生活的日与夜 </a></li>
+                        <li><a href="">电动汽车行业获发展良机 </a></li>
+                        <li><a href="">南京大屠杀档案 “申遗”成功</a></li>
+                        <li><a href="">慰安妇档案落选朝鲜将举行建党70周年阅兵</a> </li>
+                        <li><a href="">电动汽车行业获发展良机 </a></li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="video-second-screen margin_top20 ">
+        <div class="row">
+            <div class="col-xs-9">
+
+<!--评论头部-->
+                <div class="mod-commentTextareaTitle">
+                                <span class="w-rightBox">
+                                    <span class="w-com">
+                                        <span class="w-num">254</span>
+                                        <span class="w-txt">条评论</span>
+                                    </span>
+                                    <span class="w-line">/</span>
+                                    <span class="w-reply">
+                                        <span class="w-num">6985</span>
+                                        <span class="w-txt">人参与</span>
+                                    </span>
+                                </span>
+                    <span class="w-tips font_size18">网友评论</span>
+                    <span class="w-line">/</span>
+                    <a href="#" class="w-tips color_999" target="_blank">文明上网理性发言，请遵守新闻评论服务协议</a>
+                </div>
+
+             <!--评论表单-->
+                <div class="fabiaopinglun-textarea">
+                    <textarea class="form-control" rows="5" placeholder="文明上网，不传谣言，登录评论！"></textarea>
+                </div>
+                <div class="fabiaopinglun-fabiao">
+                    <div class="fabiao-left color_999" style="padding-top: 6px;">你还没有登录，请 <a href="" class="color_cheng">登录</a></div>
+                    <div class="fabiao-right"><a class="btn btn-primary" href="#" role="button">&nbsp;&nbsp;&nbsp;发表&nbsp;&nbsp;&nbsp;</a></div>
+                </div>
+
+                <!--content-->
+                <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+                    <div class="lm-title  margin_top20">
+                        <h3 class="lm-title-left">全部评论 </h3>
+                        <div style="float: right; padding-top: 30px;">
+                            <ul class="nav nav-pills">
+                                <li role="presentation" class="active"><a href="#times" aria-controls="times" role="tab" data-toggle="tab"> 时间 </a></li>
+                                <li role="presentation"><a href="#hot-d" aria-controls="hot-d" role="tab" data-toggle="tab"> 热度 </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+                    <div id="myTabContent" class="tab-content ">
+
+                        <div role="tabpanel" class="tab-pane fade active in" id="times" aria-labelledby="times-tab">
+                            <h4 class="color_danger">热门评论</h4>
+                            <div class=" headline-news-list">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time">
+                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class="font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                            <a class="font_size12" role="button"  data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a>
+                                        </span>
+                                        </div>
+
+                                        <!-- show and hide-->
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="well">
+                                                <div class="fabiaopinglun-textarea">
+                                                    <textarea class="form-control" rows="5" placeholder="文明上网，不传谣言，登录评论！"></textarea>
+                                                </div>
+                                                <div class="fabiaopinglun-fabiao">
+                                                    <div class="fabiao-left color_999" style="padding-top: 6px;">你还没有登录，请<a href="">登录</a></div>
+                                                    <div class="fabiao-right"><a class="btn btn-primary" href="#" role="button">&nbsp;&nbsp;&nbsp;回复&nbsp;&nbsp;&nbsp;</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body " style="padding-right: 40px">
+                                                        <div class="media" style="border-bottom: none">
+                                                            <div class="media-left">
+                                                                <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                            </div>
+                                                            <div class="media-body pinglun-and-huifu-box lddq">
+                                                                <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                <div  class="media-time">
+                                                                    <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复(5)</a>
+
+                                        </span></div>
+                                                                <hr>
+                                                                <!--回复-->
+                                                                <div class="media">
+                                                                    <div class="media-left">
+                                                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                                    </div>
+                                                                    <div class="media-body lddq">
+                                                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                        <div  class="media-time">
+                                                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                        </span></div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media">
+                                                                    <div class="media-left">
+                                                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                                    </div>
+                                                                    <div class="media-body lddq">
+                                                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                        <div  class="media-time">
+                                                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                        </span></div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media">
+                                                                    <div class="media-left">
+                                                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                                    </div>
+                                                                    <div class="media-body lddq">
+                                                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                        <div  class="media-time">
+                                                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                        </span></div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary">没有更多</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time"><span class="left font_size12">发布时间：2005-10-21</span><span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a></span></div>
+                                        <div class="shangchuangimg" >
+                                            <ul>
+                                                <li><a href=""><img class="thumbnail" src="image/temp/temp4.jpg" alt="..." width="80px;" ></a></li>
+                                                <li><img class="thumbnail" src="image/temp/temp1.jpg" alt="..." width="80px;"></li>
+                                                <li><img class="thumbnail" src="image/temp/temp2.jpg" alt="..." width="80px;" ></li>
+                                                <li><img class="thumbnail" src="image/temp/temp3.jpg" alt="..." width="80px;"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time"><span class="left font_size12">发布时间：2005-10-21</span><span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a></span></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time"><span class="left font_size12">发布时间：2005-10-21</span><span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a></span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br><h4 class="color_primary">最新评论</h4>
+                            <div class=" headline-news-list">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time">
+                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class="font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                            <a class="font_size12" role="button"  data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a>
+                                        </span>
+                                        </div>
+
+                                        <!-- show and hide-->
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="well">
+                                                <div class="fabiaopinglun-textarea">
+                                                    <textarea class="form-control" rows="5" placeholder="文明上网，不传谣言，登录评论！"></textarea>
+                                                </div>
+                                                <div class="fabiaopinglun-fabiao">
+                                                    <div class="fabiao-left color_999" style="padding-top: 6px;">你还没有登录，请<a href="">登录</a></div>
+                                                    <div class="fabiao-right"><a class="btn btn-primary" href="#" role="button">&nbsp;&nbsp;&nbsp;回复&nbsp;&nbsp;&nbsp;</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body " style="padding-right: 40px">
+                                                        <div class="media" style="border-bottom: none">
+                                                            <div class="media-left">
+                                                                <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                            </div>
+                                                            <div class="media-body pinglun-and-huifu-box lddq">
+                                                                <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                <div  class="media-time">
+                                                                    <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复(5)</a>
+
+                                        </span></div>
+                                                                <hr>
+                                                                <!--回复-->
+                                                                <div class="media">
+                                                                    <div class="media-left">
+                                                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                                    </div>
+                                                                    <div class="media-body lddq">
+                                                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                        <div  class="media-time">
+                                                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                        </span></div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media">
+                                                                    <div class="media-left">
+                                                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                                    </div>
+                                                                    <div class="media-body lddq">
+                                                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                        <div  class="media-time">
+                                                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                        </span></div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media">
+                                                                    <div class="media-left">
+                                                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                                    </div>
+                                                                    <div class="media-body lddq">
+                                                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                        <div  class="media-time">
+                                                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                        </span></div>
+
+                                                                    </div>
+                                                                </div>
+                                                                12
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary">没有更多</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time"><span class="left font_size12">发布时间：2005-10-21</span><span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a></span></div>
+                                        <div class="shangchuangimg" >
+                                            <ul>
+                                                <li><a href=""><img class="thumbnail" src="image/temp/temp4.jpg" alt="..." width="80px;" ></a></li>
+                                                <li><img class="thumbnail" src="image/temp/temp1.jpg" alt="..." width="80px;"></li>
+                                                <li><img class="thumbnail" src="image/temp/temp2.jpg" alt="..." width="80px;" ></li>
+                                                <li><img class="thumbnail" src="image/temp/temp3.jpg" alt="..." width="80px;"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time"><span class="left font_size12">发布时间：2005-10-21</span><span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a></span></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time"><span class="left font_size12">发布时间：2005-10-21</span><span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane fade" id="hot-d" aria-labelledby="hot-d-tab">
+                            <h4 class="color_danger">热门评论</h4>
+                            <div class=" headline-news-list">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time">
+                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class="font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                            <a class="font_size12" role="button"  data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a>
+                                        </span>
+                                        </div>
+
+                                        <!-- show and hide-->
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="well">
+                                                <div class="fabiaopinglun-textarea">
+                                                    <textarea class="form-control" rows="5" placeholder="文明上网，不传谣言，登录评论！"></textarea>
+                                                </div>
+                                                <div class="fabiaopinglun-fabiao">
+                                                    <div class="fabiao-left color_999" style="padding-top: 6px;">你还没有登录，请<a href="">登录</a></div>
+                                                    <div class="fabiao-right"><a class="btn btn-primary" href="#" role="button">&nbsp;&nbsp;&nbsp;回复&nbsp;&nbsp;&nbsp;</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body " style="padding-right: 40px">
+                                                        <div class="media" style="border-bottom: none">
+                                                            <div class="media-left">
+                                                                <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                            </div>
+                                                            <div class="media-body pinglun-and-huifu-box lddq">
+                                                                <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                <div  class="media-time">
+                                                                    <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复(5)</a>
+
+                                        </span></div>
+                                                                <hr>
+                                                                <!--回复-->
+                                                                <div class="media">
+                                                                    <div class="media-left">
+                                                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                                    </div>
+                                                                    <div class="media-body lddq">
+                                                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                        <div  class="media-time">
+                                                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                        </span></div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media">
+                                                                    <div class="media-left">
+                                                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                                    </div>
+                                                                    <div class="media-body lddq">
+                                                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                        <div  class="media-time">
+                                                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                        </span></div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media">
+                                                                    <div class="media-left">
+                                                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                                                    </div>
+                                                                    <div class="media-body lddq">
+                                                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                                                        <div  class="media-time">
+                                                                            <span class="left font_size12">发布时间：2005-10-21</span>
+                                        <span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a>
+                                            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                        <a class=" font_size12" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a>
+                                        </span></div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary">没有更多</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time"><span class="left font_size12">发布时间：2005-10-21</span><span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a></span></div>
+                                        <div class="shangchuangimg" >
+                                            <ul>
+                                                <li><a href=""><img class="thumbnail" src="image/temp/temp4.jpg" alt="..." width="80px;" ></a></li>
+                                                <li><img class="thumbnail" src="image/temp/temp1.jpg" alt="..." width="80px;"></li>
+                                                <li><img class="thumbnail" src="image/temp/temp2.jpg" alt="..." width="80px;" ></li>
+                                                <li><img class="thumbnail" src="image/temp/temp3.jpg" alt="..." width="80px;"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time"><span class="left font_size12">发布时间：2005-10-21</span><span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a></span></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="text-center"> <img class="img-circle" src="image/temp/tuxiang.png" width="50px" height="50px" alt="..." ></a>
+                                    </div>
+                                    <div class="media-body lddq">
+                                        <h5 class="color_primary"> 乔沃维奇 </h5>
+                                        <p class="margin_bottom0">应该可以说见证了这家店的成长 从开始没什么销量到现在搜索排名第一 每一期海报都重新换过 可以看出来老板的用心 但是奶粉还是很不放心 超市没上架你们就出货了 真的很想知道渠道 虽然价格便宜 但是没有安心啊 这次买了四罐对比澳洲带回来的包装不一样</p>
+                                        <div  class="media-time"><span class="left font_size12">发布时间：2005-10-21</span><span class="right font_size12"><a href=""><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 支持(1234)</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 回复</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href=""><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 查看回复(5)</a></span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="addmore ">
+                    <a href=""> +加载更多</a>
+                </div>
+
+
+
+
+            </div>
+
+            <div class="col-xs-3">
+                <div class="ad-box" style="height: 300px; background: #f4f4f4"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+    <div class="container">
+        <div class="friend-link">
+
+                <a href="http://www.52pk.com/" target="_blank">52PK游戏网 </a><a href="http://www.chinaz.com" target="_blank">站长之家</a><a href="http://www.admin5.com/" target="_blank">站长网</a><a href="http://www.leiphone.com/" target="_blank">雷锋网</a><a href="http://www.ctocio.com.cn/" target="_blank">IT专家网 </a><a href="http://www.ithome.com/" target="_blank">IT之家</a><a href="http://www.ebrun.com/" target="_blank">亿邦动力网</a><a href="http://www.weiphone.com/" target="_blank">iPhone威锋网</a><a href="http://www.yzmg.com" target="_blank">亿智蘑菇</a><a href="http://www.tompda.com/" target="_blank">智能手机</a><a href="http://www.ikanchai.com" target="_blank">砍柴网</a><a href="http://www.fengniao.com/" target="_blank">蜂鸟网</a><a href="http://www.weiot.net " target="_blank">威腾网</a><a href="http://www.dop2p.com/" target="_blank">互联网金融门户</a><a href="http://www.3533.com/" target="_blank">手机世界</a><a href="http://www.uc.cn/" target="_blank">手机浏览器</a><a href="http://www.9466.com/" target="_blank">9466网页助手</a><a href="http://www.hqbpc.com" target="_blank">华强北电脑网</a><a href="http://www.uisdc.com/" target="_blank">优秀网页设计</a><a href="http://hao.360.cn/" target="_blank">360安全网址导航</a><a href="http://www.1616.net/" target="_blank">1616个人门户</a><a href="http://www.sudu.cn/" target="_blank">华夏名网</a><a href="http://www.szsmw.com/Default.shtml" target="_blank">神州商贸网</a><a href="http://www.ciotimes.com/" target="_blank">CIO时代网</a><a href="http://www.nmglabs.com/" target="_blank">内蒙古IT实验室</a><a href="http://www.cnzz.cn/" target="_blank">中国站长</a><a href="http://www.xmtnews.com/" target="_blank">新媒体观察</a><a href="http://www.oneplusbbs.com" target="_blank">一加手机</a>
+
+        </div>
+    </div>
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center  line_height2d0">
+                联系电话：010-82463345    QQ:282198327  Email:zhw@wuzhicms.com <br>
+                五指简介  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> <a href="">联系我们</a> <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>  用户协议 <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>  法律声明<small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small> 付款方式<br>
+                Copyright © 2015 北京五指互联科技有限公司 All Rights Reserved<br>
+                京ICP备14036160号-1</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+
+<script src="js/my.js"></script>
+
+
+</body>
+</html>

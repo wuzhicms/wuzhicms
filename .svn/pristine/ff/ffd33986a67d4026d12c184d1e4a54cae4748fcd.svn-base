@@ -1,0 +1,1 @@
+document.writeln("<a href='{stat_url($rand_result[pid],$rand_result[id])}' target='_blank'><img src='{$rand_result[file]}' style='max-width: 100%;height: auto;'></a>");

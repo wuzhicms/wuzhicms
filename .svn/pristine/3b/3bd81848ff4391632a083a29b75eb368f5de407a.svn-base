@@ -1,0 +1,11 @@
+﻿body {
+  min-width: 960px;
+  padding-top: 52px;
+  padding-bottom: 30px;
+}
+.container {
+  width: 960px;
+  max-width: 960px !important;
+}
+
+

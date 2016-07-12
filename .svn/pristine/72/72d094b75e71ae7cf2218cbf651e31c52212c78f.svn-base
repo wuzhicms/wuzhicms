@@ -1,0 +1,18 @@
+{T 'tags','header'}
+
+
+<ul>
+{wz:tags action="listing" page="$page" letter="" linkage="" pagesize="10" order="number DESC"}
+{loop $rs $r}
+<li>{$r[tid]} <a href="{$r[url]}">{safe_htm($r['tag'])}</a>({$r['number']})</li>
+{/loop}
+{/wz}
+</ul>
+分页：{$pages}
+<hr>
+
+区块展示：
+
+
+</body>
+</html>

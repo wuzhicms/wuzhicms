@@ -1,0 +1,28 @@
+{T "content","head",TPLID}
+
+<div class="bankuai_1 pd30">
+    <div class="container"> 
+        <div class="row">
+            <div  style="text-align: center; padding: 30px 0px;" >
+                <a class="btn btn-danger"  style="color: white" href="{$downfile}" target="_blank"  role="button"> 点击下载</a>
+            </div>
+            <div  style="padding: 16px;">
+                <div class="right_hot" id="righthot">
+                    <h4>浏览排行</h4>
+                    <div class="list-group">
+                        {wz:content action="rank" pagesize="10" order="monthviews DESC" cid="$cid"}
+                        {loop $rs $r}
+                        <a href="{$r['url']}" class="list-group-item_gr"><span class="badge_top">{str_pad($n, 2, "0", STR_PAD_LEFT)} </span>&nbsp;{strcut($r['title'],36)}</a>
+                        {/loop}
+                        {/wz}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="ft">
+    Copyright 2005 - 2015 WuzhiCMS. All Rights Reserved
+</footer>
+</body>
+</html>

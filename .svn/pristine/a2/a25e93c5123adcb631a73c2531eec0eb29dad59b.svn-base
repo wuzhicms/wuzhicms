@@ -1,0 +1,21 @@
+{T  'member','head'}
+<div class="container membercenter">
+    <div class="row">
+        <div class="span3 memberleft">
+{T 'member','left'}
+        </div>
+        <div class="memberright">
+            <div class="memberframe order">
+                <div class="memberinfotitle"><h4>预约体检</h4></div>
+                <div class="orderstate"><strong>订单信息：</strong></div>
+                您的预约信息已经提交！预约单号：{$card_no} <br>
+                重要提示：<a href="index.php?m=order&order_form&v=subscribe&acbar=3">查看我的预约单</a> <br>
+                您的预约体检地点：{$r['title']} ，您预约的体检时间：{$tjtime}
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+{T  'member','foot'}

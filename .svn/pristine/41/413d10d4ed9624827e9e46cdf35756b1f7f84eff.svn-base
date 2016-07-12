@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+<meta charset=utf-8"{CHARSET}">
+<title>WZCMS后台管理系统</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="" />
+<meta name="author" content="Pixel grid studio"  />
+<link href="{R}css/bootstrap.min.css" rel="stylesheet">
+<link href="{R}css/bootstrapreset.css" rel="stylesheet">
+<link href="{R}css/pxgridsicons.min.css" rel="stylesheet" />
+<link href="{R}css/style.css" rel="stylesheet">
+<link href="{R}css/responsive.css" rel="stylesheet" media="screen"/>
+<link href="{R}css/animation.css" rel="stylesheet">
+<script src="{R}js/jquery.min.js"></script>
+<link href="{R}css/validform.css" rel="stylesheet">
+<script src="{R}js/validform.min.js"></script>
+</head>
+<body>
+<section class="wrapper">
+<div class="col-lg-6">
+  <section class="panel">
+    <header class="panel-heading">
+    	<span>邀请码</span>
+        {if $setting['invite']}
+        	<button type="button" class="btn btn-info btn-sm" onclick="create()">获取邀请码</button>
+        {else}
+        	系统未开启邀请注册
+        {/if}
+    </header>
+    <div class="panel-body" id="panel-bodys">
+    <table class="table table-striped table-advance table-hover">
+      <thead>
+        <tr>
+          <td>邀请码</td>
+          <td>来源</td>
+          <td>生成时间</td>
+          <td>使用者</td>
+          <td>使用时间</td>
+        </tr>
+      </thead>
+      {loop $infos $v}
+      <tr>
+        <td>{$v['invite']}</td>
+        <td>{if $v['isbuy']}购买{else}免费获取{/if}</td>
+        <td>{date('Y-m-d', $v['createtime'])}</td>
+        <td>{$v['usinguser']}</td>
+        <td>{if $v['usingtime']}{date('Y-m-d', 	$v['usingtime'])}{/if}</td>
+      </tr>
+      {/loop}
+    </table>
+  </section>
+</div>
+<script type="text/javascript">
+{if $setting['invite']}
+function create(){
+	{if $freenum < 1}
+		{if $buynum < 1}
+		alert('您今日的邀请名额已经用完');
+		return false;
+		{else}
+		if(!confirm('您确认花费{$setting['inviteprice']}点购买邀请码吗'))return false;
+		{/if}
+	{/if}
+	$.getJSON('index.php?m=member&f=invite&v=create&rand='+Math.random()+'&callback=?', function(data){
+		if(data.error){
+			alert(data.msg);
+		}else{
+			alert('获取成功');	
+		}
+	});
+}
+{/if}
+</script>
+</body>
+</html>

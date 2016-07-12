@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>{if isset($seo_title)}{$seo_title}{else}{$siteconfigs['sitename']}{/if} -  Powered by wuzhicms</title>
+    <meta name="keywords" content="{if isset($seo_keywords)}{$seo_keywords}{/if}">
+    <meta name="description" content="{if isset($seo_description)}{$seo_description}{/if}">
+    <meta name="generator" content="wuzhicms 3.x" />
+    <!-- CSS -->
+    <link href="{R}t3/css/bootstrap.css" rel="stylesheet">
+    <link href="{R}t3/css/style.css" rel="stylesheet">
+    <link href="{R}t3/css/hover.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{R}t3/css/non-responsive.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.wuzhicms.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        var cookie_pre = "{COOKIE_PRE}";var cookie_domain = '{COOKIE_DOMAIN}';var cookie_path = '{COOKIE_PATH}';var web_url = '{WEBURL}';
+    </script>
+    <script src="{R}t3/js/jquery.min.js"></script>
+    <script type="text/javascript" src="{R}js/base.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default-index">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar" class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{WEBURL}">
+                <img alt="Brand" src="{R}t3/image/logo.png">
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+            {wz:content action="category" pagesize="100" order="sort ASC"}
+            {loop $rs $r}
+            {if $r['pid']==0 && $r['ismenu']}
+            <li><a href="{$r['url']}">{$r['name']}</a></li>
+            {/if}
+            {/loop}
+            {/wz}
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right hide" id="mylogined">
+            {if !isset($hide_search_icon)}
+            <li>
+                <a href="{WEBURL}index.php?f=search"  style="padding-top: 18px; padding-bottom: 15px;"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 7px;"></span> </a>
+            </li>
+            {/if}
+            <!--
+            <li class="dropdown  mall--dropdown-menu">
+                <a href="#"   class="dropdown-toggle " data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true" style="padding-top: 5px;"></span> <span class="font-Arial font_size14">3</span></a>
+                <ul class="dropdown-menu">
+                    <p class="font_size12">最近加入的宝贝：</p>
+
+
+                    <ul class="cart-list">
+                        <li>
+                            <div class="cart-item clearfix"><a class="thumb" href=""><img alt="" src="image/temp/temp8.jpg " width="60px"></a>
+                                <a class="name" href="">小蚁蓝牙遥控器胡歌来测试  黑色</a><span class="price">39元 × 1</span>
+                                <a class="btn-del" href="javascript: void(0);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cart-item clearfix "><a class="thumb" href=""><img alt="" src=""></a>
+                                <a class="name" href="">智能唤醒翻盖保护套 黑色</a> <span class="price">39元 × 1</span>
+                                <a class="btn-del" href="javascript: void(0);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+
+                    <li role="separator" class="divider" style="margin-top: 0"></li>
+                    <p class="font_size12 text-right">购物车里还有1件宝贝</p>
+                    <a href="#" class=" btn btn-warning btn-sm  float_right">查看我的购物车</a>
+                </ul>
+            </li>
+            -->
+            <li class="dropdown login--dropdown-menu">
+                <a href="{WEBURL}index.php?m=member"  title="进入会员中心"  class="dropdown-toggle" ><img src="{WEBURL}api/myface.php" class="img-circle" height="24px;" style="border: 2px solid #fff"> wuzhicms</a>
+            </li>
+            <li>
+                <a href="{WEBURL}index.php?m=member&v=logout"  class="dropdown-toggle" >退出</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" id="mylogin">
+            {if !isset($hide_search_icon)}
+            <li>
+                <a href="{WEBURL}index.php?f=search"  style="padding-top: 18px; padding-bottom: 15px;"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 7px;"></span> </a>
+            </li>
+            {/if}
+            <li class="dropdown login--dropdown-menu">
+                <a href="#"  title="登录"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> </a>
+                <ul class="dropdown-menu">
+                    <form name="toplogin" action="{WEBURL}index.php?m=member&v=login" method="post" onsubmit="return formcheck_toplogin();">
+                        <p class="help-block text-right color_999">还不是会员? <a href="{WEBURL}index.php?m=member&v=register">立即注册</a></p>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="toplogin_username" name="username" placeholder="用户名" >
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="toplogin_password" name="password" placeholder="密码">
+                        </div>
+                        <div class="form-group " style="position: relative;">
+                            <input type="text" name="checkcode" class="form-control" id="toplogin_checkcode" placeholder="请输入验证码" onfocus="if($('#code_img').attr('src') == '{R}images/logincode.gif') $('#code_img').attr('src', '{WEBURL}api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" onkeyup="toplogin_keyup(this.value)" >
+                            <img src="{R}images/logincode.gif" id="code_img" alt="点击刷新" onclick="$(this).attr('src', '{WEBURL}api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" style="margin-top:2px; position: absolute; top: 0;right: 2px; max-height: 35px;" title="点击更换验证码">
+                        </div>
+                        <div class="checkbox font_size12">
+                            <label>
+                                <input type="checkbox" name="savecookie" value="1" checked> 下次自动登录
+                            </label>
+                            <a  href="{WEBURL}index.php?m=member&v=public_find_password_email" class="color_warning pading_left_10px" style=" float: right">忘记密码？</a>
+                        </div>
+                        <div id="toplogin_msg" class="help-block-g  color_danger hide"></div>
+                        <button type="submit" name="submit" class="btn btn-primary btn-block"><span class="font_size16">登录</span></button>
+                    </form>
+                    <div class=" disanfang_ico">
+                        <div  style=" color: #999999; padding-bottom: 8px;">使用第三方账号登录</div>
+                        <li><a href="{WEBURL}index.php?m=member&amp;f=index&amp;v=auth&amp;type=qq"><img src="{R}images/qqlogin.png" alt="使用QQ帐号登录" title="使用QQ帐号登录" width="30px"></a></li>                    <li><a href="{WEBURL}index.php?m=member&amp;f=index&amp;v=auth&amp;type=sina"><img src="{R}images/weibologin.png" alt="使用微博帐号登录" title="使用微博帐号登录" width="30px"></a></li>                    <li><a href="{WEBURL}index.php?m=member&amp;f=index&amp;v=auth&amp;type=weixin"><img src="{R}images/weichatlogin.png" alt="使用微信帐号登录" title="使用微信帐号登录" width="30px"></a></li>
+                    </div>
+
+                </ul>
+            </li>
+
+        </ul>
+    </div><!--/.nav-collapse -->
+</nav>
+
+<!--ad-->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ad-box" style="height: 90px; width: 100%; background: #dddddd; text-align: center; "><script  src="{WEBURL}promote/1.js"></script></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--index-one-screen-->
+<div class="index-one-screen">
+    <!--big-headline-news-->
+    <div class="container">
+
+        <div class="big-headline-news ">
+            <div class="row">
+                <!--头条-->
+                {block=16}
+            </div>
+
+        </div>
+
+
+        <div class="index-last-new-box">
+            <div class="row">
+                <!--图片区-->
+                {block=18}
+
+                </div>
+                <div class="col-xs-3">
+
+                    <div class="headline-news-list">
+                        <!--列表区-->
+                        {block=19}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <!--专题区-->
+                {block=20}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="{WEBURL}promote/2.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 图片 -->
+<div class="container">
+    <div class="index-pic-box">
+        <div class="lanmu-content lanmu-content-bg">
+            <h2 class="lanmu-title">
+                <a href="/index.php?v=listing&cid=3&page=1" >图片</a>
+            </h2>
+            <nav>
+                {wz:content action="category" cid="3" pagesize="100" order="sort ASC"}
+                {loop $rs $r}
+                {if $r['ismenu']}<a href="{$r['url']}">{$r['name']}</a>{/if}
+                {/loop}
+                {/wz}
+            </nav>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <!--图片区一-->
+                {block=21}
+            </div>
+            <div class="col-xs-4">
+                <!--图片区二-->
+                {block=22}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="{WEBURL}promote/3.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- 视频 -->
+<div class="container">
+    <div class="index-video-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=38&page=1" >视频</a>
+                    </h2>
+                    <nav>
+                        {wz:content action="category" cid="38" pagesize="100" order="sort ASC"}
+                        {loop $rs $r}
+                        {if $r['ismenu']}<a href="{$r['url']}">{$r['name']}</a>{/if}
+                        {/loop}
+                        {/wz}
+                    </nav>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="#" >浏览排行</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <!--图片区一-->
+                {block=24}
+            </div>
+            <div class="col-xs-4">
+                {wz:content action="block" pagesize="5" type="1" blockid="25"}
+                {loop $rs $r}
+                {if $n==1}
+                <div class="narrowArt jia-biaoqian video">
+                    <a href="{$r['url']}" title="222" target="_blank">
+                        <img  src=" {imagecut($r['thumb'],369,380,4)}" alt="{$r['title']}" height="380">
+                        <h1 data-autor="原创">{$r['title']}</h1>
+                    </a>
+                </div>
+                {elseif $n==2}
+                <div class="narrowArt video jia-biaoqian">
+                    <a href="{$r['url']}" title="222" target="_blank">
+                        <img  src=" {imagecut($r['thumb'],369,181,4)}" alt="{$r['title']}" height="182">
+                        <h2 data-autor="原创">{$r['title']}</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                {else}
+                <div class="narrowArt video">
+                    <a href="{$r['url']}" title="222">
+                        <img  src=" {imagecut($r['thumb'],273,182,4)}" alt="{$r['title']}" height="182">
+                        <h2>{$r['title']}</h2>
+                    </a>
+                </div>
+               {/if}
+                {/loop}
+                {/wz}
+            </div>
+            <div class="col-xs-3">
+                <div class="list-ol-box">
+                    <ol class="rectangle-list">
+                        {wz:content action="rank" pagesize="16" order="weekviews DESC" cid="38"}
+                        {loop $rs $r}
+                        <li ><a href="{$r['url']}" target="_blank">{safe_htm($r['title'])}</a></li>
+                        {/loop}
+                        {/wz}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="{WEBURL}promote/4.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 团购 -->
+<div class="container">
+    <div class="index-tuangou-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=27&page=1" >团购</a>
+                    </h2>
+                    <nav>
+                        {wz:content action="category" cid="27" pagesize="100" order="sort ASC"}
+                        {loop $rs $r}
+                        {if $r['ismenu']}<a href="{$r['url']}">{$r['name']}</a>{/if}
+                        {/loop}
+                        {/wz}
+                    </nav>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="#" >特惠推荐</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <!--团购专场-->
+                {block=27}
+
+            </div>
+            <!--团购推荐-->
+            {block=28}
+
+            <div class="col-xs-3 right-thumbnail">
+                <div class="row">
+                    <!--特惠推荐-->
+                    {block=29}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="{WEBURL}promote/5.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 积分商城 -->
+<div class="container">
+    <div class="index-jifenmall-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=26&page=1" >积分商城</a>
+                    </h2>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=39&page=1" >热门兑换</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            {block=30}
+
+            <!--hot-duihuan-->
+            {block=31}
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="friend-link">
+        {wz:link action="listing" kid="0" pagesize="20" order="sort ASC"}
+        {loop $rs $r}
+        <a href="{$r['url']}" target="_blank">{$r['sitename']} </a>
+        {/loop}
+        {/wz}
+    </div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center  line_height2d0">
+                {block=44} <br>
+                {wz:content action="category" cid="51" pagesize="10" order="sort ASC"}
+                {loop $rs $r}
+                <a href="{$r[url]}">{$r['name']}</a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                {/loop}
+                {/wz}
+                <a href="{WEBURL}index.php?m=link">友情链接</a>
+            <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+            <a href="{WEBURL}index.php?m=affiche&f=index&v=listing">站点公告</a><br>
+                {$siteconfigs['copyright']}{$siteconfigs['statcode']} <a href="http://www.wuzhicms.com" target="_blank">五指CMS提供技术支持</a> </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{R}t3/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="{R}t3/js/ie10-viewport-bug-workaround.js"></script>
+
+<script src="{R}t3/js/my.js"></script>
+<script src="{R}t3/js/bootstrap-hover-dropdown.min.js"></script>
+<script type="text/javascript">
+    var _uid=getcookie('_uid');
+    if(_uid!=null) {
+        $("#mylogined").removeClass('hide');
+        $("#mylogin").addClass('hide');
+        var _username=decodeURI(getcookie('truename'));
+        $("#myname").html(_username);
+    }
+</script>
+</body>
+</html>

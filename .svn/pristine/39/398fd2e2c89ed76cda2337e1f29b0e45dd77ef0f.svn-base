@@ -1,0 +1,66 @@
+<?php
+//筛选配置
+defined('IN_WZ') or exit('No direct script access allowed');
+
+return array(
+	'tuan'=>array(
+		'field'=>array('cid','order','price'),
+		'urlrule'=>'/tuan/{$cid}-{$price}-{$order}-{$page}.html',
+		'price' =>
+			array(
+				1=>array(
+					'name'=>'100元以下',
+					'min'=>'0',
+					'max'=>'100',
+				),
+				2=>array(
+					'name'=>'100-200元',
+					'min'=>'100',
+					'max'=>'200',
+				),
+				3=>array(
+					'name'=>'200-500元',
+					'min'=>'200',
+					'max'=>'500',
+				),
+				4=>array(
+					'name'=>'500-1000元',
+					'min'=>'500',
+					'max'=>'1000',
+				),
+				5=>array(
+					'name'=>'1000-2000元',
+					'min'=>'1000',
+					'max'=>'2000',
+				),
+				6=>array(
+					'name'=>'2000-5000元',
+					'min'=>'2000',
+					'max'=>'5000',
+				),
+				7=>array(
+					'name'=>'5000-1万元',
+					'min'=>'5000',
+					'max'=>'10000',
+				),
+				8=>array(
+					'name'=>'1万元以上',
+					'min'=>'10000',
+					'max'=>'0',
+				)
+			),
+		'order' =>
+			array(
+				0=>array(
+					'name'=>'智能推荐',
+				),
+				1=>array(
+					'name'=>'时间排序',
+				),
+				2=>array(
+					'name'=>'价格排序',
+				),
+			),
+	),
+	);
+?>

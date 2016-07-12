@@ -1,0 +1,40 @@
+<div class="panel-heading">
+    <h3 class="panel-title">
+        <span class="glyphicon glyphicon-list-alt"></span> 全部评论
+    </h3>
+</div>
+
+<div class="panel-body">
+    {wz:dianping action="listing" keyid="$keyid" pagesize="10" page="$page"}
+    {loop $rs $r}
+    <div class="media" style="border-bottom:1px solid #ddd; padding-bottom:16px;"> <div class="media-left"> <img class="img-circle" src="{avatar($r['uid'], 180)}" width="60px" alt="...">
+        <div style="width:100px; line-height:1.6; padding-top:4px;" class="manhangyichu" > {$r['username']}<br>
+            <span class=" color_777 font_size12">{$r['groupname']}</span> </div>
+    </div>
+        <div class="media-body">
+            {if $r['field4']}{$r['field4']}{/if}
+            {if $r['field5']}{$r['field5']}{/if}
+            <br>
+            <span class="font_size12 color_777">{time_format($r['addtime'])}</span>
+            {if $r['data']}
+{php $imgrs = explode("\r\n",$r['data']);}
+            <div class="shangchuangimg" >
+                <ul>
+                    {loop $imgrs $img}
+                    <li><img class="thumbnail" src="{$img}" width="80px;" ></li>
+                    {/loop}
+                </ul>
+            </div>
+            {/if}
+        </div>
+    </div>
+    {/loop}
+    {/wz}
+</div>
+{if $number>10}
+<div style="text-align:center">
+    <ul class="pagination">
+        {$pages}
+    </ul>
+</div>
+{/if}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="{CHARSET}">
+    <title>{if isset($seo_title)}{$seo_title}{else}{$siteconfigs['sitename']}{/if}</title>
+    <meta name="keywords" content="{if isset($seo_keywords)}{$seo_keywords}{/if}">
+    <meta name="description" content="{if isset($seo_description)}{$seo_description}{/if}">
+    <script type="text/javascript" src="{R}t2/js/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="{R}t2/css/bootstrap.css">
+	<link type="text/css" rel="stylesheet" href="{R}t2/css/style.css">
+    <script type="text/javascript" src="{R}t2/js/bootstrap.js"></script>
+    <script type="text/javascript" src="{R}t2/js/my.js"></script>
+    <script type="text/javascript">
+        var cookie_pre="{COOKIE_PRE}";var cookie_domain = '{COOKIE_DOMAIN}';var cookie_path = '{COOKIE_PATH}';
+    </script>
+    <script type="text/javascript" src="{R}js/base.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.wuzhicms.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.wuzhicms.com/respond.js/1.4.2/respond.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{R}t2/css/style_ie.css" />
+    <![endif]-->
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+            <ul class="nav navbar-nav">
+                <li class="dropdown {if !isset($cid)}active{/if}" id="c0">
+                    <a href="{WEBURL}" class="dropdown-toggle">首页</a>
+                </li>
+                {wz:content action="category" pagesize="100" order="sort ASC"}
+                {loop $rs $r}
+                {if $r['pid']==0 && $r['ismenu']}
+                <li class="dropdown {if $elasticid==$r['cid']}active{/if}" id="c{$r['cid']}">
+                    {if $r['child']}<a href="{$r[url]}" class="dropdown-toggle" data-toggle="dropdown">{$r['name']}<span class="caret"></span></a>{else}<a href="{$r[url]}" >{$r['name']}</a>{/if}
+                    <ul class="dropdown-menu" role="menu">
+                        {loop $rs $rn}
+                        {if $rn['pid']==$r['cid']}<li><a href="{$rn[url]}">{$rn['name']}</a></li>{/if}
+                        {/loop}
+                    </ul>
+                </li>
+                {/if}
+                {/loop}
+                {/wz}
+            </ul>
+            <ul id="mylogin" class="nav navbar-nav navbar-right">
+                <li><a href="{WEBURL}index.php?m=member&v=register">注册</a></li>
+                <li><a href="{WEBURL}index.php?m=member&v=login">登录</a></li>
+            </ul>
+            <ul id="mylogined" class="nav navbar-nav navbar-right hide">
+                <li><a href="{WEBURL}index.php?m=member"><span id="myname"></span> [会员中心]</a></li>
+                <li><a href="{WEBURL}index.php?m=member&v=logout">退出</a></li>
+            </ul>
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<div class="top_box">
+    <div class="container">
+        <div class="top_logo"><a href="{WEBURL}" title="返回首页"><img src="{R}t2/image/logo.png"></a></div>
+        <div class="top_ad">{block=12}</div>
+        <div class="top_search">
+            {block=11}
+            <form class="navbar-form navbar-right" role="search" method="get" action="{WEBURL}index.php?f=search">
+                <input name="f" value="search" type="hidden">
+                <div class="form-group">
+                    <input type="text" name="keywords" class="form-control" size="25" placeholder="输入您要搜索的内容">
+                </div>
+                <button type="submit" class="btn btn-primary_g">搜索</button>
+            </form>
+        </div>
+    </div>
+</div>

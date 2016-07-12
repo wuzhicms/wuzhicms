@@ -1,0 +1,26 @@
+<div class="container">
+    <hr/>
+    <div style="color: #7D7D7D;text-align: center;" class="foot_category">
+        {wz:content action="category" cid="29" pagesize="10" order="sort ASC"}
+        {loop $rs $r}
+        <a href="{$r[url]}">{$r['name']}</a>  |
+        {/loop}
+        {/wz}
+        <a href="{WEBURL}index.php?m=link">友情链接</a>
+    </div>
+    <div style="text-align: center; padding-top:10px;font-size:12px; color:#7D7D7D">{$siteconfigs['copyright']}{$siteconfigs['statcode']} Powered by <a href="http://www.wuzhicms.com" target="_blank">五指CMS</a> </div>
+</div>
+
+<script type="text/javascript">
+    var _uid=getcookie('_uid');
+    if(_uid!=null) {
+        $("#mylogined").removeClass('hide');
+        $("#mylogin").addClass('hide');
+        var _username=decodeURI(getcookie('truename'));
+        $("#myname").html(_username);
+    }
+</script>
+
+    
+</body>
+</html>

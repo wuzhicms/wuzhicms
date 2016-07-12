@@ -1,0 +1,1 @@
+<?php defined('IN_WZ') or exit('No direct script access allowed'); ?>document.writeln("<a href='<?php echo stat_url($rand_result[pid],$rand_result[id]);?>' target='_blank'><img src='<?php echo $rand_result[file];?>' style='max-width: 100%;height: auto;'></a>");

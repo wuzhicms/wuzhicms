@@ -1,0 +1,40 @@
+{T "member","head"}
+<div class="container membercenter">
+    <div class="row">
+        <div class="span3 memberleft">
+            {T 'member','left'}
+        </div>
+        <div class="memberright">
+            <div class="userdisplay">
+                <div class="userbar">
+                    <ul>
+                        <li><a href="#"><p>{$toay_count}</p><span>今日访问量</span></a></li>
+                        <li><a href="#"><p>{$tatal_count}</p><span>总访问量</span></a></li>
+                        <li><a href="#"><p>{$total_member}</p><span>下线会员数</span></a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="memberframe article mt10">
+                <div class="memberinfotitle"><h4>推广访问统计</h4></div>
+                <ul>
+                    {loop $result $r}
+                    <li><a href="#">{$r['ip_location']}<span>{time_format($r['addtime'])}</span></a></li>
+                    {/loop}
+                </ul>
+            </div>
+
+            <div class="page-ination">
+                <div class="page-in">
+                    <ul class="clearfix">
+                        {$pages}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{T "member","foot"}

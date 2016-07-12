@@ -2,7 +2,6 @@
 /caches/upgrade/*
 /caches/db_bak
 /.idea/*
-/.svn/*
 /caches/content/*
 /caches/templates/*
 /www/uploadfile/*
@@ -20,3 +19,5 @@ upgrade/migrations/*
 www/guanyuwomen/gongsijieshao/index.html
 
 caches/lock.install
+
+.svn/*

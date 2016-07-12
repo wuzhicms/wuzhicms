@@ -1,0 +1,1 @@
+document.writeln("<a href='http://dev.wuzhicms.com/index.php?m=promote&v=stat&pid=2&id=' target='_blank'><img src='http://placehold.it/1140x90' style='max-width: 100%;height: auto;'></a>");

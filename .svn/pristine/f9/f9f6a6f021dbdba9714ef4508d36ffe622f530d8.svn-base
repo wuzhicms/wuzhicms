@@ -1,0 +1,184 @@
+
+/*---------------------------------------*/
+/* ---- login ---- */
+/*---------------------------------------*/
+.form-control {
+    padding: 7px 12px;
+    font-size: 14px;
+    height: 39px;
+}
+
+.login .verticalcenter .form-group{margin-bottom: 20px;}
+.login .verticalcenter .form-group input{border-radius: 0}
+.login .verticalcenter .form-group input:focus{border-color: #75B9F0;box-shadow: 0 0 0 2px rgba(82, 168, 236, 0.15);}
+.login .verticalcenter .form-group input::-webkit-input-placeholder {color:#ccc;}
+.login .verticalcenter .form-group input::-moz-placeholder {color:#ccc;}
+.login .verticalcenter .form-group #error{color: #fe461c}
+
+/*.login .verticalcenter .form-group .prompt{display: inline-block;margin: 0;color: #999;}
+.login .verticalcenter .form-group .prompt img{padding: 0 10px;margin-top: -5px;}*/
+
+/*.login .verticalcenter .form-group #Verificationcode{width: 90px;margin-right: 4px;}*/
+
+.login .verticalcenter .form-group .checkbox,
+.login .verticalcenter .form-group .btn-login{margin: 0 0 0 10px; display:inline-block;vertical-align: middle;}
+
+/*.login .verticalcenter .form-group .btn-register{margin-left: 20px;}*/
+/*.login .verticalcenter .form-group {font-size: 12px;}*/
+/*.login .verticalcenter .form-group .btn-login{padding: 10px 36px;color: #fff;text-shadow:none; border-color:#2c83e5;background-color:#3c8de9;background-image:-webkit-gradient(linear,left top,left bottom,from(#4795f7),to(#3c8de9));background-image:-webkit-linear-gradient(top,#4795f7,#3c8de9);background-image:-moz-linear-gradient(top,#4795f7,#3c8de9);background-image:-ms-linear-gradient(top,#4795f7,#3c8de9);background-image:-o-linear-gradient(top,#4795f7,#3c8de9);background-image:linear-gradient(top,#4795f7,#3c8de9);filter:progid:DXImageTransform.Microsoft.gradient(StartColorStr="#4795f7",EndColorStr="#3c8de9")}*/
+/*.login .verticalcenter .form-group .btn-register{padding: 10px 36px;background: #ddd;
+border: #CCC 1px solid;}*/
+/*.login .verticalcenter .connectwebsite{padding-top: 55px;}
+.login .verticalcenter .connectwebsite h6{ color:#666}
+.login .verticalcenter .connectwebsite h3{ color:#61656c}
+.login .verticalcenter .connectwebsite p{ color:#61656c; line-height:1.8; padding-right:32px;}
+.login .verticalcenter .connectwebsite ul li{float: left;margin: 10px 6px;}
+.login .verticalcenter .connectwebsite ul li a img{opacity: .5;-webkit-transition: all 0.3s;transition: all 0.3s;-moz-transition: all 0.3s;-o-transition: all 0.3s;}
+.login .verticalcenter .connectwebsite ul li a img:hover{opacity: 1}*/
+/*.agreement{border-left: 1px solid #E6E6E6;border-right: 1px solid #E6E6E6;padding: 20px;}
+.agreement h1{padding: 5px 0 20px;margin-bottom: 20px;border-bottom: 1px solid #D2D2D2;font-size: 18px;color: #666;}*/
+
+/*.parner_img{max-width: 80%}
+.list-paddingleft-2{list-style-type:decimal;}
+
+
+ul, ol {
+list-style: none;
+margin: 0;
+padding: 0;
+}*/
+
+/*去掉框内阴影*/
+.login .verticalcenter .form-group .form-control{
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+}
+/*重置胶囊标签*/
+.typesbox{margin-bottom:30px; }
+.typesbox .nav > li > a{border-radius: 0; border-bottom: 2px solid #d4d4d4; padding: 8px 15px; color: #777}
+.typesbox .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #337ab7;
+    background:none;
+    border-bottom: 2px solid #337ab7;
+}
+
+
+/*针对登录注册页面独立样式*/
+body{ background: #f5f5f5;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefefe+0,e2e2e2+100 */
+    background: #fefefe; /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  #fefefe 0%, #e2e2e2 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#fefefe), color-stop(100%,#e2e2e2)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #fefefe 0%,#e2e2e2 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #fefefe 0%,#e2e2e2 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #fefefe 0%,#e2e2e2 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #fefefe 0%,#e2e2e2 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#e2e2e2',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
+
+@media (min-width: 767px) {
+    .container {
+        width: 1000px;
+    }
+
+    body{ background: url("../images/login-bg-01.jpg");
+        background-size:cover;
+    }
+
+    .login--page{ min-height: 768px;}
+    .login{
+        background: #ffffff;
+        margin-top: 60px;
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 0.09);
+    }
+}
+
+.login--page{ min-height: 768px;}
+ .login{
+    background: #ffffff;
+     border-radius: 5px;
+}
+
+.login--bottom{ padding:16px 0px; background: #fff; font-size: 12px; margin-top: 60px; color: #999; border-top: 1px solid #f3f3f3}
+
+
+
+
+/*第三方登录*/
+.disanfang_ico{ background: #f9fcff; padding: 96px 50px 30px 50px; min-height: 500px; border-right: 1px solid #dee1e4;border-radius: 5px 0px 0px 5px;}
+.disanfang_ico li{list-style: none;  display: inline-block; width: 40px;}
+.disanfang_ico li+li{margin-left: 4px;}
+
+.login-logo{ position: absolute; top:-50px;left: 65px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.09);
+    border: 5px solid #fff;
+}
+
+
+
+
+
+
+/*-----------------------*/
+/* 针对手机版 + 样式 */
+/*------------------*/
+@media (max-width: 768px) {
+    .login--page{  padding: 16px;}
+    .login .verticalcenter .form-group {
+        margin-bottom: 0px;
+    }
+
+    .login .verticalcenter .form-group input {
+        border-radius: 4px;
+    }
+
+    body{ background: #ffffff;
+    }
+}
+
+.header-mobile {
+    position: relative;
+    z-index: 8888;
+    min-height: 44px;
+    font-family: PingHei,"Lucida Grande","Lucida Sans Unicode",STHeiti,Helvetica,Arial,Verdana,sans-serif;
+    color: #252525;
+    font-size: 16px;
+    min-width: 320px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eeeeee+0,cccccc+100;Gren+3D */
+    background: #eeeeee; /* Old browsers */
+    background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #eeeeee 0%,#cccccc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+
+}
+.header-mobile a {
+    position: absolute;
+    width: 40px;
+    height: 44px;
+}
+
+.header-mobile span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 12px 0 0 10px;
+    text-indent: -100px;
+    overflow: hidden;
+    background: url(../images/arrow.png) no-repeat;
+    background-size: 20px 20px;
+}
+
+.header-mobile h2 {
+    height: 44px;
+    line-height: 44px;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 0px;
+}
+
+
+
+

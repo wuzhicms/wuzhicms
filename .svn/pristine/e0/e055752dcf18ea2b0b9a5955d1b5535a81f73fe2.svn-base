@@ -1,0 +1,303 @@
+/*本样式是针对IE8，同时优化手机端也在此基础！*/
+
+.margin_bottom16{ margin-bottom: 16px}
+
+.ie8-member{}
+@media (min-width: 1200px) {
+    .ie8-member >.row > .col-sm-3 {
+        width: 20%;
+    }
+    .ie8-member >.row > .col-sm-9 {
+        width: 80%;
+    }
+}
+@media (min-width: 1440px) {
+    .ie8-member >.row >.col-sm-3 {
+        width: 18%;
+    }
+    .ie8-member >.row > .col-sm-9 {
+        width: 82%;
+    }
+}
+@media (min-width: 1900px) {
+    .ie8-member >.row > .col-sm-3 {
+        width: 15%;
+    }
+    .ie8-member >.row > .col-sm-9 {
+        width: 85%;
+    }
+}
+
+/*针对top 导航重置*/
+.navbar-static-side{
+    min-height: 50px;
+    border-radius: 0;
+    -webkit-box-shadow: 0 0  8px rgba(0,0,0,.5);
+    box-shadow: 0 0 8px rgba(0,0,0,.5);
+}
+.navbar-top-links li a {
+    padding: 15px;
+    min-height: 1px;
+}
+
+
+/*布局*/
+.container-fluid {
+    padding-right: 8px;
+    padding-left: 8px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.row {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.row-40{margin-left: 40px; margin-right: 40px}
+.padding-right0{padding-right: 0}
+.paddingleft0{padding-left: 0px}
+
+.left-nav > nav,
+.left-nav  nav{
+    min-height: 800px;
+    -webkit-box-shadow: 0 0  8px rgba(0,0,0,.3);
+    box-shadow: 0 0 8px rgba(0,0,0,.3);
+    border-radius: 5px 0  0  5px;
+    -webkit-border-radius: 5px 0  0  5px;
+    -moz-border-radius: 5px 0  0  5px;
+}
+.left-nav .nav-header{
+    border-radius: 5px 0  0  0;
+    -webkit-border-radius: 5px 0  0  0;
+    -moz-border-radius: 5px 0  0  0;
+}
+.left-nav  .nav > li.active {
+    border-left: 2px solid #19aa8d;
+}
+.ie8-member .ibox {
+    min-height: 800px;
+    padding: 16px  40px 40px 40px;
+    background: #ffffff;
+    -webkit-box-shadow: 0 0  8px rgba(0,0,0,.1);
+    box-shadow: 0 0 8px rgba(0,0,0,.1);
+    border-radius: 0 5px  5px 0;
+    -webkit-border-radius: 0 5px  5px 0;
+    -moz-border-radius: 0 5px  5px 0;
+}
+.ie8-member .ibox-title:first-child {
+    border-color: #ffffff;
+}
+.ie8-member .ibox-content {
+    margin-bottom: 24px;
+}
+
+
+.zw-member-c{ color: #dfe4ed; font-size: 24px; padding-left:50px;}
+.en-member-c{ color: #8095a8; font-size: 16px;  font-family: 'Times New Roman', Helvetica, Arial, sans-serif}
+
+
+
+/*
+针对手机*/
+
+
+/*二级导航*/
+.ernav-content {
+    display: table;
+    max-width: 1000px;
+    min-width: 320px;
+    width: 100%;
+    margin-top: -16px;
+    background: #2f4050;
+}
+.ernav-content ul {
+    display: table;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.ernav-content ul li {
+    display: table-cell;
+    text-align: center;
+    height: 60px;
+    border-right: none;
+    line-height: 1.6;
+    min-width: 50px;
+}
+
+.ernav-content ul .active {
+    background: #222E39;
+}
+
+
+.ernav-content ul li a {
+    color: #FFFFFF;
+}
+/* / 二级导航*/
+
+/*san级导航*/
+.sannav-content {
+    display: table;
+    max-width: 1000px;
+    min-width: 320px;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #efefef;
+    border-top: 1px solid #efefef;
+    margin-bottom: 8px;
+}
+.sannav-content ul {
+    display: table;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.sannav-content ul li {
+    display: table-cell;
+    text-align: center;
+    height: 40px;
+    border-right: none;
+    line-height: 40px;
+    min-width: 80px;
+    border-bottom: 1px solid #efefef;
+}
+.sannav-content ul li:hover {
+    background: #e4e4e4;
+}
+.sannav-content ul li a {
+    color: #666;
+}
+.sannav-content ul  .sdsd
+{
+    border-bottom: 1px solid #ed5565;
+    color: #ed5565 !important
+}
+.sannav-content ul  .sdsd a
+{
+    color: #ed5565 !important
+}
+/* / san级导航*/
+
+/*bottom 导航*/
+.bottomnav-content {
+    display: table;
+    max-width: 1000px;
+    min-width: 320px;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #efefef;
+    border-top: 1px solid #efefef;
+    margin-bottom: 8px;
+}
+.bottomnav-content ul {
+    display: table;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.bottomnav-content ul li {
+    display: table-cell;
+    text-align: center;
+    height: 40px;
+    border-right: none;
+    line-height: 40px;
+    min-width: 80px;
+    border-bottom: 1px solid #efefef;
+}
+.bottomnav-content ul li:hover {
+    background: #e4e4e4;
+}
+.bottomnav-content ul li a {
+    color: #666;
+}
+.bottomnav-content ul  .sdsd
+{
+    border-bottom: 1px solid #ed5565;
+    color: #ed5565 !important
+}
+.bottomnav-content ul  .sdsd a
+{
+    color: #ed5565 !important
+}
+/* / bottom导航*/
+
+@media (min-width: 768px) {
+    .ie8-member .dropdown {
+        display: inline-block;
+    }
+    .top-right-ico{ display: none}
+
+    .ernav-content {
+        display: none;
+    }
+
+    .ernav-content {
+        display: none;
+    }
+    .sannav-content{ display: none}
+} /* / media min-width-768*/
+
+@media (max-width: 767px) {
+    .margin_bottom16{ margin-bottom: 0}
+    .ie8-member .left-nav{ display: none}
+    .ie8-member .dropdown {
+        display: none;
+    }
+
+    .navbar-static-side {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f4f4f4+0,f2f2f2+48,efefef+100 */
+        background: #f4f4f4; /* Old browsers */
+        background: -moz-linear-gradient(top,  #f4f4f4 0%, #f2f2f2 48%, #efefef 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #f4f4f4 0%,#f2f2f2 48%,#efefef 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #f4f4f4 0%,#f2f2f2 48%,#efefef 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#efefef',GradientType=0 ); /* IE6-9 */
+        border-bottom: 1px solid #efefef;
+
+
+    }
+    .navbar-static-side {
+        min-height: 50px;
+        border-radius: 0;
+        -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.14);
+    }
+
+    .zw-member-c{ color: #657588; font-size: 16px; padding-left:10px;}
+    .en-member-c{ display: none}
+    .row-40{margin-left: 0px; margin-right: 0px}
+
+    .top-right-ico{ float: right;     padding: 15px 15px;}
+
+    .ie8-member .ibox {
+        padding: 16px;
+        background: #ffffff;
+        -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0);
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0);
+        border-radius:  5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        min-height: 1px;
+        margin-bottom: 8px;
+    }
+
+
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 4px;
+        padding-left: 4px;
+    }
+
+
+}/*@media max767*/
+
+

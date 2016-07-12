@@ -1,0 +1,174 @@
+/*
+    像素格工作室 Pixel grid studio www.pxgrids.com
+*/
+@media (min-width: 1400px) and (max-width: 1920px) {
+    .table>tbody>tr>td, .table>thead>tr>th{padding: 5px 20px;}
+    .personal-task>tbody>tr>td{padding: 10px 20px;}
+    #sidebar .appicon img{width: 60px;}
+    .topnav ul li a{padding: 8px 10px 5px 10px;}
+    .topmenunav ul li a{padding: 23px 25px 20px 25px;}
+    .top-menu{padding-left: 10px;}
+    .table>thead>tr>th.tablehead{padding: 10px 20px;}
+    .wrapper{padding: 15px;}
+    .table>thead>tr>th.tableth15{padding: 15px }
+    .header,.footer{padding:0 15px;}
+    .main-nav{padding: 10px 15px;}
+    .userinfo a{padding: 10px 10px !important}
+    .treelist{margin-left: 7px;}
+    #menu{display:block;}
+}
+
+@media (min-width: 1366px) and (max-width: 1400px) {
+    .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
+    #sidebar .appicon img{width: 60px;}
+    .topnav ul li a{padding: 8px 10px 5px 10px;}
+    .topmenunav ul li a{padding: 23px 25px 20px 25px;}
+    .top-menu{padding-left: 10px;}
+    .wrapper{padding: 15px;}
+    .header,.footer{padding:0 15px;}
+    .main-nav{padding: 10px 15px;}
+    .userinfo a{padding: 10px 10px !important}
+    .treelist{margin-left: 7px;}
+    #menu{display:block;}
+}
+
+@media (min-width: 1200px) and (max-width: 1366px) {
+    .topmenunav ul li a{padding: 23px 25px 20px 25px;}
+    .top-menu{padding-left: 0px;}
+    #sidebar .appicon img{width: 60px;}
+    .topnav ul li a{padding: 8px 10px 5px 10px;}
+    .userinfo a{padding: 5px 10px !important}
+    .top-nav ul li a{padding: 15px 10px;}
+    .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
+    .table>thead>tr>th.tableth15{padding: 15px;}
+    #sidebar{width: 130px;}
+    ul.sidebar-menu li a{padding: 9px 0 9px 20px;}
+    .wrapper{padding: 15px;}
+    .footer{padding:0 15px;}
+    .main-nav{padding: 10px 15px;}
+    #main-content{margin-left: 130px;}
+    .topmenunav{margin-left: 20px;}
+    .state-overview .symbol{padding: 25px 31px;}
+    #menu{display:block;}
+    ul.sidebar-menu li {margin-left: 2px;}
+    #sidebar .appicon {
+        margin-bottom: 10px;
+        padding-top: 5px;
+    }
+    #sidebar .appicon img {
+        width: 50px;
+    }
+    .topmenunav ul li a {
+        padding: 15px 25px 15px 25px;
+    }
+    .header{
+        min-height: 47px;
+        padding: 0 20px;
+    }
+    .logo img {
+        padding: 8px 0 8px 0;
+    }
+    .userinfo .userimg {
+        width: 37px;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1200px) {
+    .topmenunav ul li a{padding: 23px 15px 20px 15px;}
+    .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 10px;}
+    .topnav ul li a{padding: 8px 10px 5px 10px;}
+    .top-menu{padding-left: 0px;}
+    #sidebar{width: 175px;}
+    .topmenunav{margin-left: 20px;}
+    #main-content {margin-left: 175px;}
+    ul.sidebar-menu li a{padding: 15px 0 15px 47px;}
+    #sidebar .appicon img{width: 60px;}
+    .userinfo a{padding: 10px 10px !important}
+    .top-nav ul li a{padding: 21px 10px;}
+    .wrapper{padding: 15px;}
+    #menu{display:block;}
+
+
+}
+
+@media (min-width: 990px) and (max-width: 1100px) {
+    .topmenunav ul li a{padding: 23px 15px 20px 15px;}
+    #menu{display:block;}
+    .table>tbody>tr>td, .table>thead>tr>th{padding: 7px 20px;}
+    .table>tbody>tr>td.paydescription{width: 685px;}
+    .table>tbody>tr>td.td5{padding: 5px 20px;}
+    .table>thead>tr>th.tablehead{padding: 10px 20px;}
+    .table>thead>tr>th.tableth15{padding: 15px;}
+    .table>tbody>tr>td.categorytd{padding: 5px 20px;}
+    .topnav ul li a{padding: 8px 10px 5px 10px;}
+    .topmenunav{margin-left: 20px;}
+    #main-content {margin-left: 175px;}
+    .top-menu{padding-left: 0px;}
+    #sidebar{width: 175px;}
+    ul.sidebar-menu li a{padding: 15px 0 15px 47px;}
+    #sidebar .appicon img{width: 60px;}
+    .userinfo a{padding: 10px 10px !important}
+    .top-nav ul li a{padding: 21px 10px;}
+    .wrapper{padding: 15px;}
+    .main-nav{padding: 10px 15px;}
+    .header,.footer{padding:0 15px;}
+    .treelistmain{margin-left: 2px !important;}
+}
+
+@media (min-width: 768px) and (max-width: 990px) {
+    .top-menu{padding-left: 0px;}
+    .userinfo a{padding: 10px 10px !important}
+    .top-nav ul li a{padding: 21px 10px;}
+    .state-overview .symbol{padding: 25px 28px;}
+    .table>tbody>tr>td, .table>thead>tr>th{padding: 10px 20px;}
+    #sidebar{width: 175px;}
+    #sidebar .appicon img{width: 60px;}
+    ul.sidebar-menu li a{padding: 15px 0 15px 47px;}
+    #main-content{margin-left: 175px;}
+    .topmenunav{display: none;}
+    .wrapper{padding: 15px;}
+    .main-nav{padding: 10px 15px;}
+    .header,.footer{padding:0 15px;}
+}
+
+@media (min-width: 640px) and (max-width: 980px){
+     .mobliebtn {display: block;}
+     #sidebar .appicon img{width: 60px;}
+     .topmenunav{display: none;}
+     .wrapper{padding: 15px !important;}
+     .table>tbody>tr>td, .table>thead>tr>th{padding: 5px 20px;}
+     .table>thead>tr>th.tablehead{padding: 10px;}
+     .form-inline .uploaduser, .form-inline .filename, .form-inline .tags {width: 75px;}
+     .panel-heading form .date {width: 85px;}
+     .panel .panel-body {padding: 15px;}
+}
+
+
+@media (min-width: 480px) and (max-width: 640px){
+     .topmenunav{display: none;}
+     #sidebar .appicon img{width: 60px;}
+     .loginlogo img{width: 260px;}
+     .login-wrap{padding: 20px 100px;}
+     .table>tbody>tr>td, .table>thead>tr>th {padding: 10px;}
+     .wrapper {padding: 15px;}
+     .panel-heading{padding: 15px 10px;}
+
+}
+
+@media (min-width: 320px) and (max-width: 480px){
+     .topmenunav{display: none;}
+     #sidebar .appicon img{width: 60px;}
+     .loginlogo img{width: 165px;}
+     .form-signin{width: 100%;}
+     .login-wrap{padding: 20px 20%;}
+     .form-signin .input-group #logincode img{width: 70px;height: 25px;}
+}
+
+@media (min-width: 240px) and (max-width: 320px){
+     .topmenunav{display: none;}
+     #sidebar .appicon img{width: 60px;}
+     .loginlogo img{width: 130px;}
+     .form-signin{width: 100%;}
+     .login-wrap{padding: 20px 20%;}
+     .form-signin .input-group #logincode img{width: 50px;height: 18px;}
+}

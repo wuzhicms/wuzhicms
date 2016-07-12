@@ -1,0 +1,136 @@
+@charset "gb2312";
+
+.explr-tree * {
+	margin: 0;
+	padding: 0;
+}
+
+.explr-tree, 
+.explr-tree ol,
+.explr-tree ul {
+	display: block;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	letter-spacing: normal;
+	line-height: 12px;
+	list-style: none;
+	margin: 0;
+	padding-bottom: 0;
+	padding-left: 20px;
+	padding-top: 8px;
+	position: relative;
+}
+
+.explr-tree {
+	background: #F1F2F7;
+	overflow: auto;
+}
+
+.explr-tree li {
+	background: url("tree/folder.png") 16px 2px no-repeat;
+	display: block;
+	position: relative;
+	white-space: nowrap;
+}
+
+.explr-tree li a {
+	color: #666;
+	display: block;
+	font-size: 12px;
+	margin-left: 30px;
+	font-family: Arial,Helvetica,sans-serif;
+	padding: 5px 0 5px 9px;
+	text-decoration: none;
+}
+
+.explr-tree li a:hover {
+	color: #34495E;
+	text-decoration: underline;
+}
+
+.explr-line {
+	border-left: 1px solid #c4c8d2;
+	border-bottom: 1px solid #c4c8d2;
+	height: 22px;
+	position: absolute;
+	margin-left: 0;
+	margin-top: -12px;
+	width: 12px;
+}
+
+.explr-tree ol>li:first-child>.explr-line,
+.explr-tree ul>li:first-child>.explr-line {
+	margin-top: -8px;
+	height: 18px;
+}
+
+.explr-line-fix {
+	border-left: 1px solid #c4c8d2;
+}
+
+.icon-plus2 {
+	background-color: #F1F2F7;
+	height: 16px;
+	margin-left: -8px;
+	margin-top: 2px;
+	position: absolute;
+	width: 20px;
+	color: #c4c8d2;
+	z-index: 1;
+	font-size: 18px;
+	cursor: pointer;
+}
+.icon-plus2:hover{color: #9BA1B1;}
+.explr-tree li span:hover{color: #9BA1B1 !important;}
+.icon-minus2:before{color:#BBBEC6;content:"\e6c8";font-family:"pxgridsicons";}
+
+
+/* Menu icons: */
+.explr-tree .icon-text > li, .explr-tree li.icon-text { background-image: url("tree/administrative-docs.png"); }
+.explr-tree .icon-text > li, .explr-tree li.icon-text { background-image: url("tree/attibutes.png"); }
+.explr-tree .icon-folder > li, .explr-tree li.icon-folder { background-image: url("tree/folder.png"); }
+.explr-tree .icon-folder2 > li, .explr-tree li.icon-folder2 { background-image: url("tree/finished-work.png"); }
+.explr-tree .icon-home > li, .explr-tree li.icon-home { background-image: url("tree/home.png"); }
+.explr-tree .icon-home > li, .explr-tree li.icon-home { background-image: url("tree/issue.png"); }
+.explr-tree .icon-text3 > li, .explr-tree li.icon-text3 { background-image: url("tree/future-projects.png"); }
+
+
+/* IE Hack Fixes: */
+
+.explr-ie, 
+.explr-ie ol,
+.explr-ie ul {
+	margin-left: 4px;
+	padding-left: 16px;
+	position: static;
+}
+
+.explr-ie ol,
+.explr-ie ul {
+	overflow: hidden;
+}
+
+.explr-ie {
+	padding-top: 20px;
+}
+
+.explr-ie .explr-line, 
+.explr-ie .icon-plus2 {
+	top: 0;
+	left: 4px;
+}
+
+.explr-ie li {
+	height: auto !important;
+	height: 24px;
+	*padding-top: 12px;
+	_padding-top: 0;
+}
+
+.explr-ie li a {
+	*position: absolute;
+	_position: static;
+	*top: 0;
+	_top: auto;
+}
+.line-active {color:#d90e0e;font-weight:bold;}

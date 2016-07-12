@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="{CHARSET}">
+    <title>{if isset($seo_title)}{$seo_title}{else}{$siteconfigs['sitename']}{/if}</title>
+    <meta name="keywords" content="{if isset($seo_keywords)}{$seo_keywords}{/if}">
+    <meta name="description" content="{if isset($seo_description)}{$seo_description}{/if}">
+    <script type="text/javascript" src="{R}t2/js/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="{R}t2/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="{R}t2/css/style.css">
+    <script type="text/javascript" src="{R}t2/js/bootstrap.js"></script>
+    <script type="text/javascript" src="{R}t2/js/wuzhi_searchlist.js"></script>
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <script src="{R}haiwaitou/js/ie-emulation-modes-warning.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown {if !isset($cid)}active{/if}" id="c0">
+                    <a href="{WEBURL}" class="dropdown-toggle">首页</a>
+                </li>
+                {wz:content action="category" pagesize="100" order="sort ASC"}
+                {loop $rs $r}
+                {if $r['pid']==0 && $r['ismenu']}
+                <li class="dropdown {if $elasticid==$r['cid']}active{/if}" id="c{$r['cid']}">
+                    <a href="{$r[url]}" class="dropdown-toggle" data-toggle="dropdown">{$r['name']}<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        {loop $rs $rn}
+                        {if $rn['pid']==$r['cid']}<li><a href="{$rn[url]}">{$rn['name']}</a></li>{/if}
+                        {/loop}
+                    </ul>
+                </li>
+                {/if}
+                {/loop}
+                {/wz}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{WEBURL}index.php?m=member&v=register">注册</a></li>
+                <li><a href="{WEBURL}index.php?m=member&v=login">登录</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<div class="top_box">
+  <div class="container">
+    <div class="top_logo"><img src="{R}t2/image/logo.png" height="63"></div>
+    <div class="wuzhi_search_top">
+        <form class="navbar-form" role="search" method="get" action="{WEBURL}index.php?f=search">
+            <input name="f" value="search" type="hidden">
+            <div class="form-group">
+          <input type="text" name="keywords" class="form-control" size="65" value="{$keywords}" placeholder="输入您要搜索的内容">
+        </div>
+        <button type="submit" class="btn btn-primary_g">&nbsp;&nbsp;&nbsp;&nbsp;搜索&nbsp;&nbsp;&nbsp;&nbsp;</button>
+      </form>
+      <p>获得约<span style="color:#C00"> {$total_number} </span>条结果 （用时{$runtime} 秒）</p>
+    </div>
+  </div>
+</div>
+
+<div class="bankuai_1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-2">
+		<div class="wuzhi_search_list" id="wuzhi_searchlist">
+          <h5 style=" text-align:right">按时间搜索结果</h5>
+          <div class="list-group" style="text-align:right">
+            <a href="?f=search&starttime=0&keywords={$keywords}" class="list-group-item_gr {if $starttime==0}active{/if}">全部时间</a>
+            <a href="?f=search&starttime=1&keywords={$keywords}" class="list-group-item_gr {if $starttime==1}active{/if}" >一天内</a>
+            <a href="?f=search&starttime=7&keywords={$keywords}" class="list-group-item_gr {if $starttime==7}active{/if}">一周内</a>
+            <a href="?f=search&starttime=30&keywords={$keywords}" class="list-group-item_gr {if $starttime==30}active{/if}">一月内</a>
+            <a href="?f=search&starttime=365&keywords={$keywords}" class="list-group-item_gr {if $starttime==365}active{/if}">一年内</a>
+          </div>
+          <h5 style=" text-align:right">搜索历史</h5>
+          <div class="list-group" style="text-align:right">
+           {loop $history_result $rs}
+            <a href="?f=search&starttime=0&keywords={$rs}" class="list-group-item_gr">{$rs}</a>
+           {/loop}
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-10" style="border-left:1px solid #ddd">
+        <div class="wuzhi_search_bd">
+{loop $result $r}
+        	<div class="wuzhi_search_bdlist">
+            <div class="Nhead"><a href="{$r['url']}" >{str_replace($keywords, "<font color='#C00'>".$keywords."</font>", $r['title'])}</a></div>
+            <div class="Nbd">{if $r['thumb']}<a href="{$r['url']}"><img src="{$r['thumb']}"></a>{/if}
+                <p>{str_replace($keywords, "<font color='#C00'>".$keywords."</font>", strcut($r['remark'],160))}</p>
+              </div>
+            <div class="Nfoot">
+                <div class="lwd">发布时间：{date('Y年m月d日 H:i',$r['addtime'])}</div>
+              </div>
+          </div>
+{/loop}
+		<nav>
+          <ul class="pagination">
+              <li><a>共{$total_number}条</a></li>
+            {$result_pages}
+          </ul>
+        </nav>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+{T "content","foot",TPLID}

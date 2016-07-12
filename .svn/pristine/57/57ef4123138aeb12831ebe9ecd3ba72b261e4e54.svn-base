@@ -1,0 +1,47 @@
+{T  'member','head'}
+<!--正文部分-->
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <ul class="nav nav-tabs">
+                        <li ><a href="index.php?m=content&f=contribute&v=newinfo">投稿</a></li>
+                        <li class="active"><a href="index.php?m=content&f=contribute&v=listing">我的投稿</a>
+                        </li>
+                    </ul>
+
+                         <div class="project-list">
+
+                            <table class="table table-hover">
+                                <tbody>
+                                {loop $result $r}
+                                    <tr>
+
+                                        <td class="project-title">
+                                            <strong>{$r['title']}</strong>
+                                            <br/>
+                                            <small>时间: {date('Y-m-d H:i:s',$r['addtime'])}</small>
+                                        </td>
+                                        <td class="project-status">
+                                            {if $r['status']==0}<span class="label label-default">已删除</span>{elseif $r['status']==9}<span class="label label-primary">审核通过</span>{else}<span class="label label-danger">待审核</span>{/if}
+                                        </td>
+                                        <td class="project-actions">
+                                            <a href="?m=content&f=contribute&v=view&id={$r['id']}" class="btn btn-white btn-sm" target="_blank"><i class="fa fa-folder"></i> 查看 </a>
+                                            <a href="?m=content&f=contribute&v=edit&id={$r['id']}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 编辑 </a>
+                                            <a href="?m=content&f=contribute&v=delinfo&id={$r['id']}" class="btn btn-white btn-sm"><i class="fa fa-recycle"></i> 删除 </a>
+                                        </td>
+                                    </tr>
+{/loop}
+                                    </tbody>
+                                </table>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{T "member","foot"}
+</body>
+</html>
+

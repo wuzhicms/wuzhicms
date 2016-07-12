@@ -1,0 +1,14 @@
+{T 'tags','header'}
+
+{wz:tags action="listing" page="$page" letter="$letter" linkage="" pagesize="10" order="number DESC"}
+{loop $rs $r}
+<li>{$r[tid]} <a href="{$r[url]}">{safe_htm($r['tag'])}</a>({$r['number']})</li>
+{/loop}
+{/wz}
+
+
+
+
+</pre>
+</body>
+</html>

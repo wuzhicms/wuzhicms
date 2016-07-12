@@ -1,0 +1,8 @@
+<table>
+	<tr>
+		<td>尊敬的{$username}您好，请点击下面的连接找回您的账户密码</td>	
+	</tr>
+	<tr>
+		<td><a href="{$url}">{$url}</a></td>
+	</tr>
+</table>
