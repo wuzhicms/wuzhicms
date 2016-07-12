@@ -15,8 +15,8 @@ if(!empty($GLOBALS['keyid'])) {
     $rs = array();
     foreach($GLOBALS['keyid'] as $r) {
         $tmp = explode('_',$r);
-        $cid = $tmp[0];
-        $id = $tmp[1];
+        $cid = intval($tmp[0]);
+        $id = intval($tmp[1]);
         $where = "`cid`='$cid' AND `id`='$id'";
         $rs[] = $db->get_one('content_rank', $where);
     }
