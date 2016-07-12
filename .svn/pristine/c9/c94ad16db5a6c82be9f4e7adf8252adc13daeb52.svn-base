@@ -1,4 +1,0 @@
-.memberframe .memberright {
-    width: 890px;
-    float: right;
-}
