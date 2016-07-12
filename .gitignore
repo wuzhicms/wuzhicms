@@ -1,7 +1,8 @@
 /build/
 /caches/upgrade/*
 /caches/db_bak
-/.idea/*
+/.idea/
+.svn/
 /caches/content/*
 /caches/templates/*
 /www/uploadfile/*
@@ -15,9 +16,7 @@ www/configs/mysql_config.php
 caches/templates/*
 www/.htaccess
 upgrade/migrations/*
-
 www/guanyuwomen/gongsijieshao/index.html
-
 caches/lock.install
 
-.svn/*
+.svn/wc.db
