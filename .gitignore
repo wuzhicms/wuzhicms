@@ -2,7 +2,7 @@
 /caches/upgrade/*
 /caches/db_bak
 /.idea/
-.svn/
+/.svn/
 /caches/content/*
 /caches/templates/*
 /www/uploadfile/*
