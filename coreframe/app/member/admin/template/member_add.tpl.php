@@ -62,6 +62,7 @@
 						<td class="text-right"><label class="control-label">头像</label></td>
 						<td><div class="col-sm-8 col-xs-8"><div class="input-group"><?php echo $form->attachment('','1','avatar',$avatar);?></div></div></td>
 					</tr>
+
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">激活状态</label></td>
 						<td>
@@ -72,6 +73,17 @@
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">更改用户名</label></td>
 						<td>
 							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><label><input type="radio" name="sys_name" value="1" > 允许 </label><label style="padding-left: 20px;"><input type="radio" name="sys_name" value="0" checked> 不允许</label></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-right"><label class="control-label">会员组</label></td>
+						<td><div class="col-sm-8 col-xs-8">
+								<select name="info[groupid]" class="form-control">
+									<?php if(is_array($group))foreach($group as $v){?>
+										<option value="<?php echo $v['groupid']?>" <?php echo $v['groupid'] == 3 ? 'selected' : ''?> ><?php echo $v['name']?></option>
+									<?php }?>
+								</select>
+							</div>
 						</td>
 					</tr>
 					<tr>
