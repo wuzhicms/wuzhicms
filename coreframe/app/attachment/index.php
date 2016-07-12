@@ -270,7 +270,8 @@ class index {
                 $page = $GLOBALS['page']  ? intval($GLOBALS['page']) : 1;
                 $keytype = $GLOBALS['keytype'] ? intval($GLOBALS['keytype']) : 0;
                 $keywords = isset($GLOBALS['keywords']) ? iconv('utf-8','gbk',remove_xss($GLOBALS['keywords'])) : '';
-                 $username = strip_tags($GLOBALS['username']);
+                $username = strip_tags($GLOBALS['username']);
+                $username = sql_replace($username);
                 $result = $ckditor->lists($page,$keytype,$keywords,$username);
                 if(isset($GLOBALS['returnjson'])) {
                     echo json_encode($result);
