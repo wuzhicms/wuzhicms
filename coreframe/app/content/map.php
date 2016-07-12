@@ -72,7 +72,7 @@ class map{
     public function search2() {
         $categorys = get_cache('category','content');
         $cityname = remove_xss($GLOBALS['cityname']);
-
+        $cityname = sql_replace($cityname);
         $page = max(intval($GLOBALS['page']),1);
         $urlrule = 'javascript:change_pagemap2({$page});';
         $where = "`status`=9 AND `title` LIKE '%$cityname%'";

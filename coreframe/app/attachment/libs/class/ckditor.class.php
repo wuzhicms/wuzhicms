@@ -197,6 +197,7 @@ class WUZHI_ckditor{
 	public static function lists($page,$keytype = 0,$keywords = '',$username = '')
 	{
 		$db = load_class('db');
+		$keywords = sql_replace($keywords);
 		$pagesize = isset($GLOBALS['size']) ? intval($GLOBALS['size']) : 40;
 		if($keytype) {
 			$where = $keywords ? "`diycat`='$keywords'" : '1';

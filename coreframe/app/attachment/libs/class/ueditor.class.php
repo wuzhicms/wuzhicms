@@ -176,6 +176,7 @@ class WUZHI_ueditor{
 		$page = $GLOBALS['start']  ? intval($GLOBALS['start']) : 1;
 		if($page > 1) $page = ceil($page/$pagesize);
 		$q = isset($GLOBALS['q']) ? iconv('utf-8','gbk',remove_xss($GLOBALS['q'])) : '';
+		$q = sql_replace($q);
 		$where = $q ? ' (name like "%'.$q.'%" or tags like "%'.$q.'%" )' : ' 1 ';
 		$lists = $db->get_list('attachment',$where,'path,addtime,name', 0, $pagesize, $page, 'id DESC');
 		$return_list = $files = array();
