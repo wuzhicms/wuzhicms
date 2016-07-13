@@ -51,7 +51,7 @@ class index extends WUZHI_admin {
 	{
 		$tag_info = array();
 		$tid = intval( output( $GLOBALS, 'tid') );//有值表示为修改
-		if(output($GLOBALS,'dosubmit'))
+		if(output($GLOBALS,'submit'))
 		{
 			$tag_info = $GLOBALS['tag'];
 			unset($GLOBALS['tag']);
