@@ -1629,8 +1629,11 @@
 /*留言板*/
 
 .liuyan-list{ }
+.biaodan-border{ border: 1px solid #eee; display: inline-block}
 .liuyan-list .form-control {
-    border: 1px solid #EEEEEE;
+    border: none;
+    -webkit-box-shadow:none;
+    box-shadow: none;
 }
 .liuyan-list .panel-default > .panel-heading {
     color: #337AB7;

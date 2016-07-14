@@ -41,9 +41,6 @@
         padding-top: 0px;
         margin-left: 16px;
     }
-    .login .verticalcenter .form-group input {
-        color: #fff;
-    }
 </style>
 <!--[if lt IE 9]>
 <style>

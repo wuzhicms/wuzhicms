@@ -19,14 +19,14 @@ define('WEBURL','http://dev.wuzhicms.com/');//网站域名
 //Cookie配置
 define('COOKIE_DOMAIN','');//Cookie 作用域
 define('COOKIE_PATH','');//Cookie 作用路径
-define('COOKIE_PRE','XsU_'); //Cookie 前缀
+define('COOKIE_PRE','fbx_'); //Cookie 前缀
 define('COOKIE_TTL',0); //Cookie 生命周期，0 表示随浏览器进程
 
 //附件相关配置
 define('ATTACHMENT_ROOT',WWW_ROOT.'uploadfile/');
 define('ATTACHMENT_URL','http://dev.wuzhicms.com/uploadfile/');//附件路径
 define('R','http://dev.wuzhicms.com/res/');//静态文件存储目录
-define('_KEY','YgSK0jzv'); //密钥,最长8位
+define('_KEY','mzWp1duN'); //密钥,最长8位
 define('LANG','zh-cn');  //网站默认语言包
 
 define('FOUNDERS','1'); //网站创始人ID，多个ID逗号分隔
