@@ -96,21 +96,24 @@
                         <?php
                         $categorys = get_cache('category','content');
                         if(!empty($categorys)) {
-                        $lastlist = get_cache('lastlist','content');
-                        $nums = 1;
-                        foreach($lastlist as $n=>$r) {
-                            if($nums>10) break;
-                            if(!isset($categorys[$r['cid']])) continue;
-                            $nums++;
-                            ?>
-                            <tr>
-                                <td><?php echo $categorys[$r['cid']]['name'];?></td>
-                                <td><?php echo "<a href='".$r['url']."' target='_blank'>".strcut($r['title'],40,'..')."</a>";?></td>
-                                <td class="col-md-4">
-                                    <?php echo time_format($r['addtime']);?>
-                                </td>
-                            </tr>
-                        <?php }}?>
+                            $lastlist = get_cache('lastlist', 'content');
+                            $nums = 1;
+                            if (!empty($lastlist)) {
+                            foreach ($lastlist as $n => $r) {
+                                if ($nums > 10) break;
+                                if (!isset($categorys[$r['cid']])) continue;
+                                $nums++;
+                                ?>
+                                <tr>
+                                    <td><?php echo $categorys[$r['cid']]['name']; ?></td>
+                                    <td><?php echo "<a href='" . $r['url'] . "' target='_blank'>" . strcut($r['title'], 40, '..') . "</a>"; ?></td>
+                                    <td class="col-md-4">
+                                        <?php echo time_format($r['addtime']); ?>
+                                    </td>
+                                </tr>
+                            <?php }
+                        }
+                        }?>
                         </tbody>
                     </table>
                 </div>
