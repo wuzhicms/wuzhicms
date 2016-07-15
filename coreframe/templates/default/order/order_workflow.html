@@ -287,7 +287,7 @@ echo build_calendar($month,$year,$dateArray);
             $("#tabs1").click();
             $("#mobile").focus();
             return false;
-        } else if (!$("#mobile").val().match(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|170)\d{8}$/)) {
+        } else if (!$("#mobile").val().match(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|17[0-9])\d{8}$/)) {
             if(errno==1) {
                 alert("请认证填写每一项，o(>﹏<)o千万别再开玩笑了！请输入正确的手机号码！");
             } else {

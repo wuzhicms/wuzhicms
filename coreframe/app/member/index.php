@@ -179,7 +179,7 @@ class index extends WUZHI_foreground{
 		if(isset($GLOBALS['submit'])) {
 
 			$mobile = $GLOBALS['mobile'];
-			if(!preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|17[0|1|2|3|5|6|7|8|9]\d{8}|18[0|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8})$/',$mobile)) {
+			if(!preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|17[0|1|2|3|5|6|7|8|9]\d{8}|18[0|1|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8})$/',$mobile)) {
 				MSG('手机号码错误');
 			}
 			//检查短信验证码是否正确
@@ -458,7 +458,7 @@ class index extends WUZHI_foreground{
 
 			//检查验证码是否匹配
 			$password = random_string('diy',6,'23456789abcdefghjkmnpqrstuwxy');
-			if(!preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|17[0|1|2|3|5|6|7|8|9]\d{8}|18[0|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8})$/',$mobile)) {
+			if(!preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|17[0|1|2|3|5|6|7|8|9]\d{8}|18[0|1|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8})$/',$mobile)) {
 				MSG('手机号码错误');
 			}
 			$posttime = SYS_TIME-300;//5分钟内有效
@@ -672,7 +672,7 @@ class index extends WUZHI_foreground{
 	public function edit_mobile() {
 		if(isset($GLOBALS['submit'])) {
 			$mobile = $GLOBALS['mobile'];
-			if(!preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|17[0|1|2|3|5|6|7|8|9]\d{8}|18[0|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8})$/',$mobile)) {
+			if(!preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|17[0|1|2|3|5|6|7|8|9]\d{8}|18[0|1|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8})$/',$mobile)) {
 				MSG('手机号码错误');
 			}
 			$uid = $this->memberinfo['uid'];

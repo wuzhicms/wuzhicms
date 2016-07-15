@@ -28,5 +28,5 @@ function url_exists($url) {
     return is_array($head) ?  true : false;
 }
 function is_tel($tel) {
-    return strlen($tel) == 11 && preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8})$/',$tel);
+    return strlen($tel) == 11 && preg_match('/^(?:13\d{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|1|2|3|5|6|7|8|9]\d{8}|14[5|7]\d{8}|17[0|1|2|3|5|6|7|8|9]\d{8})$/',$tel);
 }

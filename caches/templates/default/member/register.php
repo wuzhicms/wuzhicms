@@ -183,7 +183,7 @@
 </script>
 <script type="text/javascript">
     var times = 0;
-    function sendsms() {
+    function send_sms() {
         var mobile = $("#mobile").val();
         var checkcode = $("#checkcode").val();
         if(mobile== '' || checkcode=='') {
