@@ -37,6 +37,7 @@ class index extends WUZHI_admin {
 		$modelid = intval($GLOBALS['modelid']);
 
 		$group = $ext_group = array();
+if(is_array($this->group)){
 		foreach($this->group as $gr) {
 			if($gr['issystem']==1) {
 				$group[$gr['groupid']] = $gr;
@@ -47,7 +48,7 @@ class index extends WUZHI_admin {
 				$ext_group[$gr['groupid']] = $gr;
 			}
 		}
-
+}
 		$tree = load_class('tree','core',$ext_group);
 		$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
 		//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');

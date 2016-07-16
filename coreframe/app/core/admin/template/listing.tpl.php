@@ -98,7 +98,7 @@
                         if(!empty($categorys)) {
                             $lastlist = get_cache('lastlist', 'content');
                             $nums = 1;
-                            if (!empty($lastlist)) {
+                            if (is_array($lastlist)) {
                             foreach ($lastlist as $n => $r) {
                                 if ($nums > 10) break;
                                 if (!isset($categorys[$r['cid']])) continue;
