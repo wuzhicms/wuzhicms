@@ -25,7 +25,7 @@
   'listurl' => 'index.php?v=listing&cid={$cid}&page={$page}',
   'showurl' => '',
   'category_template' => '',
-  'list_template' => 't3:page',
+  'list_template' => '',
   'show_template' => '',
   'seo_title' => '',
   'seo_keywords' => '',

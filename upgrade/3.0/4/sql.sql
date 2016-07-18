@@ -1,1 +1,1 @@
-UPDATE `wz_block` SET `lang` = 'zh'
+UPDATE `wz_block` SET `lang` = 'zh';

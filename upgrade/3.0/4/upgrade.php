@@ -6,3 +6,8 @@
 // | Author: wangcanjia <phpip@qq.com>
 //+----------------------------------------------------------------------
 defined('IN_WZ') or exit('No direct script access allowed');
+//wz_member
+$fields_arr = $db->get_fields('member');
+if(!in_array('sys_name',$fields_arr)) {
+	$db->query("ALTER TABLE `wz_member` ADD `sys_name` TINYINT(1) NOT NULL DEFAULT '1'");
+}

@@ -31,5 +31,5 @@
   'createhtml' => '0',
   'remark' => '',
   'isopenid' => '0',
-  'lang' => '',
+  'lang' => 'zh',
 )?>

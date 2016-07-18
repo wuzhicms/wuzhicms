@@ -102,7 +102,7 @@ class form_build {
         extract($config,EXTR_SKIP);
         $siteid = SITEID;
         if(defined('IN_ADMIN')) {
-                $_lang = $GLOBALS['_lang'];
+			$_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
         } else {
                 $_lang = LANGUAGE;
         }

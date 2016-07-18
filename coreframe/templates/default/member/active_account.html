@@ -52,7 +52,7 @@
 		<div class="row">
             <div class="row" style="margin-left: 0px; margin-right: 0px;">
                  <div class="col-xs-3 disanfang_ico" style="min-height: 530px;">
-                    <div class="login-logo thumbnail" style="border-radius: 50%;" ><img  alt="Brand" src="{R}iiis/image/login-logo.png" class="img-circle" ></div>
+                     <div class="login-logo thumbnail" style="border-radius: 50%;" ><img  alt="Brand" src="{R}images/login-logo.png" class="img-circle" ></div>
 
                     <span style="color: #999999; font-size: 24px;"><center>帐号激活</center></span><hr>
                 </div>
@@ -60,7 +60,7 @@
 
                     <div class="typesbox" style="padding-left: 180px; padding-bottom: 36px;">
                         <ul class="nav nav-pills">
-                            <li role="presentation" class="stypeclass active"><a href="javascript:;"><span>Account Activation</span></a></li>
+                            <li role="presentation" class="stypeclass active"><a href="javascript:;"><span>帐号激活</span></a></li>
 
                         </ul>
                     </div>
@@ -70,28 +70,28 @@
                         <form action="" method="post" id="loginform" name="loginform" class="form-horizontal">
                             <input type="hidden" name="modelid" id="setmodelid" value="10">
                             <div class="form-group">
-                                <label class="control-label col-xs-3">Username</label>
+                                <label class="control-label col-xs-3">用户名</label>
                                 <div class="col-xs-9  form-inline">
                                     <input style="width: 60%" type="text" class="form-control" id="username"
                                             name="username" datatype="/^[a-z0-9@\.\u4E00-\u9FA5\uf900-\ufa2d\-]{3,40}$/i"
-                                            errormsg="Username error" nullmsg="Username empty" sucmsg="ok" autoComplete="off" value="{$username}" {if $sys_name==0}readonly{/if}>
+                                            errormsg="用户名错误" nullmsg="用户名不能为空" sucmsg="ok" autoComplete="off" value="{$username}" {if $sys_name==0}readonly{/if}>
                                     <span class="Validform_checktip"><!--请输入手机号码--></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-xs-3">Password</label>
+                                <label class="control-label col-xs-3">密码</label>
                                 <div class="col-xs-9  form-inline">
-                                    <input style="width: 60%" type="password" name="password" class="form-control" datatype="*6-18" errormsg="6-16 characters in length." nullmsg="Password empty" sucmsg="OK" plugin="passwordStrength">
+                                    <input style="width: 60%" type="password" name="password" class="form-control" datatype="*6-18" errormsg="密码需要6-16位字符." nullmsg="密码不能为空" sucmsg="OK" plugin="passwordStrength">
 
-                                    <span class="Validform_checktip"><!--请输入密码--></span><div class="passwordStrength">Password Strength： <span>Weak</span><span>Medium</span><span class="last">Strong</span></div>
+                                    <span class="Validform_checktip"><!--请输入密码--></span><div class="passwordStrength">密码强度： <span>弱</span><span>中</span><span class="last">强</span></div>
 
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-xs-3">Confirm password</label>
+                                <label class="control-label col-xs-3">确认密码</label>
                                 <div class=" col-xs-9  form-inline">
-                                    <input style="width: 60%"  type="password" name="pwdconfirm" class="form-control" placeholder="6-16 characters in length." datatype="*6-18" recheck="password" errormsg="Passwords do not match." sucmsg="OK" nullmsg="Confirm passwords empty" >
+                                    <input style="width: 60%"  type="password" name="pwdconfirm" class="form-control" placeholder="密码需要6-16位字符." datatype="*6-18" recheck="password" errormsg="密码不匹配" sucmsg="OK" nullmsg="确认密码不能为空" >
                                     <span class="Validform_checktip"><!--请再次输入密码--></span>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                             <div class="form-group">
                                 <label class="control-label col-xs-3"> </label>
                                 <div class=" col-xs-9">
-                                    <input style="width: 60%" type="submit" name="submit" class="btn btn-primary btn-lg" value=" Submit " />
+                                    <input style="width: 60%" type="submit" name="submit" class="btn btn-primary btn-lg" value=" 提交 " />
                                 </div>
                             </div>
                         </form>

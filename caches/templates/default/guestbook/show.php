@@ -1,45 +1,42 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed'); ?><?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","head",TPLID); ?>
-<script type="text/javascript" src="<?php echo R;?>h1jk/js/starmap.js"></script>
-<link type="text/css" rel="stylesheet" href="<?php echo R;?>h1jk/css/shequ.css">
-<!-- ---------------------------------- -->
-<!-- ---------------------------------- -->
 
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="shequ_box" >
-                <div class="shequ_title_g">
-                    <table class="table table-hover">
-                        <tbody>
-                        <tr>
-                            <td class="tuxiang"><img src="<?php echo avatar($uid, 180);?>" width="60"></td>
-                            <td class="zhuti">
-                                <div class="title"><?php echo $title;?></div>
-                                <div class="em"><?php echo $publisher;?>&nbsp;&nbsp; 于<?php echo date('Y-m-d',$addtime);?>发表 </div>
-                            </td>
-                            <td class="rw">
-                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> <span ><?php echo $hits;?></span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="shequ_list">
-                    <div class="content">
-                        <?php echo $content;?>
-                    </div>
-
-                </div>
-                <?php if($replytime) { ?>
-                <div style="line-height:40px; padding:0px 16px; font-weight:bold;">最后回复 <?php echo date('Y-m-d H:i',$replytime);?></div>
-                <div class="shequ_list_g">
-                    <?php echo $reply;?>
-                </div>
-                <?php } ?>
+<div style="background: #f5f5f5; border-bottom: 1px solid #ddd">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px; font-size: 12px;">
+            您现在的位置：
+            <li><a href="index.php">首页</a></li>
+            <li ><a href="index.php?m=guestbook">留言板</a></li>
+            <li class="active">正文</li>
+        </ol>
+    </div>
+</div>
+<hr>
+<div class="container liuyan-list">
+<div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+<div id="myTabContent" class="tab-content">
+    <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span style="display: inline-block"><strong>留言主题： <a><?php echo $title;?></a></strong> </span> <span style=" float: right; font-size: 14px;  color: #999; line-height: 2.2">网友：<?php echo $linkman;?>  &nbsp;&nbsp; <?php echo date('Y-m-d H:i',$addtime);?></span>
             </div>
+            <div class="panel-body">
+                <?php echo $content;?>
+            </div>
+            <!--回复-->
+            <?php if($replytime) { ?>
+            <div class="panel-footer">
+                <div class="huifu-hd">
+                    <div class="hd-left"><h4><strong>官方回复：</strong></h4></div>
+                    <div class="hd-right"> <span style=" font-size: 14px;  color: #999; line-height: 2.2">回复单位：<?php echo $reply_user;?>  &nbsp;&nbsp; <?php echo date('Y-m-d H:i',$replytime);?></span></div>
+                </div>
+                <?php echo $reply;?>
+            </div>
+            <?php } ?>
+
         </div>
     </div>
+</div>
+</div>
 </div>
 
 <?php if(!isset($siteconfigs)) $siteconfigs=get_cache('siteconfigs'); include T("content","foot",TPLID); ?>

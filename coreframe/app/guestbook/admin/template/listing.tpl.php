@@ -17,8 +17,11 @@
                         <th class="hidden-phone tablehead">ID</th>
                         <th class="tablehead">留言标题</th>
                         <th class="tablehead">留言时间</th>
+                        <th class="tablehead">主题领域</th>
+                        <th class="tablehead">主题类别</th>
                         <th class="tablehead">状态</th>
                         <th class="tablehead">联系人</th>
+                        <th class="tablehead">邮箱</th>
                         <th class="tablehead">联系电话</th>
                         <th class="tablehead">用户地理位置</th>
                         <th class="tablehead">管理操作</th>
@@ -32,14 +35,24 @@
                             <td><?php echo $r['id'];?></td>
                             <td><?php echo "<a href='index.php?m=guestbook&f=index&v=reply&id=".$r['id'].$this->su()."'>".safe_htm($r['title'])."</a>";?></a></td>
                             <td><?php echo time_format($r['addtime']);?></td>
-                            <td><?php echo $r['status'];?></td>
+                            <td><?php echo $r['area'];?></td>
+                            <td><?php echo $r['category'];?></td>
+                            <td><button type="button" <?php if($r['status']==1||$r['status']==9){ echo 'class="btn btn-danger btn-xs"';}else{ echo 'class="btn btn-primary btn-xs"';} ;?> ><?php echo $status[$r['status']];?></button></td>
+
                             <td><?php echo $r['linkman'];?></td>
+                            <td><?php echo $r['email'];?></td>
                             <td><?php echo $r['tel'];?></td>
                             <td><?php echo $r['ip_location'];?></td>
                             <td>
+
+
+                                <a href="?m=guestbook&f=index&v=audit&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">审核</a>
+
                                 <a href="?m=guestbook&f=index&v=reply&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">回复</a>
+                                <a href="?m=guestbook&f=index&v=end&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">完结</a>
                                 <a href="javascript:makedo('?m=guestbook&f=index&v=delete&id=<?php echo $r['id'];?><?php echo $this->su();?>', '确认删除该记录？')"
                                    class="btn btn-danger btn-xs">删除</a>
+
                             </td>
                         </tr>
                     <?php

@@ -1,0 +1,50 @@
+{T "content","head",TPLID}
+
+
+
+<!--路径导航-->
+<div style="background: #f5f5f5; border-bottom: 1px solid #ddd">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px; font-size: 12px;">
+            您现在的位置：
+            <li><a href="/index.php">首页</a></li>
+            <li><a href="/index.php?m=guestbook">留言板</a></li>
+            <li class="active"><a href="">已回复留言</a></li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+
+<div class="container liuyan-list">
+    <hr>
+    <div class="panel panel-default">
+        {wz:guestbook action="listing"  page="$page" pagesize="3" order="id DESC" status="status=8" urlrule="$urlrule"}
+        {php $arr=array(1=>'未审核',8=>'已回复',9=>'未回复');}
+        {loop $rs $r}
+            <div class="panel-heading">
+                <span style="display: inline-block"><strong>[<a>{$r['field']}</a> <a>{$r['category']}</a>] <a>{$r['title']}</a></strong> <span class="color_999 font_size14">&nbsp;&nbsp; | &nbsp;&nbsp;{$arr[$r[status]]}</span> </span>
+                <span style=" float: right; font-size: 14px;  color: #999; line-height: 2.2">网友：{$r['linkman']}  &nbsp;&nbsp; {date('Y-m-d H:i',$r['addtime'])}</span>
+            </div>
+            <div class="panel-body">
+                {strcut($r['content'],180,'...')}
+                <p class="text-right color_777 font_size14 margin_bottom0"><a href="/index.php?m=guestbook&f=index&v=show&id={$r['id']}">[查看全文]</a></p>
+            </div>
+        {/loop}
+        {/wz}
+    </div>
+    <div style="text-align:center;">
+        {if $this->db->number>5}
+        <nav style="text-align: center;">
+            <ul class="pagination">
+                {$pages}
+            </ul>
+        </nav>
+        {/if}
+    </div>
+</div>
+
+
+{T "content","foot",TPLID}

@@ -22,15 +22,24 @@ class WUZHI_guestbook_template_parse {
      * @return array
      */
     public function listing($c) {
-
+        $where = $c['status'];
+        /*
         if(isset($c['id'])) {
             $id = intval($c['id']);
             $where = '`id`='.$id;
         } else {
             $where = '';
         }
+        */
         $order = isset($c['order']) ? $c['order'] : 'id DESC';
         $result = $this->db->get_list('guestbook', $where, '*', $c['start'], $c['pagesize'], 0,$order);
+        $this->number = $this->db->number;
+        $GLOBALS['pagesize'] = $c['pagesize'];
+        $GLOBALS['pages'] = 1;
+        if($c['page']) {
+            $this->pages = $this->db->pages;
+            $GLOBALS['pages'] = $this->pages;
+        }
         return $result;
 	}
 }
