@@ -143,9 +143,11 @@ class index extends WUZHI_admin {
 		$models = get_cache('model_member','model');
 		if(isset($GLOBALS['submit'])) {
 			if(!isset($GLOBALS['info']['email'])) MSG('邮件不能为空');
-			if(empty($GLOBALS['groups'])) {
+
+			if(empty($GLOBALS['info']['groupid'])) {
 				MSG('请选择会员组');
 			}
+
 			if(empty($GLOBALS['modelids'])) {
 				MSG('请选择模型');
 			}
@@ -159,12 +161,15 @@ class index extends WUZHI_admin {
 				copy(WWW_ROOT.$GLOBALS['avatar'],$file.'180x180.jpg');
 				$this->db->update('member', array('avatar'=>1), array('uid' => $uid));
 			}
-			foreach($GLOBALS['groups'] as $groupid) {
-				$formdata = array();
-				$formdata['uid'] = $uid;
-				$formdata['groupid'] = $groupid;
-				$this->db->insert('member_group_extend', $formdata);
+			if(!empty($GLOBALS['groups'])) {
+				foreach($GLOBALS['groups'] as $groupid) {
+					$formdata = array();
+					$formdata['uid'] = $uid;
+					$formdata['groupid'] = $groupid;
+					$this->db->insert('member_group_extend', $formdata);
+				}
 			}
+
 			if($GLOBALS['islock']==1) {//未激活
 //发送激活邮件
 				$sys_name = intval($GLOBALS['sys_name']);
@@ -175,7 +180,7 @@ class index extends WUZHI_admin {
 				$username = $GLOBALS['info']['username'];
 				$sendtime = date('F j, Y H:i',SYS_TIME);//January 20, 2016 17:14
 				//Wed Jan 20 18:21:37 GMT-8 2016
-				$subject = 'Activate your IIIS website account';
+				$subject = '激活您的帐号';
 				$randtime = rand(10000,99999);
 				$activecode = md5($uid.$randtime);
 				$linkurl = WEBURL.'index.php?m=member&f=active_account&activecode='.$activecode.'&uid='.$uid.'&randtime='.$randtime;
@@ -184,19 +189,12 @@ class index extends WUZHI_admin {
 				include T('member', 'mail_active');
 				$message = ob_get_contents();
 				ob_end_clean();
-
-				$mail = load_class('sendmail');
-				$mail->setServer($config['smtp_server'], $config['smtp_user'], $password); //设置smtp服务器，普通连接
-				$mail->setFrom($config['send_email']); //设置发件人
-				$mail->setReceiver($GLOBALS['info']['email']); //设置收件人，多个收件人，调用多次
-
-				$mail->setMail($subject, $message); //设置邮件主题、内容
-				$mail->sendMail(); //发送
-				if($mail->_errorMessage) {
-					MSG($mail->_errorMessage);
+				load_function('sendmail');
+				if(send_mail($GLOBALS['info']['email'],$subject,$message)===false) {
+					MSG(L('邮件发送失败!'));
 				}
 			} else {
-
+				$this->db->update('member', array('ischeck_email'=>1), array('uid' => $uid));
 			}
 			MSG(L('operation_success'),'?m=member&f=index&v=listing'.$this->su());
 		} else {

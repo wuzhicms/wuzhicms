@@ -38,7 +38,7 @@ class active_account{
 
 			$factor = random_string('diy', 6,'23456789abcdefghjkmnpqrstuvwxyz');
 			$password = md5(md5($password).$factor);
-			$this->db->update('member', array('username'=>$username, 'password'=>$password,'pw_reset'=>0,'islock'=>0,'sys_name'=>0), array('uid' => $uid));
+			$this->db->update('member', array('username'=>$username, 'password'=>$password,'factor'=>$factor,'pw_reset'=>0,'islock'=>0,'sys_name'=>0,'ischeck_email'=>1), array('uid' => $uid));
 			$forward = urlencode('index.php?m=member');
 			MSG('帐号激活成功,请登录','index.php?m=member&v=login&forward='.$forward);
 		} else {
