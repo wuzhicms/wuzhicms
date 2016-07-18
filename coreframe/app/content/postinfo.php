@@ -20,8 +20,8 @@ class postinfo extends WUZHI_foreground {
         if(!$this->memberinfo['ischeck_email']) {
             MSG('请先验证您的邮箱!','?m=member&f=index&v=edit_email&set_iframe='.$GLOBALS['set_iframe'],3000);
         }
-		if(!$this->memberinfo['ischeck_mobile']) {
-			MSG('您的手机还未验证！请先验证！','index.php?m=member&f=index&v=edit_mobile',3000);
+		if($this->member_setting['checkmobile'] && !$this->memberinfo['ischeck_mobile']) {
+			MSG('您的手机还未验证！请先验证！','index.php?m=member&f=index&v=edit_mobile&set_iframe='.$GLOBALS['set_iframe'],3000);
 		}
 	}
 
@@ -176,7 +176,7 @@ class postinfo extends WUZHI_foreground {
 
                 //统计表加默认数据
                 $this->db->insert('content_rank',array('cid'=>$cid,'id'=>$id,'updatetime'=>SYS_TIME));
-            MSG('信息发布成功，我们将在24小时内进行审核！','?f=postinfo&v=listing&cid='.$cid,3000);
+            MSG('信息发布成功，我们将在24小时内进行审核！','?f=postinfo&v=listing&cid='.$cid.'&set_iframe='.$GLOBALS['set_iframe'],3000);
         } else {
             $categorys = get_cache('category','content');
             load_function('content','content');
