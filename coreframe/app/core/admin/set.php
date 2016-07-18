@@ -128,7 +128,7 @@ class set extends WUZHI_admin {
             load_function('sendmail');
 
             if(send_mail($receive,$subject,$message)===false) {
-                MSG(L('邮件发送失败!'));
+                MSG(L('邮件发送失败,请检查配置.'));
             }
             MSG(L('sendmail success'),HTTP_REFERER);
         } else {

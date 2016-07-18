@@ -35,6 +35,8 @@ function send_mail($to,$subject,$body) {
 		$mail->addAddress($_to);
 		$mail->Subject = $subject;
 		$mail->Body    = $tmp_body;
-		$mail->send();
+		if(!$mail->send()) {
+			return false;
+		}
 	}
 }
