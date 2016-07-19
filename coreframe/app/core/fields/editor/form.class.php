@@ -4,7 +4,7 @@
         extract($config,EXTR_SKIP);
         if($setting) extract($setting,EXTR_SKIP);
         if($minlength>0) {
-            $validform = 'datatype="*" nullmsg="请输入\'.$name.\'" errormsg="\'.$name.\'不能为空"';
+            $validform = 'datatype="*" nullmsg="请输入'.$name.'" errormsg="'.$name.'不能为空"';
         } else {
             $validform = '';
         }

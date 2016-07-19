@@ -72,7 +72,7 @@
 					<tr id="set_name_id">
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">更改用户名</label></td>
 						<td>
-							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><label><input type="radio" name="sys_name" value="1" > 允许 </label><label style="padding-left: 20px;"><input type="radio" name="sys_name" value="0" checked> 不允许</label></div>
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><label><input type="radio" name="sys_name" value="1" datatype="*" errormsg="请选择是否允许更改用户名" nullmsg="请选择是否允许更改用户名！"> 允许 </label><label style="padding-left: 20px;"><input type="radio" name="sys_name" value="0" checked> 不允许</label></div>
 						</td>
 					</tr>
 					<tr>
