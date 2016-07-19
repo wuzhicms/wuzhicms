@@ -1,6 +1,6 @@
 UPDATE `wz_block` SET `lang` = 'zh';
 DELETE FROM `wz_model_field` WHERE `modelid` = 15;
-INSERT INTO `wz_model_field` (`id`, `modelid`, `field`, `name`, `remark`, `css`, `minlength`, `maxlength`, `pattern`, `errortips`, `formtype`, `setting`, `ext_code`, `unsetgids`, `unsetroles`, `master_field`, `ban_field`, `location`, `search_field`, `ban_contribute`, `to_fulltext`, `to_block`, `sort`, `disabled`, `powerful_field`, `workflow_field`) VALUES
+INSERT INTO `wz_model_field` (`modelid`, `field`, `name`, `remark`, `css`, `minlength`, `maxlength`, `pattern`, `errortips`, `formtype`, `setting`, `ext_code`, `unsetgids`, `unsetroles`, `master_field`, `ban_field`, `location`, `search_field`, `ban_contribute`, `to_fulltext`, `to_block`, `sort`, `disabled`, `powerful_field`, `workflow_field`) VALUES
 (15, 'addtime', '添加时间', '', '', 0, 0, '', '', 'datetime', 'a:2:{s:9:"fieldtype";s:3:"int";s:6:"format";s:11:"Y-m-d H:i:s";}', '', '', '', 1, 1, 1, 0, 0, 0, 1, 12, 0, 0, 0),
 (15, 'content', '留言内容', '', '', 0, 0, '', '', 'editor', 'a:2:{s:7:"toolbar";s:8:"textarea";s:12:"defaultvalue";s:0:"";}', '', '', '', 1, 0, 0, 0, 0, 1, 0, 4, 0, 0, 0),
 (15, 'title', '留言标题', '', '', 2, 80, '', '', 'text', 'a:4:{s:4:"size";s:0:"";s:12:"defaultvalue";s:0:"";s:10:"ispassword";s:1:"0";s:10:"enablehtml";s:1:"0";}', '', '', '', 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0),

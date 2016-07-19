@@ -7269,6 +7269,7 @@ CREATE TABLE `wz_model_field` (
 -- 转存表中的数据 `wz_model_field`
 --
 
+
 INSERT INTO `wz_model_field` (`id`, `modelid`, `field`, `name`, `remark`, `css`, `minlength`, `maxlength`, `pattern`, `errortips`, `formtype`, `setting`, `ext_code`, `unsetgids`, `unsetroles`, `master_field`, `ban_field`, `location`, `search_field`, `ban_contribute`, `to_fulltext`, `to_block`, `sort`, `disabled`, `powerful_field`, `workflow_field`) VALUES
 (392, 20, 'tel', '电话', '', '', 0, 0, '', '', 'text', 'a:4:{s:4:"size";s:0:"";s:12:"defaultvalue";s:0:"";s:10:"ispassword";s:1:"0";s:10:"enablehtml";s:1:"0";}', '', '', '', 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0),
 (468, 7, 'remark', '摘要', '', '', 0, 0, '', '', 'textarea', 'a:2:{s:12:"defaultvalue";s:0:"";s:10:"enablehtml";s:1:"0";}', '', '', '', 1, 1, 0, 0, 0, 1, 1, 4, 0, 0, 0),
@@ -7479,7 +7480,10 @@ INSERT INTO `wz_model_field` (`id`, `modelid`, `field`, `name`, `remark`, `css`,
 (534, 2, 'return_point', '返还积分', '', '', 0, 0, '', '', 'number', '', '', '', '', 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0),
 (535, 2, 'iprice', '原价', '', '', 0, 0, '', '', 'coin', '', '', '', '', 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0),
 (536, 7, 'youku', '优酷播放', '', '', 0, 0, '', '', 'video_youku', '', '', '', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0),
-(537, 7, 'tudou', '土豆播放', '', '', 0, 0, '', '', 'video_tudou', '', '', '', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0);
+(537, 7, 'tudou', '土豆播放', '', '', 0, 0, '', '', 'video_tudou', '', '', '', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0),
+(538, 15, 'area', '主题领域', '', '', 0, 0, '', '', 'box', 'a:5:{s:7:"options";s:223:"三农|三农\r\n环保|环保\r\n医疗|医疗\r\n就业|就业\r\n文娱|文娱\r\n感谢|感谢\r\n拆迁|拆迁\r\n城建|城建\r\n交通|交通\r\n旅游|旅游\r\n企业|企业\r\n谏言|谏言\r\n教育|教育\r\n贪腐|贪腐\r\n其他|其他";s:7:"boxtype";s:5:"radio";s:9:"fieldtype";s:7:"varchar";s:12:"defaultvalue";s:0:"";s:10:"outputtype";s:1:"0";}', '', '', '', 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
+(539, 15, 'category', '主题类别', '', '', 0, 0, '', '', 'box', 'a:5:{s:7:"options";s:73:"咨询|咨询\r\n谏言|谏言\r\n投诉|投诉\r\n求助|求助\r\n感谢|感谢";s:7:"boxtype";s:5:"radio";s:9:"fieldtype";s:7:"varchar";s:12:"defaultvalue";s:0:"";s:10:"outputtype";s:1:"0";}', '', '', '', 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0);
+
 
 -- --------------------------------------------------------
 
