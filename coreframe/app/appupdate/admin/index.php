@@ -18,7 +18,7 @@ final class index extends WUZHI_admin
         $this->db         = load_class('db');
         $this->filesystem = load_class('filesystem', $m = 'appupdate');
         $this->app_client = load_class('app_client', $m = 'appupdate');
-        $this->systemRoot = substr(WWW_ROOT, 0, -4);
+        $this->systemRoot = '';
     }
 
     /**
@@ -63,34 +63,33 @@ final class index extends WUZHI_admin
             }
         }
 
-        $rootDirectory = $this->systemRoot;
 
-        if (!is_writeable("{$rootDirectory}www")) {
-            $errors[] = 'www目录无写权限';
+        if (!is_writeable(WWW_ROOT)) {
+            $errors[] = WWW_ROOT.'目录无写权限';
         }
 
-        if (!is_writeable("{$rootDirectory}www/api")) {
-            $errors[] = 'www/api目录无写权限';
+        if (!is_writeable(WWW_ROOT."api")) {
+            $errors[] = WWW_ROOT.'api目录无写权限';
         }
 
-        if (!is_writeable("{$rootDirectory}www/configs")) {
-            $errors[] = 'www/configs目录无写权限';
+        if (!is_writeable(WWW_ROOT."configs")) {
+            $errors[] = WWW_ROOT.'configs目录无写权限';
         }
 
-        if (!is_writeable("{$rootDirectory}www/res")) {
-            $errors[] = 'www/res目录无写权限';
+        if (!is_writeable(WWW_ROOT."res")) {
+            $errors[] = WWW_ROOT.'res目录无写权限';
         }
 
-        if (!is_writeable("{$rootDirectory}coreframe")) {
+        if (!is_writeable(COREFRAME_ROOT)) {
             $errors[] = 'coreframe目录无写权限';
         }
 
-        if (!is_writeable("{$rootDirectory}caches")) {
+        if (!is_writeable(CACHE_ROOT)) {
             $errors[] = 'cache目录无写权限';
         }
 
-        if (!is_writeable("{$rootDirectory}/www/configs/web_config.php")) {
-            $errors[] = 'www/configs/web_config.php文件无写权限';
+        if (!is_writeable(WWW_ROOT."configs/web_config.php")) {
+            $errors[] = WWW_ROOT.'configs/web_config.php文件无写权限';
         }
         $this->createJsonErrors($errors);
     }
@@ -174,7 +173,13 @@ final class index extends WUZHI_admin
             $this->filesystem->remove(BACKUP_PATH."{$package['fromVersion']}");
         }
         while ($filePath = fgets($handle)) {
-            $originFile = $this->systemRoot.trim($filePath);
+            $filePath= trim($filePath);
+            if(substr($filePath,0,9)=='coreframe') {
+                $originFile = COREFRAME_ROOT.substr($filePath,9);
+            } elseif(substr($filePath,0,3)=='www') {
+                $originFile = WWW_ROOT.substr($filePath,3);
+            }
+
 
             $targetFile = BACKUP_PATH."{$package['fromVersion']}/".trim($filePath);
             if ($this->filesystem->exists($originFile)) {
@@ -217,7 +222,8 @@ final class index extends WUZHI_admin
 
         $handle = fopen($packageDir.'/template', 'r');
         while ($filePath = fgets($handle)) {
-            $fullPath        = $this->systemRoot.trim($filePath);
+            $filePath = trim($filePath);
+            $fullPath        = COREFRAME_ROOT.substr($filePath,9);
             $fullUpgradePath = $packageDir.'/source/'.trim($filePath);
 
             if (md5_file($fullPath) !== md5_file($fullUpgradePath)) {
@@ -316,11 +322,19 @@ final class index extends WUZHI_admin
         $handle = fopen($packageDir.'/delete', 'r');
 
         while ($filePath = fgets($handle)) {
-            $fullPath = $this->systemRoot.trim($filePath);
-
-            if ($this->filesystem->exists($fullPath)) {
-                $this->filesystem->remove($fullPath);
+            $filePath= trim($filePath);
+            if(substr($filePath,0,9)=='coreframe') {
+                $fullPath = COREFRAME_ROOT.substr($filePath,9);
+                if ($this->filesystem->exists($fullPath)) {
+                    $this->filesystem->remove($fullPath);
+                }
+            } elseif(substr($filePath,0,3)=='www') {
+                $fullPath = WWW_ROOT.substr($filePath,3);
+                if ($this->filesystem->exists($fullPath)) {
+                    $this->filesystem->remove($fullPath);
+                }
             }
+
         }
 
         fclose($handle);
@@ -345,8 +359,9 @@ final class index extends WUZHI_admin
         $handle = fopen($packageDir.'/template', 'r');
 
         while ($filePath = fgets($handle)) {
-            $originFile  = $this->systemRoot.trim($filePath);
-            $upgradeFile = "{$packageDir}/source/".trim($filePath);
+            $filePath = trim($filePath);
+            $originFile  = COREFRAME_ROOT.substr($filePath,9);
+            $upgradeFile = "{$packageDir}/source/".$filePath;
 
             if ($coveringUpdateTpl) {
                 //覆盖更新  -> 备份系统中的模版文件并覆盖更新
@@ -368,7 +383,13 @@ final class index extends WUZHI_admin
 
     protected function _replaceFileForPackageUpdate($packageDir)
     {
-        $this->filesystem->mirror("{$packageDir}/source", $this->systemRoot, null, array(
+        $this->systemRoot = COREFRAME_ROOT;
+        $this->filesystem->mirror("{$packageDir}/source/coreframe", $this->systemRoot, null, array(
+            'override'        => true,
+            'copy_on_windows' => true
+        ));
+        $this->systemRoot = WWW_ROOT;
+        $this->filesystem->mirror("{$packageDir}/source/www", $this->systemRoot, null, array(
             'override'        => true,
             'copy_on_windows' => true
         ));
