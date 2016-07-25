@@ -143,7 +143,7 @@ class model extends WUZHI_admin {
             }
         }
 		$this->cache_form();
-        MSG(L('delete success'),'?m=core&f=model&v=model_listing'.$this->su());
+		MSG(L('delete success'),HTTP_REFERER);
     }
 
 	//添加字段
