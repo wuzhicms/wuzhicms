@@ -119,7 +119,11 @@ final class WUZHI_application {
         $GLOBALS['_CLASS_NAME_'] = '';
         if ($name === FALSE) {
             $full_dir = '';
-            if(OPEN_DEBUG) $full_dir = COREFRAME_ROOT.'app/'.$app.$_admin_dir.'/';
+            if(OPEN_DEBUG) {
+                $full_dir = COREFRAME_ROOT.'app/'.$app.$_admin_dir.'/';
+            } else {
+                $full_dir = '/coreframe/app/'.$app.$_admin_dir.'/';
+            }
             $filename = strip_tags($filename);
             echo 'Unable to locate the specified filename: '.$full_dir.$filename.'.php';
             exit();
