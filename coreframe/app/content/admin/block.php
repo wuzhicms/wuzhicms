@@ -29,7 +29,7 @@ class block extends WUZHI_admin {
 	}
 
     public function listing() {
-        $where = array('siteid'=>$this->siteid);
+        $where = array('siteid'=>$this->siteid,'tplid'=>TPLID);
         $page = intval($GLOBALS['page']);
         $result = $this->db->get_list('block', $where, '*', 0, 20, $page,'blockid DESC');
         $pages = $this->db->pages;
