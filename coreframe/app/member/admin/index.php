@@ -241,13 +241,13 @@ class index extends WUZHI_admin {
 		if(empty($member))MSG(L('user not_exists'));
 		$models = get_cache('model_member','model');
 		if(isset($GLOBALS['submit'])) {
-			if(empty($GLOBALS['groups'])) MSG('请选择会员组');
 			if(empty($GLOBALS['modelids'])) MSG('请选择模型');
 			$GLOBALS['info']['factor'] = $member['factor'];
 			//$GLOBALS['info']['username'] = $member['username'];
 			$GLOBALS['info']['modelid'] = implode(',',$GLOBALS['modelids']);
 
 			if(!$this->member->edit($GLOBALS['info'], $uid)) MSG(L('operation_failure'));
+
 			$file = WWW_ROOT.'uploadfile/member/'.substr(md5($uid), 0, 2).'/'.$uid.'/';
 			if(!is_dir($file)) mkdir($file,0777,true);
 			if($GLOBALS['avatar'] && file_exists(WWW_ROOT.$GLOBALS['avatar'])) {
@@ -273,7 +273,6 @@ class index extends WUZHI_admin {
 					$data[$modelid][$field] = $value;
 				}
 			}
-			//print_r($data);exit;
 			foreach($data as $modelid=>$rs) {
 
 				$table = $models[$modelid]['attr_table'];
@@ -286,25 +285,18 @@ class index extends WUZHI_admin {
 					$this->db->insert($table, $rs);
 				}
 			}
-			foreach($data_en as $modelid=>$rs) {
-				$table = $models[$modelid]['attr_table'].'_en';
-				$rd = $this->db->get_one($table, array('uid' => $uid));
-				if($rd) {
-					$this->db->update($table, $rs, array('uid' => $uid));
-				} else {
-					$rs['uid'] = $uid;
-					$this->db->insert($table, $rs);
-				}
-			}
+
 			//保存扩展会员组
 			$this->db->delete('member_group_extend', array('uid' => $uid));
-
-			foreach($GLOBALS['groups'] as $groupid) {
-				$formdata = array();
-				$formdata['uid'] = $uid;
-				$formdata['groupid'] = $groupid;
-				$this->db->insert('member_group_extend', $formdata);
+			if(!empty($GLOBALS['groups'])) {
+				foreach($GLOBALS['groups'] as $groupid) {
+					$formdata = array();
+					$formdata['uid'] = $uid;
+					$formdata['groupid'] = $groupid;
+					$this->db->insert('member_group_extend', $formdata);
+				}
 			}
+
 			MSG('信息修改成功!',HTTP_REFERER);
 		} else {
 			$modelid = $member['modelid'];
@@ -345,16 +337,16 @@ class index extends WUZHI_admin {
 				}
 
 			}
-		$tree = load_class('tree','core',$ext_group);
-		$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
-		//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');
-		$tree_data = '';
+			$tree = load_class('tree','core',$ext_group);
+			$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
+			//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');
+			$tree_data = '';
 
-		//格式字符串
-		$str="<tr id='gid\$groupid' class='\$trbg'><td class='categorytd'><input  name='groups[]' type='checkbox' value='\$groupid' id='box\$groupid' \$selected onclick='set_gp(\$groupid,\$pid);'><input name='pids[]' type='hidden' value='\$pid' id='hgid\$groupid'></td><td>\$groupid</td><td>\$spacer\$name</td></tr>";
+			//格式字符串
+			$str="<tr id='gid\$groupid' class='\$trbg'><td class='categorytd'><input  name='groups[]' type='checkbox' value='\$groupid' id='box\$groupid' \$selected onclick='set_gp(\$groupid,\$pid);'><input name='pids[]' type='hidden' value='\$pid' id='hgid\$groupid'></td><td>\$groupid</td><td>\$spacer\$name</td></tr>";
 
-		//返回树
-		$tree_data.=$tree->create(0,$str);
+			//返回树
+			$tree_data.=$tree->create(0,$str);
 
 			$form = load_class('form');
 			$avatar = avatar($uid,180);
