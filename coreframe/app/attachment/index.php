@@ -71,9 +71,11 @@ class index {
     public function h5upload() {
         $insert = array();
         $_username = get_cookie('_username');
-        $wz_name = get_cookie('wz_name');
-        $_username = $_username ? $_username : $wz_name ? $wz_name : '';
 
+        $wz_name = get_cookie('wz_name');
+        if($wz_name!='') {
+            $_username = $wz_name;
+        }
         if($_username!='') {
             $mr = $this->db->get_one('member', array('username' => $_username),'uid');
             if(!$mr) {
