@@ -183,8 +183,7 @@ class index extends WUZHI_foreground{
 				MSG('手机号码错误');
 			}
 			//检查短信验证码是否正确
-			if($setting['checkmobile'] && $GLOBALS['smscode']=='') {
-				MSG('短信验证码错误');
+			if($setting['checkmobile']) {
 				$posttime = SYS_TIME-300;//5分钟内有效
 				$r = $this->db->get_one('sms_checkcode',"`mobile`='$mobile' AND `posttime`>$posttime",'*',0,'id DESC');
 				if(!$r || $r['code']!=$GLOBALS['smscode']) MSG("手机号验证失败！");
