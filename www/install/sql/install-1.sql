@@ -1982,7 +1982,7 @@ CREATE TABLE `wz_block` (
   `createhtml` tinyint(1) UNSIGNED NOT NULL,
   `remark` varchar(255) NOT NULL,
   `isopenid` tinyint(1) NOT NULL DEFAULT '0',
-  `lang` varchar(10) NOT NULL
+  `lang` varchar(10) NOT NULL DEFAULT 'zh'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='区块表';
 
 --
