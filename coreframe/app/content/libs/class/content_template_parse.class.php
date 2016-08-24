@@ -289,6 +289,7 @@ class WUZHI_content_template_parse {
         return $result;
     }
     public function block($c) {
+        $this->childs = array();
         if($c['type']==1) {
             if(isset($c['cid'])) {
                 if($this->categorys[$c['cid']]['child']) {
