@@ -120,12 +120,20 @@ function sql_execute($link, $sql, $tablepre = '')
         foreach($ret as $sql) {
             if(trim($sql) != '') {
                 //echo $sql."\r\n";
+                if($is_mysql) {
+                    if(mysqli_query($link,$ret)) {
 
-                if(mysql_query($sql,$link)) {
-
+                    } else {
+                        mysqli_error($link);
+                    }
                 } else {
-                    mysql_error();
+                    if(mysql_query($sql,$link)) {
+
+                    } else {
+                        mysql_error();
+                    }
                 }
+
             }
         }
     } else {
@@ -139,7 +147,7 @@ function sql_execute($link, $sql, $tablepre = '')
             if(mysqli_query($link,$ret)) {
 
             } else {
-                mysqli_error();
+                mysqli_error($link);
             }
         }
 
@@ -161,8 +169,11 @@ function import_sql($id,$weburl){
         }
         mysql_select_db($db['dbname']);
     } else {
-        $link = mysqli_connect($db['dbhost'], $db['username'], $db['password'],$db['dbname']) or die ('Not connected : ' . mysqli_error());
-        $version = mysqli_get_server_info();
+        $link = mysqli_connect($db['dbhost'], $db['username'], $db['password'],$db['dbname']);
+        if(!$link){
+            die ('Not connected mysql.' );
+        }
+        $version = mysqli_get_server_info($link);
         mysqli_query($link,"SET NAMES '$dbcharset'");
 
         if($version > '5.0') {
