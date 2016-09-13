@@ -121,7 +121,7 @@ function sql_execute($link, $sql, $tablepre = '')
             if(trim($sql) != '') {
                 //echo $sql."\r\n";
                 if(!$is_mysql) {
-                    if(mysqli_query($link,$ret)) {
+                    if(mysqli_query($link,$sql)) {
 
                     } else {
                         mysqli_error($link);
@@ -500,8 +500,11 @@ switch($step) {
 
 
                     } else {
-                        $link = mysqli_connect($db['dbhost'], $db['username'], $db['password']) or die ('Not connected : ' . mysqli_error());
-                        $version = mysqli_get_server_info();
+                        $link = mysqli_connect($db['dbhost'], $db['username'], $db['password']);
+                        if(!$link){
+                            die ('Not connected : ' . mysqli_error($link));
+                        }
+                        $version = mysqli_get_server_info($link);
                         mysqli_query($link,"SET NAMES '$dbcharset'");
 
                         if($version > '5.0') {
