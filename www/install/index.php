@@ -120,7 +120,7 @@ function sql_execute($link, $sql, $tablepre = '')
         foreach($ret as $sql) {
             if(trim($sql) != '') {
                 //echo $sql."\r\n";
-                if($is_mysql) {
+                if(!$is_mysql) {
                     if(mysqli_query($link,$ret)) {
 
                     } else {
