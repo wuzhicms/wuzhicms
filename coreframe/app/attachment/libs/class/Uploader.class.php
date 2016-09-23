@@ -50,7 +50,9 @@ class WUZHI_Uploader
      */
     public function __construct()
     {
-
+		$this->image = load_class('image');
+		$this->setting = get_cache('attachment');
+		$this->water_mark = $this->setting['watermark_enable'];
     }
     public function set($fileField = '', $config = array(), $type = "upload") {
         $this->fileField = $fileField;
@@ -356,6 +358,17 @@ class WUZHI_Uploader
 		$insert['filesize'] = $this->fileSize;
 		$insert['ip'] = get_ip();
 		$insert['username'] = get_cookie('username') ? get_cookie('username') : get_cookie('wz_name');
+		if($this->water_mark == true) {
+			$this->image->set_image($this->filePath);
+			$this->image->createImageFromFile();
+			if($this->setting['watermark_enable']==2) {//文字水印
+				$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+			} else {//图片水印
+				$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+			}
+
+			$this->image->save();
+		}
 		$id = $attachment->insert($insert);
 	}
 
