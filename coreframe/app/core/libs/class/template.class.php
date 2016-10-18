@@ -156,13 +156,15 @@ final class WUZHI_template {
 		$arr = array('action', 'cache', 'page', 'pagesize', 'return', 'start');
 		$tools = array('json', 'xml', 'block', 'sql');
 		$datas = array();
+		$tmp = array();
 		foreach ($matches as $v) {
 			if (in_array($v[1], $arr)) {
-				$$v[1] = $v[2];
+				$tmp[$v[1]] = $v[2];
 				continue;
 			}
 			$datas[$v[1]] = $v[2];
 		}
+		extract($tmp,EXTR_OVERWRITE);
 		$str = $str_datas = '';
 
 		$pagesize = isset($pagesize) && intval($pagesize) ? intval($pagesize) : 20;
