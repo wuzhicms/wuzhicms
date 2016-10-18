@@ -188,11 +188,11 @@ class WUZHI_mysqli {
 	}
 
 	public function error() {
-		return (($this->link) ? mysqli_error($this->link) : mysql_error());
+		return mysqli_error($this->link);
 	}
 
 	public function errno() {
-		return intval(($this->link) ? mysqli_errno($this->link) : mysqli_errno());
+		return mysqli_errno($this->link);
 	}
 
 	public function result($query, $row) {
