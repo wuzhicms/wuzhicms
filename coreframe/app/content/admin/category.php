@@ -30,7 +30,7 @@ class category extends WUZHI_admin {
 		foreach($result as $cid=>$r) {
 			$result[$cid]['str_manage'] = '<a class="btn btn-default btn-xs" href="?m=content&f=category&v=add&pid='.$r['cid'].$this->su().'">添加子栏目</a> <a class="btn btn-primary btn-xs" href="?m=content&f=category&v=edit&cid='.$r['cid'].$this->su().'">修改</a> <a class="btn btn-danger btn-xs" href="javascript:makedo(\'?m=content&f=category&v=delete&cid='.$r['cid'].$this->su().'\', \'确认删除该记录？\')">删除</a>';
 			$result[$cid]['ctype'] = $types[$r['type']];
-			$result[$cid]['siteid'] = $sitelist[$r['siteid']]['name'];
+			$result[$cid]['siteid'] = isset($sitelist[$r['siteid']]['name'])? $sitelist[$r['siteid']]['name']:'';
 			$result[$cid]['modelname'] = $model_cache[$r['modelid']]['name'];
 			$result[$cid]['url'] = strpos('://',$r['url'])===false ? '<a href="'.$sitelist[$r['siteid']]['url'].ltrim($r['url'],'/').'" target="_blank">访问</a>' : '<a href="'.$r['url'].'" target="_blank">访问</a>';
 		}

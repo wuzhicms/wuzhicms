@@ -229,7 +229,7 @@ class group extends WUZHI_admin {
 				}
 
 				$result[$cid]['ctype'] = $types[$r['type']];
-				$result[$cid]['siteid'] = $sitelist[$r['siteid']]['name'];
+				$result[$cid]['siteid'] = isset($sitelist[$r['siteid']]['name']) ? $sitelist[$r['siteid']]['name'] : '';
 				$result[$cid]['modelname'] = $model_cache[$r['modelid']]['name'];
 				$result[$cid]['url'] = '<a href="'.$r['url'].'" target="_blank">访问</a>';
 			}
