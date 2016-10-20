@@ -1,36 +1,22 @@
 <?php
 $_CACHE['apps'] = array (
-  1 => 
+  1 =>
   array (
     'appid' => '1',
     'type' => 'DISCUZX',
     'name' => 'Discuz! Board',
-    'url' => 'http://bbs.wuzhicms.com',
+    'url' => 'http://localhost/discuz_development',
     'ip' => '',
     'viewprourl' => '',
     'apifilename' => 'uc.php',
     'charset' => '',
+    'dbcharset' => '',
     'synlogin' => '1',
-    'extra' => '',
     'recvnote' => '1',
+    'extra' => false,
+    'tagtemplates' => '',
+    'allowips' => '',
   ),
-  2 => 
-  array (
-    'appid' => '2',
-    'type' => 'OTHER',
-    'name' => 'wuzhicms',
-    'url' => 'http://dev.wuzhicms.com',
-    'ip' => '',
-    'viewprourl' => '',
-    'apifilename' => 'uc.php',
-    'charset' => '',
-    'synlogin' => '1',
-    'extra' => 
-    array (
-      'apppath' => '',
-      'extraurl' => '			',
-    ),
-    'recvnote' => '1',
-  ),
-  'UC_API' => 'http://bbs.wuzhicms.com/uc_server',
 );
+
+?>

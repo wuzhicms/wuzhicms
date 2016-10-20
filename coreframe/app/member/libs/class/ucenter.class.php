@@ -23,6 +23,7 @@ class WUZHI_ucenter {
 		define('UC_DBPRE', $this->setting['uc_dbtablepre']) ;
 		define('UC_DBTABLEPRE', $this->setting['uc_dbtablepre']);
     	define('UC_DBCHARSET', $this->setting['uc_dbcharset']); 
+    	define('DISCUZ_DBTABLEPRE', $this->setting['discuz_dbtablepre']);
 		define('UC_CONNECT', 'mysql');
 		define('UC_DBCONNECT',0);
 		define('API_RETURN_SUCCEED', 1);
@@ -51,8 +52,10 @@ class WUZHI_ucenter {
 			//	再一次调取UC的信息
 			list($ucuid, $uc_username, $uc_password, $email) =  $this->uc_call("uc_user_login", array($username, $password));
 		}
-		if($ucuid == '-1')MSG(L('user_not_exist'));
-		if($ucuid == '-2')MSG(L('password_error'), HTTP_REFERER);
+		if($ucuid == '-1') {
+			MSG(L('user_not_exist'));
+		}
+		if($ucuid == '-2') MSG(L('password_error'), HTTP_REFERER);
 		$synlogin = $this->uc_call('uc_user_synlogin', array($ucuid));
 		//	同步数据到WZ
 		if(!is_array($user) || empty($user)){
@@ -66,12 +69,19 @@ class WUZHI_ucenter {
 				$user['password'] = md5(md5($password).$user['factor']);
 				$user['ucuid'] = $ucuid;
 				$user['modelid'] = '';
+				$user['pw_reset'] = 0;
+				$user['modelid'] = 10;
+				$user['regtime'] = SYS_TIME;
+				$user['regip'] = get_ip();
+				$user['lasttime'] = SYS_TIME;
 				$user['uid'] = $this->db->insert('member', $user, true);
 			}
 		}
 		if($user['ucuid'] != $ucuid){
 			$this->db->update('member', 'ucuid='.$ucuid, 'uid='.$user['uid']);
 		}
+		//TODO 删除测试
+		//echo $synlogin;exit;
 		return $synlogin;
 	}
 	/**
@@ -95,7 +105,9 @@ class WUZHI_ucenter {
 	 * @return	int	$ucuid
 	 */
 	public function register($user){
-		$ucuid = $this->uc_call('uc_user_register', $user);
+
+		$ucuid = $this->uc_call('uc_user_register_new', $user);
+
 		if($ucuid <= 0){
 			switch ($ucuid){
 				case -1:
@@ -116,6 +128,12 @@ class WUZHI_ucenter {
 				case -6:
 					MSG(L('uc_error_6'));
 					break;
+				case -7:
+					MSG('UCenter已存在手机号错误');
+					break;
+				case -8:
+					MSG('UCenter手机号重复');
+					break;
 				default:
 					MSG(L('uc_error_7'));
 			}
@@ -129,6 +147,7 @@ class WUZHI_ucenter {
 		return $this->uc_call('uc_user_edit', array($username, $oldpw, $newpw, $email, $ignoreoldpw, $questionid, $answer));
 	}
 	final function uc_call($func, $params=null){
+
 		if (!function_exists($func)){
 			include_once(WWW_ROOT.'api/uc_client/client.php');
 		}

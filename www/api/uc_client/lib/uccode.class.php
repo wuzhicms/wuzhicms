@@ -4,11 +4,15 @@
 	[UCenter] (C)2001-2099 Comsenz Inc.
 	This is NOT a freeware, use is subject to license terms
 
-	$Id: uccode.class.php 1059 2011-03-01 07:25:09Z monkey $
+	$Id: uccode.class.php 1166 2014-11-03 01:49:32Z hypowang $
 */
 
 class uccode {
 	var $uccodes;
+
+	function __construct() {
+		$this->uccode();
+	}
 
 	function uccode() {
 		$this->uccode = array(
@@ -27,15 +31,15 @@ class uccode {
 	}
 
 	function complie($message) {
-		$message = htmlspecialchars($message);
+		$message = dhtmlspecialchars($message);
 		if(strpos($message, '[/code]') !== FALSE) {
-			$message = preg_replace("/\s*\[code\](.+?)\[\/code\]\s*/ies", "\$this->codedisp('\\1')", $message);
+			$message = preg_replace_callback("/\s*\[code\](.+?)\[\/code\]\s*/is", array($this, 'complie_callback_codedisp_1'), $message);
 		}
 		if(strpos($message, '[/url]') !== FALSE) {
-			$message = preg_replace("/\[url(=((https?|ftp|gopher|news|telnet|rtsp|mms|callto|bctp|ed2k|thunder|synacast){1}:\/\/|www\.)([^\[\"']+?))?\](.+?)\[\/url\]/ies", "\$this->parseurl('\\1', '\\5')", $message);
+			$message = preg_replace_callback("/\[url(=((https?|ftp|gopher|news|telnet|rtsp|mms|callto|bctp|ed2k|thunder|synacast){1}:\/\/|www\.)([^\[\"']+?))?\](.+?)\[\/url\]/is", array($this, 'complie_callback_parseurl_15'), $message);
 		}
 		if(strpos($message, '[/email]') !== FALSE) {
-			$message = preg_replace("/\[email(=([a-z0-9\-_.+]+)@([a-z0-9\-_]+[.][a-z0-9\-_.]+))?\](.+?)\[\/email\]/ies", "\$this->parseemail('\\1', '\\4')", $message);
+			$message = preg_replace_callback("/\[email(=([a-z0-9\-_.+]+)@([a-z0-9\-_]+[.][a-z0-9\-_.]+))?\](.+?)\[\/email\]/is", array($this, 'complie_callback_parseemail_14'), $message);
 		}
 		$message = str_replace(array(
 			'[/color]', '[/size]', '[/font]', '[/align]', '[b]', '[/b]',
@@ -64,18 +68,33 @@ class uccode {
 			$message = preg_replace("/\s*\[quote\][\n\r]*(.+?)[\n\r]*\[\/quote\]\s*/is", $this->tpl_quote(), $message);
 		}
 		if(strpos($message, '[/img]') !== FALSE) {
-			$message = preg_replace(array(
-				"/\[img\]\s*([^\[\<\r\n]+?)\s*\[\/img\]/ies",
-				"/\[img=(\d{1,4})[x|\,](\d{1,4})\]\s*([^\[\<\r\n]+?)\s*\[\/img\]/ies"
-			), array(
-				"\$this->bbcodeurl('\\1', '<img src=\"%s\" border=\"0\" alt=\"\" />')",
-				"\$this->bbcodeurl('\\3', '<img width=\"\\1\" height=\"\\2\" src=\"%s\" border=\"0\" alt=\"\" />')"
-			), $message);
+			$message = preg_replace_callback("/\[img\]\s*([^\[\<\r\n]+?)\s*\[\/img\]/is", array($this, 'complie_callback_bbcodeurl_1a'), $message);
+			$message = preg_replace_callback("/\[img=(\d{1,4})[x|\,](\d{1,4})\]\s*([^\[\<\r\n]+?)\s*\[\/img\]/is", array($this, 'complie_callback_bbcodeurl_312a'), $message);
 		}
 		for($i = 0; $i <= $this->uccode['pcodecount']; $i++) {
 			$message = str_replace("[\tUCENTER_CODE_$i\t]", $this->uccode['codehtml'][$i], $message);
 		}
 		return nl2br(str_replace(array("\t", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
+	}
+
+	function complie_callback_codedisp_1($matches) {
+		return $this->codedisp($matches[1]);
+	}
+
+	function complie_callback_parseurl_15($matches) {
+		return $this->parseurl($matches[1], $matches[5]);
+	}
+
+	function complie_callback_parseemail_14($matches) {
+		return $this->parseemail($matches[1], $matches[4]);
+	}
+
+	function complie_callback_bbcodeurl_1a($matches) {
+		return $this->bbcodeurl($matches[1], '<img src="%s" border="0" alt="" />');
+	}
+
+	function complie_callback_bbcodeurl_312a($matches) {
+		return $this->bbcodeurl($matches[3], '<img width="'.$matches[1].'" height="'.$matches[2].'" src="%s" border="0" alt="" />');
 	}
 
 	function parseurl($url, $text) {
@@ -125,18 +144,5 @@ class uccode {
 	}
 }
 
-/*
-
-Usage:
-$str = <<<EOF
-1
-2
-3
-EOF;
-require_once 'lib/uccode.class.php';
-$this->uccode = new uccode();
-echo $this->uccode->complie($str);
-
-*/
 
 ?>

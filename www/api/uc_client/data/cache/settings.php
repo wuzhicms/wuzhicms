@@ -25,6 +25,7 @@ $_CACHE['settings'] = array (
   'maildelimiter' => '0',
   'mailusername' => '1',
   'mailsilent' => '1',
+  'login_failedtime' => '5',
   'version' => '1.6.0',
 );
 

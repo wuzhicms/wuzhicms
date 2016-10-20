@@ -195,14 +195,6 @@ class pmcontrol extends base {
 		if($filter == 'newpm') {
 			$type = 0;
 			$new = 1;
-/*
-		} elseif($filter == 'privatepm') {
-			$type = 1;
-			$new = 0;
-		} elseif($filter == 'chatpm') {
-			$type = 2;
-			$new = 0;
-*/
 		} elseif($filter == 'privatepm') {
 			$type = 0;
 			$new = 0;

@@ -43,7 +43,8 @@ $post = xml_unserialize($post);
 if(in_array($get['action'], array('test', 'deleteuser', 'renameuser', 'gettag', 'synlogin', 'synlogout', 'updatepw', 'updatebadwords', 'updatehosts', 'updateapps', 'updateclient', 'updatecredit', 'getcreditsettings', 'updatecreditsettings'))) {
 	$uc_note = new uc_note();
 	header('Content-type: text/html; charset='.CHARSET);
-	echo $uc_note->$get['action']($get, $post);
+	$action = $get['action'];
+	echo $uc_note->$action($get, $post);
 	exit();
 } else {
 	exit(API_RETURN_FAILED);

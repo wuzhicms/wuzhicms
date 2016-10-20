@@ -63,9 +63,9 @@ class WUZHI_foreground {
 					$this->clean_cookie();
 					MSG(L('login_again_please'), 'index.php?m=member&v=login');
 				}
-				//	如果用户还没选择模型 那么强制跳转到模型选择页面
-				if(empty($this->memberinfo['modelid']) && V != 'model'){
-					MSG(L('need_set_model'), 'index.php?m=member&v=model');
+				//判断用户是否必须要修改密码
+				if($this->memberinfo['pw_reset'] && V!='pw_reset'){
+					MSG('请先设置新密码', 'index.php?m=member&v=pw_reset');
 				}
 				//	判断是否存在模型id
 				if($this->memberinfo['modelid']){
@@ -81,10 +81,8 @@ class WUZHI_foreground {
 
 
 				}
-				//判断用户是否必须要修改密码
-				if($this->memberinfo['pw_reset'] && V!='pw_reset'){
-					MSG('请先设置新密码', 'index.php?m=member&v=pw_reset');
-				}
+
+
 				$this->uid = $uid;
 			} else {
 				if(isset($GLOBALS['setwindow'])) {

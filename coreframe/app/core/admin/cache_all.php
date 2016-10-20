@@ -53,7 +53,8 @@ class cache_all extends WUZHI_admin {
         $id = array_shift($ids);
         $r = $this->db->get_one('setting',array('id'=>$id));
         $caches = load_class($r['f'],$r['m']);
-        if($caches->$r['v']()) {
+		$funcname = $r['v'];
+        if($caches->$funcname()) {
             set_cache('cache_all-'.$uid,$ids);
             MSG($r['data'].L('update success'),'?m=core&f=cache_all&v=cache_select&setcache=1&'.$this->su(),200);
         } else {

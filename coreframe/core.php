@@ -22,8 +22,7 @@ if(ERROR_REPORT==1) {
     error_reporting(E_ALL);
 }
 ini_set('display_errors', 1);
-register_shutdown_function('running_fatal');
-set_error_handler('log_error');
+
 set_exception_handler('log_exception');
 
 //开始运行时间
@@ -277,7 +276,7 @@ function log_error( $num, $str, $file, $line, $context = null ) {
 /**
  * Uncaught exception handler.
  */
-function log_exception( Exception $e) {
+function log_exception($e) {
     $file = str_replace(rtrim(COREFRAME_ROOT,'/'),'coreframe->',$e->getFile());
     $file = str_replace(rtrim(WWW_ROOT,'/'),'www->',$file);
     $file = str_replace(rtrim(CACHE_ROOT,'/'),'caches->',$file);
@@ -315,12 +314,4 @@ function log_exception( Exception $e) {
         $message = "Time: " . date('Y-m-d H:i:s') . "; Type: " . $data['type'] . "; Message: {$e->getMessage()}; File: {$data['file']}; Line: {$data['line']};";
         @file_put_contents(CACHE_ROOT. "logs/error-".CACHE_EXT.'-'.date("ym").".log", $message . PHP_EOL, FILE_APPEND );
     }
-}
-
-/**
- * Checks for a fatal error, work around for set_error_handler not working on fatal errors.
- */
-function running_fatal() {
-    $error = error_get_last();
-    if($error["type"] == E_ERROR || $error["type"] == 4) log_error( $error["type"], $error["message"], $error["file"], $error["line"] );
 }

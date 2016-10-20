@@ -4,7 +4,7 @@
 	[UCenter] (C)2001-2099 Comsenz Inc.
 	This is NOT a freeware, use is subject to license terms
 
-	$Id: pm.php 1059 2011-03-01 07:25:09Z monkey $
+	$Id: pm.php 1160 2013-10-24 08:04:45Z jeffjzhang $
 */
 
 !defined('IN_UC') && exit('Access Denied');
@@ -145,7 +145,7 @@ class pmmodel {
 	}
 
 	function isnewpm($uid) {
-		return $this->db->result_first("SELECT COUNT(*) FROM ".UC_DBTABLEPRE."newpm WHERE uid='$uid'");
+		return $this->db->result_first("SELECT uid FROM ".UC_DBTABLEPRE."newpm WHERE uid='$uid'");
 	}
 
 	function lastpm($uid) {
@@ -223,9 +223,9 @@ class pmmodel {
 		if(!$subject) {
 			$subject = $this->removecode(trim($message), 80);
 		} else {
-			$subject = htmlspecialchars($subject);
+			$subject = dhtmlspecialchars($subject);
 		}
-		$lastsummary = $this->removecode(trim($message), 150);
+		$lastsummary = $this->removecode(trim(stripslashes($message)), 150);
 
 		if(!$type) {
 			$query = $this->db->query("SELECT plid, min_max FROM ".UC_DBTABLEPRE."pm_lists WHERE min_max IN (".$this->base->implode($relationship).")");
@@ -326,7 +326,7 @@ class pmmodel {
 		if($_CACHE['badwords']['findpattern']) {
 			$message = @preg_replace($_CACHE['badwords']['findpattern'], $_CACHE['badwords']['replace'], $message);
 		}
-		$lastsummary = $this->removecode(trim($message), 150);
+		$lastsummary = $this->removecode(trim(stripslashes($message)), 150);
 
 		$this->db->query("INSERT INTO ".UC_DBTABLEPRE."pm_indexes(plid) VALUES('$plid')");
 		$pmid = $this->db->insert_id();
@@ -470,60 +470,6 @@ class pmmodel {
 		return 1;
 	}
 
-/*
-	function deletepmbypmids($uid, $pmids) {
-		if(!$uid || !$pmids) {
-			return 0;
-		}
-		$pmplid = $delstatus1pm = $delstatus2pm = $pmplidpost = array();
-		$existplid = array();
-		$query = $this->db->query("SELECT * FROM ".UC_DBTABLEPRE."pm_indexes i LEFT JOIN ".UC_DBTABLEPRE."pm_lists t ON i.plid=t.plid WHERE i.pmid IN (".$this->base->implode($pmids).") AND t.pmtype=1");
-		while($index = $this->db->fetch_array($query)) {
-			$users = explode('_', $index['min_max']);
-			if(!in_array($uid, $users)) {
-				return PMPRIVILEGENONE_ERROR;
-			}
-			if($index['authorid'] == $uid) {
-				$delstatus1pm[$this->getposttablename($index['plid'])][] = $index['pmid'];
-			} else {
-				$delstatus2pm[$this->getposttablename($index['plid'])][] = $index['pmid'];
-			}
-			$pmplidpost[$this->getposttablename($index['plid'])][] = $index['plid'];
-			$pmplid[$index['plid']] = $index['plid'];
-		}
-		if(empty($pmplidpost)) {
-			return 0;
-		}
-
-		if($delstatus1pm) {
-			foreach($delstatus1pm as $key => $value) {
-				$this->db->query("UPDATE ".UC_DBTABLEPRE."$key SET delstatus=1 WHERE pmid IN (".$this->base->implode($value).") AND delstatus=0");
-				$this->db->query("DELETE FROM ".UC_DBTABLEPRE."$key WHERE pmid IN (".$this->base->implode($value).") AND delstatus=2");
-			}
-		}
-
-		if($delstatus2pm) {
-			foreach($delstatus2pm as $key => $value) {
-				$this->db->query("UPDATE ".UC_DBTABLEPRE."$key SET delstatus=2 WHERE pmid IN (".$this->base->implode($value).") AND delstatus=0");
-				$this->db->query("DELETE FROM ".UC_DBTABLEPRE."$key WHERE pmid IN (".$this->base->implode($value).") AND delstatus=1");
-			}
-		}
-
-		foreach($pmplidpost as $key => $value) {
-			$query = $this->db->query("SELECT DISTINCT plid FROM ".UC_DBTABLEPRE."$key WHERE plid IN (".$this->base->implode($value).")");
-			while($pmpostarr = $this->db->fetch_array($query)) {
-				$existplid[] = $pmpostarr['plid'];
-			}
-		}
-		$pmplid = array_diff($pmplid, $existplid);
-		if($pmplid) {
-			$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_lists WHERE plid IN (".$this->base->implode($pmplid).")");
-			$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_members WHERE plid IN (".$this->base->implode($pmplid).")");
-			$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_indexes WHERE plid IN (".$this->base->implode($pmplid).")");
-		}
-		return 1;
-	}
-*/
 
 	function deletepmbyplid($uid, $plid, $isuser = 0) {
 		if(!$uid || !$plid) {
@@ -587,94 +533,6 @@ class pmmodel {
 		return 1;
 	}
 
-/*
-	function deletepmbyplid($uid, $plids, $isuser = 0) {
-		if(!$uid || !$plids) {
-			return 0;
-		}
-
-		$privatepm = $chatpm = array();
-		$privatepmauthorpost = $privatepmpost = $privatepmpostall = array();
-		$existplid = array();
-		if($isuser) {
-			$relationship = array();
-			foreach($plids as $key => $value) {
-				if($uid == $value || !$value) {
-					return PMDATA_ERROR;
-				}
-				$relationship[] = $this->relationship($uid, $value);
-			}
-			$sql = "SELECT * FROM ".UC_DBTABLEPRE."pm_lists WHERE min_max IN (".$this->base->implode($relationship).")";
-		} else {
-			$sql = "SELECT * FROM ".UC_DBTABLEPRE."pm_lists WHERE plid IN (".$this->base->implode($plids).")";
-		}
-		$query = $this->db->query($sql);
-		while($threadpm = $this->db->fetch_array($query)) {
-			if($threadpm['pmtype'] == 1) {
-				$users = explode('_', $threadpm['min_max']);
-				if($users[0] == $uid) {
-					$touid = $users[1];
-				} elseif($users[1] == $uid) {
-					$touid = $users[0];
-				} else {
-					continue;
-				}
-
-				if($threadpm['authorid'] == $uid) {
-					$privatepmauthorpost[$this->getposttablename($threadpm['plid'])][] = $threadpm['plid'];
-				} else {
-					$privatepmpost[$this->getposttablename($threadpm['plid'])][] = $threadpm['plid'];
-				}
-				$privatepmpostall[$this->getposttablename($threadpm['plid'])][] = $threadpm['plid'];
-				$privatepm[] = $threadpm['plid'];
-			} else {
-				if($uid != $threadpm['authorid']) {
-					continue;
-				}
-				$chatpm[] = $threadpm['plid'];
-				$chatpmpost[$this->getposttablename($threadpm['plid'])][] = $threadpm['plid'];
-			}
-		}
-
-		if($privatepmauthorpost) {
-			foreach($privatepmauthorpost as $key => $value) {
-				$this->db->query("UPDATE ".UC_DBTABLEPRE."$key SET delstatus=1 WHERE plid IN (".$this->base->implode($value).") AND delstatus=0");
-				$this->db->query("DELETE FROM ".UC_DBTABLEPRE."$key WHERE plid IN (".$this->base->implode($value).") AND delstatus=2");
-			}
-		}
-
-		if($privatepmpost) {
-			foreach($privatepmpost as $key => $value) {
-				$this->db->query("UPDATE ".UC_DBTABLEPRE."$key SET delstatus=2 WHERE plid IN (".$this->base->implode($value).") AND delstatus=0");
-				$this->db->query("DELETE FROM ".UC_DBTABLEPRE."$key WHERE plid IN (".$this->base->implode($value).") AND delstatus=1");
-			}
-		}
-		if($privatepmpostall) {
-			foreach($privatepmpostall as $key => $value) {
-				$query = $this->db->query("SELECT DISTINCT plid FROM ".UC_DBTABLEPRE."$key WHERE plid IN (".$this->base->implode($value).")");
-				while($postpm = $this->db->fetch_array($query)) {
-					$existplid[] = $postpm['plid'];
-				}
-			}
-			$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_members WHERE plid IN (".$this->base->implode($privatepm).") AND uid='$uid'");
-			$privatepm = array_diff($privatepm, $existplid);
-			if(!empty($privatepm)) {
-				$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_lists WHERE plid IN (".$this->base->implode($privatepm).")");
-				$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_members WHERE plid IN (".$this->base->implode($privatepm).")");
-				$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_indexes WHERE plid IN (".$this->base->implode($privatepm).")");
-			}
-		}
-		if($chatpmpost) {
-			foreach($chatpmpost as $key => $value) {
-				$this->db->query("DELETE FROM ".UC_DBTABLEPRE."$key WHERE plid IN (".$this->base->implode($value).")");
-			}
-			$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_lists WHERE plid IN (".$this->base->implode($chatpm).")");
-			$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_members WHERE plid IN (".$this->base->implode($chatpm).")");
-			$this->db->query("DELETE FROM ".UC_DBTABLEPRE."pm_indexes WHERE plid IN (".$this->base->implode($chatpm).")");
-		}
-		return 1;
-	}
-*/
 
 	function getprivatepmbyplid($uid, $plid, $starttime = 0, $endtime = 0, $start = 0, $ppp = 0) {
 		if(!$uid || !$plid) {
@@ -759,12 +617,6 @@ class pmmodel {
 
 		if($filter == 'newpm') {
 			$addsql = 'm.isnew=1 AND ';
-		/*性能有影响
-		} elseif($filter == 'privatepm') {
-			$addsql = 't.pmtype=1 AND ';
-		} elseif($filter == 'chatpm') {
-			$addsql = 't.pmtype=2 AND ';
-		*/
 		} else {
 			$addsql = '';
 		}
@@ -883,7 +735,7 @@ class pmmodel {
 
 	function getposttablename($plid) {
 		$id = substr((string)$plid, -1, 1);
-		return 'pm_messages_'.$id;
+		return 'pm_messages_'.intval($id);
 	}
 
 	function get_blackls($uid, $uids = array()) {

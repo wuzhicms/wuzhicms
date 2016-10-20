@@ -4,7 +4,7 @@
 	[UCenter] (C)2001-2099 Comsenz Inc.
 	This is NOT a freeware, use is subject to license terms
 
-	$Id: base.php 1059 2011-03-01 07:25:09Z monkey $
+	$Id: base.php 1167 2014-11-03 03:06:21Z hypowang $
 */
 
 !defined('IN_UC') && exit('Access Denied');
@@ -23,6 +23,7 @@ if(!function_exists('getgpc')) {
 
 class base {
 
+	var $sid;
 	var $time;
 	var $onlineip;
 	var $db;
@@ -69,9 +70,13 @@ class base {
 	}
 
 	function init_db() {
-		require_once UC_ROOT.'lib/db.class.php';
+		if(function_exists("mysql_connect")) {
+			require_once UC_ROOT.'lib/db.class.php';
+		} else {
+			require_once UC_ROOT.'lib/dbi.class.php';
+		}
 		$this->db = new ucclient_db();
-		$this->db->connect(UC_DBHOST, UC_DBUSER, UC_DBPW, UC_DBNAME, UC_DBCHARSET, UC_DBCONNECT, UC_DBTABLEPRE);
+		$this->db->connect(UC_DBHOST, UC_DBUSER, UC_DBPW, '', UC_DBCHARSET, UC_DBCONNECT, UC_DBTABLEPRE);
 	}
 
 	function load($model, $base = NULL) {
@@ -198,7 +203,7 @@ class base {
 	}
 
 	function note_exists() {
-		$noteexists = $this->db->fetch_first("SELECT value FROM ".UC_DBTABLEPRE."vars WHERE name='noteexists".UC_APPID."'");
+		$noteexists = $this->db->result_first("SELECT value FROM ".UC_DBTABLEPRE."vars WHERE name='noteexists".UC_APPID."'");
 		if(empty($noteexists)) {
 			return FALSE;
 		} else {
@@ -213,14 +218,16 @@ class base {
 		}
 	}
 
+	function init_sms() {
+		if($this->sms_exists() && !getgpc('inajax')) {
+			$this->load('sms');
+			$_ENV['sms']->send();
+		}
+	}
+
 	function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
 		return uc_authcode($string, $operation, $key, $expiry);
 	}
-/*
-	function serialize() {
-
-	}
-*/
 	function unserialize($s) {
 		return uc_unserialize($s);
 	}
@@ -230,8 +237,17 @@ class base {
 	}
 
 	function mail_exists() {
-		$mailexists = $this->db->fetch_first("SELECT value FROM ".UC_DBTABLEPRE."vars WHERE name='mailexists'");
+		$mailexists = $this->db->result_first("SELECT value FROM ".UC_DBTABLEPRE."vars WHERE name='mailexists'");
 		if(empty($mailexists)) {
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+
+	function sms_exists() {
+		$smsexists = $this->db->result_first("SELECT value FROM ".UC_DBTABLEPRE."vars WHERE name='smsexists'");
+		if(empty($smsexists)) {
 			return FALSE;
 		} else {
 			return TRUE;

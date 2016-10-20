@@ -23,7 +23,6 @@ class index extends WUZHI_foreground{
         $uid = $memberinfo['uid'];
         $groups = $this->groups;
 
-
         $GLOBALS['acbar'] = 1;
         //登录日志
         $log_results = $this->db->get_list('logintime', '`uid`='.$uid.' AND status > 1', '*', 0, 10, 0, 'id DESC');
@@ -91,6 +90,7 @@ class index extends WUZHI_foreground{
 		if(get_cookie('auth')) MSG(L('logined'), 'index.php?m=member');
 		if(isset($GLOBALS['submit'])) {
             checkcode($GLOBALS['checkcode']);
+
 			$username = isset($GLOBALS['username']) ? p_htmlspecialchars($GLOBALS['username']) : '';
 			$password = isset($GLOBALS['password']) ? $GLOBALS['password'] : '';
 			if(empty($username)) MSG(L('username_empty'));
@@ -210,7 +210,7 @@ class index extends WUZHI_foreground{
 			if(!isset($GLOBALS['email'])) $GLOBALS['email'] = '';
 			if($this->setting['ucenter']){
 				$ucenter = load_class('ucenter', M);
-				$info['ucuid'] = $ucenter->register(array($GLOBALS['username'], $GLOBALS['password'], $GLOBALS['email']));
+				$info['ucuid'] = $ucenter->register(array($GLOBALS['username'], $GLOBALS['password'], $GLOBALS['email'],$GLOBALS['mobile']));
 			}
 			//	注册赠送积分，  如果需要记录到财务的话  得搬到下面去
 			$info['points'] = (int)$this->setting['points'];
@@ -253,7 +253,12 @@ class index extends WUZHI_foreground{
 					//设置登录
 					$r = $this->db->get_one('member', array('uid' => $uid));
 					$this->create_cookie($r, SYS_TIME+604800);
-					MSG('注册成功','?m=member');
+					$synlogin = '';
+					if($this->setting['ucenter']) {
+						//同步登陆
+						$synlogin = $ucenter->login($r['username'], $info['password'], $r);
+					}
+					MSG('注册成功'.$synlogin);
 				}
 			}else{
 				MSG(L('register_error'));

@@ -4,7 +4,7 @@
 	[UCenter] (C)2001-2099 Comsenz Inc.
 	This is NOT a freeware, use is subject to license terms
 
-	$Id: client.php 1079 2011-04-02 07:29:36Z zhengqingpeng $
+	$Id: client.php 1178 2014-11-03 07:05:21Z hypowang $
 */
 
 if(!defined('UC_API')) {
@@ -14,8 +14,8 @@ if(!defined('UC_API')) {
 error_reporting(0);
 
 define('IN_UC', TRUE);
-define('UC_CLIENT_VERSION', '1.6.0');
-define('UC_CLIENT_RELEASE', '20110501');
+define('UC_CLIENT_VERSION', '1.7.1');
+define('UC_CLIENT_RELEASE', '20160915');
 define('UC_ROOT', substr(__FILE__, 0, -10));
 define('UC_DATADIR', UC_ROOT.'./data/');
 define('UC_DATAURL', UC_API.'/data');
@@ -42,6 +42,49 @@ if(!function_exists('daddslashes')) {
 	}
 }
 
+
+if(!function_exists('dhtmlspecialchars')) {
+	function dhtmlspecialchars($string, $flags = null) {
+		if(is_array($string)) {
+			foreach($string as $key => $val) {
+				$string[$key] = dhtmlspecialchars($val, $flags);
+			}
+		} else {
+			if($flags === null) {
+				$string = str_replace(array('&', '"', '<', '>'), array('&amp;', '&quot;', '&lt;', '&gt;'), $string);
+				if(strpos($string, '&amp;#') !== false) {
+					$string = preg_replace('/&amp;((#(\d{3,5}|x[a-fA-F0-9]{4}));)/', '&\\1', $string);
+				}
+			} else {
+				if(PHP_VERSION < '5.4.0') {
+					$string = htmlspecialchars($string, $flags);
+				} else {
+					if(strtolower(CHARSET) == 'utf-8') {
+						$charset = 'UTF-8';
+					} else {
+						$charset = 'ISO-8859-1';
+					}
+					$string = htmlspecialchars($string, $flags, $charset);
+				}
+			}
+		}
+		return $string;
+	}
+}
+if(!function_exists('fsocketopen')) {
+	function fsocketopen($hostname, $port = 80, &$errno, &$errstr, $timeout = 15) {
+		$fp = '';
+		if(function_exists('fsockopen')) {
+			$fp = @fsockopen($hostname, $port, $errno, $errstr, $timeout);
+		} elseif(function_exists('pfsockopen')) {
+			$fp = @pfsockopen($hostname, $port, $errno, $errstr, $timeout);
+		} elseif(function_exists('stream_socket_client')) {
+			$fp = @stream_socket_client($hostname.':'.$port, $errno, $errstr, $timeout);
+		}
+		return $fp;
+	}
+}
+
 function uc_stripslashes($string) {
 	!defined('MAGIC_QUOTES_GPC') && define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc());
 	if(MAGIC_QUOTES_GPC) {
@@ -52,6 +95,7 @@ function uc_stripslashes($string) {
 }
 
 function uc_api_post($module, $action, $arg = array()) {
+
 	$s = $sep = '';
 	foreach($arg as $k => $v) {
 		$k = urlencode($k);
@@ -69,6 +113,7 @@ function uc_api_post($module, $action, $arg = array()) {
 		$sep = '&';
 	}
 	$postdata = uc_api_requestdata($module, $action, $s);
+
 	return uc_fopen2(UC_API.'/index.php', 500000, $postdata, '', TRUE, UC_IP, 20);
 }
 
@@ -91,7 +136,11 @@ function uc_api_input($data) {
 function uc_api_mysql($model, $action, $args=array()) {
 	global $uc_controls;
 	if(empty($uc_controls[$model])) {
-		include_once UC_ROOT.'./lib/db.class.php';
+		if(function_exists("mysql_connect")) {
+			include_once UC_ROOT.'./lib/db.class.php';
+		} else {
+			include_once UC_ROOT.'./lib/dbi.class.php';
+		}
 		include_once UC_ROOT.'./model/base.php';
 		include_once UC_ROOT."./control/$model.php";
 		eval("\$uc_controls['$model'] = new {$model}control();");
@@ -167,6 +216,7 @@ function uc_authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
 }
 
 function uc_fopen2($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE, $ip = '', $timeout = 15, $block = TRUE) {
+
 	$__times__ = isset($_GET['__times__']) ? intval($_GET['__times__']) + 1 : 1;
 	if($__times__ > 2) {
 		return '';
@@ -178,43 +228,52 @@ function uc_fopen2($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE
 function uc_fopen($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE, $ip = '', $timeout = 15, $block = TRUE) {
 	$return = '';
 	$matches = parse_url($url);
+
+	!isset($matches['scheme']) && $matches['scheme'] = '';
 	!isset($matches['host']) && $matches['host'] = '';
 	!isset($matches['path']) && $matches['path'] = '';
 	!isset($matches['query']) && $matches['query'] = '';
 	!isset($matches['port']) && $matches['port'] = '';
+	$scheme = $matches['scheme'];
 	$host = $matches['host'];
 	$path = $matches['path'] ? $matches['path'].($matches['query'] ? '?'.$matches['query'] : '') : '/';
 	$port = !empty($matches['port']) ? $matches['port'] : 80;
 	if($post) {
 		$out = "POST $path HTTP/1.0\r\n";
-		$out .= "Accept: */*\r\n";
-		//$out .= "Referer: $boardurl\r\n";
-		$out .= "Accept-Language: zh-cn\r\n";
-		$out .= "Content-Type: application/x-www-form-urlencoded\r\n";
-		$out .= "User-Agent: $_SERVER[HTTP_USER_AGENT]\r\n";
-		$out .= "Host: $host\r\n";
-		$out .= 'Content-Length: '.strlen($post)."\r\n";
-		$out .= "Connection: Close\r\n";
-		$out .= "Cache-Control: no-cache\r\n";
-		$out .= "Cookie: $cookie\r\n\r\n";
-		$out .= $post;
+		$header = "Accept: */*\r\n";
+		$header .= "Accept-Language: zh-cn\r\n";
+		$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
+		$header .= "User-Agent: $_SERVER[HTTP_USER_AGENT]\r\n";
+		$header .= "Host: $host\r\n";
+		$header .= 'Content-Length: '.strlen($post)."\r\n";
+		$header .= "Connection: Close\r\n";
+		$header .= "Cache-Control: no-cache\r\n";
+		$header .= "Cookie: $cookie\r\n\r\n";
+		$out .= $header.$post;
 	} else {
 		$out = "GET $path HTTP/1.0\r\n";
-		$out .= "Accept: */*\r\n";
-		//$out .= "Referer: $boardurl\r\n";
-		$out .= "Accept-Language: zh-cn\r\n";
-		$out .= "User-Agent: $_SERVER[HTTP_USER_AGENT]\r\n";
-		$out .= "Host: $host\r\n";
-		$out .= "Connection: Close\r\n";
-		$out .= "Cookie: $cookie\r\n\r\n";
+		$header = "Accept: */*\r\n";
+		$header .= "Accept-Language: zh-cn\r\n";
+		$header .= "User-Agent: $_SERVER[HTTP_USER_AGENT]\r\n";
+		$header .= "Host: $host\r\n";
+		$header .= "Connection: Close\r\n";
+		$header .= "Cookie: $cookie\r\n\r\n";
+		$out .= $header;
 	}
 
-	if(function_exists('fsockopen')) {
-		$fp = @fsockopen(($ip ? $ip : $host), $port, $errno, $errstr, $timeout);
-	} elseif (function_exists('pfsockopen')) {
-		$fp = @pfsockopen(($ip ? $ip : $host), $port, $errno, $errstr, $timeout);
-	} else {
-		$fp = false;
+	$fpflag = 0;
+	if(!$fp = @fsocketopen(($ip ? $ip : $host), $port, $errno, $errstr, $timeout)) {
+		$context = array(
+			'http' => array(
+				'method' => $post ? 'POST' : 'GET',
+				'header' => $header,
+				'content' => $post,
+				'timeout' => $timeout,
+			),
+		);
+		$context = stream_context_create($context);
+		$fp = @fopen($scheme.'://'.($ip ? $ip : $host).':'.$port.$path, 'b', false, $context);
+		$fpflag = 1;
 	}
 
 	if(!$fp) {
@@ -225,7 +284,7 @@ function uc_fopen($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE,
 		@fwrite($fp, $out);
 		$status = stream_get_meta_data($fp);
 		if(!$status['timed_out']) {
-			while (!feof($fp)) {
+			while (!feof($fp) && !$fpflag) {
 				if(($header = @fgets($fp)) && ($header == "\r\n" ||  $header == "\n")) {
 					break;
 				}
@@ -242,6 +301,7 @@ function uc_fopen($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE,
 			}
 		}
 		@fclose($fp);
+
 		return $return;
 	}
 }
@@ -298,40 +358,40 @@ function uc_friend_ls($uid, $page = 1, $pagesize = 10, $totalnum = 10, $directio
 }
 
 function uc_user_register($username, $password, $email, $questionid = '', $answer = '', $regip = '') {
-	return call_user_func(UC_API_FUNC, 'user', 'register', array('username'=>$username, 'password'=>$password, 'email'=>$email, 'questionid'=>$questionid, 'answer'=>$answer, 'regip' => $regip));
+	return uc_user_register_new($username, $password, $email, null, $questionid, $answer, $regip);
+}
+function uc_user_register_new($username, $password, $email, $sms, $questionid = '', $answer = '', $regip = '') {
+	return call_user_func(UC_API_FUNC, 'user', 'register_new', array('username'=>$username, 'password'=>$password, 'email'=>$email, 'sms'=>$sms, 'questionid'=>$questionid, 'answer'=>$answer, 'regip' => $regip));
 }
 
-function uc_user_login($username, $password, $isuid = 0, $checkques = 0, $questionid = '', $answer = '') {
+function uc_user_login($username, $password, $isuid = 0, $checkques = 0, $questionid = '', $answer = '', $ip = '') {
 	$isuid = intval($isuid);
-	$return = call_user_func(UC_API_FUNC, 'user', 'login', array('username'=>$username, 'password'=>$password, 'isuid'=>$isuid, 'checkques'=>$checkques, 'questionid'=>$questionid, 'answer'=>$answer));
+	$return = call_user_func(UC_API_FUNC, 'user', 'login', array('username'=>$username, 'password'=>$password, 'isuid'=>$isuid, 'checkques'=>$checkques, 'questionid'=>$questionid, 'answer'=>$answer, 'ip' => $ip));
+	return UC_CONNECT == 'mysql' ? $return : uc_unserialize($return);
+}
+function uc_user_login_new($username, $password, $isuid = 0, $checkques = 0, $questionid = '', $answer = '', $ip = '') {
+	$isuid = intval($isuid);
+	$return = call_user_func(UC_API_FUNC, 'user', 'login_new', array('username'=>$username, 'password'=>$password, 'isuid'=>$isuid, 'checkques'=>$checkques, 'questionid'=>$questionid, 'answer'=>$answer, 'ip' => $ip));
 	return UC_CONNECT == 'mysql' ? $return : uc_unserialize($return);
 }
 
 function uc_user_synlogin($uid) {
 	$uid = intval($uid);
-	if(@include UC_ROOT.'./data/cache/apps.php') {
-		if(count($_CACHE['apps']) > 1) {
-			$return = uc_api_post('user', 'synlogin', array('uid'=>$uid));
-		} else {
-			$return = '';
-		}
-	}
+
+	$return = uc_api_post('user', 'synlogin', array('uid'=>$uid));
 	return $return;
 }
 
 function uc_user_synlogout() {
-	if(@include UC_ROOT.'./data/cache/apps.php') {
-		if(count($_CACHE['apps']) > 1) {
-			$return = uc_api_post('user', 'synlogout', array());
-		} else {
-			$return = '';
-		}
-	}
+	$return = uc_api_post('user', 'synlogout', array());
 	return $return;
 }
 
 function uc_user_edit($username, $oldpw, $newpw, $email, $ignoreoldpw = 0, $questionid = '', $answer = '') {
-	return call_user_func(UC_API_FUNC, 'user', 'edit', array('username'=>$username, 'oldpw'=>$oldpw, 'newpw'=>$newpw, 'email'=>$email, 'ignoreoldpw'=>$ignoreoldpw, 'questionid'=>$questionid, 'answer'=>$answer));
+	return uc_user_edit_new($username, $oldpw, $newpw, $email, null, $ignoreoldpw, $questionid, $answer);
+}
+function uc_user_edit_new($username, $oldpw, $newpw, $email, $sms, $ignoreoldpw = 0, $questionid = '', $answer = '') {
+	return call_user_func(UC_API_FUNC, 'user', 'edit_new', array('username'=>$username, 'oldpw'=>$oldpw, 'newpw'=>$newpw, 'email'=>$email, 'sms'=>$sms, 'ignoreoldpw'=>$ignoreoldpw, 'questionid'=>$questionid, 'answer'=>$answer));
 }
 
 function uc_user_delete($uid) {
@@ -348,6 +408,10 @@ function uc_user_checkname($username) {
 
 function uc_user_checkemail($email) {
 	return call_user_func(UC_API_FUNC, 'user', 'check_email', array('email'=>$email));
+}
+
+function uc_user_checksms($sms) {
+	return call_user_func(UC_API_FUNC, 'user', 'check_sms', array('sms'=>$sms));
 }
 
 function uc_user_addprotected($username, $admin='') {
@@ -368,8 +432,8 @@ function uc_get_user($username, $isuid=0) {
 	return UC_CONNECT == 'mysql' ? $return : uc_unserialize($return);
 }
 
-function uc_user_merge($oldusername, $newusername, $uid, $password, $email) {
-	return call_user_func(UC_API_FUNC, 'user', 'merge', array('oldusername'=>$oldusername, 'newusername'=>$newusername, 'uid'=>$uid, 'password'=>$password, 'email'=>$email));
+function uc_user_merge($oldusername, $newusername, $uid, $password, $email, $sms) {
+	return call_user_func(UC_API_FUNC, 'user', 'merge', array('oldusername'=>$oldusername, 'newusername'=>$newusername, 'uid'=>$uid, 'password'=>$password, 'email'=>$email, 'sms'=>$sms));
 }
 
 function uc_user_merge_remove($username) {
@@ -378,6 +442,11 @@ function uc_user_merge_remove($username) {
 
 function uc_user_getcredit($appid, $uid, $credit) {
 	return uc_api_post('user', 'getcredit', array('appid'=>$appid, 'uid'=>$uid, 'credit'=>$credit));
+}
+
+
+function uc_user_logincheck($username, $ip) {
+	return call_user_func(UC_API_FUNC, 'user', 'logincheck', array('username' => $username, 'ip' => $ip));
 }
 
 function uc_pm_location($uid, $newpm = 0) {
@@ -560,6 +629,11 @@ function uc_avatar($uid, $type = 'virtual', $returnhtml = 1) {
 
 function uc_mail_queue($uids, $emails, $subject, $message, $frommail = '', $charset = 'gbk', $htmlon = FALSE, $level = 1) {
 	return call_user_func(UC_API_FUNC, 'mail', 'add', array('uids' => $uids, 'emails' => $emails, 'subject' => $subject, 'message' => $message, 'frommail' => $frommail, 'charset' => $charset, 'htmlon' => $htmlon, 'level' => $level));
+}
+
+
+function uc_sms_queue($uids, $smses, $message, $charset = 'gbk', $level = 1) {
+    return call_user_func(UC_API_FUNC, 'sms', 'add', array('uids' => $uids, 'smses' => $smses, 'message' => $message, 'charset' => $charset, 'level' => $level));
 }
 
 function uc_check_avatar($uid, $size = 'middle', $type = 'virtual') {

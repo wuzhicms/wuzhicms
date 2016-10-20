@@ -139,6 +139,10 @@
 								<td><input type="text" name="setting[uc_dbtablepre]" id="uc_dbtablepre" value="<?php if(isset($setting['uc_dbtablepre']))echo $setting['uc_dbtablepre']?>" /> <input type="button" value="测试数据库连接" class="btn btn-info btn-sm"  onclick="check_uc()" /></td>
 							</tr>
 							<tr>
+								<td>Discuz 数据库表前缀：</td>
+								<td><input type="text" name="setting[discuz_dbtablepre]" id="discuz_dbtablepre" value="<?php if(isset($setting['discuz_dbtablepre']))echo $setting['discuz_dbtablepre']?>" /> </td>
+							</tr>
+							<tr>
 								<td>Ucenter 数据库字符集：</td>
 								<td>
 									<select name="setting[uc_dbcharset]"  id="uc_dbcharset"  />

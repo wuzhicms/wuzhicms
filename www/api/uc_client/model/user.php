@@ -4,7 +4,7 @@
 	[UCenter] (C)2001-2099 Comsenz Inc.
 	This is NOT a freeware, use is subject to license terms
 
-	$Id: user.php 1078 2011-03-30 02:00:29Z monkey $
+	$Id: user.php 1178 2014-11-03 07:05:21Z hypowang $
 */
 
 !defined('IN_UC') && exit('Access Denied');
@@ -35,6 +35,11 @@ class usermodel {
 
 	function get_user_by_email($email) {
 		$arr = $this->db->fetch_first("SELECT * FROM ".UC_DBTABLEPRE."members WHERE email='$email'");
+		return $arr;
+	}
+
+	function get_user_by_sms($sms) {
+		$arr = $this->db->fetch_first("SELECT * FROM ".UC_DBTABLEPRE."members WHERE sms='$sms'");
 		return $arr;
 	}
 
@@ -90,7 +95,11 @@ class usermodel {
 	}
 
 	function check_emailformat($email) {
-		return strlen($email) > 6 && preg_match("/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/", $email);
+		return strlen($email) > 6 && strlen($email) <= 32 && preg_match("/^([a-z0-9\-_.+]+)@([a-z0-9\-]+[.][a-z0-9\-.]+)$/", $email);
+	}
+
+	function check_smsformat($sms) {
+		return strlen($sms) == 11 && preg_match("/^1\d{10}$/", $sms);
 	}
 
 	function check_emailaccess($email) {
@@ -116,6 +125,12 @@ class usermodel {
 		return $email;
 	}
 
+	function check_smsexists($sms, $username = '') {
+		$sqladd = $username !== '' ? "AND username<>'$username'" : '';
+		$sms = $this->db->result_first("SELECT email FROM  ".UC_DBTABLEPRE."members WHERE sms='$sms' $sqladd");
+		return $sms;
+	}
+
 	function check_login($username, $password, &$user) {
 		$user = $this->get_user_by_username($username);
 		if(empty($user['username'])) {
@@ -127,24 +142,43 @@ class usermodel {
 	}
 
 	function add_user($username, $password, $email, $uid = 0, $questionid = '', $answer = '', $regip = '') {
+		return $this->add_user_new($username, $password, $email, null, $uid, $questionid, $answer, $regip);
+	}
+
+	function add_user_new($username, $password, $email, $sms, $uid = 0, $questionid = '', $answer = '', $regip = '') {
+
 		$regip = empty($regip) ? $this->base->onlineip : $regip;
 		$salt = substr(uniqid(rand()), -6);
 		$password = md5(md5($password).$salt);
 		$sqladd = $uid ? "uid='".intval($uid)."'," : '';
 		$sqladd .= $questionid > 0 ? " secques='".$this->quescrypt($questionid, $answer)."'," : " secques='',";
-		$this->db->query("INSERT INTO ".UC_DBTABLEPRE."members SET $sqladd username='$username', password='$password', email='$email', regip='$regip', regdate='".$this->base->time."', salt='$salt'");
+		$this->db->query("INSERT INTO ".UC_DBTABLEPRE."members SET $sqladd username='$username', password='$password', email='$email', sms='$sms', regip='$regip', regdate='".$this->base->time."', salt='$salt'");
 		$uid = $this->db->insert_id();
 		$this->db->query("INSERT INTO ".UC_DBTABLEPRE."memberfields SET uid='$uid'");
+		// BEGIN 同步激活论坛
+		$this->db->query("INSERT INTO ".DISCUZ_DBTABLEPRE."common_member SET uid='$uid', username='$username', password='$password', email='$email', adminid='0', groupid='10', regdate='".$this->base->time."', credits='0', timeoffset='9999'");
+		$this->db->query("INSERT INTO ".DISCUZ_DBTABLEPRE."common_member_status SET uid='$uid', regip='$regip', lastip='$regip', lastvisit='".$this->base->time."', lastactivity='".$this->base->time."', lastpost='0', lastsendmail='0'");
+		$this->db->query("INSERT INTO ".DISCUZ_DBTABLEPRE."common_member_profile SET uid='$uid'");
+		$this->db->query("INSERT INTO ".DISCUZ_DBTABLEPRE."common_member_field_forum SET uid='$uid'");
+		$this->db->query("INSERT INTO ".DISCUZ_DBTABLEPRE."common_member_field_home SET uid='$uid'");
+		$this->db->query("INSERT INTO ".DISCUZ_DBTABLEPRE."common_member_count SET uid='$uid', extcredits1='0', extcredits2='0', extcredits3='0', extcredits4='0', extcredits5='0', extcredits6='0', extcredits7='0', extcredits8='0'");
+
+		// END
 		return $uid;
 	}
 
+
 	function edit_user($username, $oldpw, $newpw, $email, $ignoreoldpw = 0, $questionid = '', $answer = '') {
+		return $this->edit_user_new($username, $oldpw, $newpw, $email, null, $ignoreoldpw, $questionid, $answer);
+	}
+
+	function edit_user_new($username, $oldpw, $newpw, $email, $sms, $ignoreoldpw = 0, $questionid = '', $answer = '') {
 		$data = $this->db->fetch_first("SELECT username, uid, password, salt FROM ".UC_DBTABLEPRE."members WHERE username='$username'");
 
 		if($ignoreoldpw) {
 			$isprotected = $this->db->result_first("SELECT COUNT(*) FROM ".UC_DBTABLEPRE."protectedmembers WHERE uid = '$data[uid]'");
 			if($isprotected) {
-				return -8;
+				return -10;
 			}
 		}
 
@@ -154,6 +188,7 @@ class usermodel {
 
 		$sqladd = $newpw ? "password='".md5(md5($newpw).$data['salt'])."'" : '';
 		$sqladd .= $email ? ($sqladd ? ',' : '')." email='$email'" : '';
+		$sqladd .= $sms ? ($sqladd ? ',' : '')." sms='$sms'" : '';
 		if($questionid !== '') {
 			if($questionid > 0) {
 				$sqladd .= ($sqladd ? ',' : '')." secques='".$this->quescrypt($questionid, $answer)."'";
@@ -161,11 +196,11 @@ class usermodel {
 				$sqladd .= ($sqladd ? ',' : '')." secques=''";
 			}
 		}
-		if($sqladd || $emailadd) {
+		if($sqladd) {
 			$this->db->query("UPDATE ".UC_DBTABLEPRE."members SET $sqladd WHERE username='$username'");
 			return $this->db->affected_rows();
 		} else {
-			return -7;
+			return -9;
 		}
 	}
 
@@ -228,6 +263,53 @@ class usermodel {
 		return $questionid > 0 && $answer != '' ? substr(md5($answer.md5($questionid)), 16, 8) : '';
 	}
 
-}
+	function can_do_login($username, $ip = '') {
 
-?>
+		$check_times = $this->base->settings['login_failedtime'] < 1 ? 5 : $this->base->settings['login_failedtime'];
+
+		$username = substr(md5($username), 8, 15);
+		$expire = 15 * 60;
+		if(!$ip) {
+			$ip = $this->base->onlineip;
+		}
+
+		$ip_check = $user_check = array();
+		$query = $this->db->query("SELECT * FROM ".UC_DBTABLEPRE."failedlogins WHERE ip='".$ip."' OR ip='$username'");
+		while($row = $this->db->fetch_array($query)) {
+			if($row['ip'] === $username) {
+				$user_check = $row;
+			} elseif($row['ip'] === $ip) {
+				$ip_check = $row;
+			}
+		}
+
+		if(empty($ip_check) || ($this->base->time - $ip_check['lastupdate'] > $expire)) {
+			$ip_check = array();
+			$this->db->query("REPLACE INTO ".UC_DBTABLEPRE."failedlogins (ip, count, lastupdate) VALUES ('{$ip}', '0', '{$this->base->time}')");
+		}
+
+		if(empty($user_check) || ($this->base->time - $user_check['lastupdate'] > $expire)) {
+			$user_check = array();
+			$this->db->query("REPLACE INTO ".UC_DBTABLEPRE."failedlogins (ip, count, lastupdate) VALUES ('{$username}', '0', '{$this->base->time}')");
+		}
+
+		if ($ip_check || $user_check) {
+			$time_left = min(($check_times - $ip_check['count']), ($check_times - $user_check['count']));
+			return $time_left;
+
+		}
+
+		$this->db->query("DELETE FROM ".UC_DBTABLEPRE."failedlogins WHERE lastupdate<".($this->base->time - ($expire + 1)), 'UNBUFFERED');
+
+		return $check_times;
+	}
+
+	function loginfailed($username, $ip = '') {
+		$username = substr(md5($username), 8, 15);
+		if(!$ip) {
+			$ip = $this->base->onlineip;
+		}
+		$this->db->query("UPDATE ".UC_DBTABLEPRE."failedlogins SET count=count+1, lastupdate='".$this->base->time."' WHERE ip='".$ip."' OR ip='$username'");
+	}
+
+}

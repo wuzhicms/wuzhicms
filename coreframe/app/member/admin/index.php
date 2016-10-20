@@ -454,7 +454,13 @@ if(is_array($this->group)){
 		$uc_dbhost = isset($GLOBALS['uc_dbhost']) && trim($GLOBALS['uc_dbhost']) ? trim($GLOBALS['uc_dbhost']) : exit('0');
 		$uc_dbuser = isset($GLOBALS['uc_dbuser']) && trim($GLOBALS['uc_dbuser']) ? trim($GLOBALS['uc_dbuser']) : exit('0');
 		$uc_dbpw = isset($GLOBALS['uc_dbpw']) && trim($GLOBALS['uc_dbpw']) ? trim($GLOBALS['uc_dbpw']) : exit('0');
-		if (@mysql_connect($uc_dbhost, $uc_dbuser, $uc_dbpw)) {
+		if(function_exists('mysqli_connect')) {
+			if (@mysqli_connect($uc_dbhost, $uc_dbuser, $uc_dbpw)) {
+				exit('1');
+			} else {
+				exit('0');
+			}
+		} elseif (@mysql_connect($uc_dbhost, $uc_dbuser, $uc_dbpw)) {
 			exit('1');
 		} else {
 			exit('0');

@@ -4,7 +4,7 @@
 	[UCenter] (C)2001-2099 Comsenz Inc.
 	This is NOT a freeware, use is subject to license terms
 
-	$Id: mail.php 1059 2011-03-01 07:25:09Z monkey $
+	$Id: mail.php 1139 2012-05-08 09:02:11Z liulanbo $
 */
 
 !defined('IN_UC') && exit('Access Denied');
@@ -36,7 +36,7 @@ class mailmodel {
 		$start = $this->base->page_get_start($page, $ppp, $totalnum);
 		$data = $this->db->fetch_all("SELECT m.*, u.username, u.email FROM ".UC_DBTABLEPRE."mailqueue m LEFT JOIN ".UC_DBTABLEPRE."members u ON m.touid=u.uid ORDER BY dateline DESC LIMIT $start, $ppp");
 		foreach((array)$data as $k => $v) {
-			$data[$k]['subject'] = htmlspecialchars($v['subject']);
+			$data[$k]['subject'] = dhtmlspecialchars($v['subject']);
 			$data[$k]['tomail'] = empty($v['tomail']) ? $v['email'] : $v['tomail'];
 			$data[$k]['dateline'] = $v['dateline'] ? $this->base->date($data[$k]['dateline']) : '';
 			$data[$k]['appname'] = $this->base->cache['apps'][$v['appid']]['name'];
