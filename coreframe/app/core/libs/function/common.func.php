@@ -414,7 +414,7 @@ function set_cache($filename, $data, $dir = '_cache_'){
  * @return mixed|string
  */
 function get_cache($filename, $dir = '_cache_'){
-	$file = get_cache_path($filename, $dir);;
+	$file = get_cache_path($filename, $dir);
 	if (!file_exists($file)) return '';
 	$data = include $file;
 	return $data;
