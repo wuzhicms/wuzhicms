@@ -32,18 +32,18 @@ header('Content-type: text/html; charset=' . $charset);
 $best_iframe = substr(INSTALL_ROOT,0,-12).'coreframe/';
 $best_cache = substr(INSTALL_ROOT,0,-12).'caches/';
 $in_same_dir = false;
-if(file_exists($best_cache.'install.check')) {
-	$current_cache = $best_cache;
-} elseif(file_exists(WWW_ROOT.'caches/install.check')) {
+if(file_exists(WWW_ROOT.'caches/install.check')) {
 	$current_cache = WWW_ROOT . 'caches/';
 	$in_same_dir = true;
+} elseif(file_exists($best_cache.'install.check')) {
+		$current_cache = $best_cache;
 } else {
 	exit('caches 缓存目录不存在');
 }
-if(file_exists($best_iframe.'core.php')) {
-	$current_iframe = $best_iframe;
-} elseif(file_exists(WWW_ROOT.'coreframe/core.php')) {
+if(file_exists(WWW_ROOT.'coreframe/core.php')) {
 	$current_iframe = WWW_ROOT.'coreframe/';
+}elseif(file_exists($best_iframe.'core.php')) {
+	$current_iframe = $best_iframe;
 }
 if(file_exists($current_cache.'lock.install')) exit('已经安装过wuzhicms，如需重装请删除caches/lock.install');
 
@@ -218,11 +218,11 @@ switch($step) {
 	case 2:
 
 
-		if(file_exists($best_iframe.'core.php')) {
-			$current_iframe = $best_iframe;
-			$iframe_status = '<div class="right"></div>';
-		} elseif(file_exists(WWW_ROOT.'coreframe/core.php')) {
+		if(file_exists(WWW_ROOT.'coreframe/core.php')) {
 			$current_iframe = WWW_ROOT.'coreframe/';
+			$iframe_status = '<div class="right"></div>';
+		} elseif(file_exists($best_iframe.'core.php')) {
+			$current_iframe = $best_iframe;
 			$iframe_status = '<div class="right"></div>';
 		} else {
 			$iframe_status = '<div class="error"></div>';
@@ -234,12 +234,12 @@ switch($step) {
 			$best_iframe_status = '≠';
 		}
 
-		if(file_exists($best_cache.'install.check')) {
-			$current_cache = $best_cache;
-			$cache_status = '<div class="right"></div>';
-		} elseif(file_exists(WWW_ROOT.'caches/install.check')) {
+		if(file_exists(WWW_ROOT.'caches/install.check')) {
 			$cache_status = '<div class="right"></div>';
 			$current_cache = WWW_ROOT.'caches/';
+		} elseif(file_exists($best_cache.'install.check')) {
+			$current_cache = $best_cache;
+			$cache_status = '<div class="right"></div>';
 		} else {
 			$cache_status = '<div class="error"></div>';
 			$current_cache = '<div class="error-div">未找到缓存目录</div>';
