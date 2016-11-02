@@ -70,7 +70,7 @@ class category extends WUZHI_admin {
 				$formdata['name'] = trim($value);
 				$formdata['type'] = $type;
                 if($GLOBALS['catdir'][$key]) {
-                    $formdata['catdir'] = sql_replace($GLOBALS['catdir'][$key]);
+                    $formdata['catdir'] = trim(sql_replace($GLOBALS['catdir'][$key]));
                 } else {
                     $py = $pinyin->return_py($formdata['name']);
                     $formdata['catdir'] = $py['pinyin'];
@@ -132,7 +132,7 @@ class category extends WUZHI_admin {
             $formdata = $GLOBALS['form'];
             $formdata['keyid'] = 'content';
             $formdata['name'] = remove_xss($formdata['name']);
-            $formdata['catdir'] = sql_replace($formdata['catdir']);
+            $formdata['catdir'] = trim(sql_replace($formdata['catdir']));
             $formdata['type'] = $type;
             $formdata['parentdir'] = $this->get_parentdir($cid);
             if($type==2) {
