@@ -52,6 +52,7 @@ class index extends WUZHI_admin {
             $form = load_class('form');
             load_function('admin');
             $r = $this->db->get_one('feedback',array('id'=>$id));
+			$set_iframe_url = 0;
             include $this->template('reply');
         }
     }

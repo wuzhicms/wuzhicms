@@ -33,14 +33,17 @@ include $this->template('header','core');
                 </div>
             </div>
 
-
+            <?php
+            if(!$r['replytime']) {
+            ?>
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label"></label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <input name="forward" type="hidden" value="<?php echo HTTP_REFERER;?>">
-                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">
+                    <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="设置为已处理">
                 </div>
             </div>
+            <?php }?>
         </form>
     </div>
 </section>

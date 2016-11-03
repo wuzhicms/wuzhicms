@@ -20,6 +20,7 @@ include $this->template('header','core');
                                 <th class="tablehead">联系人</th>
                                 <th class="tablehead">邮箱</th>
                                 <th class="tablehead">用户地理位置</th>
+                                <th class="tablehead">状态</th>
                                 <th class="tablehead">管理操作</th>
                             </tr>
                             </thead>
@@ -34,8 +35,9 @@ include $this->template('header','core');
                                     <td><?php echo $r['linkman'];?></td>
                                     <td><?php echo $r['email'];?></td>
                                     <td><?php echo $r['ip_location'];?></td>
+                                    <td><?php if($r['replytime']) {echo '已处理';}else{echo '<font color="red">未处理</font>';}?></td>
                                     <td>
-                                        <a href="?m=feedback&f=index&v=reply&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">查看</a>
+                                        <a href="javascript:void(0);" onclick="view(<?php echo $r['id'];?>)" class="btn btn-primary btn-xs">查看</a>
 
                                         <a href="javascript:makedo('?m=feedback&f=index&v=delete&id=<?php echo $r['id'];?><?php echo $this->su();?>', '确认删除该记录？')"
                                            class="btn btn-danger btn-xs">删除</a>
@@ -66,7 +68,11 @@ include $this->template('header','core');
     </div>
     <!-- page end-->
 </section>
-
+<script>
+    function view(id){
+        top.openiframe('?m=feedback&f=index&v=reply&id='+id+'<?php echo $this->su();?>', 'editGroup', '查看', 600, 300);
+    }
+</script>
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
 <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
 <script src="<?php echo R;?>js/pxgrids-scripts.js"></script>

@@ -14,6 +14,5 @@ CREATE TABLE `wz_feedback` (
   `reply_user` varchar(10) NOT NULL COMMENT '回复人'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-ALTER TABLE `wz_feedback`
-ADD PRIMARY KEY (`id`),
-ADD UNIQUE KEY `id` (`id`);
+ALTER TABLE `wz_feedback` ADD PRIMARY KEY (`id`);
+ALTER TABLE `wz_feedback` MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
