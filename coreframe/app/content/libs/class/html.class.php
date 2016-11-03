@@ -131,7 +131,6 @@ class WUZHI_html {
         $original_addtime = $data['addtime'];
         $top_categoryid = getcategoryid($cid);
         $top_category = $categorys[$top_categoryid];
-
         $page = 1;
         //手动分页
         $CONTENT_POS = strpos($content, '_wuzhicms_page_tag_');

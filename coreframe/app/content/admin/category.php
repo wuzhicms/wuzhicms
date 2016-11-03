@@ -32,8 +32,13 @@ class category extends WUZHI_admin {
 			$result[$cid]['ctype'] = $types[$r['type']];
 			$result[$cid]['siteid'] = isset($sitelist[$r['siteid']]['name'])? $sitelist[$r['siteid']]['name']:'';
 			$result[$cid]['modelname'] = $model_cache[$r['modelid']]['name'];
-			$result[$cid]['url'] = strpos('://',$r['url'])===false ? '<a href="'.$sitelist[$r['siteid']]['url'].ltrim($r['url'],'/').'" target="_blank">访问</a>' : '<a href="'.$r['url'].'" target="_blank">访问</a>';
+			if(strpos($r['url'],'://')===false) {
+				$result[$cid]['url'] = '<a href="'.$sitelist[$r['siteid']]['url'].ltrim($r['url'],'/').'" target="_blank">访问</a>';
+			} else {
+				$result[$cid]['url'] = '<a href="'.$r['url'].'" target="_blank">访问</a>';
+			}
 		}
+
 		$tree = load_class('tree','core',$result);
 		$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
 		//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');

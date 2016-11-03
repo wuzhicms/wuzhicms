@@ -14,6 +14,9 @@ class WUZHI_url {
     public $categorys;//当前模块所有栏目
 	public function __construct($category = '') {
         $this->category = $category;
+		$this->siteid = get_cookie('siteid');
+		if(!$this->siteid) $this->siteid = 1;
+		$this->sitelist = get_cache('sitelist');
 	}
     public function set_category($category) {
         $this->category = $category;
@@ -46,6 +49,7 @@ class WUZHI_url {
         }
         $url = str_replace($_match[0],$replace,$urlrule);
         $urls = '';
+		$siteid = $this->siteid;
         if($this->category['listhtml']) {//生成静态
             $domain = $this->get_domain($configs['cid']);
             if($domain) {
@@ -56,14 +60,25 @@ class WUZHI_url {
                     $urls['url'] = $domain['url'].$configs['catdir'].'/';
                     $urls['root'] = $domain['root'].$configs['catdir'].'/';
                 }
-                if($page!=1) {
-                    $urls['root'] = $urls['root'].$page.POSTFIX;
-                }
+                if($page==1) {
+					$urls['root'] = $urls['root'].'index'.POSTFIX;
+                } else {
+					$urls['root'] = $urls['root'].$page.POSTFIX;
+				}
             } else {
                 $url = str_replace('//','/',$url);
                 $url = ltrim($url,'/');
-                $urls['url'] = WWW_PATH.$url;
-                $urls['root'] = WWW_ROOT.ltrim(WWW_PATH,'/').$url;
+				if(ENABLE_SITES) {//开启站群
+					$urls['url'] = $this->sitelist[$siteid]['url'].$url;
+					if($this->sitelist[$siteid]['html_root']=='') {
+						$this->sitelist[$siteid]['html_root'] = WWW_ROOT;
+					}
+					$urls['root'] = $this->sitelist[$siteid]['html_root'].$url;
+				} else {//未开启站群
+					$urls['url'] = WWW_PATH.$url;
+					$urls['root'] = WWW_ROOT.ltrim(WWW_PATH,'/').$url;
+				}
+
                 if($page==1) {
                     $pos = strrpos($urls['url'],'/')+1;
                     $urls['url'] = substr($urls['url'],0,$pos);
@@ -82,19 +97,22 @@ class WUZHI_url {
             $parents = $this->get_parents($cid);
             $parents = explode(',',$parents);
             $maxid = count($parents);
-            krsort($parents);
-
-            if(!isset($this->categorys[$parents[$maxid]]['domain'])) {
+            if(!isset($this->categorys[$parents[1]]['domain'])) {
                 return '';
             }
-            $urls['url'] = $this->categorys[$parents[$maxid]]['domain'];
-            $urls['root'] = WWW_ROOT.$this->categorys[$parents[$maxid]]['catdir'].'/';
+
+			//krsort($parents);
+
+            $urls['url'] = $this->categorys[$parents[1]]['domain'];
+            $urls['root'] = WWW_ROOT.$this->categorys[$parents[1]]['catdir'].'/';
             foreach($parents as $_key=>$_v) {
-                if($_key==$maxid) continue;
+                if($_key==$maxid || $_v==0) continue;
+				if(strpos($this->categorys[$parents[$_key]]['domain'],'://')!==false) {
+					continue;
+				}
                 $urls['url'] .= $this->categorys[$_v]['catdir'].'/';
                 $urls['root'] .= $this->categorys[$_v]['catdir'].'/';
             }
-            //print_r($urls);exit;
         } else {
             $urls = '';
         }
@@ -120,6 +138,7 @@ class WUZHI_url {
      */
     public function showurl($configs) {
         if(empty($configs['id']) || empty($configs['cid']) || empty($configs['addtime'])) return 'configs error';
+		$siteid = $this->siteid;
         $page = intval($configs['page']);
         $page = max(1,$page);
         
@@ -152,12 +171,19 @@ class WUZHI_url {
             } else {
                 $url = str_replace('//','/',$url);
                 $url = ltrim($url,'/');
-                $urls['url'] = WWW_PATH.$url;
-                $urls['root'] = WWW_ROOT.ltrim(WWW_PATH,'/').$url;
-
+				if(ENABLE_SITES) {//开启站群
+					$urls['url'] = $this->sitelist[$siteid]['url'].$url;
+					if($this->sitelist[$siteid]['html_root']=='') {
+						$this->sitelist[$siteid]['html_root'] = WWW_ROOT;
+					}
+					$urls['root'] = $this->sitelist[$siteid]['html_root'].$url;
+				} else {//未开启站群
+					$urls['url'] = WWW_PATH.$url;
+					$urls['root'] = WWW_ROOT.ltrim(WWW_PATH,'/').$url;
+				}
             }
         } else {//动态地址
-            $urls['url'] = WWW_PATH.$url;
+            $urls['url'] = $this->sitelist[$siteid]['url'].$url;
         }
         //print_r($urls);
         return $urls;

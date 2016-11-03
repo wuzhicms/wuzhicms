@@ -235,7 +235,11 @@ class content extends WUZHI_admin {
                 $urls['url'] = remove_xss($GLOBALS['url']);
             } else {
                 //生成url
-                $urlclass = load_class('url','content',$cate_config);
+				$urlclass = load_class('url','content',$cate_config);
+				$categorys = get_cache('category','content');
+				$urlclass->set_category($cate_config);
+				$urlclass->set_categorys($categorys);
+
                 $urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1,'route'=>$formdata['master_data']['route']));
             }
 
@@ -359,6 +363,7 @@ class content extends WUZHI_admin {
         } else {
             $modelid = $cate_config['modelid'];
         }
+		$categorys = get_cache('category','content');
 
         if(isset($GLOBALS['submit']) || isset($GLOBALS['submit2'])) {
             $formdata = $GLOBALS['form'];
@@ -397,6 +402,9 @@ class content extends WUZHI_admin {
 
                 $productid = 0;
 
+				$urlclass->set_category($cate_config);
+				$urlclass->set_categorys($categorys);
+
                 if(isset($formdata['master_data']['productid'])) $productid = $formdata['master_data']['productid'];
                 $urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1,'route'=>$formdata['master_data']['route'],'productid'=>$productid));
             }
@@ -433,7 +441,7 @@ class content extends WUZHI_admin {
                 foreach($GLOBALS['tb_update'] as $tb_id=>$tb_cid) {
                     $formdata['master_data']['id'] = $tb_id;
                     $formdata['master_data']['cid'] = $tb_cid;
-                    if(strpos('://',$formdata['master_data']['url'])===false) {
+                    if(strpos($formdata['master_data']['url'],'://')===false) {
                         unset($formdata['master_data']['url']);
                     }
 
@@ -458,10 +466,12 @@ class content extends WUZHI_admin {
                 $data['previous_page'] = $this->db->get_one($formdata['master_table'],"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
                 //下一页
                 $data['next_page'] = $this->db->get_one($formdata['master_table'],"`cid`= '$cid' AND `id`>'$id' AND `status`=9",'*',0,'id ASC');
+
                 $this->html = load_class('html','content');
                 $this->html->set_category($cate_config);
-                $this->html->set_categorys();
+                $this->html->set_categorys($categorys);
                 $this->html->load_formatcache();
+
 
                 $this->html->show($data,1,1,$urls['root']);
                 $loadhtml = true;
@@ -699,6 +709,8 @@ class content extends WUZHI_admin {
         if($cate_config['showhtml']) {
             $r = $this->db->get_one($master_table, array('id' => $id));
             $urlclass = load_class('url', 'content', $cate_config);
+			$categorys = get_cache('category','content');
+			$urlclass->set_categorys($categorys);
             $urls = $urlclass->showurl(array('id' => $id, 'cid' => $cid, 'addtime' => $r['addtime'], 'page' => 1, 'route' => $r['route']));
             //编辑操作日志
             $this->editor_logs('delete',$r['title'],'', "?m=content&f=content&v=edit&id=$id&cid=$cid");

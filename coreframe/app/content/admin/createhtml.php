@@ -72,6 +72,7 @@ class createhtml extends WUZHI_admin {
             if(empty($urls['root'])) {
 
             }
+
             $file_root = $urls['root'];
             $this->html->listing($file_root,$page);
             if($GLOBALS['result_lists']==0) {
