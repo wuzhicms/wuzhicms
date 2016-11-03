@@ -17,3 +17,12 @@ if(!in_array('thumb',$fields_arr)) {
 if(!in_array('pictures',$fields_arr)) {
 	$db->query("ALTER TABLE `wz_linkage_data` ADD `pictures` TEXT NOT NULL");
 }
+//site
+$fields_arr = $db->get_fields('site');
+if(!in_array('html_root',$fields_arr)) {
+	$db->query("ALTER TABLE `wz_site` ADD `html_root` VARCHAR(200) NOT NULL");
+}
+if(!in_array('setting',$fields_arr)) {
+	$db->query("ALTER TABLE `wz_site` ADD `setting` TEXT NOT NULL");
+}
+

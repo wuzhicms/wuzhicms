@@ -8412,7 +8412,9 @@ CREATE TABLE `wz_site` (
   `siteid` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(80) NOT NULL,
   `logo` varchar(100) NOT NULL,
-  `url` varchar(100) NOT NULL
+  `url` varchar(100) NOT NULL,
+  `html_root` varchar(200) NOT NULL COMMENT '生成html物理路径',
+  `setting` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
