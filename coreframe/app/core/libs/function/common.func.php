@@ -134,6 +134,7 @@ function MSG($msg, $gotourl = '', $time = 1000, $msg2 = '', $msg3 = ''){
 	if (IS_CLI) {
 		echo date('H:i:s', SYS_TIME) . ' Msg:' . $msg . "\r\n";
 	} else {
+		if(OPEN_DEBUG) $time = 10000;
 		if (defined('IN_ADMIN')) {
 			include COREFRAME_ROOT . 'app/core/admin/template/msg.tpl.php';
 		} else {
