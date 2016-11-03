@@ -21,7 +21,7 @@ include $this->template('header','core');
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">网站域名</label>
                 <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
-                    <input type="text" class="form-control" name="weburl" color="#000000" value="<?php echo WEBURL;?>" readonly>
+                    <input type="text" class="form-control" name="weburl" color="#000000" value="<?php echo $r['url'];?>" readonly>
                 </div>
             </div>
             <div class="form-group">

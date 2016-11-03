@@ -24,7 +24,13 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-xs-4 control-label">网站logo</label>
+                <label class="col-sm-2 col-xs-4 control-label">站点物理路径</label>
+                <div class="col-lg-8 col-sm-8 col-xs-8 input-group">
+                    <input type="text" class="form-control" name="form[html_root]" value="<?php echo $r['html_root'];?>" placeholder="留空为跟目录，需要绝对的物理路径：如，/workspace/wwwroot/wuzhicms_v3/site2/">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 col-xs-4 control-label">后台切换图标</label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <div class="input-group"><?php echo WUZHI_form::attachment('png|jpg|gif|jpeg','1','form[logo]','');?></div>
                 </div>

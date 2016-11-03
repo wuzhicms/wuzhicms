@@ -14,19 +14,29 @@ class WUZHI_cache_global_vars{
 
     }
     /**
-     * 更新敏感词缓存，默认最多1万个敏感词
+     * 更新站点缓存
      * @return bool
      */
     public function cache_all() {
         $db = load_class('db');
-        $r = $db->get_one('setting',array('keyid'=>'configs','m'=>'core'));
-        $datas = unserialize($r['data']);
-        $result = $db->get_list('setting', array('m'=>'global_vars'), '*', 0, 1000,0,'','','keyid');
-        foreach ($result as $key=>$v) {
-            if(isset($datas[$key])) continue;
-            $datas[$key] = $v['data'];
-        }
-        set_cache('siteconfigs',$datas);
+		$result = $db->get_list('setting', array('m'=>'global_vars'), '*', 0, 1000,0,'','','keyid');
+		$datas = array();
+		foreach ($result as $key=>$v) {
+			$datas[$key] = $v['data'];
+		}
+		$sitelist = $db->get_list('site', '', '*', 0, 20, 0, 'siteid DESC');
+		foreach($sitelist as $r) {
+			if($r['setting']) {
+				$setting = unserialize($r['setting']);
+				$setting = array_merge($setting,$datas);
+				set_cache('siteconfigs_'.$r['siteid'],$setting);
+			} else {
+				$r2 = $db->get_one('setting',array('keyid'=>'configs','m'=>'core'));
+				$setting = unserialize($r2['data']);
+				$setting = array_merge($setting,$datas);
+				set_cache('siteconfigs_'.$r['siteid'],$setting);
+			}
+		}
         return true;
 	}
 }

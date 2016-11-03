@@ -28,16 +28,23 @@ class set extends WUZHI_admin {
 
             $serialize_data = serialize($formdata);
             $updatetime = date('Y-m-d H:i:s',SYS_TIME);
-            $this->db->update('setting',array('data'=>$serialize_data,'updatetime'=>$updatetime),array('keyid'=>'configs','m'=>'core'));
+            $this->db->update('site',array('setting'=>$serialize_data),array('siteid'=>SITEID));
             load_function('admin');
             $cache_global = load_class('cache_global_vars');
             $cache_global->cache_all();
             set_web_config('CLOSE',intval($formdata['close']));
             MSG(L('edit success'),HTTP_REFERER);
         } else {
-            $setting = array();
-            $r = $this->db->get_one('setting',array('keyid'=>'configs','m'=>'core'));
-            $setting = unserialize($r['data']);
+
+			$setting = array();
+            $r = $this->db->get_one('site',array('siteid'=>SITEID));
+            if(!$r || $r['setting']=='') {
+				$r2 = $this->db->get_one('setting',array('keyid'=>'configs','m'=>'core'));
+				$setting = unserialize($r2['data']);
+			} else {
+				$setting = unserialize($r['setting']);
+			}
+			if(!$r['url']) $r['url'] = '请在：系统设置 - 站点管理 - 配置域名';
             load_class('form');
             include $this->template('set_basic');
         }
