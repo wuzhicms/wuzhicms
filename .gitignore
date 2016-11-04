@@ -52,3 +52,13 @@ caches/lock.install
 
 .svn/wc.db
 
+
+www/xinwen/*
+
+www/2016/*
+
+site2/*
+
+caches/content/category_1.H_1_a.php
+
+caches/templates/*
