@@ -126,9 +126,11 @@ function edit(uid){
 function del(uid){
 	if(!confirm('您确认要删除吗，该操作不可恢复！'))return false;
 	$.getJSON('index.php?m=member&f=index&v=del&uid='+uid+'<?php echo $this->su();?>&callback=?', function(data){
-		if(data.status == 1){
+		if(data.status == 1) {
 			toast('删除成功');
-			$('#u_'+uid).remove();
+			$('#u_' + uid).remove();
+		}else if(data.status == 2) {
+			toast(data.username+'是后台管理员，如需删除，请先删除管理员<br><br>5秒后自动关闭',5);
 		}else{
 			toast('删除失败');
 		}

@@ -361,8 +361,29 @@ if(is_array($this->group)){
 		if(isset($GLOBALS['uid']) && $GLOBALS['uid']) {
 			if(is_array($GLOBALS['uid'])){
 				$GLOBALS['uid'] = array_map('intval', $GLOBALS['uid']);
+				foreach ($GLOBALS['uid'] as $uid) {
+					$checkdata = $this->db->get_one('admin', array('uid' => $uid));
+					if($checkdata) {
+						$checkdata2 = $this->db->get_one('member', array('uid' => $uid));
+						$username = $checkdata2['username'];
+						MSG($username.'是后台管理员，如需删除，请先删除管理员');
+					}
+				}
+
 				$where = ' IN ('.implode(',', $GLOBALS['uid']).')';
 			}else{
+				$uid = intval($GLOBALS['uid']);
+				$checkdata = $this->db->get_one('admin', array('uid' => $uid));
+				if($checkdata) {
+					$checkdata2 = $this->db->get_one('member', array('uid' => $uid));
+					$username = $checkdata2['username'];
+					$data = array();
+					$data['status'] = 2;
+					$data['username'] = $username;
+					$data = json_encode($data,true);
+					echo $GLOBALS['callback'].'('.$data.')';
+					exit;
+				}
 				$where = ' = '.intval($GLOBALS['uid']);
 			}
 			$user = $this->db->get_list('member', 'uid'.$where, 'uid,modelid,ucuid');
