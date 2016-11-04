@@ -61,9 +61,11 @@ class category extends WUZHI_admin {
 	public function add() {
         $type = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : 0;
         $siteid = get_cookie('siteid');
+
 		if(isset($GLOBALS['submit'])) {
 			if(!is_array($GLOBALS['catname'])) MSG(L('catname error'));
             $pinyin = load_class('pinyin');
+			$gids = get_cache('group','member');
 
 			foreach ($GLOBALS['catname'] as $key => $value) {
                 if(trim($value)=='') continue;
@@ -97,6 +99,19 @@ class category extends WUZHI_admin {
                     $this->db->update('category',array('child'=>1),array('cid'=>$formdata['pid']));
                 }
                 $this->db->update('category',array('url'=>$urls['url']),array('cid'=>$cid));
+				//添加上栏目访问权限
+				if($type!=2) {
+					$formdata2 = array();
+					$formdata2['value'] = $cid;
+					foreach($gids as $_gid=>$tmp2) {
+						if($_gid==1) continue;
+						$formdata2['priv'] = 'view';
+						$formdata2['groupid'] = $_gid;
+						$this->db->insert('member_group_priv', $formdata2);
+						$formdata2['priv'] = 'listview';
+						$this->db->insert('member_group_priv', $formdata2);
+					}
+				}
 			}
             //更新缓存
             $category_cache = load_class('category_cache','content');
@@ -184,6 +199,13 @@ class category extends WUZHI_admin {
 		if (!$cid) MSG(L('empty category id'));
 		$this->db->delete('category',array('cid'=>$cid));
 		$this->delete_child($cid);
+		//删除前台权限表
+		$gids = get_cache('group','member');
+		foreach($gids as $_gid=>$tmp2) {
+			if($_gid==1) continue;
+			$this->db->delete('member_group_priv',array('groupid'=>$_gid,'value'=>$cid,'priv'=>'view'));
+			$this->db->delete('member_group_priv',array('groupid'=>$_gid,'value'=>$cid,'priv'=>'listview'));
+		}
         //更新缓存
         $category_cache = load_class('category_cache','content');
         $category_cache->cache_all();

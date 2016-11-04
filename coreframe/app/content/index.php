@@ -15,11 +15,7 @@ class index{
 	public function __construct() {
         $this->db = load_class('db');
         $this->siteid = $_GET['siteid'] ? $_GET['siteid'] : 1;
-        if(ENABLE_SITES) {
-            $this->siteconfigs = get_cache('siteconfigs_'.$this->siteid);
-        } else {
-            $this->siteconfigs = get_cache('siteconfigs');
-        }
+		$this->siteconfigs = get_cache('siteconfigs_'.$this->siteid);
 	}
 
     /**
@@ -126,21 +122,29 @@ class index{
             $$_key = $_value['data'];
         }
         //权限检查
-        /**
-         *
+		$access_authority = true;
         $_groupid = $GLOBALS['_groupid'];
         if(!empty($groups)) {
             $groups_arr = explode(',',$groups);
             if(!in_array($_groupid,$groups_arr)) {
-                MSG('您没有访问该内容的权限');
+            	//栏目访问权限和内容访问权限-提醒模式
+				if(!$this->siteconfigs['access_authority']) {
+					MSG('您没有访问该内容的权限');
+				} else {
+					$access_authority = false;
+				}
             }
         } else {
             $priv_data = $this->db->get_one('member_group_priv', array('groupid' => $_groupid,'value'=>$cid,'priv'=>'view'));
 
             if(!$priv_data) {
-                MSG('禁止访问');
+				if(!$this->siteconfigs['access_authority']) {
+					MSG('您没有访问该内容的权限');
+				} else {
+					$access_authority = false;
+				}
             }
-        }*/
+        }
         //end 权限检查
         if($template) {
             $_template = $template;
@@ -204,26 +208,18 @@ class index{
         $priv_data = $this->db->get_one('member_group_priv', array('groupid' => $_groupid,'value'=>$cid,'priv'=>'listview'));
 
         if(!$priv_data) {
-            //MSG('禁止访问');
+			//栏目访问权限和内容访问权限-提醒模式
+			if(!$this->siteconfigs['access_authority']) {
+				MSG('您没有访问该内容的权限');
+			} else {
+				$access_authority = false;
+			}
         }
         //end 权限检查
 
         $city = get_cookie('city');
         $city = isset($GLOBALS['city']) && !empty($GLOBALS['city']) ? $GLOBALS['city'] : $city=='' ? 'xa' : $city;
         $cookie_city = $_COOKIE[COOKIE_PRE.'city_key'];
-        /**
-        $cids_config = array(38=>'-maichebang/',50=>'-lvxingbao/',52=>'-gaoduan-tour/',51=>'-zijiayou-tour/',27=>'-tuangou/',40=>'-tejiache/',39=>'-remaichexing/');
-        if($cookie_city) {
-            setcookie(COOKIE_PRE.'city_key',0,SYS_TIME+86400,COOKIE_PATH);
-            $hurl = WEBURL.$cookie_city.$cids_config[$cid];
-            set_cookie('city',$cookie_city);
-            if(in_array($cid,array_keys($cids_config))) {
-                header("Location:".$hurl);
-            } else {
-                header("Location:".HTTP_REFERER);
-            }
-        }
-        **/
         $city_config = get_config('city_config');
         $cityid = $city_config[$city]['cityid'];
         $cityname = $city_config[$city]['cityname'];

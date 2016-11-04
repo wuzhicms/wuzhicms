@@ -57,6 +57,18 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 col-xs-4 control-label">栏目访问权限和内容访问权限-提醒模式</label>
+                <div class="col-lg-6 col-sm-6 col-xs-6 input-group">
+                    <label class="radio-inline">
+                        <input type="radio" name="form[access_authority]" value="0" <?php if(!output($setting,'access_authority')) echo 'checked';?>>系统模式（直接退出）
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="form[access_authority]" value="1" <?php if(output($setting,'access_authority')) echo 'checked';?>>手动模式（在模版中添加要隐藏的内容）<i class="icon-info-circle"></i><a href="https://www.wuzhicms.com/item-34-70-1.html" target="_blank"> 在线查看帮助</a>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">关闭网站</label>
                 <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
                     <label class="radio-inline">
@@ -67,6 +79,8 @@ include $this->template('header','core');
                     </label>
                 </div>
             </div>
+
+
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">关闭原因</label>
                 <div class="col-lg-4 col-sm-6 col-xs-6 input-group">

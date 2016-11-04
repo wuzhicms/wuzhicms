@@ -18,7 +18,15 @@
             <div class="text-center color_999">时间：{$addtime} &nbsp;&nbsp;&nbsp;&nbsp;{if $copyfrom!==""}来源：{/if}{$copyfrom}&nbsp;&nbsp;&nbsp;&nbsp; 访问次数：<span id="hits">0</span></div>
             <hr>
             <div  class="content-p">
-                {$content}
+                {if $access_authority}
+                    {$content}
+                {else}
+                <div style="text-align: center;">
+                    <font color="#b22222">您当前的用户组没有访问该内容的权限！</font>
+                        <br>
+                        <a href="{WEBURL}index.php?m=member&v=login">您可以点击这里登录</a>
+                </div>
+                {/if}
             </div>
 
             <hr>
