@@ -1,1 +1,0 @@
-<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><section class="imgbox"><ul class="lstc3 list-paddingleft-2"><li><p><img src="<?php echo R;?>img/img186x140.jpg"/></p></li><li><p><img src="<?php echo R;?>img/img186x140.jpg"/></p></li><li><p><img src="<?php echo R;?>img/img186x140.jpg"/></p></li></ul><p>宋氏“夫人干政”之有无，本不成问题。</p></section>

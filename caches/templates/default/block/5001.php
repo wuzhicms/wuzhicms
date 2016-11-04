@@ -1,1 +1,0 @@
-<?php defined('IN_WZ') or exit('No direct script access allowed'); ?><p>s</p>
