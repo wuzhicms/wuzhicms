@@ -2776,9 +2776,9 @@ CREATE TABLE `wz_content_stat` (
 DROP TABLE IF EXISTS `wz_copyfrom`;
 CREATE TABLE `wz_copyfrom` (
   `fromid` smallint(5) UNSIGNED NOT NULL,
-  `name` char(20) NOT NULL,
-  `url` char(40) NOT NULL,
-  `logo` char(50) NOT NULL,
+  `name` char(30) NOT NULL,
+  `url` char(200) NOT NULL,
+  `logo` char(200) NOT NULL,
   `usetimes` mediumint(8) UNSIGNED NOT NULL,
   `updatetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `remark` TEXT NOT NULL

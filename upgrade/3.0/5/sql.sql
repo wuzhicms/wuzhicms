@@ -16,3 +16,7 @@ CREATE TABLE `wz_feedback` (
 
 ALTER TABLE `wz_feedback` ADD PRIMARY KEY (`id`);
 ALTER TABLE `wz_feedback` MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `wz_category` CHANGE `thumb` `thumb` VARCHAR(200) NOT NULL COMMENT '栏目图片';
+ALTER TABLE `wz_category` CHANGE `icon` `icon` VARCHAR(200) NOT NULL;
+ALTER TABLE `wz_copyfrom` CHANGE `logo` `logo` CHAR(200) NOT NULL;
+ALTER TABLE `wz_copyfrom` CHANGE `url` `url` CHAR(200) NOT NULL;
