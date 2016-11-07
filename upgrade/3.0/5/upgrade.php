@@ -25,12 +25,7 @@ if(!in_array('html_root',$fields_arr)) {
 if(!in_array('setting',$fields_arr)) {
 	$db->query("ALTER TABLE `wz_site` ADD `setting` TEXT NOT NULL");
 }
-//
-//wz_message
-$fields_arr = $db->get_fields('message');
-if(!in_array('title',$fields_arr)) {
-	$db->query("ALTER TABLE `wz_message` ADD `title` VARCHAR(80) NOT NULL AFTER `status`");
-}
+
 $db->query("TRUNCATE TABLE wz_member_group_priv");
 $categorys = get_cache('category','content');
 $gids = get_cache('group','member');
