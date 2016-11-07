@@ -169,8 +169,7 @@ class WUZHI_mysqli {
 	}
 	public function query($sql, $type = '', $cachetime = FALSE) {
         //if($_SERVER['REMOTE_ADDR']=='127.0.0.1') echo $sql."<br>";
-		$func = $type == 'UNBUFFERED' && @function_exists('mysql_unbuffered_query') ? 'mysqli_unbuffered_query' : 'mysqli_query';
-		if(!($query = $func($this->link,$sql)) && $type != 'SILENT') {
+		if(!($query = mysqli_query($this->link,$sql)) && $type != 'SILENT') {
 			$this->halt('MySQL Query Error', $sql);
 		}
 		$this->querynum++;
