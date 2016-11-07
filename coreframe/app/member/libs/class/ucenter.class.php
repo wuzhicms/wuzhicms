@@ -46,7 +46,8 @@ class WUZHI_ucenter {
 			//	生成临时密码用于比对密码是否正确
 			$password_t = md5(md5($password).$user['factor']);
 			if($user['password'] == $password_t){
-				$ucuid = $this->uc_call("uc_user_register", array($user['username'], $password, $user['email']));
+				$ucuid = $this->uc_call("uc_user_register_new", array($user['username'], $password, $user['email'],$user['mobile']));
+				print_r($ucuid);
 				if($ucuid <= 0)MSG(L('user_not_exist'));
 			}
 			//	再一次调取UC的信息

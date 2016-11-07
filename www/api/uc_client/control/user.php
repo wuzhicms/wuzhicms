@@ -81,9 +81,6 @@ class usercontrol extends base {
 		if(($status = $this->_check_email($email)) < 0) {
 			return $status;
 		}
-		if(($status = $this->_check_sms($sms)) < 0) {
-			return $status;
-		}
 
 		$uid = $_ENV['user']->add_user_new($username, $password, $email, $sms, 0, $questionid, $answer, $regip);
 		return $uid;

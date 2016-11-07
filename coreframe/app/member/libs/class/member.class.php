@@ -89,10 +89,11 @@ class WUZHI_member {
 				MSG(L('password_not_identical', '', 'member'));
 			}
 		}
+
 		//	判断Email 和 Mobile是否有效
 		$master_data['email'] = $this->check_email($data['email'], $uid) ? $data['email'] : MSG(L('email_exist', 'member'));
 		$master_data['mobile'] = isset($data['mobile']) && $data['mobile'] ? ($this->check_mobile($data['mobile'], $uid) ? $data['mobile'] : MSG(L('mobile_exist', '', 'member'))) : '';
-		
+
 		$master_data['locktime'] = strtotime($data['locktime']);
 		$master_data['islock'] = $master_data['locktime'] > SYS_TIME ? 1 : 0;
 		$master_data['viptime'] = strtotime($data['viptime']);
