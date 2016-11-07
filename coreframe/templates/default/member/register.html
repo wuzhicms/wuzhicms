@@ -195,7 +195,7 @@
         if(mobile== '' || checkcode=='') {
             $("#form-register").submit();
         } else {
-            $.get( "index.php?m=sms&f=sms&v=sendsms",{ mobile:mobile,checkcode: checkcode }, function( data ) {
+            $.get( "index.php?m=sms&f=sms&v=sendsms",{ mobile:mobile,checkcode: checkcode,isreg: '1' }, function( data ) {
                 if(data=='0') {
                     $("#smscode").val('');
                     times = 120;
@@ -212,6 +212,8 @@
                     alert('发送过快，请2分钟后重试！');
                 } else if(data=='205') {
                     alert('发送失败！今天发送数量太多！');
+                } else if(data=='206') {
+                    alert('发送失败！该手机号码已注册过！');
                 } else {
                     alert('接口异常，短信发送失败！');
                 }
