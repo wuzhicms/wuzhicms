@@ -36,6 +36,12 @@ class site extends WUZHI_admin {
             $formdata['logo'] = $GLOBALS['form']['logo'];
             $formdata['url'] = $GLOBALS['form']['url'];
 			$formdata['html_root'] = $GLOBALS['form']['html_root'];
+			if($formdata['html_root'] && !is_dir($formdata['html_root'])) {
+				@mkdir($formdata['html_root'],0777);
+				if(!is_dir($formdata['html_root'])) {
+					MSG($formdata['html_root'].'目录创建失败，请手动创建');
+				}
+			}
             $r = $this->db->get_one('site', array('name' => $formdata['name']));
             if($r) MSG('站点已存在，无需重复添加');
             $this->db->insert('site',$formdata);
@@ -58,6 +64,12 @@ class site extends WUZHI_admin {
             $formdata['logo'] = $GLOBALS['form']['logo'];
             $formdata['url'] = $GLOBALS['form']['url'];
             $formdata['html_root'] = $GLOBALS['form']['html_root'];
+			if($formdata['html_root'] && !is_dir($formdata['html_root'])) {
+				@mkdir($formdata['html_root'],0777);
+				if(!is_dir($formdata['html_root'])) {
+					MSG($formdata['html_root'].'目录创建失败，请手动创建');
+				}
+			}
             $this->db->update('site',$formdata,array('siteid'=>$siteid));
             MSG(L('operation success'),'?m=core&f=site&v=listing'.$this->su());
         } else {
