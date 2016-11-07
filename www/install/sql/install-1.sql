@@ -7675,6 +7675,7 @@ CREATE TABLE `wz_message` (
   `addtime` int(10) UNSIGNED NOT NULL,
   `username` varchar(20) NOT NULL,
   `status` tinyint(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT '1 新消息，0 已读',
+  `title` varchar(80) NOT NULL,
   `content` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='站内信息';
 
