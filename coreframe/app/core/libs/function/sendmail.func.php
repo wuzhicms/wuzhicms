@@ -15,6 +15,7 @@ function send_mail($to,$subject,$body) {
 	$smtp_server = $config['smtp_server'];
 	$smtp_user = $config['smtp_user'];
 	$send_email = $config['send_email'];
+	if($send_email=='') return true;
 	$smtp_port = $config['smtp_port'];
 
 	//$mail->SMTPDebug = 3;                               // Enable verbose debug output
