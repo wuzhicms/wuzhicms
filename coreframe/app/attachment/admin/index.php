@@ -147,7 +147,7 @@ class index extends WUZHI_admin
      */
     public function ueditor()
     {
-        if (isset($GLOBALS['dosubmit'])) {
+        if (isset($GLOBALS['submit'])) {
             $cache_in_db = cache_in_db($GLOBALS['setting'], V, M);
             set_cache(V, $GLOBALS['setting']);
             MSG(L('operation_success'), HTTP_REFERER, 3000);
