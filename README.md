@@ -5,7 +5,7 @@
 #### 服务器要求
 Web服务器：apache/nginx/iis
 
-PHP环境要求：支持php5.2、php5.3、php5.4、php5.5、php5.6！（推荐使用5.4或更高版本！）
+PHP环境要求：支持php5.2、php5.3、php5.4、php5.5、php5.6、php7.1（推荐使用5.4或更高版本！）
 
 数据库要求： Mysql 5
 
