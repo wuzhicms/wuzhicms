@@ -18,7 +18,7 @@ class WUZHI_category_cache{
      */
     public function cache_all() {
         $db = load_class('db');
-        $result = $db->get_list('category', array('keyid'=>'content'), '*', 0, 10000,'sort ASC,cid ASC');
+        $result = $db->get_list('category', array('keyid'=>'content'), '*', 0, 10000,0,'sort ASC,cid ASC');
         //所有内容模块栏目缓存，仅缓存name，url，cid，pid，child
         $all = array();
         foreach($result as $v) {
