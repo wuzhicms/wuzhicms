@@ -71,11 +71,12 @@ class upgrade
     /**
      * 执行每次升级的外部php文件
      */
-    protected function auto_execute()
-    {
-        $db = $this->db;
-        if(file_exists('./auto_execute.php')) {
-            include './auto_execute.php';
-        }
-    }
+	protected function auto_execute()
+	{
+		$db = $this->db;
+		$currentdir = dirname(__FILE__);
+		if(file_exists($currentdir.'/auto_execute.php')) {
+			include $currentdir.'/auto_execute.php';
+		}
+	}
 }

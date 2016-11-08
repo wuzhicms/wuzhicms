@@ -47,3 +47,5 @@ foreach($categorys as $_cid=>$tmp) {
 		$db->insert('member_group_priv', $formdata);
 	}
 }
+$cache_global = load_class('cache_global_vars');
+$cache_global->cache_all();
