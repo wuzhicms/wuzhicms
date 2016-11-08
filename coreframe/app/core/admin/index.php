@@ -79,6 +79,19 @@ final class index extends WUZHI_admin {
 
 
     function listing() {
+		//更新栏目缓存
+		$project_tmp = glob(CACHE_ROOT.'content/*');
+		if(!isset($project_tmp[3])) {
+			$category_cache = load_class('category_cache','content');
+			$category_cache->cache_all();
+		}
+		//更新模版缓存
+    	if(!file_exists(CACHE_ROOT.'templates/default/content/msg.php')) {
+			//更新模版缓存
+			$c_template = load_class('template');
+			$dirs = COREFRAME_ROOT."templates";
+			$c_template->cache_dir_template($dirs);
+		}
         // query db version
         $dbversion = $this->db->version();
         //$total_member
