@@ -1,0 +1,1 @@
+UPDATE `wz_block` SET `lang` = 'zh' WHERE `lang` = '';
