@@ -38,6 +38,25 @@ class index{
                 $formdata['referer'] = str_replace(WEBURL,'',strip_tags(HTTP_REFERER));
             }
             $month = date('Ym',SYS_TIME);
+			$stat_table = date('Ym',SYS_TIME);
+			if($r['stat_table']!=$stat_table) {//创建统计表
+				load_function('sql');
+				$sql = "DROP TABLE IF EXISTS `wz_promote_stat_$stat_table`;
+CREATE TABLE `wz_promote_stat_$stat_table` (
+  `pid` int(10) NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `uid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `qkey` varchar(13) NOT NULL,
+  `addtime` datetime NOT NULL,
+  `referer` varchar(100) NOT NULL,
+  `day` tinyint(2) UNSIGNED NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='广告统计';
+ALTER TABLE `wz_promote_stat_$stat_table`
+  ADD KEY `pid_2` (`pid`,`qkey`,`day`);";
+				sql_execute($this->db,$sql);
+			}
+			$this->db->update('promote', array('stat_table'=>$stat_table), array('id' => $id));
             $this->db->insert('promote_stat_'.$month, $formdata);
             header("Location:".$r['url']);
         } else {

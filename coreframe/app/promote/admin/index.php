@@ -293,7 +293,34 @@ class index extends WUZHI_admin {
 	 */
 	public function stat() {
 		$pid = intval($GLOBALS['pid']);
-		$month = date('Ym',SYS_TIME);
+		$month = $stat_table = date('Ym',SYS_TIME);
+
+		$query = $this->db->query('show tables');
+		$dbtalbes = array();
+		while($r = $this->db->fetch_row($query)) {
+			$dbtalbes[]=$r[0];
+		}
+
+		$tablepre = $this->db->tablepre;
+		$check_tablename = $tablepre.$stat_table;
+		if(!in_array($check_tablename,$dbtalbes)) {
+			load_function('sql');
+			$sql = "DROP TABLE IF EXISTS `wz_promote_stat_$stat_table`;
+CREATE TABLE `wz_promote_stat_$stat_table` (
+  `pid` int(10) NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `uid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `qkey` varchar(13) NOT NULL,
+  `addtime` datetime NOT NULL,
+  `referer` varchar(100) NOT NULL,
+  `day` tinyint(2) UNSIGNED NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='广告统计';
+ALTER TABLE `wz_promote_stat_$stat_table`
+  ADD KEY `pid_2` (`pid`,`qkey`,`day`);";
+			sql_execute($this->db,$sql);
+			$this->db->update('promote', array('stat_table'=>$stat_table));
+		}
 		$r = $this->db->count('promote_stat_'.$month, '', "COUNT(*) AS num", 0, '', '');
 		$result = $this->db->query("SELECT COUNT(*) as num,day FROM `wz_promote_stat_$month` WHERE pid=$pid GROUP by day");
 		$page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;

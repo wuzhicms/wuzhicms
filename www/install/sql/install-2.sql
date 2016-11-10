@@ -27,4 +27,3 @@ TRUNCATE wz_receipt;
 TRUNCATE wz_search_index;
 TRUNCATE wz_search_result;
 TRUNCATE wz_sms_checkcode;
-ALTER TABLE `wz_block` CHANGE `lang` `lang` VARCHAR(10) NOT NULL DEFAULT 'zh';
