@@ -1,4 +1,12 @@
 <?php defined('IN_ADMIN') or exit('No permission resources.');?>
+<?php
+//默认值
+if(V=='field_add') {
+    $setting = array(
+        'defaultvalue'=>"0",
+    );
+}
+?>
 <table cellpadding="2" cellspacing="1" width=100%" class="table table-striped table-advance ">
     <tr>
         <td>字段类型</td>

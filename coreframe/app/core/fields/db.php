@@ -7,7 +7,7 @@ if(isset($GLOBALS['field_type'])) {
 }
 $db_table = $formdata['master_field'] ? $this->db->tablepre.$model_r['master_table'] : $this->db->tablepre.$model_r['attr_table'];
 if(isset($_appendstr)) $db_table .= $_appendstr;
-$initialise = isset($GLOBALS['setting']['initialise']) ? $GLOBALS['setting']['initialise'] : '';
+$initialise = isset($GLOBALS['setting']['defaultvalue']) ? $GLOBALS['setting']['defaultvalue'] : '';
 $min_value = isset($GLOBALS['setting']['minnumber']) ? intval($GLOBALS['setting']['minnumber']) : 1;
 $decimaldigits = isset($GLOBALS['setting']['decimaldigits']) ? $GLOBALS['setting']['decimaldigits'] : '';
 //判断是添加字段还是修改字段
@@ -16,7 +16,7 @@ if($action=='add') {
 } else {
 	$sqltype = "CHANGE `$oldfield` `$field`";
 }
-
+echo $field_type;
 switch($field_type) {
 	case 'varchar':
 		if(!$maxlength) $maxlength = 255;
@@ -77,9 +77,11 @@ switch($field_type) {
 		break;
 
 	case 'money':
+		if($initialise=='') $initialise = '0.00';
 		$this->db->query("ALTER TABLE `$db_table` $sqltype decimal(10,2) NOT NULL default '$initialise'");
 		break;
 	case 'money1':
+		if($initialise=='') $initialise = '0.0';
 		$this->db->query("ALTER TABLE `$db_table` $sqltype decimal(10,1) NOT NULL default '$initialise'");
 		break;
 	case 'money2':
