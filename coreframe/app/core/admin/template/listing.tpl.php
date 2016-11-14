@@ -258,7 +258,7 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td><strong>环境信息</strong>：<a data-toggle="modal" href="#chartsetting">【查看基本信息】</a>
+                            <td><strong>环境信息</strong>：<a data-toggle="modal" href="#chartsetting"><?php echo $_SERVER['SERVER_SOFTWARE'];?>【查看基本信息】</a>
                                 <a href="index.php?m=core&f=index&v=phpinfo<?php echo $this->su();?>" target="_blank" >【点击查看 phpinfo()】</a><br/>
                                 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="chartsetting" class="modal fade">
                                     <div class="modal-dialog">
@@ -289,11 +289,17 @@
                             </td>
                             <td></td>
                         </tr>
+                        <tr>
+                            <td>
+                                <strong>服务器IP</strong>：<?php echo $_SERVER["SERVER_ADDR"];?>
+                            </td>
+                            <td></td>
+                        </tr>
                         <?php
                         $li1 = '试用型 － <a href="http://www.wuzhicms.com/buy/" target="_blank">点击购买</a>';
                         $li3 = '<a href="http://www.wuzhicms.com/buy/" target="_blank"> 没有技术服务，点击这里购买</a>';
                         $li2 = '';
-                        $li5 = '个人用户永久免费，企业用户免费使用30天';
+                        $li5 = '';
                         ?>
                         <tr>
                             <td>
@@ -314,13 +320,6 @@
                             <td>
                                 <strong>产品服务编号</strong>：
                                 <strong><?php echo $li2;?></strong>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>授权使用年限</strong>：
-                                <?php echo $li5;?>
                             </td>
                             <td></td>
                         </tr>

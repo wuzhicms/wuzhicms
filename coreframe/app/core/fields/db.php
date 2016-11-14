@@ -16,7 +16,7 @@ if($action=='add') {
 } else {
 	$sqltype = "CHANGE `$oldfield` `$field`";
 }
-echo $field_type;
+
 switch($field_type) {
 	case 'varchar':
 		if(!$maxlength) $maxlength = 255;
