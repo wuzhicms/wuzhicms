@@ -170,6 +170,45 @@ class index {
         $master_table = $model_r['master_table'];
         $data = $this->db->get_one($master_table,array('id'=>$id));
 
+        $model_r = $this->db->get_one('model',array('m'=>'guestbook'));
+        $fields = get_cache('field_'.$model_r['modelid'],'model');
+        $area_array_tmp = $fields['area']['setting']['options'];
+        $area_array_tmp = explode("\r\n",$area_array_tmp);
+        $area_array =array();
+        foreach($area_array_tmp as $area) {
+            $areas = explode('|',$area);
+            $area_array[$areas[0]] = $areas[1];
+        }
+        $area = isset($GLOBALS['area']) ? sql_replace($GLOBALS['area']) : '';
+        $category_array_tmp = $fields['category']['setting']['options'];
+        $category_array_tmp = explode("\r\n",$category_array_tmp);
+        $category_array =array();
+        foreach($category_array_tmp as $category) {
+            $categorys = explode('|',$category);
+            $category_array[$categorys[0]] = $categorys[1];
+        }
+
+        $category = isset($GLOBALS['category']) ? sql_replace($GLOBALS['category']) : '';
+        $conditions = isset($GLOBALS['conditions']) ? intval($GLOBALS['conditions']) : 0;
+        if(isset($GLOBALS['keywords'])) {
+            $keywords = sql_replace($GLOBALS['keywords']);
+            if($conditions) {
+                $keywords = intval($keywords);
+                $where .= " AND `id`='$keywords'";
+            } else {
+                $where .= " AND (`title` LIKE '%$keywords%' OR `content` LIKE '%$keywords%')";
+            }
+
+        }
+        if($area) {
+            $where .= " AND `area`='$area'";
+        }
+        if($category) {
+            $where .= " AND `category`='$category'";
+        }
+        $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
+        $page = max($page,1);
+        $guestbook_result = $this->db->get_list('guestbook', $where, '*', 0, 5,$page,'id DESC');
 
         require get_cache_path('content_format','model');
         $form_format = new form_format($model_r['modelid']);

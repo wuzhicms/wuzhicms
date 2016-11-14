@@ -33,7 +33,7 @@ class myissue extends WUZHI_foreground {
         $formdata['publisher'] = $this->memberinfo['username'];
         $formdata['ip'] = get_ip();
         $this->db->insert('guestbook', $formdata);
-        MSG('您的提问已经提交，我们的专家会尽快给您回复','?m=guestbook&f=myissue&v=listing');
+        MSG('您的提问已经提交，我们的专家会尽快给您回复',$GLOBALS['forward']);
     }
     public function newask() {
         include T('guestbook','newask');

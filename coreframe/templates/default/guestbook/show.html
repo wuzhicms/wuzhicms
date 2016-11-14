@@ -10,8 +10,44 @@
         </ol>
     </div>
 </div>
-<hr>
 <div class="container liuyan-list">
+    <div class="margin_top30" style="display: inline-block;">
+        <form class="form-inline" action="" method="get">
+            <div class="biaodan-border">
+                <select class="form-control" name="conditions">
+                    <option value="0" {if $conditions==0}selected{/if}>按关键字查询</option>
+                    <option value="1" {if $conditions==1}selected{/if}>按帖子查询码查询</option>
+                </select>
+            </div>
+            <div class="biaodan-border">
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputEmail3"> </label>
+                    <input type="text" name="keywords" class="form-control" id="exampleInputEmail3" placeholder="请输入搜索内容" value="{$keywords}">
+                </div>
+            </div>
+            <div class="biaodan-border">
+                <select class="form-control" name="area">
+                    <option value="">主题领域</option>
+                    {loop $area_array $key $r}
+                    <option value="{$key}" {if $area==$key}selected{/if}>{$r}</option>
+                    {/loop}
+                </select>
+            </div>
+            <div class="biaodan-border">
+                <select class="form-control" name="category">
+                    <option value="">主题类别</option>
+                    {loop $category_array $key $r}
+                    <option value="{$key}" {if $category==$key}selected{/if}>{$r}</option>
+                    {/loop}
+                </select>
+            </div>
+            <input type="hidden" name="m" value="guestbook">
+            <button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;搜索&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        </form>
+    </div>
+    <div class="margin_top30" style="float: right"><a href="index.php?m=guestbook&v=contact" class="btn  btn-warning"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 快速留言</a>
+    </div>
+    <hr>
 <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
 <div id="myTabContent" class="tab-content">
     <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
@@ -32,7 +68,6 @@
                 {$reply}
             </div>
             {/if}
-
         </div>
     </div>
 </div>
