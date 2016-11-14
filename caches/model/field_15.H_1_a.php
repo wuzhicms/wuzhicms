@@ -1,11 +1,11 @@
 <?php
  return array (
-  'area' => 
+  'category' => 
   array (
-    'id' => '538',
+    'id' => '546',
     'modelid' => '15',
-    'field' => 'area',
-    'name' => '主题领域',
+    'field' => 'category',
+    'name' => '主题类别',
     'remark' => '',
     'css' => '',
     'minlength' => '0',
@@ -15,8 +15,11 @@
     'formtype' => 'box',
     'setting' => 
     array (
-      'options' => '中文|中文
-bb|bb',
+      'options' => '咨询|咨询
+谏言|谏言
+投诉|投诉
+求助|求助
+感谢|感谢',
       'boxtype' => 'radio',
       'fieldtype' => 'varchar',
       'defaultvalue' => '',
@@ -39,12 +42,12 @@ bb|bb',
     'master_table' => 'guestbook',
     'attr_table' => '',
   ),
-  'category' => 
+  'area' => 
   array (
-    'id' => '539',
+    'id' => '545',
     'modelid' => '15',
-    'field' => 'category',
-    'name' => '主题类别',
+    'field' => 'area',
+    'name' => '主题领域',
     'remark' => '',
     'css' => '',
     'minlength' => '0',
@@ -54,8 +57,21 @@ bb|bb',
     'formtype' => 'box',
     'setting' => 
     array (
-      'options' => 'cc|cc
-dd|dd',
+      'options' => '三农|三农
+环保|环保
+医疗|医疗
+就业|就业
+文娱|文娱
+感谢|感谢
+拆迁|拆迁
+城建|城建
+交通|交通
+旅游|旅游
+企业|企业
+谏言|谏言
+教育|教育
+贪腐|贪腐
+其他|其他',
       'boxtype' => 'radio',
       'fieldtype' => 'varchar',
       'defaultvalue' => '',
@@ -80,7 +96,7 @@ dd|dd',
   ),
   'title' => 
   array (
-    'id' => '178',
+    'id' => '542',
     'modelid' => '15',
     'field' => 'title',
     'name' => '留言标题',
@@ -117,7 +133,7 @@ dd|dd',
   ),
   'linkman' => 
   array (
-    'id' => '180',
+    'id' => '543',
     'modelid' => '15',
     'field' => 'linkman',
     'name' => '联系人',
@@ -154,7 +170,7 @@ dd|dd',
   ),
   'tel' => 
   array (
-    'id' => '181',
+    'id' => '544',
     'modelid' => '15',
     'field' => 'tel',
     'name' => '联系电话',
@@ -191,7 +207,7 @@ dd|dd',
   ),
   'content' => 
   array (
-    'id' => '176',
+    'id' => '541',
     'modelid' => '15',
     'field' => 'content',
     'name' => '留言内容',
@@ -226,7 +242,7 @@ dd|dd',
   ),
   'addtime' => 
   array (
-    'id' => '165',
+    'id' => '540',
     'modelid' => '15',
     'field' => 'addtime',
     'name' => '添加时间',

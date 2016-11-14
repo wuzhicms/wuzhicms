@@ -102,7 +102,7 @@ class form_build {
         extract($config,EXTR_SKIP);
         $siteid = SITEID;
         if(defined('IN_ADMIN')) {
-			$_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
+                $_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
         } else {
                 $_lang = LANGUAGE;
         }
@@ -319,7 +319,7 @@ private function content_group($config, $value){
         extract($config,EXTR_SKIP);
         if($setting) extract($setting,EXTR_SKIP);
         if($minlength>0) {
-            $validform = 'datatype="*" nullmsg="请输入\'.$name.\'" errormsg="\'.$name.\'不能为空"';
+            $validform = 'datatype="*" nullmsg="请输入'.$name.'" errormsg="'.$name.'不能为空"';
         } else {
             $validform = '';
         }
