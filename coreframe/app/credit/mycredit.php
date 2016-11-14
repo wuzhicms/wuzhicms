@@ -45,7 +45,7 @@ class mycredit extends WUZHI_foreground{
             $point = $money*$point_config['exchange_point'];
             $credit_api->handle($memberinfo['uid'], '+',$point, '积分购买');
             $this->db->update('member', "`money`=`money`-$money", array('uid' => $memberinfo['uid']));
-            MSG('积分购买成功','?m=credit&f=mycredit&v=listing');
+            MSG('积分购买成功',HTTP_REFERER);//?m=credit&f=mycredit&v=listing $GLOBALS['forward']
         } else {
             MSG('没有开启积分兑换功能，请联系客服！');
         }
