@@ -819,16 +819,19 @@ class content extends WUZHI_admin {
             //检查权限
             $role = $_SESSION['role'];
             $workflows = $this->db->get_one('workflow', array('workflowid'=>$workflowid));
+
             $level = $workflows['level'];
 
             if($level==1) {
                 $level_user = p_unserialize($workflows['level1_user']);
+                if(empty($level_user ))MSG('工作流程审核中没有该管理员，如需审核到后台超级管理员设置工作流程权限！');
                 if(!in_array($_SESSION['uid'],array_keys($level_user))) {
                     MSG(L('no content private'));
                 }
                 $status=9;
             } elseif($level>1) {
                 $level_user = p_unserialize($workflows['level'.$r['status'].'_user']);
+                if(empty($level_user ))MSG('工作流程审核中没有该管理员，如需审核到后台超级管理员设置工作流程权限！');
                 if(!in_array($_SESSION['uid'],array_keys($level_user))) {
                     MSG(L('no content private'));
                 }
