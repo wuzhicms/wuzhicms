@@ -107,8 +107,10 @@ class category extends WUZHI_admin {
 						if($_gid==1) continue;
 						$formdata2['priv'] = 'view';
 						$formdata2['groupid'] = $_gid;
+						$this->db->delete('member_group_priv',$formdata2);
 						$this->db->insert('member_group_priv', $formdata2);
 						$formdata2['priv'] = 'listview';
+						$this->db->delete('member_group_priv',$formdata2);
 						$this->db->insert('member_group_priv', $formdata2);
 					}
 				}
