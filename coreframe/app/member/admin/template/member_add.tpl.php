@@ -57,27 +57,21 @@
 							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><input type="text" name="info[mobile]" class="form-control" value="" datatype="m|*0-0" errormsg="请输入正确的手机号" sucmsg="OK" ajaxurl="index.php?m=member&f=index&v=public_check_mobile" /></div>
 						</td>
 					</tr>
-				
 					<tr>
-						<td class="text-right"><label class="control-label">头像</label></td>
-						<td><div class="col-sm-8 col-xs-8"><div class="input-group"><?php echo $form->attachment('','1','avatar',$avatar);?></div></div></td>
+						<td class="text-right"><label class="control-label">用户模型</label></td>
+						<td><div class="col-sm-4 col-xs-4 input-group" style="height: 100px;overflow-y: scroll;">
+								<select name="modelids[]" class="form-control opheight" style="height: 100px;" multiple="multiple">
+									<?php if($this->model)foreach($this->model as $k=>$t){?>
+										<option value="<?php echo $t['modelid']?>" <?php if($k==10) echo 'selected';?>><?php echo $t['name'];?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</td>
 					</tr>
 
 					<tr>
-						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">激活状态</label></td>
-						<td>
-							<div class="col-lg-5 col-sm-5 col-xs-5 input-group"><label><input type="radio" name="islock" value="0" onclick="$('#set_name_id').css('display','none');"> 已激活 </label><label style="padding-left: 20px;"><input type="radio" name="islock" value="1" checked onclick="$('#set_name_id').css('display','');"> 未激活(发送邮件进行激活后,方可登录)</label></div>
-						</td>
-					</tr>
-					<tr id="set_name_id">
-						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">更改用户名</label></td>
-						<td>
-							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><label><input type="radio" name="sys_name" value="1" datatype="*" errormsg="请选择是否允许更改用户名" nullmsg="请选择是否允许更改用户名！"> 允许 </label><label style="padding-left: 20px;"><input type="radio" name="sys_name" value="0" checked> 不允许</label></div>
-						</td>
-					</tr>
-					<tr>
 						<td class="text-right"><label class="control-label">会员组</label></td>
-						<td><div class="col-sm-8 col-xs-8">
+						<td><div class="col-sm-4 col-xs-4 input-group">
 								<select name="info[groupid]" class="form-control">
 									<?php if(is_array($group))foreach($group as $v){?>
 										<option value="<?php echo $v['groupid']?>" <?php echo $v['groupid'] == 3 ? 'selected' : ''?> ><?php echo $v['name']?></option>
@@ -87,8 +81,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="text-right"><label class="control-label">扩展会员组</label></td>
-						<td><div class="col-sm-6 col-xs-6" style="height: 200px;overflow-y: scroll;">
+						<td class="text-right"><label class="control-label">扩展会员组（可选）</label></td>
+						<td><div class="col-sm-6 col-xs-6 input-group" style="height: 200px;overflow-y: scroll;">
 								<table class="table table-advance ">
 									<thead>
 									<tr>
@@ -104,17 +98,37 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="col-sm-2 col-xs-2 " style="text-align:right;padding-top: 200px;font-size: 14px;">用户模型</div>
-							<div class="col-sm-3 col-xs-3">
-								<select name="modelids[]" class="form-control opheight" style="height: 200px;" multiple="multiple">
-									<?php if($this->model)foreach($this->model as $k=>$t){?>
-										<option value="<?php echo $t['modelid']?>"><?php echo $t['name'];?></option>
-									<?php } ?>
-								</select>
-							</div>
 						</td>
 					</tr>
+					<tr>
+						<td class="text-right"><label class="control-label">头像</label></td>
+						<td><div class="col-sm-4 col-xs-4"><div class="input-group"><?php echo $form->attachment('','1','avatar',$avatar);?></div></div></td>
+					</tr>
 
+					<tr>
+						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">激活状态</label></td>
+						<td>
+							<div class="col-lg-8 col-sm-8 col-xs-8 input-group"><label><input type="radio" name="islock" value="0" onclick="$('#set_name_id').css('display','none');"> 已激活 </label><label style="padding-left: 20px;"><input type="radio" name="islock" value="1" checked onclick="$('#set_name_id').css('display','');"> 未激活(发送邮件进行激活后,方可登录)</label></div>
+						</td>
+					</tr>
+					<tr id="set_name_id">
+						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label">更改用户名</label></td>
+						<td>
+							<div class="col-lg-3 col-sm-4 col-xs-4 input-group"><label><input type="radio" name="sys_name" value="1" datatype="*" errormsg="请选择是否允许更改用户名" nullmsg="请选择是否允许更改用户名！"> 允许 </label><label style="padding-left: 20px;"><input type="radio" name="sys_name" value="0" checked> 不允许</label></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-right" width="150"><label class="control-label"> 性别</label></td>
+						<td>
+							<div class="col-sm-8 col-xs-8"> <label class="radio-inline"><input type="radio" name='info[sex]'  value="1"> 男</label> <label class="radio-inline"><input type="radio" name='info[sex]'  value="0" checked> 女</label></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-right" width="150"><label class="control-label"> 婚姻</label></td>
+						<td>
+							<div class="col-sm-8 col-xs-8"> <label class="radio-inline"><input type="radio" name='info[marriage]'  value="1" > 已婚</label> <label class="radio-inline"><input type="radio" name='info[marriage]'  value="0" checked> 未婚</label></div>
+						</td>
+					</tr>
 					<tr>
 						<td class="col-sm-2 col-xs-4 text-right"><label class="control-label"></label></td>
 						<td>

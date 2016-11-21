@@ -131,13 +131,13 @@ include $this->template('header','core');
 			<tr>
 				<td class="text-right" width="150"><label class="control-label"> 性别</label></td>
 				<td>
-					<div class="col-sm-8 col-xs-8"> <label class="radio-inline"><input type="radio" name='info[sex]'  value="1" checked> 男</label> <label class="radio-inline"><input type="radio" name='info[sex]'  value="0" > 女</label></div>
+					<div class="col-sm-8 col-xs-8"> <label class="radio-inline"><input type="radio" name='info[sex]'  value="1" <?php if($member['sex']==1) echo 'checked';?>> 男</label> <label class="radio-inline"><input type="radio" name='info[sex]'  value="0" <?php if(!$member['sex']) echo 'checked';?>> 女</label></div>
 				</td>
 			</tr>
 			<tr>
 				<td class="text-right" width="150"><label class="control-label"> 婚姻</label></td>
 				<td>
-					<div class="col-sm-8 col-xs-8"> <label class="radio-inline"><input type="radio" name='info[marriage]'  value="1" checked> 已婚</label> <label class="radio-inline"><input type="radio" name='info[marriage]'  value="0" > 未婚</label></div>
+					<div class="col-sm-8 col-xs-8"> <label class="radio-inline"><input type="radio" name='info[marriage]'  value="1" <?php if($member['marriage']) echo 'checked';?>> 已婚</label> <label class="radio-inline"><input type="radio" name='info[marriage]'  value="0" <?php if(!$member['marriage']) echo 'checked';?>> 未婚</label></div>
 				</td>
 			</tr>
 		   </tbody>

@@ -97,6 +97,8 @@ class WUZHI_member {
 		$master_data['locktime'] = strtotime($data['locktime']);
 		$master_data['islock'] = $master_data['locktime'] > SYS_TIME ? 1 : 0;
 		$master_data['viptime'] = strtotime($data['viptime']);
+		$master_data['sex'] = intval($data['sex']);
+		$master_data['marriage'] = intval($data['marriage']);
 		$master_data['vip'] = $master_data['viptime'] > SYS_TIME ? 1 : 0;
 		if(isset($master_data['password']))$this->password($uid, $data['username'], $master_data['email'], $data['password']);
 		return $this->db->update('member', $master_data, '`uid`='.$uid);

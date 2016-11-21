@@ -158,10 +158,14 @@ if(is_array($this->group)){
 			$file = WWW_ROOT.'uploadfile/member/'.substr(md5($uid), 0, 2).'/'.$uid.'/';
 			if(!is_dir($file)) mkdir($file,0777,true);
 
-			if($GLOBALS['avatar'] && file_exists(substr(WWW_ROOT,0,-1).$GLOBALS['avatar'])) {
-				copy(WWW_ROOT.$GLOBALS['avatar'],$file.'180x180.jpg');
+			$avatar_path = str_replace(ATTACHMENT_URL,ATTACHMENT_ROOT,$GLOBALS['avatar']);
+			if($GLOBALS['avatar'] && file_exists($avatar_path)) {
+				copy($avatar_path,$file.'180x180.jpg');
 				$this->db->update('member', array('avatar'=>1), array('uid' => $uid));
+			} else {
+				$this->db->update('member', array('avatar'=>0), array('uid' => $uid));
 			}
+
 			if(!empty($GLOBALS['groups'])) {
 				foreach($GLOBALS['groups'] as $groupid) {
 					$formdata = array();
@@ -246,14 +250,17 @@ if(is_array($this->group)){
 			$GLOBALS['info']['factor'] = $member['factor'];
 			//$GLOBALS['info']['username'] = $member['username'];
 			$GLOBALS['info']['modelid'] = implode(',',$GLOBALS['modelids']);
-
 			if(!$this->member->edit($GLOBALS['info'], $uid)) MSG(L('operation_failure'));
 
 			$file = WWW_ROOT.'uploadfile/member/'.substr(md5($uid), 0, 2).'/'.$uid.'/';
+
 			if(!is_dir($file)) mkdir($file,0777,true);
-			if($GLOBALS['avatar'] && file_exists(WWW_ROOT.$GLOBALS['avatar'])) {
-				copy(WWW_ROOT.$GLOBALS['avatar'],$file.'180x180.jpg');
+			$avatar_path = str_replace(ATTACHMENT_URL,ATTACHMENT_ROOT,$GLOBALS['avatar']);
+			if($GLOBALS['avatar'] && file_exists($avatar_path)) {
+				copy($avatar_path,$file.'180x180.jpg');
 				$this->db->update('member', array('avatar'=>1), array('uid' => $uid));
+			} else {
+				$this->db->update('member', array('avatar'=>0), array('uid' => $uid));
 			}
 
 			$modelid = (int)$GLOBALS['info']['modelid'];
