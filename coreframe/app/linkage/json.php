@@ -29,7 +29,8 @@ class json {
             $str = '[';
             foreach($result as $rs) {
                 $vid = $returnid ? $rs['lid'] : $rs['name'];
-                $str .= '{"v" : "'.$vid.'", "n" : "'.$rs['initial'].' '.$rs['name'].'", "g" : "'.$rs['isgroup'].'"';
+                //$str .= '{"v" : "'.$vid.'", "n" : "'.$rs['initial'].' '.$rs['name'].'", "g" : "'.$rs['isgroup'].'"';
+                $str .= '{"v" : "'.$vid.'", "n" : " '.$rs['name'].'", "g" : "'.$rs['isgroup'].'"';
                 if($rs['child']) {
                     $str .= $this->child($rs['lid'],$returnid);
                 }

@@ -258,7 +258,7 @@ class index extends WUZHI_foreground{
 						//同步登陆
 						$synlogin = $ucenter->login($r['username'], $info['password'], $r);
 					}
-					MSG('注册成功'.$synlogin);
+					MSG('注册成功'.$synlogin,'?m=member');
 				}
 			}else{
 				MSG(L('register_error'));

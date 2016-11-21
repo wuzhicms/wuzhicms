@@ -116,14 +116,22 @@ class index extends WUZHI_admin {
         $data = $this->db->get_one('linkage', array('linkageid' => $linkageid));
 
         if($linkageid) {
+			$data2 = $this->db->get_one('linkage_data', array('lid' => $pid));
             $where = array('linkageid'=>$linkageid,'pid'=>$pid);
         } else {
             $where = array('pid'=>$pid);
+
         }
         $result = $this->db->get_list('linkage_data', $where, '*', 0, 20,$page,"sort ASC,lid ASC");
         $pages = $this->db->pages;
         $total = $this->db->number;
-        include $this->template('item_listing');
+
+		if(file_exists($this->template('item_listing'.$linkageid))) {
+			include $this->template('item_listing'.$linkageid);
+		} else {
+			include $this->template('item_listing');
+		}
+
     }
     /**
      * 排序
@@ -200,10 +208,12 @@ class index extends WUZHI_admin {
             $formdata['name'] = remove_xss($GLOBALS['form']['name']);
             $formdata['remark'] = remove_xss($GLOBALS['form']['remark']);
             $py = $pinyin->return_py($formdata['name']);
-            $formdata['initial'] = strtoupper($py['pinyin']);
+            $formdata['initial'] = strtolower($py['pinyin']);
+            $formdata['letter'] = strtolower($GLOBALS['form']['letter']);
             $formdata['thumb'] = strip_tags($GLOBALS['form']['thumb']);
             $pictures = $GLOBALS['pictures'];
             $pictures2 = $GLOBALS['form']['pictures'];
+
             if($pictures2 && $pictures) {
                 $pictures = array_merge($pictures,$pictures2);
             } else {
@@ -213,6 +223,16 @@ class index extends WUZHI_admin {
 
             $this->db->update('linkage_data',$formdata,array('lid'=>$lid));
             $forward = $GLOBALS['forward'];
+			//缓存城市配置信息
+			if($formdata['letter']) {
+				$result = $this->db->get_list('linkage_data',"letter!=''", '*', 0, 500, 0, 'lid ASC');
+				$data = array();
+				foreach($result as $r) {
+					$data[$r['letter']] = array('cityid'=>$r['lid'],'cityname'=>str_replace('市','',$r['name']));
+				}
+                $data = '<?php' . "\r\n return " . array2string($data) . '?>';
+                file_put_contents(WWW_ROOT.'configs/city_config.php', $data);
+			}
             MSG(L('operation success'),$forward);
         } else {
             $show_formjs = 1;
@@ -237,7 +257,12 @@ class index extends WUZHI_admin {
             $pictures = $str . '<div class="attaclist">' . $str2 . $this->form->attachment("jpg|png|gif|bmp", 20, "form[$field]", $value, 'callback_images2', 0,true) . '</div>';
             $show_formjs = 1;
             $show_dialog = 1;
-            include $this->template('edit_item');
+			if(file_exists($this->template('edit_item'.$r['linkageid']))) {
+				include $this->template('edit_item'.$r['linkageid']);
+			} else {
+				include $this->template('edit_item');
+			}
+
         }
     }
 

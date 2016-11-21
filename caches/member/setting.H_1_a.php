@@ -3,7 +3,7 @@
   'register' => '1',
   'checkemail' => '0',
   'checkmobile' => '0',
-  'checkuser' => '1',
+  'checkuser' => '0',
   'invite' => '0',
   'inviteprice' => '10',
   'invitenum' => 
@@ -48,7 +48,7 @@
       'free' => '',
       'buy' => '',
     ),
-    10 => 
+    5 => 
     array (
       'free' => '',
       'buy' => '',
@@ -90,15 +90,16 @@
 
 五指互联公司',
   'ucenter' => '0',
-  'uc_api' => 'http://bbs.phpcms.com/uc_server',
-  'uc_ip' => '',
+  'uc_api' => 'http://bbstest.com/uc_server',
+  'uc_ip' => '127.0.0.1',
   'uc_appid' => '2',
-  'uc_key' => '123456',
-  'uc_dbhost' => '127.0.0.1',
-  'uc_dbuser' => '123456',
-  'uc_dbpw' => '123456',
-  'uc_dbname' => 'ultrax',
-  'uc_dbtablepre' => '`ultrax`.pre_ucenter_',
+  'uc_key' => 'e063rbkHX22RAvIg',
+  'uc_dbhost' => 'localhost',
+  'uc_dbuser' => 'admin',
+  'uc_dbpw' => 'admin',
+  'uc_dbname' => 'bbstest',
+  'uc_dbtablepre' => '`bbstest`.pre_ucenter_',
+  'discuz_dbtablepre' => '',
   'uc_dbcharset' => 'gbk',
   'qq_appid' => '101164321',
   'qq_appkey' => '57fc75d43a6b5208320dec0b5986a395',
