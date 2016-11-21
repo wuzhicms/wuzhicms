@@ -6,6 +6,7 @@
 // | Author: wangcanjia <phpip@qq.com>
 // +----------------------------------------------------------------------
 defined('IN_WZ') || exit('No direct script access allowed');
+define('CLI_DISPLAY',true);
 /**
  * 升级
  */

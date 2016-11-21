@@ -290,7 +290,7 @@ function log_exception($e) {
     $data['referer'] = URL();
 
     if (ERROR_REPORT) {
-        if(IS_CLI==0) {
+		if(IS_CLI==0 && !defined('CLI_DISPLAY')) {
             print "<!DOCTYPE html><div style='text-align: center;'>";
             print "<h5 style='color: rgb(190, 50, 50);'>WuzhiCMS Exception Occured:</h5>";
             print "<table style='width: 800px; display: inline-block;'>";

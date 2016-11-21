@@ -131,7 +131,7 @@ function T($m = 'content', $template = 'index', $style = 'default'){
  * @param string $msg3    扩展提示信息
  */
 function MSG($msg, $gotourl = '', $time = 1000, $msg2 = '', $msg3 = ''){
-	if (IS_CLI) {
+	if (IS_CLI || defined('CLI_DISPLAY')) {
 		echo date('H:i:s', SYS_TIME) . ' Msg:' . $msg . "\r\n";
 	} else {
 		if(OPEN_DEBUG) $time = 10000;

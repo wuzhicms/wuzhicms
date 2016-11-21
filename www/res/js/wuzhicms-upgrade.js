@@ -146,7 +146,7 @@ function exec(title, url, progressBar, startProgress, endProgress) {
             $(document).dequeue('update_step_queue');
         }
     }).fail(function(jqXHR, errorThrown) {
-        progressBar.error(title + '时，发生了未知错误。');
+        progressBar.error(title + '时，发生了错误'+'<br>'+jqXHR.responseText);
         $(document).clearQueue('update_step_queue');
     });
 }
