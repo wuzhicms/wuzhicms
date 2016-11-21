@@ -112,7 +112,7 @@ class content extends WUZHI_admin {
         } else {
             $modelid = 0;
             $_master_table = $master_table = 'content_share';
-            
+
             $where = "`status`='$status'";
             $categorys = get_cache('category','content');
             if($title) $where .= " AND `title` LIKE '%$title%'";
@@ -166,7 +166,7 @@ class content extends WUZHI_admin {
 
         $result = array();
         $content_share_table='content_share';
-        
+
         $result[0] = $this->db->get_list($content_share_table,$where, '*', 0, 20,0,'id DESC');
         foreach($models as $key=>$model) {
             $master_table = $model['master_table'];
@@ -190,7 +190,7 @@ class content extends WUZHI_admin {
         if($cate_config['type']==1) {//单网页,查下是否已经存在该内容
             $models = get_cache('model_content','model');
             $master_table = $models[$modelid]['master_table'];
-            
+
             $data = $this->db->get_one($master_table, array('cid' => $cid),'id');
             if($data) {
                 header("Location: ?m=content&f=content&v=edit&cid=".$cid.'&_lang='.$_lang.'&id='.$data['id'].$this->su());
@@ -240,7 +240,9 @@ class content extends WUZHI_admin {
 				$urlclass->set_category($cate_config);
 				$urlclass->set_categorys($categorys);
 
-                $urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1,'route'=>$formdata['master_data']['route']));
+				$route_config = array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1);
+				$route_config = array_merge($route_config,$formdata['master_data']);
+				$urls = $urlclass->showurl($route_config);
             }
 
 
@@ -406,7 +408,9 @@ class content extends WUZHI_admin {
 				$urlclass->set_categorys($categorys);
 
                 if(isset($formdata['master_data']['productid'])) $productid = $formdata['master_data']['productid'];
-                $urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1,'route'=>$formdata['master_data']['route'],'productid'=>$productid));
+				$route_config = array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1);
+				$route_config = array_merge($route_config,$formdata['master_data']);
+				$urls = $urlclass->showurl($route_config);
             }
             $formdata['master_data']['url'] = $urls['url'];
 
@@ -417,7 +421,7 @@ class content extends WUZHI_admin {
             $this->db->update($formdata['master_table'],$formdata['master_data'],array('id'=>$id));
             if(!empty($formdata['attr_table']) && $formdata['attr_data']) {
                 $_attr_table = $attr_table = $formdata['attr_table'];
-            
+
                 //查询从表是否存在数据,不存在则修复数据.
                 $attr_data = $this->db->get_one($attr_table, array('id' => $id),'id');
                 if($attr_data) {
@@ -755,7 +759,7 @@ class content extends WUZHI_admin {
         $master_table = $model_r['master_table'];
         $data = $this->db->delete($master_table,array('id'=>$id));
         $attr_table = $model_r['attr_table'];
-        
+
         if($model_r['attr_table']) {
             $attrdata = $this->db->delete($attr_table,array('id'=>$id));
         }
@@ -779,7 +783,7 @@ class content extends WUZHI_admin {
         $master_table = $model_r['master_table'];
         $status = intval($GLOBALS['status']);
         $attr_table = $model_r['attr_table'];
-        
+
         foreach($GLOBALS['ids'] as $id) {
             if($status==0) {
                 $data = $this->db->delete($master_table,array('id'=>$id));
