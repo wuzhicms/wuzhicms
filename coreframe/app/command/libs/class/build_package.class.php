@@ -111,6 +111,10 @@ class WUZHI_build_package
                 echo " 忽略升级文件：{$opFile}\n";
                 continue;
             }
+			if (strpos($opFile, 'README.md') === 0) {
+				echo " 忽略升级文件：{$opFile}\n";
+				continue;
+			}
 
 
             $this->insterCopyFile($opFile, $packageDirectory);
