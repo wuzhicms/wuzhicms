@@ -9,6 +9,5 @@ defined('IN_WZ') or exit('No direct script access allowed');
 //linkage_data
 $fields_arr = $db->get_fields('linkage_data');
 if(!in_array('letter',$fields_arr)) {
-	$db->query("DELETE FROM wz_linkage_data where linkageid=1");
-	$db->query("ALTER TABLE `wz_linkage_data` ADD `letter` VARCHAR(10) NOT NULL");
+	$db->query("ALTER TABLE `wz_linkage_data` ADD `letter` VARCHAR(30) NOT NULL");
 }

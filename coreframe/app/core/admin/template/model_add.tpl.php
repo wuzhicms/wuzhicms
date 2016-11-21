@@ -27,14 +27,14 @@ if($share_model) {
                             <div class="form-group">
                                 <label class="col-sm-2 col-xs-4 control-label">模型别名</label>
                                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                    <input type="text" class="form-control" name="name"  value="" datatype="s2-20" errormsg="别名至少2个字符,最多20个字符！">
+                                    <input type="text" class="form-control" name="name"  value="" datatype="*2-20" errormsg="别名至少2个字符,最多20个字符！">
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 col-xs-4 control-label">数据表名</label>
                                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                    <input type="text" class="form-control" name="tablename" value="<?php echo $pre;?>">
+                                    <input type="text" class="form-control" name="tablename" value="<?php echo $pre;?>" datatype="dbtable" errormsg="数据表名至少1个字符,最多20个字符！且必须为，数字，字母，下划线" placeholder="必须为，数字，字母，下划线">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -173,7 +173,10 @@ if($share_model) {
     <script type="text/javascript">
         $(function(){
             $(".form-horizontal").Validform({
-                tiptype:3
+                tiptype:3,
+                datatype:{
+                    "dbtable":/^[0-9a-z_]{1,20}$/
+                }
             });
         })
         function s_icon(value) {

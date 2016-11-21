@@ -18,7 +18,7 @@ include $this->template('header','core');
                             <div class="form-group">
                                 <label class="col-sm-2 col-xs-4 control-label">模型别名</label>
                                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                    <input type="text" class="form-control" name="name"  value="<?php echo $r['name'];?>" datatype="s2-20" errormsg="别名至少2个字符,最多20个字符！">
+                                    <input type="text" class="form-control" name="name"  value="<?php echo $r['name'];?>" datatype="*2-20" errormsg="别名至少2个字符,最多20个字符！">
                                 </div>
 
                             </div>

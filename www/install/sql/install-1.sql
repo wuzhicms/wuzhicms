@@ -3331,6 +3331,7 @@ CREATE TABLE `wz_linkage_data` (
   `sort` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `remark` varchar(100) DEFAULT NULL,
   `initial` varchar(1) NOT NULL,
+  `letter` varchar(30) NOT NULL,
   `thumb` varchar(150) NOT NULL,
   `pictures` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
