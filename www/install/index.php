@@ -13,7 +13,7 @@ set_time_limit(300);
 if(PHP_VERSION < '5.2.0') die('PHP配置需要大于 5.2.0 ');
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', 1);
-$wz_version = '3.1.2';
+$wz_version = '3.1.3';
 
 //定义当前的网站物理路径
 define('INSTALL_ROOT',dirname(__FILE__).'/');

@@ -7661,7 +7661,7 @@ INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `
   (302, 301, '添加自定义变量', 'core', 'set', 'add_global_vars', '', 0, 1, 0),
   (303, 301, '修改自定义变量', 'core', 'set', 'edit_global_vars', '', 0, 0, 0),
   (304, 301, '删除自定义变量', 'core', 'set', 'delete_global_vars', '', 0, 0, 0),
-  (305, 6, '审批新会员', 'member', 'index', 'check_list', '', 0, 1, 0),
+  (305, 6, '审批新会员', 'member', 'index', 'check_list', '', 5, 1, 0),
   (306, 5, '问题反馈', 'feedback', 'index', 'listing', '', 306, 1, 0);
 
 -- --------------------------------------------------------
