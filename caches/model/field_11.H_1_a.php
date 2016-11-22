@@ -1,42 +1,5 @@
 <?php
  return array (
-  'worktype' => 
-  array (
-    'id' => '303',
-    'modelid' => '11',
-    'field' => 'worktype',
-    'name' => '职务',
-    'remark' => '',
-    'css' => '',
-    'minlength' => '0',
-    'maxlength' => '0',
-    'pattern' => '',
-    'errortips' => '',
-    'formtype' => 'text',
-    'setting' => 
-    array (
-      'size' => '',
-      'defaultvalue' => '',
-      'ispassword' => '0',
-      'enablehtml' => '0',
-    ),
-    'ext_code' => '',
-    'unsetgids' => '',
-    'unsetroles' => '',
-    'master_field' => '1',
-    'ban_field' => '0',
-    'location' => '0',
-    'search_field' => '0',
-    'ban_contribute' => '1',
-    'to_fulltext' => '1',
-    'to_block' => '0',
-    'sort' => '0',
-    'disabled' => '0',
-    'powerful_field' => '0',
-    'workflow_field' => '0',
-    'master_table' => 'member',
-    'attr_table' => 'member_company_data',
-  ),
   'companyname' => 
   array (
     'id' => '301',

@@ -204,11 +204,7 @@ if(is_array($this->group)){
 			MSG(L('operation_success'),'?m=member&f=index&v=listing'.$this->su());
 		} else {
 
-			$group_extend_result = $this->db->get_list('member_group_extend', array('uid'=>$uid), '*', 0, 50, 0, 'groupid ASC');
-			$group_extend = array();
-			foreach($group_extend_result as $er) {
-				$group_extend[] = $er['groupid'];
-			}
+			$group_extend_result = $group_extend = array();
 			$group = $ext_group = array();
 			foreach($this->group as $gr) {
 				if($gr['issystem']==1) {
@@ -248,7 +244,6 @@ if(is_array($this->group)){
 		if(isset($GLOBALS['submit'])) {
 			if(empty($GLOBALS['modelids'])) MSG('请选择模型');
 			$GLOBALS['info']['factor'] = $member['factor'];
-			//$GLOBALS['info']['username'] = $member['username'];
 			$GLOBALS['info']['modelid'] = implode(',',$GLOBALS['modelids']);
 			if(!$this->member->edit($GLOBALS['info'], $uid)) MSG(L('operation_failure'));
 

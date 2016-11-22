@@ -59,14 +59,20 @@ include $this->template('header','core');
 		    	<td><div class="col-sm-8 col-xs-8"><input type="text" name="info[mobile]" class="form-control" value="<?php echo $member['mobile'];?>" datatype="m|*0-0" errormsg="请输入正确的手机号" sucmsg="OK"/></div></td>
 		    </tr>
 			<tr>
-				<td class="text-right"><label class="control-label">头像</label></td>
-				<td><div class="col-sm-8 col-xs-8"><div class="input-group"><?php echo $form->attachment('','1','avatar',$avatar);?></div></div></td>
+				<td class="text-right"><label class="control-label">用户模型</label></td>
+				<td><div class="col-sm-4 col-xs-4" style="height: 100px;">
+						<select name="modelids[]" class="form-control opheight" style="height: 100px;" multiple="multiple">
+							<?php if($this->model)foreach($this->model as $k=>$t){?>
+								<option value="<?php echo $t['modelid']?>" <?php echo in_array($t['modelid'],$modelids) ? 'selected' : '';?>><?php echo $t['name'];?></option>
+							<?php } ?>
+						</select>
+					</div>
+
+				</td>
 			</tr>
-
-
 		    <tr>
 		    	<td class="text-right"><label class="control-label">会员组</label></td>
-		    	<td><div class="col-sm-8 col-xs-8">
+		    	<td><div class="col-sm-4 col-xs-4">
 						<select name="info[groupid]" class="form-control">
 							<?php if(is_array($group))foreach($group as $v){?>
 							<option value="<?php echo $v['groupid']?>" <?php echo $v['groupid'] == $member['groupid'] ? 'selected' : ''?> ><?php echo $v['name']?></option>
@@ -75,6 +81,7 @@ include $this->template('header','core');
 					</div>
 				</td>
 		    </tr>
+
 			<tr>
 		    	<td class="text-right"><label class="control-label">扩展会员组</label></td>
 		    	<td><div class="col-sm-6 col-xs-6" style="height: 200px;overflow-y: scroll;">
@@ -93,23 +100,19 @@ include $this->template('header','core');
                             </tbody>
                         </table>
 					</div>
-					<div class="col-sm-2 col-xs-2 " style="text-align:right;padding-top: 200px;font-size: 14px;">用户模型</div>
-					<div class="col-sm-3 col-xs-3">
-						 <select name="modelids[]" class="form-control opheight" style="height: 200px;" multiple="multiple">
-						<?php if($this->model)foreach($this->model as $k=>$t){?>
-							<option value="<?php echo $t['modelid']?>" <?php echo in_array($t['modelid'],$modelids) ? 'selected' : '';?>><?php echo $t['name'];?></option>
-		                <?php } ?>
-		                </select>
-					</div>
 				</td>
 		    </tr>
+			<tr>
+				<td class="text-right"><label class="control-label">头像</label></td>
+				<td><div class="col-sm-4 col-xs-4"><div class="input-group"><?php echo $form->attachment('','1','avatar',$avatar);?></div></div></td>
+			</tr>
 			<tr>
 				<td class="text-right" width="150"><label class="control-label"> 生日</label></td>
 				<td>
 					<div class="col-sm-8 col-xs-8"><link rel="stylesheet" type="text/css" href="<?php echo R;?>js/calendar/css/jscal2.css"/>
 						<link rel="stylesheet" type="text/css" href="<?php echo R;?>js/calendar/css/border-radius.css"/>
 						<script type="text/javascript" src="<?php echo R;?>js/calendar/jscal2.js"></script>
-						<script type="text/javascript" src="<?php echo R;?>js/calendar/lang/cn.js"></script><input type="text" name="info[birthday]" id="birthday" value="" class="date" >&nbsp;<script type="text/javascript">
+						<script type="text/javascript" src="<?php echo R;?>js/calendar/lang/cn.js"></script><input type="text" name="info[birthday]" id="birthday" value="<?php echo $member['birthday'];?>" class="date" >&nbsp;<script type="text/javascript">
 							Calendar.setup({
 								weekNumbers: 0,
 								inputField : "birthday",
@@ -125,7 +128,7 @@ include $this->template('header','core');
 			<tr>
 				<td class="text-right" width="150"><label class="control-label"> 真实姓名</label></td>
 				<td>
-					<div class="col-sm-8 col-xs-8"><input type="text" name="info[truename]" id="truename" size="" placeholder="" value="" class="form-control"  ></div>
+					<div class="col-sm-4 col-xs-4"><input type="text" name="info[truename]" id="truename" size="" placeholder="" value="<?php echo $member['truename'];?>" class="form-control"  ></div>
 				</td>
 			</tr>
 			<tr>

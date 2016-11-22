@@ -118,6 +118,31 @@
 						</td>
 					</tr>
 					<tr>
+						<td class="text-right" width="150"><label class="control-label"> 生日</label></td>
+						<td>
+							<div class="col-sm-8 col-xs-8"><link rel="stylesheet" type="text/css" href="<?php echo R;?>js/calendar/css/jscal2.css"/>
+								<link rel="stylesheet" type="text/css" href="<?php echo R;?>js/calendar/css/border-radius.css"/>
+								<script type="text/javascript" src="<?php echo R;?>js/calendar/jscal2.js"></script>
+								<script type="text/javascript" src="<?php echo R;?>js/calendar/lang/cn.js"></script><input type="text" name="info[birthday]" id="birthday" value="" class="date" >&nbsp;<script type="text/javascript">
+									Calendar.setup({
+										weekNumbers: 0,
+										inputField : "birthday",
+										trigger    : "birthday",
+										dateFormat: "%Y-%m-%d",
+										showTime: false,
+										minuteStep: 1,
+										onSelect   : function() {this.hide();}
+									});
+								</script></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-right" width="150"><label class="control-label"> 真实姓名</label></td>
+						<td>
+							<div class="col-sm-4 col-xs-4"><input type="text" name="info[truename]" id="truename" size="" placeholder="" value="" class="form-control"  ></div>
+						</td>
+					</tr>
+					<tr>
 						<td class="text-right" width="150"><label class="control-label"> 性别</label></td>
 						<td>
 							<div class="col-sm-8 col-xs-8"> <label class="radio-inline"><input type="radio" name='info[sex]'  value="1"> 男</label> <label class="radio-inline"><input type="radio" name='info[sex]'  value="0" checked> 女</label></div>

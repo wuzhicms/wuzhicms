@@ -68,7 +68,12 @@ if($share_model) {
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label class="col-sm-2 col-xs-4 control-label">自定义后台列表模版</label>
+                                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                    <input type="text" id="iconcss" name="manage_template" class="form-control" value="" placeholder="例如：company_listing，手动创建：company_listing.tpl.php">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 col-xs-4 control-label"></label>
                                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
@@ -95,13 +100,13 @@ if($share_model) {
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">模型别名</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="text" class="form-control" name="name" >
+                                <input type="text" class="form-control" name="name" datatype="*2-20" errormsg="别名至少2个字符,最多20个字符！">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">数据表名</label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                                <input type="text" class="form-control" name="tablename" value="<?php echo $pre;?>">
+                                <input type="text" class="form-control" name="tablename" value="<?php echo $pre;?>" datatype="dbtable" errormsg="数据表名至少1个字符,最多20个字符！且必须为，数字，字母，下划线" placeholder="必须为，数字，字母，下划线">
                             </div>
                         </div>
                         <?php
@@ -150,6 +155,12 @@ if($share_model) {
                                 </div>
                             </div>
                         <?php }?>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-xs-4 control-label">自定义后台列表模版</label>
+                            <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                                <input type="text" id="iconcss" name="manage_template" class="form-control" value="" placeholder="例如：company_listing，手动创建：company_listing.tpl.php">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label"></label>
                             <div class="col-lg-3 col-sm-4 col-xs-4 input-group">

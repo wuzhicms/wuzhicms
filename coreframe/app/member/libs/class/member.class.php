@@ -52,6 +52,10 @@ class WUZHI_member {
 		$master_data['regtime'] = SYS_TIME;
 		$master_data['points'] = $data['points'];
 		$master_data['companyname'] = isset($data['companyname']) ? $data['companyname'] : '';
+		$master_data['truename'] = sql_replace($data['truename']);
+		$master_data['sex'] = intval($data['sex']);
+		$master_data['birthday'] = sql_replace($data['birthday']);
+		$master_data['marriage'] = intval($data['marriage']);
 		$master_data['worktype'] = isset($data['worktype']) ? $data['worktype'] : '';
 		$master_data['ischeck_email'] = isset($data['ischeck_email']) ? $data['ischeck_email'] : 0;
 		$master_data['ischeck_mobile'] = isset($data['ischeck_mobile']) ? intval($data['ischeck_mobile']) : 0;
@@ -76,6 +80,7 @@ class WUZHI_member {
 		$r = $this->db->get_one('member', array('username' => $data['username']),'uid');
 		if($r && $r['uid']!=$uid) MSG(L('user_exist', '', 'member'));
 		$master_data['username'] = $data['username'];
+		$master_data['truename'] = sql_replace($data['truename']);
 		$master_data['modelid'] = $data['modelid'];
 		$master_data['groupid'] = (int)$data['groupid'];
 		if(!$master_data['groupid']) $master_data['groupid'] = 3;
@@ -98,6 +103,7 @@ class WUZHI_member {
 		$master_data['islock'] = $master_data['locktime'] > SYS_TIME ? 1 : 0;
 		$master_data['viptime'] = strtotime($data['viptime']);
 		$master_data['sex'] = intval($data['sex']);
+		$master_data['birthday'] = sql_replace($data['birthday']);
 		$master_data['marriage'] = intval($data['marriage']);
 		$master_data['vip'] = $master_data['viptime'] > SYS_TIME ? 1 : 0;
 		if(isset($master_data['password']))$this->password($uid, $data['username'], $master_data['email'], $data['password']);

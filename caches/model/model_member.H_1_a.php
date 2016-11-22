@@ -26,17 +26,4 @@
     'share_model' => '1',
     'manage_template' => '',
   ),
-  23 => 
-  array (
-    'modelid' => '23',
-    'm' => 'member',
-    'name' => '机构',
-    'master_table' => 'member',
-    'attr_table' => 'jigou_data',
-    'remark' => '',
-    'template' => 'show',
-    'css' => '',
-    'share_model' => '1',
-    'manage_template' => '',
-  ),
 )?>
