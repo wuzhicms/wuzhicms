@@ -194,7 +194,10 @@ class createhtml extends WUZHI_admin {
         foreach($result as $key=>$rs) {
             if($rs['route']>1) continue;
             $id = $rs['id'];
-            $urls = $this->urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$rs['addtime'],'page'=>1,'route'=>$rs['route'],'productid'=>$rs['productid']));
+			$route_config = array('page'=>1);
+			$route_config = array_merge($route_config,$rs);
+			$urls = $this->urlclass->showurl($route_config);
+
             $this->db->update($master_table,array('url'=>$urls['url']),array('id'=>$id));
 
             $startid = $startid+1;
