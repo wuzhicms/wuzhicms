@@ -145,7 +145,7 @@ class index extends WUZHI_admin{
 					$comma = "";
 					$tabledump .= "INSERT INTO `$tables[$i]` VALUES(";
 					for($j = 0; $j < $numfields; $j++) {
-						$tabledump .= $comma."'".$row[$name[$j]]."'";
+						$tabledump .= $comma."'".addslashes($row[$name[$j]])."'";
 						$comma = ",";
 					}
 					$tabledump .= ");\n";
@@ -219,11 +219,6 @@ class index extends WUZHI_admin{
 	}
 
  	private function sql_split($sql) {
-		//if($this->db->version() > '4.1' && $this->db_charset) {
-		//	$sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=".$this->db_charset,$sql);
-		//}
-		//if($this->db_tablepre != "wzcms_") $sql = str_replace("`wzcms_", '`'.$this->db_tablepre, $sql);
-		$sql = str_replace("\r", "\n", $sql);
 		$ret = array();
 		$num = 0;
 		$queriesarray = explode(";\n", trim($sql));
