@@ -15,7 +15,8 @@ class WUZHI_html {
     public $categorys;//当前模块所有栏目
     public function __construct($category = '') {
         $this->category = $category;
-        $this->siteconfigs = get_cache('siteconfigs');
+		$this->siteid = get_cookie('siteid');
+		$this->siteconfigs = get_cache('siteconfigs_'.$this->siteid);
         $this->urlclass = load_class('url','content');
     }
 
