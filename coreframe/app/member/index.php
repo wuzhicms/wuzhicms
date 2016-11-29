@@ -230,7 +230,6 @@ class index extends WUZHI_foreground{
 			$info['password'] = $GLOBALS['password'];
 			$info['pwdconfirm'] = $GLOBALS['pwdconfirm'];
 			$info['companyname'] = remove_xss($GLOBALS['companyname']);
-			$info['worktype'] = remove_xss($GLOBALS['worktype']);
 			$info['mobile'] = remove_xss($GLOBALS['mobile']);
 
 

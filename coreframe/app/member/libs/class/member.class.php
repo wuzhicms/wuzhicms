@@ -56,7 +56,7 @@ class WUZHI_member {
 		$master_data['sex'] = intval($data['sex']);
 		$master_data['birthday'] = sql_replace($data['birthday']);
 		$master_data['marriage'] = intval($data['marriage']);
-		$master_data['worktype'] = isset($data['worktype']) ? $data['worktype'] : '';
+
 		$master_data['ischeck_email'] = isset($data['ischeck_email']) ? $data['ischeck_email'] : 0;
 		$master_data['ischeck_mobile'] = isset($data['ischeck_mobile']) ? intval($data['ischeck_mobile']) : 0;
 		$master_data['pw_reset'] = 0;
