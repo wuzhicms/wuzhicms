@@ -270,9 +270,9 @@ class index {
             case 'listimage':/* 列出图片 */
             case 'listfile':/* 列出文件 */
                 $page = $GLOBALS['page']  ? intval($GLOBALS['page']) : 1;
-                $keytype = $GLOBALS['keytype'] ? intval($GLOBALS['keytype']) : 0;
+                $keytype = isset($GLOBALS['keytype']) ? intval($GLOBALS['keytype']) : 0;
                 $keywords = isset($GLOBALS['keywords']) ? iconv('utf-8','gbk',remove_xss($GLOBALS['keywords'])) : '';
-                $username = strip_tags($GLOBALS['username']);
+                $username = input('username');
                 $username = sql_replace($username);
                 $result = $ckditor->lists($page,$keytype,$keywords,$username);
                 if(isset($GLOBALS['returnjson'])) {
@@ -281,6 +281,8 @@ class index {
                     $CKEditorFuncNum = intval($GLOBALS['CKEditorFuncNum']);
                     load_class('form');
                     $CKEditor = $GLOBALS['CKEditor'];
+					$GLOBALS['start'] = isset($GLOBALS['start']) ? $GLOBALS['start'] : '';
+					$GLOBALS['end'] = isset($GLOBALS['end']) ? $GLOBALS['end'] : '';
                     include T('attachment','listimage');
                 }
                 exit;

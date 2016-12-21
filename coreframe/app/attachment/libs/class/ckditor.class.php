@@ -204,12 +204,12 @@ class WUZHI_ckditor{
 		} else {
 			$where = $keywords ? ' (`name` like "%'.$keywords.'%" or tags like "%'.$keywords.'%" )' : ' 1 ';
 		}
-		if($GLOBALS['start']) {
+		if(isset($GLOBALS['start']) && $GLOBALS['start']) {
 			$start = $GLOBALS['start'];
 			$start = strtotime($start);
 			$where .= " AND `addtime`>='$start'";
 		}
-		if($GLOBALS['end']) {
+		if(isset($GLOBALS['end']) && $GLOBALS['end']) {
 			$end = $GLOBALS['end'];
 			$end = strtotime($end);
 			$where .= " AND `addtime`<='$end'";
