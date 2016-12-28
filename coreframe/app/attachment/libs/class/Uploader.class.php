@@ -65,7 +65,7 @@ class WUZHI_Uploader
         } else {
             $this->upFile();
         }
-        $this->stateMap['ERROR_TYPE_NOT_ALLOWED'] = iconv('gbk', 'utf-8', $this->stateMap['ERROR_TYPE_NOT_ALLOWED']);
+        //$this->stateMap['ERROR_TYPE_NOT_ALLOWED'] = iconv('gbk', 'utf-8', $this->stateMap['ERROR_TYPE_NOT_ALLOWED']);
     }
     /**
      * 上传文件的主处理方法

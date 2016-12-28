@@ -159,7 +159,7 @@ class WUZHI_ckditor{
 		/* 返回数据 */
 		$FileInfo = $up->getFileInfo();
 		$fileurl = $FileInfo['url'];
-		$CKEditorFuncNum = intval($GLOBALS['CKEditorFuncNum']);
+		$CKEditorFuncNum = isset($GLOBALS['CKEditorFuncNum']) ? intval($GLOBALS['CKEditorFuncNum']) : 0;
 		//{"fileName":"image(4).png","uploaded":1,"error":{"number":201,"message":"A file with the same name already exists. The uploaded file was renamed to \u0022image(4).png\u0022."},"url":"\/userfiles\/files\/image(4).png"}
 		/**
 		 *

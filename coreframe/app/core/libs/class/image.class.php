@@ -137,7 +137,7 @@ class WUZHI_image{
             throw new Exception('Unable to open file "' . $fileName . '"');
         }
 
-        if (!$imgType) {
+        if (!isset($imgType) || !$imgType) {
             $imageInfo = $this->getImageInfo($fileName);
             $imgType = $imageInfo[2];
         }
