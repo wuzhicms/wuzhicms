@@ -148,6 +148,8 @@ class index{
         //end 权限检查
         if($template) {
             $_template = $template;
+		} elseif($category['modelid']!=$modelid) {
+			$_template = TPLID.':'.$model_r['template'];
         } elseif($category['show_template']) {
             $_template = $category['show_template'];
         } elseif($model_r['template']) {

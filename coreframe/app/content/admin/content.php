@@ -641,6 +641,8 @@ class content extends WUZHI_admin {
         }
         if($template) {
             $_template = $template;
+		} elseif($category['modelid']!=$modelid) {
+			$_template = TPLID.':'.$model_r['template'];
         } elseif($category['show_template']) {
             $_template = $category['show_template'];
         } elseif($model_r['template']) {
