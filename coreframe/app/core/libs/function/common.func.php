@@ -694,7 +694,7 @@ function linkage($linkageid, $name, $returnid = 1, $extjs = '',$values = array()
 		$str .= '<div id="wz_' . $id . '">';
 		$str .= '<input type="hidden" id="' . $id . '" name="' . $name . '" value="0">';
 		for ($i = 1; $i <= $level; $i++) {
-			if($i==$level) $extjs = '';
+			if($i>1 && $i==$level) $extjs = '';
 			$str .= '<div class="col-sm-4"><select class="LK' . $linkageid . '_' . $i . ' form-control" name="LK' . $linkageid . '_' . $i . '" id="LK' . $linkageid . '_' . $i . '" onchange="linkage(\'' . $id . '\',this.value,this)" ' . $extjs . ' data-value="'.$values[$i].'"></select></div>';
 		}
 		$str .= '</div>';
