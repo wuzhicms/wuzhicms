@@ -116,6 +116,10 @@ class model extends WUZHI_admin {
 			$this->cache_form();
             MSG(L('update success'),$forward);
         } else {
+			$module_config = '';
+			if(file_exists(COREFRAME_ROOT.'app/'.$this->m.'/fields/config.php')) {
+				$module_config = include COREFRAME_ROOT.'app/'.$this->m.'/fields/config.php';
+			}
             load_class('form');
             load_function('template');
             $r = $this->db->get_one('model',array('modelid'=>$modelid));

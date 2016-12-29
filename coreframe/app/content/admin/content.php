@@ -606,6 +606,10 @@ class content extends WUZHI_admin {
 
         $data = $this->db->get_one($master_table,array('id'=>$id));
         if(!$data) MSG('信息不存在!');
+		if($data['modelid']) {
+			$model_r = $models[$data['modelid']];
+		}
+
         //城市分站信息
         $city = get_cookie('city');
         $city = isset($GLOBALS['city']) && !empty($GLOBALS['city']) ? $GLOBALS['city'] : $city ? $city : 'xa';
@@ -641,8 +645,8 @@ class content extends WUZHI_admin {
         }
         if($template) {
             $_template = $template;
-		} elseif($category['modelid']!=$modelid) {
-			$_template = TPLID.':'.$model_r['template'];
+		} elseif($model_r['template'] && $category['modelid']!=$modelid) {
+			$_template = $model_r['template'];
         } elseif($category['show_template']) {
             $_template = $category['show_template'];
         } elseif($model_r['template']) {
