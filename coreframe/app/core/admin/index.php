@@ -101,12 +101,12 @@ final class index extends WUZHI_admin {
 
         $modellist = get_cache('model_content','model');
         $total_number = $this->db->count_result('content_share',"`status`=9");
-        $status_number = $this->db->count_result('content_share',"`status`<4");
+        $status_number = $this->db->count_result('content_share',"`status` IN(1,2,3)");
         foreach($modellist as $model) {
             $master_table = $model['master_table'];
             if($master_table=='content_share') continue;
             $tmp = $this->db->count_result($master_table,"`status`=9");
-            $tmp2 = $this->db->count_result($master_table,"`status`<4");
+            $tmp2 = $this->db->count_result($master_table,"`status` IN(1,2,3)");
             $total_number += $tmp;
             $status_number += $tmp2;
         }
