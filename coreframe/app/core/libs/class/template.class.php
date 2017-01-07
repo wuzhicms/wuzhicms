@@ -92,7 +92,7 @@ final class WUZHI_template {
 			$template = preg_replace_callback("/\{\/wz\}/i", "self::endof_syntax_parse", $template);
 			$template = preg_replace("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/s", "<?php echo \\1;?>", $template);
 		}
-		$template = preg_replace("/\{T\s+(.+)\}/", "<?php if(!isset(\$siteconfigs)) \$siteconfigs=get_cache('siteconfigs'); include T(\\1); ?>", $template);
+		$template = preg_replace("/\{T\s+(.+)\}/", "<?php if(!isset(\$siteconfigs)) \$siteconfigs=get_cache('siteconfigs_1'); include T(\\1); ?>", $template);
 		$template = preg_replace("/\{if\s+(.+?)\}/", "<?php if(\\1) { ?>", $template);
 		$template = preg_replace("/\{else\}/", "<?php } else { ?>", $template);
 		$template = preg_replace("/\{elseif\s+(.+?)\}/", "<?php } elseif (\\1) { ?>", $template);
