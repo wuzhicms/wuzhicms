@@ -72,7 +72,7 @@ class index {
         $insert = array();
         $_username = get_cookie('_username');
 
-        $wz_name = get_cookie('wz_name');
+        $wz_name = get_cookie('username');
         if($wz_name!='') {
             $_username = $wz_name;
         }
