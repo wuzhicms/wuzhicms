@@ -7662,7 +7662,16 @@ INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `
   (303, 301, '修改自定义变量', 'core', 'set', 'edit_global_vars', '', 0, 0, 0),
   (304, 301, '删除自定义变量', 'core', 'set', 'delete_global_vars', '', 0, 0, 0),
   (305, 6, '审批新会员', 'member', 'index', 'check_list', '', 5, 1, 0),
-  (306, 5, '问题反馈', 'feedback', 'index', 'listing', '', 306, 1, 0);
+  (306, 5, '问题反馈', 'feedback', 'index', 'listing', '', 306, 1, 0),
+  (307, 5, '模块管理', 'module_app', 'module_manage', 'init', '', 307, 1, 0),
+  (308, 5, '采集', 'collect', 'index', 'listing', '', 308, 1, 0),
+  (309, 308, '采集分类', 'core', 'kind', 'listing', 'keyid=collect', 309, 1, 0),
+  (310, 308, '添加规则', 'collect', 'index', 'add', '', 310, 1, 0),
+  (311, 308, '修改规则', 'collect', 'index', 'edit', '', 311, 0, 0),
+  (312, 308, '采集测试', 'collect', 'index', 'test', '', 312, 0, 0),
+  (313, 34, '类别管理', 'core', 'kind', 'listing', 'keyid=link', 313, 1, 0),
+  (314, 34, '修改类别', 'core', 'kind', 'edit', 'keyid=link', 314, 0, 0),
+  (315, 34, '删除类别', 'core', 'kind', 'delete', 'keyid=link', 315, 0, 0);
 
 -- --------------------------------------------------------
 
