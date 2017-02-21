@@ -21,7 +21,7 @@ echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js
 <div class="row">
 <div class="col-lg-12">
 <section class="panel" style="border-top: 2px solid #2E3238;">
-<header class="panel-heading addpos"><?php echo catpos($cid, ' &gt; ', 'target="_blank"'); ?></header>
+<header class="panel-heading addpos"><?php echo catpos($cid, ' &gt; ', 'target="_blank"'); ?> <a href="<?php echo $data['url'];?>" target="_blank">访问</a>  &gt; </header>
 <div class="panel-body" id="panel-bodys">
 <form name="myform" class="form-horizontal tasi-form" action="" method="post">
 <table class="table table-striped table-advance table-hover" id="contenttable">
