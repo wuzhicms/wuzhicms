@@ -13,7 +13,7 @@ load_function('content','content');
 class search{
     private $siteconfigs;
 	public function __construct() {
-        $this->siteconfigs = get_cache('siteconfigs');
+        $this->siteconfigs = get_cache('siteconfigs_1');
         $this->db = load_class('db');
 	}
 
