@@ -13,18 +13,7 @@
     'pattern' => '',
     'errortips' => '',
     'formtype' => 'box',
-    'setting' => 
-    array (
-      'options' => '咨询|咨询
-谏言|谏言
-投诉|投诉
-求助|求助
-感谢|感谢',
-      'boxtype' => 'radio',
-      'fieldtype' => 'varchar',
-      'defaultvalue' => '',
-      'outputtype' => '0',
-    ),
+    'setting' => '',
     'ext_code' => '',
     'unsetgids' => '',
     'unsetroles' => '',

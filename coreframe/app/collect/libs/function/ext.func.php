@@ -8,9 +8,15 @@
 defined('IN_WZ') or exit('No direct script access allowed');
 //字段格式化处理函数集合
 
-//结果转换数组中的值
+/**
+ * 内容转化
+ *
+ * @param $str
+ * @param $arr
+ * @return mixed
+ */
 function r2id($str,$arr) {
-    return array_search($str,$arr);
+	return array_search($str,$arr);
 }
 
 /**
@@ -20,12 +26,12 @@ function r2id($str,$arr) {
  * @param $arr
  */
 function group_search_string($str,$arr) {
-    $tmp = array('no_value');
-    foreach($arr as $key=>$value) {
-        if(strpos($str,$value)===false) continue;
-        $tmp[] = $key;
-    }
-    return $tmp;
+	$tmp = array('no_value');
+	foreach($arr as $key=>$value) {
+		if(strpos($str,$value)===false) continue;
+		$tmp[] = $key;
+	}
+	return $tmp;
 }
 
 /**
@@ -34,15 +40,14 @@ function group_search_string($str,$arr) {
  * @param string $baseurl
  */
 function get_image_in_string($str,$baseurl = '') {
-    //alt="北京军区医协会大兴亦庄体检中心" src="/update/1380187086l537268028.jpg"
-    preg_match('/src=[\'"]?([^\'" ]*)[\'"]?/i', $str, $match_out);
-    if($match_out[1]) {
-        $img = fillurl($match_out[1],$baseurl);
-        $attachment = load_class('attachment','attachment');
-        $attachment->set_water_mark(false);
-        $newimg = $attachment->get_remote_file($img);
-        return $newimg;
-    }
+	preg_match('/src=[\'"]?([^\'" ]*)[\'"]?/i', $str, $match_out);
+	if($match_out[1]) {
+		$img = fillurl($match_out[1],$baseurl);
+		$attachment = load_class('attachment','attachment');
+		$attachment->set_water_mark(false);
+		$newimg = $attachment->get_remote_file($img);
+		return $newimg;
+	}
 }
 /**
  * 从字符串中找出图片多组下载地址，并下载
@@ -51,16 +56,22 @@ function get_image_in_string($str,$baseurl = '') {
  */
 
 function get_more_image($str,$baseurl = '') {
-    preg_match_all('/src=[\'"]?([^\'" ]*)[\'"]?/i', $str, $match_out);
-    if(!empty($match_out[1])) {
-        $match_out[1] = array_unique($match_out[1]);
-        $attachment = load_class('attachment','attachment');
-        $attachment->set_water_mark(false);
-        $newimg = array();
-        foreach($match_out[1] as $_m) {
-            $img = fillurl($_m,$baseurl);
-            $newimg[]['url'] = $attachment->get_remote_file($img);
-        }
-        return $newimg;
-    }
+	preg_match_all('/src=[\'"]?([^\'" ]*)[\'"]?/i', $str, $match_out);
+	if(!empty($match_out[1])) {
+		$match_out[1] = array_unique($match_out[1]);
+		$attachment = load_class('attachment','attachment');
+		$attachment->set_water_mark(false);
+		$newimg = array();
+		foreach($match_out[1] as $_m) {
+			$img = fillurl($_m,$baseurl);
+			$newimg[]['url'] = $attachment->get_remote_file($img);
+		}
+		return $newimg;
+	}
+}
+function get_emails($str,$baseurl = '') {
+	$pattern = "/([a-z0-9\-_\.]+@[a-z0-9]+\.[a-z0-9\-_\.]+)/";
+	preg_match_all($pattern,$str,$emailArr);
+	$emails = array_unique($emailArr[1]);
+	return $emails;
 }

@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS `wz_promote`;
+DELETE from `wz_menu` WHERE `menuid`=260;
+DELETE from `wz_menu` WHERE `menuid`=261;
+DELETE from `wz_menu` WHERE `menuid`=262;
+DELETE from `wz_menu` WHERE `menuid`=263;
+DELETE from `wz_menu` WHERE `menuid`=264;
+DELETE from `wz_menu` WHERE `menuid`=265;
+DELETE from `wz_menu` WHERE `menuid`=266;
+DELETE from `wz_menu` WHERE `menuid`=267;
+DELETE from `wz_menu` WHERE `menuid`=268;
+DELETE from `wz_menu` WHERE `menuid`=269;

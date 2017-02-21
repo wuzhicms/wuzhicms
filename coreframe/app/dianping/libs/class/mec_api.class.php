@@ -1,13 +1,13 @@
 <?php
 // +----------------------------------------------------------------------
-// | wuzhicms [ 五指互联网站内容管理系统 ]
+// | wuzhicms [ 浜旀寚浜掕仈缃戠珯鍐呭绠＄悊绯荤粺 ]
 // | Copyright (c) 2014-2015 http://www.wuzhicms.com All rights reserved.
 // | Licensed ( http://www.wuzhicms.com/licenses/ )
 // | Author: wangcanjia <phpip@qq.com>
 // +----------------------------------------------------------------------
 defined('IN_WZ') or exit('No direct script access allowed');
 /**
- * 体检中心
+ * 浣撴涓績
  */
 class WUZHI_mec_api {
 	public function __construct() {
@@ -15,9 +15,9 @@ class WUZHI_mec_api {
 	}
 
     /**
-     * 获取mec
+     * 鑾峰彇mec
      *
-     * @param $id 内容id
+     * @param $id 鍐呭id
      */
     public function get($id) {
         $r = $this->db->get_one('mec', array('id' => $id));

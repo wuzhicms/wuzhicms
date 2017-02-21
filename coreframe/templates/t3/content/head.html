@@ -53,7 +53,7 @@
             <li class="dropdown serch--dropdown-menu">
                 <a href="#"   class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  style="padding-top: 18px; padding-bottom: 15px;"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 7px;"></span> </a>
                 <ul class="dropdown-menu ">
-                    <form name="topsearch" action="" method="get">
+                    <form name="topsearch" action="{WEBURL}index.php" method="get">
                     <div class="input-group  select-search">
                         <input type="text" name="keywords" class="form-control" placeholder="搜索{$top_category['name']}" style="border-left: 1px solid #cccccc; background: none;">
                         <input type="hidden" name="f" value="search">
@@ -108,7 +108,7 @@
             <li class="dropdown serch--dropdown-menu">
                 <a href="#"   class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 5px;"></span> </a>
                 <ul class="dropdown-menu ">
-                    <form name="topsearch" action="" method="get">
+                    <form name="topsearch" action="{WEBURL}index.php" method="get">
                         <div class="input-group  select-search">
                             <input type="text" name="keywords" class="form-control" placeholder="搜索{$top_category['name']}" style="border-left: 1px solid #cccccc; background: none;">
                             <input type="hidden" name="f" value="search">

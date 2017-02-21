@@ -1,5 +1,40 @@
 <?php
  return array (
+  'test111' => 
+  array (
+    'id' => '547',
+    'modelid' => '2',
+    'field' => 'test111',
+    'name' => '省市测试',
+    'remark' => '',
+    'css' => '',
+    'minlength' => '0',
+    'maxlength' => '0',
+    'pattern' => '',
+    'errortips' => '',
+    'formtype' => 'linkage',
+    'setting' => 
+    array (
+      'linkageid' => '1',
+      'defaultvalue' => '',
+    ),
+    'ext_code' => '',
+    'unsetgids' => '',
+    'unsetroles' => '',
+    'master_field' => '0',
+    'ban_field' => '0',
+    'location' => '0',
+    'search_field' => '0',
+    'ban_contribute' => '1',
+    'to_fulltext' => '1',
+    'to_block' => '0',
+    'sort' => '0',
+    'disabled' => '0',
+    'powerful_field' => '0',
+    'workflow_field' => '0',
+    'master_table' => 'tuangou',
+    'attr_table' => 'tuangou_data',
+  ),
   'subtitle' => 
   array (
     'id' => '530',

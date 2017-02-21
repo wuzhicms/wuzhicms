@@ -1,0 +1,77 @@
+{T "content","head",TPLID}
+
+<div style="background: #f5f5f5; border-bottom: 1px solid #ddd">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px; font-size: 12px;">
+            您现在的位置：
+            <li><a href="index.php">首页</a></li>
+            <li ><a href="index.php?m=guestbook">留言板</a></li>
+            <li class="active">正文</li>
+        </ol>
+    </div>
+</div>
+<div class="container liuyan-list">
+    <div class="margin_top30" style="display: inline-block;">
+        <form class="form-inline" action="" method="get">
+            <div class="biaodan-border">
+                <select class="form-control" name="conditions">
+                    <option value="0" {if $conditions==0}selected{/if}>按关键字查询</option>
+                    <option value="1" {if $conditions==1}selected{/if}>按帖子查询码查询</option>
+                </select>
+            </div>
+            <div class="biaodan-border">
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputEmail3"> </label>
+                    <input type="text" name="keywords" class="form-control" id="exampleInputEmail3" placeholder="请输入搜索内容" value="{$keywords}">
+                </div>
+            </div>
+            <div class="biaodan-border">
+                <select class="form-control" name="area">
+                    <option value="">主题领域</option>
+                    {loop $area_array $key $r}
+                    <option value="{$key}" {if $area==$key}selected{/if}>{$r}</option>
+                    {/loop}
+                </select>
+            </div>
+            <div class="biaodan-border">
+                <select class="form-control" name="category">
+                    <option value="">主题类别</option>
+                    {loop $category_array $key $r}
+                    <option value="{$key}" {if $category==$key}selected{/if}>{$r}</option>
+                    {/loop}
+                </select>
+            </div>
+            <input type="hidden" name="m" value="guestbook">
+            <button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;搜索&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        </form>
+    </div>
+    <div class="margin_top30" style="float: right"><a href="index.php?m=guestbook&v=contact" class="btn  btn-warning"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 快速留言</a>
+    </div>
+    <hr>
+<div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+<div id="myTabContent" class="tab-content">
+    <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span style="display: inline-block"><strong>留言主题： <a>{$title}</a></strong> </span> <span style=" float: right; font-size: 14px;  color: #999; line-height: 2.2">网友：{$linkman}  &nbsp;&nbsp; {date('Y-m-d H:i',$addtime)}</span>
+            </div>
+            <div class="panel-body">
+                {$content}
+            </div>
+            <!--回复-->
+            {if $replytime}
+            <div class="panel-footer">
+                <div class="huifu-hd">
+                    <div class="hd-left"><h4><strong>官方回复：</strong></h4></div>
+                    <div class="hd-right"> <span style=" font-size: 14px;  color: #999; line-height: 2.2">回复单位：{$reply_user}  &nbsp;&nbsp; {date('Y-m-d H:i',$replytime)}</span></div>
+                </div>
+                {$reply}
+            </div>
+            {/if}
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+{T "content","foot",TPLID}

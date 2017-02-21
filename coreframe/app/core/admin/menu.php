@@ -49,7 +49,13 @@ class menu extends WUZHI_admin {
                 $maxid = $r['menuid']+1;
                 $formdata['menuid'] = $maxid;
             }
+
 			$id = $this->db->insert('menu',$formdata);
+            //插入模块安装/卸载表数据
+            if($formdata['pid']=5){
+                $this->db->insert('module_app',array('name'=>$formdata['name'],'menuid'=>$id,'pid'=>$formdata['pid'],'m'=>$formdata['m'],'f'=>$formdata['f'],'v'=>$formdata['v'],'iscore'=>0,'isinstall'=>1));
+            }
+
 			$this->db->update('menu',array('sort'=>$id),array('menuid'=>$id));
 			//缓存菜单语音包
 			load_class('cache_menu');
@@ -95,6 +101,15 @@ class menu extends WUZHI_admin {
             $formdata['display'] = $GLOBALS['form']['display'];
 
             $this->db->update('menu',$formdata,array('menuid'=>$id));
+
+            //插入模块安装/卸载表数据
+            if($formdata['pid']=5){
+                $module_app = $this->db->get_one('module_app', array('menuid'=>$id));
+                if($module_app['iscore']!=1){//非卸载模块更新
+                    $this->db->update('module_app',array('name'=>$formdata['name'],'pid'=>$formdata['pid'],'m'=>$formdata['m'],'f'=>$formdata['f'],'v'=>$formdata['v'],'iscore'=>0,'isinstall'=>1),array('menuid'=>$id));
+                }
+
+            }
             //缓存菜单语音包
             load_class('cache_menu');
             MSG(L('operation success'),$GLOBALS['forward']);

@@ -12,7 +12,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
 class index{
     private $siteconfigs;
 	public function __construct() {
-        $this->siteconfigs = get_cache('siteconfigs');
+		$this->siteconfigs = get_cache('siteconfigs_1');
         $this->db = load_class('db');
 	}
 
@@ -25,7 +25,7 @@ class index{
         $seo_keywords = '友情链接,'.$siteconfigs['seo_keywords'];
         $seo_description = $siteconfigs['seo_description'];
         $categorys = get_cache('category','content');
-        include T('link','index',TPLID);
+        include T('link','index');
 	}
 }
 ?>

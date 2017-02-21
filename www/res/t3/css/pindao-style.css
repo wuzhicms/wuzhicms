@@ -167,7 +167,8 @@
 }
 
 .news-content img {
-    max-width: 100%
+    max-width: 100%;
+    height: auto!important;/*为控制上传图片设置高度*/
 }
 
 /* ------------------------------ */

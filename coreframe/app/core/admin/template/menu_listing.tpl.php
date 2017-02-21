@@ -14,7 +14,8 @@
             <header class="panel-heading">
                 <?php
                 if($pid!=0) {
-                    echo '<a href="?m=core&f=menu&v=listing&pid='.$this->parentid($pid).$this->su().'"><button type="button" class="btn btn-inverse"><i class="icon-chevron-left btn-icon"></i>返回上级</button></a>';
+                    echo '<a href="?m=core&f=menu&v=listing&pid='.$this->parentid($pid).$this->su().'"><button type="button" class="btn btn-inverse"><i class="icon-chevron-left btn-icon"></i>返回上级</button></a>
+                    <a href="?m=core&f=menu&v=add&pid='.$pid.$this->su().'" class="btn btn-default btn-sm" id="index-add"><i class="icon-plus btn-icon"></i>添加菜单</a></a>';
                 }
                 ?>
             </header>
@@ -51,6 +52,8 @@
                             <td><?php echo $r['f'];?></td>
                             <td><?php echo $r['v'];?></td>
                             <td class="hidden-phone"><?php if($r['display']) {echo '<span class="label btn-primary label-mini">显示</span>';} else {echo '<span class="label btn-default label-mini">隐藏</span>';}?></td>
+
+
                             <td>
                                 <a href="?m=core&f=menu&v=add&pid=<?php echo $r['menuid'];?><?php echo $this->su();?>" class="btn btn-info btn-xs">添加子菜单</a>
                                 <a href="?m=core&f=menu&v=edit&id=<?php echo $r['menuid'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">修改</a>
@@ -83,5 +86,6 @@
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
 <script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
 <script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
+
 </body>
 </html>

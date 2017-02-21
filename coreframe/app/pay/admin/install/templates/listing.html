@@ -1,0 +1,107 @@
+{T "member","head"}
+<body class="gray-bg">
+{if $set_iframe==0}
+{T "member","iframetop"}
+{else}
+<div style="padding-top: 15px;"></div>
+{/if}
+<div class="container-fluid  ie8-member">
+    <div class="row row-40" >
+        {if $set_iframe==0}
+        <div class="col-sm-3 left-nav">             <!--左侧导航-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="nav-close"><i class="fa fa-times-circle"></i>
+                </div>
+                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+                    <div class="sidebar-collapse" style="width: auto; height: 100%;">
+                        {T "member","left"}
+                    </div>
+                </div>
+            </nav>
+            <!--end 左侧导航-->
+        </div><!--col-sm-3-->{/if}
+
+        <div class="{if $set_iframe==0}col-sm-9{else}col-sm-12{/if} paddingleft0">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>账户余额</h5>
+                            <div class="submitbtn pull-right"><a href="index.php?m=pay&f=payment&v=pay&set_iframe={$set_iframe}" class="right_btn btn-primary">在线充值</a></div>
+                        </div>
+                        <section class="ibox-content">
+                            <div class="mymoney">可用余额：<span class="myprice">￥{$memberinfo['money']}</span> 账户状态：<span class="state">有效</span></div>
+
+                            <ul id="myTab" class="nav nav-tabs" role="tablist">
+                                <li {if $_k==$keytype}class="active"{/if}><a href="index.php?m=pay&f=payment&v=listing&set_iframe={$set_iframe}">所有记录</a></li>
+                                {loop $pay_config $_k $_v}
+                                <li {if $_k==$keytype}class="active"{/if}><a href="index.php?m=pay&f=payment&v=listing&keytype={$_k}&set_iframe={$set_iframe}">{$_v}</a></li>
+                                {/loop}
+                            </ul>
+
+
+                            <div id="myTabContent" class="tab-content tabsbordertop">
+
+                                <div role="tabpanel" class="tab-pane fade active in" id="tabs1" aria-labelledby="1tab">
+                                    <div class="panel-body" id="panel-bodys">
+
+                                        {loop $result $r}
+                                        <table class="table table-striped table-advance table-hover text-center" style="    border-bottom: 1px dashed #EEEFF1;">
+                                            <tr>
+                                                <th class="tablehead" style="text-align: left;font-weight: 400;color: #BFBEC3;">{date('Y-m-d H:i:s',$r['addtime'])}</th>
+                                                <th class="tablehead" colspan="4" style="text-align: left;font-weight: 400;">{$r['order_no']}</th>
+
+                                            </tr>
+                                            <tr {if $n%2==0}class="tabletr"{/if}>
+                                                <td width="20%" align="center">{$r['payname']} <br>{$r['remark']}</td>
+                                                <td width="10%" align="center">{$payments[$r['payment']]}</td>
+                                                <td class="smprice">
+                                                    {if $r['plus_minus']==1}
+                                                    <font color='green'>+{sprintf("%.2f",$r['money'])}</font>
+                                                    {elseif $r['plus_minus']==-1}
+                                                    <font color='#f37800'>-{$r['money']}</font>
+                                                    {/if}
+                                                </td>
+                                                <td width="15%" align="center">{$status_arr[$r['status']]}
+                                                </td>
+                                                <td width="8%" align="center">
+                                                    {if $r['status']==6}
+                                                    <a class="btn btn-warning" href="index.php?m=pay&f=payment&v=repay&id={$r['id']}&acbar=3" target="_blank">付款</a>
+                                                    {elseif $r['dianping_status']==0 && $r['dianping_keyid']}
+                                                    <a class="btn btn-warning" href="index.php?m=dianping&f=index&v=comment&keyid={$r['dianping_keyid']}&acbar=3" target="_blank">我要点评</a>
+                                                    {elseif $r['status']==1}
+                                                    <img src="{R}images/right.png">
+                                                    {/if}
+                                                    {if ($keytype==4 || $keytype==7) && $r['status']==1 && $r['apply_point']==0} <br><br>
+                                                    <a class="btn btn-default" href="index.php?m=receipt&f=receipt&v=apply_point&orderid={$r['id']}">上传发票-返积分</a>
+                                                    {/if}
+                                                </td>
+                                            </tr>                                    </table>
+                                        <br>
+
+                                        {/loop}
+                                    </div>
+
+                                    <!--分页开始-->
+                                    <div class="paginationpage text-center">
+                                        <nav>
+                                            <ul class="pagination">
+                                                {$pages}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <!--分页结束-->
+
+                                </div>
+                            </div>
+
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{T  'member','foot'}
