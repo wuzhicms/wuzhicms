@@ -189,7 +189,7 @@ echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js
             <?php
             if(V=='add') {
             ?>
-        <input name="submit2" type="submit" class="btn  btn-primary" value=" <?php echo $_lang=='zh' ? '提交&发布英语' : '提交&发布中文';?>">
+        <input name="submit2" type="submit" class="btn  btn-primary" value="提交 & 继续发布">
             <?php }?>
         </div>
         </td>
