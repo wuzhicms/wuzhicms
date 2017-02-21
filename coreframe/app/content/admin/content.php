@@ -681,6 +681,7 @@ class content extends WUZHI_admin {
         } else {
             $content_pages = '';
         }
+		$access_authority = true;
         if($model_r['view_template']) {
             $check_tpl = $this->template($model_r['view_template']);
             $fields = $form_format->fields;
