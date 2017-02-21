@@ -71,7 +71,7 @@ class index extends WUZHI_foreground{
 			$postinfo_category[$_key] = $r;
 		}
 		$admin_rs = $this->db->get_one('admin',array('uid'=>$uid),'role');
-		//TODO 是否为IE8或者使用非框架,如果是跳转到 main
+		//是否为IE8或者使用非框架,如果是跳转到 main
 		$is_ie8 = 0;
 		if(strpos($_SERVER[HTTP_USER_AGENT], "MSIE 8.0")) {
 			$is_ie8 = 1;

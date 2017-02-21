@@ -305,8 +305,6 @@ class model extends WUZHI_admin {
         $field = $rs['field'];
         $tablename = $rs['master_field'] ? $r['master_table'] : $r['attr_table'];
         $tablename = $this->db->tablepre.$tablename;
-
-        //TODO 禁止删除共享模型的默认字段,但用户自己添加的可以删,在添加共享模型字段的时候，需要配置好系统不能删除的字段
         if($rs['ban_field']==0) {
             $this->db->delete('model_field',array('id'=>$id));
             $this->db->query("ALTER TABLE `$tablename` DROP `$field`");

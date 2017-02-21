@@ -152,9 +152,8 @@ class index extends WUZHI_foreground {
                 $data_arr = implode("\r\n",$data_arr);
                 $formdata['data'] = $data_arr;
             }
-            //赠送积分,TODO 点评配置
+            //赠送积分
             $this->db->insert('dianping',$formdata);
-            //@h1jk 私有
             //$where = "`avg_price ,avg_total,avg_env,avg_service,hits";
             $query = $this->db->query("SELECT COUNT(*) as hits,SUM(field1) as field1,SUM(field2) as field2,SUM(field3) as field3,SUM(field4) as field4 FROM wz_dianping");
             $statics = $this->db->fetch_array($query);

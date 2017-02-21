@@ -196,7 +196,6 @@ $c_time = time();
 while(1) {
 	ob_end_clean();
 	$result = $db->get_list('collect_url', array('status' => 0), '*', 0, 5, $start, 'id ASC');
-//todo 标题为空时或者长度验证不通过时，处理方式
 	foreach ($result as $rs) {
 		$url = $rs['url'];
 

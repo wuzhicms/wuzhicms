@@ -42,7 +42,6 @@ if(is_array($this->group)){
 			if($gr['issystem']==1) {
 				$group[$gr['groupid']] = $gr;
 			} else {
-				//TODO
 				//if(in_array($gr['groupid'],array(20,22,32,34))) $gr['pid'] = 0;
 				$gr['selected'] = $extgid==$gr['groupid'] ? 'selected' : '';
 				$ext_group[$gr['groupid']] = $gr;

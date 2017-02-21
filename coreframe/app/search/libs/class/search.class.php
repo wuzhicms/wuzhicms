@@ -49,7 +49,6 @@ class WUZHI_search {
 
         foreach ($result as $row) {
 
-            //TODO:
             // query content
             $data = array();
 

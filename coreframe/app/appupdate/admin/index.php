@@ -100,7 +100,6 @@ final class index extends WUZHI_admin
      */
     public function backupFile()
     {
-        //TODO LIST
         $errors = array();
 
         $this->filesystem->touch("filesystem", $mode = 0777);
@@ -113,7 +112,6 @@ final class index extends WUZHI_admin
      */
     public function backupDb()
     {
-        //TODO LIST
         $errors = array();
         $this->createJsonErrors($errors);
     }

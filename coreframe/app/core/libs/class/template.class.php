@@ -211,7 +211,6 @@ final class WUZHI_template {
 			}
 		}
 		if (!empty($cache) && !$page) {
-			//TODO
 			$str .= 'if(!empty($' . $return . ')){setcache($tag_cache_name, $' . $return . ', \'tpl_data\');}';
 			$str .= '}';
 		}

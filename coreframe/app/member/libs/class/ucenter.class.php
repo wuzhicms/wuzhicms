@@ -81,7 +81,6 @@ class WUZHI_ucenter {
 		if($user['ucuid'] != $ucuid){
 			$this->db->update('member', 'ucuid='.$ucuid, 'uid='.$user['uid']);
 		}
-		//TODO 删除测试
 		//echo $synlogin;exit;
 		return $synlogin;
 	}
