@@ -15,7 +15,6 @@ class form_format {
         $this->modelid = $modelid;
         $this->fields = get_cache('field_'.$modelid,'model');
         $this->extdata = '';
-        //TODO 初始化勾子，在程序提交前处理
     }
 	function execute($formdata) {
         $this->formdata = $formdata;

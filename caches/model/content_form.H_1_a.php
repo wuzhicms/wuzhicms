@@ -19,7 +19,6 @@ class form_build {
 		$this->fields = get_cache('field_'.$modelid,'model');
 		$this->extdata = '';
         $this->form = load_class('form');
-		//TODO 初始化勾子，在程序提交前处理
     }
 
 	public function execute($formdata = array(),$modelid = '',$set_language = '') {

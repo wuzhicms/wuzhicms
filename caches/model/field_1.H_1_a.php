@@ -254,7 +254,7 @@
     'setting' => 
     array (
       'editor_type' => 'ckeditor',
-      'toolbar' => 'normal',
+      'toolbar' => 'full',
       'defaultvalue' => '',
       'enablesaveimage' => '1',
       'watermark_enable' => '0',
