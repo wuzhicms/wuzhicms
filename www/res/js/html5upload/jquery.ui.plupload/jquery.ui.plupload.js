@@ -146,14 +146,14 @@ function renderUI(obj) {
 					'<div class="plupload_clearer">&nbsp;</div>' +
 				'</div>' +
 
-
 				'<table class="plupload_filelist plupload_filelist_footer ui-widget-header">' +
 				'<tr>' +
 					'<td class="plupload_cell plupload_file_name">' +
 						'<div class="plupload_buttons"><!-- Visible -->' +
 							'<a class="plupload_button plupload_add">' + _("Add Files") + '</a>&nbsp;' +
 							'<a class="plupload_button plupload_start">' + _("Start Upload") + '</a>&nbsp;' +
-							'<a class="plupload_button plupload_stop plupload_hidden">'+_("Stop Upload") + '</a>&nbsp;' +
+							'<a class="plupload_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary wz_online" onclick="open_wz_online(\'listimage\');"><span class="ui-button-icon-primary ui-icon ui-icon-circle-zoomin"></span><span class="ui-button-text">浏览服务器</span></a>&nbsp;' +
+		'<a class="plupload_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary wz_online" onclick="open_wz_online(\'weburl\');"><span class="ui-button-icon-primary ui-icon ui-icon-link"></span><span class="ui-button-text">网络地址</span></a>&nbsp;' +							'<a class="plupload_button plupload_stop plupload_hidden">'+_("Stop Upload") + '</a>&nbsp;' +
 						'</div>' +
 
 
@@ -1465,3 +1465,22 @@ $.widget("ui.plupload", {
 
 
 } (window, document, plupload, mOxie, jQuery));
+
+function open_wz_online(action){
+	if(action=='weburl') {
+		var height = 460;
+		var width = 820;
+	} else {
+		var height = 500;
+		var width = 1000;
+	}
+
+	var top=Math.round((window.screen.height-height)/2);
+	var left=Math.round((window.screen.width-width)/2);
+	window.open("http://dev.wuzhicms.com/index.php?m=attachment&f=index&v=file_brower&action="+action+"&CKEditor=content&CKEditorFuncNum=0&langCode=zh-cn", "",
+		"height=" + height + ", width=" + width + ", top=" + top + ", left= " + left + ", toolbar=no, menubar=no, scrollbars=auto, resizable=no, location=yes, status=no");
+}
+function callback_online(fileurl) {
+	//alert(fileurl);
+	callback_thumb_dialog(fileurl);
+}

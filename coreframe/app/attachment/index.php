@@ -302,5 +302,50 @@ class index {
         }
         exit($result);
     }
+    function file_brower() {
+		$action = remove_xss($GLOBALS['action']);
+		$ckditor = load_class('ckditor',M);
+		switch($action)
+		{
+			case 'listimage':/* 列出图片 */
+				$page = $GLOBALS['page']  ? intval($GLOBALS['page']) : 1;
+				$keytype = isset($GLOBALS['keytype']) ? intval($GLOBALS['keytype']) : 0;
+				$keywords = isset($GLOBALS['keywords']) ? iconv('utf-8','gbk',remove_xss($GLOBALS['keywords'])) : '';
+				$username = input('username');
+				$username = sql_replace($username);
+				$result = $ckditor->lists($page,$keytype,$keywords,$username);
+				if(isset($GLOBALS['returnjson'])) {
+					echo json_encode($result);
+				} else {
+					$CKEditorFuncNum = intval($GLOBALS['CKEditorFuncNum']);
+					load_class('form');
+					$CKEditor = $GLOBALS['CKEditor'];
+					$GLOBALS['start'] = isset($GLOBALS['start']) ? $GLOBALS['start'] : '';
+					$GLOBALS['end'] = isset($GLOBALS['end']) ? $GLOBALS['end'] : '';
+					include T('attachment','file_brower');
+				}
+				exit;
+				break;
+			case 'weburl':/* 远程图片 */
+				$page = $GLOBALS['page']  ? intval($GLOBALS['page']) : 1;
+				$keytype = isset($GLOBALS['keytype']) ? intval($GLOBALS['keytype']) : 0;
+				$keywords = isset($GLOBALS['keywords']) ? iconv('utf-8','gbk',remove_xss($GLOBALS['keywords'])) : '';
+				$username = input('username');
+				$username = sql_replace($username);
+				$result = $ckditor->lists($page,$keytype,$keywords,$username);
+				if(isset($GLOBALS['returnjson'])) {
+					echo json_encode($result);
+				} else {
+					$CKEditorFuncNum = intval($GLOBALS['CKEditorFuncNum']);
+					load_class('form');
+					$CKEditor = $GLOBALS['CKEditor'];
+					$GLOBALS['start'] = isset($GLOBALS['start']) ? $GLOBALS['start'] : '';
+					$GLOBALS['end'] = isset($GLOBALS['end']) ? $GLOBALS['end'] : '';
+					include T('attachment','file_brower_weburl');
+				}
+				exit;
+				break;
+		}
+	}
 }
 ?>
