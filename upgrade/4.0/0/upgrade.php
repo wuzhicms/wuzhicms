@@ -14,3 +14,8 @@ if(!in_array('baidu_site',$fields_arr)) {
 if(!in_array('baidu_token',$fields_arr)) {
 	$db->query("ALTER TABLE `wz_site` ADD `baidu_token` VARCHAR(32) NOT NULL");
 }
+
+$fields_arr = $db->get_fields('member');
+if(!in_array('companyname',$fields_arr)) {
+	$db->query("ALTER TABLE `wz_member` ADD `companyname` CHAR(80) NOT NULL");
+}
