@@ -153,7 +153,7 @@ function renderUI(obj) {
 							'<a class="plupload_button plupload_add">' + _("Add Files") + '</a>&nbsp;' +
 							'<a class="plupload_button plupload_start">' + _("Start Upload") + '</a>&nbsp;' +
 							'<a class="plupload_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary wz_online" onclick="open_wz_online(\'listimage\');"><span class="ui-button-icon-primary ui-icon ui-icon-circle-zoomin"></span><span class="ui-button-text">浏览服务器</span></a>&nbsp;' +
-		'<a class="plupload_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary wz_online" onclick="open_wz_online(\'weburl\');"><span class="ui-button-icon-primary ui-icon ui-icon-link"></span><span class="ui-button-text">网络地址</span></a>&nbsp;' +							'<a class="plupload_button plupload_stop plupload_hidden">'+_("Stop Upload") + '</a>&nbsp;' +
+		'<a style="display: none;" class="plupload_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary wz_weburl" onclick="open_wz_online(\'weburl\');"><span class="ui-button-icon-primary ui-icon ui-icon-link"></span><span class="ui-button-text">网络地址</span></a>&nbsp;' +							'<a class="plupload_button plupload_stop plupload_hidden">'+_("Stop Upload") + '</a>&nbsp;' +
 						'</div>' +
 
 
@@ -278,8 +278,11 @@ $.widget("ui.plupload", {
 		this.stop_button = $('.plupload_stop', this.container).attr('id', id + '_stop');
 		this.thumbs_switcher = $('#' + id + '_view_thumbs');
 		this.list_switcher = $('#' + id + '_view_list');
-
-
+		//Wz callback
+		// if(callback_func=='callback_thumb_dialog') {
+			$('.wz_weburl', this.container).css('display', '');
+		// }
+		//Wz callback
 		if ($.ui.button) {
 			this.browse_button.button({
 				icons: { primary: 'ui-icon-circle-plus' },
@@ -1477,10 +1480,13 @@ function open_wz_online(action){
 
 	var top=Math.round((window.screen.height-height)/2);
 	var left=Math.round((window.screen.width-width)/2);
-	window.open("http://dev.wuzhicms.com/index.php?m=attachment&f=index&v=file_brower&action="+action+"&CKEditor=content&CKEditorFuncNum=0&langCode=zh-cn", "",
+	window.open(web_url+"index.php?m=attachment&f=index&v=file_brower&action="+action+"&callback="+callback_func+"&CKEditor=content&CKEditorFuncNum=0&langCode=zh-cn", "",
 		"height=" + height + ", width=" + width + ", top=" + top + ", left= " + left + ", toolbar=no, menubar=no, scrollbars=auto, resizable=no, location=yes, status=no");
 }
 function callback_online(fileurl) {
-	//alert(fileurl);
-	callback_thumb_dialog(fileurl);
+	if(callback_func=='callback_ck_images') {
+		callback_ck_images(fileurl);
+	} else {
+		callback_thumb_dialog(fileurl);
+	}
 }

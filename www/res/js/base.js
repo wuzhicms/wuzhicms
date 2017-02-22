@@ -22,12 +22,14 @@ function openiframe(iframeurl,id,title,width,height,returntype) {
             onclose: function () {
             if (this.returnValue) {
                 if(returntype==1) {//返回缩略图＋隐藏input
-                    $('#'+id+"_thumb").attr('src',this.returnValue);
-                    $('#'+id).val(this.returnValue);
+                    $('#' + id + "_thumb").attr('src', this.returnValue);
+                    $('#' + id).val(this.returnValue);
+                } else if(returntype==5) {//ckeditor
+                    var instance = CKEDITOR.instances[id];
+                    instance.insertHtml(this.returnValue);
                 }else if(returntype > 1){ //返回字符串,多文件
 					$('#'+id+" ul").append(this.returnValue);
-				}
-				else {
+				} else {
                     $('#'+id).val(this.returnValue);
                 }
             }

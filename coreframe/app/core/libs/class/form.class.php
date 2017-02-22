@@ -63,6 +63,8 @@ class WUZHI_form {
 		} else {
 			if (!defined('CKEDITOR')) {
 				define('CKEDITOR', TRUE);
+				$ck_ext_token = md5('jpg|png|gif'._KEY);
+				$str .= '<script type="text/javascript">var ck_ext_token="'.$ck_ext_token.'";</script>';
 				$str .= '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
 			}
 			if($area_load==0) {

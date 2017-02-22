@@ -75,14 +75,18 @@
 	}
 	// Simulate user action of selecting a file to be returned to CKEditor.
 	function returnFileUrl() {
-		//var funcNum = getUrlParam( 'CKEditorFuncNum' );
+		var callback = getUrlParam( 'callback' );
 		var fileUrl=$("#weburl").val();
 		$("#wrapper_content").addClass('return-online');
 		$("#wrapper_content").html('已选择成功');
 		window.opener.callback_online(fileUrl);
-		setTimeout("window.close()",500);
+		if(callback=='callback_ck_images') {
+			window.close();
+		} else {
+			setTimeout("window.close()",500);
+		}
 	}
-
+	$("#weburl").focus();
 </script>
 
 </body>

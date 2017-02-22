@@ -7,6 +7,25 @@ function callback_thumb_dialog(filename,htmlid) {
 }
 
 //插入附件的回调函数
+function callback_ck_images(files,htmlid) {
+	var dialog = top.dialog.get(window);
+	var htmlid = htmlid ? htmlid : 'testid';
+	//alert(filename);
+	var imgcode = '';
+	if(files!='') {
+		var files_arr = files.split('|');
+		$.each( files_arr, function( key, value ) {
+			imgcode += '<p class="wz-images-list"><img src="'+value+'" style="max-width: 900px;"></p>';
+		});
+	}
+	dialog.close(imgcode).remove();
+	//dialog.close('<img src="http://dev.wuzhicms.com/uploadfile/2017/02/22/20170222090318AE29No.png" style="max-width: 900px;">').remove();
+	//console.log(filename);
+	console.log(htmlid);
+	return false;
+}
+
+//插入附件的回调函数
 function insert_file_callback(filename) {
 	//alert(filename);
 	document.getElementById('thumb').innerHTML += "<img src='"+filename+"' width='60' height='60'>";

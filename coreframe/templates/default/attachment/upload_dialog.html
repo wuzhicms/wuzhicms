@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8 echo CHARSET;?>"/>
-
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Plupload - jQuery UI Widget</title>
-
     <link rel="stylesheet" href="{R}js/jquery-ui/jquery-ui.css" type="text/css" />
     <link rel="stylesheet" href="{R}js/html5upload/jquery.ui.plupload/css/jquery.ui.plupload.css" type="text/css" />
-
+    <script type="text/javascript">
+        var cookie_pre = "{COOKIE_PRE}";var cookie_domain = '{COOKIE_DOMAIN}';var cookie_path = '{COOKIE_PATH}';var web_url = '{WEBURL}';var callback_func = '{$callback}';
+    </script>
     <script src="{R}js/jquery.min.js"></script>
     <script type="text/javascript" src="{R}js/jquery-ui/jquery-ui.min.js"></script>
 
@@ -36,7 +36,7 @@
         $("#uploader").plupload({
             // General settings
             runtimes : 'html5,flash,silverlight,html4',
-            url : '{WEBURL}index.php?m=attachment&f=index&v=h5upload&cut={$GLOBALS['cut']}&width={$GLOBALS['width']}&height={$GLOBALS['height']}',
+            url : '{WEBURL}index.php?m=attachment&f=index&v=h5upload&cut={$GLOBALS['cut']}&width={$GLOBALS['width']}&height={$GLOBALS['height']}&ext={$ext}&token={$token}',
 
             // User can upload no more then 20 files in one go (sets multiple_queues to false)
             max_file_count: {$limit},
@@ -71,9 +71,17 @@
                                     return ;
                                 }
                                 if(myres['result']) {
-                                    if({$limit} > 1) uplodfiles += myres['result']+','+myres['filename']+','+myres['id']+'|';
-                                    else uplodfiles += myres['result']+'|';
-                                }
+                                    {if $callback=='callback_ck_images'}
+                                    uplodfiles += myres['result']+'|';
+                                                                        {else}
+                                    if({$limit} > 1) {
+                                        uplodfiles += myres['result']+','+myres['filename']+','+myres['id']+'|';
+                                    }
+                                    else {
+                                        uplodfiles += myres['result']+'|';
+                                    }
+                                    {/if}
+}
 
                             },
                             UploadComplete: function() {

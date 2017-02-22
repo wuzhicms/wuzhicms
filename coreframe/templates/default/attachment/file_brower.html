@@ -9,7 +9,7 @@
 	<link href="{R}css/bootstrapreset.css" rel="stylesheet" />
 	<link href="{R}css/pxgridsicons.min.css" rel="stylesheet" />
 	<script type="text/javascript">
-		var cookie_pre="{COOKIE_PRE}";var cookie_domain = '{COOKIE_DOMAIN}';var cookie_path = '{COOKIE_PATH}';
+		var cookie_pre="{COOKIE_PRE}";var cookie_domain = '{COOKIE_DOMAIN}';var cookie_path = '{COOKIE_PATH}';var web_url = '{WEBURL}';
 	</script>
 	<script type="text/javascript" src="{R}member/js/jquery.min.js"></script>
 	<script src="{R}js/base.js"></script>
@@ -79,11 +79,7 @@
 			height: 183px;
 			border: 3px solid #1094fa;
 		}
-		#online li.selected .icon {
-			background-image: url(images/success.png);
-			background-image: url(images/success.gif)\9;
-			background-position: 75px 75px;
-		}
+
 		#online li.selected .icon:hover {
 			width: 107px;
 			height: 107px;
@@ -153,11 +149,16 @@
 	}
 	// Simulate user action of selecting a file to be returned to CKEditor.
 	function returnFileUrl(fileUrl) {
-		//var funcNum = getUrlParam( 'CKEditorFuncNum' );
+		var callback = getUrlParam( 'callback' );
 		$("#wrapper_content").addClass('return-online');
 		$("#wrapper_content").html('已选择成功');
 		window.opener.callback_online(fileUrl);
-		setTimeout("window.close()",500);
+		if(callback=='callback_ck_images') {
+			window.close();
+		} else {
+			setTimeout("window.close()",500);
+		}
+
 	}
 
 	var htmls = '';
@@ -167,7 +168,7 @@
 	function get_listimage(page) {
 		if(is_load) {
 			is_load = false;
-			$.getJSON("/index.php?m=attachment&file=index&v=file_brower&action=listimage", {returnjson:1,page: page, keytype: keytype,keywords:keywords}, 			function(json) {
+			$.getJSON(web_url+"index.php?m=attachment&file=index&v=file_brower&action=listimage", {returnjson:1,page: page, keytype: keytype,keywords:keywords}, 			function(json) {
 				$.each(json, function( index, value ) {
 					htmls += '<li><div class="max_h"><img width="142" src="'+value.url+'"></div><div class="title">'+value.title+'</div><div>'+value.mtime+'<br>'+value.filesize+'</div><span class="icon" onclick="returnFileUrl(\''+value.url+'\');"></span> </li>';
 				});
