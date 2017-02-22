@@ -76,6 +76,11 @@ class index {
         if($wz_name!='') {
             $_username = $wz_name;
         }
+		$ext = $GLOBALS['ext'];
+		$token = $GLOBALS['token'];
+		if($ext=='' || md5($ext._KEY)!=$token) {
+			die('{"jsonrpc" : "2.0", "error" : {"code": 105, "message": "token验证失败，不允许上传文件"}, "id" : "id"}');
+		}
         if($_username!='') {
             $mr = $this->db->get_one('member', array('username' => $_username),'uid');
             if(!$mr) {
