@@ -1263,7 +1263,7 @@ function baidu_linkpost($urls,$siteid = 1,$action = 'urls') {
 	if($baidu_api['sitelist'][$siteid]['baidu_site']=='') {
 		return true;
 	}
-	
+
 	$baidu_urls = array();
 	foreach($urls as $url) {
 		if(strpos($url,'://')===false) {

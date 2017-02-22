@@ -8828,7 +8828,9 @@ CREATE TABLE `wz_site` (
   `logo` varchar(100) NOT NULL,
   `url` varchar(100) NOT NULL,
   `html_root` varchar(200) NOT NULL COMMENT '生成html物理路径',
-  `setting` text NOT NULL
+  `setting` text NOT NULL COMMENT '配置文件',
+  `baidu_site` varchar(50) NOT NULL COMMENT '百度站长平台自动提交site',
+  `baidu_token` varchar(32) NOT NULL COMMENT '百度站长平台自动提交token'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
