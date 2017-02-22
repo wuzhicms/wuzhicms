@@ -1243,4 +1243,47 @@ function segment($data) {
 	}
 	return $words;
 }
+
+/**
+ * 提交链接到百度
+ * @param $urls 链接地址，数组 array('url1','url2')
+ * @param $siteid 站点id
+ * @param $action 操作方法，推送数据：urls，更新数据：update，删除数据：del
+ */
+function baidu_linkpost($urls,$siteid = 1,$action = 'urls') {
+	static $baidu_api;
+	if(empty($baidu_api)) {
+		$baidu_api['sitelist'] = get_cache('sitelist');
+		foreach ($baidu_api['sitelist'] as $sid=>$r) {
+			$baidu_api['urls'][$sid] = 'http://data.zz.baidu.com/urls?site='.$r['baidu_site'].'&token='.$r['baidu_token'];
+			$baidu_api['update'][$sid] = 'http://data.zz.baidu.com/update?site='.$r['baidu_site'].'&token='.$r['baidu_token'];
+			$baidu_api['del'][$sid] = 'http://data.zz.baidu.com/del?site='.$r['baidu_site'].'&token='.$r['baidu_token'];
+		}
+	}
+	if($baidu_api['sitelist'][$siteid]['baidu_site']=='') {
+		return true;
+	}
+	
+	$baidu_urls = array();
+	foreach($urls as $url) {
+		if(strpos($url,'://')===false) {
+			$url = $baidu_api['sitelist'][$siteid]['url'].ltrim($url,'/');
+		}
+		$baidu_urls[] = $url;
+	}
+	$baidu_urls = implode("\n", $baidu_urls);
+
+	$ch = curl_init();
+	$options =  array(
+		CURLOPT_URL => $baidu_api[$action][$siteid],
+		CURLOPT_POST => true,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_POSTFIELDS => $baidu_urls,
+		CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+	);
+	curl_setopt_array($ch, $options);
+	curl_exec($ch);
+	curl_close($ch);
+}
+
 ?>

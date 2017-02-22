@@ -258,6 +258,10 @@ class content extends WUZHI_admin {
             $form_update = new form_update($modelid);
             $data = $form_update->execute($formdata);
 
+			//自动推送至搜索引擎
+			$baidu_urls = array($urls['url']);
+			baidu_linkpost($baidu_urls,$this->siteid,'update');
+
             //判断是否存在，防止意外发生
             if(!$this->db->get_one('content_rank',array('cid'=>$cid,'id'=>$id))) {
                 //统计表加默认数据
@@ -439,8 +443,12 @@ class content extends WUZHI_admin {
 
             $formdata['master_data']['id'] = $id;
             $form_update->execute($formdata);
-            //同步修改
 
+			//自动推送至搜索引擎
+			$baidu_urls = array($urls['url']);
+			baidu_linkpost($baidu_urls,$this->siteid,'update');
+
+            //同步修改
             if($GLOBALS['tb_update']) {
                 foreach($GLOBALS['tb_update'] as $tb_id=>$tb_cid) {
                     $formdata['master_data']['id'] = $tb_id;

@@ -36,6 +36,9 @@ class site extends WUZHI_admin {
             $formdata['logo'] = $GLOBALS['form']['logo'];
             $formdata['url'] = $GLOBALS['form']['url'];
 			$formdata['html_root'] = $GLOBALS['form']['html_root'];
+			$formdata['baidu_site'] = $GLOBALS['form']['baidu_site'];
+			$formdata['baidu_token'] = $GLOBALS['form']['baidu_token'];
+
 			if($formdata['html_root'] && !is_dir($formdata['html_root'])) {
 				@mkdir($formdata['html_root'],0777);
 				if(!is_dir($formdata['html_root'])) {
@@ -64,6 +67,8 @@ class site extends WUZHI_admin {
             $formdata['logo'] = $GLOBALS['form']['logo'];
             $formdata['url'] = $GLOBALS['form']['url'];
             $formdata['html_root'] = $GLOBALS['form']['html_root'];
+            $formdata['baidu_site'] = $GLOBALS['form']['baidu_site'];
+            $formdata['baidu_token'] = $GLOBALS['form']['baidu_token'];
 			if($formdata['html_root'] && !is_dir($formdata['html_root'])) {
 				@mkdir($formdata['html_root'],0777);
 				if(!is_dir($formdata['html_root'])) {
