@@ -26,7 +26,8 @@ include $this->template('header','core');
 
                                     <td>
                                         <?php if($r['install'] && $r['allow_uninstall']){ ?>
-                                            <a href="?m=core&f=app&v=uninstall&appkey=<?php echo $r['m'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">卸载</a>
+                                            <a href="javascript:makedo('?m=core&f=app&v=uninstall&appkey=<?php echo $r['m'];?><?php echo $this->su();?>', '【<?php echo $r['appname'].'-'.$r['m'];?>】模块数据会被清空！确认卸载该模块吗？')"
+                                                class="btn btn-danger btn-xs">卸载</a>
                                         <?php } elseif($r['install']) { ?>
                                             ----
                                         <?php } else {  ?>

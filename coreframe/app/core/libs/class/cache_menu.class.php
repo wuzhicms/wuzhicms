@@ -13,16 +13,10 @@ class WUZHI_cache_menu {
 	private $db;
 	public function __construct() {
 		$db = load_class('db');
-		$where = array('display'=>1);
-		$result = $db->get_list('menu', $where, 'menuid,name', 0, 2000, 0, '', '', 'menuid');
-		//写入 coreframe/languages/zh-cn/admin_menu.lang.php
+		$where = "`display` IN(1,2)";
+		$result = $db->get_list('menu', $where, 'menuid,name', 0, 2000, 0, 'menuid ASC', '', 'menuid');
+
 		$data = '<?php'."\r\n";
-		foreach ($result as $key => $value) {
-			$data .= '$MENU['.$key.']='."'$value[name]';\r\n";
-		}
-        //自定义菜单
-        $where = array('display'=>2);
-        $result = $db->get_list('menu', $where, 'menuid,name', 0, 2000, 0, '', '', 'menuid');
         foreach ($result as $key => $value) {
             $data .= '$MENU['.$key.']='."'$value[name]';\r\n";
         }

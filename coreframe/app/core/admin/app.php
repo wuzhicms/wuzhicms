@@ -70,13 +70,22 @@ class app extends WUZHI_admin {
 		if($module_array) {
 			MSG('模块已经安装过！');
 		}
-		$install_sql = COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.$appkey . '.sql';
+
+		//先执行卸载SQL，防止重复报错。
+		$uninstall_sql = COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/'.$appkey . '.sql';
+		//执行sql语句
+		if (file_exists($uninstall_sql)) {
+			$sql = file_get_contents($uninstall_sql);
+			$this->sql_execute($sql);
+		}
         //执行sql语句
+		$install_sql = COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.$appkey . '.sql';
         if (!file_exists($install_sql)) {
             MSG('安装SQL：文件不存在:'.$install_sql);
         }
         $sql = file_get_contents($install_sql);
-        if(empty($sql))MSG('SQL文件中必须有其对应的SQL语句，方可安装模块！');
+        if(empty($sql)) MSG('SQL文件中必须有其对应的SQL语句，方可安装模块！');
+
         $this->sql_execute($sql);
 
         //模板html文件的拷贝
@@ -86,8 +95,12 @@ class app extends WUZHI_admin {
 
         //缓存菜单语音包
         load_class('cache_menu');
+		$apppath = COREFRAME_ROOT.'app/'.$appkey.'/admin/install/config.php';
 
-		$this->db->insert('setting', array('keyid'=>'install','m'=>$appkey,'data'=>1));
+		$appconfig = include $apppath;
+
+		$title = $appconfig['appname'];
+		$this->db->insert('setting', array('keyid'=>'install','m'=>$appkey,'data'=>1,'title'=>$title));
         MSG('模块安装成功',HTTP_REFERER,2000);
 
     }
@@ -95,58 +108,29 @@ class app extends WUZHI_admin {
      * 模块卸载
      */
     public function uninstall(){
-        $moduleid = intval($GLOBALS['moduleid']);
-        $module_array = $this->db->get_one('module_app', array('menuid' => $moduleid));
+		$appkey = $GLOBALS['appkey'];
+		if(preg_match('/([^a-z0-9_]+)/i',$appkey)) {
+			MSG('安装目录错误');
+		}
+		$module_array = $this->db->get_one('setting', array('keyid'=>'install','m'=>$appkey));
+		if(!$module_array) {
+			MSG('该模块未安装');
+		}
 
-        //执行sql语句
+		//先执行卸载SQL，防止重复报错。
+		$uninstall_sql = COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/'.$appkey . '.sql';
+		//执行sql语句
+		if (file_exists($uninstall_sql)) {
+			$sql = file_get_contents($uninstall_sql);
+			$this->sql_execute($sql);
+		}
 
-        //删除模板html文件
-        //if(!is_dir(COREFRAME_ROOT . 'templates/default/'. $appkey))MSG('指定文件夹不存在！');
-        //创建文件夹
-        if (!is_dir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install')) {
+		//缓存菜单语音包
+		load_class('cache_menu');
 
-            mkdir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install');
-            mkdir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/templates');
-            fopen(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.$appkey . '.sql','a+');
-
-        }
-        if (!is_dir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/')) {
-
-            mkdir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall');
-            fopen(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/'.$appkey . '.sql','a+');
-        }
-        if (is_dir(COREFRAME_ROOT . 'templates/default/'. $appkey)){
-            dir_copy(COREFRAME_ROOT . 'templates/default/'. $appkey,COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/templates');
-            dir_delete(COREFRAME_ROOT . 'templates/default/'. $appkey);
-        }
-
-        if (!file_exists(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/'.$appkey . '.sql')) {
-            MSG('文件名错误不存在！');
-        }
-        $sql = file_get_contents(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/'.$appkey . '.sql');
-        if(empty($sql))MSG('SQL文件中必须有其对应的SQL语句，方可卸载模块！');
-        $this->sql_execute($sql);
-
-        //更新模块数据表信息
-        $this->db->update('module_app',array('isinstall'=>0),array('menuid'=>$moduleid));
-
-
-
-        //更新缓存;
-        $uid = $_SESSION['uid'];
-        $where = array('keyid'=>'cache_all');
-        $result = $this->db->get_list('setting', $where, '*', 0, 100);
-        $ids = array();
-        foreach($result as $r) {
-            $ids[] = $r['id'];
-        }
-        set_cache('cache_all-'.$uid,$ids);
-
+		$this->db->delete('setting', array('keyid'=>'install','m'=>$appkey));
         MSG('模块卸载成功',HTTP_REFERER,2000);
     }
-
-
-
 
     /**
      * 执行mysql.sql文件，创建数据表等
@@ -154,7 +138,7 @@ class app extends WUZHI_admin {
      */
 
     function sql_execute($sql) {
-        $db=load_class('db');
+        $db = $this->db;
         $sql = preg_replace("/ENGINE=(InnoDB|MyISAM|MEMORY) DEFAULT CHARSET=([^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8",$sql);
         if($db->tablepre != 'wz_') $sql = str_replace('`wz_', '`'.$db->tablepre, $sql);
         $sql = str_replace("\r", "\n", $sql);
