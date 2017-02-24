@@ -718,7 +718,7 @@ DIY定制|9
     'id' => '262',
     'modelid' => '3',
     'field' => 'block',
-    'name' => '添加到区块',
+    'name' => '添加到推荐位',
     'remark' => '',
     'css' => '',
     'minlength' => '0',

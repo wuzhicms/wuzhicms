@@ -9,7 +9,7 @@ include $this->template('header','core');
             <section class="panel">
                 <?php echo $this->menu($GLOBALS['_menuid']);?>
                 <div class="panel-body" id="panel-bodys">
-                    <form name="myform" method="post" action="?m=core&f=menu&v=sort<?php echo $this->su();?>">
+
                         <table class="table table-striped table-advance table-hover">
                             <thead>
                             <tr>
@@ -19,32 +19,25 @@ include $this->template('header','core');
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach($result AS $r) { ?>
-                                <?php $module_array=$this->db->get_one('module_app',array('m'=>$value));?>
-
+                            <?php foreach($settings AS $r) { ?>
                                 <tr>
-                                    <td><?php echo $r['name'];?></td>
+                                    <td><?php echo $r['appname'];?></td>
                                     <td><?php echo $r['m'];?></td>
 
                                     <td>
-                                        <?php if($r['iscore']!=1 && !empty($r['m'])){ ?>
-                                            <?php if(empty($r['isinstall'])){?>
-                                                <a href="?m=module_app&f=module_manage&v=install&moduleid=<?php echo $r['menuid'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">安装</a>
-                                                <?php }else{?>
-                                        <a href="?m=module_app&f=module_manage&v=uninstall&moduleid=<?php echo $r['menuid'];?><?php echo $this->su();?>" class="btn btn-info btn-xs">卸载</a>
-                                            <?php } ?>
-
-                                        <?php } ?>
-                                        <?php if(empty($r['m']) || $r['iscore']==1){?>
-                                            <?php echo '禁止';?>
-                                        <?php }?>
+                                        <?php if($r['install'] && $r['allow_uninstall']){ ?>
+                                            <a href="?m=core&f=app&v=uninstall&appkey=<?php echo $r['m'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">卸载</a>
+                                        <?php } elseif($r['install']) { ?>
+                                            ----
+                                        <?php } else {  ?>
+                                            <a href="?m=core&f=app&v=install&appkey=<?php echo $r['m'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">安装</a>
+                                        <?php }  ?>
 
                                     </td>
                                 </tr>
                             <?php } ?>
                             </tbody>
                         </table>
-                    </form>
             </section>
         </div>
 </section>

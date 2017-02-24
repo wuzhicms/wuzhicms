@@ -7,11 +7,11 @@
 // +----------------------------------------------------------------------
 defined('IN_WZ') or exit('Access Denied');
 /**
- *模板管理
+ *app管理（模块管理）
 */
 load_class('admin');
 load_function('dir','core');
-class module_manage extends WUZHI_admin {
+class app extends WUZHI_admin {
 	private $db;
 	function __construct() {
 		$this->db = load_class('db');
@@ -28,48 +28,66 @@ class module_manage extends WUZHI_admin {
                 $dirs_arr[] = $d;
             }
         }
-        $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
-        $page = max($page,1);
-        $result = $this->db->get_list('module_app','', '*', 0, 20,$page,'menuid ASC');
-        $pages = $this->db->pages;
-        $total = $this->db->number;
-        include $this->template('module_list');
+		$setting_datas = $this->db->get_list('setting',array('keyid'=>'install'), '*', 0, 100,0,'id ASC','','m');
+		$install_apps = array_keys($setting_datas);
+
+		$settings = array();
+		foreach ($dirs_arr as $_m) {
+			$tmp = array();
+			//是否已经安装
+			if(in_array($_m,$install_apps)) {
+				$tmp['appname'] = $setting_datas[$_m]['title'];
+				$tmp['install'] = 1;//已经安装
+				$tmp['allow_uninstall'] = $setting_datas[$_m]['data'];//是否允许卸载,0 ：禁止卸载
+			} else {
+				$tmp['install'] = 0;//未安装
+				$tmp['allow_uninstall'] = 0;
+				$apppath = COREFRAME_ROOT.'app/'.$_m.'/admin/install/config.php';
+				if(file_exists($apppath)) {
+					$appconfig = include $apppath;
+					if(isset($appconfig['unpublish'])) continue;//开发中的模块，不显示
+					$tmp['appname'] = $appconfig['appname'];
+				} else {
+					$tmp['appname'] = $_m;
+				}
+			}
+			$tmp['m'] = $_m;
+			$settings[] = $tmp;
+		}
+		//print_r($settings);
+        include $this->template('app_list');
     }
 
     /**
      * 模块安装
      */
     public function install(){
-        $moduleid = intval($GLOBALS['moduleid']);
-        $module_array = $this->db->get_one('module_app', array('menuid' => $moduleid));
-
+        $appkey = $GLOBALS['appkey'];
+		if(preg_match('/([^a-z0-9_]+)/i',$appkey)) {
+			MSG('安装目录错误');
+		}
+        $module_array = $this->db->get_one('setting', array('keyid'=>'install','m'=>$appkey));
+		if($module_array) {
+			MSG('模块已经安装过！');
+		}
+		$install_sql = COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.$appkey . '.sql';
         //执行sql语句
-        if (!file_exists(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/install/'.$module_array['m'] . '.sql')) {
-            MSG('文件名错误不存在！');
+        if (!file_exists($install_sql)) {
+            MSG('安装SQL：文件不存在:'.$install_sql);
         }
-        $sql = file_get_contents(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/install/'.$module_array['m'] . '.sql');
+        $sql = file_get_contents($install_sql);
         if(empty($sql))MSG('SQL文件中必须有其对应的SQL语句，方可安装模块！');
         $this->sql_execute($sql);
 
         //模板html文件的拷贝
-        if(file_exists(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/install/'.'templates/')){
-            dir_copy(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/install/'.'templates/',COREFRAME_ROOT . 'templates/default/'. $module_array['m'] .'/');
+        if(file_exists(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.'templates/') && !file_exists(COREFRAME_ROOT . 'templates/default/'. $appkey .'/')){
+            dir_copy(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.'templates/',COREFRAME_ROOT . 'templates/default/'. $appkey .'/');
         }
-
-        //更新缓存;
-        $uid = $_SESSION['uid'];
-        $where = array('keyid'=>'cache_all');
-        $result = $this->db->get_list('setting', $where, '*', 0, 100);
-        $ids = array();
-        foreach($result as $r) {
-            $ids[] = $r['id'];
-        }
-        set_cache('cache_all-'.$uid,$ids);
 
         //缓存菜单语音包
         load_class('cache_menu');
 
-        $this->db->update('module_app',array('isinstall'=>1),array('menuid'=>$moduleid));
+		$this->db->insert('setting', array('keyid'=>'install','m'=>$appkey,'data'=>1));
         MSG('模块安装成功',HTTP_REFERER,2000);
 
     }
@@ -83,29 +101,29 @@ class module_manage extends WUZHI_admin {
         //执行sql语句
 
         //删除模板html文件
-        //if(!is_dir(COREFRAME_ROOT . 'templates/default/'. $module_array['m']))MSG('指定文件夹不存在！');
+        //if(!is_dir(COREFRAME_ROOT . 'templates/default/'. $appkey))MSG('指定文件夹不存在！');
         //创建文件夹
-        if (!is_dir(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/install')) {
+        if (!is_dir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install')) {
 
-            mkdir(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/install');
-            mkdir(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/install/templates');
-            fopen(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/install/'.$module_array['m'] . '.sql','a+');
+            mkdir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install');
+            mkdir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/templates');
+            fopen(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.$appkey . '.sql','a+');
 
         }
-        if (!is_dir(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/uninstall/')) {
+        if (!is_dir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/')) {
 
-            mkdir(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/uninstall');
-            fopen(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/uninstall/'.$module_array['m'] . '.sql','a+');
+            mkdir(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall');
+            fopen(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/'.$appkey . '.sql','a+');
         }
-        if (is_dir(COREFRAME_ROOT . 'templates/default/'. $module_array['m'])){
-            dir_copy(COREFRAME_ROOT . 'templates/default/'. $module_array['m'],COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/install/templates');
-            dir_delete(COREFRAME_ROOT . 'templates/default/'. $module_array['m']);
+        if (is_dir(COREFRAME_ROOT . 'templates/default/'. $appkey)){
+            dir_copy(COREFRAME_ROOT . 'templates/default/'. $appkey,COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/templates');
+            dir_delete(COREFRAME_ROOT . 'templates/default/'. $appkey);
         }
 
-        if (!file_exists(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/uninstall/'.$module_array['m'] . '.sql')) {
+        if (!file_exists(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/'.$appkey . '.sql')) {
             MSG('文件名错误不存在！');
         }
-        $sql = file_get_contents(COREFRAME_ROOT . 'app/' . $module_array['m'] . '/admin/uninstall/'.$module_array['m'] . '.sql');
+        $sql = file_get_contents(COREFRAME_ROOT . 'app/' . $appkey . '/admin/uninstall/'.$appkey . '.sql');
         if(empty($sql))MSG('SQL文件中必须有其对应的SQL语句，方可卸载模块！');
         $this->sql_execute($sql);
 

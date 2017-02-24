@@ -31,7 +31,7 @@ CREATE TABLE `$basic_tablename` (
 
 INSERT INTO `$table_model_field` (`modelid`, `field`, `name`, `remark`, `css`, `minlength`, `maxlength`, `pattern`, `errortips`, `formtype`, `setting`, `ext_code`, `unsetgids`, `unsetroles`, `master_field`, `ban_field`, `location`, `search_field`, `ban_contribute`, `to_fulltext`, `to_block`, `sort`, `disabled`, `powerful_field`) VALUES
   (0, 'addtime', '添加时间', '', '', 0, 0, '', '', 'datetime', 'a:2:{s:9:"fieldtype";s:3:"int";s:6:"format";s:11:"Y-m-d H:i:s";}', '', '', '', 1, 1, 1, 0, 0, 0, 1, 12, 0, 0),
-  (0, 'block', '添加到区块', '', '', 0, 0, '', '', 'block', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 6, 0, 0),
+  (0, 'block', '添加到推荐位', '', '', 0, 0, '', '', 'block', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 6, 0, 0),
   (0, 'groups', '用户组权限', '', '', 0, 0, '', '', 'group', 'a:1:{s:6:"groups";s:3:"4,5";}', '', '', '', 1, 0, 2, 0, 0, 0, 0, 18, 0, 0),
   (0, 'url', '链接地址', '', '', 0, 0, '', '', 'url', '', '', '', '', 1, 1, 0, 0, 0, 0, 1, 11, 0, 0),
   (0, 'sort', '权重', '', '', 0, 255, '', '', 'slider', 'a:1:{s:12:"defaultvalue";s:1:"0";}', '', '', '', 1, 1, 1, 0, 0, 0, 0, 20, 0, 0),

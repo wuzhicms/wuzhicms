@@ -209,7 +209,7 @@
     'id' => '429',
     'modelid' => '5',
     'field' => 'block',
-    'name' => '添加到区块',
+    'name' => '添加到推荐位',
     'remark' => '',
     'css' => '',
     'minlength' => '0',

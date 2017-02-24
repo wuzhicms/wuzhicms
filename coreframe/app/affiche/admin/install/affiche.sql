@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `wz_affiche` (
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1，会员中心，2 全站公告，3 后台公告',
   PRIMARY KEY (`id`),
   KEY `sort` (`sort`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='系统公告';
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='系统公告';
 
 INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `display`, `isopenid`) VALUES
 (110,5,'系统公告','affiche','index','listing','',6,1,0),
