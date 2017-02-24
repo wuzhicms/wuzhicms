@@ -1,0 +1,68 @@
+{T "content","head",TPLID}
+
+
+
+
+<!--路径导航-->
+<div style="background: #f5f5f5; border-bottom: 1px solid #ddd">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px; font-size: 12px;">
+            您现在的位置：
+            <li><a href="index.php">首页</a></li>
+            <li class="active"><a href="index.php?m=feedback">问题反馈</a></li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+
+<div class="container">
+    <div class="liuyan-form-title">
+        <div class="lft-left">
+            <a href=""><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="top: 3px;"></span> 我要反馈</a>
+        </div>
+    </div>
+    <br>
+
+    <form action="index.php?m=feedback&f=index&v=contact" method="post">
+        <div  class="form-inline" style="margin-bottom: 15px;">
+
+            <div class="form-group">
+                <label for="exampleInputName2">姓名<span class="color_danger">*</span></label>
+                <input type="text" name="form[linkman]" class="form-control" id="exampleInputName2" placeholder="姓名" required>
+            </div>
+            <div class="form-group" style="margin-right: 100px;"></div>
+            <div class="form-group">
+                <label for="exampleInputEmail2">联系邮箱 <span class="color_danger">*</span></label>
+                <input type="email" name="form[email]" class="form-control" id="exampleInputEmail2" placeholder="xxx@xxx.com" required>
+            </div>
+
+
+        </div>
+
+
+        <div class="form-box">
+            <div class="row">
+
+
+                <div class="col-md-12">
+                    <textarea name="form[content]" class="form-control" rows="10" placeholder="请详细的输入反馈问题" required></textarea>
+                </div>
+
+            </div>
+        </div>
+        <br>
+
+        <div class=" form-inline text-center" >
+            <input type="hidden" name="form[forward]" value="{$forward}">
+            <button type="submit" name="submit" class="btn btn-warning  btn-lg" >&nbsp;&nbsp;&nbsp;提交&nbsp;&nbsp;&nbsp;</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+{T "content","foot",TPLID}
