@@ -2903,27 +2903,6 @@ CREATE TABLE `wz_credit_data` (
 
 -- --------------------------------------------------------
 
---
--- 表的结构 `wz_dianping`
---
-
-DROP TABLE IF EXISTS `wz_dianping`;
-CREATE TABLE `wz_dianping` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `keyid` varchar(15) NOT NULL COMMENT '索引',
-  `field1` tinyint(3) UNSIGNED NOT NULL DEFAULT '5',
-  `field2` tinyint(3) UNSIGNED NOT NULL DEFAULT '5',
-  `field3` tinyint(3) UNSIGNED NOT NULL DEFAULT '5',
-  `field4` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `field5` varchar(255) NOT NULL,
-  `field6` varchar(255) NOT NULL,
-  `addtime` int(10) UNSIGNED NOT NULL COMMENT '评价时间',
-  `ip` varchar(15) NOT NULL COMMENT 'ip地址',
-  `uid` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '所属用户',
-  `data` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='点评';
-
--- --------------------------------------------------------
 
 --
 -- 表的结构 `wz_download_data`
@@ -7608,17 +7587,12 @@ INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `
   (213, 212, '上传报告', 'medical', 'record', 'add', '', 213, 1, 0),
   (215, 5, '优惠券管理', 'coupon', 'card', 'listing', '', 215, 1, 0),
   (216, 215, '生成优惠券', 'coupon', 'card', 'add', '', 216, 1, 0),
-  (217, 5, '发票申请管理', 'receipt', 'receipt', 'listing', '', 217, 1, 0),
-  (218, 217, '审核', 'receipt', 'receipt', 'check', '', 218, 0, 0),
   (219, 6, '机构审核', 'member', 'mec', 'listing', '', 219, 0, 0),
   (222, 220, '物流公司', 'order', 'express', 'listing', '', 222, 1, 0),
   (223, 220, '添加物流公司', 'order', 'express', 'add', '', 223, 1, 0),
   (224, 220, '修改物流', 'order', 'express', 'edit', '', 224, 0, 0),
   (225, 220, '删除物流', 'order', 'express', 'delete', '', 225, 0, 0),
   (226, 5, '积分管理', 'credit', 'index', 'listing', '', 226, 1, 0),
-  (228, 5, '点评信息管理', 'dianping', 'index', 'listing', '', 228, 1, 0),
-  (229, 228, '团购信息点评', 'dianping', 'index', 'taocan_listing', '', 229, 1, 0),
-  (230, 228, '删除', 'dianping', 'index', 'delete', '', 230, 0, 0),
   (231, 5, '站内短信', 'message', 'index', 'listing', '', 231, 1, 0),
   (232, 231, '发布站内短信', 'message', 'index', 'add', '', 232, 1, 0),
   (258, 29, '添加附件', 'attachment', 'index', 'add', '', 0, 1, 0),
@@ -9293,12 +9267,6 @@ ALTER TABLE `wz_credit_data`
   ADD UNIQUE KEY `jid` (`jid`);
 
 --
--- Indexes for table `wz_dianping`
---
-ALTER TABLE `wz_dianping`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `wz_download_data`
 --
 ALTER TABLE `wz_download_data`
@@ -9880,11 +9848,7 @@ ALTER TABLE `wz_coupon_card_active`
 --
 ALTER TABLE `wz_credit`
   MODIFY `jid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- 使用表AUTO_INCREMENT `wz_dianping`
---
-ALTER TABLE `wz_dianping`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- 使用表AUTO_INCREMENT `wz_editor_log`
 --
