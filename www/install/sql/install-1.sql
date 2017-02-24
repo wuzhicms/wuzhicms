@@ -7453,7 +7453,7 @@ INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `
   (32, 7, '静态资源管理', 'template', 'res', 'listing', '', 2, 1, 0),
   (33, 7, '后台菜单管理', 'core', 'menu', 'listing', '', 3, 1, 0),
   (34, 5, '友情链接', 'link', 'index', 'listing', '', 5, 1, 0),
-  (35, 5, '数据库管理', 'database', 'index', 'export', '', 4, 1, 0),
+  (35, 5, '数据库备份', 'database', 'index', 'export', '', 4, 1, 0),
   (36, 5, '在线支付', 'pay', 'index', 'listing', '', 3, 1, 0),
   (37, 5, '手机触屏', 'mobile', 'index', 'setting', '', 2, 1, 0),
   (91, 29, '编辑器附件配置', 'attachment', 'index', 'ueditor', '', 3, 1, 0),
@@ -7636,7 +7636,7 @@ INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `
   (253, 5, '手机短信', 'sms', 'index', 'init', '', 253, 1, 0),
   (247, 244, '自定义菜单', 'weixin', 'set', 'menu_setting', '', 247, 1, 0),
   (245, 244, '关注自动回复设置', 'weixin', 'set', 'subscribe', '', 245, 1, 0),
-  (244, 5, '微信设置', 'weixin', 'set', 'setting', '', 244, 1, 0),
+  (244, 5, '微信公众号', 'weixin', 'set', 'setting', '', 244, 1, 0),
   (256, 2, '站点管理', 'core', 'site', 'listing', '', 7, 1, 0),
   (268, 267, '添加广告', 'promote', 'index', 'add', '', 0, 1, 0),
   (267, 260, '管理广告', 'promote', 'index', 'listing', '', 0, 2, 0),
@@ -8634,24 +8634,6 @@ INSERT INTO `wz_quyu` (`areaid`, `name`, `letter`, `pid`, `sort`) VALUES
 (78, '昌平区', 'changping', 28, 0);
 
 -- --------------------------------------------------------
-
---
--- 表的结构 `wz_receipt`
---
-
-DROP TABLE IF EXISTS `wz_receipt`;
-CREATE TABLE `wz_receipt` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `orderid` int(10) UNSIGNED NOT NULL COMMENT '订单id',
-  `title` varchar(50) NOT NULL COMMENT '发票抬头',
-  `linkman` varchar(10) NOT NULL COMMENT '联系人',
-  `tel` varchar(18) NOT NULL COMMENT '电话',
-  `address` varchar(255) NOT NULL COMMENT '地址',
-  `zip` varchar(6) NOT NULL COMMENT '邮编',
-  `uid` int(10) UNSIGNED NOT NULL COMMENT '申请人',
-  `addtime` int(10) UNSIGNED NOT NULL COMMENT '申请时间',
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 未审核，1已审核'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='发票申请表';
 
 -- --------------------------------------------------------
 
@@ -9676,11 +9658,6 @@ ALTER TABLE `wz_quyu`
   ADD PRIMARY KEY (`areaid`),
   ADD KEY `pid` (`pid`);
 
---
--- Indexes for table `wz_receipt`
---
-ALTER TABLE `wz_receipt`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `wz_route_config`
@@ -10098,11 +10075,7 @@ ALTER TABLE `wz_promote_place`
 --
 ALTER TABLE `wz_quyu`
   MODIFY `areaid` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
---
--- 使用表AUTO_INCREMENT `wz_receipt`
---
-ALTER TABLE `wz_receipt`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- 使用表AUTO_INCREMENT `wz_route_config`
 --
