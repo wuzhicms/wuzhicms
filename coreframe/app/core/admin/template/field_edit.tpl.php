@@ -195,7 +195,7 @@ $submenuid = $menu_r['menuid'];
                               <input type="radio" name="form[location]" value="2" <?php if($r['location']==2) echo "checked";?>>权限与收费
                           </label>
                           <label class="radio-inline">
-                              <input type="radio" name="form[location]" value="5" <?php if($r['location']==5) echo "checked";?>>手动表单项
+                              <input type="radio" name="form[location]" value="5" <?php if($r['location']==5) echo "checked";?>>手动表单项 <a href="https://www.wuzhicms.com/doc/field-setting-xianshiweizhi.html" target="_blank"><i class="icon-help"></i> 打开帮助页面</a>
                           </label>
                       </div>
                     </td>

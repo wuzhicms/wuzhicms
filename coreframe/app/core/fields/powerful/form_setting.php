@@ -2,7 +2,7 @@
 	<tr> 
       <td width="100">表单</td>
       <td><textarea name="setting[formtext]" rows="2" cols="20" id="options" style="height:100px;width:400px;"><?php echo htmlentities(output($setting,'formtext'));?></textarea><BR>
-          <a href="http://www.wuzhicms.com/help-powerful-field.html" target="_blank"><i class="icon-help"></i> 打开帮助页面</a>
+          <a href="https://www.wuzhicms.com/doc/field-chaojiziduan.html" target="_blank"><i class="icon-help"></i> 打开帮助页面</a>
 	  </td>
     </tr>
 	<tr> 
