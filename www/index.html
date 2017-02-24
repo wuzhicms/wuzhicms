@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>站点2 -  Powered by wuzhicms</title>
+    <meta name="keywords" content="五指CMS网站内容管理系统,cms,wuzhicms系统">
+    <meta name="description" content="五指CMS网站内容管理系统">
+    <meta name="generator" content="wuzhicms 3.x" />
+    <!-- CSS -->
+    <link href="http://dev.wuzhicms.com/res/t3/css/bootstrap.css" rel="stylesheet">
+    <link href="http://dev.wuzhicms.com/res/t3/css/style.css" rel="stylesheet">
+    <link href="http://dev.wuzhicms.com/res/t3/css/hover.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="http://dev.wuzhicms.com/res/t3/css/non-responsive.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.wuzhicms.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.wuzhicms.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        var cookie_pre = "fbx_";var cookie_domain = '';var cookie_path = '';var web_url = 'http://dev.wuzhicms.com/';
+    </script>
+    <script src="http://dev.wuzhicms.com/res/t3/js/jquery.min.js"></script>
+    <script type="text/javascript" src="http://dev.wuzhicms.com/res/js/base.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default-index">
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar" class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://dev.wuzhicms.com/">
+                <img src="/res/images/head_logo.png" height="55">
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <li><a href="http://news.wuzhicms.com/">新闻</a></li>
+                                                <li><a href="/index.php?v=listing&cid=38&page=1">视频</a></li>
+                                                <li><a href="/index.php?v=listing&cid=3&page=1">图片</a></li>
+                                                <li><a href="/index.php?v=listing&cid=4&page=1">下载</a></li>
+                                                <li><a href="/index.php?v=listing&cid=27&page=1">团购</a></li>
+                                                <li><a href="/index.php?v=listing&cid=26&page=1">积分商城</a></li>
+                                                                    </ul>
+
+        <ul class="nav navbar-nav navbar-right hide" id="mylogined">
+                        <li>
+                <a href="http://dev.wuzhicms.com/index.php?f=search"  style="padding-top: 18px; padding-bottom: 15px;"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 7px;"></span> </a>
+            </li>
+                        <!--
+            <li class="dropdown  mall--dropdown-menu">
+                <a href="#"   class="dropdown-toggle " data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true" style="padding-top: 5px;"></span> <span class="font-Arial font_size14">3</span></a>
+                <ul class="dropdown-menu">
+                    <p class="font_size12">最近加入的宝贝：</p>
+
+
+                    <ul class="cart-list">
+                        <li>
+                            <div class="cart-item clearfix"><a class="thumb" href=""><img alt="" src="image/temp/temp8.jpg " width="60px"></a>
+                                <a class="name" href="">小蚁蓝牙遥控器胡歌来测试  黑色</a><span class="price">39元 × 1</span>
+                                <a class="btn-del" href="javascript: void(0);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cart-item clearfix "><a class="thumb" href=""><img alt="" src=""></a>
+                                <a class="name" href="">智能唤醒翻盖保护套 黑色</a> <span class="price">39元 × 1</span>
+                                <a class="btn-del" href="javascript: void(0);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+
+                    <li role="separator" class="divider" style="margin-top: 0"></li>
+                    <p class="font_size12 text-right">购物车里还有1件宝贝</p>
+                    <a href="#" class=" btn btn-warning btn-sm  float_right">查看我的购物车</a>
+                </ul>
+            </li>
+            -->
+            <li class="dropdown login--dropdown-menu">
+                <a href="http://dev.wuzhicms.com/index.php?m=member"  title="进入会员中心"  class="dropdown-toggle" ><img src="http://dev.wuzhicms.com/api/myface.php" class="img-circle" height="24px;" style="border: 2px solid #fff"><span id="myname"></span></a>
+            </li>
+            <li>
+                <a href="http://dev.wuzhicms.com/index.php?m=member&v=logout"  class="dropdown-toggle" >退出</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" id="mylogin">
+                        <li>
+                <a href="http://dev.wuzhicms.com/index.php?f=search"  style="padding-top: 18px; padding-bottom: 15px;"><span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-top: 7px;"></span> </a>
+            </li>
+                        <li class="dropdown login--dropdown-menu">
+                <a href="#"  title="登录"  class="dropdown-toggle" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> </a>
+                <ul class="dropdown-menu">
+                    <form name="toplogin" action="http://dev.wuzhicms.com/index.php?m=member&v=login" method="post" onsubmit="return formcheck_toplogin();">
+                        <p class="help-block text-right color_999">还不是会员? <a href="http://dev.wuzhicms.com/index.php?m=member&v=register">立即注册</a></p>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="toplogin_username" name="username" placeholder="用户名" >
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="toplogin_password" name="password" placeholder="密码">
+                        </div>
+                        <div class="form-group " style="position: relative;">
+                            <input type="text" name="checkcode" class="form-control" id="toplogin_checkcode" placeholder="请输入验证码" onfocus="if($('#code_img').attr('src') == 'http://dev.wuzhicms.com/res/images/logincode.gif') $('#code_img').attr('src', 'http://dev.wuzhicms.com/api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" onkeyup="toplogin_keyup(this.value)" >
+                            <img src="http://dev.wuzhicms.com/res/images/logincode.gif" id="code_img" alt="点击刷新" onclick="$(this).attr('src', 'http://dev.wuzhicms.com/api/identifying_code.php?w=112&amp;h=40&amp;rd='+Math.random());" style="margin-top:2px; position: absolute; top: 0;right: 2px; max-height: 35px;" title="点击更换验证码">
+                        </div>
+                        <div class="checkbox font_size12">
+                            <label>
+                                <input type="checkbox" name="savecookie" value="1" checked> 下次自动登录
+                            </label>
+                            <a  href="http://dev.wuzhicms.com/index.php?m=member&v=public_find_password_email" class="color_warning pading_left_10px" style=" float: right">忘记密码？</a>
+                        </div>
+                        <div id="toplogin_msg" class="help-block-g  color_danger hide"></div>
+                        <button type="submit" name="submit" class="btn btn-primary btn-block"><span class="font_size16">登录</span></button>
+                    </form>
+                    <div class=" disanfang_ico">
+                        <div  style=" color: #999999; padding-bottom: 8px;">使用第三方账号登录</div>
+                        <li><a href="http://dev.wuzhicms.com/index.php?m=member&amp;f=index&amp;v=auth&amp;type=qq"><img src="http://dev.wuzhicms.com/res/images/qqlogin.png" alt="使用QQ帐号登录" title="使用QQ帐号登录" width="30px"></a></li>                    <li><a href="http://dev.wuzhicms.com/index.php?m=member&amp;f=index&amp;v=auth&amp;type=sina"><img src="http://dev.wuzhicms.com/res/images/weibologin.png" alt="使用微博帐号登录" title="使用微博帐号登录" width="30px"></a></li>                    <li><a href="http://dev.wuzhicms.com/index.php?m=member&amp;f=index&amp;v=auth&amp;type=weixin"><img src="http://dev.wuzhicms.com/res/images/weichatlogin.png" alt="使用微信帐号登录" title="使用微信帐号登录" width="30px"></a></li>
+                    </div>
+
+                </ul>
+            </li>
+
+        </ul>
+    </div><!--/.nav-collapse -->
+</nav>
+
+<!--ad-->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ad-box" style="height: 90px; width: 100%; background: #dddddd; text-align: center; "><script  src="http://dev.wuzhicms.com/promote/1.js"></script></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--index-one-screen-->
+<div class="index-one-screen">
+    <!--big-headline-news-->
+    <div class="container">
+
+        <div class="big-headline-news ">
+            <div class="row">
+                <!--头条-->
+                                                                <div class="col-xs-12">
+                    <div class="border--bottom1s">
+                        <h2 class=" text-center  manhangyichu" ><a href="/index.php?v=show&cid=9&id=140" target="_blank">股东纠纷拖累方正证券业绩 20亿信托投资涉嫌违规</a></h2>
+                    </div>
+                </div>
+                                                                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="/index.php?v=show&cid=8&id=32">网秦公布年度股东大会结果：股本扩增</a></div></div>
+                                                                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="/index.php?v=show&cid=6&id=13">沪指缩量涨3.36%冲刺3100 中字头股尾盘拉升</a></div></div>
+                                                                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="/index.php?v=show&cid=6&id=133">亚洲首富王健林：“在中国远离政府太假了”</a></div></div>
+                                                                <div class="col-xs-3"><div  class="sm-title manhangyichu border--bottom1s"><a href="/index.php?v=show&cid=8&id=136">商业健康险个税政策试点时间表划定</a></div></div>
+                                                            </div>
+
+        </div>
+
+
+        <div class="index-last-new-box">
+            <div class="row">
+                <!--图片区-->
+                                                                <div class="col-xs-6">
+                    <div class="narrowArt">
+                        <a href="/index.php?v=show&cid=9&id=31" title="222" target="_blank">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071500419809.jpg" alt="" height="380">
+                            <h1>谷歌微软反对酒店封杀个人WiFi设备</h1>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                                                                            <div class="narrowArt video">
+                        <a href="/index.php?v=show&cid=6&id=133" title="222" target="_blank">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071422068310.jpg" alt="" height="182">
+                            <h2>亚洲首富王健林：“在中国远离政府太假了”</h2>
+                        </a>
+                    </div>
+                                                                            <div class="narrowArt video">
+                        <a href="/index.php?v=show&cid=7&id=22" title="222" target="_blank">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071428049436.jpg" alt="" height="182">
+                            <h2>任正非：华为将试点以项目为中心的管理方式</h2>
+                        </a>
+                    </div>
+                                                            
+                </div>
+                <div class="col-xs-3">
+
+                    <div class="headline-news-list">
+                        <!--列表区-->
+                                                                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading color_qiyelan font_size16 toutiao-right-title" ><a href="/index.php?v=show&cid=6&id=131" target="_blank">众筹已死：硬件创业公司如何在中美两地失去了支持者</a></h4>
+                                <div class="media-content  color_777 ">这是一个有着GoPro广告风格的宣传视频：在浩瀚无际的大海旁边，一个戴着黑色墨镜、身穿白色T恤的男子站在巨石上大手一挥，几乎比手掌还小的无人机便一跃而起，飞向遥远的天空。这是深圳市盛祥科技开发有限公司(以下简称“盛祥科技”)推出的安果掌飞自拍无人机在京东众筹发起页上的宣传视频。</div>
+                            </div>
+                        </div>
+                                                <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading color_qiyelan font_size16 toutiao-right-title" ><a href="/index.php?v=show&cid=6&id=16" target="_blank">祁斌：A股市场具有成为全球最大资本市场的潜力</a></h4>
+                                <div class="media-content  color_777 ">应梳理和消除沪港通现存国际资本进入的障碍，争取尽快将A股纳入MSCI和FTSE指数　　■本报记者 朱宝琛　　证监会[微博]国际部主任祁斌日前表示，作为资本市场渐进式开放的举措，沪港通的推出实现了内地和香港市场的双赢，两个差异巨大的市场的联通和制度衔接也可以为未来其他</div>
+                            </div>
+                        </div>
+                                                <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading color_qiyelan font_size16 toutiao-right-title" ><a href="/index.php?v=show&cid=6&id=133" target="_blank">亚洲首富王健林：“在中国远离政府太假了”</a></h4>
+                                <div class="media-content  color_777 ">【王健林】　　61岁，大连万达集团股份有限公司董事长。　　2015年3月，福布斯发布2015全球富豪榜，王健林成为中国内地首富；根据彭博华人富豪榜和亚洲富豪榜截至5月1日的数据，王健林以38</div>
+                            </div>
+                        </div>
+                                                                                
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <!--专题区-->
+                                                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="首页专题四" title="222" target="_blank">
+                            <img  src="http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071521498376.jpg" alt="" height="182">
+                            <h2 data-autor="专题推荐">首页专题四</h2>
+                        </a>
+                    </div>
+                </div>
+                                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="首页专题三" title="222" target="_blank">
+                            <img  src="http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071521143191.jpg" alt="" height="182">
+                            <h2 data-autor="专题推荐">首页专题三</h2>
+                        </a>
+                    </div>
+                </div>
+                                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="首页专题二" title="222" target="_blank">
+                            <img  src="http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071520478706.jpg" alt="" height="182">
+                            <h2 data-autor="专题推荐">首页专题二</h2>
+                        </a>
+                    </div>
+                </div>
+                                <div class="col-xs-3">
+                    <div class="narrowArt jia-biaoqian">
+                        <a href="首页专题一" title="222" target="_blank">
+                            <img  src="http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071519406425.jpg" alt="" height="182">
+                            <h2 data-autor="专题推荐">首页专题一</h2>
+                        </a>
+                    </div>
+                </div>
+                                            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="http://dev.wuzhicms.com/promote/2.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 图片 -->
+<div class="container">
+    <div class="index-pic-box">
+        <div class="lanmu-content lanmu-content-bg">
+            <h2 class="lanmu-title">
+                <a href="/index.php?v=listing&cid=3&page=1" >图片</a>
+            </h2>
+            <nav>
+                                                <a href="/index.php?v=listing&cid=14">图片子栏目A</a>                                <a href="/index.php?v=listing&cid=15&page=1">图片子栏目B</a>                                            </nav>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <!--图片区一-->
+                                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=14&id=103" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2015/05/1212/img_300_600_201505121412597711.jpg" alt="西湖，位于浙江省杭州市西面，是中国大陆首批国家重点风景名胜区和中国十大风景名胜之一">
+                        </div>
+                        <h2>西湖，位于浙江省杭州市西面，是中国大陆首批国家重点风景名胜区和中国十大风景名胜之一</h2>
+                    </a>
+                </div>
+                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=14&id=108" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2015/05/1208/img_300_600_201505121608398264.jpg" alt="在画家眼中处处风景如画;在诗人眼里风景如诗如歌;在作家笔下风景则会化作一个个动人心魄的故事。">
+                        </div>
+                        <h2>在画家眼中处处风景如画;在诗人眼里风景如诗如歌;在作家笔下风景则会化作一个个动人心魄的故事。</h2>
+                    </a>
+                </div>
+                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=14&id=173" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/03/18/201603181609032031.jpg" alt="西安创拓大厦在西安市雁塔区高新五路2号">
+                        </div>
+                        <h2>西安创拓大厦在西安市雁塔区高新五路2号</h2>
+                    </a>
+                </div>
+                                                                
+            </div>
+            <div class="col-xs-4">
+                <!--图片区二-->
+                <div class="narrowArt">
+    <a href="/index.php?v=show&cid=14&id=81" title="222" target="_blank">
+        <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071547521117.jpg" alt="峡谷" height="380">
+        <h1>峡谷</h1>
+    </a>
+</div>
+        <div class="narrowArt">
+    <a href="/index.php?v=show&cid=14&id=77" title="222" target="_blank">
+        <img  src=" http://demo3.wuzhicms.com/uploadfile/2015/05/1234/img_300_600_201505121334284787.jpg" alt="撒哈拉沙漠" height="182">
+        <h2>撒哈拉沙漠</h2>
+    </a>
+</div>
+</div>
+<div class="col-xs-6">
+    <div class="row">
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=14&id=91" title="222" target="_blank">
+                    <img  src=" http://demo3.wuzhicms.com/uploadfile/2015/05/1248/img_300_600_201505121348437298.jpg" alt="余陈秋子时尚服饰写真" height="182">
+                    <h2>余陈秋子时尚服饰写真</h2>
+                </a>
+            </div>
+        </div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=14&id=101" title="222" target="_blank">
+                    <img  src=" http://demo3.wuzhicms.com/uploadfile/2015/05/1209/img_300_600_201505121409386456.jpg" alt="北海公园和故宫角楼" height="182">
+                    <h2>北海公园和故宫角楼</h2>
+                </a>
+            </div>
+        </div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=15&id=54" title="222" target="_blank">
+                    <img  src=" http://demo3.wuzhicms.com/uploadfile/2015/05/1240/img_300_600_201505121040226319.jpg" alt="震撼照片展示地球几大奇景" height="182">
+                    <h2>震撼照片展示地球几大奇景</h2>
+                </a>
+            </div>
+        </div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=15&id=56" title="222" target="_blank">
+                    <img  src=" http://demo3.wuzhicms.com/uploadfile/2015/05/1243/img_300_600_201505121043523784.jpg" alt="哈勃望远镜25周年绚美太空图像精选" height="182">
+                    <h2>哈勃望远镜25周年绚美太空图像精选</h2>
+                </a>
+            </div>
+        </div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=14&id=96" title="222" target="_blank">
+                    <img  src=" http://demo3.wuzhicms.com/uploadfile/2015/05/1202/img_300_600_201505121402082227.jpg" alt="横店圆明新园正式开园" height="182">
+                    <h2>横店圆明新园正式开园</h2>
+                </a>
+            </div>
+        </div>
+                        <div class="col-xs-6">
+            <div class="narrowArt">
+                <a href="/index.php?v=show&cid=14&id=51" title="222" target="_blank">
+                    <img  src=" http://demo3.wuzhicms.com/uploadfile/2015/05/1237/img_300_600_201505121037257324.jpg" alt="南非洋面现千只海豚捕食浩大场面" height="182">
+                    <h2>南非洋面现千只海豚捕食浩大场面</h2>
+                </a>
+            </div>
+        </div>
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="http://dev.wuzhicms.com/promote/3.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- 视频 -->
+<div class="container">
+    <div class="index-video-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=38&page=1" >视频</a>
+                    </h2>
+                    <nav>
+                                                                        <a href="/index.php?v=listing&cid=43&page=1">综艺</a>                                                <a href="/index.php?v=listing&cid=41&page=1">原创</a>                                                <a href="/index.php?v=listing&cid=42&page=1">MV</a>                                                <a href="/index.php?v=listing&cid=44&page=1">娱乐</a>                                                                    </nav>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="#" >浏览排行</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <!--图片区一-->
+                                                <div class="narArts">
+                    <a title="222" href="" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071707214799.jpg" alt="综艺">
+                        </div>
+                        <h2><strong>+ 专题 + </strong><br>综艺</h2>
+                    </a>
+                </div>
+                                <div class="narArts">
+                    <a title="222" href="" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071705063109.jpg" alt="电影">
+                        </div>
+                        <h2><strong>+ 专题 + </strong><br>电影</h2>
+                    </a>
+                </div>
+                                <div class="narArts">
+                    <a title="222" href="" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071702552418.jpg" alt="电视剧">
+                        </div>
+                        <h2><strong>+ 专题 + </strong><br>电视剧</h2>
+                    </a>
+                </div>
+                                            </div>
+            <div class="col-xs-4">
+                                                                <div class="narrowArt jia-biaoqian video">
+                    <a href="/index.php?v=show&cid=41&id=169" title="222" target="_blank">
+                        <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071801274413.jpg" alt="纲到你身边 2016："德云运动会"搞笑来袭 20160404  " height="380">
+                        <h1 data-autor="原创">纲到你身边 2016："德云运动会"搞笑来袭 20160404  </h1>
+                    </a>
+                </div>
+                                                                <div class="narrowArt video jia-biaoqian">
+                    <a href="/index.php?v=show&cid=43&id=167" title="222" target="_blank">
+                        <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/08/201604081324235299.jpg" alt="我们相爱吧 第二季：橙汁CP巴厘岛度" height="182">
+                        <h2 data-autor="原创">我们相爱吧 第二季：橙汁CP巴厘岛度</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                                                                <div class="narrowArt video">
+                    <a href="/index.php?v=show&cid=43&id=168" title="222">
+                        <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071746561834.jpg" alt="林志玲电臀撞球对抗李治廷" height="182">
+                        <h2>林志玲电臀撞球对抗李治廷</h2>
+                    </a>
+                </div>
+                                                               <div class="narrowArt video">
+                    <a href="/index.php?v=show&cid=43&id=165" title="222">
+                        <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071731378872.png" alt="金星秀 2016：金星"手撕"膨胀的明星 20160406 " height="182">
+                        <h2>金星秀 2016：金星"手撕"膨胀的明星 20160406 </h2>
+                    </a>
+                </div>
+                                                               <div class="narrowArt video">
+                    <a href="/index.php?v=show&cid=43&id=166" title="222">
+                        <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/07/201604071729173369.jpg" alt="火星情报局 2016：对不起 这期我们录砸了 160331" height="182">
+                        <h2>火星情报局 2016：对不起 这期我们录砸了 160331</h2>
+                    </a>
+                </div>
+                                                           </div>
+            <div class="col-xs-3">
+                <div class="list-ol-box">
+                    <ol class="rectangle-list">
+                                                                        <li ><a href="/index.php?v=show&cid=43&id=179" target="_blank">小岳岳强吻沈腾&nbsp;两季喜剧之王合体喜剧人盛典</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=165" target="_blank">金星秀&nbsp;2016：金星&quot;手撕&quot;膨胀的明星&nbsp;20160406</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=168" target="_blank">林志玲电臀撞球对抗李治廷</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=167" target="_blank">我们相爱吧&nbsp;第二季：橙汁CP巴厘岛度</a></li>
+                                                <li ><a href="asf.html" target="_blank">测试</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=181" target="_blank">汪涵率众特工入侵地球&nbsp;20160408</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=180" target="_blank">第20160411期：星爸星妈黑历史大起底&nbsp;汪峰子怡为女儿大...</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=169" target="_blank">纲到你身边&nbsp;2016：</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=166" target="_blank">火星情报局&nbsp;2016：对不起&nbsp;这期我们录砸了&nbsp;160331</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=169" target="_blank">纲到你身边&nbsp;2016：</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=160" target="_blank">狼图</a></li>
+                                                <li ><a href="/index.php?v=show&cid=42&id=170" target="_blank">花旦</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=181" target="_blank">汪涵率众特工入侵地球&nbsp;20160408</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=180" target="_blank">第20160411期：星爸星妈黑历史大起底&nbsp;汪峰子怡为女儿大...</a></li>
+                                                <li ><a href="/index.php?v=show&cid=43&id=179" target="_blank">小岳岳强吻沈腾&nbsp;两季喜剧之王合体喜剧人盛典</a></li>
+                                                <li ><a href="/index.php?v=show&cid=44&id=171" target="_blank">春天</a></li>
+                                                                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="http://dev.wuzhicms.com/promote/4.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 团购 -->
+<div class="container">
+    <div class="index-tuangou-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=27&page=1" >团购</a>
+                    </h2>
+                    <nav>
+                                                                        <a href="/index.php?v=listing&cid=50&page=1">品牌团</a>                                                <a href="/index.php?v=listing&cid=48&page=1">单品团</a>                                                                    </nav>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="#" >特惠推荐</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <!--团购专场-->
+                                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=50&id=3" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/08/201604081335331262.jpg" alt="">
+                        </div>
+                        <h2><strong>+ 团购专场 + </strong><br> 4月9日车游买车帮超级团购会，让您买车惠到底</h2>
+                    </a>
+                </div>
+                                <div class="narArts">
+                    <a title="222" href="/index.php?v=show&cid=50&id=1" target="_blank">
+                        <div class="crop">
+                            <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/03/31/201603311123467600.jpg" alt="">
+                        </div>
+                        <h2><strong>+ 团购专场 + </strong><br> 3月15日至31日车游超级团购会，让您买车惠到底</h2>
+                    </a>
+                </div>
+                                                                
+
+            </div>
+            <!--团购推荐-->
+                                                <div class="col-xs-4">
+                <div class="narrowArt tuan-price">
+                    <a href="/index.php?v=show&cid=50&id=4">
+                        <ins class="tuan-price_ico"><strong>￥300</strong></ins>
+                        <img  src=" http://demo3.wuzhicms.com/uploadfile/2016/04/08/201604081342026646.jpg" alt="苔原地带双人双层野营帐篷" height="380">
+                        <h1>苔原地带双人双层野营帐篷</h1>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                                                            <div class="narrowArt tuan-price">
+                    <a href="/index.php?v=show&cid=50&id=3">
+                        <ins class="tuan-price_ico"><strong>￥20000.00</strong></ins>
+                        <img  src="http://demo3.wuzhicms.com/uploadfile/2016/04/08/201604081335331262.jpg" alt="" height="182">
+                        <h2>4月9日车游买车帮超级团购会，让您买车惠到底</h2>
+                    </a>
+                </div>
+                                                            <div class="narrowArt tuan-price">
+                    <a href="/index.php?v=show&cid=50&id=1">
+                        <ins class="tuan-price_ico"><strong>￥199.00</strong></ins>
+                        <img  src="http://demo3.wuzhicms.com/uploadfile/2016/03/31/201603311123467600.jpg" alt="" height="182">
+                        <h2>3月15日至31日车游超级团购会，让您买车惠到底</h2>
+                    </a>
+                </div>
+                                                            </div>
+
+            <div class="col-xs-3 right-thumbnail">
+                <div class="row">
+                    <!--特惠推荐-->
+                                                            <div class="col-xs-6">
+                        <a href="/index.php?v=show&cid=48&id=7" class="thumbnail box-and-title-img">
+                            <ins class="tuijian_ico">抢购</ins>
+                            <div class="imght">
+                                <img src=" http://demo3.wuzhicms.com/uploadfile/2016/04/08/201604081419245440.png" alt="夏诺多吉折叠兵工铲" >
+                            </div>
+                            <div class="caption height-hide97">
+                                <h4><strong class="color_warning font_size18">￥100</strong> <del class="color_999 font_size12">￥180</del></h4>
+                                <p class="font_size12">
+                                    夏诺多吉折叠兵工铲                                </p>
+                            </div>
+                        </a>
+                    </div>
+                                        <div class="col-xs-6">
+                        <a href="/index.php?v=show&cid=48&id=5" class="thumbnail box-and-title-img">
+                            <ins class="tuijian_ico">抢购</ins>
+                            <div class="imght">
+                                <img src=" http://demo3.wuzhicms.com/uploadfile/2016/04/08/201604081347579002.png" alt="蓝贝尔汽车应急电源" >
+                            </div>
+                            <div class="caption height-hide97">
+                                <h4><strong class="color_warning font_size18">￥200</strong> <del class="color_999 font_size12">￥300</del></h4>
+                                <p class="font_size12">
+                                    蓝贝尔汽车应急电源                                </p>
+                            </div>
+                        </a>
+                    </div>
+                                        <div class="col-xs-6">
+                        <a href="/index.php?v=show&cid=50&id=4" class="thumbnail box-and-title-img">
+                            <ins class="tuijian_ico">抢购</ins>
+                            <div class="imght">
+                                <img src=" http://demo3.wuzhicms.com/uploadfile/2016/04/08/201604081342026646.jpg" alt="苔原地带双人双层野营帐篷" >
+                            </div>
+                            <div class="caption height-hide97">
+                                <h4><strong class="color_warning font_size18">￥300</strong> <del class="color_999 font_size12">￥400</del></h4>
+                                <p class="font_size12">
+                                    苔原地带双人双层野营帐篷                                </p>
+                            </div>
+                        </a>
+                    </div>
+                                        <div class="col-xs-6">
+                        <a href="/index.php?v=show&cid=50&id=1" class="thumbnail box-and-title-img">
+                            <ins class="tuijian_ico">抢购</ins>
+                            <div class="imght">
+                                <img src=" http://demo3.wuzhicms.com/uploadfile/2016/03/31/201603311123467600.jpg" alt="3月15日至31日车游超级团购会，让您买车惠到底" >
+                            </div>
+                            <div class="caption height-hide97">
+                                <h4><strong class="color_warning font_size18">￥199.00</strong> <del class="color_999 font_size12">￥600.00</del></h4>
+                                <p class="font_size12">
+                                    3月15日至31日车游超级团购会，让您买车惠到底                                </p>
+                            </div>
+                        </a>
+                    </div>
+                                                                        
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="ad-box" style="margin-top: 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 120px; background: #ddd"><script  src="http://dev.wuzhicms.com/promote/5.js"></script></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 积分商城 -->
+<div class="container">
+    <div class="index-jifenmall-box">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="lanmu-content lanmu-content-bg">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=26&page=1" >积分商城</a>
+                    </h2>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="lanmu-content lanmu-content-bg-r">
+                    <h2 class="lanmu-title">
+                        <a href="/index.php?v=listing&cid=39&page=1" >热门兑换</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+                                                <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control">
+                        <a href="/index.php?v=show&cid=49&id=7"><img src="http://demo3.wuzhicms.com/uploadfile/2016/03/16/201603161144085935.jpg" alt="图片" ></a>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><strong>图片</strong><br>
+                            <span><strong class="color_success">555</strong> 积分       <strong class="color_qiyecheng">12.00</strong>元</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                                    <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control">
+                        <a href="/index.php?v=show&cid=49&id=13"><img src="http://demo3.wuzhicms.com/uploadfile/2016/03/16/201603161533166017.jpg" alt="短袖" ></a>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><strong>短袖</strong><br>
+                            <span><strong class="color_success">80</strong> 积分       <strong class="color_qiyecheng">65.00</strong>元</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                                    <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control">
+                        <a href="/index.php?v=show&cid=49&id=15"><img src="http://demo3.wuzhicms.com/uploadfile/2016/03/17/201603171804391443.jpg" alt="歌曲" ></a>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><strong>歌曲</strong><br>
+                            <span><strong class="color_success">500</strong> 积分   </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                        
+            <!--hot-duihuan-->
+                                                <div class="col-xs-3">
+                <div class="thumbnail">
+                    <div class="pic_Control">
+                        <a href="/index.php?v=show&cid=49&id=6"><img src="http://demo3.wuzhicms.com/uploadfile/2016/03/16/201603161142329395.jpg" alt="美图" ></a>
+                        <ins class="tuijian_ico">立即兑换</ins>
+                    </div>
+                    <div class="caption">
+                        <p class="titles manhangyichu"><strong>美图</strong><br>
+                            <span><strong class="color_success">1123</strong> 积分       <strong class="color_qiyecheng">50.00</strong>元</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                                </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="friend-link">
+                        <a href="http://www.wuzhicms.com" target="_blank">五指互联网站管理系统 </a>
+                <a href="http://bbs.wuzhicms.com" target="_blank">五指CMS论坛 </a>
+                <a href="http://sms.phpip.com/index.php?m=member" target="_blank">短信通 </a>
+                    </div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center  line_height2d0">
+                <p>联系电话：010-82463345 &nbsp; &nbsp;QQ:282198327 &nbsp;Email:zhw@wuzhicms.com</p> <br>
+                                                <a href="/index.php?v=listing&cid=52&page=1">公司介绍</a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                <a href="/index.php?v=listing&cid=53&page=1">联系我们</a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                <a href="/index.php?v=listing&cid=54&page=1">用户协议</a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                <a href="/index.php?v=listing&cid=55&page=1">法律声明</a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                <a href="/index.php?v=listing&cid=56&page=1">付款方式</a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                                                <a href="http://dev.wuzhicms.com/index.php?m=link">友情链接</a>
+                <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                <a href="http://dev.wuzhicms.com/index.php?m=affiche&f=index&v=listing">站点公告</a>
+                <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                <a href="http://dev.wuzhicms.com/index.php?m=feedback">问题反馈</a>
+                <br>
+                Copyright © 2015 北京五指互联科技有限公司 All Rights Reserved<br>京ICP备14036160号-1 <a href="http://www.wuzhicms.com" target="_blank">五指CMS提供技术支持</a> </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://dev.wuzhicms.com/res/t3/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="http://dev.wuzhicms.com/res/t3/js/ie10-viewport-bug-workaround.js"></script>
+
+<script src="http://dev.wuzhicms.com/res/t3/js/my.js"></script>
+<script src="http://dev.wuzhicms.com/res/t3/js/bootstrap-hover-dropdown.min.js"></script>
+<script type="text/javascript">
+    var _uid=getcookie('_uid');
+    if(_uid!=null) {
+        $("#mylogined").removeClass('hide');
+        $("#mylogin").addClass('hide');
+        var _username=decodeURI(getcookie('truename'));
+        $("#myname").html(_username);
+    }
+</script>
+</body>
+</html>
