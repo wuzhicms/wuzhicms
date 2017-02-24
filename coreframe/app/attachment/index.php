@@ -176,8 +176,23 @@ class index {
             $id = $r['id'];
             die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.ATTACHMENT_URL.$r['path'].'", "id" : "'.$id.'", "filename" : "'.$r['name'].'" }');
         } else {
+			$this->setting = get_cache('attachment');
+			$this->water_mark = $this->setting['watermark_enable'];
+			if($this->water_mark == true) {
+				$this->image = load_class('image');
+				$this->image->set_image(ATTACHMENT_ROOT.$insert['path']);
+				$this->image->createImageFromFile();
+				if($this->setting['watermark_enable']==2) {//文字水印
+					$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+				} else {//图片水印
+					$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+				}
+
+				$this->image->save();
+			}
             $attachment = load_class('attachment',M);
             $insert['md5file'] = $md5file;
+
             $id = $attachment->insert($insert);
 
             // Return Success JSON-RPC response
