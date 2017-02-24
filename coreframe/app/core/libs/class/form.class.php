@@ -170,7 +170,6 @@ class WUZHI_form {
 		$str = '';
 		if (!defined('PUPLOAD_INIT')) {
 			define('PUPLOAD_INIT', TRUE);
-			$str = '<script src="' . R . 'js/dialog/dialog-plus.js"></script>';
 			$str .= '<script type="text/javascript" src="' . R . 'js/json2.js"></script>';
 			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/plupload.full.min.js"></script>';
 			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js"></script>';

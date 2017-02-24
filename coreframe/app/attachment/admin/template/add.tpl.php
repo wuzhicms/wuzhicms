@@ -23,10 +23,17 @@ include $this->template('header','core');
 
 			<div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">批量上传附件</label>
-                <div class="col-lg-3 col-sm-4 col-xs-4 attaclist"><?php echo WUZHI_form::attachment('jpg|jpep|gif|png|txt|zip|rar|gzip|gz|doc|docx|xls|xlsx|ppt|pptx|mp4|mp3|pdf','100','files','', 'callback_more_dialog',0);?>
+                <div class="col-lg-8 col-sm-8 col-xs-8 attaclist">
+                    <div id="files"><ul id="files_ul"></ul></div>
+                    <?php echo WUZHI_form::attachment('jpg|gif|png','100','files','', 'callback_more_dialog',0);?>
                 </div>
-                <span class="help-block col-lg-10 col-sm-10 col-xs-10">支持格式：jpg，jpep，gif，png，txt，zip，rar，gzip，gz，doc，docx，xls，xlsx，ppt，pptx，mp4，mp3，pdf</span>
+
             </div>
+            <div class="form-group">
+                <div class="help-block" style="padding-left:20px; ">支持格式：jpg，gif，png</div>
+
+            </div>
+<!--            |txt|zip|rar|gzip|gz|doc|docx|xls|xlsx|ppt|pptx|mp4|mp3|pdf-->
 
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label"></label>
