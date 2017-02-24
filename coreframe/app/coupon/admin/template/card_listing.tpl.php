@@ -32,7 +32,7 @@
                             <td><?php echo date('Y-m-d',$r['endtime']);?></td>
                             <td>
                                 <a href="?m=coupon&f=card&v=bind_select_content&groupname=<?php echo $r['groupname'];?><?php echo $this->su();?>" class="btn btn-danger btn-xs">绑定套餐</a>
-                                <a href="?m=coupon&f=card&v=bind&groupname=<?php echo $r['groupname'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">套餐列表</a>
+<!--                                <a href="?m=coupon&f=card&v=bind&groupname=--><?php //echo $r['groupname'];?><!----><?php //echo $this->su();?><!--" class="btn btn-primary btn-xs">套餐列表</a>-->
                                 <a href="?m=coupon&f=card&v=detail_listing&groupname=<?php echo $r['groupname'];?><?php echo $this->su();?>" class="btn btn-default btn-xs">优惠券列表</a>
                                 <a href="?m=coupon&f=card&v=add&groupname=<?php echo $r['groupname'];?><?php echo $this->su();?>" class="btn btn-default btn-xs"><i class="icon-plus btn-icon"></i>新增该批次优惠券</a>
 

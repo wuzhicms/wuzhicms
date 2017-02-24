@@ -2802,6 +2802,7 @@ INSERT INTO `wz_copyfrom` (`fromid`, `name`, `url`, `logo`, `usetimes`, `updatet
 DROP TABLE IF EXISTS `wz_coupon_card`;
 CREATE TABLE `wz_coupon_card` (
   `cardid` int(10) UNSIGNED NOT NULL,
+  `groupname` varchar(10) NOT NULL COMMENT '自定义批号',
   `card_no` varchar(30) NOT NULL COMMENT '优惠券号',
   `title` varchar(80) NOT NULL,
   `remark` varchar(80) NOT NULL COMMENT '限制说明',
@@ -2815,7 +2816,8 @@ CREATE TABLE `wz_coupon_card` (
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 未分发，1 已分发，2 已激活，3已使用',
   `admin_note` varchar(255) NOT NULL COMMENT '管理员备注',
   `batchid` varchar(13) NOT NULL COMMENT '生成批次',
-  `url` varchar(150) NOT NULL
+  `url` varchar(150) NOT NULL,
+  `password` varchar(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
