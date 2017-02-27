@@ -20,7 +20,15 @@
             <div  class="content-p">
                 {$content}
             </div>
-
+            {if $content_pages}
+            <div style="text-align:center;">
+                <nav style="text-align: center;">
+                    <ul class="pagination">
+                        {$content_pages}
+                    </ul>
+                </nav>
+            </div>
+            {/if}
             <hr>
             <div class="before-and-next">
                 <div class="row">
