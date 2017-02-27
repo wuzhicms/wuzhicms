@@ -50,9 +50,9 @@
                                             {if $r['status']==0}<span class="label label-default">已删除</span>{elseif $r['status']==9}<span class="label label-primary">审核通过</span>{else}<span class="label label-danger">待审核</span>{/if}
                                         </td>
                                         <td class="project-actions">
-                                            <a href="?m=content&f=postinfo&v=edit&cid={$r['cid']}&id={$r['id']}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 编辑 </a>
+                                            <a href="?m=content&f=postinfo&v=edit&cid={$r['cid']}&id={$r['id']}&set_iframe={$set_iframe}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 编辑 </a>
                                             {if $r['status']!=0}
-                                            <a href="?m=content&f=postinfo&v=delinfo&cid={$r['cid']}&id={$r['id']}" class="btn btn-white btn-sm"><i class="fa fa-recycle"></i> 删除 </a>{/if}
+                                            <a href="?m=content&f=postinfo&v=delinfo&cid={$r['cid']}&id={$r['id']}&set_iframe={$set_iframe}" class="btn btn-white btn-sm"><i class="fa fa-recycle"></i> 删除 </a>{/if}
                                         </td>
                                     </tr>
                                     {/loop}

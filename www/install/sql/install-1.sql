@@ -8771,7 +8771,8 @@ INSERT INTO `wz_setting` (`id`, `keyid`, `m`, `f`, `v`, `title`, `data`, `update
 (32, 'cy_appid', 'global_vars', '', '', '畅言appid', 'cyrKWBFTI', '2016-04-07 08:00:45'),
 (33, 'cy_key', 'global_vars', '', '', '畅言appid_key', 'prod_51cde46e252516e5a1da7093b8db4c12', '2016-04-07 08:10:10'),
 (34, 'cache_all', 'core', 'cache_global_vars', 'cache_all', '', '自定义全局变量', '2016-04-11 00:58:06'),
-(35, 'cache_all', 'content', 'block_cache', 'cache_all', '', '推荐位', '2016-04-11 01:51:52');
+(35, 'cache_all', 'content', 'block_cache', 'cache_all', '', '推荐位', '2016-04-11 01:51:52'),
+(69, 'member_tips', 'global_vars', '', '', '会员中心投稿提示', '投稿之后，我们会在24小时之内审批，如需加急审批，请拨打电话：010-00000000', '2017-02-27 05:06:46');
 
 -- --------------------------------------------------------
 
