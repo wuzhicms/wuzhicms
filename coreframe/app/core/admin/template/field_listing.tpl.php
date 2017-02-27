@@ -44,7 +44,7 @@ $submenuid = $menu_r['menuid'];
                                         <td><?php if($r[ 'ban_field']) echo '√';else echo 'x';?></td>
                                         <td><?php if($r[ 'minlength']) echo '√';else echo 'x';?></td>
                                         <td><?php if($r[ 'to_fulltext']) echo '√';else echo 'x';?></td>
-                                        <td><?php if($r[ 'ban_contribute']) echo 'x';else echo '√';?></td>
+                                        <td><?php if($r[ 'ban_contribute']) echo '√';else echo 'x';?></td>
 
                                         <td>
 
@@ -61,9 +61,13 @@ $submenuid = $menu_r['menuid'];
                                                    class="btn btn-default btn-xs" title="点击禁用">使用中</a>
                                                 <?php
                                             }?>
+                                            <?php if(!$r[ 'ban_field']) {
+?>
+                                                <a href="javascript:makedo('?m=core&f=model&v=field_delete&id=<?php echo $r['id'];?>&app=<?php echo $m;?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>', '确认删除该记录？')"
+                                                    class="btn btn-danger btn-xs">删除</a>
+                                            <?php
+                                            }?>
 
-                                            <a href="javascript:makedo('?m=core&f=model&v=field_delete&id=<?php echo $r['id'];?>&app=<?php echo $m;?>&modelid=<?php echo $r['modelid'];?><?php echo $this->su();?>', '确认删除该记录？')"
-                                               class="btn btn-danger btn-xs">删除</a>
 
                                         </td>
                                     </tr>
