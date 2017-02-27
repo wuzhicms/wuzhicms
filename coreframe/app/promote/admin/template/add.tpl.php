@@ -63,13 +63,13 @@ $submenuid = $menu_r['menuid'];
             <div class="form-group" id="url_div">
                 <label class="col-sm-2 col-xs-4 control-label">上线时间</label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <div class="input-group"><?php echo WUZHI_form::calendar('starttime',$GLOBALS['starttime'],1);?></div>
+                    <div class="input-group"><?php echo WUZHI_form::calendar('starttime',date('Y-m-d 00:00:00'),1);?></div>
                 </div>
             </div>
             <div class="form-group" id="url_div">
                 <label class="col-sm-2 col-xs-4 control-label">下线时间</label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <div class="input-group"><?php echo WUZHI_form::calendar('endtime',$GLOBALS['endtime'],1);?></div>
+                    <div class="input-group"><?php echo WUZHI_form::calendar('endtime',date('Y-m-d 23:59:59',SYS_TIME+86400*365),1);?></div>
                 </div>
             </div>
             <div class="form-group">
