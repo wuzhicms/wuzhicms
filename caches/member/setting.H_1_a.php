@@ -6,54 +6,6 @@
   'checkuser' => '0',
   'invite' => '0',
   'inviteprice' => '10',
-  'invitenum' => 
-  array (
-    1 => 
-    array (
-      'free' => '1',
-      'buy' => '2',
-    ),
-    2 => 
-    array (
-      'free' => '3',
-      'buy' => '4',
-    ),
-    3 => 
-    array (
-      'free' => '5',
-      'buy' => '6',
-    ),
-    6 => 
-    array (
-      'free' => '',
-      'buy' => '',
-    ),
-    7 => 
-    array (
-      'free' => '',
-      'buy' => '',
-    ),
-    8 => 
-    array (
-      'free' => '',
-      'buy' => '',
-    ),
-    9 => 
-    array (
-      'free' => '',
-      'buy' => '',
-    ),
-    4 => 
-    array (
-      'free' => '',
-      'buy' => '',
-    ),
-    5 => 
-    array (
-      'free' => '',
-      'buy' => '',
-    ),
-  ),
   'points' => '10',
   'showprotocol' => '0',
   'protocol' => '重要须知：
@@ -102,7 +54,7 @@
   'discuz_dbtablepre' => '',
   'uc_dbcharset' => 'gbk',
   'qq_appid' => '101164321',
-  'qq_appkey' => '57fc75d43a6b5208320dec0b5986a395',
+  'qq_appkey' => '',
   'sina_key' => '',
   'sina_secret' => '',
   'weixin_key' => '',
