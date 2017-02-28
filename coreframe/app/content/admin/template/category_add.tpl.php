@@ -260,6 +260,9 @@ include $this->template('header','core');
             </section>
         </div>
     </div>
+    <div class="alert alert-success fade in">
+        <strong>重要提示:</strong> 栏目访问权限，投稿配置，请移步至：管理会员-<a href="?m=member&f=group&v=listing<?php echo $this->su();?>&_menuid=86" target="_blank">会员组管理</a>-权限访问设置
+    </div>
     <!-- page end-->
 </section>
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
