@@ -3314,7 +3314,8 @@ CREATE TABLE `wz_linkage_data` (
   `initial` varchar(1) NOT NULL,
   `letter` varchar(30) NOT NULL,
   `thumb` varchar(150) NOT NULL,
-  `pictures` text NOT NULL
+  `pictures` text NOT NULL,
+  `isgroup` tinyint(1) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

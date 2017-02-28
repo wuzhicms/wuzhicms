@@ -23,3 +23,7 @@ $fields_arr = $db->get_fields('coupon_card');
 if(!in_array('groupname',$fields_arr)) {
 	$db->query("ALTER TABLE `wz_coupon_card` ADD `groupname` VARCHAR(10) NOT NULL");
 }
+$fields_arr = $db->get_fields('linkage_data');
+if(!in_array('isgroup',$fields_arr)) {
+	$db->query("ALTER TABLE `wz_linkage_data` ADD `isgroup` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0'");
+}
