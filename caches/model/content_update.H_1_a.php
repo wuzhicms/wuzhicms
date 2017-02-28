@@ -102,7 +102,10 @@ private function block($filed, $value) {
 		$py = $pinyin->return_py($tag);
 		$tag_info['pinyin'] = $py['pinyin'];
 		$tag_info['letter'] = $py['letter'];
-
+		$check_tag = $this->db->get_one('tag', array('pinyin' => $tag_info['pinyin']));
+		if($check_tag) {
+			$tag_info['pinyin'] = $check_tag['pinyin'].'-'.$tid;
+		}
 		$tag_class = load_class('tags','tags');
 		$param = array(
 			'pinyin'=>$tag_info['pinyin'],

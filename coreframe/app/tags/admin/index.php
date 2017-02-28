@@ -70,13 +70,15 @@ class index extends WUZHI_admin {
 			{
 				$tag_info['addtime'] = SYS_TIME;
 				$tag_info['number'] = 0;
-			} 
+			}
+			$check_tag = false;
 			if(empty($tag_info['pinyin']) || output($GLOBALS,'is_edit') == 1)
 			{
 				$pinyin = load_class('pinyin');
 				$py = $pinyin->return_py($tag_info['tag']);
 				$tag_info['pinyin'] = $py['pinyin'];
 				$tag_info['letter'] = $py['letter'];
+				$check_tag = $this->db->get_one('tag', array('pinyin' => $tag_info['pinyin']));
 			}
 			else
 			{
@@ -85,7 +87,13 @@ class index extends WUZHI_admin {
 			//调用url处理方法
 			if(empty($tag_info['url']) || output($GLOBALS,'is_edit') == 1)
 			{
-				if(!$tid) $tagid = $this->db->insert('tag',$tag_info);
+				if(!$tid) {
+					$tagid = $this->db->insert('tag',$tag_info);
+					if($check_tag) {
+						$pinyin = $check_tag['pinyin'].'-'.$tagid;
+						$this->db->update('tag', array('pinyin'=>$pinyin), array('tid' => $tagid));
+					}
+				}
 				$tag_class = load_class('tags',M);
 				$param = array(
 					'pinyin'=>$tag_info['pinyin'],
