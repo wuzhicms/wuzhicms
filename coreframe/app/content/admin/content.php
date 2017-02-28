@@ -920,7 +920,7 @@ class content extends WUZHI_admin {
             }
         } elseif($status==7) {//退稿
             $message_api = load_class('message_api','message');
-            $message_api->send_sys($r['publisher'],'很遗憾,您的信息未通过审核' ,$r['title'].' <a href="index.php?m=content&f=postinfo&v=edit&cid='.$r['cid'].'&id=1" target="_blank">点击修改</a>');
+            $message_api->send_sys($r['publisher'],'很遗憾,您的信息未通过审核' ,$r['title'].' <a href="index.php?m=content&f=postinfo&v=edit&cid='.$r['cid'].'&id='.$id.'" target="_blank">点击修改</a>');
         }
         $this->db->update($master_table,array('status'=>$status),array('id'=>$id));
         //更新推荐位状态

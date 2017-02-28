@@ -26,10 +26,15 @@
                     <?php
                     foreach($result AS $r) {
                         $mr = $this->db->get_one('member', array('uid' => $r['touid']));
+                        if($r['username']) {
+                            $username = $r['username'];
+                        } else {
+                            $username = '系统消息';
+                        }
                         ?>
                         <tr>
                             <td><?php echo $r['id'];?></td>
-                            <td><?php echo $r['username'];?></td>
+                            <td><?php echo $username;?></td>
                             <td><?php echo $mr['username'];?></td>
                             <td><?php echo $r['content'];?></td>
                             <td><?php echo time_format($r['addtime']);?></td>
