@@ -86,7 +86,11 @@ foreach($lists AS $k=>$v)
                     </div>
                 </div>
             </div>
+			<div class="alert alert-success fade in">
+				<strong>重要提示:</strong> 上传的所有文件会后，会自动建立md5file，即，您上传重复文件不会保存多份。
+			</div>
         </div>
+
 </div>
 </section>
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
