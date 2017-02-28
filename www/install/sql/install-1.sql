@@ -8850,8 +8850,8 @@ CREATE TABLE `wz_site` (
 -- 转存表中的数据 `wz_site`
 --
 
-INSERT INTO `wz_site` (`siteid`, `name`, `logo`, `url`) VALUES
-(1, '默认站点', '/res/images/userimg.jpg', 'http://dev.wuzhicms.com/');
+INSERT INTO `wz_site` (`siteid`, `name`, `logo`, `url`,`setting`) VALUES
+(1, '默认站点', '/res/images/userimg.jpg', 'http://dev.wuzhicms.com/','a:10:{s:8:"sitename";s:33:"五指CMS网站内容管理系统";s:12:"seo_keywords";s:52:"五指CMS网站内容管理系统,cms,wuzhicms系统";s:15:"seo_description";s:33:"五指CMS网站内容管理系统";s:4:"logo";s:25:"/res/images/head_logo.png";s:5:"logo2";s:25:"/res/t3/image/logo_ov.png";s:9:"copyright";s:100:"Copyright © 2017 北京五指互联科技有限公司 All Rights Reserved<br>京ICP备14036160号-1";s:8:"statcode";s:0:"";s:16:"access_authority";s:1:"0";s:5:"close";s:1:"0";s:12:"close_reason";s:36:"站点升级中，请稍后访问！";}');
 
 -- --------------------------------------------------------
 

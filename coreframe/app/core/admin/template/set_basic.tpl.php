@@ -3,6 +3,9 @@
 include $this->template('header','core');
 ?>
 <body class="body pxgridsbody">
+<style>
+    .transparent img{background-color: #0093D8;}
+</style>
 <section class="wrapper">
 <div class="row">
 <div class="col-lg-12">
@@ -44,7 +47,12 @@ include $this->template('header','core');
                     <div class="input-group"><?php echo WUZHI_form::attachment('','1','form[logo]',output($setting,'logo'));?></div>
                 </div>
             </div>
-
+            <div class="form-group">
+                <label class="col-sm-2 col-xs-4 control-label">透明logo</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+                    <div class="input-group transparent"><?php echo WUZHI_form::attachment('','1','form[logo2]',output($setting,'logo2'));?></div>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">版权信息</label>
                 <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
