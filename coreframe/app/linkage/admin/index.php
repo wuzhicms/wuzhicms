@@ -64,7 +64,8 @@ class index extends WUZHI_admin {
             foreach($names as $name) {
                 $formdata['name'] = trim(remove_xss($name));
                 $py = $pinyin->return_py($formdata['name']);
-                $formdata['initial'] = strtoupper($py['pinyin']);
+                $formdata['initial'] = strtolower($py['pinyin']);
+				
                 $formdata['thumb'] = strip_tags($GLOBALS['form']['thumb']);
                 $formdata['pictures'] = array2string($GLOBALS['form']['pictures']);
                 $this->db->insert('linkage_data',$formdata);
