@@ -250,6 +250,7 @@ class block extends WUZHI_admin {
             if(!is_dir($webroot)) @mkdir($webroot, 0777, true);
             foreach($GLOBALS['blockids'] as $blockid) {
                 $r = $this->db->get_one('block',array('blockid'=>$blockid));
+				$r['code'] = stripslashes($r['code']);
                 $code = $template->template_parse($r['code']);
                 $cache_path = CACHE_ROOT.'templates/default/block/';
                 if(!is_dir($cache_path)) @mkdir($cache_path, 0777, true);
