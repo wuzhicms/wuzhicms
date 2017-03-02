@@ -190,6 +190,10 @@ class index extends WUZHI_admin {
      */
     public function delete_item() {
         $lid = intval($GLOBALS['lid']);
+		$data = $this->db->get_one('linkage_data', array('lid'=>$lid));
+		if($data) {
+			set_cache('linkage_'.$data['linkageid'],array(),'linkage');
+		}
         $this->db->delete('linkage_data',array('lid'=>$lid));
         $this->delete_child($lid);
         MSG(L('delete success'),HTTP_REFERER,1500);

@@ -11,7 +11,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
  */
 class index{
     private $siteconfigs;
-	public function __construct() 
+	public function __construct()
 	{
         //$this->siteconfigs = get_cache('siteconfigs');
 		$this->_cache = get_cache(M);
@@ -34,7 +34,7 @@ class index{
      * 内容页面
      * url规则 /index.php?m=tags&f=index&v=show&tid=2,tid=id/pinyin/tag/其中一个
      */
-    public function show() 
+    public function show()
 	{
         $siteconfigs = $this->siteconfigs;
 		$page = max( 1,output($GLOBALS,'page') );
@@ -72,7 +72,7 @@ class index{
     /**
      * 首字母列表 /index.php?m=tags&f=index&v=letter&letter=A
      */
-    public function letter() 
+    public function letter()
 	{
         $letter = isset($GLOBALS['letter']) ? substr($GLOBALS['letter'],0,1) : MSG(L('parameter_error'));
 		$page = max( 1,output($GLOBALS,'page') );
@@ -85,7 +85,7 @@ class index{
  * @author tuzwu
  * @createtime
  * @modifytime
- * @param	
+ * @param
  * @return
  */
 	public function ajax_auto_complete()
