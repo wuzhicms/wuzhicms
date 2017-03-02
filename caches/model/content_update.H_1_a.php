@@ -64,34 +64,34 @@ private function block($filed, $value) {
 }
 
 	private function keyword($field, $value) {
-        if($value=='') return '';
+		if($value=='') return '';
 		$data = array();
-        if(strpos($value,',')===false) {
-		    $data = explode(' ', $value);
-        } else {
-            $data = explode(',', $value);
-        }
-        foreach ($data as $v) {
-            $v = sql_replace($v);
-            $v = str_replace(array('/','#','.'),'',$v);
+		if(strpos($value,',')===false) {
+			$data = explode(' ', $value);
+		} else {
+			$data = explode(',', $value);
+		}
+		foreach ($data as $v) {
+			$v = sql_replace($v);
+			$v = str_replace(array('/','#','.'),'',$v);
 			$tag_info = $this->db->get_one('tag',array('tag'=>$v),'tid');
-            if ( empty($tag_info) ) 
+			if ( empty($tag_info) )
 			{
-                $tid = $this->db->insert('tag',array('tag'=>$v,'addtime'=>SYS_TIME));
+				$tid = $this->db->insert('tag',array('tag'=>$v,'addtime'=>SYS_TIME));
 				$this->keyword_pro($v,$tid);
-            }
-			else 
+			}
+			else
 			{
-			    $tid = $tag_info['tid'];
-            }
-            $id = $this->id;
+				$tid = $tag_info['tid'];
+			}
+			$id = $this->id;
 			$exists_where = array('tid'=>$tid, 'modelid'=>$this->modelid, 'cid'=>$this->cid, 'id'=>$id);
-            if (!$this->db->get_one('tag_data',$exists_where)) 
+			if (!$this->db->get_one('tag_data',$exists_where))
 			{
-                $this->db->insert('tag_data',$exists_where);
+				$this->db->insert('tag_data',$exists_where);
 				$this->db->update('tag',"`number`=(`number`+1)", array('tid'=>$tid));
-            }
-        }
+			}
+		}
 	}
 
 	private function keyword_pro($tag = '', $tid = '')

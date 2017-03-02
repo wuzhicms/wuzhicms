@@ -621,7 +621,7 @@
     'ban_field' => '1',
     'location' => '5',
     'search_field' => '0',
-    'ban_contribute' => '0',
+    'ban_contribute' => '1',
     'to_fulltext' => '1',
     'to_block' => '1',
     'sort' => '2',
