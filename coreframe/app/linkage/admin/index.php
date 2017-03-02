@@ -65,7 +65,7 @@ class index extends WUZHI_admin {
                 $formdata['name'] = trim(remove_xss($name));
                 $py = $pinyin->return_py($formdata['name']);
                 $formdata['initial'] = strtolower($py['pinyin']);
-				
+
                 $formdata['thumb'] = strip_tags($GLOBALS['form']['thumb']);
                 $formdata['pictures'] = array2string($GLOBALS['form']['pictures']);
                 $this->db->insert('linkage_data',$formdata);
@@ -73,6 +73,8 @@ class index extends WUZHI_admin {
             if($formdata['pid']) {
                 $this->db->update('linkage_data',array('child'=>1),array('lid'=>$formdata['pid']));
             }
+			set_cache('linkage_'.$formdata['linkageid'],array(),'linkage');
+
             MSG(L('operation success'),'?m=linkage&f=index&v=item_listing&linkageid='.$formdata['linkageid'].'&pid='.$formdata['pid'].$this->su());
         } else {
             $show_formjs = 1;
@@ -143,6 +145,10 @@ class index extends WUZHI_admin {
                 $n = intval($n);
                 $this->db->update('linkage_data',array('sort'=>$n),array('lid'=>$cid));
             }
+			$data = $this->db->get_one('linkage_data', array('lid'=>$cid));
+			if($data) {
+				set_cache('linkage_'.$data['linkageid'],array(),'linkage');
+			}
             MSG(L('operation success'),HTTP_REFERER);
         } else {
             MSG(L('operation failure'));
@@ -234,7 +240,10 @@ class index extends WUZHI_admin {
                 $data = '<?php' . "\r\n return " . array2string($data) . '?>';
                 file_put_contents(WWW_ROOT.'configs/city_config.php', $data);
 			}
-            MSG(L('operation success'),$forward);
+			$data2 = $this->db->get_one('linkage_data',array('lid'=>$lid));
+
+			set_cache('linkage_'.$data2['linkageid'],array(),'linkage');
+			MSG(L('operation success'),$forward);
         } else {
             $show_formjs = 1;
             $r = $this->db->get_one('linkage_data',array('lid'=>$lid));
