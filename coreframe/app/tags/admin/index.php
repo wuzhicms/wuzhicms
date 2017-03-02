@@ -30,11 +30,7 @@ class index extends WUZHI_admin {
 		$page = isset($GLOBALS['page'])  ? intval($GLOBALS['page']) : 1;
 		$lists = $this->db->get_list('tag',$where,'*', 0, $pagesize, $page, $this->order_by);
 		$pages = $this->db->pages;
-        $linkage = $this->db->get_list('linkage', '', 'name,linkageid', 0, 100, '',"linkageid ASC", '', 'linkageid');
-        foreach($linkage AS $k=>$v)
-        {
-            $linkage[$k] = $v['name'];
-        }
+        $linkage_data = $this->db->get_list('linkage_data', array('linkageid'=>$this->_cache['linkage']), 'name,lid', 0, 100, '',"lid ASC", '', 'lid');
         include $this->template(V,M);
 	}
 
@@ -388,7 +384,7 @@ class index extends WUZHI_admin {
 		$where = '';
 		$GLOBALS['start'] = isset($GLOBALS['start']) ? remove_xss($GLOBALS['start']) : '';
 		$GLOBALS['end'] = isset($GLOBALS['end']) ? remove_xss($GLOBALS['end']) : '';
-		$GLOBALS['linkage'] = isset($GLOBALS['linkage']) ? sql_replace($GLOBALS['linkage']) : '';
+		$GLOBALS['linkageid'] = isset($GLOBALS['linkageid']) ? sql_replace($GLOBALS['linkageid']) : '';
 		$GLOBALS['tags'] = isset($GLOBALS['tags']) ? sql_replace( $GLOBALS['tags'] ) : '';
 		$GLOBALS['order'] = isset($GLOBALS['order']) ? intval( $GLOBALS['order'] ) : '0';
 		
@@ -410,9 +406,9 @@ class index extends WUZHI_admin {
 			$where .= " and `addtime` BETWEEN '$where_start_time' AND '$where_end_time' ";
 		}
 
-		if( $GLOBALS['linkage'] )
+		if( $GLOBALS['linkageid'] )
 		{
-			$where .= ' and linkage = "'.$GLOBALS['linkage'].'" ';
+			$where .= ' and linkageid = "'.$GLOBALS['linkageid'].'" ';
 		}
 
 		if( $GLOBALS['tags'] )

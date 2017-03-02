@@ -21,8 +21,8 @@ div#wz_linkage{display: inline;}
 		<input type="hidden" name="dosearch" value="1" />
 		创建时间<?php echo WUZHI_form::calendar('start',$GLOBALS['start'],1);?> - <?php echo WUZHI_form::calendar('end',$GLOBALS['end'],1);?>
 		&nbsp;Tag <input type="text" size="12" value="<?php echo $GLOBALS['tags'];?>" name="tags">
-		&nbsp;
-            <div class="input-group"><?php echo linkage(output($this->_cache,'linkage'),'linkage');?></div>
+		&nbsp;<?php echo $GLOBALS['linkageid'];?>
+            <div class="input-group"><?php echo linkage(output($this->_cache,'linkage'),'linkageid',1,'',array(0,$GLOBALS['linkageid']));?></div>
             <div class="input-group"><?php
 		$options['0'] = '排序规则';
 		$options['1'] = '使用从大到小';
@@ -62,7 +62,7 @@ foreach($lists AS $k=>$v)
 	  <td><?php echo $v['number'];?></td>
       <td><?php echo time_format($v['addtime']);?></td>
       <td><span class="label btn-default label-mini"><?php echo $v['pinyin'];?></span></td>
-	  <td><span class="label btn-default label-mini"><?php echo $v['linkage'];?></span></td>
+	  <td><span class="label btn-default label-mini"><?php echo $linkage_data[$v['linkageid']]['name'];?></span></td>
       <td>
 <a href="<?php echo link_url( array('v'=>'html','tid'=>$v['tid']) );?>" class="btn btn-info btn-xs"><?php echo L('create_html');?></a>
 <a href="<?php echo link_url( array('v'=>'add','tid'=>$v['tid']) );?>" class="btn btn-primary btn-xs"><?php echo L('edit');?></a>

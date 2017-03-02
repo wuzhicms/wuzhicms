@@ -11,7 +11,6 @@ include $this->template('header','core');
 <?php echo $this->menu($GLOBALS['_menuid']);?>
 </header>
 
-
 <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
 		<div class="form-group">
@@ -53,7 +52,7 @@ include $this->template('header','core');
 			<div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label"><?php echo L('tag_type');?></label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <?php echo linkage(output($this->_cache,'linkage'),'tag[linkage]');?>
+                    <?php echo linkage(output($this->_cache,'linkage'),'tag[linkageid]',1,'',array(0,$tag_info['linkageid']));?>
                 </div>
             </div>
 

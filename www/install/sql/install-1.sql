@@ -6614,6 +6614,9 @@ INSERT INTO `wz_linkage_data` (`lid`, `linkageid`, `name`, `pid`, `child`, `sort
   (3364, 1, '香港', 34, 1, 0, NULL, 'x', '', '', ''),
   (3365, 1, '澳门', 35, 1, 0, NULL, 'a', '', '', '');
 
+INSERT INTO `wz_linkage_data` (`lid`, `linkageid`, `name`, `pid`, `child`, `sort`, `remark`, `initial`, `letter`, `thumb`, `pictures`, `isgroup`) VALUES
+  (3366, 2, '默认分类', 0, 0, 0, '', 'm', '', '', '', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -8887,7 +8890,7 @@ CREATE TABLE `wz_tag` (
   `pinyin` varchar(50) NOT NULL COMMENT '拼音',
   `letter` char(1) NOT NULL COMMENT '首字母',
   `url` varchar(100) NOT NULL COMMENT 'url地址',
-  `linkage` smallint(5) UNSIGNED NOT NULL COMMENT '类别',
+  `linkageid` smallint(5) UNSIGNED NOT NULL COMMENT '类别',
   `addtime` int(10) UNSIGNED NOT NULL COMMENT '添加时间'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='tag';
 
