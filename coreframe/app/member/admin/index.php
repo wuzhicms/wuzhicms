@@ -461,13 +461,7 @@ if(is_array($this->group)){
 			}
 			MSG( L('operation_success'), HTTP_REFERER, 3000);
 		}else{
-			$setting = $this->db->get_one('setting', 'keyid="setting" AND m="member"', 'data');
-			if($setting){
-				$setting = unserialize($setting['data']);
-                set_cache('setting', $setting, M);
-			}else{
-				$setting = array();
-			}
+			$setting = get_cache('setting', M);
 			$group = $this->group;
 			include $this->template('setting',M);
 		}
