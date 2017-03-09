@@ -361,9 +361,7 @@ class index extends WUZHI_admin {
 			 load_class('form');
 			 load_function('template');
 			 $templates = select_template(M);
-			 $setting = &$this->_cache;
-
-			 if(empty($setting)) $setting = cache_in_db('', V, M);
+			 $setting = cache_in_db('', V, M);
 			 $linkage = $this->db->get_list('linkage', '', 'name,linkageid', 0, 100, '',"linkageid ASC", '', 'linkageid');
 			 foreach($linkage AS $k=>$v)
 			 {
