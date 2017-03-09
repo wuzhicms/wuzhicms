@@ -115,7 +115,14 @@ class WUZHI_build_package
 				echo " 忽略升级文件：{$opFile}\n";
 				continue;
 			}
-
+			if (strpos($opFile, 'bin/build.php') === 0) {
+				echo " 忽略打包文件：{$opFile}\n";
+				continue;
+			}
+			if (strpos($opFile, 'www/favicon.ico') === 0) {
+				echo " 忽略默认icon文件：{$opFile}\n";
+				continue;
+			}
 
             $this->insterCopyFile($opFile, $packageDirectory);
 
