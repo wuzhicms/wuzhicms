@@ -7486,7 +7486,6 @@ INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `
   (94, 57, '添加推荐位', 'content', 'block', 'add', '', 0, 1, 0),
   (96, 95, '重建TAGS', 'tags', 'index', 'create', '', 2, 1, 0),
   (97, 95, '导入TAGS', 'tags', 'index', 'import', '', 2, 1, 0),
-  (98, 95, '批量静态化', 'tags', 'index', 'html', '', 2, 1, 0),
   (99, 95, '模块设置', 'tags', 'index', 'set', '', 2, 1, 0),
   (101, 95, '添加TAGS', 'tags', 'index', 'add', '', 1, 1, 0),
   (102, 3, '批量更新', 'content', 'createhtml', 'listing', '', 6, 1, 0),

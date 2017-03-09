@@ -64,7 +64,7 @@ foreach($lists AS $k=>$v)
       <td><span class="label btn-default label-mini"><?php echo $v['pinyin'];?></span></td>
 	  <td><span class="label btn-default label-mini"><?php echo $linkage_data[$v['linkageid']]['name'];?></span></td>
       <td>
-<a href="<?php echo link_url( array('v'=>'html','tid'=>$v['tid']) );?>" class="btn btn-info btn-xs"><?php echo L('create_html');?></a>
+<!--<a href="--><?php //echo link_url( array('v'=>'html','tid'=>$v['tid']) );?><!--" class="btn btn-info btn-xs">--><?php //echo L('create_html');?><!--</a>-->
 <a href="<?php echo link_url( array('v'=>'add','tid'=>$v['tid']) );?>" class="btn btn-primary btn-xs"><?php echo L('edit');?></a>
 <a href="javascript:makedo('<?php echo link_url( array('v'=>'del','tid'=>$v['tid']) );?>', '<?php echo L('confirm_del');?>')" class="btn btn-danger btn-xs"><?php echo L('del');?></a>
       </td>
