@@ -31,8 +31,8 @@ class WUZHI_form {
 				//$str .= '<script type="text/javascript">';
 				//$str .= 'window.UEDITOR_HOME_URL="'.R.'js/ueditor/";';
 				//$str .= '</script>';
-				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
-				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js"></script>';
+				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js?'.VERSION.'"></script>';
+				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js?'.VERSION.'"></script>';
 			}
 
 			$str .= '<script type="text/javascript">';
@@ -65,7 +65,7 @@ class WUZHI_form {
 				define('CKEDITOR', TRUE);
 				$ck_ext_token = md5('jpg|png|gif'._KEY);
 				$str .= '<script type="text/javascript">var ck_ext_token="'.$ck_ext_token.'";</script>';
-				$str .= '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
+				$str .= '<script src="' . R . 'js/ckeditor/ckeditor.js?'.VERSION.'"></script>';
 			}
 			if($area_load==0) {
 				$str .= '<textarea name="'.$name.'" id="'.$editname.'" rows="3">'.$value.'</textarea>';
@@ -135,7 +135,7 @@ class WUZHI_form {
 			$str = '';
 			$str .= '<script type="text/javascript" src="' . R . 'js/json2.js"></script>';
 			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/plupload.full.min.js"></script>';
-			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js"></script>';
+			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js?'.VERSION.'"></script>';
 		}
 		echo $str;
 		include T('attachment', 'upload', 'default');
@@ -172,7 +172,7 @@ class WUZHI_form {
 			define('PUPLOAD_INIT', TRUE);
 			$str .= '<script type="text/javascript" src="' . R . 'js/json2.js"></script>';
 			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/plupload.full.min.js"></script>';
-			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js"></script>';
+			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js?'.VERSION.'"></script>';
 		}
 		$limit = $limit ? $limit : 1;
 		if ($is_thumb) $limit = 1;

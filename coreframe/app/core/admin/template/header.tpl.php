@@ -14,14 +14,14 @@
     <meta name="description" content="" />
     <meta name="author" content="wuzhicms.cn,Pixel grid studio" />
     <title>五指互联网站内容管理系统</title>
-    <link href="<?php echo R;?>css/bootstrap.min.css" rel="stylesheet" />
-    <link href="<?php echo R;?>css/bootstrapreset.css" rel="stylesheet" />
-    <link href="<?php echo R;?>css/pxgridsicons.min.css" rel="stylesheet" />
-    <link href="<?php echo R;?>css/style.css" rel="stylesheet" />
-    <link href="<?php echo R;?>css/responsive.css" rel="stylesheet" media="screen"/>
-    <link href="<?php echo R;?>css/animation.css" rel="stylesheet" />
+    <link href="<?php echo R;?>css/bootstrap.min.css?<?php echo VERSION;?>" rel="stylesheet" />
+    <link href="<?php echo R;?>css/bootstrapreset.css?<?php echo VERSION;?>" rel="stylesheet" />
+    <link href="<?php echo R;?>css/pxgridsicons.min.css?<?php echo VERSION;?>" rel="stylesheet" />
+    <link href="<?php echo R;?>css/style.css?<?php echo VERSION;?>" rel="stylesheet" />
+    <link href="<?php echo R;?>css/responsive.css?<?php echo VERSION;?>" rel="stylesheet" media="screen"/>
+    <link href="<?php echo R;?>css/animation.css?<?php echo VERSION;?>" rel="stylesheet" />
     <script src="<?php echo R;?>js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="<?php echo R;?>js/jquery.min.js"></script>
+    <script src="<?php echo R;?>js/jquery.min.js?<?php echo VERSION;?>"></script>
     <script type="text/javascript">
         var cookie_pre = "<?php echo COOKIE_PRE;?>";var cookie_domain = '<?php echo COOKIE_DOMAIN;?>';var cookie_path = '<?php echo COOKIE_PATH;?>';var web_url = '<?php echo WEBURL;?>';
         <?php if(!isset($set_iframe_url)) {
@@ -30,21 +30,21 @@
             echo 'var set_iframe_url = false;';
         }?>
     </script>
-    <script src="<?php echo R;?>js/base.js"></script>
-    <script src="<?php echo R;?>js/wuzhicms.js"></script>
-    <script src="<?php echo R;?>js/jquery-easing.js"></script>
-    <script src="<?php echo R;?>js/responsivenav.js"></script>
+    <script src="<?php echo R;?>js/base.js?<?php echo VERSION;?>"></script>
+    <script src="<?php echo R;?>js/wuzhicms.js?<?php echo VERSION;?>"></script>
+    <script src="<?php echo R;?>js/jquery-easing.js?<?php echo VERSION;?>"></script>
+    <script src="<?php echo R;?>js/responsivenav.js?<?php echo VERSION;?>"></script>
     <?php
         if(isset($show_dialog)) {
     ?>
-    <link rel="stylesheet" href="<?php echo R;?>js/dialog/ui-dialog.css" />
-    <script src="<?php echo R;?>js/dialog/dialog-plus.js"></script>
+    <link rel="stylesheet" href="<?php echo R;?>js/dialog/ui-dialog.css?<?php echo VERSION;?>" />
+    <script src="<?php echo R;?>js/dialog/dialog-plus.js?<?php echo VERSION;?>"></script>
     <?php
         }
     if(isset($show_formjs)) {
     ?>
-    <link href="<?php echo R;?>css/validform.css" rel="stylesheet" />
-    <script src="<?php echo R;?>js/validform.min.js"></script>
+    <link href="<?php echo R;?>css/validform.css?<?php echo VERSION;?>" rel="stylesheet" />
+    <script src="<?php echo R;?>js/validform.min.js?<?php echo VERSION;?>"></script>
     <?php }
     ?>
 

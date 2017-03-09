@@ -27,3 +27,12 @@ $fields_arr = $db->get_fields('linkage_data');
 if(!in_array('isgroup',$fields_arr)) {
 	$db->query("ALTER TABLE `wz_linkage_data` ADD `isgroup` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0'");
 }
+//更新模版缓存
+$c_template = load_class('template');
+$dirs = COREFRAME_ROOT."templates";
+$c_template->cache_dir_template($dirs);
+//更新菜单缓存
+load_class('cache_menu');
+//更新模型
+$c_model = load_class('cache_model');
+$c_model->cache_all();

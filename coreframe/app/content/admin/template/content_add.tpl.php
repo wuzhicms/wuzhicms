@@ -10,9 +10,9 @@ include $this->template('header','core');
 <link href="<?php echo R;?>js/jquery-ui/jquery-ui.css" rel="stylesheet">
 <script src="<?php echo R;?>js/colorpicker/color.js"></script>
 <?php
-echo '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
-echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
-echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js"></script>';
+echo '<script src="' . R . 'js/ckeditor/ckeditor.js?'.VERSION.'"></script>';
+echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js?'.VERSION.'"></script>';
+echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js?'.VERSION.'"></script>';
 ?>
 <section class="wrapper">
     <div class="row">
