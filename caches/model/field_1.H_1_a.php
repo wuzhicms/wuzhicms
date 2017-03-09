@@ -256,8 +256,6 @@
       'editor_type' => 'ckeditor',
       'toolbar' => 'normal',
       'defaultvalue' => '',
-      'enablesaveimage' => '0',
-      'watermark_enable' => '0',
     ),
     'ext_code' => '',
     'unsetgids' => '',
