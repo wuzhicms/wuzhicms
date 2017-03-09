@@ -21,5 +21,6 @@
     'updatetime' => '1459934796',
     'starttime' => '0',
     'endtime' => '0',
+    'stat_table' => '0',
   ),
 )?>

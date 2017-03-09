@@ -92,7 +92,7 @@
                         {loop $rs $r}
                         views_keyid.push('{$cid}_{$r['id']}');
                         {/loop}
-                        $.getJSON("index.php", {f: "stats", keyid: views_keyid },
+                        $.getJSON("{WEBURL}index.php", {f: "stats", keyid: views_keyid },
                                 function(data){
                                     $.each(data, function( index, value ) {
                                         console.log(value);

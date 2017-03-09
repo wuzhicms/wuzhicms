@@ -18,6 +18,7 @@ class index{
         $this->db = load_class('db');
 		define('NOTHML',true);//不静态化,带入下面的引入文件,保证复用
 		$this->html_tags = load_class('html_tags',M);//直接调用静态化类来做变量准备,提高代码复用
+
 	}
 
     /**
@@ -56,10 +57,12 @@ class index{
                 $tid = urldecode($GLOBALS['tid']);
             }
 			$tid = sql_replace($tid);
+
 			$where = array('tag'=>$tid);
 		}
-
+		
         $tag_info = $this->db->get_one('tag', $where);
+
 		if(empty($tag_info))
 		{
 			MSG(L('parameter_error'));

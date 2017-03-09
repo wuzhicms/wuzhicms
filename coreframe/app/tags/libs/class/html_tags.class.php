@@ -12,8 +12,10 @@ class WUZHI_html_tags {
 	public function __construct() {
 		if(!defined('HTML')) define('HTML',1);
 		$this->_cache = get_cache('tags');
-		if(isset($this->_cache['rewrite']) && $this->_cache['rewrite'] == 1 ) MSG( L('no_html'), HTTP_REFERER, 3000);
+
+		//if(isset($this->_cache['rewrite']) && $this->_cache['rewrite'] == 1 ) MSG( L('no_html'), HTTP_REFERER, 3000);
 		$this->db = load_class('db');
+		$this->letters = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
 	}
 
 	/**
@@ -24,9 +26,10 @@ class WUZHI_html_tags {
 	public function show($tagid, $taginfo = array() ) 
 	{
 		if(!$tagid) return false;
+		$letters = $this->letters;
 		if(empty($taginfo)) $taginfo = $this->db->get_one('tag', array('tid'=>$tagid) );
 		$tid = $tagid ? $tagid : $taginfo['tid'];
-		$page = 1;
+		$page = max($GLOBALS['page'],1);
 		
 		$_template = isset($this->_cache['show_tpl']) ? $this->_cache['show_tpl'] : 'default:show';
         $styles = explode(':',$_template);
@@ -36,7 +39,7 @@ class WUZHI_html_tags {
 		$seo_title = $taginfo['title'] ? $taginfo['title'] : $taginfo['tag'];
 		$seo_keywords = $taginfo['keyword'] ? $taginfo['keyword'] : $taginfo['tag'];
 		$seo_description = $taginfo['desc'] ? $taginfo['desc'] : $taginfo['tag'];
-
+		$pinyin = $taginfo['pinyin'];
 		if(!defined('NOTHML')) ob_start();
 		include T(M,$_template,$project_css);
 		if(!defined('NOTHML')) return $this->createhtml(WWW_ROOT.$taginfo['url']);
@@ -48,6 +51,7 @@ class WUZHI_html_tags {
 	 */
 	public function index($maxpage = '') 
 	{
+		$letters = $this->letters;
 		$_template = isset($this->_cache['index_tpl']) ? $this->_cache['index_tpl'] : 'default:index';
         $styles = explode(':',$_template);
         $project_css = isset($styles[0]) ? $styles[0] : 'default';
@@ -85,6 +89,7 @@ class WUZHI_html_tags {
  */
 	public function letter($letter = '', $maxpage = 1)
 	{
+		$letters = $this->letters;
 		$_template = isset($this->_cache['letter_tpl']) ? $this->_cache['letter_tpl'] : 'default:list';
         $styles = explode(':',$_template);
         $project_css = isset($styles[0]) ? $styles[0] : 'default';
