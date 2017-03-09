@@ -27,6 +27,13 @@ $fields_arr = $db->get_fields('linkage_data');
 if(!in_array('isgroup',$fields_arr)) {
 	$db->query("ALTER TABLE `wz_linkage_data` ADD `isgroup` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0'");
 }
+$fields_arr = $db->get_fields('tag');
+if(!in_array('linkage',$fields_arr)) {
+	$db->query("ALTER TABLE `wz_tag` CHANGE `linkage` `linkageid` SMALLINT(5) UNSIGNED NOT NULL COMMENT '类别'");
+	$db->query("INSERT INTO `wz_menu` (`menuid`, `pid`, `name`, `m`, `f`, `v`, `data`, `sort`, `display`, `isopenid`) VALUES(307, 5, '模块管理', 'core', 'app', 'init', '', 307, 1, 0);");
+
+}
+
 //更新模版缓存
 $c_template = load_class('template');
 $dirs = COREFRAME_ROOT."templates";
