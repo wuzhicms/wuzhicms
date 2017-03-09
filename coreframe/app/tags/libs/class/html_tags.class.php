@@ -101,7 +101,7 @@ class WUZHI_html_tags {
 		if( $letter )
 		{
 			$url = $tags_obj->url_rule('letter', array('letter'=>$letter), $maxpage = 5 );
-			$seo_title = $letter;
+			$seo_title = '字母'.$letter.'-按字母索引';
 			$seo_keywords = $letter;
 			$seo_description = $letter;
 			foreach($url AS $k=>$v)

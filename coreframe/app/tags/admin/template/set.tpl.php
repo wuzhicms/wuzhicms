@@ -48,9 +48,9 @@ include $this->template('header','core');
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-xs-4 control-label"><?php echo L('index_url_rule');?></label>
+                <label class="col-sm-2 col-xs-4 control-label"><?php echo L('index_url_rule');?> <a href="<?php echo WEBURL;?>tags/" target="_blank">访问</a></label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <input type="text" name="setting[index_url_rule]" id="index_url_rule" value="tags/" class="col-sm-8" disabled/>
+                    <input type="hidden" name="setting[index_url_rule]" id="index_url_rule" value="tags/" class="col-sm-8" />
 					<div class="col-lg-3 col-sm-4 col-xs-4 input-group">
 						<?php echo WUZHI_form::templates('tags', output($setting,'index_tpl'),'name="setting[index_tpl]" class="form-control" id="tagselect"');?>
 					</div>
@@ -58,9 +58,9 @@ include $this->template('header','core');
             </div>
 
 			<div class="form-group">
-                <label class="col-sm-2 col-xs-4 control-label"><?php echo L('letter_url_rule');?></label>
+                <label class="col-sm-2 col-xs-4 control-label"><?php echo L('letter_url_rule');?> <a href="<?php echo WEBURL;?>tags/A.html" target="_blank">访问</a></label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <input type="text" name="setting[letter_url_rule]" id="letter_url_rule" value="tags/{$letter}.html" class="col-sm-8" disabled/>
+                    <input type="hidden" name="setting[letter_url_rule]" id="letter_url_rule" value="tags/{$letter}.html" class="col-sm-8"/>
 					<div class="col-lg-3 col-sm-4 col-xs-4 input-group">
 						<?php echo WUZHI_form::templates('tags', output($setting,'letter_tpl'),'name="setting[letter_tpl]" class="form-control" id="tagselect" ');?>
 					</div>
@@ -70,11 +70,12 @@ include $this->template('header','core');
 			<div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label"><?php echo L('show_url_rule');?></label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
-                    <input type="text" name="setting[show_url_rule]" id="show_url_rule" value="tags/{$pinyin}.html" class="col-sm-8" disabled/>
+                    <input type="hidden" name="setting[show_url_rule]" id="show_url_rule" value="tags/{$pinyin}.html" class="col-sm-8"/>
 					<div class="col-lg-3 col-sm-4 col-xs-4 input-group">
 						<?php echo WUZHI_form::templates('tags', output($setting,'show_tpl'),'name="setting[show_tpl]" class="form-control" id="tagselect" ');?>
 					</div>
                 </div>
+
             </div>
 
             <div class="form-group">

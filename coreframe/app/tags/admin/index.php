@@ -9,6 +9,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
 
 load_class('admin');
 //load_function('common',M);
+define('NOTHML',true);
 
 class index extends WUZHI_admin {
 
@@ -105,8 +106,8 @@ class index extends WUZHI_admin {
 			if($tid) //修改
 			{
 				$this->db->update('tag', $tag_info, array('tid'=>$tid) );
-				$html_tags = load_class('html_tags',M);
-				$html_tags->show($tid);
+//				$html_tags = load_class('html_tags',M);
+//				$html_tags->show($tid);
 				MSG(L('edit_success'),link_url( array('v'=>'listing') ),3000);
 			}
 			else	//新增插入
@@ -292,6 +293,7 @@ class index extends WUZHI_admin {
  */
 	public function html()
 	{
+		return true;
 		if(output($this->_cache,'rewrite') == 1) MSG(L('no_html'), HTTP_REFERER, 3000);
 		$html_tags = load_class('html_tags',M);
 		$tid = intval( output( $GLOBALS, 'tid') );
@@ -349,6 +351,7 @@ class index extends WUZHI_admin {
 		 if(isset($GLOBALS['dosubmit']))
 		 {
 			 $cache_in_db = cache_in_db($GLOBALS['setting'], V, M);
+
 			 set_cache(M, $GLOBALS['setting']);
 			 MSG( L('operation_success'), HTTP_REFERER, 3000);
 		 }
