@@ -44,7 +44,7 @@ class index{
 			$tid = intval($GLOBALS['tid']);
 			$where = array('tid'=>$tid);
 		}
-		elseif( isset($GLOBALS['tid']) && ctype_alnum($GLOBALS['tid']) )//pinyin,可能为字母+数字
+		elseif( isset($GLOBALS['tid']) && preg_match('/([a-z0-9-]+)/',$GLOBALS['tid']) )//pinyin,可能为字母+数字
 		{
 		    $tid = sql_replace($GLOBALS['tid']);
 			$where = array('pinyin'=>$tid);
@@ -60,7 +60,7 @@ class index{
 
 			$where = array('tag'=>$tid);
 		}
-		
+
         $tag_info = $this->db->get_one('tag', $where);
 
 		if(empty($tag_info))
