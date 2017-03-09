@@ -69,7 +69,7 @@ class WUZHI_pinyin {
 	//多字串,外部调用时调用此方法即可
 	function strs($str)
 	{
-		if(preg_match('/([a-z0-9_\-]+)/i',$str)) return $str;
+		//if(preg_match('/([a-z0-9_\-]+)/i',$str)) return $str;
 		if(CHARSET != 'gbk')
 		{
 			$str = iconv(CHARSET,'gbk',$str);
