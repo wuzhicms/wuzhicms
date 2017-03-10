@@ -260,7 +260,7 @@ class content extends WUZHI_admin {
 
 			//自动推送至搜索引擎
 			$baidu_urls = array($urls['url']);
-			baidu_linkpost($baidu_urls,$this->siteid,'update');
+			baidu_linkpost($baidu_urls,$this->siteid,'urls');
 
             //判断是否存在，防止意外发生
             if(!$this->db->get_one('content_rank',array('cid'=>$cid,'id'=>$id))) {
