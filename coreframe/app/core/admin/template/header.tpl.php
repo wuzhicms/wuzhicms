@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui, user-scalable=no">
     <meta name="description" content="" />
     <meta name="author" content="wuzhicms.cn,Pixel grid studio" />
-    <title>五指互联网站内容管理系统</title>
+    <title>五指CMS网站管理系统</title>
     <link href="<?php echo R;?>css/bootstrap.min.css?<?php echo VERSION;?>" rel="stylesheet" />
     <link href="<?php echo R;?>css/bootstrapreset.css?<?php echo VERSION;?>" rel="stylesheet" />
     <link href="<?php echo R;?>css/pxgridsicons.min.css?<?php echo VERSION;?>" rel="stylesheet" />
