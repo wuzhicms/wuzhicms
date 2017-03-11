@@ -177,7 +177,11 @@ class index {
             die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.ATTACHMENT_URL.$r['path'].'", "id" : "'.$id.'", "filename" : "'.$r['name'].'" }');
         } else {
 			$this->setting = get_cache('attachment');
-			$this->water_mark = $this->setting['watermark_enable'];
+			if(isset($GLOBALS['is_thumb']) && $GLOBALS['is_thumb']) {
+				$this->water_mark = false;
+			} else {
+				$this->water_mark = $this->setting['watermark_enable'];
+			}
 			if($this->water_mark == true) {
 				$this->image = load_class('image');
 				$this->image->set_image(ATTACHMENT_ROOT.$insert['path']);

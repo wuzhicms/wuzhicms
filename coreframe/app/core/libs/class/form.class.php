@@ -158,7 +158,7 @@ class WUZHI_form {
 	 * @author tuzwu
 	 * @return string
 	 */
-	public static function attachment($ext = 'png|jpg|gif|doc|docx', $limit = 1, $formname = 'file', $default_val = '', $callback = 'callback_thumb_dialog', $is_thumb = 1, $width = '', $height = '', $cut = 0,$is_water = false,$is_allow_show_img=false,$ext_code = ''){
+	public static function attachment($ext = 'png|jpg|gif|doc|docx', $limit = 1, $formname = 'file', $default_val = '', $callback = 'callback_thumb_dialog', $is_thumb = 1, $width = '', $height = '', $cut = 0,$is_water = 0,$is_allow_show_img=false,$ext_code = ''){
 		if ($ext == '') $ext = 'png|jpg|gif';
 		if(strpos($formname,'][')===false) {
 			$id = preg_match("/\[(.*)\]/", $formname, $m) ? $m[1] : $formname;
