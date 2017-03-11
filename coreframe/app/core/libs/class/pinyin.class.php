@@ -57,8 +57,8 @@ class WUZHI_pinyin {
 
         // 判断 off 值
         if ($off < 0){
-            trigger_error("$zh is not a valid GBK hanzi-2", E_USER_WARNING);
-            return false;
+//            trigger_error("$zh is not a valid GBK hanzi-2", E_USER_WARNING);
+            return $zh;
         }
         fseek($this->_fd, $off * 8, SEEK_SET);
         $ret = fread($this->_fd, 8);
