@@ -144,7 +144,7 @@ include $this->template('header','core');
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">栏目页URL规则</label>
                             <div class="col-lg-7 col-sm-7 col-xs-7 input-group">
-                                <input type="text" class="form-control" id="listurl" name="form[listurl]" value="index.php?v=listing&cid={$cid}&page={$page}">
+                                <input type="text" class="form-control" id="listurl" name="form[listurl]" value="index.php?v=listing&cid={$cid}|index.php?v=listing&cid={$cid}&page={$page}">
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">选择规则 <span class="caret"></span></button>
                                     <ul id="phpurlruleid" class="dropdown-menu pull-right ">
@@ -168,7 +168,7 @@ include $this->template('header','core');
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">内容页URL规则</label>
                             <div class="col-lg-7 col-sm-7 col-xs-7 input-group">
-                                <input type="text" class="form-control" id="showurl" name="form[showurl]" value="index.php?v=show&cid={$cid}&id={$id}">
+                                <input type="text" class="form-control" id="showurl" name="form[showurl]" value="index.php?v=show&cid={$cid}&id={$id}|index.php?v=show&cid={$cid}&id={$id}&page={$page}">
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">选择规则 <span class="caret"></span></button>
                                     <ul id="phpurlruleid2" class="dropdown-menu pull-right ">
