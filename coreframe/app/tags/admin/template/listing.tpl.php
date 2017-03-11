@@ -82,8 +82,22 @@ foreach($lists AS $k=>$v)
                     <?php echo $pages;?>
                 </ul>
             </div>
+
         </div>
+
     </div>
+		<div class="alert alert-success fade in">
+			<strong>需要配置伪静态规则才能访问: <br>apache规则如下，</strong>
+			<br>
+			<br>
+			<pre>
+RewriteRule ^tags/$ index.php?m=tags
+RewriteRule ^tags/([A-Z]).html index.php?m=tags&f=index&v=letter&letter=$1
+RewriteRule ^tags/([a-z0-9-]+).html index.php?m=tags&f=index&v=show&tid=$1
+RewriteRule ^tags/([a-z0-9-]+)-P([0-9]+).html index.php?m=tags&f=index&v=show&tid=$1&page=$2</pre>
+			<br>
+			Nginx请参考apaeche规则进行转换。
+		</div>
 </div>
 </section>
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
