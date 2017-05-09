@@ -161,7 +161,7 @@ class index extends WUZHI_foreground{
             $sina_akey = '';
             $seo_title = $seo_keywords = $seo_description = '会员登录';
             $forward = empty($GLOBALS['forward']) ? remove_xss(HTTP_REFERER) : remove_xss(urldecode($GLOBALS['forward']));
-			$forward = safe_htm($GLOBALS['forward']);
+			$forward = safe_htm($forward);
 			include T('member','login');
 		}
 	}
