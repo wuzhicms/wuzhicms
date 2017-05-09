@@ -29,6 +29,9 @@
                 </nav>
             </div>
             {/if}
+            {loop $keywords $keyword}
+            <a href="{WEBURL}index.php?m=tags&f=index&v=show&tid={$keyword}">{$keyword}</a>
+            {/loop}
             <hr>
             <div class="before-and-next">
                 <div class="row">
