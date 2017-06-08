@@ -38,7 +38,7 @@ class index{
 		$cityname = $city_config[$city]['cityname'];
 
         $cookie_city = $_COOKIE[COOKIE_PRE.'city_key'];
-        if($cookie_city) {
+        if($cookie_city && in_array($cookie_city,$city_config)) {
             set_cookie('city',$cookie_city);
             $city = $cookie_city;
         }

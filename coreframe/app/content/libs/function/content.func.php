@@ -76,7 +76,11 @@ function download($filepath, $filename = '',$output = 0) {
         $filename = rawurlencode($filename);
     }
     $filetype = get_ext($filename);
-    if(!file_exists($filepath)) MSG('文件不存在');
+	//限制文件中包含..
+	if(strpos($filepath,'..')!==false) MSG('文件不存在');
+    //限制php文件下载
+    if(!file_exists($filepath) || $filetype=='php') MSG('文件不存在');
+
     $filesize = sprintf("%u", filesize($filepath));
     if(ob_get_length() !== false) @ob_end_clean();
     header('Pragma: public');
