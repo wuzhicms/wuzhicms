@@ -152,7 +152,7 @@ function renderUI(obj) {
 						'<div class="plupload_buttons"><!-- Visible -->' +
 							'<a class="plupload_button plupload_add">' + _("Add Files") + '</a>&nbsp;' +
 							'<a class="plupload_button plupload_start">' + _("Start Upload") + '</a>&nbsp;' +
-							'<a class="plupload_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary wz_online" onclick="open_wz_online(\'listimage\');"><span class="ui-button-icon-primary ui-icon ui-icon-circle-zoomin"></span><span class="ui-button-text">浏览服务器</span></a>&nbsp;' +
+							'<a style="display: none;" class="plupload_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary wz_online" onclick="open_wz_online(\'listimage\');"><span class="ui-button-icon-primary ui-icon ui-icon-circle-zoomin"></span><span class="ui-button-text">浏览服务器</span></a>&nbsp;' +
 		'<a style="display: none;" class="plupload_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary wz_weburl" onclick="open_wz_online(\'weburl\');"><span class="ui-button-icon-primary ui-icon ui-icon-link"></span><span class="ui-button-text">网络地址</span></a>&nbsp;' +							'<a class="plupload_button plupload_stop plupload_hidden">'+_("Stop Upload") + '</a>&nbsp;' +
 						'</div>' +
 
@@ -280,7 +280,10 @@ $.widget("ui.plupload", {
 		this.list_switcher = $('#' + id + '_view_list');
 		//Wz callback
 		// if(callback_func=='callback_thumb_dialog') {
-			$('.wz_weburl', this.container).css('display', '');
+			if(is_admin) {
+				$('.wz_online', this.container).css('display', '');
+				$('.wz_weburl', this.container).css('display', '');
+			}
 		// }
 		//Wz callback
 		if ($.ui.button) {

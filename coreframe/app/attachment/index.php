@@ -210,6 +210,12 @@ class index {
     //上传弹窗调用
     public function upload_dialog()
     {
+		$uid = get_cookie('uid');
+		if(is_numeric($uid)) {
+			$is_admin = 1;
+		} else {
+			$is_admin = 0;
+		}
         upload_url_safe();
         $callback = isset($GLOBALS['callback']) ? remove_xss($GLOBALS['callback']) : 'callback_thumb_dialog';
         $htmlid = isset($GLOBALS['htmlid']) ? remove_xss($GLOBALS['htmlid']) : 'file';
@@ -327,6 +333,10 @@ class index {
         exit($result);
     }
     function file_brower() {
+		$uid = get_cookie('uid');
+		if(!is_numeric($uid)) {
+			MSG('你似乎走错地方了！这是后台权限！');
+		}
 		$action = remove_xss($GLOBALS['action']);
 		$ckditor = load_class('ckditor',M);
 		switch($action)
