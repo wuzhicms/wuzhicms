@@ -182,7 +182,8 @@ class index {
 			} else {
 				$this->water_mark = $this->setting['watermark_enable'];
 			}
-			if($this->water_mark == true) {
+			$ext = get_ext($insert['path']);
+			if($this->water_mark == true && in_array($ext,array('jpg','png','gif'))) {
 				$this->image = load_class('image');
 				$this->image->set_image(ATTACHMENT_ROOT.$insert['path']);
 				$this->image->createImageFromFile();
