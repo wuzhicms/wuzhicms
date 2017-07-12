@@ -14,6 +14,7 @@ echo '<script src="' . R . 'js/ckeditor/ckeditor.js?'.VERSION.'"></script>';
 echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js?'.VERSION.'"></script>';
 echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js?'.VERSION.'"></script>';
 ?>
+<script src="<?php echo R;?>js/jquery-ui-1.10.1.custom.min.js"></script>
 <section class="wrapper">
     <div class="row">
      <div class="col-lg-12">
