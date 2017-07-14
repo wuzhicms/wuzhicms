@@ -6786,6 +6786,7 @@ CREATE TABLE `wz_member` (
   `livecity` varchar(20) NOT NULL COMMENT '居住城市',
   `ischeck_email` tinyint(1) NOT NULL DEFAULT '0',
   `ischeck_mobile` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否验证过',
+  `sys_name` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否允许更改名称',
   `birthday` char(10) NOT NULL,
   `mecid` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '所属机构',
   `checkmec` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否为认证企业用户',
