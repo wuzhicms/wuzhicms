@@ -18,7 +18,7 @@ define('WEBURL','http://dev.wuzhicms.com/');//网站域名
 
 //Cookie配置
 define('COOKIE_DOMAIN','');//Cookie 作用域
-define('COOKIE_PATH','');//Cookie 作用路径
+define('COOKIE_PATH','/');//Cookie 作用路径
 define('COOKIE_PRE','zoc_'); //Cookie 前缀
 define('COOKIE_TTL',0); //Cookie 生命周期，0 表示随浏览器进程
 
