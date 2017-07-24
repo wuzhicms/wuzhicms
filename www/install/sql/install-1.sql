@@ -8685,6 +8685,7 @@ CREATE TABLE `wz_search_index` (
   `data_id` int(10) UNSIGNED DEFAULT '0' COMMENT '搜索项标识ID',
   `full_title` varchar(255) DEFAULT NULL COMMENT '存放完整不分词的内容，如 标题',
   `data_key` text COMMENT '分词结果',
+  `addtime` int(10) UNSIGNED DEFAULT '0' COMMENT '原文添加时间',
   `updatetime` datetime DEFAULT NULL COMMENT '索引更新时间'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='搜索索引表';
 
