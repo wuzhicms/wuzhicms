@@ -190,7 +190,7 @@ class postinfo extends WUZHI_foreground {
             require get_cache_path('content_form','model');
             $form_build = new form_build($modelid);
             $form_build->cid = $cid;
-            $category = get_cache('category','content');
+            
             $form_build->extdata['catname'] = '';
             $form_build->extdata['type'] = '0';
             $formdata = $form_build->execute();
