@@ -217,12 +217,14 @@ class WUZHI_ckditor{
 		if($username) {
 			$where .= " AND `username`='$username'";
 		}
-		$lists = $db->get_list('attachment',$where,'path,addtime,name,filesize', 0, $pagesize, $page, 'id DESC');
+		$lists = $db->get_list('attachment',$where,'id,path,addtime,name,filesize', 0, $pagesize, $page, 'id DESC');
 		$return_list = $files = array();
 		foreach($lists AS $k=>$v)
 		{
-			$file_name =  pathinfo($v['name'], PATHINFO_FILENAME);
+			//$file_name =  pathinfo($v['name'], PATHINFO_FILENAME);
+			$file_name =  $v['name'];
 			$files[] = array(
+			'id'=> $v['id'],
 			'url'=> ATTACHMENT_URL.$v['path'],
 			'mtime'=> date('Y-m-d H:i',$v['addtime']),
 			'filesize'=> sizecount($v['filesize']),

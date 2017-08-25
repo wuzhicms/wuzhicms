@@ -79,7 +79,8 @@
 		var fileUrl=$("#weburl").val();
 		$("#wrapper_content").addClass('return-online');
 		$("#wrapper_content").html('已选择成功');
-		window.opener.callback_online(fileUrl);
+        id=0;
+        window.opener.callback_online(fileUrl+',文件名,'+id);
 		if(callback=='callback_ck_images') {
 			window.close();
 		} else {

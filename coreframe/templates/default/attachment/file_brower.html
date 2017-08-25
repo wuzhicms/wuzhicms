@@ -131,7 +131,7 @@
 	<div id="online" class="panel focus">
 		<div id="imageList">
 			<ul class="list">
-				{loop $result $r}<li><div class="max_h"><img width="142" src="{$r['url']}"></div><div class="title">{$r['title']}</div><div>{$r['mtime']}<br>{$r['filesize']}</div><span class="icon" onclick="returnFileUrl('{$r['url']}');"></span> </li>{/loop}
+				{loop $result $r}<li><div class="max_h"><img width="142" src="{$r['url']}"></div><div class="title">{$r['title']}</div><div>{$r['mtime']}<br>{$r['filesize']}</div><span class="icon" onclick="returnFileUrl('{$r['url']}','{$r['title']}','{$r['id']}');"></span> </li>{/loop}
 			</ul>
 		</div>
 	</div>
@@ -148,11 +148,12 @@
 		return ( match && match.length > 1 ) ? match[1] : null;
 	}
 	// Simulate user action of selecting a file to be returned to CKEditor.
-	function returnFileUrl(fileUrl) {
+	function returnFileUrl(fileUrl,filename,id) {
 		var callback = getUrlParam( 'callback' );
+		var htmlid = getUrlParam( 'htmlid' );
 		$("#wrapper_content").addClass('return-online');
 		$("#wrapper_content").html('已选择成功');
-		window.opener.callback_online(fileUrl);
+		window.opener.callback_online(fileUrl+','+filename+','+id+','+htmlid);
 		if(callback=='callback_ck_images') {
 			window.close();
 		} else {
