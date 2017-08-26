@@ -45,6 +45,7 @@ class content extends WUZHI_admin {
     }
     public function manage() {
         $modelid = isset($GLOBALS['modelid']) ? intval($GLOBALS['modelid']) : 0;
+		$type = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : 0;
         include $this->template('content_manage');
     }
     public function left() {
@@ -59,6 +60,7 @@ class content extends WUZHI_admin {
         $private_result = $this->db->get_list('category_private', $where2, '*', 0, 2000, 0, '', '', 'cid');
         if($private_result) $private_result = array_keys($private_result);
         $result_tmp = $this->db->get_list('category', $where, '*', 0, 2000, 0, 'sort ASC', '', 'cid');
+		$cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : 0;
 
         if(empty($result_tmp)) {
             $category_tree = '';
@@ -85,7 +87,7 @@ class content extends WUZHI_admin {
         $siteid = get_cookie('siteid');
         $this->siteurl = substr($this->siteurl,0,-1);
 
-        $type = intval($GLOBALS['type']);
+        $type = isset($GLOBALS['type']) ? intval($GLOBALS['type']) : 0;
         $title = isset($GLOBALS['title']) ? sql_replace($GLOBALS['title']) : '';
         $status = isset($GLOBALS['status']) ? intval($GLOBALS['status']) : 9;
         $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : 0;
