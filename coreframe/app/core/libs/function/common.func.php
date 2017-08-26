@@ -591,7 +591,7 @@ function strcut($str, $width = 0, $end = '...', $rephtml = 0) {
 	$x2 = 16;
 	$x3 = 21;
 	$x4 = $x3;
-
+	$e = '';
 	for ($i = 0; $i < $len; $i++) {
 		if ($w >= $width) {
 			$e = $end;
