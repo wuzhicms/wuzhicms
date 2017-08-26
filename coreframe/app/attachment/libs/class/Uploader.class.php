@@ -52,6 +52,7 @@ class WUZHI_Uploader
     {
 		$this->image = load_class('image');
 		$this->setting = get_cache('attachment');
+		$this->db = load_class('db');
 		$this->water_mark = $this->setting['watermark_enable'];
     }
     public function set($fileField = '', $config = array(), $type = "upload") {
@@ -122,7 +123,16 @@ class WUZHI_Uploader
         if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
             $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
         } else { //移动成功
-			$id = $this->insert();
+			//校验md5file
+			$md5file = md5_file($this->filePath);
+			if($r = $this->db->get_one('attachment', array('md5file' => $md5file))) {
+				unlink($this->filePath);
+				$id = $r['id'];
+				$this->fullName = $r['path'];
+			} else {
+				$id = $this->insert($md5file);
+			}
+			//exit($this->filePath);
             $this->stateInfo = $this->stateMap[0];
         }
     }
@@ -348,7 +358,7 @@ class WUZHI_Uploader
         );
     }
 
-	private function insert()
+	private function insert($md5file = '')
 	{
 		$attachment = load_class('attachment',M);
 		$insert = array();
@@ -357,6 +367,7 @@ class WUZHI_Uploader
 		$insert['addtime'] = SYS_TIME;
 		$insert['filesize'] = $this->fileSize;
 		$insert['ip'] = get_ip();
+		$insert['md5file'] = $md5file;
 		$insert['username'] = get_cookie('username') ? get_cookie('username') : get_cookie('wz_name');
 		if($this->water_mark == true) {
 			$this->image->set_image($this->filePath);
