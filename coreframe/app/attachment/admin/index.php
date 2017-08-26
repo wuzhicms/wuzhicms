@@ -127,11 +127,14 @@ class index extends WUZHI_admin
         if (isset($GLOBALS['submit'])) {
             set_cache(M, $GLOBALS['setting']);
             MSG(L('operation_success'), HTTP_REFERER, 3000);
-        }
-        else {
+        } else {
             $show_dialog = 1;
             load_class('form');
             $setting = &$this->_cache;
+            if(!isset($setting['show_mode'])) {
+				$setting = array('show_mode'=>2,'watermark_enable'=>1,'watermark_pos'=>0,'watermark_text'=>'www.wuzhicms.com');
+				set_cache(M, $setting);
+			}
             include $this->template('set', M);
         }
     }
