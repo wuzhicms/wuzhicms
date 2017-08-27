@@ -366,7 +366,7 @@
     $.ajax({
         type: "get", //jquey是不支持post方式跨域的
         async: false,
-        url: "http://www.wuzhicms.com/api/?m=license&f=credentials",
+        url: window.location.protocol+"//www.wuzhicms.com/api/?m=license&f=credentials",
         dataType: "jsonp",
         jsonp: "jsoncallback",
         jsonpCallback: "callback",
