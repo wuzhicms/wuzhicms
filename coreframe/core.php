@@ -22,7 +22,6 @@ if(ERROR_REPORT==1) {
     error_reporting(E_ALL);
 }
 ini_set('display_errors', 1);
-
 set_exception_handler('log_exception');
 
 //开始运行时间
@@ -40,7 +39,11 @@ define('IS_WIN',strstr(PHP_OS, 'WIN') ? 1 : 0);
 define('IS_CLI',PHP_SAPI=='cli'? 1 : 0);
 define('SYS_TIME', time());
 define('HTTP_REFERER', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
-
+if($_SERVER['SERVER_PORT'] != '443') {
+	define('HTTP_SSL', 'http');
+} else {
+	define('HTTP_SSL', 'https');
+}
 //设置本地时差
 date_default_timezone_set(TIME_ZONE);
 //输出页面字符集
