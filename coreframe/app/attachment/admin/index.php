@@ -173,20 +173,29 @@ class index extends WUZHI_admin
      */
     public function del()
     {
-        $id = isset($GLOBALS['id']) ? intval($GLOBALS['id']) : '';
+        $id = isset($GLOBALS['id']) ? $GLOBALS['id'] : '';
         $url = isset($GLOBALS['url']) ? remove_xss($GLOBALS['url']) : '';
         if (!$id && !$url) MSG(L('operation_failure'), HTTP_REFERER, 3000);
         if ($id) {
-            $where = array('id' => $id);
-            $att_info = $this->db->get_one('attachment', $where, 'usertimes,path');
-            if ($att_info['usertimes'] > 1) {
-                $this->db->update('attachment', 'usertimes = usertimes-1', $where);
-            }
-            else {
-                $this->my_unlink(ATTACHMENT_ROOT . $att_info['path']);
-                $this->db->delete('attachment', $where);
-                MSG(L('delete success'), HTTP_REFERER, 1000);
-            }
+        	if(!is_array($id)) {
+				$ids = array($id);
+			} else {
+				$ids = $id;
+			}
+			
+			foreach($ids as $id) {
+				$where = array('id' => $id);
+				$att_info = $this->db->get_one('attachment', $where, 'usertimes,path');
+				if ($att_info['usertimes'] > 1) {
+					$this->db->update('attachment', 'usertimes = usertimes-1', $where);
+				}
+				else {
+					$this->my_unlink(ATTACHMENT_ROOT . $att_info['path']);
+					$this->db->delete('attachment', $where);
+					$this->db->delete('attachment_tag_index', array('att_id'=>$id));
+				}
+			}
+			MSG(L('delete success'), HTTP_REFERER, 1000);
         }
         else {
             if (!$url) MSG('url del ' . L('operation_failure'), HTTP_REFERER, 3000);
