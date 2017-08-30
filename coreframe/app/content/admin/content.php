@@ -168,12 +168,10 @@ class content extends WUZHI_admin {
 
         $result = array();
         $content_share_table='content_share';
-
-        $result[0] = $this->db->get_list($content_share_table,$where, '*', 0, 20,0,'id DESC');
         foreach($models as $key=>$model) {
             $master_table = $model['master_table'];
-            if($master_table=='content_share') continue;
-            $result[$key] = $this->db->get_list($master_table,$where, '*', 0, 20,0,'id DESC');
+            $tmp = $this->db->get_list($master_table,$where, '*', 0, 20,0,'id DESC');
+			if($tmp) $result[$key] = $tmp;
         }
         //print_r($result);
         include $this->template('content_allcheck');
@@ -793,31 +791,60 @@ class content extends WUZHI_admin {
         if(empty($GLOBALS['ids'])) MSG('没有选择任何文章');
         $_lang = isset($GLOBALS['_lang']) ? $GLOBALS['_lang'] : 'zh';
         $cid = intval($GLOBALS['cid']);
-        if(!$cid) MSG(L('parameter_error'));
-        $category_r = get_cache('category_'.$cid,'content');
-        $models = get_cache('model_content','model');
-        $model_r = $models[$category_r['modelid']];
-        $master_table = $model_r['master_table'];
-        $status = intval($GLOBALS['status']);
-        $attr_table = $model_r['attr_table'];
+		$models = get_cache('model_content','model');
 
-        foreach($GLOBALS['ids'] as $id) {
-            if($status==0) {
-                $data = $this->db->delete($master_table,array('id'=>$id));
-                if($model_r['attr_table']) {
+        if($cid) {
+			$category_r = get_cache('category_'.$cid,'content');
+			$model_r = $models[$category_r['modelid']];
+			$master_table = $model_r['master_table'];
+			$status = intval($GLOBALS['status']);
+			$attr_table = $model_r['attr_table'];
+			foreach($GLOBALS['ids'] as $id) {
+				if($status==0) {
+					$data = $this->db->delete($master_table,array('id'=>$id));
+					if($model_r['attr_table']) {
 
-                    $attrdata = $this->db->delete($attr_table,array('id'=>$id));
-                }
-                //$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
-                $keyid = $id.'-'.$cid.'-'.$_lang;
-                $this->db->delete('block_data', array('keyid' => $keyid));
-            } else {
-                $data = $this->db->update($master_table,array('status'=>0),array('id'=>$id));
-                //$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
-                $keyid = $id.'-'.$cid.'-'.$_lang;
-                $this->db->update('block_data', array('status'=>0), array('keyid' => $keyid));
-            }
-        }
+						$attrdata = $this->db->delete($attr_table,array('id'=>$id));
+					}
+					//$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+					$keyid = $id.'-'.$cid.'-'.$_lang;
+					$this->db->delete('block_data', array('keyid' => $keyid));
+				} else {
+					$data = $this->db->update($master_table,array('status'=>0),array('id'=>$id));
+					//$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+					$keyid = $id.'-'.$cid.'-'.$_lang;
+					$this->db->update('block_data', array('status'=>0), array('keyid' => $keyid));
+				}
+			}
+		} else {
+        	foreach($GLOBALS['ids'] as $modelid=>$ids) {
+				$model_r = $models[$modelid];
+				$master_table = $model_r['master_table'];
+				$status = intval($GLOBALS['status']);
+				$attr_table = $model_r['attr_table'];
+				foreach($ids as $id) {
+					if($status==0) {
+						$data = $this->db->delete($master_table,array('id'=>$id));
+						if($model_r['attr_table']) {
+
+							$attrdata = $this->db->delete($attr_table,array('id'=>$id));
+						}
+						//$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+						$keyid = $id.'-'.$cid.'-'.$_lang;
+						$this->db->delete('block_data', array('keyid' => $keyid));
+					} else {
+						$data = $this->db->update($master_table,array('status'=>0),array('id'=>$id));
+						//$this->db->delete('content_rank',array('cid'=>$cid,'id'=>$id));
+						$keyid = $id.'-'.$cid.'-'.$_lang;
+						$this->db->update('block_data', array('status'=>0), array('keyid' => $keyid));
+					}
+				}
+			}
+
+
+
+
+		}
         MSG(L('delete success'),HTTP_REFERER,1);
     }
     /**
