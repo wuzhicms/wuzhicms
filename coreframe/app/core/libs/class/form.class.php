@@ -158,7 +158,7 @@ class WUZHI_form {
 	 * @author tuzwu
 	 * @return string
 	 */
-	public static function attachment($ext = 'png|jpg|gif|doc|docx', $limit = 1, $formname = 'file', $default_val = '', $callback = 'callback_thumb_dialog', $is_thumb = 1, $width = '', $height = '', $cut = 0,$is_water = 0,$is_allow_show_img=false,$ext_code = ''){
+	public static function attachment($ext = 'png|jpg|gif|doc|docx', $limit = 1, $formname = 'file', $default_val = '', $callback = 'callback_thumb_dialog', $is_thumb = 1, $width = '', $height = '', $cut = 0,$is_water = 0,$is_allow_show_img=false,$ext_code = '',$show_imagecut = 0,$ext_arr = array()){
 		if ($ext == '') $ext = 'png|jpg|gif';
 		if(strpos($formname,'][')===false) {
 			$id = preg_match("/\[(.*)\]/", $formname, $m) ? $m[1] : $formname;
@@ -197,7 +197,15 @@ class WUZHI_form {
 
 		$token = md5($ext . _KEY);
 		$up_url = 'index.php' . link_url(array('m' => 'attachment', 'f' => 'index', 'v' => 'upload_dialog', 'callback' => $callback, 'htmlid' => $id, '_su' => '', 'limit' => $limit, 'is_thumb' => $is_thumb, 'width' => $width, 'height' => $height, 'htmlname' => $formname, 'ext' => $ext, 'token' => $token, 'cut' => $cut,'is_water'=>$is_water,'is_allow_show_img'=>$is_allow_show_img));
-		$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="openiframe(\'' . $up_url . '\',\'' . $id . '\',\'loading...\',810,400,' . $limit . ')">上传文件</button></span>';
+		$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="openiframe(\'' . $up_url . '\',\'' . $id . '\',\'loading...\',810,400,' . $limit . ')">上传文件</button>';
+		if(isset($ext_arr['htmldata'])) {
+			$str .= $ext_arr['htmldata'];
+		}
+		$str .= '</span>';
+		if($show_imagecut) {
+			$up_url = 'index.php' . link_url(array('m' => 'attachment', 'f' => 'imagecut', 'v' => 'init', 'callback' => $callback, 'htmlid' => $id, '_su' => '', 'limit' => $limit, 'is_thumb' => $is_thumb, 'width' => $width, 'height' => $height, 'htmlname' => $formname, 'ext' => $ext, 'token' => $token, 'cut' => $cut,'is_water'=>$is_water,'is_allow_show_img'=>$is_allow_show_img));
+			$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="imagecut(\'' . $up_url . '\',\'' . $id . '\',\'图片裁剪\',1100,560,' . $limit . ')">裁剪</button></span>';
+		}
 		return $str;
 	}
 

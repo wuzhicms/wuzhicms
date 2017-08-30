@@ -279,3 +279,37 @@ function open_sortyear(id,obj) {
 function set_timer() {
     var t=setTimeout(function(){$('#alert-warning').addClass('hide');clearInterval(t);},3000);
 }
+function imagecut(iframeurl,id,title,width,height,returntype) {
+    if(document.body.clientWidth<860) {
+        width = document.body.clientWidth-50;
+        height = 300;
+    }
+
+    var imgurl = $("#"+id).val();
+    iframeurl+="&imgurl="+encodeURIComponent(imgurl);
+    top.dialog({
+        id: id,
+        fixed: true,
+        width: width,
+        height: height,
+        title: title,
+        padding: 5,
+        url: iframeurl,
+        onclose: function () {
+            if (this.returnValue) {
+                if(returntype==1) {//返回缩略图＋隐藏input
+                    $('#' + id + "_thumb").attr('src', this.returnValue);
+                    $('#' + id).val(this.returnValue);
+                } else if(returntype==5) {//ckeditor
+                    var instance = CKEDITOR.instances[id];
+                    instance.insertHtml(this.returnValue);
+                }else if(returntype > 1){ //返回字符串,多文件
+                    $('#'+id+" ul").append(this.returnValue);
+                } else {
+                    $('#'+id).val(this.returnValue);
+                }
+            }
+        }
+    }).showModal(this);
+    return false;
+}
