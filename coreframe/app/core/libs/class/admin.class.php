@@ -47,7 +47,11 @@ class WUZHI_admin {
      */
     public function template($name,$m = '') {
         if(empty($m)) $m = M;
-        return COREFRAME_ROOT.'app/'.$m.'/admin/template/'.$name.'.tpl.php';
+        if(file_exists(COREFRAME_ROOT.'app/'.$m.'/admin/template/'.$name.'.ext.php')) {
+			return COREFRAME_ROOT.'app/'.$m.'/admin/template/'.$name.'.ext.php';
+		} else {
+			return COREFRAME_ROOT.'app/'.$m.'/admin/template/'.$name.'.tpl.php';
+		}
     }
 
     /**
