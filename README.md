@@ -2,12 +2,78 @@
 五指cms网站管理系统，网站内容管理系统，php5+mysql开发。
 
 ![](http://www.wuzhicms.com/uploadfile/2015/05/18/1431917862749065.png)
+## 安装说明
 #### 服务器要求
 Web服务器：apache/nginx/iis
 
 PHP环境要求：支持php5.2、php5.3、php5.4、php5.5、php5.6、php7.1（推荐使用5.4或更高版本！）
 
 数据库要求： Mysql 5
+### 软件包目录说明
+
+```
+README.md        安装说明
+bin              开发人员使用
+caches           安装必须：缓存目录
+coreframe        安装必须：主框架
+tools            一些小工具，全新安装不需要
+upgrade          手动升级文件
+www              安装必须：域名绑定目录
+```
+#### * 虚拟主机安装
+将 **coreframe**和**caches**移动到 **www**目录
+上传所有www/下面的文件到虚拟主机根目录
+
+> 访问域名：http://域名/install/
+进行安装
+
+#### * 独立主机或者云主机安装
+
+上传文件
+
+```
+coreframe
+caches
+www
+```
+绑定域名到：www 目录上
+
+例如apache 虚拟主机配置：
+
+```
+<VirtualHost *:80>
+    DocumentRoot /wwwroot/project/mobile/www/
+    ServerName mobile.wuzhicms.com
+    <Directory  /wwwroot/project/mobile/www/>
+        Options  FollowSymLinks
+        AllowOverride Options FileInfo
+        Order allow,deny
+        Allow from all
+        DirectoryIndex index.php index.htm index.html
+    </Directory>
+    <Directory  /wwwroot/project/mobile/www/uploadfile/>
+    php_flag engine off
+    </Directory>
+</VirtualHost>
+```
+
+#### 安全：
+禁止 uploadfile，附件目录运行php
+
+```
+<Directory  /wwwroot/project/mobile/www/uploadfile/>
+php_flag engine off
+</Directory>
+```
+重启apache或者nginx后
+
+> 访问域名：http://域名/install/
+进行安装
+
+### 安装配置
+
+
+绑定域名到：
 
 
 #### 产品简介
@@ -117,6 +183,43 @@ PHP环境要求：支持php5.2、php5.3、php5.4、php5.5、php5.6、php7.1（�
     |-- uploadfile              #附件
     `-- web.php                 #自定义路由
 ```
+### v4.1.0版本更新说明（2017-08-31）
+
+* 优化：安装时的报错显示提示
+* 修复：批量更新内容页链接，当栏目有外链的时候更新失败
+* 新增：批量删除附件
+* 新增：内容模块：回收站内容可以批量删除
+* 新增：后台模版自定义-不影响升级
+* 新增：图片裁剪功能
+* 新增：文件备份所在目录
+* 新增：HTTP_SSL 常量，得到的结果为：http或者https
+* 修复：版权信息 全站开启https版权信息后，版权信息无法显示bug
+* 优化：一些notice错误
+* 优化：strcut函数，notice 错误
+* 优化：附件配置丢失，错误显示
+* 新增：附件通过编辑器进行，上传md5 校验，不重复上传图片
+* 优化：当用户调用 mysql类时，不支持时提示函数不存在
+* 修复：组图选择已上传的文件，返回地址错误
+* 新增sitemap批量定时更新。php /coreframe/crontab.php sitemap create
+* 优化：删除多余的代码
+* 新增：全站搜索，通过计划任务，自动更新到全站搜索表
+* 修复：视频内容页模版缺少描述内容展示
+* 修复：视频列表页面：观看数量显示错误
+* 删除多余的代码
+* 优化：手机登录页面
+* 修复：排行榜标签，数量无法显示
+* 修改：默认cookie 作用路径为 根目录
+* 修复：会员字段sys_name 字段缺少
+* 修复：xss 安全过滤
+* 修复：组图排序拖拽
+* 修复：附件上传为非图片格式，无法返回bug
+* 优化：附件浏览服务器和网络地址仅仅允许后台用户使用
+* 修复：最新的flash 下面 头像上传无法显示
+* 修复：下载漏洞，可下载任意文件
+* 新增：mysql类可以多次初始化，并传递不同的mysql配置
+* 修复：登录无法调整到之前页面
+* 优化：模版中删除多余调试代码
+* 新增：内容页关键词链接
 
 ### v4.0.0版本更新说明（2017-03-13）
 * 优化：单独缩略图不添加水印
