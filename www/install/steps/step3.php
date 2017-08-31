@@ -216,6 +216,7 @@
             else if(data=='ok' || (data == 1 && confirm(errmsg[1]))) {
                 window.location='index.php?step=4';
             } else {
+                alert(data);
                 return false;
             }
         });
