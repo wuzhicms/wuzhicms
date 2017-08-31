@@ -182,7 +182,7 @@ class index extends WUZHI_admin
 			} else {
 				$ids = $id;
 			}
-			
+
 			foreach($ids as $id) {
 				$where = array('id' => $id);
 				$att_info = $this->db->get_one('attachment', $where, 'usertimes,path');
