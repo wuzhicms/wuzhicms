@@ -247,6 +247,10 @@ function pages($num, $current_page, $pagesize = 20, $urlrule = '', $variables = 
 		if ($current_page == $maxpage) $active = 'class="active"';
 		$output .= '<li><a ' . $active . ' href="' . _pageurl($urlrule, $maxpage, $variables) . '">' . $maxpage . '</a></li>';
 	}
+	if(defined('IN_ADMIN')) {
+		$pagelink = _pageurl($urlrule, $pageup, $variables);
+		$output .= '<li> 跳转到：<input style="width: 40px;height: 29px;margin-top: 5px;" onkeydown="if(event.keyCode==13) {window.location=\''.$pagelink.'&page=\'+this.value;}"></li>';
+	}
 	//下一页
 	$pagedown = $current_page + 1;
 	if ($pagedown >= $maxpage) $pagedown = $maxpage;
