@@ -249,7 +249,7 @@ function pages($num, $current_page, $pagesize = 20, $urlrule = '', $variables = 
 	}
 	if(defined('IN_ADMIN')) {
 		$pagelink = _pageurl($urlrule, $pageup, $variables);
-		$output .= '<li> 跳转到：<input style="width: 40px;height: 29px;margin-top: 5px;" onkeydown="if(event.keyCode==13) {window.location=\''.$pagelink.'&page=\'+this.value;}"></li>';
+		$output .= '<li> 跳转到：<input style="width: 40px;height: 29px;margin-top: 5px;" onkeydown="if(event.keyCode==13) {gotourl(\''.$pagelink.'&page=\'+this.value);return false;};"></li>';
 	}
 	//下一页
 	$pagedown = $current_page + 1;
