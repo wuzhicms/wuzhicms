@@ -1,0 +1,19 @@
+mysql:
+  image: mysql
+  environment:
+    - MYSQL_DATABASE=wuzhicms
+    - MYSQL_ROOT_PASSWORD=123456
+  ports:
+    - 3306:3306
+
+web:
+  build: .
+  links:
+    - mysql:mysql
+  ports:
+    - 80:80
+  environment:
+    - MYSQL_INSTANCE_NAME=wuzhicms
+    - MYSQL_PASSWORD=123456
+  volumes:
+    - ./uploadfile:/app/www/uploadfile:rw
