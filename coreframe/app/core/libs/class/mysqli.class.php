@@ -11,7 +11,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
  */
 class WUZHI_mysqli {
 	var $link;
-	var $histories = '';
+	var $histories = array();
 	var $tablepre = 'wz_';
 	var $querynum = 0;
 	function __construct($config) {
