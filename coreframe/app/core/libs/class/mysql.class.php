@@ -14,7 +14,7 @@ if(!function_exists('mysql_connect')) {
  */
 class WUZHI_mysql {
 	var $link;
-	var $histories = '';
+	var $histories = array();
 	var $tablepre = 'wz_';
 	var $querynum = 0;
 	function __construct($config) {
