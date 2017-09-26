@@ -126,8 +126,8 @@ if($modelid==0) {
                                         <button type="submit" onclick="$('#v').val('push')" class="btn btn-default btn-sm">推送内容</button>
 
                                         <button type="submit" onclick="$('#v').val('move')" class="btn btn-default btn-sm">移动</button>
-                                        <?php if($cid) {?>
-                                            <button type="submit" onclick="$('#v').val('delete_more')" class="btn btn-default btn-sm">批量删除</button><?php }?>
+
+                                            <button type="submit" onclick="$('#v').val('delete_more')" class="btn btn-default btn-sm">批量删除</button>
 
                                         <input name="status" value="<?php echo $status;?>" type="hidden">
                                         <input name="cid" value="<?php echo $cid;?>" type="hidden">

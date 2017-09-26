@@ -29,8 +29,11 @@ class block extends WUZHI_admin {
 	}
 
     public function listing() {
+		if(empty($this->siteid)) MSG('站点缓存丢失，请修改站点，并提交');
         $where = array('siteid'=>$this->siteid,'tplid'=>TPLID);
+		
         $page = intval($GLOBALS['page']);
+
         $result = $this->db->get_list('block', $where, '*', 0, 20, $page,'blockid DESC');
         $pages = $this->db->pages;
 
@@ -247,6 +250,7 @@ class block extends WUZHI_admin {
             if(!is_dir($webroot)) @mkdir($webroot, 0777, true);
             foreach($GLOBALS['blockids'] as $blockid) {
                 $r = $this->db->get_one('block',array('blockid'=>$blockid));
+				$r['code'] = stripslashes($r['code']);
                 $code = $template->template_parse($r['code']);
                 $cache_path = CACHE_ROOT.'templates/default/block/';
                 if(!is_dir($cache_path)) @mkdir($cache_path, 0777, true);

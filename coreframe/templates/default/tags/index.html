@@ -1,18 +1,49 @@
 {T 'tags','header'}
+<!--路径导航-->
+<div style="background: #f3f3f3" class="change-container">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="{WEBURL}">首页</a><span> &gt;</span></li>
+            热门标签
+        </ol>
+    </div>
+</div>
+
+<div class="change-container">
+    <div class="container">
+        <div class="tags-box">
+
+            <h3 class="first-letter color_primary">首字母搜索</h3>
+            <div class=" letter-nav leter-nav-g  color_primary">
+                {loop $letters $r}
+                <a href="{WEBURL}tags/{$r}.html">{$r}</a>
+                {/loop}
+            </div>
+            <hr>
+            {loop $letters $letter}
 
 
-<ul>
-{wz:tags action="listing" page="$page" letter="" linkage="" pagesize="10" order="number DESC"}
-{loop $rs $r}
-<li>{$r[tid]} <a href="{$r[url]}">{safe_htm($r['tag'])}</a>({$r['number']})</li>
-{/loop}
-{/wz}
-</ul>
-分页：{$pages}
+            <div class="leter-search">
+                <div class="lm-title-a"><span class="wenzi">{$letter}</span></div>
+                <ul>
+                    {wz:tags action="listing" page="$page" letter="$letter" linkage="" pagesize="10" order="number DESC"}
+                    {loop $rs $r}
+                    <li><a href="/{$r[url]}">{safe_htm($r['tag'])}</a>({$r['number']})</li>
+                    {/loop}
+                    {/wz}
+                </ul>
+            </div>
+            {/loop}
+        </div>
+    </div>
+</div>
+
+
+<!--分页：{$pages}
 <hr>
 
-区块展示：
+区块展示：-->
 
 
-</body>
-</html>
+{T 'tags','footer'}

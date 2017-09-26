@@ -21,6 +21,8 @@ $(document).ready(function(){
     });
 
 });
+
+
 var current_slide = 0;
 $(function(){
     $('#myCarousel').on('slid.bs.carousel', function () {

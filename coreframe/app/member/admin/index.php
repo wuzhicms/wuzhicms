@@ -42,7 +42,6 @@ if(is_array($this->group)){
 			if($gr['issystem']==1) {
 				$group[$gr['groupid']] = $gr;
 			} else {
-				//TODO
 				//if(in_array($gr['groupid'],array(20,22,32,34))) $gr['pid'] = 0;
 				$gr['selected'] = $extgid==$gr['groupid'] ? 'selected' : '';
 				$ext_group[$gr['groupid']] = $gr;
@@ -462,13 +461,7 @@ if(is_array($this->group)){
 			}
 			MSG( L('operation_success'), HTTP_REFERER, 3000);
 		}else{
-			$setting = $this->db->get_one('setting', 'keyid="setting" AND m="member"', 'data');
-			if($setting){
-				$setting = unserialize($setting['data']);
-                set_cache('setting', $setting, M);
-			}else{
-				$setting = array();
-			}
+			$setting = get_cache('setting', M);
 			$group = $this->group;
 			include $this->template('setting',M);
 		}

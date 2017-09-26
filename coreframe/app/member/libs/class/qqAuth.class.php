@@ -101,7 +101,6 @@ class WUZHI_qqAuth {
 
 			$r['uid'] = $wz_member->add($data);
 			$r['authid'] = $db->insert('member_auth', array('type'=>'qq','uid'=>$r['uid'],'nickname'=>$user_info['nickname'], 'openid'=>$this->openid, 'token'=>$this->token, 'expires_in'=>$this->expires_in, 'extend'=>array2string($this->extend)), true);
-			//TODO 保存头像
 			$imgdata = get_curl($user_info['figureurl_qq_2']);
 
 			$dir = substr(md5($r['uid']), 0, 2).'/'.$r['uid'].'/';

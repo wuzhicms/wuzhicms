@@ -45,10 +45,12 @@ include $this->template('header','core');
 
 
 <div class="panel-body" id="panel-bodys">
+	<form name="myform" id="myform" method="post" action="?m=attachment&f=index&v=listing<?php echo $this->su();?>">
 <table class="table table-striped table-advance table-hover">
 	<thead>
 	    <tr>
-	    <th class="tablehead">文件名</th>
+			<th class="tablehead" >选择</th>
+			<th class="tablehead">文件名</th>
 	    <th class="tablehead">文件夹</th>
 		<th class="tablehead">大小</th>
 	    <th class="tablehead hidden-phone">上传时间</th>
@@ -61,7 +63,7 @@ include $this->template('header','core');
 foreach($lists AS $k=>$v)
 {
 ?>
-      <tr>
+      <tr><td class="center"><input type="checkbox" name="id[]" value="<?php echo $v['id'];?>"></td>
       <td class="hidden-phone"><a href="<?php echo ATTACHMENT_URL.$v['path'];?>" class="fancybox-button" rel="fancybox-button" title="<?php echo L('look_big');?>:<?php echo $v['name'];?>">
 	  <?php if($this->_cache['show_mode'] == 2 && in_array( fileext($v['path']),array('jpg','jpeg','png','gif','bmp') ) ):?><img src="<?php echo ATTACHMENT_URL.$v['path'];?>" height="60" /> <?php endif;?><?php echo $v['name'];?></a></td>
           <td><?php echo $v['diycat'];?></td>
@@ -75,10 +77,15 @@ foreach($lists AS $k=>$v)
 <?php } ?>
     </tbody>
 </table>
-</div>
-        <div class="panel-body">
+
+		<div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
+					<div class="pull-left">
+						<input id="v" name="v" type="hidden" value="<?php echo V;?>">
+						<button type="button" onClick="checkall()" name="submit2" class="btn btn-default btn-sm">全选/反选</button>
+						<button type="submit" onclick="$('#v').val('del')" class="btn btn-default btn-sm">批量删除</button>
+					</div>
                     <div class="pull-right">
                         <ul class="pagination pagination-sm mr0">
                             <?php echo $pages;?>
@@ -86,7 +93,13 @@ foreach($lists AS $k=>$v)
                     </div>
                 </div>
             </div>
+		</div>
+	</form>
+
         </div>
+		<div class="alert alert-success fade in">
+			<strong>重要提示:</strong> 上传的所有文件会后，会自动建立md5file，即，您上传重复文件不会保存多份。
+		</div>
 </div>
 </section>
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>

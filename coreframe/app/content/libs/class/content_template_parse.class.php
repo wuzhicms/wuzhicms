@@ -284,6 +284,7 @@ class WUZHI_content_template_parse {
                 $master_table = $model_r['master_table'];
             }
             $r = $this->db->get_one($master_table,array('id'=>$rs['id']));
+			$r = array_merge($r,$rs);
             $result[] = $r;
         }
         return $result;

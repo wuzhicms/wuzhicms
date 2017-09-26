@@ -74,7 +74,7 @@
 
                     {loop $guestbook_result $r}
                     <div class="panel-heading">
-                        <span style="display: inline-block"><strong>[<a>{$r['area']}</a> <a>{$r['category']}</a>] <a>{$r['title']}</a></strong><span class="color_danger  font_size14">&nbsp;&nbsp; | &nbsp;&nbsp;{$status[$r[status]]}</span> </span> <span style=" float: right; font-size: 14px;  color: #999; line-height: 2.2">网友：{$r['linkman']}  &nbsp;&nbsp; {date('Y-m-d H:i',$r['addtime'])}</span>
+                        <span style="display: inline-block"><strong>{if $r['area']}[<a>{$r['area']}</a>]{/if} <a>{$r['category']}</a> <a href="index.php?m=guestbook&v=show&id={$r['id']}">{$r['title']}</a></strong><span class="color_danger  font_size14">&nbsp;&nbsp; | &nbsp;&nbsp;{$status[$r[status]]}</span> </span> <span style=" float: right; font-size: 14px;  color: #999; line-height: 2.2">网友：{$r['linkman']}  &nbsp;&nbsp; {date('Y-m-d H:i',$r['addtime'])}</span>
                     </div>
                     <div class="panel-body">
                         {strcut($r['content'],180,'...')}

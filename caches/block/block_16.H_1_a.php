@@ -28,5 +28,5 @@
   'createhtml' => '0',
   'remark' => '',
   'isopenid' => '0',
-  'lang' => 'zh',
+  'lang' => '',
 )?>

@@ -247,6 +247,10 @@ function pages($num, $current_page, $pagesize = 20, $urlrule = '', $variables = 
 		if ($current_page == $maxpage) $active = 'class="active"';
 		$output .= '<li><a ' . $active . ' href="' . _pageurl($urlrule, $maxpage, $variables) . '">' . $maxpage . '</a></li>';
 	}
+	if(defined('IN_ADMIN')) {
+		$pagelink = _pageurl($urlrule, $pageup, $variables);
+		$output .= '<li> 跳转到：<input style="width: 40px;height: 29px;margin-top: 5px;" onkeydown="if(event.keyCode==13) {gotourl(\''.$pagelink.'&page=\'+this.value);return false;};"></li>';
+	}
 	//下一页
 	$pagedown = $current_page + 1;
 	if ($pagedown >= $maxpage) $pagedown = $maxpage;
@@ -591,7 +595,7 @@ function strcut($str, $width = 0, $end = '...', $rephtml = 0) {
 	$x2 = 16;
 	$x3 = 21;
 	$x4 = $x3;
-
+	$e = '';
 	for ($i = 0; $i < $len; $i++) {
 		if ($w >= $width) {
 			$e = $end;
@@ -694,7 +698,7 @@ function linkage($linkageid, $name, $returnid = 1, $extjs = '',$values = array()
 		$str .= '<div id="wz_' . $id . '">';
 		$str .= '<input type="hidden" id="' . $id . '" name="' . $name . '" value="0">';
 		for ($i = 1; $i <= $level; $i++) {
-			if($i==$level) $extjs = '';
+			if($i>1 && $i==$level) $extjs = '';
 			$str .= '<div class="col-sm-4"><select class="LK' . $linkageid . '_' . $i . ' form-control" name="LK' . $linkageid . '_' . $i . '" id="LK' . $linkageid . '_' . $i . '" onchange="linkage(\'' . $id . '\',this.value,this)" ' . $extjs . ' data-value="'.$values[$i].'"></select></div>';
 		}
 		$str .= '</div>';
@@ -1243,4 +1247,47 @@ function segment($data) {
 	}
 	return $words;
 }
+
+/**
+ * 提交链接到百度
+ * @param $urls 链接地址，数组 array('url1','url2')
+ * @param $siteid 站点id
+ * @param $action 操作方法，推送数据：urls，更新数据：update，删除数据：del
+ */
+function baidu_linkpost($urls,$siteid = 1,$action = 'urls') {
+	static $baidu_api;
+	if(empty($baidu_api)) {
+		$baidu_api['sitelist'] = get_cache('sitelist');
+		foreach ($baidu_api['sitelist'] as $sid=>$r) {
+			$baidu_api['urls'][$sid] = 'http://data.zz.baidu.com/urls?site='.$r['baidu_site'].'&token='.$r['baidu_token'];
+			$baidu_api['update'][$sid] = 'http://data.zz.baidu.com/update?site='.$r['baidu_site'].'&token='.$r['baidu_token'];
+			$baidu_api['del'][$sid] = 'http://data.zz.baidu.com/del?site='.$r['baidu_site'].'&token='.$r['baidu_token'];
+		}
+	}
+	if($baidu_api['sitelist'][$siteid]['baidu_site']=='') {
+		return true;
+	}
+
+	$baidu_urls = array();
+	foreach($urls as $url) {
+		if(strpos($url,'://')===false) {
+			$url = $baidu_api['sitelist'][$siteid]['url'].ltrim($url,'/');
+		}
+		$baidu_urls[] = $url;
+	}
+	$baidu_urls = implode("\n", $baidu_urls);
+
+	$ch = curl_init();
+	$options =  array(
+		CURLOPT_URL => $baidu_api[$action][$siteid],
+		CURLOPT_POST => true,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_POSTFIELDS => $baidu_urls,
+		CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+	);
+	curl_setopt_array($ch, $options);
+	curl_exec($ch);
+	curl_close($ch);
+}
+
 ?>

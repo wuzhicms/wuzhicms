@@ -30,7 +30,7 @@ class WUZHI_tags{
 		if(!isset($param['page'])) $param['page'] = max(output($GLOBALS,'page'),1);
 		if(!isset($this->_cache[$type.'_url_rule']))
 		{
-			MSG( L('url_rule_empty'), HTTP_REFERER, 3000);
+			//MSG( L('url_rule_empty'), HTTP_REFERER, 3000);
 		}
 		$url_rule = explode('|',$this->_cache[$type.'_url_rule']);
 

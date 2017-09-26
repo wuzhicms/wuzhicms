@@ -159,7 +159,7 @@ class WUZHI_ckditor{
 		/* 返回数据 */
 		$FileInfo = $up->getFileInfo();
 		$fileurl = $FileInfo['url'];
-		$CKEditorFuncNum = intval($GLOBALS['CKEditorFuncNum']);
+		$CKEditorFuncNum = isset($GLOBALS['CKEditorFuncNum']) ? intval($GLOBALS['CKEditorFuncNum']) : 0;
 		//{"fileName":"image(4).png","uploaded":1,"error":{"number":201,"message":"A file with the same name already exists. The uploaded file was renamed to \u0022image(4).png\u0022."},"url":"\/userfiles\/files\/image(4).png"}
 		/**
 		 *
@@ -204,12 +204,12 @@ class WUZHI_ckditor{
 		} else {
 			$where = $keywords ? ' (`name` like "%'.$keywords.'%" or tags like "%'.$keywords.'%" )' : ' 1 ';
 		}
-		if($GLOBALS['start']) {
+		if(isset($GLOBALS['start']) && $GLOBALS['start']) {
 			$start = $GLOBALS['start'];
 			$start = strtotime($start);
 			$where .= " AND `addtime`>='$start'";
 		}
-		if($GLOBALS['end']) {
+		if(isset($GLOBALS['end']) && $GLOBALS['end']) {
 			$end = $GLOBALS['end'];
 			$end = strtotime($end);
 			$where .= " AND `addtime`<='$end'";
@@ -217,12 +217,14 @@ class WUZHI_ckditor{
 		if($username) {
 			$where .= " AND `username`='$username'";
 		}
-		$lists = $db->get_list('attachment',$where,'path,addtime,name,filesize', 0, $pagesize, $page, 'id DESC');
+		$lists = $db->get_list('attachment',$where,'id,path,addtime,name,filesize', 0, $pagesize, $page, 'id DESC');
 		$return_list = $files = array();
 		foreach($lists AS $k=>$v)
 		{
-			$file_name =  pathinfo($v['name'], PATHINFO_FILENAME);
+			//$file_name =  pathinfo($v['name'], PATHINFO_FILENAME);
+			$file_name =  $v['name'];
 			$files[] = array(
+			'id'=> $v['id'],
 			'url'=> ATTACHMENT_URL.$v['path'],
 			'mtime'=> date('Y-m-d H:i',$v['addtime']),
 			'filesize'=> sizecount($v['filesize']),

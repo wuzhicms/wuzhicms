@@ -49,7 +49,7 @@ class WUZHI_py {
 	 * @param string $sRetFormat 返回格式 [head:首字母|all:全拼音]
 	 * @return string
 	 */
-	public static function encode($utf8Data, $sRetFormat='head'){
+	public static function encode($utf8Data, $sRetFormat='head', $glue = ' '){
 		$sGBK = iconv('UTF-8', 'GBK', $utf8Data);
 		$aBuf = array();
 		for ($i=0, $iLoop=strlen($sGBK); $i<$iLoop; $i++) {
@@ -64,7 +64,7 @@ class WUZHI_py {
 		if ('head' === $sRetFormat)
 			return implode('', $aBuf);
 		else
-			return implode(' ', $aBuf);
+			return implode($glue, $aBuf);
 	}
 
 	/**

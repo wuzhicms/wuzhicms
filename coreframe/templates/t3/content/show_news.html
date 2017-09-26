@@ -20,7 +20,18 @@
             <div  class="content-p">
                 {$content}
             </div>
-
+            {if $content_pages}
+            <div style="text-align:center;">
+                <nav style="text-align: center;">
+                    <ul class="pagination">
+                        {$content_pages}
+                    </ul>
+                </nav>
+            </div>
+            {/if}
+            {loop $keywords $keyword}
+            <a href="{WEBURL}index.php?m=tags&f=index&v=show&tid={$keyword}">{$keyword}</a>
+            {/loop}
             <hr>
             <div class="before-and-next">
                 <div class="row">

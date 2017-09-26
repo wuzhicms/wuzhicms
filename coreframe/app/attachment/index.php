@@ -59,7 +59,7 @@ class index {
                 ));
                 break;
         }
-        $callback = strip_tags($GLOBALS['callback']);
+        $callback = isset($GLOBALS['callback']) ? strip_tags($GLOBALS['callback']) : '';
         if($callback) {
             exit($callback.'('.json_encode($result).')');
         } else {
@@ -72,10 +72,15 @@ class index {
         $insert = array();
         $_username = get_cookie('_username');
 
-        $wz_name = get_cookie('wz_name');
+        $wz_name = get_cookie('username');
         if($wz_name!='') {
             $_username = $wz_name;
         }
+		$ext = $GLOBALS['ext'];
+		$token = $GLOBALS['token'];
+		if($ext=='' || md5($ext._KEY)!=$token) {
+			die('{"jsonrpc" : "2.0", "error" : {"code": 105, "message": "token验证失败，不允许上传文件"}, "id" : "id"}');
+		}
         if($_username!='') {
             $mr = $this->db->get_one('member', array('username' => $_username),'uid');
             if(!$mr) {
@@ -171,8 +176,28 @@ class index {
             $id = $r['id'];
             die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.ATTACHMENT_URL.$r['path'].'", "id" : "'.$id.'", "filename" : "'.$r['name'].'" }');
         } else {
+			$this->setting = get_cache('attachment');
+			if(isset($GLOBALS['is_thumb']) && $GLOBALS['is_thumb']) {
+				$this->water_mark = false;
+			} else {
+				$this->water_mark = $this->setting['watermark_enable'];
+			}
+			$ext = get_ext($insert['path']);
+			if($this->water_mark == true && in_array($ext,array('jpg','png','gif'))) {
+				$this->image = load_class('image');
+				$this->image->set_image(ATTACHMENT_ROOT.$insert['path']);
+				$this->image->createImageFromFile();
+				if($this->setting['watermark_enable']==2) {//文字水印
+					$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+				} else {//图片水印
+					$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+				}
+
+				$this->image->save();
+			}
             $attachment = load_class('attachment',M);
             $insert['md5file'] = $md5file;
+
             $id = $attachment->insert($insert);
 
             // Return Success JSON-RPC response
@@ -186,6 +211,12 @@ class index {
     //上传弹窗调用
     public function upload_dialog()
     {
+		$uid = get_cookie('uid');
+		if(is_numeric($uid)) {
+			$is_admin = 1;
+		} else {
+			$is_admin = 0;
+		}
         upload_url_safe();
         $callback = isset($GLOBALS['callback']) ? remove_xss($GLOBALS['callback']) : 'callback_thumb_dialog';
         $htmlid = isset($GLOBALS['htmlid']) ? remove_xss($GLOBALS['htmlid']) : 'file';
@@ -270,9 +301,9 @@ class index {
             case 'listimage':/* 列出图片 */
             case 'listfile':/* 列出文件 */
                 $page = $GLOBALS['page']  ? intval($GLOBALS['page']) : 1;
-                $keytype = $GLOBALS['keytype'] ? intval($GLOBALS['keytype']) : 0;
+                $keytype = isset($GLOBALS['keytype']) ? intval($GLOBALS['keytype']) : 0;
                 $keywords = isset($GLOBALS['keywords']) ? iconv('utf-8','gbk',remove_xss($GLOBALS['keywords'])) : '';
-                $username = strip_tags($GLOBALS['username']);
+                $username = input('username');
                 $username = sql_replace($username);
                 $result = $ckditor->lists($page,$keytype,$keywords,$username);
                 if(isset($GLOBALS['returnjson'])) {
@@ -281,6 +312,8 @@ class index {
                     $CKEditorFuncNum = intval($GLOBALS['CKEditorFuncNum']);
                     load_class('form');
                     $CKEditor = $GLOBALS['CKEditor'];
+					$GLOBALS['start'] = isset($GLOBALS['start']) ? $GLOBALS['start'] : '';
+					$GLOBALS['end'] = isset($GLOBALS['end']) ? $GLOBALS['end'] : '';
                     include T('attachment','listimage');
                 }
                 exit;
@@ -300,5 +333,54 @@ class index {
         }
         exit($result);
     }
+    function file_brower() {
+		$uid = get_cookie('uid');
+		if(!is_numeric($uid)) {
+			MSG('你似乎走错地方了！这是后台权限！');
+		}
+		$action = remove_xss($GLOBALS['action']);
+		$ckditor = load_class('ckditor',M);
+		switch($action)
+		{
+			case 'listimage':/* 列出图片 */
+				$page = $GLOBALS['page']  ? intval($GLOBALS['page']) : 1;
+				$keytype = isset($GLOBALS['keytype']) ? intval($GLOBALS['keytype']) : 0;
+				$keywords = isset($GLOBALS['keywords']) ? iconv('utf-8','gbk',remove_xss($GLOBALS['keywords'])) : '';
+				$username = input('username');
+				$username = sql_replace($username);
+				$result = $ckditor->lists($page,$keytype,$keywords,$username);
+				if(isset($GLOBALS['returnjson'])) {
+					echo json_encode($result);
+				} else {
+					$CKEditorFuncNum = intval($GLOBALS['CKEditorFuncNum']);
+					load_class('form');
+					$CKEditor = $GLOBALS['CKEditor'];
+					$GLOBALS['start'] = isset($GLOBALS['start']) ? $GLOBALS['start'] : '';
+					$GLOBALS['end'] = isset($GLOBALS['end']) ? $GLOBALS['end'] : '';
+					include T('attachment','file_brower');
+				}
+				exit;
+				break;
+			case 'weburl':/* 远程图片 */
+				$page = $GLOBALS['page']  ? intval($GLOBALS['page']) : 1;
+				$keytype = isset($GLOBALS['keytype']) ? intval($GLOBALS['keytype']) : 0;
+				$keywords = isset($GLOBALS['keywords']) ? iconv('utf-8','gbk',remove_xss($GLOBALS['keywords'])) : '';
+				$username = input('username');
+				$username = sql_replace($username);
+				$result = $ckditor->lists($page,$keytype,$keywords,$username);
+				if(isset($GLOBALS['returnjson'])) {
+					echo json_encode($result);
+				} else {
+					$CKEditorFuncNum = intval($GLOBALS['CKEditorFuncNum']);
+					load_class('form');
+					$CKEditor = $GLOBALS['CKEditor'];
+					$GLOBALS['start'] = isset($GLOBALS['start']) ? $GLOBALS['start'] : '';
+					$GLOBALS['end'] = isset($GLOBALS['end']) ? $GLOBALS['end'] : '';
+					include T('attachment','file_brower_weburl');
+				}
+				exit;
+				break;
+		}
+	}
 }
 ?>

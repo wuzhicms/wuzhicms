@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>远程图片-Powered by wuzhicms</title>
+	<link type="text/css" rel="stylesheet" href="{R}member/css/bootstrap.css">
+
+	<link href="{R}css/bootstrapreset.css" rel="stylesheet" />
+	<link href="{R}css/pxgridsicons.min.css" rel="stylesheet" />
+	<script type="text/javascript">
+		var cookie_pre="{COOKIE_PRE}";var cookie_domain = '{COOKIE_DOMAIN}';var cookie_path = '{COOKIE_PATH}';
+	</script>
+	<script type="text/javascript" src="{R}member/js/jquery.min.js"></script>
+	<script src="{R}js/base.js"></script>
+
+	<![endif]-->
+
+	<style>
+		/* 图片管理样式 */
+		#online {
+			padding: 20px 0 0 0;
+		}
+
+		.return-online{
+			/* vertical-align: middle; */
+			top: 40%;
+			left: 45%;
+			position: absolute;
+			color: #7d7875;
+			font-size: 28px;
+		}
+
+        .form-control {
+             min-height: 50px;
+        }
+        input[type="text"], input[type="password"], input[type="email"], input.text, input.email, input.password, textarea.form-control {
+            font-size: 18px;
+        }
+	</style>
+</head>
+<body style="background: #fafafa">
+<section class="wrapper" id="wrapper_content">
+    <br>
+	<div id="online">
+		<div class="col-lg-12 col-sm-12 col-xs-12">
+			<input type="text" name="tag[tag]" id="weburl" class="form-control input-lg " style="height: 80px" value="" placeholder="http:// 开头或者 https:// 开头">
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+
+            <div class="col-sm-4 center"></div>
+                <div class="col-sm-4 center">
+                    <button type="submit" class="form-control btn btn-info btn-lg" onclick="returnFileUrl();" style="font-size: 18px;">确定</button>
+                </div>
+                <div class="col-sm-4 center"></div>
+
+
+	</div>
+
+</section>
+
+<script>
+
+
+	function getUrlParam( paramName ) {
+		var reParam = new RegExp( '(?:[\?&]|&)' + paramName + '=([^&]+)', 'i' );
+		var match = window.location.search.match( reParam );
+
+		return ( match && match.length > 1 ) ? match[1] : null;
+	}
+	// Simulate user action of selecting a file to be returned to CKEditor.
+	function returnFileUrl() {
+		var callback = getUrlParam( 'callback' );
+		var fileUrl=$("#weburl").val();
+		$("#wrapper_content").addClass('return-online');
+		$("#wrapper_content").html('已选择成功');
+        id=0;
+        window.opener.callback_online(fileUrl+',文件名,'+id);
+		if(callback=='callback_ck_images') {
+			window.close();
+		} else {
+			setTimeout("window.close()",500);
+		}
+	}
+	$("#weburl").focus();
+</script>
+
+</body>

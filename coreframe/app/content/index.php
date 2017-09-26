@@ -38,7 +38,7 @@ class index{
 		$cityname = $city_config[$city]['cityname'];
 
         $cookie_city = $_COOKIE[COOKIE_PRE.'city_key'];
-        if($cookie_city) {
+        if($cookie_city && in_array($cookie_city,$city_config)) {
             set_cookie('city',$cookie_city);
             $city = $cookie_city;
         }
@@ -72,6 +72,7 @@ class index{
             if(!$category) MSG(L('parameter_error'));
             $model_r = $models[$category['modelid']];
             if(!$model_r) MSG(L('parameter_error'));
+
             $master_table = $model_r['master_table'];
         } else {
             $models = get_cache('model_content','model');
@@ -84,8 +85,9 @@ class index{
         if(!$cid) {
             $category = get_cache('category_'.$data['cid'],'content');
             $model_r = $models[$category['modelid']];
-        }
-
+        } elseif($data['modelid']) {
+			$model_r = $models[$data['modelid']];
+		}
         $_uid = get_cookie('_uid');
         //城市分站信息
         $city = get_cookie('city');
@@ -146,8 +148,11 @@ class index{
             }
         }
         //end 权限检查
+
         if($template) {
-            $_template = $template;
+			$_template = $template;
+		} elseif($model_r['template'] && $category['modelid']!=$modelid) {
+			$_template = $model_r['template'];
         } elseif($category['show_template']) {
             $_template = $category['show_template'];
         } elseif($model_r['template']) {

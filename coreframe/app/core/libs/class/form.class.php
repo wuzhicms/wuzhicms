@@ -31,8 +31,8 @@ class WUZHI_form {
 				//$str .= '<script type="text/javascript">';
 				//$str .= 'window.UEDITOR_HOME_URL="'.R.'js/ueditor/";';
 				//$str .= '</script>';
-				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
-				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js"></script>';
+				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js?'.VERSION.'"></script>';
+				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js?'.VERSION.'"></script>';
 			}
 
 			$str .= '<script type="text/javascript">';
@@ -63,7 +63,9 @@ class WUZHI_form {
 		} else {
 			if (!defined('CKEDITOR')) {
 				define('CKEDITOR', TRUE);
-				$str .= '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
+				$ck_ext_token = md5('jpg|png|gif'._KEY);
+				$str .= '<script type="text/javascript">var ck_ext_token="'.$ck_ext_token.'";</script>';
+				$str .= '<script src="' . R . 'js/ckeditor/ckeditor.js?'.VERSION.'"></script>';
 			}
 			if($area_load==0) {
 				$str .= '<textarea name="'.$name.'" id="'.$editname.'" rows="3">'.$value.'</textarea>';
@@ -133,7 +135,7 @@ class WUZHI_form {
 			$str = '';
 			$str .= '<script type="text/javascript" src="' . R . 'js/json2.js"></script>';
 			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/plupload.full.min.js"></script>';
-			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js"></script>';
+			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js?'.VERSION.'"></script>';
 		}
 		echo $str;
 		include T('attachment', 'upload', 'default');
@@ -156,7 +158,7 @@ class WUZHI_form {
 	 * @author tuzwu
 	 * @return string
 	 */
-	public static function attachment($ext = 'png|jpg|gif|doc|docx', $limit = 1, $formname = 'file', $default_val = '', $callback = 'callback_thumb_dialog', $is_thumb = 1, $width = '', $height = '', $cut = 0,$is_water = false,$is_allow_show_img=false,$ext_code = ''){
+	public static function attachment($ext = 'png|jpg|gif|doc|docx', $limit = 1, $formname = 'file', $default_val = '', $callback = 'callback_thumb_dialog', $is_thumb = 1, $width = '', $height = '', $cut = 0,$is_water = 0,$is_allow_show_img=false,$ext_code = '',$show_imagecut = 0,$ext_arr = array()){
 		if ($ext == '') $ext = 'png|jpg|gif';
 		if(strpos($formname,'][')===false) {
 			$id = preg_match("/\[(.*)\]/", $formname, $m) ? $m[1] : $formname;
@@ -168,10 +170,9 @@ class WUZHI_form {
 		$str = '';
 		if (!defined('PUPLOAD_INIT')) {
 			define('PUPLOAD_INIT', TRUE);
-			$str = '<script src="' . R . 'js/dialog/dialog-plus.js"></script>';
 			$str .= '<script type="text/javascript" src="' . R . 'js/json2.js"></script>';
 			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/plupload.full.min.js"></script>';
-			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js"></script>';
+			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js?'.VERSION.'"></script>';
 		}
 		$limit = $limit ? $limit : 1;
 		if ($is_thumb) $limit = 1;
@@ -196,7 +197,15 @@ class WUZHI_form {
 
 		$token = md5($ext . _KEY);
 		$up_url = 'index.php' . link_url(array('m' => 'attachment', 'f' => 'index', 'v' => 'upload_dialog', 'callback' => $callback, 'htmlid' => $id, '_su' => '', 'limit' => $limit, 'is_thumb' => $is_thumb, 'width' => $width, 'height' => $height, 'htmlname' => $formname, 'ext' => $ext, 'token' => $token, 'cut' => $cut,'is_water'=>$is_water,'is_allow_show_img'=>$is_allow_show_img));
-		$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="openiframe(\'' . $up_url . '\',\'' . $id . '\',\'loading...\',810,400,' . $limit . ')">上传文件</button></span>';
+		$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="openiframe(\'' . $up_url . '\',\'' . $id . '\',\'loading...\',810,400,' . $limit . ')">上传文件</button>';
+		if(isset($ext_arr['htmldata'])) {
+			$str .= $ext_arr['htmldata'];
+		}
+		$str .= '</span>';
+		if($show_imagecut) {
+			$up_url = 'index.php' . link_url(array('m' => 'attachment', 'f' => 'imagecut', 'v' => 'init', 'callback' => $callback, 'htmlid' => $id, '_su' => '', 'limit' => $limit, 'is_thumb' => $is_thumb, 'width' => $width, 'height' => $height, 'htmlname' => $formname, 'ext' => $ext, 'token' => $token, 'cut' => $cut,'is_water'=>$is_water,'is_allow_show_img'=>$is_allow_show_img));
+			$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="imagecut(\'' . $up_url . '\',\'' . $id . '\',\'图片裁剪\',1100,560,' . $limit . ')">裁剪</button></span>';
+		}
 		return $str;
 	}
 

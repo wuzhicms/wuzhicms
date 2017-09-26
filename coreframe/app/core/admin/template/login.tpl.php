@@ -35,7 +35,7 @@
             </div>
             <button type="submit" name="submit" class="btn btn-shadow btn-danger btn-block btn-login">登 录</button>
         </div>
-        <div class="form-signin-bottom center">Copyright &copy; 2014 wuzhicms.com <a href="http://www.wuzhicms.com/" target="_blank">北京五指互联科技有限公司 版权所有</a></div>
+        <div class="form-signin-bottom center">Copyright &copy; 2017 wuzhicms.com <a href="http://www.wuzhicms.com/" target="_blank">北京五指互联科技有限公司 版权所有</a></div>
     </form>
 </div>
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>

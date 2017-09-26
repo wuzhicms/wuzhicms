@@ -49,7 +49,9 @@ class menu extends WUZHI_admin {
                 $maxid = $r['menuid']+1;
                 $formdata['menuid'] = $maxid;
             }
+
 			$id = $this->db->insert('menu',$formdata);
+            
 			$this->db->update('menu',array('sort'=>$id),array('menuid'=>$id));
 			//缓存菜单语音包
 			load_class('cache_menu');
@@ -95,6 +97,7 @@ class menu extends WUZHI_admin {
             $formdata['display'] = $GLOBALS['form']['display'];
 
             $this->db->update('menu',$formdata,array('menuid'=>$id));
+
             //缓存菜单语音包
             load_class('cache_menu');
             MSG(L('operation success'),$GLOBALS['forward']);

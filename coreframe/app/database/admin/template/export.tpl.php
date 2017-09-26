@@ -36,7 +36,10 @@ include $this->template('header','core');
 						<td><input type="submit" name="dosubmit" class="btn btn-info btn-sm" value="备 份"></td>
 					</tr>
 					</table>
-
+						<br>
+						<div class="alert alert-success fade in">
+							<strong>文件备份所在目录:</strong> <?php echo CACHE_ROOT;?>db_bak
+						</div>
                         <table class="table table-striped table-advance table-hover">
                             <thead>
                             <thead>

@@ -21,7 +21,7 @@
 <div class="photo-list-box">
     <div class="container">
         <div class="row">
-            {wz:content action="listing" page="$page" pagesize="12" order="sort DESC,id DESC" cid="$cid" urlrule="$urlrule"}
+            {wz:content action="listing" page="$page" pagesize="12" order="sort DESC,id DESC" cid="$cid" rank="1" urlrule="$urlrule"}
             {loop $rs $r}
             <div class="col-xs-3">
                 <div class="thumbnail">
@@ -32,7 +32,7 @@
                         <p  class="manhangyichu margin_bottom0"><a href="{$r['url']}">{$r['title']}</a></p>
                         <div class="caption-left-and-right">
                             <div class="caption-left color_999 font_size12">{date('Y-m-d',$r['addtime'])}</div>
-                            <div class="caption-right color_999 font_size12"><a href=""><span class="glyphicon glyphicon-play-circle font_size12 color_ccc" aria-hidden="true"></span> 600</a></div>
+                            <div class="caption-right color_999 font_size12"><span class="glyphicon glyphicon-play-circle font_size12 color_ccc" aria-hidden="true"></span> {$r['rank']['views']}</div>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
 class index {
  	function __construct() {
         $this->db = load_class('db');
-        $this->siteconfigs = get_cache('siteconfigs');
+        $this->siteconfigs = get_cache('siteconfigs_1');
     }
 
 	public function init() {

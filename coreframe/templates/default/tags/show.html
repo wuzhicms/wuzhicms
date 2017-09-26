@@ -1,10 +1,99 @@
 {T 'tags','header'}
 
-{wz:tags action="content" page="$page" tid="$tid" cid="" modelid="" moduleid="" pagesize="10" field="" order="id DESC"}
+<!--{wz:tags action="content" page="$page" tid="$tid" cid="" modelid="" moduleid="" pagesize="10" field="" order="id DESC"}
 {loop $rs $r}
 <li>{$r[id]} <a href="{$r[url]}">{safe_htm($r['title'])}</a></li>
 {/loop}
-{/wz}
+{/wz}-->
 
-</body>
-</html>
+<!--路径导航-->
+<div style="background: #f3f3f3">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="{WEBURL}">首页</a><span> &gt;</span></li>
+            <a href="{WEBURL}tags/">TAGS列表</a> <span> &gt;</span> 标签：{$taginfo['tag']}
+        </ol>
+    </div>
+</div>
+
+<div class="news-second-screen">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8">
+                <div class=" tags-box" style="margin-top: 0; background: #F5F5F5;"><span class="juhe-tt">聚和阅读：</span> &nbsp; <strong>关于“{$taginfo['tag']}”的最新资讯</strong></div>
+                <div class=" tags-box" style="margin-top: 0; background: #F5F5F5; padding-top: 8px;">
+                    <h3 class="first-letter color_primary">首字母搜索</h3>
+                    <div class=" letter-nav-g   color_primary">
+                        {loop $letters $r}
+                        <a href="{WEBURL}tags/{$r}.html">{$r}</a>
+                        {/loop}
+                    </div>
+                </div>
+
+                <div class="headline-news-list">
+                    {wz:tags action="content" page="$page" tid="$tid" cid="" modelid="" moduleid="" pagesize="10" page="$page" field="" order="id DESC" pinyin="$pinyin"}
+                    {loop $rs $r}
+                    <div class="media">
+                        {if $r['thumb']}
+                        <div class="media-left ">
+                            <a href="{$r['url']}">
+                                <img class="media-object" src=" {$r['thumb']}" alt="{$r['title']}" width="165px" height="110px">
+                            </a>
+                        </div>
+                        {/if}
+                        <div class="media-body">
+                            <h4 class="media-heading manhangyichu"><a href="{$r['url']}">{safe_htm($r['title'])}</a></h4>
+                            <div class="media-content" >{strcut($r['remark'],200,'...')}</div>
+                            <div  class="media-time"><span class="left">发布时间：{date('Y-m-d H:i:s',$r['addtime'])}</span><span class="right">浏览(<samp  id="view_{$r['cid']}_{$r['id']}">0</samp>) </span></div>
+                        </div>
+                    </div>
+                    {/loop}
+                    {/wz}
+                </div>
+                <div style="text-align:center;">
+
+                    <nav style="text-align: center;">
+                        <ul class="pagination">
+                            {$pages}
+                        </ul>
+                    </nav>
+
+                </div>
+                    <script>
+                        var views_keyid = new Array();
+                        {loop $rs $r}
+                        views_keyid.push('{$r['cid']}_{$r['id']}');
+                        {/loop}
+                        $.getJSON("{WEBURL}index.php", {f: "stats", keyid: views_keyid },
+                                function(data){
+                                    $.each(data, function( index, value ) {
+                                        console.log(value);
+                                        $("#view_"+value.cid+'_'+value.id).html(value.views);
+                                    });
+                                });
+                    </script>
+            </div><!-- col-xs-8  -->
+
+            <div class="col-xs-4 ">
+                <div class="right-bg-box" style="padding-top: 20px; padding-bottom: 20px;">
+                    <div class="ad-box-first" style="height: 300px; width: 100%; background: #dddddd"><script  src="{WEBURL}promote/8.js"></script></div>
+                    <div class="lm-title margin_bottom15">
+                        <h3 class="lm-title-left">浏览排行 </h3>
+                    </div>
+                    <div class="list-ol-box-2">
+                        <ol class="rectangle-list-2">
+                            {wz:content action="rank" pagesize="10" order="weekviews DESC" cid="$cid" urlrule="$urlrule"}
+                            {loop $rs $r}
+                            <li ><a href="{$r[url]}">{$r['title']}</a></li>
+                            {/loop}
+                            {/wz}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{T 'tags','footer'}

@@ -9,7 +9,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
 /**
  * 采集内容
  */
-//Example: php /workspace/wwwroot/project/h1jk.cn/coreframe/crontab.php collect collect_content
+//Example: php /workspace/wwwroot/sendmail.wuzhicms.net/coreframe/crontab.php domain_collect collect_content
 /*
 /Applications/XAMPP/bin/php-5.4.31 /workspace/wwwroot/project/h1jk.cn/coreframe/crontab.php collect collect_content
 */
@@ -67,7 +67,13 @@ function replace_code($html, $config) {
 }
 
 function get_content($url,$config) {
-    $html = get_curl($url);
+	$ip1 = rand(1,211).'.'.rand(1,211).'.'.rand(1,211).'.'.rand(1,211);
+	$ip2 = rand(1,211).'.'.rand(1,211).'.'.rand(1,211).'.'.rand(1,211);
+	$header = array(
+		'CLIENT-IP:'.$ip1,
+		'X-FORWARDED-FOR:'.$ip2,
+	);
+    $html = get_curl($url,$header);
     $html = str_replace(array("\r", "\n"), "", $html);
     foreach($config['fields'] as $field=>$_c) {
         if(isset($_c['func'])) {
@@ -89,57 +95,81 @@ function get_content($url,$config) {
 
 $config['fields'] = array(
     'title'=>array(
-        'start'=>'<title>【',
-        'end'=>'】',
+        'start'=>'h2Title fl">',
+        'end'=>'</h2>',
     ),
-    'address'=>array(
-        'start'=>'gray">地址：</span>',
-        'end'=>'<a class="maps_ico',
+    'domain'=>array(
+        'start'=>'plink ml5 fl"><a href="http://',
+        'end'=>'"',
     ),
-    'days'=>array(
-        'start'=>'该医院需提前<em class="orange">',
-        'end'=>'天',
-    ),
-    'worktime'=>array(
-        'start'=>'gray">时间：</span>',
-        'end'=>'</div>',
-    ),
-    'huanjing'=>array(
-        'start'=>'<div class="slider clearfix">',
-        'end'=>'<div class="text fr">',
-        'func'=>'get_more_image',
-        'func_result'=>'http://www.rkang.cn/',
-    ),
-    'jibie'=>array(
-        'start'=>'<em class="green">[',
-        'end'=>']</em>',
-        'func'=>'r2id',
-        'func_result'=>array('1'=>'专业体检中心','2'=>'高端体检中心','3'=>'公立医院体检中心'),
-    ),
-    'fuwu'=>array(
-        'start'=>'div class="agency_icons fr">',
-        'end'=>'</div>',
-        'func'=>'group_search_string',
-        'func_result'=>array('1'=>'体检报告','2'=>'早餐','3'=>'VIP体检区','4'=>'周末体检','5'=>'停车位','6'=>'体检服','7'=>'一对一陪检','8'=>'快递报告','9'=>'DIY定制','10'=>'可两天内预约'),
-    ),
-    'content'=>array(
-        'start'=>'<div class="order_way_cont">',
-        'end'=>'</div>',
-        'replace_code'=>' style="line-height:3em;"',
+    'top'=>array(
+        'start'=>'.html?#obj_',
+        'end'=>'"',
     ),
     'thumb'=>array(
-        'start'=>'slider clearfix"> <img',
-        'end'=>'class="bigimg"',
+        'start'=>'Centleft fl mt5"><img',
+        'end'=>'onerror="this',
         'func'=>'get_image_in_string',
         'func_result'=>'http://www.rkang.cn/',
     ),
-
+	'remark'=>array(
+		'start'=>'class="webIntro">',
+		'end'=>'</p>',
+	),
+	'content'=>array(
+		'start'=>'class="webIntro">',
+		'end'=>'</p>',
+	),
+	'icp_dwmc'=>array(
+		'start'=>'<p>单位名称：',
+		'end'=>'</p>',
+	),
+	'icp_dwxz'=>array(
+		'start'=>'<p>单位性质：',
+		'end'=>'</p>',
+	),
+	'icp_wzba'=>array(
+		'start'=>'<p>网站备案：',
+		'end'=>'</p>',
+	),
+	'server_ip'=>array(
+		'start'=>'<p>Ip地址：',
+		'end'=>'</p>',
+	),
+	'server_address'=>array(
+		'start'=>'<p>服务器地址：',
+		'end'=>'</p>',
+	),
+	'server_lx'=>array(
+		'start'=>'<p>服务器类型：',
+		'end'=>'</p>',
+	),
+	'server_xysj'=>array(
+		'start'=>'<p>响应时间：',
+		'end'=>'</p>',
+	),
+	'domain_ymzcs'=>array(
+		'start'=>'<p>域名注册商：',
+		'end'=>'</p>',
+	),
+	'domain_ymfwq'=>array(
+		'start'=>'<p>域名服务器：',
+		'end'=>'</p>',
+	),
+	'domain_zcsj'=>array(
+		'start'=>'<p>创建时间：',
+		'end'=>'</p>',
+	),
+	'domain_dqsj'=>array(
+		'start'=>'<p>到期时间：',
+		'end'=>'</p>',
+	),
 );
 
 $db=load_class('db');
 
 
-$cid = 32;
+$cid = 57;
 
 $cate_config = get_cache('category_'.$cid,'content');
 if(!$cate_config) MSG(L('category not exists'));
@@ -160,98 +190,85 @@ $form_add = new form_add($modelid);
 require get_cache_path('content_update','model');
 $form_update = new form_update($modelid);
 
-$result = $db->get_list('collect_url', array('status'=>0), '*', 0, 1000, 0, 'id DESC');
-//todo 标题为空时或者长度验证不通过时，处理方式
-foreach($result as $rs) {
-    $url = $rs['url'];
+$start = 1;
+$starttime = date('Y-m-d H:i:s');
+$c_time = time();
+while(1) {
+	ob_end_clean();
+	$result = $db->get_list('collect_url', array('status' => 0), '*', 0, 5, $start, 'id ASC');
+	foreach ($result as $rs) {
+		$url = $rs['url'];
 
-    $formdata = get_content($url,$config);
-    print_r($formdata);
-    if(strlen($formdata['title'])<3) continue;
+		$formdata = get_content($url, $config);
+		if (strlen($formdata['title']) < 1) continue;
+		echo $formdata['title']."\r\n";
+		$formdata = $form_add->execute($formdata);
 
-    $formdata = $form_add->execute($formdata);
+		//插入时间，更新时间，如果用户设置了时间。则按照用户设置的时间
+		$addtime = empty($formdata['addtime']) ? SYS_TIME : strtotime($formdata['addtime']);
+		$formdata['master_data']['addtime'] = $formdata['master_data']['updatetime'] = $addtime;
+		//如果是共享模型，那么需要在将字段modelid增加到数据库
+		if ($formdata['master_table'] == 'content_share') {
+			$formdata['master_data']['modelid'] = $modelid;
+		}
+		$formdata['master_data']['cid'] = $cid;
+		//默认状态 status ,9为通过审核，1-4为审核的工作流，0为回收站
+		$formdata['master_data']['status'] = isset($GLOBALS['form']['status']) ? intval($GLOBALS['form']['status']) : 9;
 
-    //插入时间，更新时间，如果用户设置了时间。则按照用户设置的时间
-    $addtime = empty($formdata['addtime']) ? SYS_TIME : strtotime($formdata['addtime']);
-    $formdata['master_data']['addtime'] = $formdata['master_data']['updatetime'] = $addtime;
-    //如果是共享模型，那么需要在将字段modelid增加到数据库
-    if($formdata['master_table']=='content_share') {
-        $formdata['master_data']['modelid'] = $modelid;
-    }
-    $formdata['master_data']['cid'] = $cid;
-    //默认状态 status ,9为通过审核，1-4为审核的工作流，0为回收站
-    $formdata['master_data']['status'] = isset($GLOBALS['form']['status']) ? intval($GLOBALS['form']['status']) : 9;
+		$formdata['master_data']['route'] = 0;
+		$formdata['master_data']['publisher'] = get_cookie('username') ? get_cookie('username') : '智能发布';
 
-    $formdata['master_data']['route'] = 0;
-    $formdata['master_data']['publisher'] = get_cookie('username') ? get_cookie('username') : '智能发布';
+		if (empty($formdata['master_data']['remark']) && isset($formdata['attr_data']['content'])) {
+			$formdata['master_data']['remark'] = mb_strcut(strip_tags($formdata['attr_data']['content']), 0, 255);
+		}
 
-    if(empty($formdata['master_data']['remark']) && isset($formdata['attr_data']['content'])) {
-        $formdata['master_data']['remark'] = mb_strcut(strip_tags($formdata['attr_data']['content']),0,255);
-    }
+		$id = $db->insert($formdata['master_table'], $formdata['master_data']);
+		//生成url
 
-    $id = $db->insert($formdata['master_table'],$formdata['master_data']);
-    //生成url
-
-    $urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1,'route'=>$formdata['master_data']['route']));
+		$urls = $urlclass->showurl(array('id' => $id, 'cid' => $cid, 'addtime' => $addtime, 'page' => 1, 'route' => $formdata['master_data']['route']));
 
 
-    $db->update($formdata['master_table'],array('url'=>$urls['url']),array('id'=>$id));
-    if(!empty($formdata['attr_table'])) {
-        $formdata['attr_data']['id'] = $id;
-        // print_r($formdata['attr_data']);exit;
-        $db->insert($formdata['attr_table'],$formdata['attr_data']);
-    }
-    $formdata['master_data']['url'] = $urls['url'];
-    //执行更新
+		$db->update($formdata['master_table'], array('url' => $urls['url']), array('id' => $id));
+		if (!empty($formdata['attr_table'])) {
+			$formdata['attr_data']['id'] = $id;
+			// print_r($formdata['attr_data']);exit;
+			$db->insert($formdata['attr_table'], $formdata['attr_data']);
+		}
+		$formdata['master_data']['url'] = $urls['url'];
+		//执行更新
 
-    $data = $form_update->execute($formdata);
+		$data = $form_update->execute($formdata);
 
-    //统计表加默认数据
-    $db->insert('content_rank',array('cid'=>$cid,'id'=>$id,'updatetime'=>SYS_TIME));
-    //生成静态
-    if($cate_config['showhtml'] && $formdata['master_data']['status']==9) {
-        $data = $db->get_one($formdata['master_table'],array('id'=>$id));
-        if(!empty($formdata['attr_table'])) {
-            $attrdata = $db->get_one($formdata['attr_table'],array('id'=>$id));
-            $data = array_merge($data,$attrdata);
-        }
-        //上一页
-        $data['previous_page'] = $db->get_one($formdata['master_table'],"`cid` = '$cid' AND `id`<'$id' AND `status`=9",'*',0,'id DESC');
-        //下一页
-        $data['next_page'] = '';
+		//统计表加默认数据
+		//$db->insert('content_rank', array('cid' => $cid, 'id' => $id, 'updatetime' => SYS_TIME));
+		//生成静态
+		if ($cate_config['showhtml'] && $formdata['master_data']['status'] == 9) {
+			$data = $db->get_one($formdata['master_table'], array('id' => $id));
+			if (!empty($formdata['attr_table'])) {
+				$attrdata = $db->get_one($formdata['attr_table'], array('id' => $id));
+				$data = array_merge($data, $attrdata);
+			}
+			//上一页
+			$data['previous_page'] = $db->get_one($formdata['master_table'], "`cid` = '$cid' AND `id`<'$id' AND `status`=9", '*', 0, 'id DESC');
+			//下一页
+			$data['next_page'] = '';
 
-        $createhtml->set_category($cate_config);
-        $createhtml->set_categorys();
-        $createhtml->load_formatcache();
-        $createhtml->show($data,1,1,$urls['root']);
-    }
-    $collecttime = date('Y-m-d H:i:s');
-    $db->update('collect_url',array('status'=>1,'collecttime'=>$collecttime),array('id'=>$rs['id']));
+			$createhtml->set_category($cate_config);
+			$createhtml->set_categorys();
+			$createhtml->load_formatcache();
+			$createhtml->show($data, 1, 1, $urls['root']);
+		}
+		$collecttime = date('Y-m-d H:i:s');
+		$db->update('collect_url', array('status' => 1, 'collecttime' => $collecttime), array('id' => $rs['id']));
+	}
+	if(empty($result)) {
+		$e_time = time();
+		$r_time = $e_time-$c_time."s\r\r";
+
+		exit("\r\nFinish!!!\r\nStart Time:".$starttime."\r\nEnd   Time:".date('Y-m-d H:i:s')."\r\nTotal Time:".$r_time."\r\n");
+	}
+	$start += 1;
+	echo "running...\r\n";
+	//sleep(1);
 }
-
-
-/**
- * 专业体检中心|1
-高端体检中心|2
-公立医院体检中心|3
- *
- *
- * 电子报告|1
-早餐|2
-vip体检区|3
-周末体检|4
-停车位|5
-体检服|6
-一对一陪检|7
-快递报告|8
-DIY定制|9
-可两天内预约|10
- */
 exit("OK\r\n");
-
-//http://api.gpsspg.com/convert/latlng/?oid=515&key=A3B8B66FEE4E5D53C529571DA61633C2&from=3&to=2&latlng=39.957530,116.395952
-
-
-//http://restapi.amap.com/v3/geocode/geo?address=%E5%8C%97%E4%BA%AC%E5%B8%82%E4%B8%9C%E5%9F%8E%E5%8C%BA%E5%AE%89%E5%BE%B7%E9%87%8C%E5%8C%97%E8%A1%9721%E5%8F%B7&key=5c69e3f99ef28981d0bf78caf4f26073&s=rsv3&callback=AMap._67523_
-
-//AMap._67523_({"status":"1","info":"OK","count":"1","geocodes":[{"formatted_address":"北京市东城区安德里北街21号","province":"北京市","citycode":"010","city":"北京市","district":"东城区","township":[],"neighborhood":{"name":[],"type":[]},"building":{"name":[],"type":[]},"adcode":"110101","street":"安德里北街","number":"21号","location":"116.395952,39.957530","level":"门牌号"}]})

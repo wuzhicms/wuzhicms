@@ -10,18 +10,18 @@
   array (
     1 => 
     array (
-      'free' => '1',
-      'buy' => '2',
+      'free' => '',
+      'buy' => '',
     ),
     2 => 
     array (
-      'free' => '3',
-      'buy' => '4',
+      'free' => '',
+      'buy' => '',
     ),
     3 => 
     array (
-      'free' => '5',
-      'buy' => '6',
+      'free' => '',
+      'buy' => '',
     ),
     6 => 
     array (
@@ -101,8 +101,8 @@
   'uc_dbtablepre' => '`bbstest`.pre_ucenter_',
   'discuz_dbtablepre' => '',
   'uc_dbcharset' => 'gbk',
-  'qq_appid' => '101164321',
-  'qq_appkey' => '57fc75d43a6b5208320dec0b5986a395',
+  'qq_appid' => '',
+  'qq_appkey' => '',
   'sina_key' => '',
   'sina_secret' => '',
   'weixin_key' => '',

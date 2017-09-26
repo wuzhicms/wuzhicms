@@ -56,7 +56,11 @@ class index extends WUZHI_admin {
             }
             $success_user = implode(',',$success_user);
             $error_user = implode(',',$error_user);
-            MSG('成功发送给：'.$success_user.'<br>失败用户名：'.$error_user);
+			$message = '成功发送给：'.$success_user;
+			if($error_user) {
+				$message.='<br>失败用户名：'.$error_user;
+			}
+            MSG($message);
         } else {
             $show_formjs = 1;
             include $this->template('add');

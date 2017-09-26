@@ -7,7 +7,7 @@
 // +----------------------------------------------------------------------
 defined('IN_WZ') or exit('No direct script access allowed');
 /**
- * 在线支付
+ * 系统公告
  */
 load_class('admin');
 class index extends WUZHI_admin {

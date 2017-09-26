@@ -1,0 +1,52 @@
+<!--ad-->
+<div class="container">
+    <div class="row margin_top20">
+        <div class="col-xs-3"><script  src="{WEBURL}promote/27.js"></script> </div>
+        <div class="col-xs-3"><script  src="{WEBURL}promote/28.js"></script> </div>
+        <div class="col-xs-3"><script  src="{WEBURL}promote/29.js"></script> </div>
+        <div class="col-xs-3"><script  src="{WEBURL}promote/30.js"></script> </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center  line_height2d0">
+                {block=44} <br>
+                {wz:content action="category" cid="51" pagesize="10" order="sort ASC"}
+                {loop $rs $r}
+                <a href="{$r[url]}">{$r['name']}</a>  <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                {/loop}
+                {/wz}
+                <a href="{WEBURL}index.php?m=link">友情链接</a>
+                <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                <a href="{WEBURL}index.php?m=affiche&f=index&v=listing">站点公告</a>
+                <small class="color_999" style="padding-left: 5px; padding-right: 5px;">|</small>
+                <a href="{WEBURL}index.php?m=feedback">问题反馈</a>
+                <br>
+                {$siteconfigs['copyright']}{$siteconfigs['statcode']} <a href="http://www.wuzhicms.com" target="_blank">五指CMS提供技术支持</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{R}t3/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="{R}t3/js/ie10-viewport-bug-workaround.js"></script>
+<script src="{R}t3/js/my.js"></script>
+<script src="{R}t3/js/bootstrap-hover-dropdown.min.js"></script>
+<script type="text/javascript">
+    var _uid=getcookie('_uid');
+    if(_uid!=null) {
+        $("#mylogined").removeClass('hide');
+        $("#mylogin").addClass('hide');
+        var _username=decodeURI(getcookie('truename'));
+        $("#myname").html(_username);
+    }
+</script>
+</body>
+</html>

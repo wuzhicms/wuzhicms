@@ -7715,7 +7715,7 @@ body.skin-3 {
 .checkbox-inline input[type=checkbox],
 .radio input[type=radio],
 .radio-inline input[type=radio] {
-    margin-top: -4px;
+    margin-top: 2px;
 }
 
 /* Only demo */

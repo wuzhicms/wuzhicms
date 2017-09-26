@@ -124,7 +124,7 @@
         <!--系统升级-->
             <section class="panel">
             <header class="panel-heading bm0">
-                <span>系统更新 </span><span class="badge" style="background-color:#FF3333"><?php if (isset($app['package'])) {?> new <?php }?></span>
+                <span>系统信息 </span><span class="badge" style="background-color:#FF3333"><?php if (isset($app['package'])) {?> new <?php }?></span>
                     <span class="tools pull-right">
                         <a class="icon-chevron-down" href="javascript:;"></a>
                     </span>
@@ -133,13 +133,46 @@
                 <table class="table table-hover system-upgrade">
                     <tbody>
                     <tr>
+                        <td><strong>环境信息</strong>：<a data-toggle="modal" href="#chartsetting"><?php echo $_SERVER['SERVER_SOFTWARE'];?>【查看基本信息】</a>
+                            <a href="index.php?m=core&f=index&v=phpinfo<?php echo $this->su();?>" target="_blank" >【点击查看 phpinfo()】</a><br/>
+                            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="chartsetting" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">服务器基本信息</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                站点路径：<?php echo $_SERVER['DOCUMENT_ROOT']?str_replace('\\','/',$_SERVER['DOCUMENT_ROOT']):str_replace('\\','/',dirname(__FILE__));?> <br/>
+                                                服务器系统：<?php echo php_uname(); ?> <br/>
+                                                服务器软件：<?php echo $_SERVER['SERVER_SOFTWARE'];?> <br/>
+                                                数据库版本：<?php echo $dbversion;?> <br/>
+                                                PHP 版本： <?php echo PHP_VERSION;?>
+
+                                                <!--                            上传文件最大限制：--><?php //echo get_cfg_var('upload_max_filesize'); ?><!-- <br/>-->
+                                                Zend版本：<?php $zend_version = zend_version();if(empty($zend_version)){echo 'X';}else{echo $zend_version;}?>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" data-dismiss="modal" class="btn btn-default">隐藏</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
                         <td>
-                            <strong>版本信息</strong>：当前版本 V<!--已是最新版本 V2.0.3 当前版本 V2.0.3-->
-                            <?php if (isset($app['package'])) {?>
-                                <?php echo $app['package']['fromVersion']; ?>
-                            <?php } else {?>
-                                <?php echo $app['latestVersion']; ?>
-                             <?php }?>
+                            <strong>服务器IP</strong>：<?php echo $_SERVER["SERVER_ADDR"];?>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>版本信息</strong>： 五指CMS v<?php echo VERSION.' (简体中文'.CHARSET.')';?>
                         </td>
                         <td></td>
                     </tr>
@@ -231,13 +264,13 @@
         <!-- 版权信息 -->
             <section class="panel">
                 <header class="panel-heading bm0">
-                    <span>团队及版权信息</span>
+                    <span id="license-tip">版权信息</span>
                             <span class="tools pull-right">
                                 <a class="icon-chevron-down" href="javascript:;"></a>
                             </span>
                 </header>
                 <div class="panel-body" id="panel-bodys">
-                    <table class="table table-hover personal-task">
+                    <table class="table table-hover personal-task hide" id="license-table">
                         <tbody>
                         <tr>
                             <td>
@@ -258,85 +291,59 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td><strong>环境信息</strong>：<a data-toggle="modal" href="#chartsetting"><?php echo $_SERVER['SERVER_SOFTWARE'];?>【查看基本信息】</a>
-                                <a href="index.php?m=core&f=index&v=phpinfo<?php echo $this->su();?>" target="_blank" >【点击查看 phpinfo()】</a><br/>
-                                <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="chartsetting" class="modal fade">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title">服务器基本信息</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>
-                                                    站点路径：<?php echo $_SERVER['DOCUMENT_ROOT']?str_replace('\\','/',$_SERVER['DOCUMENT_ROOT']):str_replace('\\','/',dirname(__FILE__));?> <br/>
-                                                    服务器系统：<?php echo php_uname(); ?> <br/>
-                                                    服务器软件：<?php echo $_SERVER['SERVER_SOFTWARE'];?> <br/>
-                                                    数据库版本：<?php echo $dbversion;?> <br/>
-                                                    PHP 版本： <?php echo PHP_VERSION;?>
-
-                                                    <!--                            上传文件最大限制：--><?php //echo get_cfg_var('upload_max_filesize'); ?><!-- <br/>-->
-                                                    Zend版本：<?php $zend_version = zend_version();if(empty($zend_version)){echo 'X';}else{echo $zend_version;}?>
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" data-dismiss="modal" class="btn btn-default">隐藏</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>服务器IP</strong>：<?php echo $_SERVER["SERVER_ADDR"];?>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <?php
-                        $li1 = '试用型 － <a href="http://www.wuzhicms.com/buy/" target="_blank">点击购买</a>';
-                        $li3 = '<a href="http://www.wuzhicms.com/buy/" target="_blank"> 没有技术服务，点击这里购买</a>';
-                        $li2 = '';
-                        $li5 = '';
-                        ?>
-                        <tr>
-                            <td>
-                                <strong>系统信息</strong>： 五指CMS v<?php echo VERSION.' (简体中文'.CHARSET.')';?>
-                                <a href="http://www.wuzhicms.com/update/lastest/" target="_blank">【查看最新版本】</a>
-                            </td>
-                            <td></td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <strong>产品型号</strong>：
-                                <span style="color: rgb(244, 83, 107);"><?php echo $li1;?></span>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>产品服务编号</strong>：
-                                <strong><?php echo $li2;?></strong>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>技术服务年限</strong>：
-                                <?php echo $li3;?>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
                             <td>
                                 <strong>免费技术论坛支持</strong>：
                                 <a href="http://bbs.wuzhicms.com" target="_blank">点击进入咨询</a>
                             </td>
                             <td></td>
                         </tr>
+                        </tbody></table>
+                        <table class="table table-hover personal-task">
+                            <tbody>
+
+                        <?php
+                        $li1 = '免费版 － <a href="http://www.wuzhicms.com/buy/" target="_blank">点击购买</a>';
+                        $li3 = '<a href="http://www.wuzhicms.com/buy/" target="_blank"> 没有技术服务，点击这里购买</a>';
+                        $li2 = '';
+                        $li5 = '';
+                        ?>
+
+                        <tr id="license-company" class="hide">
+                            <td>
+                                <strong>授权持有单位</strong>：
+                                <span style="color: rgb(244, 83, 107);" id="authorized_company"><?php echo $li1;?></span>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr id="license-name" class="hide">
+                            <td>
+                                <strong>授权网站名称</strong>：
+                                <span style="color: rgb(244, 83, 107);" id="license_domain_name"><?php echo $li1;?></span>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr id="license-protr" class="hide">
+                            <td>
+                                <strong>产品型号</strong>：
+                                <span style="color: rgb(244, 83, 107);" id="license_product"><?php echo $li1;?></span>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>产品服务编号</strong>：
+                                <strong id="license_id"><?php echo $li2;?></strong>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>授权起止时间</strong>：
+                                <span id="license_time"><?php echo $li3;?></span>
+                            </td>
+                            <td></td>
+                        </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -356,6 +363,32 @@
     <script src="<?php echo R;?>js/wuzhicms-upgrade.js"></script>
 <?php }?>
 <script type="text/javascript">
+    $.ajax({
+        type: "get", //jquey是不支持post方式跨域的
+        async: false,
+        url: window.location.protocol+"//www.wuzhicms.com/api/?m=license&f=credentials",
+        dataType: "jsonp",
+        jsonp: "jsoncallback",
+        jsonpCallback: "callback",
+        success: function (json) {
+            if (json.code == 369) {
+                $("#license-tip").html('授权信息');
+                $("#authorized_company").html(json.data.authorized_company);
+                $("#license_domain_name").html(json.data.domain_name);
+                $("#license_product").html(json.data.authorized_version);
+                $("#license_id").html(json.data.serviceid);
+                $("#license_time").html(json.data.buy_time + ' - ' + json.data.end_time);
+                $("#license-protr").removeClass('hide');
+                $("#license-company").removeClass('hide');
+                $("#license-name").removeClass('hide');
+            } else if (json.code == 400) {
+                $("#license-table").removeClass('hide');
+                $("#license-protr").removeClass('hide');
+                return false;
+            }
+
+        }
+    });
     function stat_speed(count,id)
     {
         var div_by = 10;

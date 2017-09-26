@@ -47,9 +47,9 @@ final class WUZHI_application {
         } else {
             $route_config = $route_config['default'];
         }
-        $this->_m = isset($GLOBALS['m']) ? sql_replace($GLOBALS['m']) : $route_config['m'];
-        $this->_f = isset($GLOBALS['f']) ? sql_replace($GLOBALS['f']) : $route_config['f'];
-        $this->_v = isset($GLOBALS['v']) ? sql_replace($GLOBALS['v']) : $route_config['v'];
+        $this->_m = isset($GLOBALS['m']) ? $this->safe($GLOBALS['m']) : $route_config['m'];
+        $this->_f = isset($GLOBALS['f']) ? $this->safe($GLOBALS['f']) : $route_config['f'];
+        $this->_v = isset($GLOBALS['v']) ? $this->safe($GLOBALS['v']) : $route_config['v'];
         $this->_v = strip_tags($this->_v);
         if(isset($route_config['_get'])) {
             foreach($route_config['_get'] as $key=>$value) {
@@ -57,6 +57,15 @@ final class WUZHI_application {
             }
         }
     }
+
+	/**
+	 * 安全过滤
+	 */
+    private function safe($str) {
+		$search = array('=','(',')','.','<','>','\'','"');
+		$str = str_replace($search,'',$str);
+		return $str;
+	}
 
 	/**
 	 * 运行

@@ -9,6 +9,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
 
 load_class('admin');
 //load_function('common',M);
+define('NOTHML',true);
 
 class index extends WUZHI_admin {
 
@@ -30,11 +31,7 @@ class index extends WUZHI_admin {
 		$page = isset($GLOBALS['page'])  ? intval($GLOBALS['page']) : 1;
 		$lists = $this->db->get_list('tag',$where,'*', 0, $pagesize, $page, $this->order_by);
 		$pages = $this->db->pages;
-        $linkage = $this->db->get_list('linkage', '', 'name,linkageid', 0, 100, '',"linkageid ASC", '', 'linkageid');
-        foreach($linkage AS $k=>$v)
-        {
-            $linkage[$k] = $v['name'];
-        }
+        $linkage_data = $this->db->get_list('linkage_data', array('linkageid'=>$this->_cache['linkage']), 'name,lid', 0, 100, '',"lid ASC", '', 'lid');
         include $this->template(V,M);
 	}
 
@@ -70,13 +67,15 @@ class index extends WUZHI_admin {
 			{
 				$tag_info['addtime'] = SYS_TIME;
 				$tag_info['number'] = 0;
-			} 
+			}
+			$check_tag = false;
 			if(empty($tag_info['pinyin']) || output($GLOBALS,'is_edit') == 1)
 			{
 				$pinyin = load_class('pinyin');
 				$py = $pinyin->return_py($tag_info['tag']);
 				$tag_info['pinyin'] = $py['pinyin'];
 				$tag_info['letter'] = $py['letter'];
+				$check_tag = $this->db->get_one('tag', array('pinyin' => $tag_info['pinyin']));
 			}
 			else
 			{
@@ -85,7 +84,13 @@ class index extends WUZHI_admin {
 			//调用url处理方法
 			if(empty($tag_info['url']) || output($GLOBALS,'is_edit') == 1)
 			{
-				if(!$tid) $tagid = $this->db->insert('tag',$tag_info);
+				if(!$tid) {
+					$tagid = $this->db->insert('tag',$tag_info);
+					if($check_tag) {
+						$pinyin = $check_tag['pinyin'].'-'.$tagid;
+						$this->db->update('tag', array('pinyin'=>$pinyin), array('tid' => $tagid));
+					}
+				}
 				$tag_class = load_class('tags',M);
 				$param = array(
 					'pinyin'=>$tag_info['pinyin'],
@@ -101,8 +106,8 @@ class index extends WUZHI_admin {
 			if($tid) //修改
 			{
 				$this->db->update('tag', $tag_info, array('tid'=>$tid) );
-				$html_tags = load_class('html_tags',M);
-				$html_tags->show($tid);
+//				$html_tags = load_class('html_tags',M);
+//				$html_tags->show($tid);
 				MSG(L('edit_success'),link_url( array('v'=>'listing') ),3000);
 			}
 			else	//新增插入
@@ -288,6 +293,7 @@ class index extends WUZHI_admin {
  */
 	public function html()
 	{
+		return true;
 		if(output($this->_cache,'rewrite') == 1) MSG(L('no_html'), HTTP_REFERER, 3000);
 		$html_tags = load_class('html_tags',M);
 		$tid = intval( output( $GLOBALS, 'tid') );
@@ -345,6 +351,7 @@ class index extends WUZHI_admin {
 		 if(isset($GLOBALS['dosubmit']))
 		 {
 			 $cache_in_db = cache_in_db($GLOBALS['setting'], V, M);
+
 			 set_cache(M, $GLOBALS['setting']);
 			 MSG( L('operation_success'), HTTP_REFERER, 3000);
 		 }
@@ -354,9 +361,7 @@ class index extends WUZHI_admin {
 			 load_class('form');
 			 load_function('template');
 			 $templates = select_template(M);
-			 $setting = &$this->_cache;
-
-			 if(empty($setting)) $setting = cache_in_db('', V, M);
+			 $setting = cache_in_db('', V, M);
 			 $linkage = $this->db->get_list('linkage', '', 'name,linkageid', 0, 100, '',"linkageid ASC", '', 'linkageid');
 			 foreach($linkage AS $k=>$v)
 			 {
@@ -380,7 +385,7 @@ class index extends WUZHI_admin {
 		$where = '';
 		$GLOBALS['start'] = isset($GLOBALS['start']) ? remove_xss($GLOBALS['start']) : '';
 		$GLOBALS['end'] = isset($GLOBALS['end']) ? remove_xss($GLOBALS['end']) : '';
-		$GLOBALS['linkage'] = isset($GLOBALS['linkage']) ? sql_replace($GLOBALS['linkage']) : '';
+		$GLOBALS['linkageid'] = isset($GLOBALS['linkageid']) ? sql_replace($GLOBALS['linkageid']) : '';
 		$GLOBALS['tags'] = isset($GLOBALS['tags']) ? sql_replace( $GLOBALS['tags'] ) : '';
 		$GLOBALS['order'] = isset($GLOBALS['order']) ? intval( $GLOBALS['order'] ) : '0';
 		
@@ -402,9 +407,9 @@ class index extends WUZHI_admin {
 			$where .= " and `addtime` BETWEEN '$where_start_time' AND '$where_end_time' ";
 		}
 
-		if( $GLOBALS['linkage'] )
+		if( $GLOBALS['linkageid'] )
 		{
-			$where .= ' and linkage = "'.$GLOBALS['linkage'].'" ';
+			$where .= ' and linkageid = "'.$GLOBALS['linkageid'].'" ';
 		}
 
 		if( $GLOBALS['tags'] )

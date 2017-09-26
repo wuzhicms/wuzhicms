@@ -50,30 +50,13 @@
       pr/54
       release/2.1.7
       v2.1.7
-
-    mkdir upgrade/build (if does not exist)
-    git diff --name-status  release/3.0.0  release/3.0.1  > caches/upgrade/build/diff-3.0.1 (caches/upgrade/build 为web_config.php中的 BUILD_PATH 的路径)
-
-    git diff --name-status  pr/13 master  > upgrade/build/diff-3.0.1  (if no release branch was  created)
-    cat upgrade/build/diff-3.0.0  (view diff content)
+   
+   git diff --name-status  release/3.1.3  master  > caches/upgrade/build/diff-4.0.0
+   cat caches/upgrade/build/diff-4.0.0
+   php bin/build.php MAIN 4.0.0 diff-4.0.0
+   cd caches/upgrade/build
+   zip -r MAIN_4.0.0.zip MAIN_4.0.0
     ```
-5. 整理升级sql
-
-
-6. 生成升级包
-
-    ```[sh]
-<<<<<<< HEAD
-    php /bin/build.php MAIN 3.0.1 upgrade/build/diff-3.0.1
-=======
-    php bin/build.php MAIN 3.0.1 upgrade/build/diff-3.0.1
->>>>>>> master
-
-    cd upgrade/build
-    zip -r MAIN_3.0.1.zip MAIN_3.0.1
-    ```
-
-7. 上传升级包
-
-
-8.  测试
+5. 上传升级包
+   update.wuzhicms.cn
+6.  测试

@@ -22,6 +22,9 @@ class res extends WUZHI_admin {
     public function listing() {
         $dir = $this->dir;
         $lists = glob(TPL_ROOT.$dir.'/'.'*');
+		if(empty($lists)) {
+			MSG('/res/目录没有内容，此功能无法使用！');
+		}
         //if(!empty($lists)) rsort($lists);
         $cur_dir = str_replace(array( WWW_ROOT ,DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR), array('',DIRECTORY_SEPARATOR), TPL_ROOT.$dir.'/');
         $show_dialog = 1;

@@ -1,14 +1,44 @@
 {T 'tags','header'}
+<!--路径导航-->
+<div style="background: #f3f3f3" class="change-container">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 0px">
+            您现在的位置：
+            <li><a href="{WEBURL}">首页</a><span> &gt;</span></li>
+            <a href="{WEBURL}tags/">TAGS列表</a> <span> &gt;</span>字母：{$letter}
+        </ol>
+    </div>
+</div>
 
-{wz:tags action="listing" page="$page" letter="$letter" linkage="" pagesize="10" order="number DESC"}
-{loop $rs $r}
-<li>{$r[tid]} <a href="{$r[url]}">{safe_htm($r['tag'])}</a>({$r['number']})</li>
-{/loop}
-{/wz}
+<div class="change-container">
+    <div class="container">
+        <div class="tags-box">
+
+            <h3 class="first-letter color_primary">按首字母查看</h3>
+            <div class=" letter-nav  color_primary">
+                {loop $letters $r}
+                <a href="{WEBURL}tags/{$r}.html">{$r}</a>
+                {/loop}
+            </div>
+            <hr>
+            <div class="leter-search">
+                <div class="lm-title-a"><span class="wenzi"><a name="tag_a">{$letter}</a></span></div>
+                <ul>
+                    {wz:tags action="listing" page="$page" letter="$letter" linkage="" pagesize="10" order="number DESC"}
+                    {loop $rs $r}
+                    <li><a href="/{$r[url]}">{safe_htm($r['tag'])}</a>({$r['number']})</li>
+                    {/loop}
+                    {/wz}
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 
 
-</pre>
-</body>
-</html>
+
+{T 'tags','footer'}

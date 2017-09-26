@@ -10,7 +10,7 @@ defined('IN_WZ') or exit('No direct script access allowed');
 class index{
     private $siteconfigs;
     public function __construct() {
-        $this->siteconfigs = get_cache('siteconfigs');
+		$this->siteconfigs = get_cache('siteconfigs_1');
         $this->db = load_class('db');
     }
 
@@ -24,7 +24,7 @@ class index{
         $seo_description = $siteconfigs['seo_description'];
         $categorys = get_cache('category','content');
         $forward = encode(HTTP_REFERER);
-        include T('feedback','index',TPLID);
+        include T('feedback','index');
     }
     /**
      *反馈问题
@@ -44,7 +44,7 @@ class index{
             MSG('感谢您的反馈!',$formdata['url'],3000);
         }
         else{
-            include T('feedback','index',TPLID);
+            include T('feedback','index');
         }
     }
 }

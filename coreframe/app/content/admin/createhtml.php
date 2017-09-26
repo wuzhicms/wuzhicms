@@ -166,9 +166,15 @@ class createhtml extends WUZHI_admin {
             $catids = get_cache('cache-html-'.$uid);
         } else {
             if($GLOBALS['catids'][0]=='') {
-                $catids = array_keys($this->categorys);
+            	foreach($this->categorys as $_cid=>$tmp) {
+            		if($tmp['type']==2) continue;
+					$catids[] = $_cid;
+				}
             } else {
-                $catids = $GLOBALS['catids'];
+            	foreach ($GLOBALS['catids'] as $_cid) {
+					if($this->categorys[$_cid]['type']==2) continue;
+					$catids[] = $_cid;
+				}
             }
             set_cache('cache-html-'.$uid,$catids);
         }
@@ -194,7 +200,10 @@ class createhtml extends WUZHI_admin {
         foreach($result as $key=>$rs) {
             if($rs['route']>1) continue;
             $id = $rs['id'];
-            $urls = $this->urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$rs['addtime'],'page'=>1,'route'=>$rs['route'],'productid'=>$rs['productid']));
+			$route_config = array('page'=>1);
+			$route_config = array_merge($route_config,$rs);
+			$urls = $this->urlclass->showurl($route_config);
+
             $this->db->update($master_table,array('url'=>$urls['url']),array('id'=>$id));
 
             $startid = $startid+1;

@@ -9,7 +9,7 @@ defined('WWW_ROOT') or exit('No direct script access allowed');
 /**
  * 核心文件
  */
-define('VERSION','3.1.3');
+define('VERSION','4.1.0');
 
 $GLOBALS = array();
 define('SYSTEM_NAME','wuzhicms');
@@ -22,7 +22,6 @@ if(ERROR_REPORT==1) {
     error_reporting(E_ALL);
 }
 ini_set('display_errors', 1);
-
 set_exception_handler('log_exception');
 
 //开始运行时间
@@ -41,6 +40,12 @@ define('IS_CLI',PHP_SAPI=='cli'? 1 : 0);
 define('SYS_TIME', time());
 define('HTTP_REFERER', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
 
+if(isset($_SERVER['HTTPS']) && (strcasecmp($_SERVER['HTTPS'], 'on') === 0 || $_SERVER['HTTPS'] == 1)
+    || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strcasecmp($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') === 0) {
+    define('HTTP_SSL', 'http');
+} else {
+    define('HTTP_SSL', 'https');
+}
 //设置本地时差
 date_default_timezone_set(TIME_ZONE);
 //输出页面字符集

@@ -84,7 +84,7 @@ class WUZHI_weixinAuth {
 			$r['uid'] = $wz_member->add($data);
 
 			$r['authid'] = $db->insert('member_auth', array('type'=>'weixin','uid'=>$r['uid'],'nickname'=>$user_info['nickname'], 'openid'=>$this->openid, 'token'=>$this->token, 'expires_in'=>$this->expires_in), true);
-			//TODO 保存头像
+			//保存头像
 			$imgdata = get_curl($user_info['headimgurl']);
 
 			$dir = substr(md5($r['uid']), 0, 2).'/'.$r['uid'].'/';

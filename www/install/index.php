@@ -13,7 +13,7 @@ set_time_limit(300);
 if(PHP_VERSION < '5.2.0') die('PHP配置需要大于 5.2.0 ');
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', 1);
-$wz_version = '3.1.3';
+$wz_version = '4.1.0';
 
 //定义当前的网站物理路径
 define('INSTALL_ROOT',dirname(__FILE__).'/');
@@ -297,8 +297,9 @@ switch($step) {
 			if(empty($admin_email)) exit('7');
 			if(!is_email($admin_email)) exit('9');
 			if($is_mysql) {
-				if(!@mysql_connect($dbhost, $username, $password)) {
-
+				$link = @mysql_connect($dbhost, $username, $password);
+				if(!$link) {
+					die('数据库账号配置错误，连接失败 ！mysql 错误信息：'. mysql_connect_error());
 					exit('2');
 				}
 
@@ -313,9 +314,12 @@ switch($step) {
 				}
 			} else {
 				$link = @mysqli_connect($dbhost, $username, $password,$dbname);
-
 				if(!$link) {
-					die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+					if(mysqli_connect_error()=='Unknown error 1049') {
+						die('数据库不存在，请手动创建！mysql 错误信息：'. mysqli_connect_error());
+					} else {
+						die('数据库账号配置错误，连接失败 ！mysql 错误信息：'. mysqli_connect_error());
+					}
 					exit('2');
 				}
 				$tables = array();
@@ -455,6 +459,7 @@ switch($step) {
 
 					$res = set_config($res,'WEBURL',"'".$weburl."'");
 					$cookie_pre =install_rand(3, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
+					$res = set_config($res,'COOKIE_PATH',"'/'");
 					$res = set_config($res,'COOKIE_PRE',"'".$cookie_pre."_'");
 					$res = set_config($res,'ATTACHMENT_URL',"'".$weburl."uploadfile/'");
 					$res = set_config($res,'R',"'".$weburl."res/'");
@@ -531,13 +536,13 @@ switch($step) {
 					$password = md5(md5($configs['admin_password']).$factor);
 					if($is_mysql) {
 
-						mysql_query("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`) VALUES
-(1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0)");
+						mysql_query("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`,`ischeck_email`,`ischeck_mobile`,`pw_reset`) VALUES
+(1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0,1,1,0)");
 						mysql_query("INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')");
 						mysql_query("INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')");
 					} else {
-						mysqli_query($link,"INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`) VALUES
-(1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0)")  or die(mysqli_error($link));
+						mysqli_query($link,"INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`,`ischeck_email`,`ischeck_mobile`,`pw_reset`) VALUES
+(1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0,1,1,0)")  or die(mysqli_error($link));
 						mysqli_query($link,"INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')") or die(mysqli_error($link));
 						mysqli_query($link,"INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')") or die(mysqli_error($link));
 					}

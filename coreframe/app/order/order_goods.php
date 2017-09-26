@@ -418,7 +418,6 @@ class order_goods extends WUZHI_foreground{
             $formdata['cardtype'] = intval($GLOBALS['cardtype']);
 
             $orderids[] = $this->db->insert('order_goods',$formdata);
-            //TODO
             $this->db->delete('order_cart',array('cartid'=>$goods['cartid'],'uid'=>$this->uid));
         }
         if($total_price<0) {

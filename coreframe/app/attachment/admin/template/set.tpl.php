@@ -15,6 +15,10 @@ include $this->template('header','core');
     .watermark_pos label{font-weight: 400;}
 </style>
 <div class="panel-body">
+    <div class="alert alert-success fade in">
+        <strong>重要提示:</strong> 上传的所有文件会后，会自动建立md5file，即，您上传重复文件不会保存多份。如果您之前开启了水印功能，现在想去除水印，那么您需要上传一张从未上传过的图片。
+        您也可以手动清理索引。UPDATE `wz_attachment` SET `md5file` = ''
+    </div>
         <form class="form-horizontal tasi-form" method="post" action="">
 
             <div class="form-group">

@@ -3,20 +3,37 @@
 include $this->template('header','core');
 ?>
 <body class="body pxgridsbody">
+<style>
+    .transparent img{background-color: #0093D8;}
+</style>
 <section class="wrapper">
 <div class="row">
 <div class="col-lg-12">
 <section class="panel">
     <?php echo $this->menu($GLOBALS['_menuid']);?>
-    <header class="panel-heading"><span>基本设置</span></header>
+    <header class="panel-heading"><span>【<?php echo $r['name'];?>】基本设置</span></header>
     <div class="panel-body">
         <form class="form-horizontal tasi-form" method="post" action="">
             <div class="form-group">
-                <label class="col-sm-2 col-xs-4 control-label">网站名称</label>
+                <label class="col-sm-2 col-xs-4 control-label">SEO标题</label>
                 <div class="col-lg-4 col-sm-6 col-xs-6 input-group pull-left">
                     <input type="text" class="form-control" name="form[sitename]" color="#000000" value="<?php echo output($setting,'sitename');?>">
                 </div>
                 <div class="col-sm-4 col-xs-10"><span class="help-block"><i class="icon-info-circle"></i>一般不超过80个字符</span></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 col-xs-4 control-label">SEO关键字</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group pull-left">
+                    <input type="text" class="form-control" name="form[seo_keywords]" color="#000000" value="<?php echo output($setting,'seo_keywords');?>">
+                </div>
+                <div class="col-sm-4 col-xs-10"><span class="help-block"><i class="icon-info-circle"></i>一般不超过100个字符，关键词用英文逗号隔开</span></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 col-xs-4 control-label">SEO描述</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group pull-left">
+                    <textarea name="form[seo_description]" class="form-control" cols="60" rows="3"><?php echo output($setting,'seo_description');?></textarea>
+                </div>
+                <div class="col-sm-4 col-xs-10"><span class="help-block"><i class="icon-info-circle"></i>一般不超过200个字符</span></div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">网站域名</label>
@@ -31,18 +48,10 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-xs-4 control-label">SEO关键字</label>
-                <div class="col-lg-4 col-sm-6 col-xs-6 input-group pull-left">
-                    <input type="text" class="form-control" name="form[seo_keywords]" color="#000000" value="<?php echo output($setting,'seo_keywords');?>">
+                <label class="col-sm-2 col-xs-4 control-label">透明logo</label>
+                <div class="col-lg-4 col-sm-6 col-xs-6 input-group">
+                    <div class="input-group transparent"><?php echo WUZHI_form::attachment('','1','form[logo2]',output($setting,'logo2'));?></div>
                 </div>
-                <div class="col-sm-4 col-xs-10"><span class="help-block"><i class="icon-info-circle"></i>一般不超过100个字符，关键词用英文逗号隔开</span></div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 col-xs-4 control-label">SEO描述</label>
-                <div class="col-lg-4 col-sm-6 col-xs-6 input-group pull-left">
-                    <input type="text" class="form-control" name="form[seo_description]" color="#000000" value="<?php echo output($setting,'seo_description');?>">
-                </div>
-                <div class="col-sm-4 col-xs-10"><span class="help-block"><i class="icon-info-circle"></i>一般不超过200个字符</span></div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label">版权信息</label>

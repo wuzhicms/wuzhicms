@@ -57,11 +57,11 @@ include $this->template('header','core');
                             </thead>
                             <tbody>
                             <?php
-                            foreach($result as $rs) {
+                            foreach($result as $_modelid=>$rs) {
 
                             foreach($rs AS $r) { ?>
                                 <tr>
-                                    <td class="center"><input type="checkbox" name="ids[]" value="<?php echo $r['id'];?>"></td>
+                                    <td class="center"><input type="checkbox" name="ids[<?php echo $_modelid;?>][]" value="<?php echo $r['id'];?>"></td>
                                     <td><?php echo $r[ 'id'];?></td>
                                     <?php if($modelid==0) echo ' <td>'.$categorys[$r['cid']]['name'].'</td>';?>
                                     <td><a href="<?php if($r['status']==9) {echo $r['url'];}else{ echo '?m=content&f=content&v=view&id='.$r['id'].'&cid='.$r['cid'].$this->su();};?>" target="_blank"><?php echo p_htmlentities($r['title']);?></a></td>
@@ -85,8 +85,8 @@ include $this->template('header','core');
                                     <div class="pull-left">
                                         <input id="v" name="v" type="hidden" value="<?php echo V;?>">
                                         <button type="button" onClick="checkall()" name="submit2" class="btn btn-default btn-sm">全选/反选</button>
-                                        <button type="submit" onclick="$('#v').val('move')" class="btn btn-default btn-sm">移动</button>
                                         <input name="cid" value="<?php $cid;?>" type="hidden">
+										<button type="submit" onclick="$('#v').val('delete_more')" class="btn btn-default btn-sm">批量删除</button>
                                     </div>
                                     <div class="pull-right">
                                         <ul class="pagination pagination-sm mr0">

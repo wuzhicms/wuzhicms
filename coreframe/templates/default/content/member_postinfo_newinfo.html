@@ -10,7 +10,7 @@
     #Validform_msg .Validform_info {
         border: 1px solid #4585E6;
     }
-    .input-group-btn{display: inline-block;padding-left: 10px;}
+    .input-group-btn{display: table-cell;padding-left: 10px;}
 </style>
 <link href="{R}css/validform.css" rel="stylesheet" />
 <script src="{R}js/validform.min.js"></script>
@@ -46,20 +46,20 @@
 
             <div class="row">
                 <div class="col-sm-12">
+                    <div style="background-color: #fff;color: #ff7600;padding: 18px 20px 18px 28px;">{$siteconfigs['member_tips']}</div>
                     <div class="ibox-content">
                         <div class="memberright">
 
                             <ul id="myTab" class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active"><a href="#tabs1" id="1tab" role="tab" data-toggle="tab" aria-controls="tabs1" aria-expanded="true">{$catname} - 信息发布</a></li>
                                 <li role="presentation" class=""><a href="?m=content&f=postinfo&v=listing&cid={$cid}&set_iframe={$set_iframe}">我发布的{$catname} </a></li>
-                                <li class="tip-a" style="float:right;">温馨提示：我们的客服会在24小时内审核。全国免费咨询电话：010-11111111</li>
                             </ul>
                             <div class="memberbordertop">
                                 <form name="myform" class="form-horizontal" action="" method="post" id="myform">
                                     <table class="table-dashed table-striped table-advance">
                                         <tr>
                                             <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod"><font color="red">*</font> 标题：</label><div class="col-sm-10 text-left">
-                                                <input type="text" style="color:#" name="form[title]" id="title" maxlength="80" value="" class="form-control" datatype="*2-80" nullmsg="请输入标题" errormsg="标题至少2个字符,最多80个字符！">                                       </div></div></td>
+                                                <input type="text" name="form[title]" id="title" maxlength="80" value="" placeholder="总字数不要超过80个汉字" class="form-control" datatype="*2-80" nullmsg="请输入标题" errormsg="标题至少2个字符,最多80个字符！">                                       </div></div></td>
                                         </tr>
 
                                         {loop $field_list $info}
@@ -67,13 +67,23 @@
                                             <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod">{if $info['star']}<font color="red">*</font>{/if} {$info['name']}：</label><div class="col-sm-10 text-left">{$info['form']}
                                             </div></div></td>
                                         </tr>
+                                        {if $info['remark']}
+                                        <tr>
+                                            <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod"></label><div class="col-sm-10 text-left"><div class="form-tips">{$info['remark']}</div>
+                                            </div></div></td>
+                                        </tr>
+                                        {/if}
                                         {/loop}
                                         {if $formdata['5']['content']['name']}
                                         <tr>
                                             <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right text-blod">{if $info['star']}<font color="red">*</font>{/if} {$formdata['5']['content']['name']}：</label><div class="col-sm-10 text-left">
                                                 {$formdata['5']['content']['form']}
                                             </div></div></td>
-                                        </tr>{/if}
+                                        </tr>
+
+                                        {/if}
+
+
                                         <tr>
                                             <td><div class="form-groupinfo"><label class="col-sm-2 control-label text-right"> </label><div class="col-sm-3 text-left"><input type="submit" name="submit" id="submit" value="提交" class="btn btn-primary" style="width:100%;"></div></div></td>
                                         </tr>
@@ -88,13 +98,6 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
-        $('.form-groupinfo').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-        $('[data-toggle="tooltip"]').tooltip();
-    });
     $("#submit").click(function(){
         t=setTimeout("hide_formtips()",3000);
     });

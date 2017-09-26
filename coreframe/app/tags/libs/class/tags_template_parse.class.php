@@ -60,7 +60,14 @@ class WUZHI_tags_template_parse {
      */
     public function content($c) 
 	{
+		if(isset($c['urlrule'])) {
+			$urlrule = $c['urlrule'];
+		} else {
+			$urlrule = '/tags/{$tid}.html|/tags/{$tid}-P{$page}.html';
+		}
+		
 		$where = ' 1 ';
+
 		if( !output( $c,'field') ) $c['field'] = '*';
         if(isset($c['tid'])) 
 		{
@@ -86,8 +93,13 @@ class WUZHI_tags_template_parse {
 		    $where .= ' AND `moduleid`='.intval($c['moduleid']);
 		}
         $order = isset($c['order']) && $c['order'] == 'id DESC' ? 'id DESC' : 'id ASC';
-		$temp_info = $this->db->get_list( 'tag_data', $where, '*', '', $c['pagesize'], $c['page'], $order, '' );
-
+		if(isset($c['pinyin'])) {
+			$rule_arr = array('tid'=>$c['pinyin']);
+		} else {
+			$rule_arr = array('tid'=>$tid);
+		}
+		$temp_info = $this->db->get_list( 'tag_data', $where, '*', 0, $c['pagesize'], $c['page'], $order, '','',$urlrule,$rule_arr );
+		if($c['page']) $this->pages = $this->db->pages;
 		$modelid_arr = $query_arr = $result = $ids_arr = array();
 		foreach($temp_info AS $k=>$v)
 		{

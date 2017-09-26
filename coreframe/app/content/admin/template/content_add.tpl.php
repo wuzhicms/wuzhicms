@@ -10,10 +10,11 @@ include $this->template('header','core');
 <link href="<?php echo R;?>js/jquery-ui/jquery-ui.css" rel="stylesheet">
 <script src="<?php echo R;?>js/colorpicker/color.js"></script>
 <?php
-echo '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
-echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
-echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js"></script>';
+echo '<script src="' . R . 'js/ckeditor/ckeditor.js?'.VERSION.'"></script>';
+echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js?'.VERSION.'"></script>';
+echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js?'.VERSION.'"></script>';
 ?>
+<script src="<?php echo R;?>js/jquery-ui-1.10.1.custom.min.js"></script>
 <section class="wrapper">
     <div class="row">
      <div class="col-lg-12">
@@ -189,7 +190,7 @@ echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js
             <?php
             if(V=='add') {
             ?>
-        <input name="submit2" type="submit" class="btn  btn-primary" value=" <?php echo $_lang=='zh' ? '提交&发布英语' : '提交&发布中文';?>">
+        <input name="submit2" type="submit" class="btn  btn-primary" value="提交 & 继续发布">
             <?php }?>
         </div>
         </td>

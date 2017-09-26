@@ -45,8 +45,7 @@ class index extends WUZHI_admin {
             $status = 8;//已回复
             if(!empty($GLOBALS['reply_user'])) $reply_user = remove_xss($GLOBALS['reply_user']);
             $this->db->update('feedback',array('status'=>$status,'reply'=>$GLOBALS['reply'],'replytime'=>SYS_TIME,'reply_user'=>$reply_user),array('id'=>$id));
-            MSG(L('operation success'),$GLOBALS['forward']);
-
+			MSG("更新成功,窗口即将自动关闭<script>setTimeout('top.dialog.get(window).close().remove();',2000)</script>");
         } else {
             $show_formjs = 1;
             $form = load_class('form');

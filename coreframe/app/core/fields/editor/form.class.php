@@ -9,7 +9,7 @@
             $validform = '';
         }
         if($value && $editor_type=='ckeditor') {
-            $value = str_replace('_wuzhicms_page_tag_','<div style="page-break-after: always"><span style="display:none">&nbsp;</span></div>',$value);
+            $value = str_replace('_wuzhicms_page_tag_','<div style="page-break-after: always"><span style="display: none;">&nbsp;</span></div>',$value);
         }
         if($toolbar=='textarea') {
             return '<textarea name="form['.$field.']" id="'.$field.'" class="form-control" rows="3" boxid="'.$field.'" '.$validform.'>'.$value.'</textarea>';

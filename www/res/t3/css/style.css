@@ -351,7 +351,14 @@ p {line-height: 1.6;}
     width: 1170px;
     max-width: none !important;
 }
-
+.change-container .container {
+    width: 970px;
+    max-width: none !important;
+}
+.change-container-sm .container {
+    width: 768px;
+    max-width: none !important;
+}
 /* --- 媒体列表  ----*/
 .headline-news-list{ margin-top: 16px; }
 .headline-news-list .media { border-bottom: 1px solid #eeeeee; padding-bottom: 16px; margin-top: 16px;}
@@ -1351,4 +1358,85 @@ ol ol{
 .cart-item .btn-del i {
     font-size: 16px;
     line-height: 16px;
+}
+
+/* ------------------------------------------------- */
+/*tags-box*/
+.tags-box{ border: 1px solid #e5e5e5; margin-top: 32px; padding: 16px 24px;}
+.tags-box .first-letter {
+    font-size: 20px;
+    margin: 12px 15px 8px 0;
+    font-weight: 100;
+}
+.tags-box .letter-nav{ margin-left: -4px; margin-right: -4px;}
+.tags-box .letter-nav a {
+    display: block;
+    height: 17px;
+    line-height: 17px;
+    padding: 0 5px;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0px 4.8px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.tags-box .letter-nav a:hover {
+    outline: 1px solid #ec972f;
+}
+
+/**/
+.tags-box .letter-nav-g{ margin-left: -4px; margin-right: -4px;}
+.tags-box .letter-nav-g  a {
+    display: block;
+    height: 17px;
+    line-height: 17px;
+    padding: 0 5px;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0px 1.2px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.tags-box .letter-nav-g  a:hover {
+    outline: 1px solid #ec972f;
+}
+/**/
+
+
+.juhe-tt{ background: #0bb8ee; padding: 3px 8px; color: #ffffff; border-radius: 10px;}
+
+/*lm-title-a*/
+.lm-title-a {
+    border-bottom: 1px solid #dddddd;
+    padding: 10px 0;
+    margin-bottom: 16px;
+}
+.lm-title-a .wenzi {
+    border-bottom: 2px solid #3498DB;
+    padding: 11px 0;
+    font-size: 20px;
+}
+.lm-title-a .wenzi-r{ display: inline-block; float: right; margin-top: 0.5em;}
+/**/
+.leter-search .lm-title-a {
+    border-bottom: 1px dotted  #dddddd;
+    padding: 5px 0;
+    margin-bottom: 16px;
+}
+.leter-search .lm-title-a .wenzi {
+    /*border-bottom: 2px solid #ff7728;*/
+    padding: 9px 0;
+    font-size: 20px;
+    color: #3498DB;
+    font-weight: 600;
+}
+.leter-search .lm-title-a .wenzi-r{ display: inline-block; float: right; margin-top: 0.5em;}
+.leter-search ul { margin: 0; padding: 0; margin-left: -10px; margin-right: -10px;}
+.leter-search ul li {
+    display: inline-block;
+    overflow: hidden;
+    margin: 0 10px;
+    line-height: 24px;
+    white-space: nowrap;
+    color: #666666;
 }

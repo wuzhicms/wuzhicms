@@ -13,7 +13,7 @@ load_function('content','content');
 class search{
     private $siteconfigs;
 	public function __construct() {
-        $this->siteconfigs = get_cache('siteconfigs');
+        $this->siteconfigs = get_cache('siteconfigs_1');
         $this->db = load_class('db');
 	}
 
@@ -51,28 +51,49 @@ class search{
         }
 
         if($keywords) {
-            if($starttime) {
-                $stime = SYS_TIME-$starttime*86400;
-                $where = "`status`=9 AND (`addtime`>$stime AND `title` LIKE '%$keywords%') or (`addtime`>$stime AND `remark` LIKE '%$keywords%')";
-            } else {
-                $where = "`status`=9 AND (`title` LIKE '%$keywords%' or `remark` LIKE '%$keywords%')";
-            }
+
             $page = intval($GLOBALS['page']);
 
             if($modelid) {
+				if($starttime) {
+					$stime = SYS_TIME-$starttime*86400;
+					$where = "`status`=9 AND (`addtime`>$stime AND `title` LIKE '%$keywords%') or (`addtime`>$stime AND `remark` LIKE '%$keywords%')";
+				} else {
+					$where = "`status`=9 AND (`title` LIKE '%$keywords%' or `remark` LIKE '%$keywords%')";
+				}
                 $tablename = $models[$modelid]['master_table'];
                 if($tablename=='') MSG('参数错误!');
                 if($tablename=='content_share') {
                     $where = "`modelid`='$modelid' AND ".$where;
                 }
+				$result = $this->db->get_list($tablename, $where, '*', 0, 20, $page,'id DESC');
+				$result_pages = $this->db->pages;
+				$total_number = $this->db->number;
             } else {
-                $tablename = 'content_share';
+            	 //全站搜索表
+				if($starttime) {
+					$stime = SYS_TIME-$starttime*86400;
+					$where = "`addtime`>'$stime' AND `data_key` LIKE '%$keywords%'";
+				} else {
+					$where = "`data_key` LIKE '%$keywords%'";
+				}
+				$result_tmp = $this->db->get_list('search_index', $where, '*', 0, 20, $page,'id DESC');
+				$result_pages = $this->db->pages;
+				$total_number = $this->db->number;
+				$result = array();
+				if(!empty($result_tmp)) {
+					foreach($result_tmp as $r) {
+						$data = $this->db->get_one('search_result', array('id' => $r['id']));
+						$data['addtime'] =  $r['addtime'];
+						$result[] = $data;
+					}
+				}
+				//print_r($result);
             }
             //if(LANGUAGE=='en') $tablename .= '_en';
             
-            $result = $this->db->get_list($tablename, $where, '*', 0, 20, $page,'id DESC');
-            $result_pages = $this->db->pages;
-            $total_number = $this->db->number;
+
+
 
             if($search_cookie) {
                 if(!in_array($keywords,$history_result)) {

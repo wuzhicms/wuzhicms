@@ -80,11 +80,6 @@
 </div>
 
 
-<div class="login--bottom">
-    <div class="container">
-        <div class="col-xs-12" style="text-align: center">观点 © 2010－2015 guandian.cn, All Rights Reserved</div>
-    </div>
-</div>
 
 <script type="text/javascript">
     function ch_type(type,obj) {
@@ -94,15 +89,15 @@
         $("#setmodelid").val(type);
         if(type==10) {
             $("#companyname").attr('type','hidden');
-            $("#worktype").attr('type','hidden');
+
             $("#d_companyname").css('display','none');
-            $("#d_worktype").css('display','none');
+
 
         } else {
             $("#companyname").attr('type','text');
-            $("#worktype").attr('type','text');
+
             $("#d_companyname").css('display','');
-            $("#d_worktype").css('display','');
+
             if(type==11) {
                 $("#f_companyname").html('公司名称');
             }

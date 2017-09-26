@@ -35,7 +35,7 @@
 						<th class="tablehead">UID</th>
 						<th class="tablehead">用户名</th>
 						<th class="tablehead">机构名称</th>
-						<th class="tablehead">职务</th>
+
 						<th class="tablehead">手机</th>
 						<th class="tablehead">Email</th>
 						<th class="tablehead">注册时间</th>
@@ -49,7 +49,7 @@
 						<td><?php echo $r['uid'];?></td>
 						<td><?php echo $r['username'];?></td>
 						<td><?php echo $r['companyname'];?></td>
-						<td><?php echo $r['worktype'];?></td>
+
 
 						<td><?php echo $r['mobile'];?></td>
 						<td><?php echo $r['email'];?></td>

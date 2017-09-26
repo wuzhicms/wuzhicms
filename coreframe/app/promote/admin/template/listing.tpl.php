@@ -40,8 +40,9 @@
                     <thead>
                     <tr>
                         <th class="tablehead">ID</th>
-                        <th class="tablehead">名称</th>
+                        <th class="tablehead" width="40%">名称</th>
                         <th class="tablehead">预览</th>
+                        <th class="tablehead">投放时间/截止时间</th>
                         <th class="tablehead">添加时间/更新时间</th>
                         <th class="tablehead">管理操作</th>
                     </tr>
@@ -55,7 +56,8 @@
                             <td><?php echo $r['id'];?></td>
                             <td><?php echo $r['title'];?></td>
                             <td><a href="?m=promote&f=index&v=view&id=<?php echo $r['id'];?>&pid=<?php echo $r['pid'].$this->su();?>" target="_blank">预览</a></td>
-                            <td><?php echo time_format($r['addtime']);?> / <?php echo time_format($r['updatetime']);?></td>
+                            <td><?php echo date('Y-m-d H:i',$r['starttime']);?> /<br> <?php echo date('Y-m-d H:i',$r['endtime']);?></td>
+                            <td><?php echo time_format($r['addtime']);?> /<br> <?php echo time_format($r['updatetime']);?></td>
 
                             <td>
                                 <a href="?m=promote&f=index&v=edit&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">修改</a>

@@ -19,7 +19,6 @@ class form_build {
 		$this->fields = get_cache('field_'.$modelid,'model');
 		$this->extdata = '';
         $this->form = load_class('form');
-		//TODO 初始化勾子，在程序提交前处理
     }
 
 	public function execute($formdata = array(),$modelid = '',$set_language = '') {
@@ -324,7 +323,7 @@ private function content_group($config, $value){
             $validform = '';
         }
         if($value && $editor_type=='ckeditor') {
-            $value = str_replace('_wuzhicms_page_tag_','<div style="page-break-after: always"><span style="display:none">&nbsp;</span></div>',$value);
+            $value = str_replace('_wuzhicms_page_tag_','<div style="page-break-after: always"><span style="display: none;">&nbsp;</span></div>',$value);
         }
         if($toolbar=='textarea') {
             return '<textarea name="form['.$field.']" id="'.$field.'" class="form-control" rows="3" boxid="'.$field.'" '.$validform.'>'.$value.'</textarea>';
@@ -354,7 +353,7 @@ private function content_group($config, $value){
         } else {
             $show_type = intval($setting['member_show_type']);
         }
-        return '<div class="input-group">'.$this->form->attachment($setting['upload_allowext'],1,"form[$field]","$value","callback_thumb_dialog",$show_type,$setting['images_width'],$setting['images_height'],$setting['images_cut'],$setting['is_water'],$setting['is_allow_show_img'],$ext_code).'</div>';
+        return '<div class="input-group">'.$this->form->attachment($setting['upload_allowext'],1,"form[$field]","$value","callback_thumb_dialog",$show_type,$setting['images_width'],$setting['images_height'],$setting['images_cut'],$setting['is_water'],$setting['is_allow_show_img'],$ext_code,1).'</div>';
     }
 
 private function images($config, $value){

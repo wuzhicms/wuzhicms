@@ -71,7 +71,7 @@ class index extends WUZHI_foreground{
 			$postinfo_category[$_key] = $r;
 		}
 		$admin_rs = $this->db->get_one('admin',array('uid'=>$uid),'role');
-		//TODO 是否为IE8或者使用非框架,如果是跳转到 main
+		//是否为IE8或者使用非框架,如果是跳转到 main
 		$is_ie8 = 0;
 		if(strpos($_SERVER[HTTP_USER_AGENT], "MSIE 8.0")) {
 			$is_ie8 = 1;
@@ -161,7 +161,7 @@ class index extends WUZHI_foreground{
             $sina_akey = '';
             $seo_title = $seo_keywords = $seo_description = '会员登录';
             $forward = empty($GLOBALS['forward']) ? remove_xss(HTTP_REFERER) : remove_xss(urldecode($GLOBALS['forward']));
-			$forward = safe_htm($GLOBALS['forward']);
+			$forward = safe_htm($forward);
 			include T('member','login');
 		}
 	}
@@ -230,7 +230,6 @@ class index extends WUZHI_foreground{
 			$info['password'] = $GLOBALS['password'];
 			$info['pwdconfirm'] = $GLOBALS['pwdconfirm'];
 			$info['companyname'] = remove_xss($GLOBALS['companyname']);
-			$info['worktype'] = remove_xss($GLOBALS['worktype']);
 			$info['mobile'] = remove_xss($GLOBALS['mobile']);
 
 

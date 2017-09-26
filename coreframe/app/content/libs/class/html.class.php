@@ -15,7 +15,8 @@ class WUZHI_html {
     public $categorys;//当前模块所有栏目
     public function __construct($category = '') {
         $this->category = $category;
-        $this->siteconfigs = get_cache('siteconfigs');
+		$this->siteid = get_cookie('siteid');
+		$this->siteconfigs = get_cache('siteconfigs_'.$this->siteid);
         $this->urlclass = load_class('url','content');
     }
 
@@ -124,7 +125,8 @@ class WUZHI_html {
         } else {
             $_template = TPLID.':show';
         }
-        
+        //生成静态不检查权限
+		$access_authority = true;
         $styles = explode(':',$_template);
         $project_css = isset($styles[0]) ? $styles[0] : 'default';
         $_template = isset($styles[1]) ? $styles[1] : 'show';

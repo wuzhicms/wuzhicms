@@ -36,6 +36,18 @@ include $this->template('header','core');
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 col-xs-4 control-label">百度站长平台（site）：</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <input type="text" class="form-control" name="form[baidu_site]" value="" placeholder="不自动提交，请留空">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 col-xs-4 control-label">百度站长平台（token）：</label>
+                <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
+                    <input type="text" class="form-control" name="form[baidu_token]" value="">
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 col-xs-4 control-label"></label>
                 <div class="col-lg-3 col-sm-4 col-xs-4 input-group">
                     <input class="btn btn-info col-sm-12 col-xs-12" type="submit" name="submit" value="提交">

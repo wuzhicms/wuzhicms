@@ -79,7 +79,8 @@ function strpos_array($haystack, $needles)
  */
 function upload_url_safe()
 {
-	if(empty($_SERVER['HTTP_REFERER'])) MSG( L('operation_failure'), '', 3000);//上传弹窗必然由上级页面加载
+	//TODO 删除下面注释
+	//if(empty($_SERVER['HTTP_REFERER'])) MSG( L('operation_failure'), '', 3000);//上传弹窗必然由上级页面加载
 }
 
 /**

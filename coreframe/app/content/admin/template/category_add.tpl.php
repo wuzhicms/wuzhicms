@@ -144,7 +144,7 @@ include $this->template('header','core');
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">栏目页URL规则</label>
                             <div class="col-lg-7 col-sm-7 col-xs-7 input-group">
-                                <input type="text" class="form-control" id="listurl" name="form[listurl]" value="index.php?v=listing&cid={$cid}&page={$page}">
+                                <input type="text" class="form-control" id="listurl" name="form[listurl]" value="index.php?v=listing&cid={$cid}|index.php?v=listing&cid={$cid}&page={$page}">
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">选择规则 <span class="caret"></span></button>
                                     <ul id="phpurlruleid" class="dropdown-menu pull-right ">
@@ -168,7 +168,7 @@ include $this->template('header','core');
                         <div class="form-group">
                             <label class="col-sm-2 col-xs-4 control-label">内容页URL规则</label>
                             <div class="col-lg-7 col-sm-7 col-xs-7 input-group">
-                                <input type="text" class="form-control" id="showurl" name="form[showurl]" value="index.php?v=show&cid={$cid}&id={$id}">
+                                <input type="text" class="form-control" id="showurl" name="form[showurl]" value="index.php?v=show&cid={$cid}&id={$id}|index.php?v=show&cid={$cid}&id={$id}&page={$page}">
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">选择规则 <span class="caret"></span></button>
                                     <ul id="phpurlruleid2" class="dropdown-menu pull-right ">
@@ -259,6 +259,9 @@ include $this->template('header','core');
                 </div>
             </section>
         </div>
+    </div>
+    <div class="alert alert-success fade in">
+        <strong>重要提示:</strong> 栏目访问权限，投稿配置，请移步至：管理会员-<a href="?m=member&f=group&v=listing<?php echo $this->su();?>&_menuid=86" target="_blank">会员组管理</a>-权限访问设置
     </div>
     <!-- page end-->
 </section>

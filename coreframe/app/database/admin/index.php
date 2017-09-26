@@ -145,7 +145,7 @@ class index extends WUZHI_admin{
 					$comma = "";
 					$tabledump .= "INSERT INTO `$tables[$i]` VALUES(";
 					for($j = 0; $j < $numfields; $j++) {
-						$tabledump .= $comma."'".$row[$name[$j]]."'";
+						$tabledump .= $comma."'".str_replace("\n","\\n", addslashes($row[$name[$j]]))."'";
 						$comma = ",";
 					}
 					$tabledump .= ");\n";
@@ -209,6 +209,8 @@ class index extends WUZHI_admin{
 		if(is_array($sqls)) {
 			foreach($sqls as $sql) {
 				if(trim($sql) != '') {
+					//echo $sql."\r\n";
+					$sql = str_replace ( "\n", "", $sql );
 					$this->db->query($sql);
 				}
 			}
@@ -219,25 +221,18 @@ class index extends WUZHI_admin{
 	}
 
  	private function sql_split($sql) {
-		//if($this->db->version() > '4.1' && $this->db_charset) {
-		//	$sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=".$this->db_charset,$sql);
-		//}
-		//if($this->db_tablepre != "wzcms_") $sql = str_replace("`wzcms_", '`'.$this->db_tablepre, $sql);
-		$sql = str_replace("\r", "\n", $sql);
-		$ret = array();
-		$num = 0;
-		$queriesarray = explode(";\n", trim($sql));
-		unset($sql);
-		foreach($queriesarray as $query) {
-			$ret[$num] = '';
-			$queries = explode("\n", trim($query));
-			$queries = array_filter($queries);
-			foreach($queries as $query) {
-				$str1 = substr($query, 0, 1);
-				if($str1 != '#' && $str1 != '-') $ret[$num] .= $query;
+		//$sql=str_replace("\r","\n",$sql);
+		$ret=array();
+		$num=0;
+		foreach(explode(";\n",trim($sql)) as $query)
+		{
+			$queries=explode("\n",trim($query));
+			foreach($queries as $query)
+			{
+				$ret[$num].=$query[0]=='#'||$query[0].$query[1]=='--'?'':$query;
 			}
 			$num++;
 		}
-		return($ret);
+		return $ret;
 	}
 }

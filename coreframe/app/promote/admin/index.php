@@ -268,8 +268,11 @@ class index extends WUZHI_admin {
         $pr = $this->db->get_one('promote_place', array('pid' => $pid));
         $where = "`pid`='$pid' AND starttime<".SYS_TIME." AND endtime>".SYS_TIME;
         $result = $this->db->get_list('promote', $where, '*', 0, 10, 0, 'id DESC');
-        $rand_key = array_rand($result,1);
-        $rand_result = $result[$rand_key];
+		if($result) {
+			$rand_key = array_rand($result,1);
+			$rand_result = $result[$rand_key];
+		}
+
         $template = $r['template'];
         $file = WWW_ROOT.'promote/'.$pid.'.js';
 

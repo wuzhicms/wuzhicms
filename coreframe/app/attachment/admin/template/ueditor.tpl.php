@@ -12,6 +12,9 @@ include $this->template('header','core');
 
 
 <div class="panel-body">
+    <div class="alert alert-success fade in">
+        <strong>重要提示:</strong> 以下配置仅对百度编辑器（Ueditor）起作用。
+    </div>
         <form class="form-horizontal tasi-form" method="post" action="">
 
             <div class="form-group">

@@ -203,7 +203,7 @@
     'id' => '5019',
     'modelid' => '1001',
     'field' => 'block',
-    'name' => '添加到区块',
+    'name' => '添加到推荐位',
     'remark' => '',
     'css' => '',
     'minlength' => '0',

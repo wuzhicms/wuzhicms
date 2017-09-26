@@ -24,15 +24,16 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12">
+            <div style="background-color: #fff;color: #ff7600;padding: 18px 20px 18px 28px;">{$siteconfigs['member_tips']}</div>
+
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="memberright">
 
                         <ul id="myTab" class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class=""><a href="?m=content&f=postinfo&v=newinfo&cid={$cid}">信息发布</a></li>
-                            <li role="presentation" class=""><a href="?m=content&f=postinfo&v=listing&cid={$cid}">我发布的信息</a></li>
+                            <li role="presentation" class=""><a href="?m=content&f=postinfo&v=newinfo&cid={$cid}&set_iframe={$set_iframe}">信息发布</a></li>
+                            <li role="presentation" class=""><a href="?m=content&f=postinfo&v=listing&cid={$cid}&set_iframe={$set_iframe}">我发布的信息</a></li>
                             <li role="presentation" class="active"><a href="#tabs1" id="1tab" role="tab" data-toggle="tab" aria-controls="tabs1" aria-expanded="true">修改信息</a></li>
-                            <li class="tip-a" style="float:right;">温馨提示：我们的客服会在24小时内审核。全国免费咨询电话：010-11111111</li>
                         </ul>
                         <div class="memberbordertop">
                             <form name="myform" class="form-horizontal" action="" method="post" id="myform">
@@ -69,13 +70,6 @@
 </div>
 {T "member","foot"}
 <script>
-    $(document).ready(function () {
-        $('.form-groupinfo').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-         $('[data-toggle="tooltip"]').tooltip();
-    });
     $("#submit").click(function(){
         t=setTimeout("hide_formtips()",3000);
     });

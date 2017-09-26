@@ -21,8 +21,8 @@ div#wz_linkage{display: inline;}
 		<input type="hidden" name="dosearch" value="1" />
 		创建时间<?php echo WUZHI_form::calendar('start',$GLOBALS['start'],1);?> - <?php echo WUZHI_form::calendar('end',$GLOBALS['end'],1);?>
 		&nbsp;Tag <input type="text" size="12" value="<?php echo $GLOBALS['tags'];?>" name="tags">
-		&nbsp;
-            <div class="input-group"><?php echo linkage(output($this->_cache,'linkage'),'linkage');?></div>
+		&nbsp;<?php echo $GLOBALS['linkageid'];?>
+            <div class="input-group"><?php echo linkage(output($this->_cache,'linkage'),'linkageid',1,'',array(0,$GLOBALS['linkageid']));?></div>
             <div class="input-group"><?php
 		$options['0'] = '排序规则';
 		$options['1'] = '使用从大到小';
@@ -62,9 +62,9 @@ foreach($lists AS $k=>$v)
 	  <td><?php echo $v['number'];?></td>
       <td><?php echo time_format($v['addtime']);?></td>
       <td><span class="label btn-default label-mini"><?php echo $v['pinyin'];?></span></td>
-	  <td><span class="label btn-default label-mini"><?php echo $v['linkage'];?></span></td>
+	  <td><span class="label btn-default label-mini"><?php echo $linkage_data[$v['linkageid']]['name'];?></span></td>
       <td>
-<a href="<?php echo link_url( array('v'=>'html','tid'=>$v['tid']) );?>" class="btn btn-info btn-xs"><?php echo L('create_html');?></a>
+<!--<a href="--><?php //echo link_url( array('v'=>'html','tid'=>$v['tid']) );?><!--" class="btn btn-info btn-xs">--><?php //echo L('create_html');?><!--</a>-->
 <a href="<?php echo link_url( array('v'=>'add','tid'=>$v['tid']) );?>" class="btn btn-primary btn-xs"><?php echo L('edit');?></a>
 <a href="javascript:makedo('<?php echo link_url( array('v'=>'del','tid'=>$v['tid']) );?>', '<?php echo L('confirm_del');?>')" class="btn btn-danger btn-xs"><?php echo L('del');?></a>
       </td>
@@ -82,8 +82,22 @@ foreach($lists AS $k=>$v)
                     <?php echo $pages;?>
                 </ul>
             </div>
+
         </div>
+
     </div>
+		<div class="alert alert-success fade in">
+			<strong>需要配置伪静态规则才能访问: <br>apache规则如下，</strong>
+			<br>
+			<br>
+			<pre>
+RewriteRule ^tags/$ index.php?m=tags
+RewriteRule ^tags/([A-Z]).html index.php?m=tags&f=index&v=letter&letter=$1
+RewriteRule ^tags/([a-z0-9-]+).html index.php?m=tags&f=index&v=show&tid=$1
+RewriteRule ^tags/([a-z0-9-]+)-P([0-9]+).html index.php?m=tags&f=index&v=show&tid=$1&page=$2</pre>
+			<br>
+			Nginx请参考apaeche规则进行转换。
+		</div>
 </div>
 </section>
 <script src="<?php echo R;?>js/bootstrap.min.js"></script>
