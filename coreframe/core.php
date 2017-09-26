@@ -39,10 +39,12 @@ define('IS_WIN',strstr(PHP_OS, 'WIN') ? 1 : 0);
 define('IS_CLI',PHP_SAPI=='cli'? 1 : 0);
 define('SYS_TIME', time());
 define('HTTP_REFERER', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
-if($_SERVER['SERVER_PORT'] != '443') {
-	define('HTTP_SSL', 'http');
+
+if(isset($_SERVER['HTTPS']) && (strcasecmp($_SERVER['HTTPS'], 'on') === 0 || $_SERVER['HTTPS'] == 1)
+    || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strcasecmp($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') === 0) {
+    define('HTTP_SSL', 'http');
 } else {
-	define('HTTP_SSL', 'https');
+    define('HTTP_SSL', 'https');
 }
 //设置本地时差
 date_default_timezone_set(TIME_ZONE);
