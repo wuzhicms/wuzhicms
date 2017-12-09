@@ -313,3 +313,7 @@ function imagecut(iframeurl,id,title,width,height,returntype) {
     }).showModal(this);
     return false;
 }
+function remove_image(id) {
+    $("#"+id+"_thumb").attr('src',web_url+'res/images/upload-thumb.png');
+    $("#"+id).val('');
+}

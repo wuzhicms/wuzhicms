@@ -184,7 +184,8 @@ class WUZHI_form {
 				$thumb_h = $height ? $height : '113';
 				$style = "max-width:".$thumb_w."px;";
 				$style .= "max-height:".$thumb_h."px;";
-				$str .= '<img class="attachment_thumb" id="' . $id . '_thumb" src="' . $default_thumb . '" onclick="img_view(this.src);"  style="' . $style . '" " />';
+				if($default_val) $str .= '<span class="btn btn-default btn-xs" onclick="remove_image(\'' . $id . '\');" style="position: absolute;">X</span>';
+				$str .= '<img class="attachment_thumb" id="' . $id . '_thumb" src="' . $default_thumb . '" onclick="img_view(this.src);"  style="' . $style . '"/>';
 			} else {
 				$input_type = 'text';
 			}
