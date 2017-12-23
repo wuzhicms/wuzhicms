@@ -119,9 +119,6 @@ class WUZHI_member {
 	public function check_user($username, $return = 0){
 		if(empty($username) || !preg_match('/^[a-z0-9\x7f-\xff\-]{4,20}$/i', $username, $r))return $return ? '{"info":"用户名需要4-20位字符","status":"n"}' : false;
 		$data = $this->db->get_one('member', '`username` = "'.$username.'"', 'uid');
-		if(empty($data)) {
-			$data = $this->db->get_one('order_card', '`card_no` = "'.$username.'" AND `uid`=0', 'cardid');
-		}
 		return empty($data) ? ($return ? '{"info":"'.L('check_ok', '', 'member').'","status":"y"}' : true): ($return ? '{"info":"'.L('user_exist', '', 'member').'","status":"n"}' : false);
 	}
 	/**
