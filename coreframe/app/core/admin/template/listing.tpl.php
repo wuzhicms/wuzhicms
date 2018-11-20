@@ -399,7 +399,7 @@
         } else if(count>100) {
             div_by = 50;
         }
-        var speed = Math.round(count / div_by),
+        var speed = Math.floor(count / div_by),
             $display = $('#'+id),
             run_count = 1,
             int_speed = 1;
