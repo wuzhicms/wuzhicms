@@ -1,5 +1,5 @@
 # 五指CMS网站管理系统
-五指cms网站管理系统，网站内容管理系统，php5+mysql开发。
+五指cms网站管理系统，网站内容管理系统，php + mysql开发。
 
 ![](http://www.wuzhicms.com/uploadfile/2015/05/18/1431917862749065.png)
 ## 安装说明
