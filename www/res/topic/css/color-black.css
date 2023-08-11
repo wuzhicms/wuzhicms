@@ -1,0 +1,40 @@
+a:focus, a:hover {
+    color: #333;
+}
+.bg-main, .border-main .button.active, .pointer.border-main .active, .nav-pills.border-main .active a, .nav-main.border-main .nav-head, .pagination.border-main .active {
+    background-color: #333;
+}
+.border-main, .border-main .button, .border-main .tab-nav li a, .border-main .tab-body, .button.bg-main, .selected.border-main, .pointer.border-main li, .nav.border-main .active a, .nav.nav-tabs.border-main, .nav-main.border-main a, .nav-main.border-main .nav-head, .pagination.border-main li, .pager.border-main a {
+    border-color: #333;
+}
+.button.border-main:hover, .button.border-main:focus, .button.bg-main:hover, .button.bg-main:focus {
+    color: #fff;
+    border-color: #000;
+    background-color: #000;
+}
+.zt-banner {
+    background: url(../img/banner-black.jpg) no-repeat top center #333;
+}
+.zt-attr {
+    border-left: 1px solid #333;
+}
+.zt-intro .intro-tag {
+    background: #333;
+}
+.zt-intro .intro-tag i {
+    color: #333;
+}
+.cate-title {
+    border-bottom-color: #333;
+}
+.newSlide .hd li.on {
+    background: #333;
+}
+.bigImage .hd .pageState span {
+    color: #333;
+}
+.bigImage .prev:hover,
+.bigImage .next:hover {
+    background: rgba(255,255,255,1);
+    color: #333;
+}

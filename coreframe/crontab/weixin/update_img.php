@@ -21,7 +21,7 @@ while(1) {
         $tmp_arr = array();
         $result2 = $db->get_list('weixin_uploadfile', array('status' => 1,'pageid'=>$rs['pageid']), '*', 0, 8, 0, 'fileid ASC');
         foreach($result2 as $r) {
-            $fileurl =  '/uploadfile/weixin/'.date('Y/m/d', $r['addtime']).'/'.$r['localId'] . ".jpg";;
+            $fileurl =  '/uploadfile/weixin/'.date('Y/m/d', $r['addtime']).'/'.$r['localId'] . ".jpg";
             $tmp_arr[] = array(
                 'url' => $fileurl,
                 'alt' => ''
@@ -40,7 +40,7 @@ while(1) {
         $tmp_arr = array();
         $result2 = $db->get_list('weixin_uploadfile', array('status' => 1,'pageid'=>$rs['pageid']), '*', 0, 8, 0, 'fileid ASC');
         foreach($result2 as $r) {
-            $fileurl =  '/uploadfile/weixin/'.date('Y/m/d', $r['addtime']).'/'.$r['localId'] . ".jpg";;
+            $fileurl =  '/uploadfile/weixin/'.date('Y/m/d', $r['addtime']).'/'.$r['localId'] . ".jpg";
             $tmp_arr[] = array(
                 'url' => $fileurl,
                 'alt' => ''

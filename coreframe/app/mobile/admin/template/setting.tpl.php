@@ -88,7 +88,5 @@ include $this->template('header','core');
         <strong>使用提示:</strong> 手机访问内容通过手机模版来呈现。只有在使用伪静态或者动态地址时，可自动识别。如果生成静态，则需要通过js代码来判断，实现跳转！
     </div>
 </section>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
+<?php include $this->template('footer','core');?>
 

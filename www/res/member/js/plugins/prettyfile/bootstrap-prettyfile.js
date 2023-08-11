@@ -1,4 +1,4 @@
-﻿/*
+/*
  * jQuery and Bootsrap3 Plugin prettyFile
  *
  * version 2.0, Jan 20th, 2014
@@ -29,7 +29,7 @@
 				' );
 
 				return $el.parent();
-			};
+			}
 
 			function bind_change( $wrap, multiple ) {
 				$wrap.find( 'input[type="file"]' ).change(function () {
@@ -50,14 +50,14 @@
 
 					$wrap.find('.input-append input').val( info );
 				});
-			};
+			}
 
 			function bind_button( $wrap, multiple ) {
 				$wrap.find( '.input-append' ).click( function( e ) {
 					e.preventDefault();
 					$wrap.find( 'input[type="file"]' ).click();
 				});
-			};
+			}
 
 			return plugin.each( function() {
 				$this = $( this );

@@ -52,6 +52,14 @@ class workflow extends WUZHI_admin {
                 }
                 $r['level3_user'] = $str;
             }
+			if($r['level4_user']!='') {
+				$leveluser = unserialize($r['level4_user']);
+				$str = '';
+				foreach($leveluser as $uid=>$le) {
+					$str .= '<a href="?m=core&f=workflow&v=deluser&level=4&uid='.$uid.'&workflowid='.$r['workflowid'].$this->su().'" title="点击删除">'.$le.'</a> <br>';
+				}
+				$r['level3_user'] = $str;
+			}
             $result[$key] = $r;
         }
         $pages = $this->db->pages;
@@ -97,4 +105,33 @@ class workflow extends WUZHI_admin {
         $this->db->update('workflow',array('level'.$level.'_user'=>$users),array('workflowid'=>$workflowid));
         MSG(L('delete success'),HTTP_REFERER);
     }
+	public function edit() {
+		$workflowid = intval($GLOBALS['workflowid']);
+		if($GLOBALS['submit']) {
+			$formdata = array();
+			$formdata['name'] = $GLOBALS['name'];
+			$formdata['level'] = $GLOBALS['level'];
+			$formdata['level1_name'] = $GLOBALS['level1_name'];
+			$formdata['level2_name'] = $GLOBALS['level2_name'];
+			$formdata['level3_name'] = $GLOBALS['level3_name'];
+			$formdata['level4_name'] = $GLOBALS['level4_name'];
+
+			$this->db->update('workflow',$formdata,array('workflowid'=>$workflowid));
+
+			MSG(L('edit success'),$GLOBALS['forward']);
+		} else {
+			$show_formjs = 1;
+			$data = $this->db->get_one('workflow', array('workflowid'=>$workflowid));
+			include $this->template('workflow_edit');
+		}
+
+	}
+	/**
+	 * 权限列表
+	 */
+	public function priv_list() {
+		$workflowid = intval($GLOBALS['workflowid']);
+		$data = $this->db->get_one('workflow', array('workflowid' => $workflowid));
+		include $this->template('workflow_priv_list');
+	}
 }

@@ -6,5 +6,5 @@
 		}
 		$size = $setting['size'];
 		if($value=='') $value = $setting['defaultvalue'];
-		return "<input type='text' name='form[$field]' id='$field' value='$value' class='input-text' size='$size' {$ext_code}>";
+		return "<input type='text' name='form[$field]' id='$field' value='$value' class='form-control' size='$size' {$ext_code}>";
 	}

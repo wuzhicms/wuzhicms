@@ -39,7 +39,7 @@
                             <td><?php echo $username;?></td>
 
                             <td>
-                                <a href="?m=core&f=badword&v=delete&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-danger btn-xs">删除</a>
+                                <a href="?m=core&f=badword&v=delete&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-danger btn-sm btn-xs">删除</a>
 
 
                             </td>
@@ -66,8 +66,5 @@
 
 <!-- page end-->
 </section>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
-</body>
-</html>
+<?php include $this->template('footer','core');?>
+

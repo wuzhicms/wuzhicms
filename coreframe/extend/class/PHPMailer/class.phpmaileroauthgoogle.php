@@ -17,6 +17,8 @@
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use League\OAuth2\Client\Grant\RefreshToken;
+
 /**
  * PHPMailerOAuthGoogle - Wrapper for League OAuth2 Google provider.
  * @package PHPMailer
@@ -59,7 +61,7 @@ class PHPMailerOAuthGoogle
 
     private function getGrant()
     {
-        return new \League\OAuth2\Client\Grant\RefreshToken();
+        return new RefreshToken();
     }
 
     private function getToken()

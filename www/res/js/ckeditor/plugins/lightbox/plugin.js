@@ -1,1 +1,0 @@
-﻿(function(){CKEDITOR.plugins.add("lightbox",{lang:"en",init:function(a){a.addCommand("lightbox",new CKEDITOR.dialogCommand("lightbox"));CKEDITOR.dialog.add("lightbox",this.path+"dialogs/lightbox.js");a.ui.addButton("lightbox",{label:a.lang.lightbox.label,command:"lightbox",icon:this.path+"icon.png"})}})})();

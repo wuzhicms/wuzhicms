@@ -1,1 +1,0 @@
-document.writeln("<a href='http://dev.wuzhicms.com/index.php?m=promote&v=stat&pid=1&id=15' target='_blank'><img src='' style='max-width: 100%;height: auto;'></a>");

@@ -116,13 +116,20 @@ class WUZHI_db {
 		$offset = 0;
 		$page = max(intval($page), 1);
 		$offset = $pagesize*($page-1)+$startid;
+		$tmpgroup = array();
 		if($page) {
-			$this->number = $this->count_result($table,$where);
+			if($group) {
+				$tmpgroup = $this->read_db->get_list($table, $where, $field, "$offset,$pagesize", $order, $group, $keyfield);
+				$this->number = count($tmpgroup);
+			} else {
+				$this->number = $this->count_result($table,$where,"COUNT(*) AS num", 0, '', $group);
+			}
 			$this->pages = pages($this->number, $page, $pagesize, $urlrule, $array,$colspan);
 		}
 		if ($page && $this->number == 0) {
 			return array();
 		} else {
+			if($tmpgroup) return $tmpgroup;
 			return $this->read_db->get_list($table, $where, $field, "$offset,$pagesize", $order, $group, $keyfield);
 		}
 	}

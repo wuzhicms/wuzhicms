@@ -12,6 +12,7 @@
 		$values[1] = $this->formdata[$field.'_1'];
 		$values[2] = $this->formdata[$field.'_2'];
 		$values[3] = $this->formdata[$field];
+		$values[4] = $this->formdata[$field.'_3'];
 		}
-		return linkage($linkageid, 'form['.$field.']',1,$ext_code,$values);
+		return linkage($linkageid, 'form['.$field.']',1,$ext_code,$values,'',$field);
 	}

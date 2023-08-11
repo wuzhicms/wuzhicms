@@ -94,10 +94,7 @@ class WUZHI_build_package
                 echo " 忽略git文件：{$opFile}\n";
                 continue;
             }
-			if (strpos($opFile, '.DS_Store') === 0) {
-				echo " 忽略mac系统文件：{$opFile}\n";
-				continue;
-			}
+
             if (strpos($opFile, 'upgrade') === 0) {
                 echo " 忽略升级文件：{$opFile}\n";
                 continue;
@@ -157,7 +154,7 @@ class WUZHI_build_package
 
         try {
             $this->filesystem->copy(WWW_ROOT.$source, $dest);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
     }

@@ -171,7 +171,7 @@
 
 <script type="text/javascript">
     <!--
-    var errmsg = new Array();
+    var errmsg = [];
     errmsg[1] = '您已经安装过wuzhicms，确认安装将会删除老数据！是否继续？';
     errmsg[2] = '数据库信息配置错误！';
     errmsg[3] = '成功连接数据库，数据库名称不存在，请创建';

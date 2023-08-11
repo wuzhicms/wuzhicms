@@ -166,15 +166,9 @@ class createhtml extends WUZHI_admin {
             $catids = get_cache('cache-html-'.$uid);
         } else {
             if($GLOBALS['catids'][0]=='') {
-            	foreach($this->categorys as $_cid=>$tmp) {
-            		if($tmp['type']==2) continue;
-					$catids[] = $_cid;
-				}
+                $catids = array_keys($this->categorys);
             } else {
-            	foreach ($GLOBALS['catids'] as $_cid) {
-					if($this->categorys[$_cid]['type']==2) continue;
-					$catids[] = $_cid;
-				}
+                $catids = $GLOBALS['catids'];
             }
             set_cache('cache-html-'.$uid,$catids);
         }

@@ -1,4 +1,4 @@
-﻿/**
+/**
  
  @Name : layDate v1.1 日期控件
  @Author: 贤心

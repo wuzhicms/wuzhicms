@@ -2,7 +2,7 @@
 <?php include $this->template('header','core');?>
 <body class="body">
 <section class="wrapper">
-	<div class="panel mr0">
+	<div class="panel">
 		<header><?php if(isset($GLOBALS['_menuid']))echo $this->menu($GLOBALS['_menuid']);?></header>
 		<header class="panel-heading">
 			<form class="form-inline" role="form">
@@ -55,9 +55,9 @@
 						<td><?php echo $r['email'];?></td>
 						<td><?php echo date('Y-m-d', $r['regtime']);?></td>
 						<td>
-							<a href="?m=member&f=mec&v=check&uid=<?php echo $r['uid'].$this->su();?>" class="btn btn-warning btn-xs">审核</a>
+							<a href="?m=member&f=mec&v=check&uid=<?php echo $r['uid'].$this->su();?>" class="btn btn-warning btn-sm btn-xs">审核</a>
 
-							<a href="javascript:void(0)" onclick="del(<?php echo $r['uid'];?>)" class="btn btn-danger btn-xs">删除</a>
+							<a href="javascript:void(0)" onclick="del(<?php echo $r['uid'];?>)" class="btn btn-danger btn-sm btn-xs">删除</a>
 						</td>
 					</tr>
 				<?php } ?>
@@ -73,7 +73,7 @@
                             <button type="submit" name="submit" class="btn btn-default btn-sm">删除</button>
                         </div>
                         <div class="pull-right">
-                            <ul class="pagination pagination-sm mr0">
+                            <ul class="pagination pagination-sm">
                                 <?php echo $pages;?>
                             </ul>
                         </div>
@@ -83,9 +83,6 @@
 		</form>
 	</div>
 </section>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
 <script type="text/javascript">
 function edit(uid){
 	top.openiframe('index.php?m=member&f=index&v=edit&uid='+uid+'<?php echo $this->su();?>', 'editUser', '编辑用户', 800, 500);
@@ -123,5 +120,4 @@ function toast(msg, time){
 }
 
 </script>
-</body>
-</html>
+<?php include $this->template('footer','core');?>

@@ -33,6 +33,7 @@ class index{
 
         if (isset($GLOBALS['submit'])) {
             $formdata = $GLOBALS['form'];
+            $formdata['typeid'] = intval($formdata['typeid']);
             $formdata['url'] = decode($formdata['forward']);
             $formdata['content'] = remove_xss($formdata['content']);
             $formdata['addtime'] = SYS_TIME;

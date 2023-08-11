@@ -16,13 +16,7 @@ class postinfo extends WUZHI_foreground {
         load_function('common', 'member');
         $this->member_setting = get_cache('setting', 'member');
         parent::__construct();
-		//判断当前是否验证了邮箱和手机
-        if(!$this->memberinfo['ischeck_email']) {
-            MSG('请先验证您的邮箱!','?m=member&f=index&v=edit_email&set_iframe='.$GLOBALS['set_iframe'],3000);
-        }
-		if($this->member_setting['checkmobile'] && !$this->memberinfo['ischeck_mobile']) {
-			MSG('您的手机还未验证！请先验证！','index.php?m=member&f=index&v=edit_mobile&set_iframe='.$GLOBALS['set_iframe'],3000);
-		}
+
 	}
 
 	/**
@@ -58,25 +52,32 @@ class postinfo extends WUZHI_foreground {
 
         $memberinfo = $this->memberinfo;
         $uid = $memberinfo['uid'];
-        $cid = intval($GLOBALS['cid']);
+        $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : null;
         $publisher = $memberinfo['username'];
-		$this->priv_check($cid);
-        $cate_config = get_cache('category_'.$cid,'content');
-        if(!$cate_config) MSG(L('category not exists'));
+//		$this->priv_check($cid);
+//        $cate_config = get_cache('category_'.$cid,'content');
+//        if(!$cate_config) MSG(L('category not exists'));
 
         $categorys = get_cache('category','content');
-        $modelid = $cate_config['modelid'];
-        $models = get_cache('model_content','model');
-        $master_table = $models[$modelid]['master_table'];
+//        $modelid = $cate_config['modelid'];
+//        $models = get_cache('model_content','model');
+//        $master_table = $models[$modelid]['master_table'];
         $page = intval($GLOBALS['page']);
         $page = max($page,1);
 
-        $where = "`cid`='$cid' AND `publisher`='$publisher'";
+        $where = "`publisher`='$publisher'";
 
-        $result = $this->db->get_list($master_table,$where, '*', 0, 20,$page,'id DESC');
+        $result = $this->db->get_list('content_share',$where, '*', 0, 20,$page,'id DESC');
+        foreach($result as &$_v) {
+			$check_data = $this->db->get_one('check_msg', array('id' => $_v['id'],'cid'=>$_v['cid']),'*',0,'checktime DESC');
+			if($check_data) {
+				$_v['check_msg'] = $check_data['msg'];
+				$_v['check_msg_time'] = $check_data['checktime'];
+			}
+		}
         $pages = $this->db->pages;
         $total = $this->db->number;
-		$catname = $cate_config['name'];
+//		$catname = $cate_config['name'];
         include T('content','member_postinfo_listing');
     }
 	//权限判断
@@ -99,9 +100,10 @@ class postinfo extends WUZHI_foreground {
 		} else {
 			$no_priv = false;
 		}
-		if($no_priv) {
-			MSG('没有权限!');
-		}
+		return $no_priv;
+/*		if($no_priv) {
+			MSG('没有权限!!');
+		}*/
 	}
     /**
      * 信息发布
@@ -109,10 +111,11 @@ class postinfo extends WUZHI_foreground {
     public function newinfo() {
         $memberinfo = $this->memberinfo;
 
-        $cid = intval($GLOBALS['cid']);
-        if(!$cid) {
-            MSG('请选择要发布的信息分类！');
-        }
+        $cid = isset($GLOBALS['cid']) ? intval($GLOBALS['cid']) : 1;
+
+        if(isset($GLOBALS['cid2'])) {
+			$cid = intval($GLOBALS['cid2']);
+		}
 		$this->priv_check($cid);
         $uid = $memberinfo['uid'];
         if(isset($GLOBALS['submit'])) {
@@ -142,10 +145,14 @@ class postinfo extends WUZHI_foreground {
                 }
                 $formdata['master_data']['cid'] = $cid;
                 //默认状态 status ,9为通过审核，1-4为审核的工作流，0为回收站
-                $formdata['master_data']['status'] = 1;
+				$status = intval($GLOBALS['form']['status']);
+				if(!in_array($status,array(1,6))) {
+					$status = 6;
+				}
+                $formdata['master_data']['status'] = $status;
 
                 //如果 route为 0 默认，1，加密，2外链 ，3，自定义 例如：wuzhicms-diy-url-example 用户，不能不需要自己写后缀。程序自动补全。
-                $formdata['master_data']['route'] = 0;
+			$formdata['master_data']['route'] = intval($GLOBALS['form']['route']);
                 $formdata['master_data']['publisher'] = $memberinfo['username'];
 
                 //echo $formdata['master_table'];exit;
@@ -156,11 +163,25 @@ class postinfo extends WUZHI_foreground {
 
                 //$formdata['master_data']['type'] = 2;//团购类型
 
+			$pinyin = load_class('pinyin');
+			$title = trim(remove_xss($formdata['master_data']['title']));
+			$py = $pinyin->return_py($title);
+			$formdata['master_data']['initial'] = strtolower($py['pinyin']);
 
                 $id = $this->db->insert($formdata['master_table'],$formdata['master_data']);
                 //生成url
                 $urlclass = load_class('url','content',$cate_config);
-                $urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1,'route'=>$formdata['master_data']['route']));
+
+			if($cate_config['type']==1) {
+				$urls['url'] = $cate_config['url'];
+			} elseif($formdata['master_data']['route']>1) {//外部链接/或者自定义链接
+				$urls['url'] = remove_xss($GLOBALS['url']);
+			} else {
+				$urls = $urlclass->showurl(array('id'=>$id,'cid'=>$cid,'addtime'=>$addtime,'page'=>1,'route'=>$formdata['master_data']['route']));
+			}
+			$formdata['master_data']['url'] = $urls['url'];
+
+
 
                 $this->db->update($formdata['master_table'],array('url'=>$urls['url']),array('id'=>$id));
                 if(!empty($formdata['attr_table'])) {
@@ -176,9 +197,26 @@ class postinfo extends WUZHI_foreground {
 
                 //统计表加默认数据
                 $this->db->insert('content_rank',array('cid'=>$cid,'id'=>$id,'updatetime'=>SYS_TIME));
-            MSG('信息发布成功，我们将在24小时内进行审核！','?f=postinfo&v=listing&cid='.$cid.'&set_iframe='.$GLOBALS['set_iframe'],3000);
+                //更新投稿数
+			$dayid = date('Ymd');
+			$category_stat = $this->db->get_one('category_stat', array('cid'=>$cid,'dayid' => $dayid));
+			if($category_stat) {
+				$this->db->update('category_stat', "`num_contribute`=`num_contribute`+1",array('cid'=>$cid,'dayid' => $dayid));
+			} else {
+				$this->db->insert('category_stat',array('cid'=>$cid,'dayid' => $dayid,'num_contribute'=>1));
+			}
+			$msg = '已经保存到草稿箱中';
+			if($status==1) $msg = '信息投稿成功，等待审批！';
+			//积分增加
+			if($status==1 || $status==9) {
+				$credit_api = load_class('credit_api','credit');
+				$credit_api->set_credit('addnews',$uid,$cid,$id);
+			}
+
+			MSG($msg,'?f=postinfo&v=listing&cid='.$cid.'&set_iframe='.$GLOBALS['set_iframe'],3000);
         } else {
             $categorys = get_cache('category','content');
+
             load_function('content','content');
             //
             $modelid = $categorys[$cid]['modelid'];
@@ -198,7 +236,7 @@ class postinfo extends WUZHI_foreground {
             $show_formjs = 1;
             $show_dialog = 1;
 
-            $field_list = '';
+            $field_list = array();
             if(is_array($formdata['0'])) {
                 foreach($formdata['0'] as $field=>$info) {
                     if($info['powerful_field'] || $info['ban_contribute']==0) continue;
@@ -219,6 +257,26 @@ class postinfo extends WUZHI_foreground {
             }
 			
 			$catname = $categorys[$cid]['name'];
+			$big_categorys = $child_categorys = array();
+
+			foreach($categorys as $_cid=>$_cat) {
+				if($_cat['pid']==0) {
+				    if($this->priv_check($_cid)){
+				        continue;
+                    }else{
+                        $big_categorys[$_cid] = $_cat;
+                    }
+				}
+				if($_cat['pid']==$cid) {
+				    if($this->priv_check($_cid)){
+				        continue;
+                    }else{
+                        $child_categorys[$_cid] = $_cat;
+
+                    }
+				}
+			}
+
             include T('content','member_postinfo_newinfo');
         }
 
@@ -345,7 +403,7 @@ class postinfo extends WUZHI_foreground {
 
 			$formdata['master_data']['id'] = $id;
 			$form_update->execute($formdata);
-			$forward = '?m=content&f=postinfo&v=listing&cid='.$cid;
+			$forward = '?m=content&f=postinfo&v=listing&set_iframe=1';
 			MSG(L('update success'),$forward,1000);
 		} else {
 			if($model_r['attr_table']) {
@@ -375,7 +433,7 @@ class postinfo extends WUZHI_foreground {
 			load_class('form');
 			$show_formjs = 1;
 			$show_dialog = 1;
-			$field_list = '';
+			$field_list = array();
 			if(is_array($formdata['0'])) {
 				foreach($formdata['0'] as $field=>$info) {
 					if($info['powerful_field'] || $info['ban_contribute']==0) continue;

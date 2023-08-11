@@ -16,7 +16,7 @@ class WUZHI_block_api {
     public function update($keyid, $posids, $datas, $cid = 0) {
         //$this->id.'-'.$this->cid
         if($posids=='') return true;
-        $formdata = $tmp = '';
+        $formdata = $tmp = [];
         foreach($datas as $key=>$value) {
             if(in_array($key,array('title','thumb','url','remark','addtime','status'))) {
                 $formdata[$key] = $value;

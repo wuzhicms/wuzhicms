@@ -32,8 +32,8 @@
                             <td><?php echo $r['keyid'];?></td>
                             <td><?php echo $r['data'];?></td>
                             <td>
-                                <a href="?m=core&f=set&v=edit_global_vars&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-primary btn-xs">修改</a>
-                                <a href="?m=core&f=set&v=delete_global_vars&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-danger btn-xs">删除</a>
+                                <a href="?m=core&f=set&v=edit_global_vars&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-primary btn-sm btn-xs">修改</a>
+                                <a href="?m=core&f=set&v=delete_global_vars&id=<?php echo $r['id'];?><?php echo $this->su();?>" class="btn btn-danger btn-sm btn-xs">删除</a>
                             </td>
                         </tr>
                     <?php
@@ -55,8 +55,5 @@
 
 <!-- page end-->
 </section>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
-</body>
-</html>
+<?php include $this->template('footer','core');?>
+

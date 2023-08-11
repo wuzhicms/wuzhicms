@@ -32,7 +32,13 @@ class WUZHI_admin {
         if(M =='core' && F =='index' && V === 'login') {
             return true;
         } else {
-            if(!isset($_SESSION['uid']) || !$_SESSION['uid'] || !isset($_SESSION['role'])) MSG(L('admin_login'),'?m=core&f=index&v=login'.$this->su());
+            if(!isset($_SESSION['uid']) || !$_SESSION['uid'] || !isset($_SESSION['role'])) {
+            	if(isset($GLOBALS['_at_'])) {
+					MSG('后台审批需要重新验证登录<script>setTimeout(top.window.location.reload(),3000);</script>');
+				} else {
+					MSG(L('admin_login'),'?m=core&f=index&v=login'.$this->su());
+				}
+			}
         }
         define('SITEID',get_cookie('siteid'));
         $this->logs();
@@ -47,11 +53,7 @@ class WUZHI_admin {
      */
     public function template($name,$m = '') {
         if(empty($m)) $m = M;
-        if(file_exists(COREFRAME_ROOT.'app/'.$m.'/admin/template/'.$name.'.ext.php')) {
-			return COREFRAME_ROOT.'app/'.$m.'/admin/template/'.$name.'.ext.php';
-		} else {
-			return COREFRAME_ROOT.'app/'.$m.'/admin/template/'.$name.'.tpl.php';
-		}
+        return COREFRAME_ROOT.'app/'.$m.'/admin/template/'.$name.'.tpl.php';
     }
 
     /**
@@ -86,7 +88,7 @@ class WUZHI_admin {
     final public function menu($pid, $apend_str = '',$append_menu = '') {
         $pid = intval($pid);
         if(!$pid) return '';
-
+		$MENU = array();
         $su = $this->su();
         $lang = get_cookie('lang') ? get_cookie('lang') : LANG;
         require COREFRAME_ROOT.'languages/'.$lang.'/admin_menu.lang.php';
@@ -94,14 +96,39 @@ class WUZHI_admin {
         $db = load_class('db');
         $result = $db->get_list('menu', 'pid='.$pid.' AND display=1', '*', 0, 100, 0, '', '', 'menuid');
         if(count($result) < 1) return '';
+
+
+		if(strpos($_SESSION['role'],',1,')===false) {
+			$roles = explode(',',trim($_SESSION['role'],','));
+			$admin_private_keys = array();
+			foreach($roles as $role) {
+
+				$admin_private_tmp = $db->get_list('admin_private', 'chk=1 AND role='.$role,'*', 0, 1000, 0, '', '', 'id');
+				if(!empty($admin_private_tmp)) {
+					foreach($admin_private_tmp as $tmp) {
+						$admin_private_keys[] = $tmp['id'];
+					}
+				}
+				//$admin_private = array_merge($admin_private,$admin_private_tmp);
+			}
+			//print_r($admin_private);
+			//$admin_private_keys = array_keys($admin_private);
+		}
+
         $GLOBALS['_submenuid'] = isset($GLOBALS['_submenuid']) ? $GLOBALS['_submenuid'] : $pid;
         $rs = $db->get_one('menu', 'menuid='.$pid, '*');
         $rs = array(0=>$rs);
-        $result = array_merge($rs,$result);
+		//$tmp = array();
+		foreach ($result as $key=>$r) {
+			if(strpos($_SESSION['role'],',1,')===false && !in_array($key,$admin_private_keys)) continue;
+			$rs[] = $r;
+		}
+
         $str = '<header class="panel-heading">';
         $objid = '';
         $j = 2;
-        foreach($result as $r) {
+
+        foreach($rs as $key=>$r) {
             $button = 'default';
             $id = $r['menuid'];
             if($id == $GLOBALS['_submenuid']) {
@@ -178,6 +205,7 @@ class WUZHI_admin {
         $formdata['title'] = remove_xss($title);
         $formdata['url'] = $url;
         $formdata['editurl'] = $editurl;
+        $formdata['uid'] = $_SESSION['uid'];
         $formdata['username'] = get_cookie('username');
         $formdata['ip'] = get_ip();
         $formdata['action'] = $action;

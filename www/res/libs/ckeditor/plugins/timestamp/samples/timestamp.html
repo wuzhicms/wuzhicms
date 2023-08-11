@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2014-2022, CKSource Holding sp. z o.o. All rights reserved.
+Licensed under the terms of the MIT License (see LICENSE.md).
+-->
+<html>
+<head>
+	<title>Tutorial &mdash; Timestamp Plugin</title>
+	<meta charset="utf-8">
+	<script src="../../../ckeditor.js"></script>
+	<link href="../../../samples/sample.css" rel="stylesheet">
+</head>
+<body>
+	<h1 class="samples">
+		CKEditor Tutorial &mdash; Timestamp Plugin
+	</h1>
+
+	<p>
+		This sample demonstrates the <strong>Timestamp</strong> plugin that was built in the
+		<a href="https://ckeditor.com/docs/ckeditor4/latest/guide/plugin_sdk_sample.html">Creating a CKEditor Plugin in 20 Lines of Code</a>
+		tutorial from the Plugin SDK section of the <a href="https://ckeditor.com/docs/ckeditor4/latest/guide/index.html">CKEditor Developer's Guide</a>.
+	</p>
+
+	<p>
+		The custom Timestamp plugin created in the tutorial lets the users insert current date and time into the editing area of CKEditor
+		at the caret position. This is an example of a most basic CKEditor plugin that you can create in 20 lines of code.
+	</p>
+
+	<textarea id="editor1" cols="10" rows="10">
+		&lt;p&gt;This is some sample text. You are using &lt;a href=&quot;http://ckeditor.com&quot;&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;
+	</textarea>
+
+	<script>
+
+		CKEDITOR.replace( 'editor1', {
+			// Load the timestamp plugin.
+			extraPlugins: 'timestamp',
+
+			// Rearrange toolbar groups and remove unnecessary plugins.
+			toolbarGroups: [
+				{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+				{ name: 'links' },
+				{ name: 'insert' },
+				{ name: 'document',	   groups: [ 'mode' ] },
+				'/',
+				{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+				{ name: 'paragraph',   groups: [ 'list', 'indent' ] },
+				{ name: 'styles' },
+				{ name: 'about' }
+			],
+			removePlugins: 'font,iframe,pagebreak,stylescombo,print,preview,save,smiley,pastetext,pastefromword',
+			removeButtons: 'Anchor,Font,Strike,Subscript,Superscript'
+		} );
+
+	</script>
+
+</body>
+</html>

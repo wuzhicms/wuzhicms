@@ -1,31 +1,31 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed');?>
 <?php include $this->template('header','core');?>
-<body class="body">
+<body class="index_frame">
 <section id="container" >
     <!--header start-->
-    <header class="header pxgrids-bg">
-        <a href="<?php echo WEBURL;?>" target="_blank" class="logo pull-left"><img src="<?php echo R;?>images/admin_logo.png" title="点击打开网站首页"></a>
-        <div class="pull-left topmenunav" id="menu">
-            <ul class="pull-left" id="top_menu">
-                <?php
-                foreach($panels as $menuid=>$panel) {
-                    $selected = $menuid==1 ? 'class="active"' : '';
-                    echo '<li><a href="javascript:;" '.$selected.' onclick="PANEL(this,\''.$menuid.'\')">'.$MENU[$menuid].'</a></li>';
-                }
-                ?>
-            </ul>
+    <header class="header pxgrids-bg d-flex justify-content-between">
+        <div class="d-flex">
+            <a href="<?php echo WEBURL;?>" target="_blank" class="logo"><img src="<?php echo R;?>images/admin_logo.png" title="点击打开网站首页"></a>
+            <div class="topmenunav" id="menu">
+                <ul id="top_menu" class="align-items-center d-flex justify-content-between align-items-center">
+                    <?php
+                    foreach($panels as $menuid=>$panel) {
+                        $selected = $menuid==1 ? 'class="active"' : '';
+                        echo '<li><a href="javascript:;" '.$selected.' onclick="PANEL(this,\''.$menuid.'\')">'.$MENU[$menuid].'</a></li>';
+                    }
+                    ?>
+                </ul>
+            </div>
         </div>
-        <div class="pull-right mobliebtn"><a id="mobile-nav" class="menu-nav" href="#menu-nav"></a></div>
-        <div class="top-nav pull-right">
-            <ul class="pull-right top-menu">
+        <div class="top-nav">
+            <ul class="top-menu p-0">
                 <!-- userinfo dropdown start-->
                 <li class="dropdown userinfo">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <img src="<?php echo R;?>images/userimg.jpg" class="userimg" id="siteimg">
+                    <a id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" class="align-items-center dropdown-toggle justify-content-center" href="#" role="button">
+                        <img src="<?php echo R;?>images/userimg.jpg" class="userimg me-2" id="siteimg">
                         <span class="username" id="sitename"><?php echo $sitelist[$siteid]['name'];?></span>
-                        <b class="caret"></b>
                     </a>
-                    <ul class="dropdown-menu extended userullist" id="userullist">
+                    <ul class="dropdown-menu extended userullist" id="userullist" aria-labelledby="dropdownMenuLink">
                         <div class="log-arrow-up"><i class="icon-sort-up"></i></div>
                         <li class="usersettitle"><h5>切换站点</h5></li>
                         <?php
@@ -33,7 +33,6 @@
                             echo '<li><a href="javascript:changesite('.$site['siteid'].',\''.$site['name'].'\')">'.$site['name'].'</a></li>';
                         }
                         ?>
-
                     </ul>
                 </li>
                 <!-- userinfo dropdown end -->
@@ -43,58 +42,60 @@
         </div>
     </header>
     <!--header end-->
-    <!--sidebar start-->
-    <aside>
-        <div id="sidebar"  class="nav-collapse ">
-            <!-- sidebar menu start-->
-            <?php
-            foreach($panels as $menuid=>$panel) {
-               // if($menuid!=1) continue;
-                ?>
-                <ul class="sidebar-menu <?php if($menuid!='1') echo 'hide';?>" id="panel-<?php echo $menuid;?>">
-                    <div class="appicon center"><img src="<?php echo R;?>images/appicons/<?php echo $menuid;?>.png" alt=""></div>
-                    <?php
-                    $n = 1;
-                    if($_panels[$menuid]) {
-                        foreach($_panels[$menuid] as $_mid=>$_panel) {
-                            $_d = $_panel['data'] ? '&'.$_panel['data'] : '';
-                            $url = '?m='.$_panel['m'].'&f='.$_panel['f'].'&v='.$_panel['v'].$_d;
-                            $selected = $n==1 ? 'class="_p_menu fone active"' : 'class="_p_menu"';
-                            echo '<li><a href="javascript:w(\''.$url.'\');" onclick="_PANEL(this,'.$_mid.',\''.$url.'\')" '.$selected.' ><span>'.$MENU[$_mid].'</span></a></li>';
-                            $n++;
-                        }
-                    }
-
+    <section class="d-flex">
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar"  class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <?php
+                foreach($panels as $menuid=>$panel) {
+                    // if($menuid!=1) continue;
                     ?>
-                    <li></li>
-                </ul>
-            <?php }?>
+                    <ul class="sidebar-menu <?php if($menuid!='1') echo 'hide';?>" id="panel-<?php echo $menuid;?>">
+                        <div class="appicon text-center"><img src="<?php echo R;?>images/appicons/<?php echo $menuid;?>.png" alt=""></div>
+                        <?php
+                        $n = 1;
+                        if($_panels[$menuid]) {
+                            foreach($_panels[$menuid] as $_mid=>$_panel) {
+                                $_d = $_panel['data'] ? '&'.$_panel['data'] : '';
+                                $url = '?m='.$_panel['m'].'&f='.$_panel['f'].'&v='.$_panel['v'].$_d;
+                                $selected = $n==1 ? 'class="_p_menu fone active"' : 'class="_p_menu"';
+                                echo '<li><a href="javascript:w(\''.$url.'\');" onclick="_PANEL(this,'.$_mid.',\''.$url.'\')" '.$selected.' ><span>'.$MENU[$_mid].'</span></a></li>';
+                                $n++;
+                            }
+                        }
 
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
-    <!--sidebar end-->
-    <!--main content start-->
-    <section id="main-content">
-        <div class="main-nav"><div class="pull-right crumbsbutton"><a href="?m=core&f=cache_all&v=index<?php echo $this->su();?>" target="iframeid">更新缓存</a><a href="?m=content&f=createhtml&v=index&setcache=1&startid=2<?php echo $this->su();?>" target="iframeid">生成首页</a><a href="#" onclick="refresh_iframe()">刷新</a><a href="javascript:new_window();" target="_blank">新建窗口</a><a href="<?php echo $siteurl;?>" target="_blank" id="weburl">站点首页</a></div><i class="icon-desktop2"></i><span id="position">我的面板<span>></span>系统首页<span>></span></span> </div>
-        <div class="alert alert-warning fade in fadeInDown hide" id="alert-warning">
-            <button class="close close-sm" type="button" onclick="$('#alert-warning').addClass('hide');"><i class="icon-times2"></i></button>
-            <span id="warning-tips"><strong>安全提示：</strong> 建议您将网站admin目录设置为644或只读，<a href="#">点击查看设置方法！</a></span>
-        </div>
-        <section id="iframecontent"><iframe  width="100%" name="iframeid" id="iframeid" frameborder="false" scrolling="auto" height="auto" allowtransparency="true" frameborder="0" src="?m=core&f=index&v=listing<?php echo $this->su();?>"></iframe>
+                        ?>
+                        <li></li>
+                    </ul>
+                <?php }?>
+
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content" class="w-100">
+            <div class="main-nav d-flex justify-content-between">
+                <div class="d-flex">
+                    <i class="icon-desktop2"></i><span id="position">我的面板<span>></span>系统首页<span>></span></span>
+                </div>
+                <div class="crumbsbutton"><a href="?m=core&f=cache_all&v=index<?php echo $this->su();?>" target="iframeid">更新缓存</a><a href="?m=content&f=createhtml&v=index&setcache=1&startid=2<?php echo $this->su();?>" target="iframeid">生成首页</a><a href="#" onclick="refresh_iframe()">刷新</a><a href="<?php echo $siteurl;?>" target="_blank" id="weburl">站点首页</a></div>
+            </div>
+            <div class="alert alert-warning fade in fadeInDown hide alert-dismissible" id="alert-warning" role="alert">
+                <span id="warning-tips"><strong>安全提示：</strong> 建议您将网站admin目录设置为644或只读</span>
+                <button class="btn close close-sm btn-close" type="button" onclick="$('#alert-warning').addClass('hide');" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <section id="iframecontent"><iframe  width="100%" name="iframeid" id="iframeid" frameborder="false" scrolling="auto" height="auto" allowtransparency="true" frameborder="0" src="?m=core&f=index&v=listing<?php echo $this->su();?>"></iframe>
+            </section>
         </section>
+        <!--main content end-->
     </section>
-    <!--main content end-->
-    <!--footer start-->
-    <!--footer end-->
 </section>
 
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/wuzhicms.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
 
 <style type="text/css">
-    .validate-has-error {border-color: #EC7876;box-shadow: 0 0 0 2px rgba(236, 89, 86, 0.35);border: #EC7876 1px dotted;}
+    .validate-has-error {box-shadow: 0 0 0 2px rgba(236, 89, 86, 0.35);border: #EC7876 1px dotted;}
 </style>
 <script type="text/javascript">
     // var menuids = new Array();
@@ -115,7 +116,7 @@
         if(menuid==1) {
             gotourl = "?m=core&f=index&v=listing";
         } else if(menuid==2) {
-            gotourl = "?m=core&f=set&v=basic&_menuid=22";
+            gotourl = "?m=core&f=site&v=listing&_menuid=256";
         } else if(menuid==3) {
             gotourl = "?m=content&f=content&v=manage";
         } else if(menuid==4) {
@@ -129,7 +130,6 @@
         }
         if(gotourl) $("#iframeid").attr('src', gotourl+'<?php echo $this->su(0);?>');
         //$("#sidebar").load("?m=core&f=index&v=left&id="+menuid+"<?php echo $this->su();?>", {},          function(){
-          if(menuid==5) $("#panel-5").niceScroll({styler:"fb",cursorcolor:"#CAD3D5",cursorwidth: '3', cursorborderradius: '10px', background: '#E2E7E8', cursorborder: '',horizrailenabled:false});
        // });
         parentpos = $(obj).html()+"<span>></span>";
         $("#position").html(parentpos);
@@ -150,14 +150,8 @@
             _iframe.src = $("#iframeid").attr('url');
         }
     }
-
-    function new_window() {
-        window.open($("#iframeid").attr('url'));
-    }
     function w(s) {}
     $(function(){
-
-
         function startTimer()
         {
             var today=new Date();
@@ -259,6 +253,10 @@
         $.get("?m=core&f=index&v=keep_alive<?php echo $this->su();?>");
     }
     setInterval("keep_alive()",30000);
+    function onlinetimes() {
+        $.get("?m=core&f=onlinetime&v=init<?php echo $this->su();?>");
+    }
+    setInterval("onlinetimes()",180000);
 
     function changesite(siteid,sitename) {
         $.post("?m=core&f=site&v=changesite<?php echo $this->su();?>", { siteid:siteid, time: Math.random() },
@@ -274,21 +272,17 @@
     }
 </script>
 
-
 <div class="lock-screen">
-    <div id="locker" class="lock-wrapper" style="display: <?php if($_SESSION['lock_screen']==1){echo 'block'; }else{ echo 'none'; }; ?>">
+    <div id="locker" class="lock-wrapper" style="display: <?php if($_SESSION['lock_screen']==1){echo 'block'; }else{ echo 'none'; } ?>">
         <div id="time"></div>
-        <div class="lock-box center">
+        <div class="lock-box text-center">
             <img src="<?php echo R;?>images/userimg.jpg" alt=""/>
             <h1><?php echo $truename; ?></h1>
             <div class="form-group col-lg-12">
                 <input type="password" placeholder="<?php echo L('lockscreen tip')?>" id="lock_password" class="form-control lock-input" autofocus />
-                <button id="unlock" class="btn btn-lock pull-right" type="button" ><?php echo L('unlockscreen')?></button>
+                <button id="unlock" class="btn btn-default btn-lock" type="button" ><?php echo L('unlockscreen')?></button>
             </div>
         </div>
     </div>
 </div>
-
-
-</body>
-</html>
+<?php include $this->template('footer','core');?>

@@ -5671,7 +5671,7 @@ return (function( root, factory ) {
                 function computeHuffmanTbl(nrcodes, std_table){
                     var codevalue = 0;
                     var pos_in_table = 0;
-                    var HT = new Array();
+                    var HT = [];
                     for (var k = 1; k <= 16; k++) {
                         for (var j = 1; j <= nrcodes[k]; j++) {
                             HT[std_table[pos_in_table]] = [];
@@ -6028,7 +6028,7 @@ return (function( root, factory ) {
                     }
                     //Encode ACs
                     var end0pos = 63; // was const... which is crazy
-                    for (; (end0pos>0)&&(DU[end0pos]==0); end0pos--) {};
+                    for (; (end0pos>0)&&(DU[end0pos]==0); end0pos--) {}
                     //end0pos = first element in reverse order !=0
                     if ( end0pos == 0) {
                         writeBits(EOB);
@@ -6071,7 +6071,7 @@ return (function( root, factory ) {
                     if(quality) setQuality(quality);
     
                     // Initialize bit writer
-                    byteout = new Array();
+                    byteout = [];
                     bytenew=0;
                     bytepos=7;
     
@@ -6215,7 +6215,7 @@ return (function( root, factory ) {
     
             init();
     
-        };
+        }
     
         JPEGEncoder.encode = function( data, quality ) {
             var encoder = new JPEGEncoder( quality );

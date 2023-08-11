@@ -42,7 +42,7 @@ class model extends WUZHI_admin {
 			if(empty($GLOBALS['tablename'])) MSG(L('database table name is empty'));
 			
 			if($share_model) $GLOBALS['att'] = 2;
-			$formdata = '';
+			$formdata = array();
 			$formdata['master_table'] = $share_model ? $master_table : $GLOBALS['tablename'];
 			$formdata['m'] = $this->m;
 			$formdata['name'] = $GLOBALS['name'];
@@ -212,7 +212,7 @@ class model extends WUZHI_admin {
             if($model_r['attr_table']=='') $addto_master = true;
 
 			$form = load_class('form');
-			$options = '';
+			$options = array();
 			foreach ($field_config AS $key => $value) {
 				$options[$key] = $value['fieldname'];
 			}
@@ -285,7 +285,7 @@ class model extends WUZHI_admin {
             }
 
             $form = load_class('form');
-            $options = '';
+            $options = [];
             foreach ($field_config AS $key => $value) {
                 $options[$key] = $value['fieldname'];
             }
@@ -368,5 +368,46 @@ class model extends WUZHI_admin {
             MSG('字段开启成功！',HTTP_REFERER);
         }
     }
+	/**
+	 * 字段复制
+	 */
+	public function field_copy() {
+		$id = intval($GLOBALS['id']);
+		if(isset($GLOBALS['submit'])) {
+			if($GLOBALS['modelids'][0]=='') {
+				MSG('请选择目标模型');
+			}
+			$r = $this->db->get_one('model_field', array('id'=>$id));
+
+			foreach ($GLOBALS['modelids'] as $modelid) {
+				$r2 = $this->db->get_one('model_field', array('modelid'=>$modelid,'field'=>$r['field']));
+				$formdata = $r;
+				$formdata['modelid'] = $modelid;
+				unset($formdata['id']);
+				if($r2) {
+					$this->db->update('model_field',$formdata,array('fieldid'=>$r2['fieldid']));
+				} else {
+					$this->db->insert('model_field',$formdata);
+				}
+			}
+			$this->cache_form();
+			$forward = $GLOBALS['forward'];
+			MSG('复制成功',$forward);
+		} else {
+			$r = $this->db->get_one('model_field', array('id'=>$id));
+			$fieldname = $r['name'];
+			$field = $r['field'];
+			$models = get_cache('model_content','model');
+			foreach($models as $modelid=>$model) {
+				if($r['modelid']==$modelid) continue;
+				if($model['master_table']=='content_share') {
+					$models_arr[$modelid]=$model['name'];
+				}
+			}
+			//$models_arr = key_value($models,'modelid','name');
+			$form = load_class('form');
+			include $this->template('field_copy');
+		}
+	}
 }
 ?>

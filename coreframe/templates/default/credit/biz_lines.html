@@ -1,0 +1,142 @@
+{T "member","head"}
+<body class="gray-bg">
+{if $set_iframe==0}
+{T "member","iframetop"}
+{else}
+<div style="padding-top: 15px;"></div>
+{/if}
+<script src="{R}js/echarts.common.min.js"></script>
+
+<div class="container-fluid  ie8-member">
+    <div class="row row-40" >
+        {if $set_iframe==0}
+        <div class="col-sm-3 left-nav">             <!--左侧导航-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="nav-close"><i class="fa fa-times-circle"></i>
+                </div>
+                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+                    <div class="sidebar-collapse" style="width: auto; height: 100%;">
+                        {T "member","left"}
+                    </div>
+                </div>
+            </nav>
+            <!--end 左侧导航-->
+        </div><!--col-sm-3-->{/if}
+
+        <div class="{if $set_iframe==0}col-sm-9{else}col-sm-12{/if} paddingleft0">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><a href="?m=credit&f=biz_member&v=listing&set_iframe=1#tabs1"> 积分记录</a></h5>
+                    <div class="submitbtn pull-right"><a href="?m=credit&f=biz_member&v=lines&set_iframe=1" class="right_btn btn-primary">查看柱状图</a></div>
+                </div>
+                <section class="ibox-content">
+
+                    <div id="myTabContent" class="tab-content tabsbordertop">
+
+                        <div role="tabpanel" class="tab-pane fade active in" id="tabs1" aria-labelledby="1tab">
+                            <div id="main" style="width: 100%;height:400px;"></div>
+
+                        </div>
+                    </div>
+
+
+                </section>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+
+    var xAxisData = [];
+    var data1 = [];
+    var data2 = [];
+
+    {loop $charts $r}
+        xAxisData.push({$r['dayid']});
+        data1.push({$r['point1']});
+        data2.push(-{$r['point2']});
+    {/if}
+
+    var itemStyle = {
+        normal: {
+        },
+        emphasis: {
+            barBorderWidth: 1,
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowOffsetY: 0,
+            shadowColor: 'rgba(0,0,0,0.5)'
+        }
+    };
+
+        option = {
+            title : {
+                text: '最近一月的积分走势'},
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['增加','减少']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : xAxisData
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'增加',
+                    type:'bar',
+                    data:data1,
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                },
+                {
+                    name:'减少',
+                    type:'bar',
+                    data:data2,
+                    markPoint : {
+                        data : [
+                            {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183},
+                            {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                        ]
+                    }
+                }
+            ]
+        };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+{T "member","foot"}

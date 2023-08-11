@@ -13,13 +13,13 @@ set_time_limit(300);
 if(PHP_VERSION < '5.2.0') die('PHP配置需要大于 5.2.0 ');
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', 1);
-$wz_version = '4.1.0';
+$wz_version = '5.0';
 
 //定义当前的网站物理路径
 define('INSTALL_ROOT',dirname(__FILE__).'/');
 
 define('WWW_ROOT',str_replace('\\','/',substr(INSTALL_ROOT,0,-8)));
-$reinstall = 'default_';
+$reinstall = '';
 
 $step = isset($_GET['step']) ? intval($_GET['step']) : 1;
 $step = max(1,$step);
@@ -36,7 +36,7 @@ if(file_exists(WWW_ROOT.'caches/install.check')) {
 	$current_cache = WWW_ROOT . 'caches/';
 	$in_same_dir = true;
 } elseif(file_exists($best_cache.'install.check')) {
-		$current_cache = $best_cache;
+	$current_cache = $best_cache;
 } else {
 	exit('caches 缓存目录不存在');
 }
@@ -180,7 +180,8 @@ function import_sql($id,$weburl){
 
 	if(file_exists(WWW_ROOT."install/sql/install-$id.sql")) {
 		$sql = file_get_contents(WWW_ROOT."install/sql/install-$id.sql");
-		$sql = str_replace('http://dev.wuzhicms.com/',$weburl,$sql);
+		$sql = str_replace('http://p1.zgw.wuzhicms.com/',$weburl,$sql);
+		$sql = str_replace('http://www.v5.com/',$weburl,$sql);
 		sql_execute($link,$sql,$db['tablepre']);
 	}
 }
@@ -201,8 +202,8 @@ function edit_filename($dir,$cache_ext) {
 		}
 	} else {
 		$filename = basename($dir);
-		if(strpos($filename,'H_1_a')!==false) {
-			$name = str_replace('H_1_a',$cache_ext,$filename);
+		if(strpos($filename,'Iv5aw')!==false) {
+			$name = str_replace('Iv5aw',$cache_ext,$filename);
 			if(is_writable($dir)) {
 				rename($dir,dirname($dir).'/'.$name);
 			} else {
@@ -258,15 +259,11 @@ switch($step) {
 		if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'web_config.php')) {
 			$filelist[] = WWW_ROOT.'configs/'.$reinstall.'web_config.php';
 		}
+
 		if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php')) {
 			$filelist[] = WWW_ROOT.'configs/'.$reinstall.'mysql_config.php';
 		}
-		if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php')) {
-			$filelist[] = WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php';
-		}
-		if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'weixin_config.php')) {
-			$filelist[] = WWW_ROOT.'configs/'.$reinstall.'weixin_config.php';
-		}
+
 		if(!is_writable(WWW_ROOT.'configs/'.$reinstall.'route_config.php')) {
 			$filelist[] = WWW_ROOT.'configs/'.$reinstall.'route_config.php';
 		}
@@ -276,7 +273,7 @@ switch($step) {
 		if(!is_writable($current_cache)) {
 			$filelist[] = $current_cache;
 		}
-		if(!is_writable($current_cache.'model/content_add.H_1_a.php')) {
+		if(!is_writable($current_cache.'model/content_add.Iv5aw.php')) {
 			$filelist[] = '重新安装需要删除caches/目录，重新上传';
 			$filelist[] = $current_cache.'*';
 		}
@@ -331,7 +328,7 @@ switch($step) {
 
 			$datas = $_POST;
 			if($_SERVER["SERVER_ADMIN"]=='phpip@qq.com') {
-				$datas['cache_ext'] = 'H_1_a';
+				$datas['cache_ext'] = 'Iv5aw';
 			} else {
 				$datas['cache_ext'] = install_rand(5);
 			}
@@ -402,20 +399,8 @@ switch($step) {
 							exit('请重新上传文件：'.WWW_ROOT.'configs/'.$reinstall.'mysql_config.php');
 						}
 						rename(WWW_ROOT.'configs/'.$reinstall.'mysql_config.php',WWW_ROOT.'configs/mysql_config.php');
-						if(file_exists(WWW_ROOT.'configs/uc_mysql_config.php')) {
-							unlink(WWW_ROOT.'configs/uc_mysql_config.php');
-						}
-						if(!file_exists(WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php')) {
-							exit('请重新上传文件：'.WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php');
-						}
-						rename(WWW_ROOT.'configs/'.$reinstall.'uc_mysql_config.php',WWW_ROOT.'configs/uc_mysql_config.php');
-						if(file_exists(WWW_ROOT.'configs/weixin_config.php')) {
-							unlink(WWW_ROOT.'configs/weixin_config.php');
-						}
-						if(!file_exists(WWW_ROOT.'configs/'.$reinstall.'weixin_config.php')) {
-							exit('请重新上传文件：'.WWW_ROOT.'configs/'.$reinstall.'weixin_config.php');
-						}
-						rename(WWW_ROOT.'configs/'.$reinstall.'weixin_config.php',WWW_ROOT.'configs/weixin_config.php');
+
+				
 						if(file_exists(WWW_ROOT.'configs/route_config.php')) {
 							unlink(WWW_ROOT.'configs/route_config.php');
 						}
@@ -458,18 +443,19 @@ switch($step) {
 
 
 					$res = set_config($res,'WEBURL',"'".$weburl."'");
+					$res = set_config($res,'PLURL',"'".$weburl."'");
 					$cookie_pre =install_rand(3, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
 					$res = set_config($res,'COOKIE_PATH',"'/'");
 					$res = set_config($res,'COOKIE_PRE',"'".$cookie_pre."_'");
-					$res = set_config($res,'ATTACHMENT_URL',"'".$weburl."uploadfile/'");
+					$res = set_config($res,'ATTACHMENT_URL',"'/uploadfile/'");
 					$res = set_config($res,'R',"'".$weburl."res/'");
 					$key1 =install_rand(1, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
 					$key2 =install_rand(7);
 					$res = set_config($res,'_KEY',"'".$key1.$key2."'");
 					$res = set_config($res,'CHARSET',"'".$charset."'");
-					$sitelist_cache = file_get_contents($current_cache.'_cache_/sitelist.H_1_a.php');
-					$sitelist_cache = str_replace('http://dev.wuzhicms.com/',$weburl,$sitelist_cache);
-					file_put_contents($current_cache.'_cache_/sitelist.H_1_a.php',$sitelist_cache);
+					$sitelist_cache = file_get_contents($current_cache.'_cache_/sitelist.Iv5aw.php');
+					$sitelist_cache = str_replace('http://test1.wuzhicms.com/',$weburl,$sitelist_cache);
+					file_put_contents($current_cache.'_cache_/sitelist.Iv5aw.php',$sitelist_cache);
 					file_put_contents(WWW_ROOT.'configs/'.$reinstall.'web_config.php',$res);
 					if($reinstall) {
 						if(file_exists(WWW_ROOT.'configs/web_config.php')) {
@@ -536,13 +522,15 @@ switch($step) {
 					$password = md5(md5($configs['admin_password']).$factor);
 					if($is_mysql) {
 
-						mysql_query("INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`,`ischeck_email`,`ischeck_mobile`,`pw_reset`) VALUES
-(1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0,1,1,0)");
+						mysql_query("INSERT INTO `".$db['tablepre']."member`
+						 (`uid`, `ucuid`, `username`, `password`, `factor`, `mobile`, `email`, `modelid`, `groupid`,  `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`,`ischeck_email`,`ischeck_mobile`,`pw_reset`) VALUES
+                         (1, 0, '".$configs['admin_username']."', '$password', '$factor',  '0', '".$configs['admin_email']."', 10, 3, 0, 0, '', '127.0.0.1', 0, 0, 0,1,1,0)");
 						mysql_query("INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')");
 						mysql_query("INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')");
 					} else {
-						mysqli_query($link,"INSERT INTO `".$db['tablepre']."member` (`uid`, `ucuid`, `username`, `password`, `factor`, `points`, `money`, `mobile`, `email`, `modelid`, `groupid`, `vip`, `viptime`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`,`ischeck_email`,`ischeck_mobile`,`pw_reset`) VALUES
-(1, 0, '".$configs['admin_username']."', '$password', '$factor', 0, '0.00', '0', '".$configs['admin_email']."', 10, 3, 0, 0, 0, 0, '', '127.0.0.1', 0, 0, 0,1,1,0)")  or die(mysqli_error($link));
+						mysqli_query($link,"INSERT INTO `".$db['tablepre']."member` 
+						(`uid`, `ucuid`, `username`, `password`, `factor`,`mobile`, `email`, `modelid`, `groupid`, `islock`, `locktime`, `regip`, `lastip`, `regtime`, `lasttime`, `loginnum`,`ischeck_email`,`ischeck_mobile`,`pw_reset`) VALUES
+                        (1, 0, '".$configs['admin_username']."', '$password', '$factor', '0', '".$configs['admin_email']."', 10, 3,  0, 0, '', '127.0.0.1', 0, 0, 0,1,1,0)")  or die(mysqli_error($link));
 						mysqli_query($link,"INSERT INTO `".$db['tablepre']."member_detail_data` (`uid`) VALUES ('1')") or die(mysqli_error($link));
 						mysqli_query($link,"INSERT INTO `".$db['tablepre']."admin` (`uid`, `role`, `truename`, `password`, `factor`, `lang`, `department`, `face`, `email`, `tel`, `mobile`, `remark`) VALUES ('1', ',1,', '".$configs['admin_username']."', '$password', '$factor', 'zh-cn', '', '', '', '', '', '')") or die(mysqli_error($link));
 					}

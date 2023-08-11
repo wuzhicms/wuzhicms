@@ -1,4 +1,4 @@
-#五指CMS网站管理系统
+# 五指CMS网站管理系统
 五指cms网站管理系统，网站内容管理系统，php5+mysql开发。
 
 ![](http://www.wuzhicms.com/uploadfile/2015/05/18/1431917862749065.png)
@@ -6,18 +6,15 @@
 #### 服务器要求
 Web服务器：apache/nginx/iis
 
-PHP环境要求：支持php5.2、php5.3、php5.4、php5.5、php5.6、php7.1（推荐使用5.4或更高版本！）
+PHP环境要求：支持php5.2、php5.3、php5.4、php5.5、php5.6、php7.1、php7.4（推荐使用7.4或更高版本！）
 
-数据库要求： Mysql 5
+数据库要求： Mysql 
 ### 软件包目录说明
 
 ```
 README.md        安装说明
-bin              开发人员使用
 caches           安装必须：缓存目录
 coreframe        安装必须：主框架
-tools            一些小工具，全新安装不需要
-upgrade          手动升级文件
 www              安装必须：域名绑定目录
 ```
 #### * 虚拟主机安装

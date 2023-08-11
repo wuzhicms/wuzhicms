@@ -92,15 +92,29 @@ class app extends WUZHI_admin {
         if(file_exists(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.'templates/') && !file_exists(COREFRAME_ROOT . 'templates/default/'. $appkey .'/')){
             dir_copy(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.'templates/',COREFRAME_ROOT . 'templates/default/'. $appkey .'/');
         }
+        //样式文件的拷贝
+        if(file_exists(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.'res/') && !file_exists(RES_ROOT. $appkey .'/')){
+            dir_copy(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.'res/',RES_ROOT. $appkey .'/');
+        }
+        //缓存文件拷贝
 
-        //缓存菜单语音包
-        load_class('cache_menu');
+
+        if(file_exists(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.'caches/') && !file_exists(CACHE_ROOT . 'model/'. $appkey .'/')){
+            $file_arr = glob(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.'caches/*.*');
+            foreach($file_arr as $k=>$v){
+                rename($v,substr($v,0,-9).CACHE_EXT.'.php');
+            }
+            dir_copy(COREFRAME_ROOT . 'app/' . $appkey . '/admin/install/'.'caches/',CACHE_ROOT . 'model/');
+        }
+
 		$apppath = COREFRAME_ROOT.'app/'.$appkey.'/admin/install/config.php';
 
 		$appconfig = include $apppath;
 
 		$title = $appconfig['appname'];
 		$this->db->insert('setting', array('keyid'=>'install','m'=>$appkey,'data'=>1,'title'=>$title));
+        //缓存菜单语言包
+        load_class('cache_menu');
         MSG('模块安装成功',HTTP_REFERER,2000);
 
     }
@@ -125,10 +139,19 @@ class app extends WUZHI_admin {
 			$this->sql_execute($sql);
 		}
 
-		//缓存菜单语音包
-		load_class('cache_menu');
-
 		$this->db->delete('setting', array('keyid'=>'install','m'=>$appkey));
+        //卸载模板html文件
+		if(file_exists(COREFRAME_ROOT . 'templates/default/'. $appkey .'/')){
+		        array_map('unlink',glob(COREFRAME_ROOT . 'templates/default/'. $appkey .'/*'));
+		        rmdir(COREFRAME_ROOT . 'templates/default/'. $appkey .'/');
+        }
+        //卸载样式文件
+        if(file_exists(RES_ROOT. $appkey .'/')){
+		    dir_delete(RES_ROOT. $appkey .'/');
+        }
+
+        //更新缓存
+        load_class('cache_menu');
         MSG('模块卸载成功',HTTP_REFERER,2000);
     }
 

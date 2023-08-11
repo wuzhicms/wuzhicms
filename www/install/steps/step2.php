@@ -130,8 +130,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td>PHP 版本</td>
-                                                    <td class="hidden-phone">5.2/5.3/5.4</td>
-                                                    <td>5.4</td>
+                                                    <td class="hidden-phone">5.4/7.4</td>
+                                                    <td>7.4</td>
                                                     <td><?php echo PHP_VERSION;?></td>
                                                     <td><div class="right"></div></td>
                                                 </tr>

@@ -1,0 +1,32 @@
+.zt-header {
+    background: url(../img/header-bg.gif) no-repeat top center;
+    padding: 10px 0;
+    background-size: cover;
+    border-bottom: 1px solid #ddd;
+}
+.bread {
+    padding: 8px 0;
+}
+
+blockquote {
+    border: none;
+    border-left: 6px solid #ddd;
+    padding: 0 20px;
+}
+blockquote strong {
+    font-size: 18px;
+}
+
+.mainCon {
+    background: #fff;
+}
+.mainCon img {
+    margin: 0 auto;
+}
+.detail p {
+    line-height: 200%;
+}
+
+#comments {
+    background: #fff;
+}

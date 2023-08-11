@@ -45,7 +45,7 @@ final class index extends WUZHI_admin
         } else {
             try {
                 mkdir($downloadDirectory, 0777, true);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errors[] = "下载目录({$downloadDirectory})创建失败";
             }
         }
@@ -59,7 +59,7 @@ final class index extends WUZHI_admin
         } else {
             try {
                 mkdir($backupdDirectory, 0777, true);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errors[] = "备份({$backupdDirectory})创建失败";
             }
         }
@@ -130,12 +130,12 @@ final class index extends WUZHI_admin
             $package = $this->app_client->getUpdatePackage($packageId); //获取url
 
             if (empty($package)) {
-                throw new \RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
+                throw new RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
             }
             $filepath = $this->app_client->downloadPackage($packageId);
 
             $this->unzipPackageFile($filepath, $this->getPackageFileUnzipDir($package));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = $e->getMessage();
         }
 
@@ -154,10 +154,10 @@ final class index extends WUZHI_admin
             $package = $this->app_client->getUpdatePackage($packageId);
 
             if (empty($package)) {
-                throw new \RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
+                throw new RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
             }
             $packageDir = $this->getPackageFileUnzipDir($package);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = $e->getMessage();
             goto last;
         }
@@ -205,10 +205,10 @@ final class index extends WUZHI_admin
             $package = $this->app_client->getUpdatePackage($packageId);
 
             if (empty($package)) {
-                throw new \RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
+                throw new RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
             }
             $packageDir = $this->getPackageFileUnzipDir($package);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = $e->getMessage();
             goto last;
         }
@@ -261,38 +261,38 @@ final class index extends WUZHI_admin
             $package = $this->app_client->getUpdatePackage($packageId);
 
             if (empty($package)) {
-                throw new \RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
+                throw new RuntimeException("应用包#{$packageId}不存在或网络超时，读取包信息失败");
             }
             $packageDir = $this->getPackageFileUnzipDir($package);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = $e->getMessage();
             goto last;
         }
 
         try {
             $this->_deleteFilesForPackageUpdate($packageDir);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = "删除文件时发生了错误：{$e->getMessage()}";
             goto last;
         }
 
         try {
             $this->_proccessTplFile($package, $packageDir, $coveringUpdateTpl);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = "处理模板文件时发生了错误：{$e->getMessage()}";
             goto last;
         }
 
         try {
             $this->_replaceFileForPackageUpdate($packageDir);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = "复制升级文件时发生了错误：{$e->getMessage()}";
             goto last;
         }
 
         try {
             $this->_execScriptForPackageUpdate($package, $packageDir, $type);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = "执行升级/安装脚本时发生了错误：{$e->getMessage()}";
             goto last;
         }
@@ -300,7 +300,7 @@ final class index extends WUZHI_admin
         try {
             //refresh cache
             // $this->filesystem->remove(CACHE_ROOT);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = "应用安装升级成功，但刷新缓存失败！请检查权限";
             goto last;
         }
@@ -442,7 +442,7 @@ final class index extends WUZHI_admin
         }
         $this->filesystem->mkdir($tmpUnzipDir);
 
-        $zip = new \ZipArchive;
+        $zip = new ZipArchive;
         if ($zip->open($filePath) === true) {
             $tmpUnzipFullDir = $tmpUnzipDir.'/'.$zip->getNameIndex(0);
             $zip->extractTo($tmpUnzipDir);
@@ -450,7 +450,7 @@ final class index extends WUZHI_admin
             $this->filesystem->rename($tmpUnzipFullDir, $unzipDir);
             $this->filesystem->remove($tmpUnzipDir);
         } else {
-            throw new \Exception('无法解压缩安装包！');
+            throw new Exception('无法解压缩安装包！');
         }
     }
 

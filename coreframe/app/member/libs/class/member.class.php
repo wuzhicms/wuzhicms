@@ -25,15 +25,22 @@ class WUZHI_member {
 		$master_data['username'] = $this->check_user($data['username']) ? $data['username'] : MSG(L('user_exist', '', 'member'));
 		$master_data['modelid'] = isset($data['modelid']) ? $data['modelid'] : '';
 		$master_data['groupid'] = $data['groupid'];
-		//	判断邀请码
+		$master_data['regip'] = get_ip();
+		$master_data['regtime'] = SYS_TIME;
+		$master_data['truename'] = sql_replace($data['truename']);
+		$master_data['email'] =  $data['email'];
+		$master_data['mobile'] = isset($data['mobile']) && $data['mobile'] ? ($this->check_mobile($data['mobile']) ? $data['mobile'] : MSG(L('mobile_exist', '', 'member'))) : '';
+		$master_data['pw_reset'] = 0;
+		//单位ID
+		$master_data['org_id'] = $data['org_id'];
+		//判断邀请码
 		if(isset($data['invite'])){
 			if(!$this->check_invite($data['invite']))MSG(L('invite_error', '', 'member'));
 		}
 		//	判断Email格式
 		//if(!$this->check_email($data['email']))MSG(L('email_exist', '', 'member'));
-		$master_data['email'] =  $data['email'];
+		
 		//	判断 Mobile是否有效
-		$master_data['mobile'] = isset($data['mobile']) && $data['mobile'] ? ($this->check_mobile($data['mobile']) ? $data['mobile'] : MSG(L('mobile_exist', '', 'member'))) : '';
 		//	判断是否有更改密码且两次的密码是否一致
 		if(empty($data['password']))MSG(L('password_empty', '', 'member'));
 		if($data['password'] != $data['pwdconfirm'])MSG(L('password_not_identical', '', 'member'));
@@ -44,22 +51,8 @@ class WUZHI_member {
 			$master_data['locktime'] = strtotime($data['locktime']);
 			$master_data['islock'] = $master_data['locktime'] > SYS_TIME ? 1 : 0;
 		}
-		if(isset($data['viptime'])){
-			$master_data['viptime'] = strtotime($data['viptime']);
-			$master_data['vip'] = $master_data['viptime'] > SYS_TIME ? 1 : 0;
-		}
-		$master_data['regip'] = get_ip();
-		$master_data['regtime'] = SYS_TIME;
-		$master_data['points'] = $data['points'];
-		$master_data['companyname'] = isset($data['companyname']) ? $data['companyname'] : '';
-		$master_data['truename'] = sql_replace($data['truename']);
-		$master_data['sex'] = intval($data['sex']);
-		$master_data['birthday'] = sql_replace($data['birthday']);
-		$master_data['marriage'] = intval($data['marriage']);
-
 		$master_data['ischeck_email'] = isset($data['ischeck_email']) ? $data['ischeck_email'] : 0;
 		$master_data['ischeck_mobile'] = isset($data['ischeck_mobile']) ? intval($data['ischeck_mobile']) : 0;
-		$master_data['pw_reset'] = 0;
 
 		$uid = $this->db->insert('member', $master_data, true);
 		if($uid){
@@ -85,8 +78,9 @@ class WUZHI_member {
 		$master_data['groupid'] = (int)$data['groupid'];
 		if(!$master_data['groupid']) $master_data['groupid'] = 3;
 		//	判断Email格式
-		if(!is_email($data['email']))MSG(L('email_format_error', '', 'member'));
+		//if(!is_email($data['email']))MSG(L('email_format_error', '', 'member'));
 		//	判断是否有更改密码且两次的密码是否一致
+		
 		if(isset($data['password']) && $data['password'] != ''){
 			if($data['password'] == $data['pwdconfirm']){
 				$master_data['password'] = md5(md5($data['password']).$data['factor']);
@@ -94,19 +88,21 @@ class WUZHI_member {
 				MSG(L('password_not_identical', '', 'member'));
 			}
 		}
-
+		$master_data['org_id'] = $data['org_id'];
 		//	判断Email 和 Mobile是否有效
-		$master_data['email'] = $this->check_email($data['email'], $uid) ? $data['email'] : MSG(L('email_exist', 'member'));
+		//$master_data['email'] = $this->check_email($data['email'], $uid) ? $data['email'] : MSG(L('email_exist', 'member'));
 		$master_data['mobile'] = isset($data['mobile']) && $data['mobile'] ? ($this->check_mobile($data['mobile'], $uid) ? $data['mobile'] : MSG(L('mobile_exist', '', 'member'))) : '';
-
 		$master_data['locktime'] = strtotime($data['locktime']);
 		$master_data['islock'] = $master_data['locktime'] > SYS_TIME ? 1 : 0;
-		$master_data['viptime'] = strtotime($data['viptime']);
-		$master_data['sex'] = intval($data['sex']);
-		$master_data['birthday'] = sql_replace($data['birthday']);
-		$master_data['marriage'] = intval($data['marriage']);
-		$master_data['vip'] = $master_data['viptime'] > SYS_TIME ? 1 : 0;
-		if(isset($master_data['password']))$this->password($uid, $data['username'], $master_data['email'], $data['password']);
+		//$master_data['viptime'] = strtotime($data['viptime']);
+		//$master_data['sex'] = intval($data['sex']);
+		//$master_data['birthday'] = sql_replace($data['birthday']);
+		//$master_data['marriage'] = intval($data['marriage']);
+		//$master_data['vip'] = $master_data['viptime'] > SYS_TIME ? 1 : 0;
+		
+		
+		//if(isset($master_data['password'])) $this->password($uid, $data['username'], $master_data['email'], $data['password']);
+		
 		return $this->db->update('member', $master_data, '`uid`='.$uid);
 	}
 	/**
@@ -117,7 +113,7 @@ class WUZHI_member {
 	 * @return boolean or json
 	 */
 	public function check_user($username, $return = 0){
-		if(empty($username) || !preg_match('/^[a-z0-9\x7f-\xff\-]{4,20}$/i', $username, $r))return $return ? '{"info":"用户名需要4-20位字符","status":"n"}' : false;
+		if(empty($username) || !preg_match('/^[a-z0-9\x7f-\xff\-]{2,20}$/i', $username, $r))return $return ? '{"info":"用户名需要2-20位字符","status":"n"}' : false;
 		$data = $this->db->get_one('member', '`username` = "'.$username.'"', 'uid');
 		return empty($data) ? ($return ? '{"info":"'.L('check_ok', '', 'member').'","status":"y"}' : true): ($return ? '{"info":"'.L('user_exist', '', 'member').'","status":"n"}' : false);
 	}
@@ -180,14 +176,6 @@ class WUZHI_member {
 			$ucenter = load_class('ucenter', 'member');
 			$ucenter->uc_user_edit($username, '', $password, '', true);
 		}
-		//	获取模版
-		ob_start();
-		include T('member', 'mail_setpassword');
-		$template = ob_get_contents();
-		ob_clean();
-		//	发送Email
-		load_function('sendmail');
-		$fs = send_mail($email,L('set_password_email_title', '', 'member'),$template);
 
 		return true;
 	}

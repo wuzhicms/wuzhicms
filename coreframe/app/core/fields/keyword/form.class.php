@@ -7,10 +7,10 @@
 		if(!defined('TAGS_JS'))
 		{
 			define('TAGS_JS',true);
-			$str .= '<script src="'.R.'js/jquery.tagsinput.js"></script><script src="'.R.'js/jquery-ui-1.10.1.custom.min.js"></script>';
+			$str .= '<script src="'.R.'libs/jquery/jquery.tagsinput.js"></script><script src="'.R.'/libs/jquery-ui/jquery-ui.min.js"></script>';
 		}
 		$str .= '<script type="text/javascript">
-		$(function(){	
+		$(function(){
 			$(".'.$field.'").tagsInput({
 			width: "100%",
 			minChars:2,
@@ -18,5 +18,5 @@
 			autocomplete:{selectFirst:true,width:"100px",autoFill:true}
 			});
 		})</script>';
-		return $str."<input type='text' name='form[$field]' id='$field' value='$value' placeholder='输入关键词后，请回车' {$ext_code} class='input-text form-control contentkeyword ".$field."'>";
+		return $str."<input type='text' name='form[$field]' id='$field' value='$value' placeholder='输入关键词后，请回车' {$ext_code} class='input-text form-control small contentkeyword ".$field."'>";
 	}

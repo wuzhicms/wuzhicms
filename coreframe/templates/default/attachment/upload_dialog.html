@@ -3,27 +3,19 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Plupload - jQuery UI Widget</title>
-    <link rel="stylesheet" href="{R}js/jquery-ui/jquery-ui.css" type="text/css" />
-    <link rel="stylesheet" href="{R}js/html5upload/jquery.ui.plupload/css/jquery.ui.plupload.css" type="text/css" />
+    <link rel="stylesheet" href="{R}libs/jquery-ui/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="{R}libs/html5upload/jquery.ui.plupload/css/jquery.ui.plupload.css" type="text/css" />
     <script type="text/javascript">
         var cookie_pre = "{COOKIE_PRE}";var cookie_domain = '{COOKIE_DOMAIN}';var cookie_path = '{COOKIE_PATH}';var web_url = '{WEBURL}';var callback_func = '{$callback}';
         var is_admin = {$is_admin};
     </script>
-    <script src="{R}js/jquery.min.js"></script>
-    <script type="text/javascript" src="{R}js/jquery-ui/jquery-ui.min.js"></script>
-
+    <script src="{R}libs/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="{R}libs/jquery-ui/jquery-ui.min.js"></script>
     <!-- production -->
-    <script type="text/javascript" src="{R}js/html5upload/plupload.full.min.js"></script>
-    <script type="text/javascript" src="{R}js/html5upload/jquery.ui.plupload/jquery.ui.plupload.js"></script>
-    <script type="text/javascript" src="{R}js/html5upload/i18n/zh_cn.js"></script>
-    <script type="text/javascript" src="{R}js/html5upload/extension.js"></script>
-
-    <!-- debug
-    <script type="text/javascript" src="../../js/moxie.js"></script>
-    <script type="text/javascript" src="../../js/plupload.dev.js"></script>
-    <script type="text/javascript" src="../../js/jquery.ui.plupload/jquery.ui.plupload.js"></script>
-    -->
-
+    <script type="text/javascript" src="{R}libs/html5upload/plupload.full.min.js"></script>
+    <script type="text/javascript" src="{R}libs/html5upload/jquery.ui.plupload/jquery.ui.plupload.js"></script>
+    <script type="text/javascript" src="{R}libs/html5upload/i18n/zh_cn.js"></script>
+    <script type="text/javascript" src="{R}libs/html5upload/extension.js"></script>
 </head>
 <body>
 <div id="uploader">
@@ -37,84 +29,67 @@
         $("#uploader").plupload({
             // General settings
             runtimes : 'html5,flash,silverlight,html4',
-            url : '{WEBURL}index.php?m=attachment&f=index&v=h5upload&is_thumb={$GLOBALS['is_thumb']}&cut={$GLOBALS['cut']}&width={$GLOBALS['width']}&height={$GLOBALS['height']}&ext={$ext}&token={$token}',
-
+            url : '{WEBURL}index.php?m=attachment&f=index&v=h5upload&is_thumb={$is_thumb}&cut={$cut}&width={$width}&height={$height}&ext={$ext}&token={$token}',
             // User can upload no more then 20 files in one go (sets multiple_queues to false)
             max_file_count: {$limit},
-            {if $GLOBALS['cut']}
-                // Resize images on clientside if we can
-                resize : {
-                    {if isset($GLOBALS['width']) && $GLOBALS['width'] > 0}width : {$GLOBALS['width']},{/if}
-                        {if isset($GLOBALS['height']) && $GLOBALS['height'] > 0}height : {$GLOBALS['height']},{/if}
-                            quality : 100,
-                                    crop: false // crop to exact dimensions
-                        },
-                 {/if}
-            chunk_size: '10mb',
-                        filters : {
-                            // Maximum file size
-                     max_file_size : '{$maxsize}',
-                         // Specify what files to browse for
-                             mime_types: [
-                         {title : "Image files", extensions : "{$extimg}"},
-                         {title : "Zip files", extensions : "{$extzip}"},
-                         {title : "Word files", extensions : "{$extword}"},
-                         {title : "pdf", extensions : "{$extpdf}"},
-                         {title : "other", extensions : "{$extother}"},
+            chunk_size: '1mb',
+            filters : {
+                // Maximum file size
+                max_file_size : '{$maxsize}',
+                // Specify what files to browse for
+                mime_types: [
+                         {title : "Image files", extensions : "{$extImages}"},
+                         {title : "Compression files", extensions : "{$extCompression}"},
+                         {title : "files", extensions : "{$extFile}"},
+                         {title : "Video", extensions : "{$extVideo}"},
                             ]
-                        },
-                        init: {
-                            FileUploaded: function(up, file, info) {
+                },
+            init: {
+                 FileUploaded: function(up, file, info) {
+                     myres = JSON.parse(info.response);
+                     if(myres['error']) {
+                     alert(myres['error']['message']);
+                          return ;
+                     }
+                     if(myres['result']) {
+                         <?php if($callback == 'callback_ck_images'):?>
+                         uplodfiles += myres['result'] + '|';
+                         <?php else: ?>
+                         if ({$limit} > 1) {
+                             uplodfiles += myres['result'] + ',' + myres['filename'] + ',' + myres['id'] + '|';
+                         } else {
+                             uplodfiles += myres['result'] + '|';
+                         }
+                         <?php endif; ?>
+                     }},
+                 UploadComplete: function() {
+                    if(uplodfiles!='') {
+                        uplodfiles = uplodfiles.substring(0, uplodfiles.lastIndexOf('|'));
+                     }
+                    {$callback}(uplodfiles,'{$htmlid}','{$is_thumb}','{$htmlname}');
+                    //console.info(uplodfiles);
+                    //console.info(file);
+                    }},
+                    // Rename files by clicking on their titles
+                    rename: true,
+                    // Sort files
+                    sortable: true,
 
-                                myres = JSON.parse(info.response);
-                                if(myres['error']) {
-                                    alert(myres['error']['message']);
-                                    return ;
-                                }
-                                if(myres['result']) {
-                                    {if $callback=='callback_ck_images'}
-                                    uplodfiles += myres['result']+'|';
-                                                                        {else}
-                                    if({$limit} > 1) {
-                                        uplodfiles += myres['result']+','+myres['filename']+','+myres['id']+'|';
-                                    }
-                                    else {
-                                        uplodfiles += myres['result']+'|';
-                                    }
-                                    {/if}
-}
+                    // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+                    dragdrop: true,
 
-                            },
-                            UploadComplete: function() {
-                                if(uplodfiles!='') {
-                                    uplodfiles = uplodfiles.substring(0, uplodfiles.lastIndexOf('|'));
-                                }
-                                {$callback}(uplodfiles,'{$htmlid}',{$GLOBALS['is_thumb']},'{$GLOBALS['htmlname']}');
-                                console.info(uplodfiles);
-                                //console.info(file);
-                            },
-                        },
-                        // Rename files by clicking on their titles
-                        rename: true,
-
-                            // Sort files
-                                sortable: true,
-
-                        // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
-                            dragdrop: true,
-
-                        // Views to activate
-                            views: {
+                    // Views to activate
+                    views: {
                         list: true,
                                 thumbs: true, // Show thumbs
                                 active: 'thumbs'
                     },
 
                         // Flash settings
-                        flash_swf_url : '{R}js/html5upload/Moxie.swf',
+                    flash_swf_url : '{R}libs/html5upload/Moxie.swf',
 
-                            // Silverlight settings
-                                silverlight_xap_url : '{R}js/html5upload/Moxie.xap'
+                    // Silverlight settings
+                    silverlight_xap_url : '{R}libs/html5upload/Moxie.xap'
                     });
                 });
 

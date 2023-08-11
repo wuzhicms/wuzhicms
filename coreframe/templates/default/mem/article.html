@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {T "mem","head",TPLID}
+    <link rel="stylesheet" href="/res/mem/css/contribute.css" media="all">
+    <link rel="stylesheet" href="/res/mem/css/editContribute.css" media="all">
+</head>
+<body>
+<div class="contribute-page">
+    <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-hash">
+        <ul class="layui-tab-title">
+            <li  lay-id="22" class="layui-this">文章列表</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 165px;">
+            <div class="layui-tab-item layui-show">
+                <ul class="article-list" id="list">
+                </ul>
+                <div id="test-laypage-demo2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{T "mem","foot",TPLID}
+<script>
+    layui.config({
+        base: 'res/libs/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'laypage', 'laytpl'], function(){
+        var $ = layui.$
+            ,admin = layui.admin
+            ,element = layui.element
+            ,laytpl = layui.laytpl
+            ,router = layui.router();
+
+        element.render();
+
+
+
+        // 分页
+        var laypage = layui.laypage;
+
+        var lists = [
+            '{{# layui.each(d, function (index, item) { }}'
+            ,'<li id="com-{{ item.id }}">'
+            ,'<div class="list-content">'
+            ,'<div class="list-content-text">'
+            ,'<div class="list-content-text-title">'
+            ,'<span class="tag-icon {{ item.color }}">{{ item.status }}</span>'
+            ,'<a href="{{ item.url }}" target="_blank">'
+            ,'<span class="article-title">{{ item.title }}</span></a></div>'
+            ,'<div class="list-content-text-tag"><span class="world">{{ item.categoryName }}</span><span class="time">{{ item.addtime }}</span></div>'
+            ,'</div>'
+            ,'<div class="list-content-but">'
+            ,'<button data-type="test2" class="del layui-btn layui-btn-primary layui-btn-radius" data="{{ item.cid }}-{{ item.id }}">删除</button>'
+            ,'<button class="edit layui-btn layui-btn-primary layui-btn-radius"> <a href="index.php?m=mem&f=article&v=edit&cid={{ item.cid }}&id={{ item.id }}" >编辑</a></button>'
+            ,'</div>'
+            ,'</div>'
+            ,'</li>'
+            , '{{# }); }}'
+        ].join('');
+        $.getJSON('index.php?m=mem&f=article&v=getMyList', {page: 1}, function(res) {
+            laytpl(lists).render(res.data['lists'], function (html) {
+                $("#list").html(html);
+                $('[data-type="test2"]').on('click', function(){
+                    var fieldValue = $(this).attr("data");
+                    var fieldArr = fieldValue.split('-');
+                    window.parent.layer.confirm('确定删除此文章', {
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        $.getJSON('index.php?m=mem&f=article&v=delete', {"cid":fieldArr[0],"id":fieldArr[1]}, function (data) {
+                            if (data.code == 200) {
+                                $("#com-"+fieldArr[1]).remove();
+                                layer.msg('删除成功', {icon: 1});
+                            } else {
+                                layer.msg('系统错误', {icon: 2});
+                            }
+                        });
+                        parent.layer.close(index);
+                    });
+                });
+            });
+            laypage.render({
+                elem: 'test-laypage-demo2'
+                ,count: res.data['count']//通过后台拿到的总页数
+                ,limit: 7
+                ,curr: 1
+                ,jump: function (obj, first) {
+                    if ( !first ) {
+                        $.getJSON('index.php?m=mem&f=article&v=getMyList', {page: obj.curr}, function(res) {
+                            laytpl(lists).render(res.data['lists'], function (html) {
+                                $("#list").html(html);
+                            });
+                        });
+                    }
+                }
+            });
+
+        });
+    });
+</script>
+</html>

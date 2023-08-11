@@ -16,6 +16,7 @@
                 $block_data = $this->db->get_list('block_data',array('keyid'=>$keyid), '*', 0, 100);
                 if(!empty($block_data)) {
                         $option_value = array_keys($option);
+                        $values = [];
                         foreach($block_data as $rs) {
 
                                 if(in_array($rs['blockid'],$option_value)) {

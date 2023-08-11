@@ -13,6 +13,16 @@ defined('IN_WZ') or exit('No direct script access allowed');
  * 记录用户登录的错误记录
  */
 load_class('admin');
+function sddate($start,$end){ // 两个日期之间的所有日期
+	$dt_start = strtotime($start);
+	$dt_end = strtotime($end);
+	$arr = array();
+	while ($dt_start<=$dt_end){
+		$arr[] = date('Ymd',$dt_start);
+		$dt_start = strtotime('+1 day',$dt_start);
+	}
+	return $arr;
+}
 
 final class index extends WUZHI_admin {
 
@@ -52,7 +62,7 @@ final class index extends WUZHI_admin {
             }
         }
         //       $username = get_cookie('username');
-        $username = get_cookie('username');
+        $uid = $_SESSION['uid'];
         $truename = get_cookie('wz_name');
         $ip = $_SESSION['ip'];
         $show_dialog = 1;
@@ -73,6 +83,7 @@ final class index extends WUZHI_admin {
         }
 
         $siteurl = $sitelist[$siteid]['url'];
+
         include $this->template('index');
 
     }
@@ -110,14 +121,92 @@ final class index extends WUZHI_admin {
             $total_number += $tmp;
             $status_number += $tmp2;
         }
-        $app = $this->app_update->checkAppUpgrades();
-        ob_start();
-        include $this->template('listing');
-        $content = ob_get_contents();
-        ob_end_clean();
-        echo $content;
+
+		if(isset($GLOBALS['submit2'])) {
+			include $this->template('listing2');
+		} else {
+			include $this->template('listing');
+		}
     }
 
+	/**
+	 * 发稿统计
+	 */
+	function listing_stat() {
+		//更新栏目缓存
+		$project_tmp = glob(CACHE_ROOT.'content/*');
+		if(!isset($project_tmp[3])) {
+			$category_cache = load_class('category_cache','content');
+			$category_cache->cache_all();
+		}
+		//更新模版缓存
+		if(!file_exists(CACHE_ROOT.'templates/default/content/msg.php')) {
+			//更新模版缓存
+			$c_template = load_class('template');
+			$dirs = COREFRAME_ROOT."templates";
+			$c_template->cache_dir_template($dirs);
+		}
+		// query db version
+		$dbversion = $this->db->version();
+		//$total_member
+		$total_member = $this->db->count_result('member');
+		$regtime = strtotime(date('Y-m-d'));
+		$today_member = $this->db->count_result('member',"regtime>$regtime");
+
+		$modellist = get_cache('model_content','model');
+		$total_number = $this->db->count_result('content_share',"`status`=9");
+		$status_number = $this->db->count_result('content_share',"`status` IN(1,2,3)");
+		foreach($modellist as $model) {
+			$master_table = $model['master_table'];
+			if($master_table=='content_share') continue;
+			$tmp = $this->db->count_result($master_table,"`status`=9");
+			$tmp2 = $this->db->count_result($master_table,"`status` IN(1,2,3)");
+			$total_number += $tmp;
+			$status_number += $tmp2;
+		}
+		$form = load_class('form');
+
+		$categorys = $this->db->get_list('category', '', '*', 0, 2000, 0, '', '', 'cid');
+
+		$cid = intval($GLOBALS['cid']);
+		$start = SYS_TIME-86400*60;
+		$end = SYS_TIME;
+		if(isset($GLOBALS['regTimeStart'])) {
+			$starttime = $GLOBALS['regTimeStart'];
+			$endtime = $GLOBALS['regTimeEnd'];
+			$s1 = date('Ymd',strtotime($starttime));
+			$e1 = date('Ymd',strtotime($endtime));
+		} else {
+			$starttime = date('Y-m-d',$start);
+			$endtime = date('Y-m-d',$end);
+			$s1 = date('Ymd',$start);
+			$e1 = date('Ymd',$end);
+		}
+
+		if($cid) {
+			$where = "`dayid`>=$s1 AND `dayid`<=$e1 AND `cid`='$cid'";
+		} else {
+			$where = "`dayid`>=$s1 AND `dayid`<=$e1";
+		}
+		$result = $this->db->get_list('content_day_stat', $where, '*', 0, 1000, 0, 'dayid ASC');
+		$newres = array();
+		foreach($result as $r) {
+			$newres[$r['dayid']] += $r['num'];
+		}
+		//print_r($newres);
+		$days = sddate($starttime,$endtime);
+		$xAxis = "'".implode("','",$days)."'";
+		$datas = array();
+		foreach($days as $dy) {
+			$datas[$dy] = max(0,$newres[$dy]);
+		}
+		$datas = implode(',',$datas);
+		if(isset($GLOBALS['submit2'])) {
+			include $this->template('listing_stat2');
+		} else {
+			include $this->template('listing_stat');
+		}
+	}
     /**
      * 显示 phpinfo 内容
      */
@@ -128,7 +217,7 @@ final class index extends WUZHI_admin {
 
     //登录
     function login() {
-        //已经登陆的用户重定向到后台首页
+        //已经登录的用户重定向到后台首页
         if (isset($_SESSION['uid']) && $_SESSION['uid']!='') {
             MSG(L('already login'), '?m=core&f=index'.$this->su(0));
         }

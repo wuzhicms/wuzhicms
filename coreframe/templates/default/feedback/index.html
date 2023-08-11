@@ -28,7 +28,11 @@
 
     <form action="index.php?m=feedback&f=index&v=contact" method="post">
         <div  class="form-inline" style="margin-bottom: 15px;">
-
+            <div class="form-group">
+                <label for="exampleInputName2">举报类型<span class="color_danger">*</span></label>
+                <input type="radio" name="form[typeid]" class="form-control" value="1" checked> 抄袭举报
+                <input type="radio" name="form[typeid]" class="form-control" value="2"> 漏错误举报
+            </div>
             <div class="form-group">
                 <label for="exampleInputName2">姓名<span class="color_danger">*</span></label>
                 <input type="text" name="form[linkman]" class="form-control" id="exampleInputName2" placeholder="姓名" required>

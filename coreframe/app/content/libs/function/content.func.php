@@ -76,11 +76,7 @@ function download($filepath, $filename = '',$output = 0) {
         $filename = rawurlencode($filename);
     }
     $filetype = get_ext($filename);
-	//限制文件中包含..
-	if(strpos($filepath,'..')!==false) MSG('文件不存在');
-    //限制php文件下载
-    if(!file_exists($filepath) || $filetype=='php') MSG('文件不存在');
-
+    if(!file_exists($filepath)) MSG('文件不存在');
     $filesize = sprintf("%u", filesize($filepath));
     if(ob_get_length() !== false) @ob_end_clean();
     header('Pragma: public');
@@ -463,4 +459,48 @@ function type_field($cid) {
         $type_field[$i] = $i;
     }
     return $type_field;
+}
+
+/**
+ * 发送至共享表
+ *
+ * @param $id
+ * @param $cid
+ */
+function post_sharecontent($id,$cid) {
+	//停用
+	return '';
+	static $SHARE_CONFIG = array();
+	if(empty($SHARE_CONFIG)) {
+		$SHARE_CONFIG['models'] = get_cache('model_content','model');
+		$SHARE_CONFIG['categorys'] = get_cache('category','content');
+		$SHARE_CONFIG['client_sharecontent'] = get_config('client_sharecontent');
+	}
+	$db = load_class('db');
+	$postdata = array();
+	$modelid = $SHARE_CONFIG['categorys'][$cid]['modelid'];
+	$model_r = $SHARE_CONFIG['models'][$modelid];
+	$master_table = $model_r['master_table'];
+	$attr_table = $model_r['attr_table'];
+	$postdata = $db->get_one($master_table,array('id'=>$id));
+	if($attr_table) {
+		$r2 = $db->get_one($attr_table,array('id'=>$id));
+		$postdata = array_merge($postdata,$r2);
+	}
+	$postdata['catname'] = $SHARE_CONFIG['categorys'][$cid]['name'];
+	$postdata['channelid'] = $SHARE_CONFIG['client_sharecontent']['channelid'];
+	$postdata['__token'] = md5(SYS_TIME.$SHARE_CONFIG['client_sharecontent']['channelid'].$SHARE_CONFIG['client_sharecontent']['secretkey']);
+	$postdata['__key'] = SYS_TIME;
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $SHARE_CONFIG['client_sharecontent']['addnews']);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	curl_setopt($ch, CURLOPT_UNRESTRICTED_AUTH, 1);
+	curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko');
+	curl_setopt($ch, CURLOPT_POST, 1);//启用POST提交
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata); //设置POST提交的字符串
+
+	$output = curl_exec($ch);
+	curl_close($ch);
 }

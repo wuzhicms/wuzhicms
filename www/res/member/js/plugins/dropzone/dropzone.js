@@ -71,7 +71,7 @@
 
         function Emitter(obj) {
             if (obj) return mixin(obj);
-        };
+        }
 
         /**
          * Mixin the emitter properties.
@@ -336,7 +336,7 @@
                             if (/(^| )dz-message($| )/.test(child.className)) {
                                 messageElement = child;
                                 child.className = "dz-message";
-                                continue;
+
                             }
                         }
                         if (!messageElement) {
@@ -1561,7 +1561,7 @@
                             regex = _ref[_i];
                             if (regex.test(navigator.userAgent)) {
                                 capableBrowser = false;
-                                continue;
+
                             }
                         }
                     }

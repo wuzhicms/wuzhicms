@@ -1,3 +1,4 @@
+@charset "utf-8";
 /*==========以下部分是Validform必须的===========*/
 .Validform_checktip{
     line-height:20px;
@@ -33,6 +34,7 @@
 }
 .Validform_error{
     background-color:#ffe7e7;
+    border-color: #e7a3a3;
 }
 #Validform_msg{color:#7d8289; font: 12px/1.5 tahoma, arial, \5b8b\4f53, sans-serif; width:280px; -webkit-box-shadow:2px 2px 3px #aaa; -moz-box-shadow:2px 2px 3px #aaa; background:#fff; position:absolute; top:0px; right:50px; z-index:99999; display:none;filter: progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=135, Color='#999999');}
 #Validform_msg .iframe{position:absolute; left:0px; top:-1px; z-index:-1;}
@@ -41,16 +43,3 @@
 #Validform_msg a.Validform_close:hover{color:#cc0;}
 #Validform_msg .Validform_info{padding:8px;border:1px solid #000; border-top:none; text-align:left;}
 
-
-
-
-
-/*-----------------------*/
-/* 针对手机版 + 样式 */
-/*------------------*/
-@media (max-width: 768px) {
-    .Validform_checktip{
-        position: relative;
-        padding-top: 2px;
-    }
-}

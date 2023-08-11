@@ -6,11 +6,11 @@
 //通过artdialog打开iframe
 //example: openiframe('index.php?app=demo&c=dialog&a=iframe2','id','title...',800,300)
 
-function openiframe(iframeurl,id,title,width,height,returntype) {
-    if(document.body.clientWidth<860) {
-        width = document.body.clientWidth-50;
-        height = 300;
-    }
+function openiframe(iframeurl,id,title,width,height,returntype,reload=false) {
+    // if(document.body.clientWidth<860) {
+    //     width = ;
+    //     height = 300;
+    // }
 	top.dialog({
 			id: id,
 			fixed: true,
@@ -33,9 +33,49 @@ function openiframe(iframeurl,id,title,width,height,returntype) {
                     $('#'+id).val(this.returnValue);
                 }
             }
-        }
+            },
+            onremove:function () {
+			    if(reload == true) {
+                    window.location.reload();
+                }
+            }
 		}).showModal(this);
 	return false;
+}
+
+function imagecut(iframeurl,id,title,width,height,returntype) {
+    if(document.body.clientWidth<860) {
+        width = document.body.clientWidth-50;
+        height = 300;
+    }
+
+    var imgurl = $("#"+id).val();
+    iframeurl+="&imgurl="+encodeURIComponent(imgurl);
+    top.dialog({
+        id: id,
+        fixed: true,
+        width: width,
+        height: height,
+        title: title,
+        padding: 5,
+        url: iframeurl,
+        onclose: function () {
+            if (this.returnValue) {
+                if(returntype==1) {//返回缩略图＋隐藏input
+                    $('#' + id + "_thumb").attr('src', this.returnValue);
+                    $('#' + id).val(this.returnValue);
+                } else if(returntype==5) {//ckeditor
+                    var instance = CKEDITOR.instances[id];
+                    instance.insertHtml(this.returnValue);
+                }else if(returntype > 1){ //返回字符串,多文件
+                    $('#'+id+" ul").append(this.returnValue);
+                } else {
+                    $('#'+id).val(this.returnValue);
+                }
+            }
+        }
+    }).showModal(this);
+    return false;
 }
 //跳转到url
 function gotourl(url) {
@@ -279,41 +319,39 @@ function open_sortyear(id,obj) {
 function set_timer() {
     var t=setTimeout(function(){$('#alert-warning').addClass('hide');clearInterval(t);},3000);
 }
-function imagecut(iframeurl,id,title,width,height,returntype) {
-    if(document.body.clientWidth<860) {
-        width = document.body.clientWidth-50;
-        height = 300;
-    }
-
-    var imgurl = $("#"+id).val();
-    iframeurl+="&imgurl="+encodeURIComponent(imgurl);
+function init_layout(pageid,su) {
+    makedo('?m=core&f=layout&v=init_layout&pageid='+pageid+'&_su='+su, '当前专题没有任何初始化数据，需要初始化添加嘛？')
+}
+function check_charsize(field) {
+    alert($("#"+field).val().length);
+}
+var down_filesid = -99;
+function downfiles_add(field) {
+    var str = '<li id="file_node_'+down_filesid+'" class="bg-white border border-1 input-group mb-2 p-3" style="cursor: move;"><input type="text" name="form['+field+']['+down_filesid+'][name]" value="" class="form-control w-25" placeholder="下载服务器名称"> <input type="text" name="form['+field+']['+down_filesid+'][url]" class="form-control w-50" placeholder="http://下载地址"><a class="btn btn-danger btn-sm" href="javascript:remove_file('+down_filesid+');">移除</a></li>';
+    $("#"+field+"_ul").append(str);
+    down_filesid++;
+}
+function topic_content_add(iframeurl) {
+    var text = $("#tcid").val();
     top.dialog({
-        id: id,
+        id: 'relation',
         fixed: true,
-        width: width,
-        height: height,
-        title: title,
+        width: 600,
+        height: 240,
+        title: '添加到专题',
         padding: 5,
-        url: iframeurl,
+        url: iframeurl+'&tcid='+text,
         onclose: function () {
             if (this.returnValue) {
-                if(returntype==1) {//返回缩略图＋隐藏input
-                    $('#' + id + "_thumb").attr('src', this.returnValue);
-                    $('#' + id).val(this.returnValue);
-                } else if(returntype==5) {//ckeditor
-                    var instance = CKEDITOR.instances[id];
-                    instance.insertHtml(this.returnValue);
-                }else if(returntype > 1){ //返回字符串,多文件
-                    $('#'+id+" ul").append(this.returnValue);
-                } else {
-                    $('#'+id).val(this.returnValue);
-                }
+                var text = this.returnValue;
+                var htmls = text.split("~");
+                $("#tcid").val(htmls[0]);
+                $("#tcidform").val(htmls[1]);
             }
         }
     }).showModal(this);
-    return false;
 }
 function remove_image(id) {
-    $("#"+id+"_thumb").attr('src',web_url+'res/images/upload-thumb.png');
+    $("#"+id+"_thumb").attr('src','');
     $("#"+id).val('');
 }

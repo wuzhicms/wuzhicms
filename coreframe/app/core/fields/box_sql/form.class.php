@@ -18,6 +18,8 @@
                 $sql = str_replace($_sql,$GLOBALS[$_field],$sql);
             }
         }
+        $sql = str_replace('{issue_id}',$this->issue_id, $sql);
+        $sql = str_replace('{maga_id}',$this->maga_id, $sql);
         $res = $this->db->query($sql);
         while($r = $this->db->fetch_array($res)) {
             $option[$r[$field_value]] = $r[$field_name];
@@ -44,7 +46,7 @@
 
             case 'select':
 
-                $string = $this->form->select($option,$value,"name='form[$field]' class='form-control' style='width:auto;' id='$field' $ext_code");
+                $string = $this->form->select($option,$value,"name='form[$field]' class='form-select' style='width:auto;' id='$field' $ext_code");
                 break;
 
             case 'multiple':

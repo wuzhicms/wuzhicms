@@ -26,12 +26,12 @@ class WUZHI_filesystem
      * @param string $targetFile The target filename
      * @param bool   $override   Whether to override an existing file or not
      *
-     * @throws \RuntimeException When copy fails
+     * @throws RuntimeException When copy fails
      */
     public function copy($originFile, $targetFile, $override = false)
     {
         if (stream_is_local($originFile) && !is_file($originFile)) {
-            throw new \RuntimeException(sprintf('Failed to copy %s because file not exists', $originFile));
+            throw new RuntimeException(sprintf('Failed to copy %s because file not exists', $originFile));
         }
 
         $this->mkdir(dirname($targetFile));
@@ -52,7 +52,7 @@ class WUZHI_filesystem
             unset($source, $target);
 
             if (!is_file($targetFile)) {
-                throw new \RuntimeException(sprintf('Failed to copy %s to %s', $originFile, $targetFile));
+                throw new RuntimeException(sprintf('Failed to copy %s to %s', $originFile, $targetFile));
             }
         }
     }
@@ -60,10 +60,10 @@ class WUZHI_filesystem
     /**
      * Creates a directory recursively.
      *
-     * @param string|array|\Traversable $dirs The directory path
+     * @param string|array|Traversable $dirs The directory path
      * @param int                       $mode The directory mode
      *
-     * @throws \RuntimeException On any directory creation failure
+     * @throws RuntimeException On any directory creation failure
      */
     public function mkdir($dirs, $mode = 0777)
     {
@@ -77,9 +77,9 @@ class WUZHI_filesystem
                 if (!is_dir($dir)) {
                     // The directory was not created by a concurrent process. Let's throw an exception with a developer friendly error message if we have one
                     if ($error) {
-                        throw new \RuntimeException(sprintf('Failed to create "%s": %s.', $dir, $error['message']));
+                        throw new RuntimeException(sprintf('Failed to create "%s": %s.', $dir, $error['message']));
                     }
-                    throw new \RuntimeException(sprintf('Failed to create "%s"', $dir));
+                    throw new RuntimeException(sprintf('Failed to create "%s"', $dir));
                 }
             }
         }
@@ -88,7 +88,7 @@ class WUZHI_filesystem
     /**
      * Checks the existence of files or directories.
      *
-     * @param string|array|\Traversable $files A filename, an array of files, or a \Traversable instance to check
+     * @param string|array|Traversable $files A filename, an array of files, or a \Traversable instance to check
      *
      * @return bool true if the file exists, false otherwise
      */
@@ -106,18 +106,18 @@ class WUZHI_filesystem
     /**
      * Sets access and modification time of file.
      *
-     * @param string|array|\Traversable $files A filename, an array of files, or a \Traversable instance to create
+     * @param string|array|Traversable $files A filename, an array of files, or a \Traversable instance to create
      * @param int                       $time  The touch time as a Unix timestamp
      * @param int                       $atime The access time as a Unix timestamp
      *
-     * @throws \RuntimeException When touch fails
+     * @throws RuntimeException When touch fails
      */
     public function touch($files, $time = null, $atime = null)
     {
         foreach ($this->toIterator($files) as $file) {
             $touch = $time ? @touch($file, $time, $atime) : @touch($file);
             if (true !== $touch) {
-                throw new \RuntimeException(sprintf('Failed to touch %s', $file));
+                throw new RuntimeException(sprintf('Failed to touch %s', $file));
             }
         }
     }
@@ -125,9 +125,9 @@ class WUZHI_filesystem
     /**
      * Removes files or directories.
      *
-     * @param string|array|\Traversable $files A filename, an array of files, or a \Traversable instance to remove
+     * @param string|array|Traversable $files A filename, an array of files, or a \Traversable instance to remove
      *
-     * @throws \RuntimeException When removal fails
+     * @throws RuntimeException When removal fails
      */
     public function remove($files)
     {
@@ -139,20 +139,20 @@ class WUZHI_filesystem
             }
 
             if (is_dir($file) && !is_link($file)) {
-                $this->remove(new \FilesystemIterator($file));
+                $this->remove(new FilesystemIterator($file));
 
                 if (true !== @rmdir($file)) {
-                    throw new \RuntimeException(sprintf('Failed to remove directory %s', $file));
+                    throw new RuntimeException(sprintf('Failed to remove directory %s', $file));
                 }
             } else {
                 // https://bugs.php.net/bug.php?id=52176
                 if ('\\' === DIRECTORY_SEPARATOR && is_dir($file)) {
                     if (true !== @rmdir($file)) {
-                        throw new \RuntimeException(sprintf('Failed to remove file %s', $file));
+                        throw new RuntimeException(sprintf('Failed to remove file %s', $file));
                     }
                 } else {
                     if (true !== @unlink($file)) {
-                        throw new \RuntimeException(sprintf('Failed to remove file %s', $file));
+                        throw new RuntimeException(sprintf('Failed to remove file %s', $file));
                     }
                 }
             }
@@ -162,21 +162,21 @@ class WUZHI_filesystem
     /**
      * Change mode for an array of files or directories.
      *
-     * @param string|array|\Traversable $files     A filename, an array of files, or a \Traversable instance to change mode
+     * @param string|array|Traversable $files     A filename, an array of files, or a \Traversable instance to change mode
      * @param int                       $mode      The new mode (octal)
      * @param int                       $umask     The mode mask (octal)
      * @param bool                      $recursive Whether change the mod recursively or not
      *
-     * @throws \RuntimeException When the change fail
+     * @throws RuntimeException When the change fail
      */
     public function chmod($files, $mode, $umask = 0000, $recursive = false)
     {
         foreach ($this->toIterator($files) as $file) {
             if ($recursive && is_dir($file) && !is_link($file)) {
-                $this->chmod(new \FilesystemIterator($file), $mode, $umask, true);
+                $this->chmod(new FilesystemIterator($file), $mode, $umask, true);
             }
             if (true !== @chmod($file, $mode & ~$umask)) {
-                throw new \RuntimeException(sprintf('Failed to chmod file %s', $file));
+                throw new RuntimeException(sprintf('Failed to chmod file %s', $file));
             }
         }
     }
@@ -184,25 +184,25 @@ class WUZHI_filesystem
     /**
      * Change the owner of an array of files or directories.
      *
-     * @param string|array|\Traversable $files     A filename, an array of files, or a \Traversable instance to change owner
+     * @param string|array|Traversable $files     A filename, an array of files, or a \Traversable instance to change owner
      * @param string                    $user      The new owner user name
      * @param bool                      $recursive Whether change the owner recursively or not
      *
-     * @throws \RuntimeException When the change fail
+     * @throws RuntimeException When the change fail
      */
     public function chown($files, $user, $recursive = false)
     {
         foreach ($this->toIterator($files) as $file) {
             if ($recursive && is_dir($file) && !is_link($file)) {
-                $this->chown(new \FilesystemIterator($file), $user, true);
+                $this->chown(new FilesystemIterator($file), $user, true);
             }
             if (is_link($file) && function_exists('lchown')) {
                 if (true !== @lchown($file, $user)) {
-                    throw new \RuntimeException(sprintf('Failed to chown file %s', $file));
+                    throw new RuntimeException(sprintf('Failed to chown file %s', $file));
                 }
             } else {
                 if (true !== @chown($file, $user)) {
-                    throw new \RuntimeException(sprintf('Failed to chown file %s', $file));
+                    throw new RuntimeException(sprintf('Failed to chown file %s', $file));
                 }
             }
         }
@@ -211,25 +211,25 @@ class WUZHI_filesystem
     /**
      * Change the group of an array of files or directories.
      *
-     * @param string|array|\Traversable $files     A filename, an array of files, or a \Traversable instance to change group
+     * @param string|array|Traversable $files     A filename, an array of files, or a \Traversable instance to change group
      * @param string                    $group     The group name
      * @param bool                      $recursive Whether change the group recursively or not
      *
-     * @throws \RuntimeException When the change fail
+     * @throws RuntimeException When the change fail
      */
     public function chgrp($files, $group, $recursive = false)
     {
         foreach ($this->toIterator($files) as $file) {
             if ($recursive && is_dir($file) && !is_link($file)) {
-                $this->chgrp(new \FilesystemIterator($file), $group, true);
+                $this->chgrp(new FilesystemIterator($file), $group, true);
             }
             if (is_link($file) && function_exists('lchgrp')) {
                 if (true !== @lchgrp($file, $group) || (defined('HHVM_VERSION') && !posix_getgrnam($group))) {
-                    throw new \RuntimeException(sprintf('Failed to chgrp file %s', $file));
+                    throw new RuntimeException(sprintf('Failed to chgrp file %s', $file));
                 }
             } else {
                 if (true !== @chgrp($file, $group)) {
-                    throw new \RuntimeException(sprintf('Failed to chgrp file %s', $file));
+                    throw new RuntimeException(sprintf('Failed to chgrp file %s', $file));
                 }
             }
         }
@@ -242,18 +242,18 @@ class WUZHI_filesystem
      * @param string $target    The new filename or directory
      * @param bool   $overwrite Whether to overwrite the target if it already exists
      *
-     * @throws \RuntimeException When target file or directory already exists
-     * @throws \RuntimeException When origin cannot be renamed
+     * @throws RuntimeException When target file or directory already exists
+     * @throws RuntimeException When origin cannot be renamed
      */
     public function rename($origin, $target, $overwrite = false)
     {
         // we check that target does not exist
         if (!$overwrite && is_readable($target)) {
-            throw new \RuntimeException(sprintf('Cannot rename because the target "%s" already exist.', $target));
+            throw new RuntimeException(sprintf('Cannot rename because the target "%s" already exist.', $target));
         }
 
         if (true !== @rename($origin, $target)) {
-            throw new \RuntimeException(sprintf('Cannot rename "%s" to "%s".', $origin, $target));
+            throw new RuntimeException(sprintf('Cannot rename "%s" to "%s".', $origin, $target));
         }
     }
 
@@ -264,7 +264,7 @@ class WUZHI_filesystem
      * @param string $targetDir     The symbolic link name
      * @param bool   $copyOnWindows Whether to copy files if on Windows
      *
-     * @throws \RuntimeException When symlink fails
+     * @throws RuntimeException When symlink fails
      */
     public function symlink($originDir, $targetDir, $copyOnWindows = false)
     {
@@ -289,10 +289,10 @@ class WUZHI_filesystem
             $report = error_get_last();
             if (is_array($report)) {
                 if ('\\' === DIRECTORY_SEPARATOR && false !== strpos($report['message'], 'error code(1314)')) {
-                    throw new \RuntimeException('Unable to create symlink due to error code 1314: \'A required privilege is not held by the client\'. Do you have the required Administrator-rights?');
+                    throw new RuntimeException('Unable to create symlink due to error code 1314: \'A required privilege is not held by the client\'. Do you have the required Administrator-rights?');
                 }
             }
-            throw new \RuntimeException(sprintf('Failed to create symbolic link from %s to %s', $originDir, $targetDir));
+            throw new RuntimeException(sprintf('Failed to create symbolic link from %s to %s', $originDir, $targetDir));
         }
     }
 
@@ -341,16 +341,16 @@ class WUZHI_filesystem
      *
      * @param string       $originDir The origin directory
      * @param string       $targetDir The target directory
-     * @param \Traversable $iterator  A Traversable instance
+     * @param Traversable $iterator  A Traversable instance
      * @param array        $options   An array of boolean options
      *                                Valid options are:
      *                                - $options['override'] Whether to override an existing file on copy or not (see copy())
      *                                - $options['copy_on_windows'] Whether to copy files instead of links on Windows (see symlink())
      *                                - $options['delete'] Whether to delete files that are not in the source directory (defaults to false)
      *
-     * @throws \RuntimeException When file type is unknown
+     * @throws RuntimeException When file type is unknown
      */
-    public function mirror($originDir, $targetDir, \Traversable $iterator = null, $options = array())
+    public function mirror($originDir, $targetDir, Traversable $iterator = null, $options = array())
     {
         $targetDir = rtrim($targetDir, '/\\');
         $originDir = rtrim($originDir, '/\\');
@@ -359,8 +359,8 @@ class WUZHI_filesystem
         if ($this->exists($targetDir) && isset($options['delete']) && $options['delete']) {
             $deleteIterator = $iterator;
             if (null === $deleteIterator) {
-                $flags = \FilesystemIterator::SKIP_DOTS;
-                $deleteIterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($targetDir, $flags), \RecursiveIteratorIterator::CHILD_FIRST);
+                $flags = FilesystemIterator::SKIP_DOTS;
+                $deleteIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($targetDir, $flags), RecursiveIteratorIterator::CHILD_FIRST);
             }
             foreach ($deleteIterator as $file) {
                 $origin = str_replace($targetDir, $originDir, $file->getPathname());
@@ -376,8 +376,8 @@ class WUZHI_filesystem
         }
 
         if (null === $iterator) {
-            $flags = $copyOnWindows ? \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS : \FilesystemIterator::SKIP_DOTS;
-            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($originDir, $flags), \RecursiveIteratorIterator::SELF_FIRST);
+            $flags = $copyOnWindows ? FilesystemIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS : FilesystemIterator::SKIP_DOTS;
+            $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($originDir, $flags), RecursiveIteratorIterator::SELF_FIRST);
         }
 
         if ($this->exists($originDir)) {
@@ -393,7 +393,7 @@ class WUZHI_filesystem
                 } elseif (is_dir($file)) {
                     $this->mkdir($target);
                 } else {
-                    throw new \RuntimeException(sprintf('Unable to guess "%s" file type.', $file));
+                    throw new RuntimeException(sprintf('Unable to guess "%s" file type.', $file));
                 }
             } else {
                 if (is_link($file)) {
@@ -403,7 +403,7 @@ class WUZHI_filesystem
                 } elseif (is_file($file)) {
                     $this->copy($file, $target, isset($options['override']) ? $options['override'] : false);
                 } else {
-                    throw new \RuntimeException(sprintf('Unable to guess "%s" file type.', $file));
+                    throw new RuntimeException(sprintf('Unable to guess "%s" file type.', $file));
                 }
             }
         }
@@ -430,12 +430,12 @@ class WUZHI_filesystem
     /**
      * @param mixed $files
      *
-     * @return \Traversable
+     * @return Traversable
      */
     private function toIterator($files)
     {
-        if (!$files instanceof \Traversable) {
-            $files = new \ArrayObject(is_array($files) ? $files : array($files));
+        if (!$files instanceof Traversable) {
+            $files = new ArrayObject(is_array($files) ? $files : array($files));
         }
 
         return $files;
@@ -449,7 +449,7 @@ class WUZHI_filesystem
      * @param null|int $mode     The file mode (octal). If null, file permissions are not modified
      *                           Deprecated since version 2.3.12, to be removed in 3.0.
      *
-     * @throws \RuntimeException If the file cannot be written to.
+     * @throws RuntimeException If the file cannot be written to.
      */
     public function dumpFile($filename, $content, $mode = 0666)
     {
@@ -458,13 +458,13 @@ class WUZHI_filesystem
         if (!is_dir($dir)) {
             $this->mkdir($dir);
         } elseif (!is_writable($dir)) {
-            throw new \RuntimeException(sprintf('Unable to write in the %s directory.', $dir));
+            throw new RuntimeException(sprintf('Unable to write in the %s directory.', $dir));
         }
 
         $tmpFile = tempnam($dir, basename($filename));
 
         if (false === @file_put_contents($tmpFile, $content)) {
-            throw new \RuntimeException(sprintf('Failed to write file "%s".', $filename));
+            throw new RuntimeException(sprintf('Failed to write file "%s".', $filename));
         }
 
         $this->rename($tmpFile, $filename, true);

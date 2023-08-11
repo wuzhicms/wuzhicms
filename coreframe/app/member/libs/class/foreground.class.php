@@ -37,51 +37,50 @@ class WUZHI_foreground {
 					$this->clean_cookie();
 					MSG(L('cookie_timeout'), 'index.php?m=member&v=login');
 				}
-				//	获取用户信息
-				$this->memberinfo = $this->db->get_one('member', '`uid` = '.$uid, '*');
-				//	判断用户是否被锁定
-				if($this->memberinfo['islock'] && (empty($this->memberinfo['islock']) || $this->memberinfo['locktime'] > SYS_TIME))MSG(L('user_lock'), 'index.php');
-				//	判断用户会员组
-				if($this->memberinfo['groupid'] == 1) {
-					$this->clean_cookie();
-					MSG(L('user_banned'), 'index.php');
-				} elseif($this->setting['checkemail'] && $this->memberinfo['groupid'] == 2) {
-					$this->clean_cookie();
-					$this->send_register_mail($this->memberinfo);
-					MSG(L('need_email_authentication'));
-				} elseif($this->memberinfo['groupid'] == 5) {
-					MSG('您的帐号正在审核中!');
-				}
-				if($this->memberinfo['islock']) {
-					MSG('您的帐号被锁定!不能登录了!');
-				}
-				if($this->memberinfo['locktime']>SYS_TIME) {
-					MSG('您的帐号被锁定!请在'.date('Y-m-d H:i:s',$this->memberinfo['locktime']).'之后登录!');
-				}
-				//	判断用户密码是否和cookie一致
-				if($this->memberinfo['password'] !== $password){
-					$this->clean_cookie();
-					MSG(L('login_again_please'), 'index.php?m=member&v=login');
-				}
-				//判断用户是否必须要修改密码
-				if($this->memberinfo['pw_reset'] && V!='pw_reset'){
-					MSG('请先设置新密码', 'index.php?m=member&v=pw_reset');
-				}
-				//	判断是否存在模型id
-				if($this->memberinfo['modelid']){
-					$modelids = explode(',',$this->memberinfo['modelid']);
-					foreach($modelids as $_modelid) {
-						$model_table = $this->db->get_one('model', 'modelid='.$_modelid, 'attr_table');
-						//获取用户模型信息
+				// //	获取用户信息
+				 $this->memberinfo = $this->db->get_one('member', '`uid` = '.$uid, '*');
+				// //	判断用户是否被锁定
+				 if($this->memberinfo['islock'] && (empty($this->memberinfo['islock']) || $this->memberinfo['locktime'] > SYS_TIME))MSG(L('user_lock'), 'index.php');
+				// //	判断用户会员组
+				 if($this->memberinfo['groupid'] == 1) {
+				 	$this->clean_cookie();
+				 	MSG(L('user_banned'), 'index.php');
+				 } elseif($this->setting['checkemail'] && $this->memberinfo['groupid'] == 2) {
+				 	$this->clean_cookie();
+				 	$this->send_register_mail($this->memberinfo);
+				 	MSG(L('need_email_authentication'));
+				 } elseif($this->memberinfo['groupid'] == 5) {
+				 	MSG('您的帐号正在审核中!');
+				 }
+				 if($this->memberinfo['islock']) {
+				 	MSG('您的帐号被锁定!不能登录了!');
+				 }
+				 if($this->memberinfo['locktime']>SYS_TIME) {
+				 	MSG('您的帐号被锁定!请在'.date('Y-m-d H:i:s',$this->memberinfo['locktime']).'之后登录!');
+				 }
+				// //	判断用户密码是否和cookie一致
+				 if($this->memberinfo['password'] !== $password){
+				 	$this->clean_cookie();
+				 	MSG(L('login_again_please'), 'index.php?m=member&v=login');
+				 }
+				// //判断用户是否必须要修改密码
+				 if($this->memberinfo['pw_reset'] && V!='pw_reset'){
+				 	MSG('请先设置新密码', 'index.php?m=member&v=pw_reset');
+				 }
+				// //	判断是否存在模型id
+				 if($this->memberinfo['modelid']){
+				 	$modelids = explode(',',$this->memberinfo['modelid']);
+				 	foreach($modelids as $_modelid) {
+				 		$model_table = $this->db->get_one('model', 'modelid='.$_modelid, 'attr_table');
+				 		//获取用户模型信息
 						$this->_member_modelinfo = $this->db->get_one($model_table['attr_table'], '`uid` = '.intval($uid), '*');
-						if(is_array($this->_member_modelinfo)) {
-							$this->memberinfo = array_merge($this->memberinfo, $this->_member_modelinfo);
-						}
-					}
+				 		if(is_array($this->_member_modelinfo)) {
+				 			$this->memberinfo = array_merge($this->memberinfo, $this->_member_modelinfo);
+				 		}
+				 	}
 
 
-				}
-
+				 }
 
 				$this->uid = $uid;
 			} else {
@@ -101,6 +100,7 @@ class WUZHI_foreground {
 		set_cookie('auth', '');
 		set_cookie('_uid', '');
 		set_cookie('_username', '');
+		set_cookie('_avatar', '');
 		set_cookie('_groupid', '');
 		set_cookie('modelid', '');
 	}
@@ -108,14 +108,15 @@ class WUZHI_foreground {
 	 * 登录设置cookie
 	 */
 	protected function create_cookie($info, $cookietime=0){
-		set_cookie('auth', encode($info['uid']."\t".$info['password']."\t".$cookietime, substr(md5(_KEY), 8, 8)), $cookietime);
-		set_cookie('_uid', $info['uid'], $cookietime);
-		set_cookie('_username', $info['username'], $cookietime);
-		set_cookie('_groupid', $info['groupid'], $cookietime);
-        load_function('string');
-        setcookie(COOKIE_PRE.'truename', urlencode($info['username']), $cookietime, COOKIE_PATH, COOKIE_DOMAIN, 0);
-        setcookie(COOKIE_PRE.'modelid', $info['modelid'], $cookietime, COOKIE_PATH, COOKIE_DOMAIN, 0);
-    }
+    set_cookie('auth', encode($info['uid']."\t".$info['password']."\t".$cookietime, substr(md5(_KEY), 8, 8)), $cookietime);
+    set_cookie('_uid', $info['uid'], $cookietime);
+    set_cookie('_username', $info['username'], $cookietime);
+    set_cookie('_avatar', avatar($info['uid'],180), $cookietime);
+    set_cookie('_groupid', $info['groupid'], $cookietime);
+    load_function('string');
+    setcookie(COOKIE_PRE.'truename', urlencode($info['username']), $cookietime, COOKIE_PATH, COOKIE_DOMAIN, 0);
+    setcookie(COOKIE_PRE.'modelid', $info['modelid'], $cookietime, COOKIE_PATH, COOKIE_DOMAIN, 0);
+}
 
 	/**
 	 * 注册验证 找回密码邮件发送

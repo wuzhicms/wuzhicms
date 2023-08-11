@@ -1,313 +1,287 @@
-<?php defined('IN_WZ') or exit('No direct script access allowed'); ?>
 <?php
+/**
+ * 内容添加模板
+ */
+defined('IN_WZ') or exit('No direct script access allowed');
 include $this->template('header', 'core');
 ?>
-<body class="body pxgridsbody">
-<style type="text/css">
-.tablewarnings {
-display: none;
-}
-</style>
-<link href="<?php echo R; ?>js/colorpicker/style.css" rel="stylesheet">
-<link href="<?php echo R; ?>js/jquery-ui/jquery-ui.css" rel="stylesheet">
-<script src="<?php echo R; ?>js/colorpicker/color.js"></script>
-<?php
-echo '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
-echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
-echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js"></script>';
-?>
-<script src="<?php echo R;?>js/jquery-ui-1.10.1.custom.min.js"></script>
-<section class="wrapper">
-<div class="row">
-<div class="col-lg-12">
-<section class="panel" style="border-top: 2px solid #2E3238;">
-<header class="panel-heading addpos"><?php echo catpos($cid, ' &gt; ', 'target="_blank"'); ?> <a href="<?php echo $data['url'];?>" target="_blank">访问</a>  &gt; </header>
-<div class="panel-body" id="panel-bodys">
-<form name="myform" class="form-horizontal tasi-form" action="" method="post">
-<table class="table table-striped table-advance table-hover" id="contenttable">
-<tbody>
-<?php
-if (isset($formdata['5']['title'])) {
-?>
-<tr>
-<td>
-<div class="col-sm-12 input-group" id="titlecss"><span
-        class="input-group-addon"><?php echo $formdata['5']['title']['name'] ?></span><?php echo $formdata['5']['title']['form'] ?>
-</div>
-</td>
-</tr>
-<?php
-}
-if (isset($formdata['5']['content'])) {
-?>
-<tr>
-<td>
-<div class="col-sm-12 input-group">
-    <?php echo $formdata['5']['content']['form'] ?>
-    <span
-        class="tablewarnings"><?php echo $formdata['5']['content']['remark'] ?></span>
-</div>
-</td>
-</tr>
-<?php } ?>
-<tr>
-<td>
-
-<ul id="myTab" class="nav nav-tabs" role="tablist">
-<li role="presentation" class="active"><a href="#tabs1" id="1tab" role="tab"
-                                          data-toggle="tab"
-                                          aria-controls="tabs1"
-                                          aria-expanded="true">基本信息</a></li>
-<li role="presentation" class=""><a href="#tabs2" role="tab" id="2tab"
-                                    data-toggle="tab" aria-controls="tabs2"
-                                    aria-expanded="false">高级设置</a></li>
-<li role="presentation" class=""><a href="#tabs3" role="tab" id="3tab"
-                                    data-toggle="tab" aria-controls="tabs3"
-                                    aria-expanded="false">权限与收费</a></li>
-</ul>
-</li>
-</ul>
-
-<div id="myTabContent" class="tab-content">
-<div role="tabpanel" class="tab-pane fade active in" id="tabs1"
-     aria-labelledby="1tab">
-    <table class="table table-striped table-advance table-hover"
-           id="contenttable">
-        <?php
-        if (is_array($formdata['0'])) {
-            foreach ($formdata['0'] as $field => $info) {
-                if ($info['powerful_field']) continue;
-                if ($info['formtype'] == 'powerful') {
-                    foreach ($formdata['0'] as $_fm => $_fm_value) {
-                        if ($_fm_value['powerful_field']) {
-                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
-                        }
-                    }
-                    foreach ($formdata['1'] as $_fm => $_fm_value) {
-                        if ($_fm_value['powerful_field']) {
-                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
-                        }
-                    }
-                    foreach ($formdata['2'] as $_fm => $_fm_value) {
-                        if ($_fm_value['powerful_field']) {
-                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
-                        }
-                    }
-                }
-                ?>
-                <tr>
-                    <td style="width: 120px;">
-                        <?php if ($info['star']) { ?> <font
-                            color="red">*</font><?php } ?>
-                        <strong><?php echo $info['name'] ?></strong>
-                    </td>
-                    <td class="hidden-phone">
-                        <div class="col-sm-12 input-group">
-                        <?php echo $info['form'] ?>
-                            <span
-                                class="tablewarnings"><?php echo $info['remark'] ?></span>
-                        </div>
-                    </td>
-                </tr>
-
-            <?php
-            }
-        }
-        if($tb_arr) {
-        ?>
-        <tr>
-            <td style="width: 120px;">
-                <strong>同步更新</strong>
-            </td>
-            <td class="hidden-phone">
-                <div class="col-sm-12 input-group">
-                    <?php
-                    foreach($tb_arr as $tb_r) {
-                        echo '<label class="checkbox-inline"><input type="checkbox" name="tb_update['.$tb_r['new_id'].']" value="'.$tb_r['new_cid'].'"> '.$tb_r['names'].catpos2($tb_r['new_cid']).'ID:'.$tb_r['new_id'].'</label>';
-                    }
-                    ?>
-
+<body>
+    <link href="<?php echo R; ?>libs/colorpicker/style.css" rel="stylesheet">
+    
+    <script src="<?php echo R; ?>libs/colorpicker/color.js"></script>
+    <section class="wrapper">
+        <section class="border-2 border-dark border-top panel content-panel">
+            <header class="panel-heading addpos d-flex justify-content-between">
+                <div class="breadcrumb">
+                    <?php echo catpos($cid, ' &gt; ', 'target="_blank"'); ?>
+                    <a href="<?php echo $data['url'];?>" target="_blank">访问</a> &gt;
                 </div>
-            </td>
-        </tr>
-        <?php }?>
-    </table>
-</div>
+                <button type="button" class="btn btn-outline-dark btn-sm btn-editer small">进入全屏模式</button></header>
+            <div class="panel-body">
+                <form name="myform" class="form-horizontal tasi-form" action="" method="post">
+                    <?php
+                    if (isset($formdata['5']['title'])) {
+                    ?>
+                    <div class="input-group mb-3" id="titlecss">
+                        <span class="input-group-text bg-light py-0 rounded-0 small"><?php echo $formdata['5']['title']['name'] ?></span>
+                        <?php echo $formdata['5']['title']['form'] ?>
+                    </div>
+                    <div id="checkwrap" class="list-group"></div>
+                    <?php } ?>
+                    <div class="w-100 mb-3">
+                    <?php
+                    if(isset($formdata['5']['content'])) {
+                    ?>
+                    <?php echo $formdata['5']['content']['form']?>
+                    <span class="tablewarnings"><?php echo $formdata['5']['content']['remark']?></span>
+                    <?php }?>
+                    </div>
 
-<div role="tabpanel" class="tab-pane fade" id="tabs2" aria-labelledby="2tab">
-    <table class="table table-striped table-advance table-hover"
-           id="contenttable">
-        <?php
-        if (is_array($formdata['1'])) {
-            foreach ($formdata['1'] as $field => $info) {
-                if ($info['powerful_field']) continue;
-                if ($info['formtype'] == 'powerful') {
-                    foreach ($formdata['0'] as $_fm => $_fm_value) {
-                        if ($_fm_value['powerful_field']) {
-                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
-                        }
-                    }
-                    foreach ($formdata['1'] as $_fm => $_fm_value) {
-                        if ($_fm_value['powerful_field']) {
-                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
-                        }
-                    }
-                    foreach ($formdata['2'] as $_fm => $_fm_value) {
-                        if ($_fm_value['powerful_field']) {
-                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
-                        }
-                    }
-                }
-                ?>
-                <tr>
-                    <td style="width: 120px;">
-                        <?php if ($info['star']) { ?> <font
-                            color="red">*</font><?php } ?>
-                        <strong><?php echo $info['name'] ?></strong>
-                    </td>
-                    <td class="hidden-phone">
-                        <div class="col-sm-12 input-group">
-                        <?php echo $info['form'] ?>
-                            <span
-                                class="tablewarnings"><?php echo $info['remark'] ?></span>
+                    <ul class="nav nav-tabs"  id="myTab" role="tablist">
+                        <li role="presentation" class="nav-item">
+                            <button type="button" class="px-5 nav-link active" id="1tab" data-bs-toggle="tab"  data-bs-target="#tabs1" role="tab" aria-controls="tabs1" aria-selected="true">基本信息</button>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <button type="button" class="px-5 nav-link" data-bs-target="#tabs2" role="tab" id="2tab" data-bs-toggle="tab" aria-controls="tabs2" aria-selected="false">高级设置</button>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <button type="button" class="px-5 nav-link" data-bs-target="#tabs3" role="tab" id="3tab" data-bs-toggle="tab" aria-controls="tabs3" aria-selected="false">权限与收费</button>
+                        </li>
+                    </ul>
+
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade show active" id="tabs1" aria-labelledby="1tab">
+                            <table class="table table-striped table-advance table-hover" id="contenttable">
+                                <?php
+                                if (is_array($formdata['0'])) {
+                                    foreach ($formdata['0'] as $field => $info) {
+                                        if ($info['powerful_field']) continue;
+                                        if ($info['formtype'] == 'powerful') {
+                                            foreach ($formdata['0'] as $_fm => $_fm_value) {
+                                                if ($_fm_value['powerful_field']) {
+                                                    $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                                }
+                                            }
+                                            foreach ($formdata['1'] as $_fm => $_fm_value) {
+                                                if ($_fm_value['powerful_field']) {
+                                                    $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                                }
+                                            }
+                                            foreach ($formdata['2'] as $_fm => $_fm_value) {
+                                                if ($_fm_value['powerful_field']) {
+                                                    $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php if ($info['star']) { ?> <font color="red">*</font>
+                                                <?php } ?>
+                                                <strong><?php echo $info['name'] ?></strong>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12 input-group">
+                                                    <?php echo $info['form'] ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </table>
                         </div>
-                    </td>
-                </tr>
-            <?php
-            }
-        }
-        ?>
-    </table>
-</div>
 
-<div role="tabpanel" class="tab-pane fade" id="tabs3" aria-labelledby="3tab">
-    <table class="table table-striped table-advance"
-           id="contenttable">
-        <?php
-        if (is_array($formdata['2'])) {
-            foreach ($formdata['2'] as $field => $info) {
-                if ($info['powerful_field']) continue;
-                if ($info['formtype'] == 'powerful') {
-                    foreach ($formdata['0'] as $_fm => $_fm_value) {
-                        if ($_fm_value['powerful_field']) {
-                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
-                        }
-                    }
-                    foreach ($formdata['1'] as $_fm => $_fm_value) {
-                        if ($_fm_value['powerful_field']) {
-                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
-                        }
-                    }
-                    foreach ($formdata['2'] as $_fm => $_fm_value) {
-                        if ($_fm_value['powerful_field']) {
-                            $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
-                        }
-                    }
-                }
-                ?>
-                <tr>
-                    <td style="width: 120px;">
-                        <?php if ($info['star']) { ?> <font
-                            color="red">*</font><?php } ?>
-                        <strong><?php echo $info['name'] ?></strong>
-                    </td>
-                    <td class="hidden-phone">
-                        <div class="col-sm-12 input-group">
-                        <?php echo $info['form'] ?>
-                            <span
-                                class="tablewarnings"><?php echo $info['remark'] ?></span>
+                        <div role="tabpanel" class="tab-pane fade" id="tabs2" aria-labelledby="2tab">
+                            <table class="table table-striped table-advance table-hover" id="contenttable">
+                                <?php
+                                if (is_array($formdata['1'])) {
+                                    foreach ($formdata['1'] as $field => $info) {
+                                        if ($info['powerful_field']) continue;
+                                        if ($info['formtype'] == 'powerful') {
+                                            foreach ($formdata['0'] as $_fm => $_fm_value) {
+                                                if ($_fm_value['powerful_field']) {
+                                                    $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                                }
+                                            }
+                                            foreach ($formdata['1'] as $_fm => $_fm_value) {
+                                                if ($_fm_value['powerful_field']) {
+                                                    $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                                }
+                                            }
+                                            foreach ($formdata['2'] as $_fm => $_fm_value) {
+                                                if ($_fm_value['powerful_field']) {
+                                                    $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php if ($info['star']) { ?> <font color="red">*</font>
+                                                <?php } ?>
+                                                <strong><?php echo $info['name'] ?></strong>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12 input-group">
+                                                    <?php echo $info['form'] ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </table>
                         </div>
-                    </td>
-                </tr>
-            <?php
-            }
+
+                        <div role="tabpanel" class="tab-pane fade" id="tabs3" aria-labelledby="3tab">
+                            <table class="table table-striped table-advance" id="contenttable">
+                                <?php
+                                if (is_array($formdata['2'])) {
+                                    foreach ($formdata['2'] as $field => $info) {
+                                        if ($info['powerful_field']) continue;
+                                        if ($info['formtype'] == 'powerful') {
+                                            foreach ($formdata['0'] as $_fm => $_fm_value) {
+                                                if ($_fm_value['powerful_field']) {
+                                                    $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                                }
+                                            }
+                                            foreach ($formdata['1'] as $_fm => $_fm_value) {
+                                                if ($_fm_value['powerful_field']) {
+                                                    $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                                }
+                                            }
+                                            foreach ($formdata['2'] as $_fm => $_fm_value) {
+                                                if ($_fm_value['powerful_field']) {
+                                                    $info['form'] = str_replace('{' . $_fm . '}', $_fm_value['form'], $info['form']);
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php if ($info['star']) { ?> <font color="red">*</font>
+                                                <?php } ?>
+                                                <strong><?php echo $info['name'] ?></strong>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12 input-group">
+                                                    <?php echo $info['form'] ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="contentsubmit text-center">
+                        <input name="forward" type="hidden" value="<?php echo HTTP_REFERER; ?>">
+                        <input type="hidden" name="modelid" value="<?php echo $modelid; ?>">
+                        <input type="hidden" name="old_status" value="<?php echo $status; ?>">
+                        <input name="submit" type="submit" class="save-bt btn btn-info btn-sm px-4" value=" 提 交 ">
+                    </div>
+                </form>
+            </div>
+        </section>
+    </section>
+    <script type="text/javascript">
+    $(".save-bt").click(function() {
+        t = setTimeout("hide_formtips()", 5000);
+    });
+    $(function() {
+        $(".form-horizontal").Validform({
+            tiptype: 1
+            //$.Hidemsg()
+        });
+    })
+
+    //全屏模式
+    $(".btn-editer").click(function () {
+        if($(this).html() == '退出全屏模式')
+        {$(this).html('进入全屏模式')}
+        else
+        {$(this).html('退出全屏模式')}
+        $(".content-panel").toggleClass("content-panel-edit-mode");
+        $("body" , window.top.document).toggleClass("edit_mode");
+        $("body" , window.parent.document).toggleClass("edit_mode");
+    });
+
+
+    function fillurl(obj, value) {
+        if (value != '' && $("#route_type").val() == 3) {
+            value = value.replace("<?php echo POSTFIX;?>", "");
+            $(obj).val(value + '<?php echo POSTFIX;?>');
         }
-        ?>
-    </table>
-</div>
+    }
 
-</div>
+    function change_route(name, value) {
+        $("#def_type").html(name);
+        $("#route_type").val(value);
+    }
 
-</td>
-</tr>
-<tr>
-<td>
-<div class="contentsubmit text-center">
-<input type="hidden" name="modelid" value="<?php echo $modelid; ?>">
-<input type="hidden" name="old_status" value="<?php echo $status; ?>">
-<input name="submit" type="submit" class="save-bt btn btn-info" value=" 提 交 ">
-&nbsp;&nbsp;&nbsp;
-<input name="submit2" type="submit" class="btn  btn-primary" value=" 提交后再编辑 ">
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</form>
-</div>
-</section>
-</div>
-</div>
-</section>
+    function hide_formtips() {
+        $.Hidemsg();
+        clearInterval(t);
+    }
 
-
-<script src="<?php echo R; ?>js/bootstrap.min.js"></script>
-<script src="<?php echo R; ?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R; ?>js/pxgrids-scripts.js"></script>
-<script src="<?php echo R; ?>js/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-<script src="<?php echo R; ?>js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
-<link href="<?php echo R; ?>css/style.css" rel="stylesheet">
-<script type="text/javascript">
-$(".save-bt").click(function () {
-t = setTimeout("hide_formtips()", 5000);
-});
-$(function () {
-$(".form-horizontal").Validform({
-tiptype: 1
-//$.Hidemsg()
-});
-})
-
-function fillurl(obj, value) {
-if (value != '' && $("#route_type").val() == 3) {
-value = value.replace("<?php echo POSTFIX;?>", "");
-$(obj).val(value + '<?php echo POSTFIX;?>');
-}
-}
-function change_route(name, value) {
-$("#def_type").html(name);
-$("#route_type").val(value);
-}
-function hide_formtips() {
-$.Hidemsg();
-clearInterval(t);
-}
 function check_title() {
 var title = $("#title").val();
-if (title == '') {
-alert('请填写标题');
-$("#title").focus();
-} else {
+console.log(title);
+
+if (title !='')  {
 $.post("?m=content&f=content&v=checktitle<?php echo $this->su();?>", {
 title: title,
 cid:<?php echo $cid;?>,
-id: 0
+id: <?php echo $id;?>,
 },
 function (data) {
-if (data == 'ok') {
-    alert('没有重复标题');
-} else if (data == '1') {
-    alert('有完全相同的标题存在');
-} else if (data == '2') {
-    alert('有相似度很高的标题存在');
-}
+    if (data == 'ok') {
+        $("#checkwrap").empty();//清空旧数据
+        var item = document.createElement("div");
+        var button = document.createElement("button");
+        var checkwrap = document.getElementById("checkwrap");
+        item.innerText="没有重复标题";
+        item.setAttribute("class", "alert alert-success alert-dismissible fade show text-center p-2");
+        button.setAttribute("type","button");
+        button.setAttribute("class","btn-close pe-3 pt-1");
+        button.setAttribute("data-bs-dismiss","alert");
+        button.setAttribute("aria-label","Close");
+        item.append(button);
+        checkwrap.append(item);
+    return;
+    }
+    data=JSON.parse(data);
+    $("#checkwrap").empty();//清空旧数据
+    for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        var checkwrap = document.getElementById("checkwrap");
+        var item = document.createElement("a");
+        var span = document.createElement("span");
+        item.setAttribute("href", element["url"]);
+        item.setAttribute("class", "alert alert-warning d-flex justify-content-between mb-2 p-2");
+        item.setAttribute("target","_blank");
+        span.setAttribute("class", "text-black-50");
+        span.innerText="栏目ID：" + element["cid"];
+        item.innerText= element["title"];
+        item.append(span);
+        checkwrap.append(item);
+    }
 });
 }
 }
-//移除相关内容
-    function remove_relation(obj,rid) {
-        $.post("?m=content&f=relation&v=remove_relation<?php echo $this->su();?>", { rid: rid, time: Math.random()}, function(data){
-            if(data=='200') {
+    //移除相关内容
+    function remove_relation(obj, rid) {
+        $.post("?m=content&f=relation&v=remove_relation<?php echo $this->su();?>", {
+            rid: rid,
+            time: Math.random()
+        }, function(data) {
+            if (data == '200') {
                 $(obj).parent().fadeOut();
             } else {
                 alert(data);
@@ -316,20 +290,32 @@ if (data == 'ok') {
 
     }
 
-function remove_obj(obj) {
-    $(obj).parent().remove();
-}
-function add_newfile(divid) {
-    var str = $('#text_'+divid).val();
-    str = '<li>'+str+'</li>';
-    $('#'+divid+"_ul").append(str);
-}
-<?php
-if($cate_config['workflowid'] && $_SESSION['role']!=1) {
-?>
-$("input[name='form[status]'][value='9']").attr("disabled",true);
-$("input[name='form[status]'][value='8']").attr("disabled",true);
-$("input[name='form[status]'][value='1']").attr("checked",true);
+    function remove_obj(obj) {
+        $(obj).parent().remove();
+    }
 
-<?php }?>
-</script>
+    function add_newfile(divid) {
+        var str = $('#text_' + divid).val();
+        str = '<li class="list-group-item align-items-center d-flex justify-content-between">' + str + '</li>';
+        $('#' + divid + "_ul").append(str);
+    }
+<?php if($cate_config['workflowid'] && $_SESSION['role'] != 1) { ?>
+    <?php if($data['status'] > 0 && $data['status'] < 6) {?>
+    $("input[name='form[status]'][value='1']").val(<?php echo $data['status'];?>);
+    $("input[name='form[status]'][value='9']").attr("disabled", true);
+    <?php } elseif($data['status'] == 6) {?>
+    $("input[name='form[status]'][value='6']").attr("checked", true);
+    $("input[name='form[status]'][value='9']").attr("disabled", true);
+    <?php } elseif ($data['status'] == 8) {?>
+    $("input[name='form[status]'][value='8']").attr("checked", true);
+    $("input[name='form[status]'][value='9']").attr("disabled", true);
+    <?php } elseif ($data['status'] == 7) {?>
+    $("input[name='form[status]'][value='9']").attr("disabled", true);
+    $("input[name='form[status]'][value='1']").attr("checked", true);
+    <?php } elseif ($data['status'] == 9) { ?>
+    $("input[name='form[status]'][value='9']").attr("checked", true);
+    $("input[name='form[status]'][value='8']").attr("disabled", true);
+    $("input[name='form[status]'][value='6']").attr("disabled", true);
+<?php } }?>
+    </script>
+<?php include $this->template('footer', 'core'); ?>

@@ -15,9 +15,6 @@
             return '<textarea name="form['.$field.']" id="'.$field.'" class="form-control" rows="3" boxid="'.$field.'" '.$validform.'>'.$value.'</textarea>';
         } else {
             $style = '';
-            if($GLOBALS['editor_type']=='ewebeditor') {
-                $style = ' style="display:none;"';
-            }
             return '<textarea name="form['.$field.']" id="'.$field.'" boxid="'.$field.'" '.$validform.$style.'>'.$value.'</textarea>'.$this->form->editor($field,$field,'',$toolbar,$editor_type,1);
         }
     }

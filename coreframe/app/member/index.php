@@ -8,7 +8,7 @@
 defined('IN_WZ') or exit('No direct script access allowed');
 load_class('foreground', M);
 load_class('session');
-
+define('LANGUAGE','');
 $_POST['SUPPORT_MOBILE'] = 1;
 
 class index extends WUZHI_foreground{
@@ -25,7 +25,7 @@ class index extends WUZHI_foreground{
 
         $GLOBALS['acbar'] = 1;
         //登录日志
-        $log_results = $this->db->get_list('logintime', '`uid`='.$uid.' AND status > 1', '*', 0, 10, 0, 'id DESC');
+        //$log_results = $this->db->get_list('logintime', '`uid`='.$uid.' AND status > 1', '*', 0, 10, 0, 'id DESC');
         $ip_location = load_class('ip_location');
         foreach($log_results as $key=>$rs) {
             $log_results[$key]['ip_location'] = $ip_location->seek($rs['ip'],1);
@@ -38,42 +38,10 @@ class index extends WUZHI_foreground{
 		} elseif($memberinfo['ischeck_mobile'] || $groupid>2) {
 			$safe_level = 2;//中
 		}
-		//待处理的订单
-		$order_goods_count = $this->db->count_result('order_goods', "`uid`='$uid' AND `status`=2");
-		$order_goods_comment = $this->db->count_result('order_subscribe', "`uid`='$uid' AND `status` IN(2)");
-		$coupon_card_count = $this->db->count_result('coupon_card_active', "`uid`='$uid' AND `status`=0");
-		$status = intval($GLOBALS['status']);
-		$status_arr = array();
-		$status_arr[1] = '已付款（待预约）';
-		$status_arr[2] = '待付款';
-		$status_arr[3] = '交易取消';
-		$status_arr[5] = '已付款（已预约）';
-        $status_arr[6] = '已发货';
-
-		$orderid = intval($GLOBALS['orderid']);
-		$page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
-		$page = max($page,1);
-        $result_r = $this->db->get_list('order_goods',array('uid'=>$uid), '*', 0, 2,0,'orderid DESC','order_no');
-        foreach($result_r as $r) {
-            $r['goodlist'] = $this->db->get_list('order_goods',array('order_no'=>$r['order_no']));
-            $total_money = 0;
-            foreach($r['goodlist'] as $rs) {
-                $total_money = $total_money+sprintf("%.2f",$rs['money']*$rs['quantity']-$rs['coupon_card']);
-            }
-            $r['money'] = sprintf("%.2f",$total_money);
-            $result[] = $r;
-        }
-		load_function('global','order');
-		$categorys = get_cache('category','content');
-		$postinfo_category = array();
-		foreach($categorys as $_key =>$r) {
-			if($_key==48) continue;
-			$postinfo_category[$_key] = $r;
-		}
 		$admin_rs = $this->db->get_one('admin',array('uid'=>$uid),'role');
 		//是否为IE8或者使用非框架,如果是跳转到 main
 		$is_ie8 = 0;
-		if(strpos($_SERVER[HTTP_USER_AGENT], "MSIE 8.0")) {
+		if(strpos($_SERVER['HTTP_USER_AGENT'], "MSIE 8.0")) {
 			$is_ie8 = 1;
 		}
 		$is_iframe = 1;//框架打开
@@ -83,6 +51,12 @@ class index extends WUZHI_foreground{
 			include T('member','index');
 		}
 	}
+
+	public function home()
+    {
+        include T('member','home');
+    }
+
 	/**
 	 * 登录
 	 */
@@ -111,7 +85,13 @@ class index extends WUZHI_foreground{
 				if($userfield != 'username' && $r)$username = $r['username'];
 				$synlogin = $ucenter->login($username, $password, $r);
 			}
-			if(empty($r))MSG(L('user_not_exist'));
+			//if(empty($r))MSG(L('user_not_exist'));
+        /*    if(empty($r)){
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $zgw_user = load_class('zgw',M);
+                $zgw_user->setValue($username,$password,$ip);
+                $zgw_user->checkAuthor();
+            }*/
 			//	判断用户是否被锁定
 			if($r['lock']){
 				//	判断是否在锁定的时间内
@@ -122,7 +102,7 @@ class index extends WUZHI_foreground{
 					$this->db->update('member', 'lock=0', 'uid='.$r['uid']);
 				}
 			}
-				
+
 			//	判断会员组是否禁止登录
 			if($r['groupid'] == 1) MSG(L('user_banned'), WEBURL);
 			//	登录记录
@@ -150,6 +130,9 @@ class index extends WUZHI_foreground{
 			}
 			$this->db->query('UPDATE `wz_member` SET `lasttime`='.SYS_TIME.', `lastip`="'.get_ip().'", `loginnum`=`loginnum`+1 WHERE `uid`='.$r['uid'], false);
 			$this->create_cookie($r, $cookietime);
+			//登录赠送积分
+			$credit_api = load_class('credit_api','credit');
+			$credit_api->set_credit('login',$r['uid'],0,0);
 
             $forward = empty($GLOBALS['forward']) ? 'index.php?m=member' : $GLOBALS['forward'];
 			if(isset($GLOBALS['minilogin'])) {
@@ -240,6 +223,10 @@ class index extends WUZHI_foreground{
 					$this->db->update('member_auth', array('uid'=>$uid), 'authid='.$_SESSION['authid']);
 					$_SESSION['authid'] = '';
 				}
+				//注册赠送积分
+				$credit_api = load_class('credit_api','credit');
+				$credit_api->set_credit('register',$uid,0,0);
+
 				//	判断是否需要验证邮箱 
 				if($this->setting['checkemail']){
 					$info['uid'] = $uid;
@@ -254,7 +241,7 @@ class index extends WUZHI_foreground{
 					$this->create_cookie($r, SYS_TIME+604800);
 					$synlogin = '';
 					if($this->setting['ucenter']) {
-						//同步登陆
+						//同步登录
 						$synlogin = $ucenter->login($r['username'], $info['password'], $r);
 					}
 					MSG('注册成功'.$synlogin,'?m=member');
@@ -263,7 +250,6 @@ class index extends WUZHI_foreground{
 				MSG(L('register_error'));
 			}
 		} else {
-
             $seo_title = '会员注册';
             $categorys = get_cache('category','content');
 			include T('member', 'register');
@@ -534,7 +520,7 @@ class index extends WUZHI_foreground{
 			$GLOBALS['info']['factor'] = $member['factor'];
 			$GLOBALS['info']['username'] = $member['username'];
 			$GLOBALS['info']['modelid'] = $member['modelid'];
-
+            $GLOBALS['info']['truename'] = $member['truename'];
 			$GLOBALS['info']['email'] = $member['email'];
 			if(!$this->member->edit($GLOBALS['info'], $uid)) MSG(L('operation_failure'));
 
@@ -576,7 +562,7 @@ class index extends WUZHI_foreground{
 					$this->db->insert($table, $rs);
 				}
 			}
-			MSG('信息修改成功!','?m=member&f=index&v=main');
+			MSG('信息修改成功!','?m=member&f=index&v=profile&set_iframe=1');
 		} else {
 			$memberinfo = $this->memberinfo;
 			$groups = $this->groups;
@@ -584,8 +570,6 @@ class index extends WUZHI_foreground{
 
 			$modelid = $member['modelid'];
 			//	判断是否有模型id参数
-
-//print_r($models);
 			$modelids = explode(',',$modelid);
 			asort($modelids);
 			$is_load = false;
@@ -719,7 +703,7 @@ class index extends WUZHI_foreground{
 			$r = $this->db->get_one('setting',array('keyid'=>'sendmail','m'=>'core'));
 			$setting = unserialize($r['data']);
 			$config = get_cache('sendmail');
-			$siteconfigs = get_cache('siteconfigs');
+			$siteconfigs = get_cache('siteconfigs_1');
 			$password = decode($config['password']);
 			//load_function('sendmail');
 			$t = date('YmdHis');
@@ -755,12 +739,28 @@ class index extends WUZHI_foreground{
 			$this->db->update('member', array('username'=>$username,'sys_name'=>0), array('uid' => $this->uid));
 			$r['username'] = $username;
 			$this->create_cookie($r);
-			MSG('用户名设置成功！','index.php?m=member');
+			MSG('用户名设置成功！','index.php?m=member&f=index&v=profile&set_iframe=1');
 		} else {
 
 			include T('member', 'set_username');
 		}
 	}
+
+    /**
+     *
+     */
+
+	public function set_truename(){
+        $memberinfo = $this->memberinfo;
+        if(isset($GLOBALS['submit'])) {
+            $truename = strip_tags($GLOBALS['truename']);
+            $this->db->update('member', array('truename'=>$truename), array('uid' => $this->uid));
+            MSG('用户名设置成功！','index.php?m=member&f=index&v=profile&set_iframe=1');
+        } else {
+
+            include T('member', 'set_truename');
+        }
+    }
 	/**
 	 * 会员首页框架
 	 */

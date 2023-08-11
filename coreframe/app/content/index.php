@@ -14,7 +14,7 @@ class index{
     private $siteconfigs;
 	public function __construct() {
         $this->db = load_class('db');
-        $this->siteid = $_GET['siteid'] ? $_GET['siteid'] : 1;
+        $this->siteid = isset($_GET['siteid']) ? $_GET['siteid'] : 1;
 		$this->siteconfigs = get_cache('siteconfigs_'.$this->siteid);
 	}
 
@@ -30,18 +30,6 @@ class index{
         $categorys = get_cache('category','content');
 
         $_uid = get_cookie('_uid');
-		//城市分站信息
-        $city = get_cookie('city');
-        $city = isset($GLOBALS['city']) && !empty($GLOBALS['city']) ? $GLOBALS['city'] : $city ? $city : 'xa';
-		$city_config = get_config('city_config');
-		$cityid = $city_config[$city]['cityid'];
-		$cityname = $city_config[$city]['cityname'];
-
-        $cookie_city = $_COOKIE[COOKIE_PRE.'city_key'];
-        if($cookie_city && in_array($cookie_city,$city_config)) {
-            set_cookie('city',$cookie_city);
-            $city = $cookie_city;
-        }
 
         if(ENABLE_SITES) {
             $siteid = intval($_GET['siteid']);
@@ -59,6 +47,7 @@ class index{
      * url规则 /index.php?v=show&cid=24&id=79
      */
     public function show() {
+        $v = 'show';
         $siteid = $this->siteid;
         $siteconfigs = $this->siteconfigs;
         $id = isset($GLOBALS['id']) ? intval($GLOBALS['id']) : MSG(L('parameter_error'));
@@ -90,11 +79,6 @@ class index{
 		}
         $_uid = get_cookie('_uid');
         //城市分站信息
-        $city = get_cookie('city');
-        $city = isset($GLOBALS['city']) && !empty($GLOBALS['city']) ? $GLOBALS['city'] : $city ? $city : 'xa';
-        $city_config = get_config('city_config');
-        $cityid = $city_config[$city]['cityid'];
-        $cityname = $city_config[$city]['cityname'];
 
         if($model_r['attr_table']) {
             $attr_table = $model_r['attr_table'];
@@ -123,31 +107,8 @@ class index{
         foreach($data as $_key=>$_value) {
             $$_key = $_value['data'];
         }
-        //权限检查
-		$access_authority = true;
-        $_groupid = $GLOBALS['_groupid'];
-        if(!empty($groups)) {
-            $groups_arr = explode(',',$groups);
-            if(!in_array($_groupid,$groups_arr)) {
-            	//栏目访问权限和内容访问权限-提醒模式
-				if(!$this->siteconfigs['access_authority']) {
-					MSG('您没有访问该内容的权限');
-				} else {
-					$access_authority = false;
-				}
-            }
-        } else {
-            $priv_data = $this->db->get_one('member_group_priv', array('groupid' => $_groupid,'value'=>$cid,'priv'=>'view'));
 
-            if(!$priv_data) {
-				if(!$this->siteconfigs['access_authority']) {
-					MSG('您没有访问该内容的权限');
-				} else {
-					$access_authority = false;
-				}
-            }
-        }
-        //end 权限检查
+  
 
         if($template) {
 			$_template = $template;
@@ -156,7 +117,7 @@ class index{
         } elseif($category['show_template']) {
             $_template = $category['show_template'];
         } elseif($model_r['template']) {
-            $_template = TPLID.':'.$model_r['template'];
+            $_template = $model_r['template'];
         } else {
             $_template = TPLID.':show';
         }
@@ -208,27 +169,6 @@ class index{
         $category = get_cache('category_'.$cid,'content');
         if(empty($category)) MSG('栏目不存在');
 
-        //权限检查
-        $_groupid = $GLOBALS['_groupid'];
-        $priv_data = $this->db->get_one('member_group_priv', array('groupid' => $_groupid,'value'=>$cid,'priv'=>'listview'));
-
-        if(!$priv_data) {
-			//栏目访问权限和内容访问权限-提醒模式
-			if(!$this->siteconfigs['access_authority']) {
-				MSG('您没有访问该内容的权限');
-			} else {
-				$access_authority = false;
-			}
-        }
-        //end 权限检查
-
-        $city = get_cookie('city');
-        $city = isset($GLOBALS['city']) && !empty($GLOBALS['city']) ? $GLOBALS['city'] : $city=='' ? 'xa' : $city;
-        $cookie_city = $_COOKIE[COOKIE_PRE.'city_key'];
-        $city_config = get_config('city_config');
-        $cityid = $city_config[$city]['cityid'];
-        $cityname = $city_config[$city]['cityname'];
-
 
         //分页初始化
         $page = max(intval($GLOBALS['page']),1);
@@ -247,6 +187,7 @@ class index{
         } else {
             $tplid = TPLID;
         }
+
         if(empty($_template))  $_template = $tplid.':list';
         $styles = explode(':',$_template);
         $project_css = isset($styles[0]) ? $styles[0] : 'default';
@@ -276,5 +217,18 @@ class index{
         $top_category = $categorys[$top_categoryid];
         include T('content',$_template,$project_css);
     }
+	/**
+	 * 首字母列表 /index.php?v=letter&letter=A
+	 */
+	public function letter() {
+		$letter = isset($GLOBALS['letter']) ? substr($GLOBALS['letter'],0,1) : '';
+		$page = max( 1,output($GLOBALS,'page') );
+		$letters = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+		if($letter) {
+			include T('content','letter',TPLID);
+		} else {
+			include T('content','letter-index',TPLID);
+		}
+	}
 }
 ?>

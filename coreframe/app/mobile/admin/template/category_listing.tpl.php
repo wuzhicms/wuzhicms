@@ -46,9 +46,6 @@ include $this->template('header','core');
     </form>
     <!-- page end-->
 </section>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
 <script type="text/javascript">
     function repair() {
         $.get("?m=content&f=category&v=repair<?php echo $this->su();?>",
@@ -64,5 +61,5 @@ include $this->template('header','core');
 
     }
 </script>
-</body>
-</html>
+<?php include $this->template('footer','core');?>
+

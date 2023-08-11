@@ -190,7 +190,7 @@ class index extends WUZHI_admin
 					$this->db->update('attachment', 'usertimes = usertimes-1', $where);
 				}
 				else {
-					$this->my_unlink(ATTACHMENT_ROOT . $att_info['path']);
+					$this->my_unlink(WWW_ROOT . $att_info['path']);
 					$this->db->delete('attachment', $where);
 					$this->db->delete('attachment_tag_index', array('att_id'=>$id));
 				}
@@ -205,7 +205,7 @@ class index extends WUZHI_admin
                 $att_info = $this->db->get_one('attachment', $where, 'usertimes,id');
 
                 if (empty($att_info)) {
-                    $this->my_unlink(ATTACHMENT_ROOT . $path);
+                    $this->my_unlink(WWW_ROOT . $path);
                     MSG(L('operation_success'), HTTP_REFERER, 3000);
                 }
 
@@ -213,7 +213,7 @@ class index extends WUZHI_admin
                     $this->db->update('attachment', 'usertimes = usertimes-1', array('id' => $att_info['id']));
                 }
                 else {
-                    $this->my_unlink(ATTACHMENT_ROOT . $path);
+                    $this->my_unlink(WWW_ROOT . $path);
                     $this->db->delete('attachment', array('id' => $att_info['id']));
                     MSG(L('operation_success'), HTTP_REFERER, 3000);
                 }

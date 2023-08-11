@@ -38,14 +38,14 @@
                                     <br>
                                     <tbody>
                                     <tr>
-                                        <th scope="row">昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</th>
+                                        <th scope="row">用户名：</th>
                                         <td>{$memberinfo['username']}</td>
                                         <td><a href="index.php?m=member&f=index&v=set_username&set_iframe={$set_iframe}" type="btn" class="btn btn-default btn-outline btn-xs" style="margin-bottom: 0px"><i class="fa fa-pencil-square-o"></i> 更改</a></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">真实姓名：</th>
                                         <td>{$memberinfo['truename']}</td>
-                                        <td><a href="index.php?m=member&f=index&v=profile&set_iframe={$set_iframe}" type="btn" class="btn btn-default btn-outline btn-xs" style="margin-bottom: 0px"><i class="fa fa-pencil-square-o"></i> 更改</a></td>
+                                        <td><a href="index.php?m=member&f=index&v=profile&v=set_truename&set_iframe={$set_iframe}" type="btn" class="btn btn-default btn-outline btn-xs" style="margin-bottom: 0px"><i class="fa fa-pencil-square-o"></i> 更改</a></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">注册邮箱：</th>
@@ -56,7 +56,7 @@
                                         <th scope="row">手机号码：
                                         </th>
                                         <td>{$memberinfo['mobile']}</td>
-                                        <td><a href="index.php?m=member&f=index&v=edit_mobile" type="btn" class="btn btn-default btn-outline btn-xs" style="margin-bottom: 0px"><i class="fa fa-pencil-square-o"></i> 更改</a></td>
+                                        <td><a href="index.php?m=member&f=index&v=edit_mobile&set_iframe={$set_iframe}" type="btn" class="btn btn-default btn-outline btn-xs" style="margin-bottom: 0px"><i class="fa fa-pencil-square-o"></i> 更改</a></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">会 员 组：</th>
@@ -76,46 +76,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-md-5">
-                                <div class="m-member-right">
-                                    <h4>第三方授权</h4>
-                                    <br>
-                                    <div style="background: #f5f5f5; padding: 8px 12px; border-left: 2px solid #55aa55; margin-bottom: 5px" >
-                                        {if $auth_result['weixin']}
-                                        <div style="display: inline-block;  "><i class="fa fa-weixin" style="font-size: 24px; color: #55aa55; width: 30px;"></i> &nbsp;&nbsp;已授权&nbsp;&nbsp; 账号：{$auth_result['weixin']['nickname']}</div>
-                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=remove_auth&type=weixin" type="btn" class="btn btn-danger  btn-xs"> 取消授权</a></div>
-                                        {else}
-                                        <div style="display: inline-block;  "><i class="fa fa-weixin" style="font-size: 24px; color: #55aa55; width: 30px;"></i> &nbsp;&nbsp;未授权&nbsp;&nbsp; 账号：-</div>
-                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=bind_auth&type=weixin" type="btn" class="btn btn-primary  btn-xs" target="_blank"> 授权</a></div>
-                                        {/if}
-                                    </div>
-                                    <div style="background: #f5f5f5; padding: 8px 12px; border-left: 2px solid #d78a10;margin-bottom: 5px" >
-                                        {if $auth_result['sina']}
-                                        <div style="display: inline-block;  "><i class="fa fa-weibo" style="font-size: 24px; color: #d78a10; width: 30px;"></i> &nbsp;&nbsp;已授权&nbsp;&nbsp; 账号：{$auth_result['sina']['nickname']}</div>
-                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=remove_auth&type=sina" type="btn" class="btn btn-danger  btn-xs"> 取消授权</a></div>
-                                        {else}
-                                        <div style="display: inline-block;  "><i class="fa fa-weibo" style="font-size: 24px; color: #d78a10; width: 30px;"></i> &nbsp;&nbsp;未授权&nbsp;&nbsp; 账号：-</div>
-                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=bind_auth&type=sina" type="btn" class="btn btn-primary  btn-xs" target="_blank"> 授权</a></div>
-                                        {/if}
-                                    </div>
-                                    <div style="background: #f5f5f5; padding: 8px 12px; border-left: 2px solid #2ea7ca ;margin-bottom: 5px" >
-                                        {if $auth_result['qq']}
-                                        <div style="display: inline-block; line-height: 24px; "><i class="fa fa-qq" style="font-size: 24px; color: #2ea7ca; width: 30px;"></i> &nbsp;&nbsp;已授权 &nbsp;&nbsp;账号：{$auth_result['qq']['nickname']}</div>
-                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=remove_auth&type=qq" type="btn" class="btn btn-danger  btn-xs" > 取消授权</a></div>
-                                        {else}
-                                        <div style="display: inline-block; line-height: 24px; "><i class="fa fa-qq" style="font-size: 24px; color: #2ea7ca; width: 30px;"></i> &nbsp;&nbsp;未授权 &nbsp;&nbsp;账号：-</div>
-                                        <div style="display: inline-block; float: right;    margin-top: 2px;"><a href="?m=member&v=bind_auth&type=qq" type="btn" class="btn btn-primary  btn-xs" target="_blank"> 授权</a></div>
-                                        {/if}
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <form id="myform" name="myfrom" class="form-horizontal tasi-form" method="post" action="">
                             <div class="panel-body">
                                 <ul id="myTab" class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#tabs2" role="tab" id="2tab" data-toggle="tab" aria-controls="tabs2" aria-expanded="false">中文信息</a></li>
-                                </ul>
-                                </li>
+                                    <li role="presentation" class="active"><a href="#tabs2" role="tab" id="2tab" data-toggle="tab" aria-controls="tabs2" aria-expanded="false">扩展信息</a></li>
                                 </ul>
 
                                 <div id="myTabContent" class="tab-content">
@@ -171,9 +136,6 @@
                                     </div>
 
                                 </div>
-
-
-
                                 <div class="form-group">
                                     <label class="col-sm-2 col-xs-4 control-label"></label>
                                     <div class="col-lg-5 col-sm-5 col-xs-5 input-group">
@@ -187,8 +149,8 @@
                 </div>
             </div>
         </div>
-                    </div>
-                </div>
+    </div>
+</div>
 
 
 

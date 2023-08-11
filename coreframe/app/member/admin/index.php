@@ -23,7 +23,7 @@ class index extends WUZHI_admin {
 	public function listing() {
 		$page = max(1, (isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1));
 		$sta_arr = array(-1=>'所有状态',1=>'审核通过',0=>'待审核',3=>'审核不通过');
-		$keyArr = array('username'=>'用户名', 'uid'=>'UID', 'email'=>'Email', 'mobile'=>'手机');
+		$keyArr = array('username'=>'用户名', 'uid'=>'UID', 'mobile'=>'手机');
 		$keyType = isset($GLOBALS['keyType']) && isset($keyArr[$GLOBALS['keyType']]) ? $GLOBALS['keyType'] : 'username';
 		$keyValue = isset($GLOBALS['keyType']) ? sql_replace($GLOBALS['keyValue']) : '';
 		$regTimeStart = isset($GLOBALS['regTimeStart']) ? strtotime($GLOBALS['regTimeStart']) : '';
@@ -57,7 +57,7 @@ if(is_array($this->group)){
 		$str = "<option value=\$id \$selected \$disable>\$spacer\$name</option>";
 		//返回树
 		$tree_data.=$tree->create(0,$str);
-		$string = '<select name="extgid" class="form-control">';
+		$string = '<select name="extgid" class="form-select">';
 		$string .= "<option>≡ 扩展会员组 ≡</option>";
 		$string .= $tree_data;
 		$string .= '</select>';
@@ -142,8 +142,6 @@ if(is_array($this->group)){
 	public function add() {
 		$models = get_cache('model_member','model');
 		if(isset($GLOBALS['submit'])) {
-			if(!isset($GLOBALS['info']['email'])) MSG('邮件不能为空');
-
 			if(empty($GLOBALS['info']['groupid'])) {
 				MSG('请选择会员组');
 			}
@@ -174,33 +172,9 @@ if(is_array($this->group)){
 				}
 			}
 
-			if($GLOBALS['islock']==1) {//未激活
-//发送激活邮件
-				$sys_name = intval($GLOBALS['sys_name']);
-				$this->db->update('member', array('islock'=>1,'sys_name'=>$sys_name), array('uid' => $uid));
-				$config = get_cache('sendmail');
-				$password = decode($config['password']);
+            $this->db->update('member', array('ischeck_email'=>1), array('uid' => $uid));
 
-				$username = $GLOBALS['info']['username'];
-				$sendtime = date('F j, Y H:i',SYS_TIME);//January 20, 2016 17:14
-				//Wed Jan 20 18:21:37 GMT-8 2016
-				$subject = '激活您的帐号';
-				$randtime = rand(10000,99999);
-				$activecode = md5($uid.$randtime);
-				$linkurl = WEBURL.'index.php?m=member&f=active_account&activecode='.$activecode.'&uid='.$uid.'&randtime='.$randtime;
-				$weburl = WEBURL;
-				ob_start();
-				include T('member', 'mail_active');
-				$message = ob_get_contents();
-				ob_end_clean();
-				load_function('sendmail');
-				if(send_mail($GLOBALS['info']['email'],$subject,$message)===false) {
-					MSG(L('邮件发送失败!'));
-				}
-			} else {
-				$this->db->update('member', array('ischeck_email'=>1), array('uid' => $uid));
-			}
-			MSG(L('operation_success'),'?m=member&f=index&v=listing'.$this->su());
+            MSG(L('operation_success'),'?m=member&f=index&v=listing'.$this->su());
 		} else {
 
 			$group_extend_result = $group_extend = array();
@@ -217,17 +191,13 @@ if(is_array($this->group)){
 				}
 
 			}
-			$tree = load_class('tree','core',$ext_group);
-			$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
-			//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');
-			$tree_data = '';
 
-			//格式字符串
-			$str="<tr id='gid\$groupid' class='\$trbg'><td class='categorytd'><input  name='groups[]' type='checkbox' value='\$groupid' id='box\$groupid' \$selected onclick='set_gp(\$groupid,\$pid);'><input name='pids[]' type='hidden' value='\$pid' id='hgid\$groupid'></td><td>\$groupid</td><td>\$spacer\$name</td></tr>";
-
-			//返回树
-			$tree_data.=$tree->create(0,$str);
 			$form = load_class('form');
+            //加载单位树目录
+			$pid = 0;
+            $where = '';
+            $orgLists = $this->db->get_list('org', $where, '*', 0, 2000, 0, '', '', 'cid');
+
 			include $this->template('member_add', M);
 		}
 	}
@@ -303,8 +273,6 @@ if(is_array($this->group)){
 		} else {
 			$modelid = $member['modelid'];
 			//	判断是否有模型id参数
-
-//print_r($models);
 			if($modelid=='') $modelid = 10;
 			$modelids = explode(',',$modelid);
 			asort($modelids);
@@ -339,18 +307,12 @@ if(is_array($this->group)){
 				}
 
 			}
-			$tree = load_class('tree','core',$ext_group);
-			$tree->icon = array('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;&nbsp;');
-			//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');
-			$tree_data = '';
-
-			//格式字符串
-			$str="<tr id='gid\$groupid' class='\$trbg'><td class='categorytd'><input  name='groups[]' type='checkbox' value='\$groupid' id='box\$groupid' \$selected onclick='set_gp(\$groupid,\$pid);'><input name='pids[]' type='hidden' value='\$pid' id='hgid\$groupid'></td><td>\$groupid</td><td>\$spacer\$name</td></tr>";
-
-			//返回树
-			$tree_data.=$tree->create(0,$str);
-
 			$form = load_class('form');
+						$form = load_class('form');
+            //加载单位树目录
+			$pid = $member['org_id'];
+            $where = '';
+            $orgLists = $this->db->get_list('org', $where, '*', 0, 2000, 0, '', '', 'cid');
 			$avatar = avatar($uid,180);
 			include $this->template('member_edit', M);
 		}
@@ -416,49 +378,12 @@ if(is_array($this->group)){
 			}
 		}
 	}
-	/**
-	 * 
-	 * 重置密码
-	 * @param int $uid
-	 * @param string $email
-	 * @param string $password
-	 */
-	public function password($uid=0, $username='', $email='', $password=''){
-		$uid = $uid ? $uid : (int)$GLOBALS['uid'];
-		$email = $email ? $email : $GLOBALS['email'];
-		$username = $username ? $username : $GLOBALS['username'];
-		if($this->member->password($uid, $username, $email, $password)){
-			if(isset($GLOBALS['callback'])){
-				echo $GLOBALS['callback'].'({"status":1})';
-			}else{
-				return true;
-			}
-		}else{
-			if(isset($GLOBALS['callback'])){
-				echo $GLOBALS['callback'].'({"status":0})';
-			}else{
-				return false;
-			}
-		}
-	}
+
 	public function set(){
 		if(isset($GLOBALS['submit'])){
-			$setting = $this->db->update('setting', array('data'=>serialize($GLOBALS['setting'])), 'keyid="setting" AND m="member"', 'data');
-			set_cache('setting', $GLOBALS['setting'], M);
-			$uc_config = "<?php\ndefined('IN_WZ') or exit('No direct script access allowed');\nreturn array (
-				'default' => array (
-					'dbhost' => '".$GLOBALS['setting']['uc_dbhost']."', 
-					'dbname' => '".$GLOBALS['setting']['uc_dbname']."',
-					'username' => '".$GLOBALS['setting']['uc_dbuser']."',
-					'password' => '".$GLOBALS['setting']['uc_dbpw']."',
-					'tablepre' => '".$GLOBALS['setting']['uc_dbtablepre']."',
-					'dbcharset' => '".$GLOBALS['setting']['uc_dbcharset']."',
-					'type' => 'mysql',
-					'pconnect' => 0,
-				),);?>";
-			if(!@file_put_contents(WWW_ROOT.'configs/uc_mysql_config.php', $uc_config)){
-				MSG('configs/uc_mysql_config.php'.L('not_writable'), HTTP_REFERER, 3000);
-			}
+            $getSetting = array_map("remove_xss", $GLOBALS['setting']);
+			$setting = $this->db->update('setting', array('data'=>serialize($getSetting)), 'keyid="setting" AND m="member"', 'data');
+			set_cache('setting', $getSetting, M);
 			MSG( L('operation_success'), HTTP_REFERER, 3000);
 		}else{
 			$setting = get_cache('setting', M);

@@ -58,13 +58,13 @@ class WUZHI_ckditor{
 		'catcherMaxSize' => 2048000,
 		'catcherAllowFiles' => array ( 0 => '.png', 1 => '.jpg', 2 => '.jpeg', 3 => '.gif', 4 => '.bmp', ),
 		'videoActionName' => 'uploadvideo',
-		'videoFieldName' => 'upfile',
+		'videoFieldName' => 'upload',
 		'videoPathFormat' => '{yyyy}/{mm}/{dd}/{yyyy}{mm}{dd}{hh}{ii}{ss}{rand:4}',
 		'videoUrlPrefix' => '',
 		'videoMaxSize' => 102400000,
 		'videoAllowFiles' => array ( 0 => '.flv', 1 => '.swf', 2 => '.mkv', 3 => '.avi', 4 => '.rm', 5 => '.rmvb', 6 => '.mpeg', 7 => '.mpg', 8 => '.ogg', 9 => '.ogv', 10 => '.mov', 11 => '.wmv', 12 => '.mp4', 13 => '.webm', 14 => '.mp3', 15 => '.wav', 16 => '.mid', ),
 		'fileActionName' => 'uploadfile',
-		'fileFieldName' => 'upfile',
+		'fileFieldName' => 'upload',
 		'filePathFormat' => '{yyyy}/{mm}/{dd}/{yyyy}{mm}{dd}{hh}{ii}{ss}{rand:4}',
 		'fileUrlPrefix' => '',
 		'fileMaxSize' => 51200000,
@@ -182,6 +182,7 @@ class WUZHI_ckditor{
 			$rsting .= 'window.parent.CKEDITOR.tools.callFunction("'.$CKEditorFuncNum.'", "'.$fileurl.'");';
 			$rsting .= '</script>';
 		}
+
 		return $rsting;
 	}
 
@@ -225,7 +226,7 @@ class WUZHI_ckditor{
 			$file_name =  $v['name'];
 			$files[] = array(
 			'id'=> $v['id'],
-			'url'=> ATTACHMENT_URL.$v['path'],
+			'url'=> $v['path'],
 			'mtime'=> date('Y-m-d H:i',$v['addtime']),
 			'filesize'=> sizecount($v['filesize']),
 			'title'=> $file_name,

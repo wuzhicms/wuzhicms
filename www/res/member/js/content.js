@@ -69,4 +69,4 @@ function WinMove() {
             opacity: 0.8,
         })
         .disableSelection();
-};
+}

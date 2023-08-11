@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {T "mem","head",TPLID}
+    <link rel="stylesheet" href="/res/mem/css/contribute.css" media="all">
+    <link rel="stylesheet" href="/res/mem/css/editContribute.css" media="all">
+
+</head>
+<body>
+<div class="contribute-page">
+    <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-hash">
+        <ul class="layui-tab-title">
+            <li lay-id="11" class="layui-this">稿件编辑</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 165px;">
+            <div class="layui-tab-item layui-show">
+                <!-- 设置投稿内容 -->
+                <div id="editContribute" class="wp">
+                <span class="layui-breadcrumb" lay-filter="breadcrumb">
+                    <img class="cont-jian home" src="../static/imgs/zhuye.png" alt="">
+                </span>
+                    <form method="post" action="/index.php?m=mem&f=article&v=editData">
+                        <div class="editContribute-content">
+
+                            <div class="layui-form-item" style="    width: 100%;">
+                                <label class="layui-form-label"><font color="red">*</font> 标题：</label>
+                                <div class="layui-input-block" >
+                                    <input type="text"  name="form[title]" id="title"  value="{$title}" class="layui-input" style="width: 100%;" datatype="*2-80" nullmsg="请输入标题" errormsg="标题至少2个字符,最多80个字符！" >
+                                </div>
+                            </div>
+                            {loop $field_list[5] $info}
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">{if $info['star']}<font color="red">*</font>{/if} {$info['name']}：</label>
+                                <div class="layui-input-block">{$info['form']} </div>
+                            </div>
+                            {/loop}
+
+                            {loop $field_list[0] $info}
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">{if $info['star']}<font color="red">*</font>{/if} {$info['name']}：</label>
+                                <div class="layui-input-block">{$info['form']} </div>
+                            </div>
+                            {/loop}
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label"> </label>
+                                <input type="submit" name="submit" id="submit" value="提交" class="layui-btn layui-btn-radius _green " style="min-width: 160px;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+{T "mem","foot",TPLID}
+<script>
+    layui.config({
+        base: 'res/libs/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'laypage', 'laytpl'], function(){
+        var $ = layui.$
+            ,admin = layui.admin
+            ,element = layui.element
+            ,laytpl = layui.laytpl
+            ,router = layui.router();
+
+        element.render();
+
+        element.on('tab(component-tabs-brief)', function(obj){
+            layer.msg(obj.index + '：' + this.innerHTML);
+        });
+        /* Hash地址的定位 */
+        var layid = router.hash.replace(/^#layid=/, '');
+        layid && element.tabChange('component-tabs-hash', layid);
+
+        element.on('tab(component-tabs-hash)', function(elem){
+            if(elem.elem.context.innerText=='我要投稿'){
+                window.parent&&window.parent.openDialog();
+                return
+            }
+            location.hash = '/'+ layui.router().path.join('/') + '#layid=' + $(this).attr('lay-id');
+        });
+
+        // 分页
+        var laypage = layui.laypage;
+
+    });
+</script>
+</html>

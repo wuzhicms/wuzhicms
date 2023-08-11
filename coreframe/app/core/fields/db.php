@@ -127,16 +127,24 @@ switch($field_type) {
 			$sqltype1 = "ADD `{$field}`";
 			$sqltype2 = "ADD `{$field}_1`";
 			$sqltype3 = "ADD `{$field}_2`";
+			$sqltype4 = "ADD `{$field}_3`";
+			$sqltype5 = "ADD `{$field}_4`";
 		} else {
 			$sqltype1 = "CHANGE `{$oldfield}` `{$field}`";
 			$sqltype2 = "CHANGE `{$oldfield}_1` `{$field}_1`";
 			$sqltype3 = "CHANGE `{$oldfield}_2` `{$field}_2`";
+			$sqltype4 = "CHANGE `{$oldfield}_3` `{$field}_3`";
+			$sqltype5 = "CHANGE `{$oldfield}_4` `{$field}_4`";
 		}
 		$sql = "ALTER TABLE `$db_table` $sqltype1 CHAR( 10 ) NOT NULL DEFAULT ''";
 		$this->db->query($sql);
 		$sql = "ALTER TABLE `$db_table` $sqltype2 CHAR( 10 ) NOT NULL DEFAULT ''";
 		$this->db->query($sql);
 		$sql = "ALTER TABLE `$db_table` $sqltype3 CHAR( 10 ) NOT NULL DEFAULT ''";
+		$this->db->query($sql);
+		$sql = "ALTER TABLE `$db_table` $sqltype4 CHAR( 10 ) NOT NULL DEFAULT ''";
+		$this->db->query($sql);
+		$sql = "ALTER TABLE `$db_table` $sqltype5 CHAR( 10 ) NOT NULL DEFAULT ''";
 		$this->db->query($sql);
 		break;
 }

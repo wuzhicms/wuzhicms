@@ -15,18 +15,13 @@ class search{
 	public function __construct() {
         $this->siteconfigs = get_cache('siteconfigs_1');
         $this->db = load_class('db');
+        $this->open_es_search = 1;//是否开启es搜索
 	}
 
     /**
      * 公共模型搜索
      */
     public function init() {
-        //城市分站信息
-        $city = get_cookie('city');
-        if(!$city) $city = 'xa';
-        $city_config = get_config('city_config');
-        $cityid = $city_config[$city]['cityid'];
-        $cityname = $city_config[$city]['cityname'];
         $this->siteid = $_GET['siteid'] ? $_GET['siteid'] : 1;
 
         $siteconfigs = $this->siteconfigs;
@@ -51,48 +46,46 @@ class search{
         }
 
         if($keywords) {
+            $stime      = SYS_TIME-$starttime*86400;
+            $page       = intval($GLOBALS['page']);
+            $parameter  = $GLOBALS['parameter'];
+            $pagesize   = 20;
 
-            $page = intval($GLOBALS['page']);
-
-            if($modelid) {
-				if($starttime) {
-					$stime = SYS_TIME-$starttime*86400;
-					$where = "`status`=9 AND (`addtime`>$stime AND `title` LIKE '%$keywords%') or (`addtime`>$stime AND `remark` LIKE '%$keywords%')";
-				} else {
-					$where = "`status`=9 AND (`title` LIKE '%$keywords%' or `remark` LIKE '%$keywords%')";
-				}
-                $tablename = $models[$modelid]['master_table'];
-                if($tablename=='') MSG('参数错误!');
-                if($tablename=='content_share') {
-                    $where = "`modelid`='$modelid' AND ".$where;
+            if($this->open_es_search) {
+                //es 搜索
+                $es_client = load_class('es_client');
+                if ($parameter == 'zcfg')
+                        $es_client->index = 'zcfg';
+                $datas = $es_client->search($keywords,$page,$pagesize);
+                $result = [];
+                $total_number = $datas['total']['value'];
+                if($total_number>0) {
+                    foreach ($datas['hits'] as $data) {
+                        $result[] = $data['_source'];
+                    }
                 }
-				$result = $this->db->get_list($tablename, $where, '*', 0, 20, $page,'id DESC');
-				$result_pages = $this->db->pages;
-				$total_number = $this->db->number;
+                $result_pages = pages($total_number, $page, $pagesize);
             } else {
-            	 //全站搜索表
-				if($starttime) {
-					$stime = SYS_TIME-$starttime*86400;
-					$where = "`addtime`>'$stime' AND `data_key` LIKE '%$keywords%'";
-				} else {
-					$where = "`data_key` LIKE '%$keywords%'";
-				}
-				$result_tmp = $this->db->get_list('search_index', $where, '*', 0, 20, $page,'id DESC');
-				$result_pages = $this->db->pages;
-				$total_number = $this->db->number;
-				$result = array();
-				if(!empty($result_tmp)) {
-					foreach($result_tmp as $r) {
-						$data = $this->db->get_one('search_result', array('id' => $r['id']));
-						$data['addtime'] =  $r['addtime'];
-						$result[] = $data;
-					}
-				}
-				//print_r($result);
-            }
-            //if(LANGUAGE=='en') $tablename .= '_en';
-            
+                if($starttime) {
+                    $where = "`status`=9 AND (`addtime`>$stime AND `title` LIKE '%$keywords%') or (`addtime`>$stime AND `remark` LIKE '%$keywords%')";
+                } else {
+                    $where = "`status`=9 AND (`title` LIKE '%$keywords%' or `remark` LIKE '%$keywords%')";
+                }
+                if($modelid) {
+                    $tablename = $models[$modelid]['master_table'];
+                    if($tablename=='') MSG('参数错误!');
+                    if($tablename=='content_share') {
+                        $where = "`modelid`='$modelid' AND ".$where;
+                    }
+                } else {
+                    $tablename = 'content_share';
+                }
+                //if(LANGUAGE=='en') $tablename .= '_en';
 
+                $result = $this->db->get_list($tablename, $where, '*', 0, 20, $page,'id DESC');
+                $result_pages = $this->db->pages;
+                $total_number = $this->db->number;
+            }
 
 
             if($search_cookie) {
@@ -131,11 +124,12 @@ class search{
                 include T('content','search_result',TPLID.'-'.$this->siteid);
             }
         } else {
-            if($keywords=='') {
+            /*if($keywords=='') {
                 include T('content','search',TPLID);
             } else {
                 include T('content','search_result',TPLID);
-            }
+            }*/
+            include T('content','search',TPLID);
         }
 
 	}

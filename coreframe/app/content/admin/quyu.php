@@ -27,7 +27,7 @@ class quyu extends WUZHI_admin {
 		$where = array('keyid'=>M,'modelid'=>$modelid);
 		$result = $this->db->get_list('category', $where, '*', 0, 2000, 0, 'sort ASC', '', 'cid');
 		foreach($result as $cid=>$r) {
-			$result[$cid]['str_manage'] = $r['child'] ? '' : '<a class="btn btn-default btn-xs" href="?m=content&f=quyu&v=add&pid='.$r['cid'].$this->su().'">添加区域</a> <a class="btn btn-primary btn-xs" href="?m=content&f=category&v=edit&cid='.$r['cid'].$this->su().'">修改区域</a>';
+			$result[$cid]['str_manage'] = $r['child'] ? '' : '<a class="btn btn-default btn-sm btn-xs" href="?m=content&f=quyu&v=add&pid='.$r['cid'].$this->su().'">添加区域</a> <a class="btn btn-primary btn-sm btn-xs" href="?m=content&f=category&v=edit&cid='.$r['cid'].$this->su().'">修改区域</a>';
             $quyulist = $this->db->get_list('quyu', array('pid'=>$r['cid']), '*', 0, 100, 0, 'sort ASC');
             $quyustr = '';
             if(!empty($quyulist)) {

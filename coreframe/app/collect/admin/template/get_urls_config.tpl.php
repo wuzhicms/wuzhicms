@@ -6,9 +6,9 @@ include $this->template('header','core');
 <style type="text/css">
     .tablewarnings{display: none;}
 </style>
-<link href="<?php echo R;?>js/colorpicker/style.css" rel="stylesheet">
-<link href="<?php echo R;?>js/jquery-ui/jquery-ui.css" rel="stylesheet">
-<script src="<?php echo R;?>js/colorpicker/color.js"></script>
+<link href="<?php echo R;?>libs/colorpicker/style.css" rel="stylesheet">
+
+<script src="<?php echo R;?>libs/colorpicker/color.js"></script>
 <?php
 echo '<script src="' . R . 'js/ckeditor/ckeditor.js"></script>';
 echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js"></script>';
@@ -124,11 +124,6 @@ echo '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js
 </section>
 
 
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
 <link href="<?php echo R;?>css/style.css" rel="stylesheet">
-<script type="text/javascript">
+<?php include $this->template('footer','core');?>
 
-
-</script>

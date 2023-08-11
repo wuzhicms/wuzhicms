@@ -61,9 +61,9 @@
 
                 </div>
                     <script>
-                        var views_keyid = new Array();
+                        var views_keyid = [];
                         {loop $rs $r}
-                        views_keyid.push('{$r['cid']}_{$r['id']}');
+                        views_keyid.push('{$r['cid']}_{$r['id']}')
                         {/loop}
                         $.getJSON("{WEBURL}index.php", {f: "stats", keyid: views_keyid },
                                 function(data){

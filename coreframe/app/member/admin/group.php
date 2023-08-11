@@ -23,7 +23,7 @@ class group extends WUZHI_admin {
 
 		$group = $ext_group = array();
 		foreach($result as $gr) {
-			$gr['str_manage'] = '<a href="javascript:void(0)" onclick="edit('.$gr['groupid'].')" class="btn btn-primary btn-xs">修改</a> <a href="index.php?m=member&f=group&v=private_set&groupid='.$gr['groupid'].$this->su().'" class="btn btn-info btn-xs">访问权限设置</a> <a href="javascript:void(0)" onclick="del('.$gr['groupid'].')" class="btn btn-danger btn-xs">删除</a>';
+			$gr['str_manage'] = '<a href="javascript:void(0)" onclick="edit('.$gr['groupid'].')" class="btn btn-primary btn-sm btn-xs">修改</a> <a href="index.php?m=member&f=group&v=private_set&groupid='.$gr['groupid'].$this->su().'" class="btn btn-info btn-sm btn-xs">访问权限设置</a> <a href="javascript:void(0)" onclick="del('.$gr['groupid'].')" class="btn btn-danger btn-sm btn-xs">删除</a>';
 			$gr['issystem'] = $gr['issystem'] ? '<font color="red">是</font>' : '<font color="green">否</font>';
 			$gr['upgrade'] = $gr['upgrade'] ? '<font color="green">是</font>' : '<font color="red">否</font>';
 			$ext_group[$gr['groupid']] = $gr;
@@ -34,7 +34,7 @@ class group extends WUZHI_admin {
 		//$tree->icon = array('<span class="_tree1"></span>','<span class="_tree2"></span>','<span class="_tree3"></span>');
 		$tree_data = '';
 		//格式字符串
-		$str="<tr><td class='categorytd'><div><input type='checkbox' name='groupid[]' value='\$groupid'></div></td><td class='categorytd'><div><input class='center'style='padding:3px' name='sorts[\$groupid]' type='text' size='3' value='\$sort'></div></td><td>\$groupid</td><td id='\$cid' \$selected>\$spacer\$name</td><td>\$issystem</td><td>\$upgrade</td><td>\$str_manage</td></tr>";
+		$str="<tr id='g_\$groupid'><td class='categorytd'><div><input type='checkbox' class='form-check-input' name='groupid[]' value='\$groupid'></div></td><td class='categorytd'><div><input class='text-center form-control'style='padding:3px;width: 30px;' name='sorts[\$groupid]' type='text' size='3' value='\$sort'></div></td><td>\$groupid</td><td id='\$cid' \$selected>\$spacer\$name</td><td>\$issystem</td><td>\$upgrade</td><td>\$str_manage</td></tr>";
 
 		//返回树
 		$tree_data.=$tree->create(0,$str);
@@ -82,7 +82,7 @@ class group extends WUZHI_admin {
 			$str = "<option value=\$id \$selected \$disable>\$spacer\$name</option>";
 			//返回树
 			$tree_data.=$tree->create(0,$str);
-			$string = '<select name="info[pid]" class="form-control">';
+			$string = '<select name="info[pid]" class="form-select">';
 			$string .= "<option>≡ 选择上级分类 ≡</option>";
 			$string .= $tree_data;
 			$string .= '</select>';
@@ -118,7 +118,7 @@ class group extends WUZHI_admin {
 			$str = "<option value=\$id \$selected \$disable>\$spacer\$name</option>";
 			//返回树
 			$tree_data.=$tree->create(0,$str);
-			$string = '<select name="info[pid]" class="form-control">';
+			$string = '<select name="info[pid]" class="form-select">';
 			$string .= "<option>≡ 选择上级分类 ≡</option>";
 			$string .= $tree_data;
 			$string .= '</select>';
@@ -220,9 +220,9 @@ class group extends WUZHI_admin {
 					$listview = $group_priv['listview'] && in_array($cid,$group_priv['listview']) ? 'checked' : '';
 					$view = $group_priv['view'] && in_array($cid,$group_priv['view']) ? 'checked' : '';
 					$add = $group_priv['add'] && in_array($cid,$group_priv['add']) ? 'checked' : '';
-					$result[$cid]['private'] = '<label><input type="checkbox" onclick="st(\'listview\',this);" name="listview" '.$listview.' value="'.$cid.'"> 浏览列表</label>
-<label><input type="checkbox" onclick="st(\'view\',this);" name="view" '.$view.' value="'.$cid.'"> 内容访问</label>
-<label><input type="checkbox" onclick="st(\'add\',this);" name="add" '.$add.' value="'.$cid.'"> 投稿</label>
+					$result[$cid]['private'] = '<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" onclick="st(\'listview\',this);" id="listview'.$cid.'" name="listview" '.$listview.' value="'.$cid.'"><label class="form-check-label" for="listview'.$cid.'">浏览列表</label></div>
+					<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" onclick="st(\'view\',this);" name="view" id="view'.$cid.'" '.$view.' value="'.$cid.'"><label class="form-check-label" for="view'.$cid.'">内容访问</label></div>
+					<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="add'.$cid.'" onclick="st(\'add\',this);" name="add" '.$add.' value="'.$cid.'"><label class="form-check-label" for="add'.$cid.'">投稿</label>
 ';
 				} else {
 					$result[$cid]['private'] = '';

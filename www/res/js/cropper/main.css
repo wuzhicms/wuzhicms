@@ -111,13 +111,12 @@ label.btn {
 
 .img-container {
   min-height: 200px;
-  max-height: 430px;
-  margin-bottom: 1rem;
+  max-height: 416px;
 }
 
 @media (min-width: 768px) {
   .img-container {
-    min-height: 430px;
+    min-height: 416px;
   }
 }
 

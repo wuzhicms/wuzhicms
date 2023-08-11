@@ -34,9 +34,9 @@
 }
 
 .explr-tree li a {
-	color: #666;
+	color: #000;
 	display: block;
-	font-size: 12px;
+	font-size: 14px;
 	margin-left: 30px;
 	font-family: Arial,Helvetica,sans-serif;
 	padding: 5px 0 5px 9px;

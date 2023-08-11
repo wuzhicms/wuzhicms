@@ -17,6 +17,9 @@ defined('IN_WZ') or exit('No direct script access allowed');
 //$headers[] = 'Content-type: application/x-www-form-urlencoded; charset=utf-8';
 function post_curl($url,$data,$headers = '',$cookie = ''){
 	if(!$url) return false;
+    if(is_array($data)){
+        $data = http_build_query($data);
+    }
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

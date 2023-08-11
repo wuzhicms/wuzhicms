@@ -53,9 +53,9 @@
                             <td><?php echo $status_arr[$r['status']];?></td>
                             <td>
 <?php if($r['status']==6) {?>
-                                <a href="javascript:edit(<?php echo $r['id'];?>);" class="btn btn-primary btn-xs">改价</a><?php }?>
+                                <a href="javascript:edit(<?php echo $r['id'];?>);" class="btn btn-primary btn-sm btn-xs">改价</a><?php }?>
                                 <a href="javascript:makedo('?m=pay&f=index&v=delete&id=<?php echo $r['id'];?><?php echo $this->su();?>', '确认删除该记录？')"
-                                   class="btn btn-danger btn-xs">删除</a>
+                                   class="btn btn-danger btn-sm btn-xs">删除</a>
                             </td>
                         </tr>
                     <?php
@@ -70,7 +70,7 @@
                     <div class="row">
 
                             <div class="pull-right">
-                                <ul class="pagination pagination-sm mr0">
+                                <ul class="pagination pagination-sm">
                                     <?php echo $pages;?>
                                 </ul>
                             </div>
@@ -92,8 +92,5 @@
         top.openiframe('index.php?m=pay&f=index&v=edit&id='+id+'<?php echo $this->su();?>', 'edit', '改价', 500, 240);
     }
     </script>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
-</body>
-</html>
+<?php include $this->template('footer','core');?>
+

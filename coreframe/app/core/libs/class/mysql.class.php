@@ -6,15 +6,12 @@
 // | Author: wangcanjia <phpip@qq.com>
 // +----------------------------------------------------------------------
 defined('IN_WZ') or exit('No direct script access allowed');
-if(!function_exists('mysql_connect')) {
-	exit('mysql_connect函数不存在，请尝试修改数据库配置文件：mysql_config.php 中的type类型为mysqli');
-}
 /**
  * mysql操作类
  */
 class WUZHI_mysql {
 	var $link;
-	var $histories = array();
+	var $histories = '';
 	var $tablepre = 'wz_';
 	var $querynum = 0;
 	function __construct($config) {

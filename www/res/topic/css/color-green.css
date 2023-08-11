@@ -1,0 +1,40 @@
+a:focus, a:hover {
+    color: #0a8;
+}
+.bg-main, .border-main .button.active, .pointer.border-main .active, .nav-pills.border-main .active a, .nav-main.border-main .nav-head, .pagination.border-main .active {
+    background-color: #0a8;
+}
+.border-main, .border-main .button, .border-main .tab-nav li a, .border-main .tab-body, .button.bg-main, .selected.border-main, .pointer.border-main li, .nav.border-main .active a, .nav.nav-tabs.border-main, .nav-main.border-main a, .nav-main.border-main .nav-head, .pagination.border-main li, .pager.border-main a {
+    border-color: #0a8;
+}
+.button.border-main:hover, .button.border-main:focus, .button.bg-main:hover, .button.bg-main:focus {
+    color: #fff;
+    border-color: #086;
+    background-color: #086;
+}
+.zt-banner {
+    background: url(../img/banner-green.jpg) no-repeat top center #0a8;
+}
+.zt-attr {
+    border-left: 1px solid #0a8;
+}
+.zt-intro .intro-tag {
+    background: #0a8;
+}
+.zt-intro .intro-tag i {
+    color: #0a8;
+}
+.cate-title {
+    border-bottom-color: #0a8;
+}
+.newSlide .hd li.on {
+    background: #0a8;
+}
+.bigImage .hd .pageState span {
+    color: #0a8;
+}
+.bigImage .prev:hover,
+.bigImage .next:hover {
+    background: rgba(255,255,255,1);
+    color: #0a8;
+}

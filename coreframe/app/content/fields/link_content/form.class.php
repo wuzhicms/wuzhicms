@@ -12,6 +12,6 @@
         $option = key_value($quyulist,'id','title');
         $areaid = $this->formdata['areaid'];
         $fuwuid = $this->formdata['fuwu'];
-        $string = $this->form->select($option,$value,"name='form[$field]' class='form-control' style='width:auto;' id='$field' onchange='getareaid(this.value)'",'请选择体检分院')."<input id='areaid' value='$areaid' name='form[areaid]' type='text'><input id='fuwuid' value='$fuwuid' name='form[fuwu]' type='text'>";
+        $string = $this->form->select($option,$value,"name='form[$field]' class='form-control' style='width:auto;' id='$field' onchange='getareaid(this.value)'",'请选择')."<input id='areaid' value='$areaid' name='form[areaid]' type='text'><input id='fuwuid' value='$fuwuid' name='form[fuwu]' type='text'>";
 		return $string;
 	}

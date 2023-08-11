@@ -58,11 +58,7 @@ function strpos_array($haystack, $needles)
 		//生成文件名
 	function filename($name) 
 	{
-		$_exts =  array('php','asp','jsp','jspx','html','htm','aspx','asa','cs','cgi','js','dhtml','xhtml','vb','exe','shell','bat','php4','php4','php5','pthml','cdx','cer');
-		$ext = strtolower(pathinfo($name,PATHINFO_EXTENSION));
-		if(in_array($ext, $_exts)) {
-			return FALSE;
-		}
+        $ext = strtolower(pathinfo($name,PATHINFO_EXTENSION));
 		$rand_str = random_string('diy', 6,'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
 		$files = date('YmdHis').$rand_str.'.'.$ext;
 		return $files;
@@ -80,7 +76,7 @@ function strpos_array($haystack, $needles)
 function upload_url_safe()
 {
 	//TODO 删除下面注释
-	//if(empty($_SERVER['HTTP_REFERER'])) MSG( L('operation_failure'), '', 3000);//上传弹窗必然由上级页面加载
+	if(empty($_SERVER['HTTP_REFERER'])) MSG( L('operation_failure'), '', 3000);//上传弹窗必然由上级页面加载
 }
 
 /**
@@ -92,9 +88,14 @@ function upload_url_safe()
  * @param	
  * @return
  */
-function upload_ext_safe()
+function upload_ext_safe($need,$exts)
 {
-	
+    $result = array_intersect($need,$exts);
+    if($result) {
+        $result = implode(',',$result);
+    }else{
+        $result = '';
+    }
+    return $result;
 }
-
 ?>

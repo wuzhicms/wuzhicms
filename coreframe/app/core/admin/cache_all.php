@@ -24,7 +24,8 @@ class cache_all extends WUZHI_admin {
     //更新缓存
     public function cache() {
        $caches = load_class($GLOBALS['file'],$GLOBALS['module']);
-       if($caches->$GLOBALS['view']()) {
+       $dir_template = $GLOBALS['view'];
+       if($caches->$dir_template()) {
              MSG(L('operation success'),HTTP_REFERER);
        } else {
            MSG(L('operation failure'));

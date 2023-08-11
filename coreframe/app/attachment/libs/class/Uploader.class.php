@@ -53,7 +53,7 @@ class WUZHI_Uploader
 		$this->image = load_class('image');
 		$this->setting = get_cache('attachment');
 		$this->db = load_class('db');
-		$this->water_mark = $this->setting['watermark_enable'];
+		$this->water_mark = isset($this->setting['watermark_enable']) ? $this->setting['watermark_enable'] :'0';
     }
     public function set($fileField = '', $config = array(), $type = "upload") {
         $this->fileField = $fileField;
@@ -130,7 +130,7 @@ class WUZHI_Uploader
 				$id = $r['id'];
 				$this->fullName = $r['path'];
 			} else {
-				$id = $this->insert($md5file);
+			//	$id = $this->insert($md5file);
 			}
 			//exit($this->filePath);
             $this->stateInfo = $this->stateMap[0];

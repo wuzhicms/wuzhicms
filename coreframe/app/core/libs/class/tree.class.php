@@ -15,7 +15,6 @@ class WUZHI_tree {
     private $result_array = '';
     //计算树状结构的最深层，默认不允许超过5层结构，有效防止数据结构混乱造成无限循环
     private $deep = 1;
-    private $str = '';
 
     /**
      * 注意，array的索引要和索引值id值相同

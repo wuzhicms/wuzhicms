@@ -9,7 +9,6 @@ CREATE TABLE `$basic_tablename` (
   `remark` char(255) NOT NULL default '',
   `block` tinyint(1) unsigned NOT NULL default '0',
   `url` char(100) NOT NULL,
-  `sort` tinyint(3) unsigned NOT NULL default '0',
   `status` tinyint(2) unsigned NOT NULL default '1',
   `route` tinyint(1) unsigned NOT NULL default '0',
   `publisher` char(20) NOT NULL,
@@ -21,20 +20,22 @@ CREATE TABLE `$basic_tablename` (
   `template` varchar(30) NOT NULL,
   `allowcomment` tinyint(1) unsigned NOT NULL default '1',
   `relation` varchar(255) NOT NULL default '',
+  `initial` varchar(255) NOT NULL,
+  `sort` int(11) unsigned NOT NUll,
+  `push` tinyint(1)  unsigned NOT NUll,
+  `old_id` int(11)  unsigned NOT NUll,
   PRIMARY KEY  (`id`),
-  KEY `status` (`status`,`sort`,`id`),
-  KEY `sort` (`cid`,`status`,`sort`,`id`),
+  KEY `status` (`status`,`id`),
   KEY `cid` (`cid`,`status`,`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
--- INSERT INTO `$table_model_field` (`modelid`, `siteid`, 
+-- INSERT INTO `$table_model_field` (`modelid`, `siteid`,
 
 INSERT INTO `$table_model_field` (`modelid`, `field`, `name`, `remark`, `css`, `minlength`, `maxlength`, `pattern`, `errortips`, `formtype`, `setting`, `ext_code`, `unsetgids`, `unsetroles`, `master_field`, `ban_field`, `location`, `search_field`, `ban_contribute`, `to_fulltext`, `to_block`, `sort`, `disabled`, `powerful_field`) VALUES
   (0, 'addtime', '添加时间', '', '', 0, 0, '', '', 'datetime', 'a:2:{s:9:"fieldtype";s:3:"int";s:6:"format";s:11:"Y-m-d H:i:s";}', '', '', '', 1, 1, 1, 0, 0, 0, 1, 12, 0, 0),
   (0, 'block', '添加到推荐位', '', '', 0, 0, '', '', 'block', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 6, 0, 0),
   (0, 'groups', '用户组权限', '', '', 0, 0, '', '', 'group', 'a:1:{s:6:"groups";s:3:"4,5";}', '', '', '', 1, 0, 2, 0, 0, 0, 0, 18, 0, 0),
   (0, 'url', '链接地址', '', '', 0, 0, '', '', 'url', '', '', '', '', 1, 1, 0, 0, 0, 0, 1, 11, 0, 0),
-  (0, 'sort', '权重', '', '', 0, 255, '', '', 'slider', 'a:1:{s:12:"defaultvalue";s:1:"0";}', '', '', '', 1, 1, 1, 0, 0, 0, 0, 20, 0, 0),
   (0, 'template', '内容页模板', '', '', 0, 0, '', '', 'template', '', '', '', '', 1, 0, 1, 0, 0, 0, 0, 21, 0, 0),
   (0, 'allowcomment', '允许评论', '', '', 0, 0, '', '', 'box', 'a:6:{s:7:"options";s:21:"允许|1\r\n不允许|0";s:7:"boxtype";s:5:"radio";s:9:"fieldtype";s:7:"tinyint";s:9:"minnumber";s:1:"1";s:12:"defaultvalue";s:1:"1";s:10:"outputtype";s:1:"0";}', '', '', '', 1, 0, 2, 0, 0, 0, 0, 17, 0, 0),
   (0, 'status', '稿件状态', '', '', 0, 0, '', '', 'box', 'a:6:{s:7:"options";s:50:"通过审核|9\r\n待审|1\r\n定时发送|8\r\n草稿|6";s:7:"boxtype";s:5:"radio";s:9:"fieldtype";s:7:"tinyint";s:9:"minnumber";s:1:"1";s:12:"defaultvalue";s:1:"9";s:10:"outputtype";s:1:"0";}', '', '', '', 1, 1, 0, 0, 0, 0, 0, 30, 0, 0),

@@ -1,0 +1,144 @@
+/*---全局公用样式---*/
+
+/*修改pintuer的元素为直角*/
+blockquote,
+.drop-menu,
+.nav ul,
+.nav.nav-main li:first-child,
+.nav.nav-main li:first-child a,
+.nav.nav-main li:last-child a,
+.nav.nav-sub a,
+.nav.nav-tabs a,
+.bg-inverse .nav.nav-tabs a,
+.bg-inverse .nav.nav-tabs .active a,
+.selected-inline li,
+.progress,
+.progress .progress-bar:last-child,
+.range,
+.range-bar,
+.panel,
+.panel-head,
+.panel-foot,
+.tab .tab-nav li a,
+.tab .tab-body-bordered,
+.dialog,
+.dialog .dialog-head,
+.tip,
+.tip .tip-body,
+.tip .image,
+.alert,
+.pagination li,
+.pagination .active,
+.pagination a:hover,
+.pagination-group,
+.pagination-group li:first-child,
+.pagination-group li:last-child,
+.pager li a,
+.button,
+.button-group .button-group:first-child .dropdown-toggle,
+.button-group .button-group:last-child .button:first-child,
+.button-group-y .button-group:first-child .dropdown-toggle,
+.button-group-y .button-group:last-child .button:first-child,
+.input,
+.input-group .addon,
+.input-inline input:first-child,
+.input-inline input:last-child,
+.input-block input:first-child,
+.input-block input:last-child {
+    border-radius: 0;
+}
+.border-red, .border-red .button, .border-red .tab-nav li a, .border-red .tab-body, .button.bg-red, .selected.border-red, .pointer.border-red li, .check-error .input, .nav.border-red .active a, .nav.nav-tabs.border-red, .nav-main.border-red a, .nav-main.border-red .nav-head, .pagination.border-red li, .pager.border-red a {
+    border-color: #c00;
+}
+.bg-red, .border-red .button.active, .pointer.border-red .active, .nav-pills.border-red .active a, .nav-main.border-red .nav-head, .pagination.border-red .active {
+    background-color: #c00;
+}
+.button.border-red:hover, .button.border-red:focus, .button.bg-red:hover, .button.bg-red:focus {
+    color: #fff;
+    border-color: #e33;
+    background-color: #e33;
+}
+/*自定义全局样式*/
+
+ul {
+    color: #ccc;
+}
+ul.hastyle li {
+    padding-left: 20px !important;
+    background: url(../img/dot.png) no-repeat 10px center;
+}
+.bg-back-light {
+    background: #f1f2f3;
+}
+
+.pl0 {
+    padding-left: 0 !important;
+}
+.pr0 {
+    padding-right: 0 !important;
+}
+.mb0 {
+    margin-bottom: 0 !important;
+}
+a.text-main:hover {
+    color: #0ab;
+}
+
+/*设定页面宽度为1000px*/
+.container {
+    width: 1000px;
+}
+
+/*底部样式*/
+#footer-nav .navbar-head .logo {
+    float: left;
+    padding: 0;
+}
+.bg-darkgray {
+    background: #333;
+}
+.bg-darkgray dl {
+    color: #777;
+}
+.bg-darkgray dt {
+    font-weight: normal;
+    text-align: justify;
+}
+.bg-darkgray dd {
+    padding-bottom: 10px;
+}
+.bg-darkgray p {
+    margin: 0;
+    color: #777;
+}
+.bg-darkgray .nav-sitemap li {
+    font-weight: normal;
+}
+.bg-darkgray .nav-sitemap li span {
+    display: block;
+    padding: 5px 10px 10px 10px;
+}
+.bg-darkgray .nav-sitemap li a {
+    color: #777;
+}
+.border-gray-light {
+    border-color: #444;
+}
+.dl-inline dt {
+    width: 30%;
+}
+.dl-inline dd {
+    width: 70%;
+}
+/*返回顶部样式*/
+.fixedtool {
+    position: fixed;
+    margin-right: -590px;
+    right: 50%;
+    bottom: 120px;
+    z-index: 777;
+}
+.fixedtool .button {
+    width: 60px;
+    text-align: center;
+}

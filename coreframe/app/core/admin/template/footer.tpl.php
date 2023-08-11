@@ -1,7 +1,5 @@
 <?php defined('IN_WZ') or exit('No direct script access allowed');?>
-<script src="<?php echo R;?>js/jquery.min.js"></script>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
+<script type="text/javascript" src="<?php echo R;?>libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="<?php echo R;?>js/scripts.js" charset="utf-8"></script>
 </body>
 </html>

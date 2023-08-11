@@ -1,0 +1,199 @@
+<!--用户基本信息-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {T "mem","head",TPLID}
+    <link rel="stylesheet" href="/res/mem/css/userInfo.css" media="all">
+</head>
+<body>
+<div class="userCenter-page">
+    <!-- 头像 -->
+    <div class="userCenter-title">
+        <span class="title-text">头像</span>
+        <hr class="title-hr"></hr>
+    </div>
+    <div class="avatar-info ">
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像</label>
+            <div class="layui-input-block">
+                <div class="layui-input-inline">
+                    <input   type="hidden" name="head" lay-verify="required" id="inputimgurl" placeholder="图片地址" value="123.jpg" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                    <div class="layui-upload-list" style="margin:0">
+                        <img src="{$user['avatar']}" id="srcimgurl" class="layui-upload-img" style="width:118px;">
+                    </div>
+                </div>
+                <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                    <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
+                        <i class="layui-icon">&#xe67c;</i>修改头像
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 基本信息 -->
+    <div class="userCenter-title">
+        <span class="title-text">基本信息</span>
+        <hr class="title-hr"></hr>
+        <button but-class="base-info" class="editBut layui-btn layui-btn-primary layui-btn-radius">编辑</button>
+    </div>
+    <div class="base-info ">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input value="{$user['username']}" readonly="readonly" type="text" name="username" lay-verify="title"
+                       autocomplete="off" placeholder="请编辑" class="edit-state layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input value="{$user['truename']}" type="text" name="truename" lay-verify="title" autocomplete="off"
+                       placeholder="请编辑" class="edit-state layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部职别</label>
+            <div class="layui-input-block">
+                <input value="{$user['position']}" type="text" name="position" lay-verify="title" autocomplete="off"
+                       placeholder="请编辑" class="edit-state layui-input">
+            </div>
+        </div>
+
+    </div>
+    <!-- 联系方式 -->
+    <div class="userCenter-title">
+        <span class="title-text">联系方式</span>
+        <hr class="title-hr"></hr>
+        <button id="editBut" but-class="contact-way" class="editBut layui-btn layui-btn-primary layui-btn-radius ">编辑
+        </button>
+    </div>
+    <div class="contact-way">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="mobile" value="{$user['mobile']}" lay-verify="mobile" autocomplete="off"
+                       placeholder="请编辑" class="w-360 edit-state layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" value="{$user['email']}" lay-verify="title" autocomplete="off"
+                       placeholder="请编辑" class="w-360 edit-state layui-input">
+            </div>
+        </div>
+
+    </div>
+    <!-- 职业信息 -->
+    <div class="userCenter-title">
+        <span class="title-text">单位信息</span>
+        <hr class="title-hr"></hr>
+        <button but-class="career-info" class="editBut layui-btn layui-btn-primary layui-btn-radius" lay-submit
+                lay-filter="setmyinfo">编辑
+        </button>
+    </div>
+    <div class="career-info">
+        <div class="layui-form-item">
+            <label class="layui-form-label">单位</label>
+            <div class="layui-input-block">
+                <input value="{$user['company']}" type="text" name="company" lay-verify="title" lay-filter="company"
+                       autocomplete="off" placeholder="请编辑" class="edit-state layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-block">
+                <input value="{$user['address']}" type="text" name="address" lay-verify="title" autocomplete="off"
+                       placeholder="请编辑" class="edit-state layui-input">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+{T "mem","foot",TPLID}
+<script>
+    layui.config({
+         base: '/res/libs/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'admin', 'upload'], function () {
+        var form = layui.form;
+        var admin = layui.admin;
+        var upload = layui.upload;
+        var $ = layui.jquery;
+        $('.editBut').click(function () {
+            $(this).toggleClass('edit-state-but');
+            let className = $(this).attr('but-class')
+            if ($(this).hasClass('edit-state-but')) {
+                $('.' + className).find('input').removeClass('edit-state').attr('disabled', false)
+                if (className == 'education-way') {
+                    $('#select-disabled').find('.layui-edge').removeClass('layui-edge-disabled')
+                }
+                $(this).text('保存')
+            } else {
+                $('.' + className).find('input').addClass('edit-state').attr('disabled', true)
+                if (className == 'education-way') {
+                    $('#select-disabled').find('.layui-edge').addClass('layui-edge-disabled')
+                }
+                var truename = $("input[name='truename']").val();
+                var sex = $("input[name='sex']").val();
+                var position = $("input[name='position']").val();
+                var email = $("input[name='email']").val();
+                var cellphone = $("input[name='cellphone']").val();
+                var company = $("input[name='company']").val();
+                var address = $("input[name='address']").val();
+                var mobile = $("input[name='mobile']").val();
+                var unit = {
+                    "truename": truename,
+                    "sex": sex,
+                    "position": position,
+                    "email": email,
+                    "cellphone": cellphone,
+                    "company": company,
+                    "address": address,
+                    "mobile": mobile
+                };
+                admin.req({
+                    url: 'index.php?m=mem&f=userInfo&v=setUserInfo'
+                    , type: 'post'
+                    , dataType: 'json'
+                    , data: unit
+                    , success: function (res) {
+                        if (res.code == 200) {
+                            layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                                //setTimeout('window.location.reload()', 1000);
+                            });
+                        } else {
+                            layer.msg(res.msg, {icon: 5, time: 1000}, function () {
+                                setTimeout('window.location.reload()', 1000);
+                            });
+                        }
+                    }
+                });
+                $(this).text('编辑');
+            }
+        })
+        //创建一个头像上传组件
+            var uploadInst = upload.render({
+                elem: '#LAY_avatarUpload' //绑定元素
+                ,url: 'index.php?m=mem&f=userInfo&v=setAvatar' //上传接口
+                ,done: function(res){
+                    if (res.code == 0) {
+                        $("#srcimgurl").attr('src',res.data['src']);
+                    }
+                }
+                ,error: function(){
+                    //请求异常回调
+                }
+            });
+
+
+    });
+</script>
+</html>

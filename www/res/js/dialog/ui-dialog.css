@@ -60,11 +60,10 @@
     position: relative;
     _position: absolute;
     float: right;
-    top: 15px;
-    right: 13px;
+    top: 9px;
+    right: 14px;
     _height: 26px;
     padding: 0 4px;
-    font-size: 21px;
     font-weight: bold;
     line-height: 1;
     color: #000;
@@ -76,6 +75,7 @@
     _background: #FFF;
     border: 0;
     -webkit-appearance: none;
+    font-size: 28px !important;
 }
 .ui-dialog-close:hover,
 .ui-dialog-close:focus {

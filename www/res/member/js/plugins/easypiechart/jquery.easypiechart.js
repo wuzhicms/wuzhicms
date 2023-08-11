@@ -232,13 +232,13 @@
                 return -c/2 * ((--t)*(t-2) - 1) + b;
             },
             onStart: function(from, to) {
-                return;
+
             },
             onStep: function(from, to, currentValue) {
-                return;
+
             },
             onStop: function(from, to) {
-                return;
+
             }
         };
 

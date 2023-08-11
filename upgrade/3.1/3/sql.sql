@@ -1,1 +1,0 @@
-ALTER TABLE `wz_member` CHANGE `modelid` `modelid` CHAR(20) NOT NULL COMMENT '用户模型';

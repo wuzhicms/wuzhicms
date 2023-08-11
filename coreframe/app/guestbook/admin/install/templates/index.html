@@ -1,37 +1,29 @@
-{T "content","head",TPLID}
-
+{T "content","header",TPLID}
 <!--路径导航-->
-<div style="background: #f5f5f5; border-bottom: 1px solid #ddd">
-    <div class="container">
-        <ol class="breadcrumb" style="margin-bottom: 0px; font-size: 12px;">
-            您现在的位置：
-            <li><a href="/index.php">首页</a></li>
-            <li class="active"><a href="/index.php?m=guestbook">留言板</a></li>
-        </ol>
-    </div>
+<div class="container">
+    <ol class="breadcrumb" style="margin-bottom: 0px;  font-size: 12px;">
+        您现在的位置：
+        <li><a href="/index.php">首页</a></li>
+        <li class="active"><a href="/index.php?m=guestbook">留言板</a></li>
+    </ol>
 </div>
 
-
-
-
-
-<div class="container liuyan-list">
-
+<div class="container ssa--liuyan-list">
     <div class="margin_top30" style="display: inline-block;">
         <form class="form-inline" action="" method="get">
-            <div class="biaodan-border">
+            <div class="ssa--biaodan-border">
                 <select class="form-control" name="conditions">
                     <option value="0" {if $conditions==0}selected{/if}>按关键字查询</option>
                     <option value="1" {if $conditions==1}selected{/if}>按帖子查询码查询</option>
                 </select>
             </div>
-            <div class="biaodan-border">
+            <div class="ssa--biaodan-border">
                 <div class="form-group">
                     <label class="sr-only" for="exampleInputEmail3"> </label>
                     <input type="text" name="keywords" class="form-control" id="exampleInputEmail3" placeholder="请输入搜索内容" value="{$keywords}">
                 </div>
             </div>
-            <div class="biaodan-border">
+            <div class="ssa--biaodan-border">
                 <select class="form-control" name="area">
                     <option value="">主题领域</option>
                     {loop $area_array $key $r}
@@ -39,7 +31,7 @@
                     {/loop}
                 </select>
             </div>
-            <div class="biaodan-border">
+            <div class="ssa--biaodan-border">
                 <select class="form-control" name="category">
                     <option value="">主题类别</option>
                     {loop $category_array $key $r}
@@ -48,18 +40,16 @@
                 </select>
             </div>
             <input type="hidden" name="m" value="guestbook">
-            <button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;搜索&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            <button type="submit" class="btn btn-success">搜索</button>
         </form>
     </div>
-    <div class="margin_top30" style="float: right"><a href="index.php?m=guestbook&v=contact" class="btn  btn-warning"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 快速留言</a>
+    <div class="margin_top30" style="float: right"><a href="index.php?m=guestbook&v=contact" class="btn  btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <strong>快速留言</strong></a>
     </div>
 
 
-    <hr>
 
-
-    <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
-        <ul id="myTabs" class="nav nav-pills liuyan-hdsx" role="tablist">
+    <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs" style="margin-top: 30px;">
+        <ul id="myTabs" class="nav nav-pills ssa--liuyan-hdsx" role="tablist">
             <li role="presentation" {if $type==0}class="active"{/if}><a href="index.php?m=guestbook&type=0" >全部</a></li>
             <li role="presentation" {if $type==8}class="active"{/if}><a href="index.php?m=guestbook&type=8" >已回复</a></li>
             <li role="presentation" {if $type==9}class="active"{/if}><a href="index.php?m=guestbook&type=9" >未回复</a></li>
@@ -74,20 +64,20 @@
 
                     {loop $guestbook_result $r}
                     <div class="panel-heading">
-                        <span style="display: inline-block"><strong>[<a>{$r['area']}</a> <a>{$r['category']}</a>] <a>{$r['title']}</a></strong><span class="color_danger  font_size14">&nbsp;&nbsp; | &nbsp;&nbsp;{$status[$r[status]]}</span> </span> <span style=" float: right; font-size: 14px;  color: #999; line-height: 2.2">网友：{$r['linkman']}  &nbsp;&nbsp; {date('Y-m-d H:i',$r['addtime'])}</span>
+                        <span style="display: inline-block; max-width: 70%;"><strong>{if $r['area']}[<a>{$r['area']}</a>]{/if} <a>{$r['category']}</a> <a href="index.php?m=guestbook&v=show&id={$r['id']}">{$r['title']}</a></strong><span class="color-danger  font_size14">&nbsp;&nbsp; | &nbsp;&nbsp;{$status[$r[status]]}</span> </span> <span style=" float: right; font-size: 14px;  color: #999;">网友：{$r['linkman']}  &nbsp;&nbsp; {date('Y-m-d H:i',$r['addtime'])}</span>
                     </div>
                     <div class="panel-body">
-                        {strcut($r['content'],180,'...')}
+                       <div style="width: 70%"> {strcut($r['content'],190,'...')}</div>
                         {if $r[status]==9}
-                        <p class="text-right color_777 font_size14 margin_bottom0"><a href="{WEBURL}index.php?m=guestbook&f=index&v=show&id={$r[id]}">[查看全文]</a></p>
+                        <p class="text-right color_777 font_size14 margin_bottom0" style="margin-top: -21px;"><a href="{WEBURL}index.php?m=guestbook&f=index&v=show&id={$r[id]}">[查看全文]</a></p>
                         {/if}
                     </div>
                     <!--回复-->
                     {if $r[status]==8}
                     <div class="panel-footer">
-                        <div class="huifu-hd">
+                        <div class="ssa--huifu-hd">
                             <div class="hd-left"><h4><strong>官方回复：</strong></h4></div>
-                            <div class="hd-right"> <span style=" font-size: 14px;  color: #999; line-height: 2.2">回复单位：{$r[reply_user]}  &nbsp;&nbsp; {date('Y-m-d H:i',$r['replytime'])}</span></div>
+                            <div class="hd-right"> <span style=" font-size: 14px;  color: #999;">回复单位：{$r[reply_user]}  &nbsp;&nbsp; {date('Y-m-d H:i',$r['replytime'])}</span></div>
                         </div>
                         {strcut($r['reply'],180,'...')}
                         <p class="text-right color_777 font_size14 margin_bottom0"><a href="/index.php?m=guestbook&f=index&v=show&id={$r['id']}">[查看全文]</a></p>
@@ -112,4 +102,4 @@
 
 
 
-{T "content","foot",TPLID}
+{T "content","footer",TPLID}

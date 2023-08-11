@@ -13,6 +13,11 @@ class myissue extends WUZHI_foreground {
         load_function('common', 'member');
         $this->member_setting = get_cache('setting', 'member');
         parent::__construct();
+
+        $guestbook_app = $this->db->get_one('setting',array('keyid'=>'install','m'=>M));
+        if(!isset($guestbook_app) || empty($guestbook_app)){
+            MSG('模块没有安装，请联系系统管理员');
+        }
     }
 
 	public function listing() {

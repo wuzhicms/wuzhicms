@@ -9,9 +9,9 @@ if(V=='field_add') {
 ?>
 <table cellpadding="2" cellspacing="1" width=100%" class="table table-striped table-advance ">
     <tr>
-        <td>字段类型</td>
-        <td>
-            <select name="setting[fieldtype]" onchange="javascript:fieldtype_setting(this.value);">
+        <td width="125">字段类型</td>
+        <td class="d-flex col-3">
+            <select name="setting[fieldtype]" onchange="fieldtype_setting(this.value);" class="form-select">
                 <option value="int" <?php if(output($setting,'fieldtype')=='int') echo 'selected';?>>整数 INT(10)</option>
                 <option value="tinyint" <?php if(output($setting,'fieldtype')=='tinyint') echo 'selected';?>>整数 TINYINT(3)</option>
                 <option value="smallint" <?php if(output($setting,'fieldtype')=='smallint') echo 'selected';?>>整数 SMALLINT(5)</option>
@@ -25,6 +25,6 @@ if(V=='field_add') {
     </tr>
     <tr>
         <td>默认值</td>
-        <td><input type="text" name="setting[defaultvalue]" size="40" class="input-text" value="<?php echo output($setting,'defaultvalue');?>"></td>
+        <td class="d-flex col-3"><input type="text" name="setting[defaultvalue]" size="40" class="input-text form-control" value="<?php echo output($setting,'defaultvalue');?>"></td>
     </tr>
 </table>

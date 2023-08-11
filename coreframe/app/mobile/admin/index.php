@@ -64,7 +64,7 @@ class index extends WUZHI_admin {
         $tree_data = '';
 
         //格式字符串
-        $str="<tr><td>\$cid</td></td><td id='\$cid' \$selected>\$spacer\$name</td><td><div><input class='left' name='mbs[\$cid]' type='text' size='15' value='\$mb'></div></td><td><div><input class='center' name='mshows[\$cid]' type='radio' value='1' \$ms1> 显示  <input class='center' name='mshows[\$cid]' type='radio' value='0' \$ms2> 隐藏</div></td><td>\$modelname</td><td>\$url</td></tr>";
+        $str="<tr><td>\$cid</td></td><td id='\$cid' \$selected>\$spacer\$name</td><td><div><input class='left' name='mbs[\$cid]' type='text' size='15' value='\$mb'></div></td><td><div><input class='text-center' name='mshows[\$cid]' type='radio' value='1' \$ms1> 显示  <input class='center' name='mshows[\$cid]' type='radio' value='0' \$ms2> 隐藏</div></td><td>\$modelname</td><td>\$url</td></tr>";
 
         //返回树
         $tree_data.=$tree->create(0,$str);

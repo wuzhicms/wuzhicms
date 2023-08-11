@@ -38,7 +38,7 @@ class WUZHI_mysqli {
 	}
 
 	public function fetch_array($query, $result_type = MYSQLI_ASSOC) {
-		return mysqli_fetch_array($query, $result_type);
+		return @mysqli_fetch_array($query, $result_type);
 	}
 
 	public function get_one($table, $where, $field = '*', $limit = '', $order = '', $group = '', $condition = TRUE) {
@@ -149,7 +149,7 @@ class WUZHI_mysqli {
 	}
 
 	public function escape_string($string) {
-        return mysqli_real_escape_string($this->link,$string);
+        return @mysqli_real_escape_string($this->link,$string);
 	}
 
 	private static function safe_filed($field, $is_array = TRUE) {
@@ -169,7 +169,7 @@ class WUZHI_mysqli {
 	}
 	public function query($sql, $type = '', $cachetime = FALSE) {
         //if($_SERVER['REMOTE_ADDR']=='127.0.0.1') echo $sql."<br>";
-		if(!($query = mysqli_query($this->link,$sql)) && $type != 'SILENT') {
+		if(!($query = @mysqli_query($this->link,$sql)) && $type != 'SILENT') {
 			$this->halt('MySQL Query Error', $sql);
 		}
 		$this->querynum++;
@@ -213,7 +213,7 @@ class WUZHI_mysqli {
 	}
 
 	public function insert_id() {
-		return ($id = mysqli_insert_id($this->link)) >= 0 ? $id : $this->result($this->query("SELECT last_insert_id()"), 0);
+		return ($id = @mysqli_insert_id($this->link)) >= 0 ? $id : $this->result($this->query("SELECT last_insert_id()"), 0);
 	}
 
 	public function fetch_row($query) {
@@ -234,6 +234,8 @@ class WUZHI_mysqli {
 	}
 
 	public function halt($message = '', $sql = '') {
-		MSG('<div style="font-size: 9px;word-break: break-all;height: 150px;overflow: overlay;">[sql_error]'.$message.'<br /><br />'.$sql.'<br />[msg]'.mysqli_error($this->link).'</div>');
+		if(!defined('MYSQL_ERROR_DISPLAY')) {
+			MSG('<div style="font-size: 9px;word-break: break-all;height: 150px;overflow: overlay;">[sql_error]'.$message.'<br /><br />'.$sql.'<br />[msg]'.mysqli_error($this->link).'</div>');
+		}
 	}
 }

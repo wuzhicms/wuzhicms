@@ -128,7 +128,7 @@
         }
       }
       stream.next();
-    };
+    }
 
     return {
       startState: function () {

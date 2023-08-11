@@ -10,6 +10,11 @@ class index {
  	function __construct() {
         $this->db = load_class('db');
         $this->siteconfigs = get_cache('siteconfigs_1');
+
+        $guestbook_app = $this->db->get_one('setting',array('keyid'=>'install','m'=>M));
+        if(!isset($guestbook_app) || empty($guestbook_app)){
+            MSG('模块没有安装，请联系系统管理员');
+        }
     }
 
 	public function init() {
@@ -89,6 +94,7 @@ class index {
 
     public function contact() {
         $_username = get_cookie('_username');
+        $_avatar = get_cookie('_avatar');
         $model_r = $this->db->get_one('model',array('m'=>'guestbook'));
 
         $fields = get_cache('field_'.$model_r['modelid'],'model');
@@ -118,8 +124,11 @@ class index {
                 $form_add = new form_add($model_r['modelid']);
                 $formdata = $form_add->execute($GLOBALS['form']);
                 $formdata['master_data']['publisher'] = $_username;
+                $formdata['master_data']['linkman'] = $_username;
+                $formdata['master_data']['avatar'] = $_avatar;
                 $formdata['master_data']['addtime'] = SYS_TIME;
                 $formdata['master_data']['ip'] = get_ip();
+                $formdata['master_data']['content'] = remove_xss($formdata['master_data']['content']);
                 $formdata['master_data']['status'] = 1;
                 $this->db->insert($formdata['master_table'],$formdata['master_data']);
                 //执行更新
@@ -136,7 +145,7 @@ class index {
             $form_build = new form_build($model_r['modelid']);
 
             $formdata = $form_build->execute();
-            $field_list = '';
+            $field_list = array();
             if(is_array($formdata['0'])) {
                 foreach($formdata['0'] as $field=>$info) {
                     if($info['powerful_field']) continue;

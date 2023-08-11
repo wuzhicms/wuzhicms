@@ -1,57 +1,7 @@
-# phpstorm project files
+*.iml
+*.xml
 .idea
+www/uploadfile/*
+www/caches/*
+www/configs/*
 
-# netbeans project files
-nbproject
-
-# zend studio for eclipse project files
-.buildpath
-.project
-.settings
-
-# windows thumbnail cache
-Thumbs.db
-
-# composer vendor dir
-/vendor
-
-# composer itself is not needed
-composer.phar
-
-# Mac DS_Store Files
-.DS_Store
-
-# phpunit itself is not needed
-phpunit.phar
-composer.lock
-
-# local phpunit config
-/phpunit.xml
-
-#wuzhicms files
-/build/
-/caches/upgrade/*
-/caches/db_bak
-/.idea/
-/.svn/
-/caches/content/*
-/www/uploadfile/*
-/www/tags/*
-/www/webs/*
-/www/res/t3/*.html
-/caches/sql_log.H_1_a.sql
-/www/test.php
-/caches/upgrade/
-www/configs/mysql_config.php
-www/.htaccess
-upgrade/migrations/*
-www/guanyuwomen/gongsijieshao/index.html
-caches/lock.install
-.svn/wc.db
-www/xinwen/*
-www/2016/*
-site2/*
-caches/content/category_1.H_1_a.php
-caches/templates/default/
-caches/templates/t2/
-caches/templates/t3/

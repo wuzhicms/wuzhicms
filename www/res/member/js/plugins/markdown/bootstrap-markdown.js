@@ -607,7 +607,7 @@
                 ('selectionStart' in e && function () {
                     e.selectionStart = start
                     e.selectionEnd = end
-                    return
+
                 }) ||
 
                 /* browser not supported */
@@ -678,7 +678,7 @@
                 this.setSelection(oldSelection.start, oldSelection.end)
             }
 
-            return
+
         }
 
         ,

@@ -131,6 +131,9 @@ function T($m = 'content', $template = 'index', $style = 'default'){
  * @param string $msg3    扩展提示信息
  */
 function MSG($msg, $gotourl = '', $time = 1000, $msg2 = '', $msg3 = ''){
+	if (!strpos($gotourl,"&set_iframe=1")){
+        $gotourl = remove_xss($gotourl);
+    }
 	if (IS_CLI || defined('CLI_DISPLAY')) {
 		echo date('H:i:s', SYS_TIME) . ' Msg:' . $msg . "\r\n";
 	} else {
@@ -143,6 +146,7 @@ function MSG($msg, $gotourl = '', $time = 1000, $msg2 = '', $msg3 = ''){
 	}
 	exit;
 }
+
 
 /**
  * 将字符串转换为数组
@@ -209,13 +213,13 @@ function pages($num, $current_page, $pagesize = 20, $urlrule = '', $variables = 
 
 	//上一页
 	$pageup = max(($current_page - 1), 1);
-	$output .= '<li title="按住向左方向键 向前翻页"><a href="' . _pageurl($urlrule, 1, $variables) . '">首页</a></li>';
-	$output .= '<li title="总数"><a href="javascript:;">'.$num.'</a></li>';
-	$output .= '<li title="按住向左方向键 向前翻页"><a href="' . _pageurl($urlrule, $pageup, $variables) . '">&lt;</a></li>';
+	$output .= '<li  class="page-item" title="按住向左方向键 向前翻页"><a class="page-link" href="' . _pageurl($urlrule, 1, $variables) . '">首页</a></li>';
+	$output .= '<li class="page-item" title="总数"><a class="page-link" href="javascript:;">'.$num.'</a></li>';
+	$output .= '<li class="page-item" title="按住向左方向键 向前翻页"><a class="page-link" href="' . _pageurl($urlrule, $pageup, $variables) . '">&lt;</a></li>';
 	//第一页
 	$active = '';
-	if ($current_page == 1) $active = 'class="active"';
-	$output .= '<li><a ' . $active . ' href="' . _pageurl($urlrule, 1, $variables) . '">1</a></li>';
+	if ($current_page == 1) $active = 'class="active page-item"';
+	$output .= '<li ' . $active . '><a class="page-link"  href="' . _pageurl($urlrule, 1, $variables) . '">1</a></li>';
 
 	$difference = $limit + 1;
 	$difference2 = ceil($limit / 2 - 1);
@@ -238,18 +242,14 @@ function pages($num, $current_page, $pagesize = 20, $urlrule = '', $variables = 
 	}
 	for ($i = $startpage; $i <= $endpage; $i++) {
 		$active = '';
-		if ($current_page == $i) $active = 'class="active"';
-		$output .= '<li><a href="' . _pageurl($urlrule, $i, $variables) . '" ' . $active . '>' . $i . '</a></li>';
+		if ($current_page == $i) $active = 'class="active page-item"';
+		$output .= '<li ' . $active . '><a class="page-link" href="' . _pageurl($urlrule, $i, $variables) . '" >' . $i . '</a></li>';
 	}
 	//最后一页
 	if ($maxpage > 1) {
 		$active = '';
-		if ($current_page == $maxpage) $active = 'class="active"';
-		$output .= '<li><a ' . $active . ' href="' . _pageurl($urlrule, $maxpage, $variables) . '">' . $maxpage . '</a></li>';
-	}
-	if(defined('IN_ADMIN')) {
-		$pagelink = _pageurl($urlrule, $pageup, $variables);
-		$output .= '<li> 跳转到：<input style="width: 40px;height: 29px;margin-top: 5px;" onkeydown="if(event.keyCode==13) {gotourl(\''.$pagelink.'&page=\'+this.value);return false;};"></li>';
+		if ($current_page == $maxpage) $active = 'class="active page-item"';
+		$output .= '<li ' . $active . '><a class="page-link"  href="' . _pageurl($urlrule, $maxpage, $variables) . '">' . $maxpage . '</a></li>';
 	}
 	//下一页
 	$pagedown = $current_page + 1;
@@ -259,8 +259,8 @@ function pages($num, $current_page, $pagesize = 20, $urlrule = '', $variables = 
 	$output .= '<input type="hidden" id="page-next" value="' . _pageurl($urlrule, $pagedown, $variables) . '">';
 	$output .= '<script>$(this).focus();</script>';
 
-	$output .= '<li title="按住向右方向键 向后翻页"><a href="' . _pageurl($urlrule, $pagedown, $variables) . '">&gt;</a></li>';
-	$output .= '<li title="按住向右方向键 向后翻页"><a href="' . _pageurl($urlrule, $maxpage, $variables) . '">末页</a></li>';
+	$output .= '<li class="page-item" title="按住向右方向键 向后翻页"><a class="page-link" href="' . _pageurl($urlrule, $pagedown, $variables) . '">&gt;</a></li>';
+	$output .= '<li class="page-item" title="按住向右方向键 向后翻页"><a class="page-link" href="' . _pageurl($urlrule, $maxpage, $variables) . '">末页</a></li>';
 	return $output;
 }
 
@@ -293,6 +293,7 @@ function _pageurl($urlrule, $page, $variables = array()){
  * @return string
  */
 function URL(){
+	if(IS_CLI) return '';
 	$http_url = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
 	if (isset($_SERVER['HTTP_HOST'])) {
 		$http_url .= $_SERVER['HTTP_HOST'];
@@ -370,7 +371,7 @@ function get_ip(){
 		if (isset ($_SERVER ['HTTP_X_FORWARDED_FOR']) && $_SERVER ['HTTP_X_FORWARDED_FOR'] && $_SERVER ['REMOTE_ADDR']) {
 			if (strstr($_SERVER ['HTTP_X_FORWARDED_FOR'], ',')) {
 				$x = explode(',', $_SERVER ['HTTP_X_FORWARDED_FOR']);
-				$_SERVER ['HTTP_X_FORWARDED_FOR'] = trim(end($x));
+				$_SERVER ['HTTP_X_FORWARDED_FOR'] = trim(current($x));
 			}
 			if (preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER ['HTTP_X_FORWARDED_FOR'])) {
 				$ip = $_SERVER ['HTTP_X_FORWARDED_FOR'];
@@ -433,6 +434,39 @@ function get_cache($filename, $dir = '_cache_'){
  */
 function get_cache_path($filename, $dir = '_cache_'){
 	$cache_path = CACHE_ROOT . $dir . '/' . $filename . '.' . CACHE_EXT . '.php';
+	//更新緩存
+	if (!file_exists($cache_path)) {
+		switch($dir){
+			case 'category':
+				$cache = load_class('category_cache', 'content');
+				$cache->cache_all();
+				break;
+			case 'model':
+				$cache = load_class('cache_model', 'core');
+				$cache->cache_all();
+				break;
+			case 'block':
+				$cache = load_class('block_cache', 'content');
+				$cache->cache_all();
+				break;
+			case 'linkage':
+				$cache = load_class('cache_linkage', 'core');
+				$cache->cache_all();
+				break;
+			case 'template':
+				$cache = load_class('template', 'core');
+				$cache->cache_all();
+				break;
+			case 'role':
+				$cache = load_class('cache_role', 'core');
+				$cache->cache_all();
+				break;
+			case 'global_vars':
+				$cache = load_class('cache_global_vars', 'core');
+				$cache->cache_all();
+				break;
+		}
+	}
 	return $cache_path;
 }
 
@@ -505,7 +539,7 @@ function remove_xss($val){
 	}
 
 	// now the only remaining whitespace attacks are \t, \n, and \r
-	$ra1 = array('javascript', 'vbscript', 'expression', 'applet', 'meta', 'xml', 'blink', 'link', 'style', 'script', 'embed', 'object', 'iframe', 'frame', 'frameset', 'ilayer', 'layer', 'bgsound', 'title', 'base');
+	$ra1 = array('javascript', 'vbscript', 'expression', 'applet', 'meta', 'xml', 'blink',  'style', 'script', 'embed', 'object', 'iframe', 'frame', 'frameset', 'ilayer', 'layer', 'bgsound', 'title', 'base');
 	$ra2 = array('onabort', 'onactivate', 'onafterprint', 'onafterupdate', 'onbeforeactivate', 'onbeforecopy', 'onbeforecut', 'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste', 'onbeforeprint', 'onbeforeunload', 'onbeforeupdate', 'onblur', 'onbounce', 'oncellchange', 'onchange', 'onclick', 'oncontextmenu', 'oncontrolselect', 'oncopy', 'oncut', 'ondataavailable', 'ondatasetchanged', 'ondatasetcomplete', 'ondblclick', 'ondeactivate', 'ondrag', 'ondragend', 'ondragenter', 'ondragleave', 'ondragover', 'ondragstart', 'ondrop', 'onerror', 'onerrorupdate', 'onfilterchange', 'onfinish', 'onfocus', 'onfocusin', 'onfocusout', 'onhelp', 'onkeydown', 'onkeypress', 'onkeyup', 'onlayoutcomplete', 'onload', 'onlosecapture', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'onmousewheel', 'onmove', 'onmoveend', 'onmovestart', 'onpaste', 'onpropertychange', 'onreadystatechange', 'onreset', 'onresize', 'onresizeend', 'onresizestart', 'onrowenter', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 'onselect', 'onselectionchange', 'onselectstart', 'onstart', 'onstop', 'onsubmit', 'onunload');
 	$ra = array_merge($ra1, $ra2);
 
@@ -595,7 +629,7 @@ function strcut($str, $width = 0, $end = '...', $rephtml = 0) {
 	$x2 = 16;
 	$x3 = 21;
 	$x4 = $x3;
-	$e = '';
+
 	for ($i = 0; $i < $len; $i++) {
 		if ($w >= $width) {
 			$e = $end;
@@ -660,6 +694,74 @@ function time_format($timestamp, $type = 0){
 }
 
 /**
+ * 友好格式化时间
+ * @param int $timestamp 时间
+ * @param array $formats
+ * @return string
+ */
+function time_format2($timestamp, $formats = null) {
+	if ($formats == null) {
+		$formats = array(
+			'DAY'           => '%s天前',
+			'DAY_HOUR'      => '%s天%s小时前',
+			'HOUR'          => '%s小时',
+			'HOUR_MINUTE'   => '%s小时%s分前',
+			'MINUTE'        => '%s分钟前',
+			'MINUTE_SECOND' => '%s分钟%s秒前',
+			'SECOND'        => '%s秒前',
+		);
+	}
+
+	/* 计算出时间差 */
+	$seconds = time() - $timestamp;
+	$minutes = floor($seconds / 60);
+	$hours   = floor($minutes / 60);
+	$days    = floor($hours / 24);
+
+	if ($days > 0 && $days < 31) {
+		$diffFormat = 'DAY';
+	} elseif($days == 0) {
+		$diffFormat = ($hours > 0) ? 'HOUR' : 'MINUTE';
+		if ($diffFormat == 'HOUR') {
+			$diffFormat .= ($minutes > 0 && ($minutes - $hours * 60) > 0) ? '_MINUTE' : '';
+		} else {
+			$diffFormat = (($seconds - $minutes * 60) > 0 && $minutes > 0)
+				? $diffFormat.'_SECOND' : 'SECOND';
+		}
+	}else{
+		$diffFormat = 'TURE_DATE_TIME';//超出30天, 正常时间显示
+	}
+
+	$dateDiff = null;
+	switch ($diffFormat) {
+		case 'DAY':
+			$dateDiff = sprintf($formats[$diffFormat], $days);
+			break;
+		case 'DAY_HOUR':
+			$dateDiff = sprintf($formats[$diffFormat], $days, $hours - $days * 60);
+			break;
+		case 'HOUR':
+			$dateDiff = sprintf($formats[$diffFormat], $hours);
+			break;
+		case 'HOUR_MINUTE':
+			$dateDiff = sprintf($formats[$diffFormat], $hours, $minutes - $hours * 60);
+			break;
+		case 'MINUTE':
+			$dateDiff = sprintf($formats[$diffFormat], $minutes);
+			break;
+		case 'MINUTE_SECOND':
+			$dateDiff = sprintf($formats[$diffFormat], $minutes, $seconds - $minutes * 60);
+			break;
+		case 'SECOND':
+			$dateDiff = sprintf($formats[$diffFormat], $seconds);
+			break;
+		default:
+			$dateDiff = date('Y-m-d H:i:s',$timestamp);
+	}
+	return $dateDiff;
+}
+
+/**
  * 后台url构造
  *
  * @param $array
@@ -681,7 +783,7 @@ function link_url($array){
  * @param $linkageid
  * @param $id
  */
-function linkage($linkageid, $name, $returnid = 1, $extjs = '',$values = array(),$level = ''){
+function linkage($linkageid, $name, $returnid = 1, $extjs = '',$values = array(),$level = '', $field='LK'){
 	$id = preg_match("/\[(.*)\]/", $name, $m) ? $m[1] : $name;
 	$config = @get_cache('config_' . $linkageid, 'linkage');
 	if (!$config) {
@@ -695,11 +797,11 @@ function linkage($linkageid, $name, $returnid = 1, $extjs = '',$values = array()
 		if($values[1]=='') $values[1] = 0;
 		$level = $level=='' ? $config['level'] : $level;
 		$str = '';
-		$str .= '<div id="wz_' . $id . '">';
+		$str .= '<div id="wz_' . $id . '" class="row">';
 		$str .= '<input type="hidden" id="' . $id . '" name="' . $name . '" value="0">';
 		for ($i = 1; $i <= $level; $i++) {
 			if($i>1 && $i==$level) $extjs = '';
-			$str .= '<div class="col-sm-4"><select class="LK' . $linkageid . '_' . $i . ' form-control" name="LK' . $linkageid . '_' . $i . '" id="LK' . $linkageid . '_' . $i . '" onchange="linkage(\'' . $id . '\',this.value,this)" ' . $extjs . ' data-value="'.$values[$i].'"></select></div>';
+			$str .= '<div class="col-auto"><select class="LK' . $linkageid . '_' . $i . ' form-select" name="' . $field . $linkageid . '_' . $i . '" id="LK' . $linkageid . '_' . $i . '" onchange="linkage(\'' . $id . '\',this.value,this)" ' . $extjs . ' data-value="'.$values[$i].'"></select></div>';
 		}
 		$str .= '</div>';
 		$str .= '<script src="' . R . 'js/jquery.wuzhicms-select.js"></script>';
@@ -915,7 +1017,7 @@ function wzsql($table, $where = '', $type = 1, $order = '', $limit = 10, $start 
 	if ($type == 1) {//返回统计
 		return $db->count_result($table, $where);
 	} elseif ($type == 2) {//返回单条结果
-		return $db->get_one($table, $where);
+		return $db->get_one($table, $where, '*',0, $order);
 	} elseif ($type == 3) {//返回多条结果
 		return $db->get_list($table, $where, '*', $start, $limit, 0, $order);
 	}
@@ -1289,5 +1391,138 @@ function baidu_linkpost($urls,$siteid = 1,$action = 'urls') {
 	curl_exec($ch);
 	curl_close($ch);
 }
+/**
+ * 可视化布局
+ * @param string $layout_dir
+ * @return string
+ */
+function wz_layout($layout_dir = 'default-name',$pageid = 'index') {
 
+	/**
+	$layout_ids = array(
+	'wz11'=>array(
+	'x'=>0,
+	'y'=>0,
+	'width'=>3,
+	'height'=>10,
+	),
+	'aboutus'=>array(
+	'x'=>3,
+	'y'=>0,
+	'width'=>9,
+	'height'=>10,
+	),
+	'search'=>array(
+	'x'=>0,
+	'y'=>10,
+	'width'=>3,
+	'height'=>10,
+	),
+	'product'=>array(
+	'x'=>3,
+	'y'=>10,
+	'width'=>9,
+	'height'=>10,
+	),
+	);
+	 * **/
+	$db = load_class('db');
+	$layout_ids = $db->get_list('layout', array('pageid'=>$pageid), '*', 0, 20, 0, 'id DESC','','custom_id');
+	$layout_string = '<div class="grid-stack" data-gs-width="12" data-gs-animate="yes" id="layout-'.$layout_dir.'">';
+	if(defined('_LAYOUT_')) {
+		$read_only = '';
+		if(empty($layout_ids)) {
+			$layout_string .= '<script>init_layout("'.$pageid.'","'._SU.'");</script>';
+		}
+	} else {
+		$read_only = 'data-gs-no-move="true" data-gs-no-resize="true"';
+	}
+
+	if(isset($GLOBALS['tid'])) $tid = intval($GLOBALS['tid']);
+	foreach($layout_ids as $layout_id=>$layout) {
+		//item start
+
+		$layout_string .= '<div class="grid-stack-item" data-gs-x="'.$layout['x'].'" data-gs-y="'.$layout['y'].'" data-gs-width="'.$layout['width'].'" data-gs-height="'.$layout['height'].'" data-custom-id="'.$layout_id.'" id="'.$layout_id.'" '.$read_only.'>';
+		$layout_string .= '<div class="grid-stack-item-content">';
+		//********
+		//数据
+		//初始化，是否替换链接，在只有一张图片或者一个文字链接时，没有拖拽区域时，无法移动
+		$no_drag_handle = '';
+		ob_start();
+		include T('layout',$layout_dir.'/'.$layout['configid']);
+		$cache_data = ob_get_contents();
+		ob_end_clean();
+		if($no_drag_handle) {
+			$cache_data = preg_replace('/href="([A-Za-z0-9:\/\.&\?=_]+)"/','javascript:;',$cache_data);
+		}
+		$layout_string .= $cache_data;
+		//********
+		$layout_string .= '</div>';
+		$layout_string .= '</div>';
+		//item end
+	}
+
+	$layout_string .= '</div>';
+	return $layout_string;
+}
+/**
+ * 栏目联动菜单输出
+ * @param $linkageid
+ * @param $id
+ */
+function linkage_category($linkageid = 'category', $name, $returnid = 1, $extjs = '',$values = array(),$level = ''){
+	$id = preg_match("/\[(.*)\]/", $name, $m) ? $m[1] : $name;
+	//select 选项框
+	if($values[1]=='') $values[1] = 0;
+	$level = $level=='' ? 3 : $level;
+	$str = '';
+	$str .= '<div id="wz_' . $id . '">';
+	$str .= '<input type="hidden" id="' . $id . '" name="' . $name . '" value="0">';
+	for ($i = 1; $i <= $level; $i++) {
+		if($i>1 && $i==$level) $extjs = '';
+		$str .= '<div class="col-sm-4"><select class="LK' . $linkageid . '_' . $i . ' form-select" name="LK' . $linkageid . '_' . $i . '" id="LK' . $linkageid . '_' . $i . '" onchange="linkage(\'' . $id . '\',this.value,this)" ' . $extjs . ' data-value="'.$values[$i].'"></select></div>';
+	}
+	$str .= '</div>';
+	$str .= '<script src="' . R . 'js/jquery.wuzhicms-select.js"></script>';
+	$str .= "\r\n" . '<script>';
+	$str .= "\r\n" . '$.wuzhicmsSelect.defaults.url = "' . WEBURL . 'index.php?m=linkage&f=json_category&returnid=' . $returnid . '&/wz.json";';
+	$str .= "\r\n" . '$("#wz_' . $id . '").wuzhicmsSelect({';
+	$str .= "\r\n" . 'selects : [';
+	for ($i = 1; $i <= $level; $i++) {
+		$di = $i == $level ? '' : ',';
+		$str .= '"LK' . $linkageid . '_' . $i . '"' . $di;
+	}
+	$str .= ']';
+	$str .= "\r\n" . '});';
+	$str .= "\r\n" . '</script>';
+	return $str;
+}
+function json_success($data, $msg = 'success')
+{
+    $outdata = [
+        "code" => 0,
+        "msg" => $msg,
+        "data" => $data
+    ];
+    header('content-type:application/json');
+    echo json_encode($outdata, true);
+    exit();
+}
+
+function json_error($code = 1000, $data = '', $msg = '接口异常')
+{
+    $outdata = [
+        "code" => $code,
+        "msg" => $msg,
+        "data" => $data
+    ];
+	if ($code == 404) {
+		header("HTTP/1.1 404 Not Found");
+		exit();
+	} else {
+		header('content-type:application/json');
+		echo json_encode($outdata, true);
+		exit();
+	}
+}
 ?>

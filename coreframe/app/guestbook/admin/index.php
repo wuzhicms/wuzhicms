@@ -28,7 +28,7 @@ class index extends WUZHI_admin {
         $result = $this->db->get_list('guestbook', '', '*', 0, 20,$page,'id DESC');
         $pages = $this->db->pages;
         $total = $this->db->number;
-        $replys = array('<button type="button" class="btn btn-warning btn-xs">未回复</button>','已回复');
+        $replys = array('<button type="button" class="btn btn-warning btn-sm btn-xs">未回复</button>','已回复');
         $ip_location = load_class('ip_location');
         foreach($result as $key=>$rs) {
             $result[$key]['ip_location'] = $ip_location->seek($rs['ip'],1);
@@ -169,5 +169,16 @@ class index extends WUZHI_admin {
         $id = intval($GLOBALS['id']);
         $this->db->delete('guestbook',array('id'=>$id));
         MSG(L('delete success'),HTTP_REFERER,1500);
+    }
+
+    /**
+     * 批量上删除
+     */
+    public function delete_more(){
+        $ids = $GLOBALS['ids'];
+        $ids = implode(',',$ids);
+        $where = "`id` in (".$ids.")";
+        $this->db->delete('guestbook',$where);
+        MSG('删除成功',HTTP_REFERER);
     }
 }

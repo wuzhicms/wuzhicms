@@ -27,8 +27,8 @@ class WUZHI_cache_global_vars{
 		$sitelist = $db->get_list('site', '', '*', 0, 20, 0, 'siteid DESC');
 		foreach($sitelist as $r) {
 			if($r['setting']) {
-				$setting = unserialize($r['setting']);
-				$setting = array_merge($setting,$datas);
+                $setting = unserialize($r['setting']);
+                $setting = array_merge($setting,$datas);
 				set_cache('siteconfigs_'.$r['siteid'],$setting);
 			} else {
 				$r2 = $db->get_one('setting',array('keyid'=>'configs','m'=>'core'));

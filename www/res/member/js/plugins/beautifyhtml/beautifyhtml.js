@@ -1,4 +1,4 @@
-﻿/*jshint curly:true, eqeqeq:true, laxbreak:true, noempty:false */
+/*jshint curly:true, eqeqeq:true, laxbreak:true, noempty:false */
 /*
 
   The MIT License (MIT)

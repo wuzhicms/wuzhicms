@@ -68,7 +68,6 @@
         }?>
 	</div>
 </section>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function(){
 		$(".form-horizontal").Validform({
@@ -78,7 +77,5 @@
             }
 
         });
-        $("#body").niceScroll({styler:"fb",cursorcolor:"#CAD3D5",cursorwidth: '3', cursorborderradius: '10px', background: '#E2E7E8', cursorborder: '',horizrailenabled:false});
-
     });
 </script>

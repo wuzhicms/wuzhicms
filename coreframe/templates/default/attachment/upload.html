@@ -1,7 +1,7 @@
 <div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
 <div id="container">
-    <a id="pickfiles" href="javascript:;">[Select files]</a> 
-    <a id="uploadfiles" href="javascript:;">[Upload files]</a>
+    <a id="pickfiles" href="javascript:">[Select files]</a>
+    <a id="uploadfiles" href="javascript:">[Upload files]</a>
 </div>
 
 <br />
@@ -17,8 +17,8 @@ var uploader = new plupload.Uploader({
 	browse_button : 'pickfiles', // you can pass in id...
 	container: document.getElementById('container'), // ... or DOM Element itself
 	url : '{WEBURL}index.php?m=attachment&f=index&v=h5upload',
-	flash_swf_url : '{R}js/html5upload/Moxie.swf',
-	silverlight_xap_url : '{R}js/html5upload/Moxie.xap',
+	flash_swf_url : '{R}libs/html5upload/Moxie.swf',
+	silverlight_xap_url : '{R}libs/html5upload/Moxie.xap',
 	
 	filters : {
 		max_file_size : '10mb',

@@ -793,7 +793,7 @@
 									return false;
 								}
 							}, this));
-							if(end) { return; }
+							if(end) {  }
 						}
 					}, this))
 				// THEME RELATED

@@ -38,11 +38,11 @@
                             <td><?php echo $r['id'];?></td>
                             <td><?php echo safe_htm($r['name']);?></td>
                             <td><?php echo $r['m'];?></td>
-                            <td><?php echo $r['model_name']; ;?></td>
+                            <td><?php echo $r['model_name']; ?></td>
                             <td><?php echo safe_htm($r['remark']);?></td>
                             <td>
-                                <a href="javascript:void(0)" onclick="edit(<?php echo $r['id'];?>)" class="btn btn-primary btn-xs">修改</a>
-                                <a href="javascript:void(0)" onclick="del(<?php echo $r['id'];?>)" class="btn btn-danger btn-xs">删除</a>
+                                <a href="javascript:void(0)" onclick="edit(<?php echo $r['id'];?>)" class="btn btn-primary btn-sm btn-xs">修改</a>
+                                <a href="javascript:void(0)" onclick="del(<?php echo $r['id'];?>)" class="btn btn-danger btn-sm btn-xs">删除</a>
                             </td>
                         </tr>
                     <?php }	?>
@@ -58,7 +58,7 @@
 
                         </div>
                         <div class="pull-right">
-                            <ul class="pagination pagination-sm mr0">
+                            <ul class="pagination pagination-sm">
                                 <?php echo $pages;?>
                             </ul>
                         </div>
@@ -70,9 +70,6 @@
 </div>
 
 </section>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
 <script type="text/javascript">
 function edit(id){
     self.location.href = 'index.php?m=search&f=index&v=edit&sid='+id+'<?php echo $this->su();?>';
@@ -82,5 +79,5 @@ function del(id){
     self.location.href = 'index.php?m=search&f=index&v=del&sid='+id+'<?php echo $this->su();?>';
 }
 </script>
-</body>
-</html>
+<?php include $this->template('footer','core');?>
+

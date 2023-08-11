@@ -19,7 +19,7 @@ include $this->template('header','core');
                             </tr>
                             </thead>
                             <tbody>
-							<?php 
+							<?php
 								if(is_array($datas)){
 								foreach ($datas as $info){?>
 							<tr>
@@ -28,8 +28,8 @@ include $this->template('header','core');
 								<td><?php echo $info['maketime'];?></td>
 								<td><?php echo $info['volume'];?></td>
 								<td><a href="javascript:makedo('?m=database&f=index&v=import&filename=<?php echo $info['filename'];?>&dosubmit=1<?php echo $this->su();?>', '确认恢复数据库吗？')"
-                                           class="btn btn-info btn-xs">数据恢复</a></td>
-							</tr> 
+                                           class="btn btn-info btn-sm btn-xs">数据恢复</a></td>
+							</tr>
 							<?php }}?>
                             </tbody>
                         </table>
@@ -39,7 +39,4 @@ include $this->template('header','core');
 		</div>
 	</div>
 </section>
-<script src="<?php echo R;?>js/bootstrap.min.js"></script>
-<script src="<?php echo R;?>js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?php echo R;?>js/pxgrids-scripts.js"></script>
-</body>
+<?php include $this->template('footer','core');?>

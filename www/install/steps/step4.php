@@ -79,8 +79,8 @@
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
     var startid = 1;
-    var msg = new Array();
-    var startmsg = new Array();
+    var msg = [];
+    var startmsg = [];
 
     startmsg[1] = '开始配置数据库文件： www/mysql_config.php';
     startmsg[2] = '开始配置网站信息文件：www/web_config.php';

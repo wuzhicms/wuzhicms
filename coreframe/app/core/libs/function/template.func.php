@@ -31,6 +31,7 @@ function select_template($m) {
 function globs($dir) {
     $GLOBALS['tplfiles'] = isset($GLOBALS['tplfiles']) ? $GLOBALS['tplfiles'] : '';
     $project_tmp = glob($dir.'*');
+    $GLOBALS['tplfiles'] = [];
     //$files = array();
     foreach($project_tmp as $_tmp) {
         if(is_dir($_tmp)) {
@@ -40,5 +41,6 @@ function globs($dir) {
             $GLOBALS['tplfiles'][] = str_replace($dir,'',$_tmp);
         }
     }
+
     return $GLOBALS['tplfiles'];
 }

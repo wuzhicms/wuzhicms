@@ -9,7 +9,7 @@ private function relation($config, $value) {
     if($this->id) {
         $result = $this->db->get_list('content_relation',array('id'=>$this->id,'cid'=>$this->cid), '*', 0, 100, 0, 'rid ASC');
         foreach($result as $rs) {
-        $lists .= '<li><strong>标题：</strong><a href="'.$rs['url'].'" target="_blank">'.$rs['title'].'</a> <a class="btn btn-default btn-xs" href="javascript:void();" onclick="remove_relation(this,'.$rs['rid'].');">移除</a></li>';
+        $lists .= '<li><strong>标题：</strong><a href="'.$rs['url'].'" target="_blank">'.$rs['title'].'</a> <a class="btn btn-default btn-sm" href="javascript:void();" onclick="remove_relation(this,'.$rs['rid'].')">移除</a></li>';
         }
     }
 

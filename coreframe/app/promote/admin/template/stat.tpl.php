@@ -3,87 +3,62 @@
 include $this->template('header','core');
 ?>
 <body>
-<script type="text/javascript" src="http://cdn.wuzhicms.com/highcharts/4.1.9/highcharts.js"></script>
-
+<script type="text/javascript" src="<?php echo R;?>js/highcharts.js"></script>
 <section class="wrapper">
-    <div class="row">
-        <div class="col-lg-12">
-            <section class="panel">
-                <?php echo $this->menu($GLOBALS['_menuid']);?>
-
-                <div class="panel-body">
-                    <div id="container" style="min-width:700px;height:300px"></div>
-                </div>
-            </section>
+    <section class="panel">
+        <?php echo $this->menu($GLOBALS['_menuid']);?>
+        <div class="panel-body">
+            <div id="container" style="min-width:700px;height:300px"></div>
         </div>
-    </div>
-    <!-- page end-->
-    <div class="row">
-        <div class="col-lg-12">
-
-
-            <section class="panel">
-                <div class="panel-body" id="panel-bodys">
-                    <table class="table table-striped table-advance table-hover">
-                        <thead>
-                        <tr>
-                            <th class="tablehead">点击时间</th>
-                            <th class="tablehead">ip</th>
-                            <th class="tablehead">地理位置</th>
-                            <th class="tablehead">访问用户</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        foreach($result_detail AS $r) {
-
-                            ?>
-                            <tr>
-                                <td><?php echo $r['addtime'];?></td>
-                                <td><?php echo $r['ip'];?></td>
-                                <td><?php echo $r['ip_location'];?></td>
-                                <td><?php if($r['uid']) {
-                                        $mr = $this->db->get_one('member', array('uid' => $r['uid']));
-                                        echo $mr['username'];
-                                    } else {
-                                        echo '游客';
-                                    }
-                                    ?></td>
-                            </tr>
-                            <tr style="background-color: #F1F2F7;">
-                                <td>来源：</td>
-                                <td colspan="3"><?php echo WEBURL.$r['referer'];?></td>
-                            </tr>
-                            <?php
-                        }
-                        ?>
-
-
-
-                        </tbody>
-                    </table>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-
-                                <div class="pull-right">
-                                    <ul class="pagination pagination-sm mr0">
-                                        <?php echo $pages;?>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+    </section>
+    <section class="panel">
+        <div class="panel-body" id="panel-bodys">
+            <table class="table table-striped table-advance table-hover">
+                <thead>
+                <tr>
+                    <th class="tablehead">点击时间</th>
+                    <th class="tablehead">ip</th>
+                    <th class="tablehead">地理位置</th>
+                    <th class="tablehead">访问用户</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                foreach($result_detail AS $r) {
+                    ?>
+                    <tr>
+                        <td><?php echo $r['addtime'];?></td>
+                        <td><?php echo $r['ip'];?></td>
+                        <td><?php echo $r['ip_location'];?></td>
+                        <td><?php if($r['uid']) {
+                                $mr = $this->db->get_one('member', array('uid' => $r['uid']));
+                                echo $mr['username'];
+                            } else {
+                                echo '游客';
+                            }
+                            ?></td>
+                    </tr>
+                    <tr style="background-color: #F1F2F7;">
+                        <td>来源：</td>
+                        <td colspan="3"><?php echo WEBURL.$r['referer'];?></td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+            </table>
+            <div class="panel-foot">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="panel-label">
+                        <ul class="pagination pagination-sm">
+                            <?php echo $pages;?>
+                        </ul>
                     </div>
                 </div>
-
-            </section>
-
+            </div>
         </div>
-
-    </div>
-
+    </section>
 </section>
-
 <script>
     Highcharts.setOptions({
         lang:{
@@ -180,3 +155,4 @@ include $this->template('header','core');
         });
     });
 </script>
+<?php include $this->template('footer','core');?>

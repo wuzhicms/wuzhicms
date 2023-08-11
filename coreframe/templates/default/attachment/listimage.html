@@ -125,7 +125,7 @@
 <div id="online" class="panel focus">
 	<div id="imageList">
 		<ul class="list">
-			{loop $result $r}<li><div class="max_h"><img width="142" src="{$r['url']}"></div><div class="title">{$r['title']}</div><div>{$r['mtime']}<br>{$r['filesize']}</div><span class="icon" onclick="returnFileUrl('{$r['url']}');"></span> </li>{/loop}
+			{loop $result $r}<li><div class="max_h"><img width="142" src="{$r['url']}"></div><div class="title">{$r['title']}</div><div>{$r['mtime']}<br>{$r['filesize']}</div><span class="icon" onclick="returnFileUrl('{$r['url']}')"></span> </li>{/loop}
 		</ul>
 	</div>
 </div>

@@ -1,0 +1,74 @@
+<!--框架页-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {T "mem","head",TPLID}
+    <link rel="stylesheet" href="res/mem/css/index.css" media="all">
+    
+</head>
+<body>
+    <!-- 头部 -->
+    {T "mem","nav",TPLID}
+    <!-- 头部 -->
+    <div class="home-content wp">
+        <!-- 侧栏导航 -->
+        <ul class="content_lfet-list">
+
+            <a  href="{$menus['home']}">
+                <li>
+                    <embed class="cont-icon" src="res/mem/imgs/zhuye.svg" type="image/svg+xml" />
+                    <embed class="cont-icon icon-active" src="res/mem/imgs/zhuye_1.svg" type="image/svg+xml" />
+                    <span>我的主页</span>
+                    <img class="cont-jian" src="res/mem/imgs/jiantou.png" alt="">
+                </li>
+            </a>
+            {loop $menus $r}
+            <li lay-href="{$r['url']}">
+                <embed class="cont-icon" src="res/mem/imgs/{$r['icon']}.svg" type="image/svg+xml" />
+                <embed class="cont-icon icon-active" src="res/mem/imgs/{$r['icon_active']}.svg" type="image/svg+xml" />
+                <span>{$r['name']}</span>
+                <img class="cont-jian" src="res/mem/imgs/jiantou.png" alt="">
+            </li>
+            {/loop}
+
+        </ul>
+        <!-- 侧栏导航 -->
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body">
+            <div class="layadmin-tabsbody-item layui-show">
+                <iframe id="minIframe" src="index.php?m=mem&f=userInfo" frameborder="0" class="layadmin-iframe"></iframe>
+            </div>
+        </div>
+        <!-- 主体内容 -->
+    </div>
+
+</body>
+{T "mem","foot",TPLID}
+<script>
+    layui.config({
+      base: 'res/libs/layuiadmin/' //静态资源所在路径
+    }).extend({
+      index: 'lib/index' //主入口模块
+    }).use(['index','upload','layedit','form'], function(){
+        let form = layui.form;
+
+        var layedit = layui.layedit
+        ,admin = layui.admin
+        // 侧栏
+        var $ = layui.jquery;
+        $('.content_lfet-list li').click(function(){
+            $(this).addClass('active').siblings().removeClass('active')
+        })
+        // 路由跳转
+        let options = location.href.split('?')[1]
+        if(options){
+           let values = options.split('=')
+           switch(values[0]){
+            case 'path':
+                $('#minIframe').attr('src',values[1]+'/'+values[1]+'.html')
+            break;
+           }
+        }
+    })
+</script>
+</html>

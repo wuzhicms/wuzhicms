@@ -1,0 +1,32 @@
+<div class="my-header">
+    <div class="wp content">
+        <div class="header-lfet">
+            <!-- <img class="logo-img" src="/res/mem/imgs/logo.png" mode=""></img> -->
+            <div class="back-home">
+                <div class="back-home-text">
+                    <img class="back-home-img" src="/res/mem/imgs/shouye.png" mode=""></img>
+                    <a style="color:white" href="/">
+                        <div class="text">
+                            点击返回首页
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="layui-card-body">
+                <ul class="layui-nav" lay-filter="component-nav">
+                    <li class="layui-nav-item" lay-unselect="">
+                        <dl class="layui-nav-child">
+                            <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                            <dd><a href="index.php?m=mem&f=index">个人中心</a></dd>
+                            <dd><a href="index.php?m=mem&f=logout">退出</a></dd>
+                        </dl>
+                        <a href="javascript:void(0);">{$user['username']}</a>
+                    </li>
+                    <img src="{$user['avatar']}" class="layui-nav-img">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

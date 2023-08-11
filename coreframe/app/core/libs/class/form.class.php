@@ -21,61 +21,22 @@ class WUZHI_form {
 	 * @return string
 	 */
 	public static function editor($name = 'content', $editname = 'content', $value = '', $toolbars = '',$editor_type = 'ckeditor',$area_load = 0){
-		if (!defined('IN_ADMIN')) $toolbars = 'basic';
+		if (!defined('IN_ADMIN')) $toolbars = 'normal';
 		$str = '';
-		if($editor_type=='ueditor') {
-			$str .= '<script id="' . $editname . '" name="' . $name . '" type="text/plain">' . $value . '</script>';
-			if (!defined('UEDITOR')) {
-				define('UEDITOR', TRUE);
-
-				//$str .= '<script type="text/javascript">';
-				//$str .= 'window.UEDITOR_HOME_URL="'.R.'js/ueditor/";';
-				//$str .= '</script>';
-				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.config.js?'.VERSION.'"></script>';
-				$str .= '<script type="text/javascript" src="' . R . 'js/ueditor/ueditor.all.min.js?'.VERSION.'"></script>';
-			}
-
-			$str .= '<script type="text/javascript">';
-
-			$str .= 'var ue = UE.getEditor("' . $editname . '", {';
-			if ($toolbars == 'basic') {
-				$str .= 'toolbars: [';
-				$str .= "['fullscreen', 'undo', 'redo', 'bold','italic', 'underline', 'strikethrough', 'removeformat', 'formatmatch', 'forecolor', 'backcolor',
-             'fontfamily', 'fontsize',
-            'justifyleft', 'justifycenter', 'justifyright',
-            'link', 'unlink','simpleupload','inserttable']";
-				$str .= '],';
-			} elseif ($toolbars == 'normal') {
-				$str .= 'toolbars: [';
-				$str .= "['fullscreen', 'source', 'undo', 'redo',
-            'bold', 'italic', 'underline', 'strikethrough', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain',  'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist',
-            'rowspacingtop', 'rowspacingbottom', 'lineheight',
-             'fontfamily', 'fontsize', 'indent',
-            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify',
-            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-            'simpleupload', 'insertimage', 'emotion', 'insertvideo', 'music', 'attachment', 'map','|','inserttable', 'deletetable', 'insertparagraphbeforetable','insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols','pagebreak']";
-				$str .= '],';
-			}
-			$str .= 'autoHeightEnabled: false,';
-			$str .= 'autoFloatEnabled: false';
-			$str .= '});';
-			$str .= '</script>';
-		} else {
-			if (!defined('CKEDITOR')) {
-				define('CKEDITOR', TRUE);
-				$ck_ext_token = md5('jpg|png|gif'._KEY);
-				$str .= '<script type="text/javascript">var ck_ext_token="'.$ck_ext_token.'";</script>';
-				$str .= '<script src="' . R . 'js/ckeditor/ckeditor.js?'.VERSION.'"></script>';
-			}
-			if($area_load==0) {
-				$str .= '<textarea name="'.$name.'" id="'.$editname.'" rows="3">'.$value.'</textarea>';
-			}
-			$str .= '<script type="text/javascript">';
-			$str .= "CKEDITOR.config.toolbar = '$toolbars';";
-			if(!defined('IN_ADMIN')) $str .= "CKEDITOR.config.removeButtons = 'Source, BidiLtr,BidiRtl,Image';";
-			$str .= 'CKEDITOR.replace("' . $editname . '");';
-			$str .= '</script>';
+		if (!defined('CKEDITOR')) {
+			define('CKEDITOR', TRUE);
+			$ck_ext_token = md5('jpg|png|gif'._KEY);
+			$str .= '<script type="text/javascript">var ck_ext_token="'.$ck_ext_token.'";</script>';
+			$str .= '<script src="' . R . 'libs/ckeditor/ckeditor.js?'.VERSION.'"></script>';
 		}
+		if($area_load==0) {
+			$str .= '<textarea name="'.$name.'" id="'.$editname.'" rows="3">'.$value.'</textarea>';
+		}
+		$str .= '<script type="text/javascript">';
+		$str .= "CKEDITOR.config.toolbar = '$toolbars';";
+		if(!defined('IN_ADMIN')) $str .= "CKEDITOR.config.removeButtons = 'Source';";
+		$str .= 'CKEDITOR.replace("' . $editname . '");';
+		$str .= '</script>';
 
 		return $str;
 	}
@@ -104,12 +65,12 @@ class WUZHI_form {
 
 		if ($loadjs || !defined('CALENDAR_INIT')) {
 			define('CALENDAR_INIT', 1);
-			$str .= '<link rel="stylesheet" type="text/css" href="' . R . 'js/calendar/css/jscal2.css"/>
-			<link rel="stylesheet" type="text/css" href="' . R . 'js/calendar/css/border-radius.css"/>
-			<script type="text/javascript" src="' . R . 'js/calendar/jscal2.js"></script>
-			<script type="text/javascript" src="' . R . 'js/calendar/lang/' . $_lang . '.js"></script>';
+			$str .= '<link rel="stylesheet" type="text/css" href="' . R . 'libs/calendar/css/jscal2.css"/>
+			<link rel="stylesheet" type="text/css" href="' . R . 'libs/calendar/css/border-radius.css"/>
+			<script type="text/javascript" src="' . R . 'libs/calendar/jscal2.js"></script>
+			<script type="text/javascript" src="' . R . 'libs/calendar/lang/' . $_lang . '.js"></script>';
 		}
-		$str .= '<input type="text" name="' . $name . '" id="' . $id . '" value="' . $value . '" class="date" '.$ext_code.'>&nbsp;';
+		$str .= '<input type="text" name="' . $name . '" id="' . $id . '" value="' . $value . '" class="date form-control" '.$ext_code.' >';
 		$str .= '<script type="text/javascript">
 			Calendar.setup({
 			weekNumbers: ' . $showweek . ',
@@ -119,7 +80,7 @@ class WUZHI_form {
 		    showTime: ' . $showtime . ',
 		    minuteStep: 1,
 		    onSelect   : function() {this.hide();}
-			});
+			})
         </script>';
 		return $str;
 	}
@@ -171,21 +132,22 @@ class WUZHI_form {
 		if (!defined('PUPLOAD_INIT')) {
 			define('PUPLOAD_INIT', TRUE);
 			$str .= '<script type="text/javascript" src="' . R . 'js/json2.js"></script>';
-			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/plupload.full.min.js"></script>';
-			$str .= '<script type="text/javascript" src="' . R . 'js/html5upload/extension.js?'.VERSION.'"></script>';
+			$str .= '<script type="text/javascript" src="' . R . 'libs/html5upload/plupload.full.min.js"></script>';
+			$str .= '<script type="text/javascript" src="' . R . 'libs/html5upload/extension.js?'.VERSION.'"></script>';
 		}
 		$limit = $limit ? $limit : 1;
 		if ($is_thumb) $limit = 1;
 		if ($limit == 1) {
 			if ($is_thumb) {
 				$input_type = 'hidden';
-				$default_thumb = $default_val ? $default_val : R . 'images/upload-thumb.png';
-				$thumb_w = $width ? $width : '200';
-				$thumb_h = $height ? $height : '113';
-				$style = "max-width:".$thumb_w."px;";
-				$style .= "max-height:".$thumb_h."px;";
-				if($default_val) $str .= '<span class="btn btn-default btn-xs" onclick="remove_image(\'' . $id . '\');" style="position: absolute;">X</span>';
-				$str .= '<img class="attachment_thumb" id="' . $id . '_thumb" src="' . $default_thumb . '" onclick="img_view(this.src);"  style="' . $style . '"/>';
+    			$default_thumb = $default_val;
+//				$thumb_w = $width ? $width : '200';
+//				$thumb_h = $height ? $height : '113';
+//				$style = "max-width:".$thumb_w."px;";
+//				$style .= "max-height:".$thumb_h."px;";
+               $str .= '<span class="btn btn-default btn-sm btn-xs btn-del-img" onclick="remove_image(\'' . $id . '\');"><i class="icon-trash-o"></i></span>';
+				//$str .= '<img class="attachment_thumb" id="' . $id . '_thumb" src="' . $default_thumb . '" onclick="img_view(this.src);"  style="' . $style . '"/>';
+                $str .= '<div class="attachment_thumb"><img alt="" id="' . $id . '_thumb"  src="' . $default_thumb . '"></div>';
 			} else {
 				$input_type = 'text';
 			}
@@ -205,7 +167,7 @@ class WUZHI_form {
 		$str .= '</span>';
 		if($show_imagecut) {
 			$up_url = 'index.php' . link_url(array('m' => 'attachment', 'f' => 'imagecut', 'v' => 'init', 'callback' => $callback, 'htmlid' => $id, '_su' => '', 'limit' => $limit, 'is_thumb' => $is_thumb, 'width' => $width, 'height' => $height, 'htmlname' => $formname, 'ext' => $ext, 'token' => $token, 'cut' => $cut,'is_water'=>$is_water,'is_allow_show_img'=>$is_allow_show_img));
-			$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="imagecut(\'' . $up_url . '\',\'' . $id . '\',\'图片裁剪\',1100,560,' . $limit . ')">裁剪</button></span>';
+			$str .= '<span class="input-group-btn"><button type="button" class="btn btn-white" onclick="imagecut(\'' . $up_url . '\',\'' . $id . '\',\'图片裁剪\',1100,580,' . $limit . ')">裁剪</button></span>';
 		}
 		return $str;
 	}
@@ -335,7 +297,7 @@ class WUZHI_form {
 		$string = '';
 		foreach ($options as $key => $v) {
 			$checked = $key == $value ? 'checked' : '';
-			$string .= ' <label class="radio-inline"><input type="radio" ' . $str . ' value="' . $key . '" ' . $checked . '> ' . $v . '</label>';
+			$string .= '<div class="form-check align-items-center form-check-inline mb-0"><input type="radio" class="form-check-input" id="' . $key . '" ' . $str . ' value="' . $key . '" ' . $checked . '><label class="form-check-label me-3" for="' . $key . '"> ' . $v . '</label></div>';
 		}
 		return $string;
 	}
@@ -359,7 +321,7 @@ class WUZHI_form {
 		foreach ($array as $key => $v) {
 			$key = trim($key);
 			$checked = ($value && in_array($key, $value)) ? 'checked' : '';
-			$string .= '<label class="checkbox-inline"><input type="checkbox" ' . $str . ' id="' . $field . '_' . $i . '" ' . $checked . ' value="' . p_htmlspecialchars($key) . '"> ' . p_htmlspecialchars($v) . "</label>";
+			$string .= '<div class="form-check align-items-center form-check-inline mb-0"><input type="checkbox" class="form-check-input" ' . $str . ' id="' . $field . '_' . $i . '" ' . $checked . ' value="' . p_htmlspecialchars($key) . '"><label class="me-3 form-check-label" for="' . $field . '_' . $i . '"> ' . p_htmlspecialchars($v) . '</label></div>';
 			$i++;
 		}
 		return $string;

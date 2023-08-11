@@ -48,7 +48,7 @@ class WUZHI_url {
             $replace[] = $$_mat = isset($configs[$_mat]) ? $configs[$_mat] : output($GLOBALS,$_mat);
         }
         $url = str_replace($_match[0],$replace,$urlrule);
-        $urls = '';
+        $urls = [];
 		$siteid = $this->siteid;
         if($this->category['listhtml']) {//生成静态
             $domain = $this->get_domain($configs['cid']);
@@ -85,7 +85,7 @@ class WUZHI_url {
                 }
             }
         } else {//动态地址
-            $urls['url'] = WWW_PATH.$url;
+            $urls['url'] = '/'.$url;
         }
         return $urls;
     }
@@ -162,7 +162,7 @@ class WUZHI_url {
             $replace[] = $$_mat = isset($configs[$_mat]) ? $configs[$_mat] : output($GLOBALS,$_mat);
         }
         $url = str_replace($_match[0],$replace,$urlrule);
-        $urls = '';
+        $urls = [];
         if($this->category['showhtml']) {//生成静态
             $domain = $this->get_domain($configs['cid']);
             if($domain) {
@@ -183,7 +183,7 @@ class WUZHI_url {
 				}
             }
         } else {//动态地址
-            $urls['url'] = $this->sitelist[$siteid]['url'].$url;
+            $urls['url'] = '/'.$url;
         }
         //print_r($urls);
         return $urls;

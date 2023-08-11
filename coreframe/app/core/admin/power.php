@@ -51,6 +51,9 @@ class power extends WUZHI_admin {
             }
             $formdata['role'] = ','.implode(',',$GLOBALS['form']['role']).',';
             $formdata['truename'] = remove_xss($GLOBALS['form']['truename']);
+			$formdata['teamleader'] = $GLOBALS['form']['teamleader'];
+			$formdata['qf_priv'] = $GLOBALS['form']['qf_priv'];
+
 			$this->db->insert('admin',$formdata);
 			MSG(L('operation success'));
 		} else {
@@ -80,10 +83,11 @@ class power extends WUZHI_admin {
 
             $formdata['role'] = ','.implode(',',$GLOBALS['form']['role']).',';
             $formdata['truename'] = remove_xss($GLOBALS['form']['truename']);
-
-
+            $formdata['teamleader'] = $GLOBALS['form']['teamleader'];
+            $formdata['qf_priv'] = $GLOBALS['form']['qf_priv'];
             $this->db->update('admin',$formdata,array('uid'=>$uid));
-            MSG(L('edit success'),'?m=core&f=power&v=listing'.$this->su());
+			$forward = $GLOBALS['forward'];
+            MSG(L('edit success'),$forward);
         } else {
             $show_formjs = 1;
             $form = load_class('form');

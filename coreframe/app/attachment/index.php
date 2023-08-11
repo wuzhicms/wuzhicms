@@ -7,11 +7,17 @@
 // +----------------------------------------------------------------------
 defined('IN_WZ') or exit('No direct script access allowed');
 
+
 load_function('common','attachment');
 /**
  * 附件上传
  */
 class index {
+
+    public $extImages = array('gif','bmp','jpg','jpeg','png');
+    public $extCompression = array('zip','7z','rar','gz','tar');
+    public $extFile = array('doc','docx','xls','xlsx','ppt','pptx','pdf');
+    public $video = array('mp4','mp3');
     function __construct()
     {
         $this->db = load_class('db');
@@ -22,75 +28,59 @@ class index {
         }
     }
 
-    //ueditor百度编辑器 上传
-    public function upload()
-    {
-        $action = remove_xss($GLOBALS['action']);
-        $ueditor = load_class('ueditor',M);
-        switch($action)
-        {
-            case 'config':
-                $config = $ueditor->config();
-                $result = $config;
-                break;
 
-            case 'uploadimage':/* 上传图片 */
-            case 'uploadscrawl':/* 上传涂鸦 */
-            case 'uploadvideo':/* 上传视频 */
-            case 'uploadfile':/* 上传文件 */
-                $result = $ueditor->upload($action);
-                break;
-
-
-            case 'listimage':/* 列出图片 */
-            case 'listfile':/* 列出文件 */
-                $result = $ueditor->lists();
-                break;
-            case 'searchimg':/* 搜索图片 */
-                $result = $ueditor->searchimg();
-                break;
-            case 'catchimage':/* 抓取远程文件 */
-                $result = $ueditor->saveRemote();
-                break;
-
-            default:
-                $result = json_encode(array(
-                    'state'=> '请求地址出错'
-                ));
-                break;
-        }
-        $callback = isset($GLOBALS['callback']) ? strip_tags($GLOBALS['callback']) : '';
-        if($callback) {
-            exit($callback.'('.json_encode($result).')');
-        } else {
-            exit( json_encode($result) );
-        }
-
-    }
     //html5 上传
     public function h5upload() {
-        $insert = array();
-        $_username = get_cookie('_username');
 
-        $wz_name = get_cookie('username');
-        if($wz_name!='') {
-            $_username = $wz_name;
-        }
-		$ext = $GLOBALS['ext'];
+        //token 验证
+        $ext = $GLOBALS['ext'];
 		$token = $GLOBALS['token'];
 		if($ext=='' || md5($ext._KEY)!=$token) {
 			die('{"jsonrpc" : "2.0", "error" : {"code": 105, "message": "token验证失败，不允许上传文件"}, "id" : "id"}');
 		}
-        if($_username!='') {
+		//用户中心用户
+        $_username = get_cookie('_username');
+        //后台用户
+        $wz_name = get_cookie('username');
+        if($wz_name!='') {
+            $_username = $wz_name;
+        }
+        //判断用户是否登录
+/*        if($_username!='') {
             $mr = $this->db->get_one('member', array('username' => $_username),'uid');
             if(!$mr) {
                 die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Not allow guest upload."}, "id" : "id"}');
             }
         } else {
             die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Not allow guest upload."}, "id" : "id"}');
+        }*/
+        // 获取上传文件名称
+        if (isset($GLOBALS["name"])) {
+            //$fileName = str_replace(",","_",$_FILES["file"]["name"]);
+            $fileName = $GLOBALS['name'];
+        } elseif (!empty($_FILES)) {
+            $fileName = str_replace(",","_",$_FILES["file"]["name"]);
+        } else {
+            $fileName = uniqid("file_");
         }
-
-        $insert['username'] = $_username;
+        $originalName = iconv('utf-8',CHARSET,$fileName);
+        //不允许上传的文件扩展
+        $ext = strtolower(pathinfo($fileName,PATHINFO_EXTENSION));
+        $_exts = array_merge($this->video,$this->extFile,$this->extCompression,$this->extImages);
+        if(!empty($ext)){
+            if(!in_array($ext, $_exts)) {
+                die('{"jsonrpc" : "2.0", "error" : {"code": 105, "message": "Ban file name."}, "id" : "id"}');
+            }
+        }
+        //创建新文件目录  格式：/dirname/2014/07/07/
+        $fileurl = createdir();
+        $targetDir = ATTACHMENT_ROOT.$fileurl;
+        $targetFileName = md5($fileName) .uniqid() . '.' . $ext;
+        //目标文件位置
+        $targetFilePath = $targetDir .'/'. $targetFileName;
+        // Chunking might be enabled
+        $chunk = isset($GLOBALS["chunk"]) ? intval($GLOBALS["chunk"]) : 0;
+        $chunks = isset($GLOBALS["chunks"]) ? intval($GLOBALS["chunks"]) : 0;
 
         // Make sure file is not cached (as it happens for example on iOS devices)
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -98,42 +88,9 @@ class index {
         header("Cache-Control: no-store, no-cache, must-revalidate");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
-
         // 5 minutes execution time
         @set_time_limit(5 * 60);
-
-        $fileurl = createdir();
-        $target_dir = ATTACHMENT_ROOT.$fileurl;
-
-        // Get a file name
-        if (isset($GLOBALS["name"])) {
-            $fileName = str_replace(",","_",$_FILES["file"]["name"]);
-        } elseif (!empty($_FILES)) {
-            $fileName = str_replace(",","_",$_FILES["file"]["name"]);
-        } else {
-            $fileName = uniqid("file_");
-        }
-
-
-        $insert['name'] = iconv('utf-8',CHARSET,$fileName);
-
-        $fileName = filename($fileName);
-        //不允许上传的文件扩展
-        if($fileName==FALSE) {
-            die('{"jsonrpc" : "2.0", "error" : {"code": 105, "message": "Ban file name."}, "id" : "id"}');
-        }
-        $filePath = $target_dir .'/'. $fileName;
-
-        // Chunking might be enabled
-        $chunk = isset($GLOBALS["chunk"]) ? intval($GLOBALS["chunk"]) : 0;
-        $chunks = isset($GLOBALS["chunks"]) ? intval($GLOBALS["chunks"]) : 0;
-
-
         // Open temp file
-        if (!$out = @fopen("{$filePath}.part", $chunks ? "ab" : "wb")) {
-            die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
-        }
-
         if (!empty($_FILES)) {
             $stream_input = false;
             if ($_FILES["file"]["error"] || !is_uploaded_file($_FILES["file"]["tmp_name"])) {
@@ -150,61 +107,69 @@ class index {
                 die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
             }
         }
-
-        while ($buff = fread($in, 4096)) {
-            fwrite($out, $buff);
+        if (!$out = @fopen("{$targetFilePath}.part", ($chunk == 0) ? "wb" : "ab")) {
+            die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
+        }
+        while ($buff = fread($in, 1024)) {
+           fwrite($out, $buff);
         }
 
         @fclose($out);
         @fclose($in);
+        @unlink($_FILES["file"]["tmp_name"]);
+
 
         // Check if file has been uploaded
         if (!$chunks || $chunk == $chunks - 1) {
             // Strip the temp .part suffix off
-            rename("{$filePath}.part", $filePath);
+            rename("{$targetFilePath}.part", $targetFilePath);
         }
 
-
-        $insert['path'] = $fileurl.$fileName;
-        $insert['addtime'] = SYS_TIME;
-        $insert['filesize'] = $_FILES['file']['size'] ? $_FILES['file']['size'] : filesize($filePath);
-        $insert['ip'] = get_ip();
-
-        $md5file = md5_file(ATTACHMENT_ROOT.$insert['path']);
+        //md5验证图片是否重复上传
+        $md5file = md5_file($targetFilePath);
         if($r = $this->db->get_one('attachment', array('md5file' => $md5file))) {
-            unlink(ATTACHMENT_ROOT.$insert['path']);
+            unlink($targetFilePath);
             $id = $r['id'];
-            die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.ATTACHMENT_URL.$r['path'].'", "id" : "'.$id.'", "filename" : "'.$r['name'].'" }');
-        } else {
-			$this->setting = get_cache('attachment');
-			if(isset($GLOBALS['is_thumb']) && $GLOBALS['is_thumb']) {
-				$this->water_mark = false;
-			} else {
-				$this->water_mark = $this->setting['watermark_enable'];
-			}
-			$ext = get_ext($insert['path']);
-			if($this->water_mark == true && in_array($ext,array('jpg','png','gif'))) {
-				$this->image = load_class('image');
-				$this->image->set_image(ATTACHMENT_ROOT.$insert['path']);
-				$this->image->createImageFromFile();
-				if($this->setting['watermark_enable']==2) {//文字水印
-					$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
-				} else {//图片水印
-					$this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
-				}
-
-				$this->image->save();
-			}
-            $attachment = load_class('attachment',M);
-            $insert['md5file'] = $md5file;
-
-            $id = $attachment->insert($insert);
-
-            // Return Success JSON-RPC response
-            $info = pathinfo($insert['name']);
-            $file_name =  basename($insert['name'], '.'.$info['extension']);
-            die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.ATTACHMENT_URL.$fileurl.$fileName.'", "id" : "'.$id.'", "filename" : "'.$file_name.'" }');
+            die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.$r['path'].'", "id" : "'.$id.'", "filename" : "'.$r['name'].'" }');
         }
+
+        //缩略图不加水印
+        if(isset($GLOBALS['is_thumb']) && $GLOBALS['is_thumb']) {
+            $this->water_mark = false;
+        } else {
+            $this->water_mark = $this->setting['watermark_enable'];
+        }
+        //添加水印
+        if($this->water_mark == true && in_array($ext,array('jpg','png','gif'))) {
+            $this->image = load_class('image');
+            $this->image->set_image($targetFilePath);
+            $this->image->createImageFromFile();
+            if($this->setting['watermark_enable']==2) {//文字水印
+                $this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+            } else {//图片水印
+                $this->image->water_mark(WWW_ROOT.'res/images/watermark.png',$this->setting['watermark_pos']);
+            }
+            $this->image->save();
+        }
+        //附件url地址
+        $attachmentUrl = ATTACHMENT_URL.$fileurl.$targetFileName;
+
+        
+        //信息添加到数据库
+        $attachment = load_class('attachment',M);
+        $insert = array();
+        $insert['name'] = $originalName;
+        $insert['username'] = $_username;
+        $insert['path'] = $attachmentUrl;
+        $insert['addtime'] = SYS_TIME;
+        $insert['filesize'] = filesize($targetFilePath);
+        $insert['ip'] = get_ip();
+        $insert['md5file'] = $md5file;
+        $id = $attachment->insert($insert);
+
+        // Return Success JSON-RPC response
+        $fileName = pathinfo($originalName, PATHINFO_FILENAME);
+        die('{"jsonrpc" : "2.0", "exttype" : "img", "result" : "'.$attachmentUrl.'", "id" : "'.$id.'", "filename" : "'.$fileName.'" }');
 
 
     }
@@ -220,51 +185,23 @@ class index {
         upload_url_safe();
         $callback = isset($GLOBALS['callback']) ? remove_xss($GLOBALS['callback']) : 'callback_thumb_dialog';
         $htmlid = isset($GLOBALS['htmlid']) ? remove_xss($GLOBALS['htmlid']) : 'file';
-        $limit = isset($GLOBALS['limit']) ? intval($GLOBALS['limit']) : '1';
-        $GLOBALS['is_thumb'] = isset($GLOBALS['is_thumb']) ? intval($GLOBALS['is_thumb']) : '0';
-        $GLOBALS['htmlname'] = isset($GLOBALS['htmlname']) ? remove_xss($GLOBALS['htmlname']) : '';
-        $ext = $GLOBALS['ext'];
-        $token = $GLOBALS['token'];
+        $limit = isset($GLOBALS['limit']) ? intval($GLOBALS['limit']) : 1;
+        $is_thumb = isset($GLOBALS['is_thumb']) ? intval($GLOBALS['is_thumb']) : 0;
+        $htmlname= isset($GLOBALS['htmlname']) ? remove_xss($GLOBALS['htmlname']) : '';
+        $cut = isset($GLOBALS['cut']) ? intval($GLOBALS['cut']) : 0;
+        $width = isset($GLOBALS['width']) ? intval($GLOBALS['width']) :  0;
+        $height = isset($GLOBALS['height']) ? intval($GLOBALS['height']) : 0;
+        $ext = remove_xss($GLOBALS['ext']);
+        $token = remove_xss($GLOBALS['token']);
         if($ext=='' || md5($ext._KEY)!=$token) {
             MSG('参数错误！');
         }
         $maxsize = ini_get('upload_max_filesize');
-        $extimg = array('gif','bmp','jpg','jpeg','png');
-        $extzip = array('zip','7z','rar','gz','tar');
-        $extpdf = 'pdf';
-        $extword = array('doc','docx','xls','xlsx','ppt','pptx');
         $exts = explode('|',$ext);
-
-        $extother = array_diff($exts,$extimg,$extword,$extzip);
-        if($extother) {
-            $extother = implode(',',$extother);
-        } else {
-            $extother = '';
-        }
-
-        $extimg = array_intersect($extimg,$exts);
-        if($extimg) {
-            $extimg = implode(',',$extimg);
-        } else {
-            $extimg = '';
-        }
-
-        $extzip = array_intersect($extzip,$exts);
-        if($extzip) {
-            $extzip = implode(',',$extzip);
-        } else {
-            $extzip = '';
-        }
-
-        $extword = array_intersect($extword,$exts);
-        if($extword) {
-            $extword = implode(',',$extword);
-        } else {
-            $extword = '';
-        }
-        if(!in_array($extpdf,$exts)) {
-            $extpdf = '';
-        }
+        $extImages = upload_ext_safe($this->extImages,$exts);
+        $extCompression = upload_ext_safe($this->extCompression,$exts);
+        $extFile = upload_ext_safe($this->extFile,$exts);
+        $extVideo = upload_ext_safe($this->video,$exts);
         include T('attachment','upload_dialog');
     }
     //删除附件，仅允许删除 $this->userkeys 的值。即当前cookie下有效
@@ -331,8 +268,9 @@ class index {
                 ));
                 break;
         }
-        exit($result);
+        echo $result;
     }
+
     function file_brower() {
 		$uid = get_cookie('uid');
 		if(!is_numeric($uid)) {

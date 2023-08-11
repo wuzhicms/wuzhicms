@@ -302,7 +302,7 @@ class POP3
             @fclose($this->pop_conn);
         } catch (Exception $e) {
             //Do nothing
-        };
+        }
     }
 
     /**

@@ -24,6 +24,7 @@ class index extends WUZHI_admin {
         $page = isset($GLOBALS['page']) ? intval($GLOBALS['page']) : 1;
         $page = max($page,1);
         $status=array(8=>'已回复',9=>'未回复');
+		$types=array(0=>'',1=>'文章抄袭举报',2=>'漏错误举报');
         $result = $this->db->get_list('feedback', '', '*', 0, 20,$page,'id DESC');
         $pages = $this->db->pages;
         $total = $this->db->number;
