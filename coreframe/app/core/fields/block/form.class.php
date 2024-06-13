@@ -7,7 +7,7 @@
         } else {
                 $_lang = LANGUAGE;
         }
-        $where = "`siteid`='$siteid' AND `lang`='".$_lang."' AND `type`=1 AND `modelid` IN(0,".$this->modelid.")";
+        $where = "`siteid`='$siteid' AND `lang`='".$_lang."' AND `type`=1 AND `tplid` = TPLID  AND `modelid` IN(0,".$this->modelid.")";
         $result = $this->db->get_list('block',$where, 'blockid,name', 0, 100);
         $option = key_value($result,'blockid','name');
         $values = '';
